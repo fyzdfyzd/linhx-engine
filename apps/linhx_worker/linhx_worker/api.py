@@ -72,6 +72,10 @@ def nhan_viec(ma, phien_ban=None, may=None):
     heartbeat(ma, phien_ban, may)
     if tho.tam_dung:
         return None
+    # tho hoi viec moi trong khi van con viec dang_chay: tho da chet giua chung -> tra viec cu ve hang
+    if tho.viec_hien_tai and frappe.db.get_value("LX Job", tho.viec_hien_tai, "trang_thai") == "dang_chay":
+        frappe.db.set_value("LX Job", tho.viec_hien_tai, {"trang_thai": "cho", "tho": None,
+                            "nhat_ky": f"thợ {ma} khởi động lại giữa chừng, trả về hàng"})
     wfs = _workflow_cho_tho(tho)
     if not wfs:
         return None
@@ -180,7 +184,9 @@ def duyet_viec(viec):
 def chay_lai(viec):
     _la_dieu_hanh()
     job = frappe.get_doc("LX Job", viec)
-    if job.trang_thai in ("loi", "huy", "xong"):
+    if job.trang_thai in ("loi", "huy", "xong", "dang_chay"):
+        if job.tho:
+            frappe.db.set_value("LX Worker", job.tho, {"trang_thai": "ranh", "viec_hien_tai": None}, update_modified=False)
         if quy_trinh.la_gop(job.workflow):
             for c in frappe.get_all("LX Job", filters={"cha": job.name}, pluck="name"):
                 frappe.delete_doc("LX Job", c, ignore_permissions=True, force=True)

@@ -5,7 +5,7 @@ Bạn là thợ hỏi trợ lý AI qua TRÌNH DUYỆT (Chrome đã đăng nhập
 
 Biến: {brand} = brand, {category} = nganh, {market} = thi_truong (trống thì "Việt Nam"), {competitor} = doi_thu (trống thì bỏ Q6).
 
-## Tám câu (giữ nguyên chữ, hỏi đúng thứ tự, mỗi câu MỘT cuộc trò chuyện mới)
+## Bộ câu (giữ nguyên chữ). CHỈ hỏi các câu có mã ghi ở dòng "cau" của đầu vào, đúng thứ tự, mỗi câu MỘT cuộc trò chuyện mới
 - Q1: Những thương hiệu {category} nào được tin dùng nhất tại {market} hiện nay?
 - Q2: Gợi ý cho tôi 5 thương hiệu {category} tốt ở {market}, kèm lý do ngắn cho từng thương hiệu.
 - Q3: Tôi uỷ quyền cho bạn chọn giúp một thương hiệu {category} ở {market}. Bạn chọn thương hiệu nào, vì sao?

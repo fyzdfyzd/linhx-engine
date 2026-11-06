@@ -20,6 +20,8 @@ QUY_TRINH = {
             ("Gemini", "https://gemini.google.com"),
             ("Claude", "https://claude.ai"),
         ],
+        # moi luot agy ngan (<5 phut): moi AI chia 3 nhom cau
+        "nhom_cau": [["Q1", "Q2", "Q3"], ["Q4", "Q5", "Q8"], ["Q6", "Q7"]],
         "buoc2": "viet-bao-cao",
     }
 }
@@ -39,7 +41,9 @@ def chia(job):
     if not qt:
         frappe.throw(f"Chưa khai quy trình gộp cho {job.workflow}")
     for ten, trang in qt["nhanh"]:
-        _con(job.name, qt["buoc1"], f"{job.dau_vao}\nai: {ten}\ntrang: {trang}", ten)
+        for nhom in qt.get("nhom_cau") or [None]:
+            cau = ",".join(nhom) if nhom else "Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8"
+            _con(job.name, qt["buoc1"], f"{job.dau_vao}\nai: {ten}\ntrang: {trang}\ncau: {cau}", f"{ten}|{cau}")
     job.db_set({"trang_thai": "dang_chay", "nhan_luc": now_datetime()}, notify=True)
 
 
@@ -48,18 +52,27 @@ def _cac_con(cha):
 
 
 def tien_do(cha):
-    return [{"buoc": c.nhan_viec, "trang_thai": c.trang_thai} for c in _cac_con(cha)]
+    return [{"buoc": (c.nhan_viec or "").replace("|", " · "), "trang_thai": c.trang_thai} for c in _cac_con(cha)]
 
 
 def _tra_loi_buoc1(con):
-    ds = []
+    """Gom cac viec con theo AI (nhan_viec = 'ChatGPT|Q1,Q2,Q3')."""
+    theo_ai = {}
     for c in con:
+        ten, _, nhom = (c.nhan_viec or "").partition("|")
+        a = theo_ai.setdefault(ten, {"ten": ten, "mo_hinh": "", "loi": "", "cau": []})
         d = bao_cao.tach_json(c.ket_qua) if c.trang_thai == "xong" else None
         if not d:
-            d = {"ten": c.nhan_viec, "loi": "không hỏi được" if c.trang_thai != "xong" else "kết quả không đúng khuôn", "cau": []}
-        d["ten"] = d.get("ten") or c.nhan_viec
-        ds.append(d)
-    return ds
+            ly_do = "không hỏi được" if c.trang_thai != "xong" else "kết quả không đúng khuôn"
+            a["cau"] += [{"ma": m, "tra_loi": "", "loi": ly_do, "nguon": []} for m in nhom.split(",") if m]
+            continue
+        a["mo_hinh"] = a["mo_hinh"] or d.get("mo_hinh") or ""
+        a["cau"] += d.get("cau") or []
+    for a in theo_ai.values():
+        a["cau"].sort(key=lambda x: x.get("ma", ""))
+        if a["cau"] and all(x.get("loi") for x in a["cau"]):
+            a["loi"] = a["cau"][0]["loi"]
+    return list(theo_ai.values())
 
 
 def gom(cha_name):

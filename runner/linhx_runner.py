@@ -103,7 +103,7 @@ def chay_agy(cfg, viec):
     return "xong", ket_qua, nhat_ky, tv, tr
 
 
-def vong(cfg, mot_lan=False):
+def vong(cfg, mot_lan=False, mot_viec=False):
     log(f"linhx-runner {PHIEN_BAN} tho={cfg['tho']} url={cfg['url']}")
     while True:
         try:
@@ -114,6 +114,8 @@ def vong(cfg, mot_lan=False):
                 goi(cfg, "bao_ket_qua", ma=cfg["tho"], viec=viec["viec"], trang_thai=tt,
                     ket_qua=kq, nhat_ky=nk, token_vao=tv, token_ra=tr)
                 log("xong", viec["viec"], tt)
+                if mot_viec:
+                    return
                 continue  # co viec thi hoi tiep ngay
         except urllib.error.HTTPError as e:
             log("loi HTTP", e.code, e.read()[:300])
@@ -125,4 +127,5 @@ def vong(cfg, mot_lan=False):
 
 
 if __name__ == "__main__":
-    vong(doc_env(), mot_lan="--mot-lan" in sys.argv)
+    # --mot-lan: het viec thi thoat; --mot-viec: lam toi da 1 viec roi thoat
+    vong(doc_env(), mot_lan="--mot-lan" in sys.argv or "--mot-viec" in sys.argv, mot_viec="--mot-viec" in sys.argv)
