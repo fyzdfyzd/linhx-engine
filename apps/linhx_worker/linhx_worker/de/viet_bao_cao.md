@@ -1,4 +1,4 @@
-Bạn là người chấm và viết báo cáo "AI nói gì về thương hiệu". Không cần trình duyệt, không tạo hay sửa file nào. Chỉ dùng dữ liệu dưới đây.
+Bạn là người chấm và viết báo cáo "AI nói gì về thương hiệu". Không dùng trình duyệt, KHÔNG chạy lệnh shell, không tạo hay sửa file nào: chỉ đọc dữ liệu dưới đây rồi trả lời. Chỉ dùng dữ liệu dưới đây.
 
 ## Dữ liệu (thông tin thương hiệu, rồi TRA_LOI là nguyên văn các AI trả lời 8 câu Q1–Q8)
 {dau_vao}
