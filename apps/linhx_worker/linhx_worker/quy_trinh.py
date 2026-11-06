@@ -102,9 +102,9 @@ def gom(cha_name):
         for a in ai:
             for c in a.get("cau") or []:
                 c.update({k: x for k, x in (nhan.get((a.get("ten"), c.get("ma"))) or {}).items() if k not in ("ai", "ma")})
-        for k in ("ngay", "trich_sai", "buoc_roi", "lop_yeu", "ke_hoach_30_ngay", "ket_luan"):
+        for k in ("trich_sai", "buoc_roi", "lop_yeu", "ke_hoach_30_ngay", "ket_luan"):
             kq[k] = nd.get(k)
-    kq["ngay"] = kq.get("ngay") or now_datetime().strftime("%Y-%m-%d %H:%M")
+    kq["ngay"] = now_datetime().strftime("%Y-%m-%d %H:%M")  # gio server (Asia/Ho_Chi_Minh), khong lay gio agy tu ghi
     cha.db_set({"trang_thai": "xong" if nd else "loi", "xong_luc": now_datetime(),
                 "ket_qua": json.dumps(kq, ensure_ascii=False),
                 "nhat_ky": "" if nd else f"bước viết báo cáo lỗi: {(v.nhat_ky or '')[-500:]}"}, notify=True)

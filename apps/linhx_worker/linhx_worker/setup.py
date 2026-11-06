@@ -27,6 +27,8 @@ WORKFLOWS = [
 
 
 def after_install():
+    if frappe.db.get_single_value("System Settings", "time_zone") != "Asia/Ho_Chi_Minh":
+        frappe.db.set_single_value("System Settings", "time_zone", "Asia/Ho_Chi_Minh")
     for role in ("LX Operator", "LX Worker"):
         if not frappe.db.exists("Role", role):
             frappe.get_doc({"doctype": "Role", "role_name": role, "desk_access": 1 if role == "LX Operator" else 0}).insert(ignore_permissions=True)

@@ -9,7 +9,7 @@ Q1–Q3 không nêu tên brand (đo Có mặt; Q3 còn đo Được đề xuất
 - nhac_brand: câu trả lời có nhắc brand không (true/false).
 - nhan (câu nào có nói về brand): dung / sai / nham (nhầm với brand khác) / bia (bịa điều không có) / cu (đúng nhưng đã cũ) / khong_biet / khong_ap_dung. Đối chiếu với su_that. Không có chứng cứ trái ngược thì không chấm sai; điều không kiểm được thì khong_biet.
 - de_xuat (Q3, Q6, Q7): khuyen / co_dieu_kien / khong / khong_ap_dung. ly_do_sai = true nếu khuyên dựa trên lý do sai.
-- du_kien (Q4, Q8): cong_ty, nam, san_pham, website mà AI nêu (trống nếu không nêu).
+- du_kien: BẮT BUỘC có cho MỌI câu Q4 và Q8 của MỌI AI: cong_ty, nam, san_pham, website mà AI nêu, chép ngắn (trống nếu AI không nêu). Server dùng phần này để đo Độ nhất quán giữa các AI.
 
 ## Việc 2: nhận định
 - trich_sai: tối đa 5 ý sai/bịa/nhầm/cũ, trích ngắn nguyên văn, kèm điều đúng theo su_that.
