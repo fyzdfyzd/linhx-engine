@@ -26,7 +26,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
-PHIEN_BAN = "0.1.0"
+PHIEN_BAN = "0.1.1"
+DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
 GOC = Path(__file__).resolve().parent
 
 
@@ -73,7 +74,14 @@ def chay_agy(cfg, viec):
     if viec["che_do"] == "kiem":
         return "xong", f"Thợ {cfg['tho']} trên {platform.node()} nhận được: {viec['de']}", "che_do=kiem, khong goi agy", 0, 0
     tran = int(viec.get("tran_phut") or 40) * 60
-    cmd = [cfg["agy"], "-p", viec["de"]] + shlex.split(cfg["agy_args"], posix=os.name != "nt")
+    de = viec["de"]
+    if len(de) > DE_DAI:
+        # Windows gioi han dong lenh 32.767 ky tu: de dai thi ghi ra file, -p chi tro toi file
+        f = cfg["thu_muc"] / f"de-{viec['viec']}.md"
+        f.write_text(de, encoding="utf-8")
+        de = (f"Đọc toàn bộ file {f.name} trong thư mục hiện tại (chỉ đọc, không chạy lệnh shell) "
+              f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.")
+    cmd = [cfg["agy"], "-p", de] + shlex.split(cfg["agy_args"], posix=os.name != "nt")
     kw = {}
     if os.name == "nt":
         kw["creationflags"] = 0x08000000  # CREATE_NO_WINDOW: chay an, khong bat console
@@ -85,6 +93,10 @@ def chay_agy(cfg, viec):
         return "loi", None, f"quá trần {tran // 60} phút\n{(e.stdout or '')[-4000:]}", 0, 0
     except FileNotFoundError:
         return "loi", None, f"không thấy agy ở '{cfg['agy']}' (đặt AGY_CMD)", 0, 0
+    except OSError as e:
+        if getattr(e, "winerror", None) == 206:
+            return "loi", None, f"dòng lệnh quá dài ({len(de)} ký tự)", 0, 0
+        return "loi", None, f"không chạy được agy: {e}", 0, 0
     nhat_ky = f"exit={p.returncode} giay={time.time() - t0:.0f}\n--- stderr ---\n{p.stderr[-8000:]}"
     out = p.stdout.strip()
     ket_qua, tv, tr = out, 0, 0

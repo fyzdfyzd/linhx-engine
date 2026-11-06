@@ -19,7 +19,7 @@ WORKFLOWS = [
     {"ma": "ai-noi-gi-ve-brand", "ten": "AI nói gì về thương hiệu của bạn", "che_do": "gop", "tran_phut": 60,
      "mo_ta": "Quy trình gộp: mỗi AI (ChatGPT, Gemini, Claude) một việc 'hoi-mot-ai' trên máy có trình duyệt, rồi một việc 'viet-bao-cao' gán nhãn và viết nhận định. Server tính 4 chỉ số.",
      "de_mau": "", "vi_du": "brand: (tên thương hiệu)\nnganh: (ngành)\nthi_truong: Việt Nam\ndoi_thu: (một đối thủ)\nsu_that: (3 sự thật)"},
-    {"ma": "hoi-mot-ai", "ten": "Hỏi một AI qua trình duyệt", "che_do": "agy", "tran_phut": 8, "nhan_can": "trinh-duyet",
+    {"ma": "hoi-mot-ai", "ten": "Hỏi một AI qua trình duyệt", "che_do": "agy", "tran_phut": 12, "nhan_can": "trinh-duyet",
      "mo_ta": "Bước 1 của báo cáo thương hiệu: agy mở một trang AI, hỏi 2–3 câu, chép nguyên văn.", "de_file": "hoi_mot_ai.md"},
     {"ma": "viet-bao-cao", "ten": "Viết báo cáo thương hiệu", "che_do": "agy", "tran_phut": 15,
      "mo_ta": "Bước 2: gán nhãn câu trả lời và viết nhận định. Thợ nào cũng nhận, kể cả cloud.", "de_file": "viet_bao_cao.md"},
