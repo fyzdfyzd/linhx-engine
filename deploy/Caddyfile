@@ -1,0 +1,12 @@
+{$SITE_ADDR::80} {
+	encode gzip
+	@frappe path /api/* /app /app/* /assets/* /files/* /private/* /socket.io/* /login /login* /desk* /website_script.js /logout /update-password* /me
+	handle @frappe {
+		reverse_proxy frontend:8080
+	}
+	handle {
+		root * /srv/front
+		try_files {path} /index.html
+		file_server
+	}
+}

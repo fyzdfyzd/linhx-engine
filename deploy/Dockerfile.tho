@@ -1,0 +1,11 @@
+# Tho agy tren cloud. agy cai bang script chinh thuc vao /root/.local/bin.
+# Dang nhap 1 lan: docker compose run --rm tho-cloud agy  (hien URL + ma, mo tren dien thoai, dang nhap zomplaza)
+# Phien dang nhap giu o volume agy-home (/root/.gemini).
+FROM python:3.12-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates curl git chromium gnome-keyring dbus-x11 \
+ && rm -rf /var/lib/apt/lists/*
+RUN (curl -fsSL https://antigravity.google/cli/install.sh | bash) || echo "CHUA CAI DUOC agy, xem README"
+ENV PATH="/root/.local/bin:${PATH}"
+WORKDIR /tho
+COPY runner/linhx_runner.py .
+CMD ["python", "-u", "linhx_runner.py"]

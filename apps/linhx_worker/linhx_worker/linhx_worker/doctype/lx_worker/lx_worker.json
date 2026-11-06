@@ -1,0 +1,137 @@
+{
+ "doctype": "DocType",
+ "name": "LX Worker",
+ "module": "LINHX Worker",
+ "custom": 0,
+ "autoname": "field:ma",
+ "naming_rule": "By fieldname",
+ "engine": "InnoDB",
+ "field_order": [
+  "ma",
+  "loai",
+  "may",
+  "trang_thai",
+  "nhan",
+  "workflows",
+  "user",
+  "lan_cuoi",
+  "phien_ban",
+  "viec_hien_tai",
+  "tam_dung"
+ ],
+ "fields": [
+  {
+   "fieldname": "ma",
+   "fieldtype": "Data",
+   "label": "Mã thợ",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "description": "vd cloud-1, may-cty, msi"
+  },
+  {
+   "fieldname": "loai",
+   "fieldtype": "Select",
+   "label": "Loại",
+   "options": "cloud\nmay",
+   "default": "may",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "may",
+   "fieldtype": "Data",
+   "label": "Máy",
+   "description": "tên máy thật, vd DESKTOP-PVHR2CD"
+  },
+  {
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "label": "Trạng thái",
+   "options": "offline\nranh\nban",
+   "default": "offline",
+   "in_list_view": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "nhan",
+   "fieldtype": "Data",
+   "label": "Nhãn",
+   "description": "cách nhau dấu phẩy, vd repo:chiemtinhso,windows"
+  },
+  {
+   "fieldname": "workflows",
+   "fieldtype": "Small Text",
+   "label": "Workflow nhận",
+   "description": "mã workflow cách nhau dấu phẩy; trống = nhận mọi workflow"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "Tài khoản API",
+   "options": "User"
+  },
+  {
+   "fieldname": "lan_cuoi",
+   "fieldtype": "Datetime",
+   "label": "Lần cuối gọi",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "phien_ban",
+   "fieldtype": "Data",
+   "label": "Phiên bản thợ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "viec_hien_tai",
+   "fieldtype": "Link",
+   "label": "Việc đang làm",
+   "options": "LX Job",
+   "read_only": 1
+  },
+  {
+   "fieldname": "tam_dung",
+   "fieldtype": "Check",
+   "label": "Tạm dừng",
+   "description": "bật thì thợ không nhận việc mới"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "LX Operator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1
+  },
+  {
+   "role": "LX Worker",
+   "read": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-06 10:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-06 10:00:00.000000",
+ "title_field": "ma"
+}

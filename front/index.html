@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>LINHX Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f5f1;--mat:#ffffff;--chu:#16181d;--phu:#5d6270;--vien:#e3e1da;--nhan:#1f4fd6;--nhan-nhat:#e8eefc;
+  --xanh:#14804a;--xanh-nhat:#e3f4ea;--vang:#a76700;--vang-nhat:#fbf0d9;--do:#c2321f;--do-nhat:#fbe6e2;--xam:#8b8f99;
+  --bong:0 1px 2px rgba(20,20,30,.06),0 4px 16px rgba(20,20,30,.05);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--mat:#171a21;--chu:#eceef2;--phu:#9aa0ad;--vien:#262a33;--nhan:#7ea2ff;--nhan-nhat:#1b2540;
+  --xanh:#4cc78a;--xanh-nhat:#14301f;--vang:#f0b44c;--vang-nhat:#33270f;--do:#ff7b66;--do-nhat:#3a1913;--xam:#6b7080;--bong:none}}
+:root[data-theme="dark"]{--bg:#0f1115;--mat:#171a21;--chu:#eceef2;--phu:#9aa0ad;--vien:#262a33;--nhan:#7ea2ff;--nhan-nhat:#1b2540;
+  --xanh:#4cc78a;--xanh-nhat:#14301f;--vang:#f0b44c;--vang-nhat:#33270f;--do:#ff7b66;--do-nhat:#3a1913;--xam:#6b7080;--bong:none}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--chu);font:16px/1.55 "Be Vietnam Pro",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:var(--nhan)}
+.khung{max-width:960px;margin:0 auto;padding:0 16px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.logo{font-weight:700;letter-spacing:.02em;text-decoration:none;color:var(--chu);display:flex;gap:8px;align-items:center}
+.logo i{width:10px;height:10px;border-radius:2px;background:var(--nhan);display:inline-block}
+nav a{color:var(--phu);text-decoration:none;font-size:14px;margin-left:16px}
+h1{font-size:clamp(28px,5vw,42px);line-height:1.15;margin:32px 0 12px;letter-spacing:-.01em}
+h2{font-size:20px;margin:32px 0 12px}
+h3{font-size:16px;margin:20px 0 8px}
+.dan{color:var(--phu);font-size:18px;max-width:620px}
+.the{background:var(--mat);border:1px solid var(--vien);border-radius:14px;padding:20px;box-shadow:var(--bong)}
+form .dong{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){form .dong{grid-template-columns:1fr}}
+label{display:block;font-size:14px;color:var(--phu);margin:12px 0 4px}
+input,textarea,select{width:100%;font:inherit;color:var(--chu);background:var(--bg);border:1px solid var(--vien);border-radius:10px;padding:10px 12px}
+textarea{min-height:88px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--nhan);outline-offset:1px}
+.nut{display:inline-flex;align-items:center;gap:8px;font:600 15px "Be Vietnam Pro",sans-serif;border:0;border-radius:10px;padding:12px 18px;background:var(--nhan);color:#fff;cursor:pointer;text-decoration:none}
+.nut.phu{background:transparent;color:var(--chu);border:1px solid var(--vien)}
+.nut.nho{padding:6px 10px;font-size:13px}
+.nut:disabled{opacity:.5;cursor:default}
+.ghi{font-size:13px;color:var(--phu)}
+.loi{color:var(--do);font-size:14px;margin-top:8px}
+.ba{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
+@media(max-width:640px){.ba{grid-template-columns:1fr}}
+.ba .the b{display:block;margin-bottom:4px}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px}
+.buoc{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.buoc span{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--vien);color:var(--phu)}
+.buoc span.on{background:var(--nhan-nhat);color:var(--nhan);border-color:transparent;font-weight:600}
+.buoc span.xong{color:var(--xanh)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:10px 8px;border-bottom:1px solid var(--vien);vertical-align:top}
+th{font-size:13px;color:var(--phu);font-weight:500}
+.so{font:600 22px "JetBrains Mono",monospace}
+.so small{font-size:12px;color:var(--phu);font-weight:400}
+.cuon{overflow-x:auto}
+.huy-hieu{display:inline-block;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--bg);color:var(--phu);border:1px solid var(--vien)}
+.t-xong{background:var(--xanh-nhat);color:var(--xanh);border-color:transparent}
+.t-dang_chay,.t-ban{background:var(--nhan-nhat);color:var(--nhan);border-color:transparent}
+.t-cho_duyet{background:var(--vang-nhat);color:var(--vang);border-color:transparent}
+.t-loi{background:var(--do-nhat);color:var(--do);border-color:transparent}
+.t-ranh{background:var(--xanh-nhat);color:var(--xanh);border-color:transparent}
+blockquote{margin:8px 0;padding:8px 12px;border-left:3px solid var(--vien);color:var(--phu);white-space:pre-wrap}
+details{border-top:1px solid var(--vien);padding:10px 0}
+summary{cursor:pointer;font-weight:500}
+.tuan{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:720px){.tuan{grid-template-columns:1fr 1fr}}
+@media(max-width:420px){.tuan{grid-template-columns:1fr}}
+.tuan ul{padding-left:18px;margin:6px 0 0}
+/* engine */
+.luoi{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+.tho{position:relative}
+.tho .den{width:9px;height:9px;border-radius:50%;background:var(--xam);display:inline-block;margin-right:6px}
+.tho .den.ranh{background:var(--xanh)}
+.tho .den.ban{background:var(--nhan);animation:nhip 1.2s infinite}
+@keyframes nhip{50%{opacity:.3}}
+@media (prefers-reduced-motion:reduce){.tho .den.ban{animation:none}}
+.dem{display:flex;gap:20px;flex-wrap:wrap;margin:8px 0 20px}
+.dem div{font-size:13px;color:var(--phu)}
+.dem b{display:block;font:600 24px "JetBrains Mono",monospace;color:var(--chu)}
+.viec td{font-size:14px}
+.viec tr{cursor:pointer}
+.viec tr:hover td{background:var(--bg)}
+.ngan{max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--phu)}
+.ngankeo{position:fixed;inset:0 0 0 auto;width:min(560px,100%);background:var(--mat);border-left:1px solid var(--vien);padding:20px;overflow:auto;box-shadow:-8px 0 32px rgba(0,0,0,.12);z-index:5}
+pre{white-space:pre-wrap;word-break:break-word;background:var(--bg);border:1px solid var(--vien);border-radius:10px;padding:12px;font:12px/1.5 "JetBrains Mono",monospace;max-height:360px;overflow:auto}
+@media(max-width:640px){.an-hep{display:none}}
+footer{padding:48px 0 32px;color:var(--phu);font-size:13px}
+</style>
+</head>
+<body>
+<div class="khung">
+  <header>
+    <a class="logo" href="#/"><i></i>LINHX</a>
+    <nav><a href="#/">Báo cáo</a><a href="#/engine">Engine</a></nav>
+  </header>
+  <main id="app"></main>
+  <footer>LINHX Engine 0.1 · báo cáo do trợ lý AI lập, có người duyệt trước khi chạy.</footer>
+</div>
+<script>
+const API = "/api/method/linhx_worker.api.";
+let CSRF = null, hen = null;
+const $ = (s, r = document) => r.querySelector(s);
+const e = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const TT = {cho_duyet:"Chờ duyệt",cho:"Trong hàng",dang_chay:"Đang chạy",xong:"Xong",loi:"Lỗi",huy:"Đã huỷ",ranh:"Rảnh",ban:"Đang làm",offline:"Ngoại tuyến"};
+
+async function goi(m, data, post) {
+  const o = {headers: {Accept: "application/json"}, credentials: "same-origin"};
+  let url = API + m;
+  if (post) {
+    o.method = "POST"; o.headers["Content-Type"] = "application/json";
+    if (CSRF) o.headers["X-Frappe-CSRF-Token"] = CSRF;
+    o.body = JSON.stringify(data || {});
+  } else if (data) url += "?" + new URLSearchParams(data);
+  const r = await fetch(url, o);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) {
+    let msg = j._server_messages ? JSON.parse(JSON.parse(j._server_messages)[0]).message : (j.exception || r.statusText);
+    const err = new Error(String(msg).replace(/<[^>]+>/g, "")); err.status = r.status; throw err;
+  }
+  return j.message;
+}
+
+/* ---------- trang dat bao cao ---------- */
+function trangChu() {
+  $("#app").innerHTML = `
+  <h1>AI nói gì về thương hiệu của bạn?</h1>
+  <p class="dan">Khách ngày càng hỏi ChatGPT, Gemini, Claude trước khi mua. Chúng tôi hỏi cả ba bằng 8 câu chuẩn, rồi gửi bạn báo cáo: AI có nhắc tên bạn không, nói đúng không, có khuyên chọn không.</p>
+  <div class="ba">
+    <div class="the"><b>Có mặt</b><span class="ghi">Khi khách hỏi chung về ngành, AI có kể tên bạn.</span></div>
+    <div class="the"><b>Độ đúng · Nhất quán</b><span class="ghi">AI nói về bạn đúng, sai, nhầm, bịa hay cũ, và ba AI có nói giống nhau.</span></div>
+    <div class="the"><b>Được đề xuất</b><span class="ghi">Khi được nhờ chọn giúp, AI có chọn bạn, vì lý do gì.</span></div>
+  </div>
+  <form class="the" id="f">
+    <div class="dong">
+      <div><label>Tên thương hiệu *</label><input name="brand" required maxlength="80" placeholder="vd. Trà Xanh Đồi Mây"></div>
+      <div><label>Ngành</label><input name="nganh" maxlength="80" placeholder="vd. trà túi lọc"></div>
+      <div><label>Thị trường</label><input name="thi_truong" maxlength="60" value="Việt Nam"></div>
+      <div><label>Một đối thủ</label><input name="doi_thu" maxlength="120" placeholder="để so sánh"></div>
+    </div>
+    <label>Ba sự thật về thương hiệu (để chấm AI nói đúng hay sai)</label>
+    <textarea name="su_that" maxlength="600" placeholder="vd. Thành lập 2016 ở Thái Nguyên · Website traxanhdoimay.vn · Sản phẩm chính: trà xanh túi lọc"></textarea>
+    <div class="dong">
+      <div><label>Email nhận báo cáo</label><input name="email" type="email" maxlength="120"></div>
+      <div><label>Tên bạn</label><input name="ten" maxlength="80"></div>
+    </div>
+    <p class="ghi">Mỗi yêu cầu được người duyệt trước khi chạy. Bạn nhận một đường dẫn riêng để theo dõi và đọc báo cáo.</p>
+    <button class="nut" id="gui">Gửi yêu cầu</button>
+    <div class="loi" id="loi"></div>
+  </form>`;
+  $("#f").onsubmit = async ev => {
+    ev.preventDefault();
+    const b = $("#gui"); b.disabled = true; $("#loi").textContent = "";
+    try {
+      const r = await goi("dat_bao_cao", Object.fromEntries(new FormData(ev.target)), true);
+      location.hash = `#/bao-cao/${r.viec}/${r.ma_xem}`;
+    } catch (err) { $("#loi").textContent = err.status === 429 ? "Bạn gửi nhiều quá, thử lại sau một giờ." : err.message; b.disabled = false; }
+  };
+}
+
+/* ---------- trang bao cao cua khach ---------- */
+async function trangBaoCao(viec, ma) {
+  $("#app").innerHTML = `<p class="ghi">Đang tải…</p>`;
+  const ve = async () => {
+    let d;
+    try { d = await goi("xem_bao_cao", {viec, ma_xem: ma}); }
+    catch (err) { $("#app").innerHTML = `<h1>Không tìm thấy báo cáo</h1><p class="dan">Kiểm tra lại đường dẫn.</p>`; return; }
+    const vao = Object.fromEntries((d.dau_vao || "").split("\n").map(l => [l.split(":")[0], l.slice(l.indexOf(":") + 1).trim()]));
+    if (d.trang_thai !== "xong") {
+      const thu = ["cho_duyet", "cho", "dang_chay", "xong"], i = thu.indexOf(d.trang_thai);
+      $("#app").innerHTML = `<h1>${e(vao.brand)}</h1>
+        <div class="buoc">${["Chờ duyệt","Trong hàng","Đang hỏi AI","Xong"].map((t, k) => `<span class="${k < i ? "xong" : k === i ? "on" : ""}">${k < i ? "✓ " : ""}${t}</span>`).join("")}</div>
+        ${(d.tien_do || []).length ? `<div class="the" style="margin:12px 0">${d.tien_do.map(t => `<div style="display:flex;justify-content:space-between;padding:6px 0"><span>${t.buoc === "viet-bao-cao" ? "Viết báo cáo" : "Hỏi " + e(t.buoc)}</span><span class="huy-hieu t-${e(t.trang_thai)}">${TT[t.trang_thai] || t.trang_thai}</span></div>`).join("")}</div>` : ""}
+        <p class="dan">${d.trang_thai === "loi" || d.trang_thai === "huy" ? "Yêu cầu này chưa chạy được, chúng tôi sẽ liên hệ lại." : d.trang_thai === "dang_chay" ? "Trợ lý đang hỏi ba AI, thường mất 10 đến 20 phút." : `Yêu cầu đã nhận${d.truoc ? `, còn ${d.truoc} việc trước bạn` : ""}. Trang tự cập nhật, bạn có thể lưu đường dẫn này và quay lại sau.`}</p>
+        <button class="nut phu nho" onclick="navigator.clipboard.writeText(location.href);this.textContent='Đã chép'">Chép đường dẫn</button>`;
+      if (!["loi", "huy"].includes(d.trang_thai)) hen = setTimeout(ve, 6000);
+      return;
+    }
+    $("#app").innerHTML = veBaoCao(vao, d.bao_cao);
+  };
+  ve();
+}
+
+function o(v) { return v === null || v === undefined ? `<span class="ghi">không đo được</span>` : `<span class="so">${v}<small>%</small></span>`; }
+
+function veBaoCao(vao, b) {
+  if (!b || !b.ok) return `<h1>${e(vao.brand)}</h1><p class="ghi">Báo cáo thô (chưa đúng khuôn):</p><pre>${e(b && b.tho)}</pre>`;
+  const c = b.chi_so;
+  const nhan = {dung:"đúng",sai:"sai",nham:"nhầm",bia:"bịa",cu:"cũ",khong_biet:"không biết"};
+  return `
+  <p class="ghi">${e(b.ngay)} · Ảnh chụp một lần, AI trả lời khác nhau mỗi lần hỏi · Chưa có người kiểm nhãn</p>
+  <h1>AI nói gì về ${e(vao.brand)}</h1>
+  <p class="dan">${e(b.ket_luan)}</p>
+  <div class="the cuon"><table>
+    <tr><th>Trợ lý AI</th><th>Có mặt</th><th>Độ đúng</th><th>Được đề xuất</th><th class="an-hep">Nguồn hay dẫn</th></tr>
+    ${c.hang.map(h => `<tr><td><b>${e(h.ai)}</b><br><span class="ghi">${e(h.mo_hinh)}${h.loi ? ` · ${e(h.loi)}` : ""}</span></td>
+      <td>${o(h.co_mat)}</td><td>${o(h.dung)}</td><td>${o(h.de_xuat)}</td><td class="ghi an-hep">${h.nguon.map(e).join(", ") || "—"}</td></tr>`).join("")}
+  </table></div>
+  <div class="the" style="margin-top:12px;display:flex;justify-content:space-between;gap:12px;align-items:center"><div><b>Độ nhất quán</b><br><span class="ghi">Các AI nói giống nhau về công ty, năm thành lập, sản phẩm, website</span></div>${o(c.nhat_quan)}</div>
+  ${(b.trich_sai || []).length ? `<h2>AI đang nói sai gì</h2>${b.trich_sai.map(t => `<div class="the" style="margin-bottom:10px"><span class="huy-hieu t-loi">${e(nhan[t.nhan] || t.nhan)}</span> <b>${e(t.ai)}</b> <span class="ghi">${e(t.ma)}</span><blockquote>${e(t.trich)}</blockquote><span class="ghi">Đúng ra: ${e(t.dung_ra)}</span></div>`).join("")}` : ""}
+  <h2>Thương hiệu rơi ở bước nào</h2>
+  <p>${e(b.buoc_roi)}</p>
+  <div class="buoc">${["Tìm","Nhận diện","Đối chiếu","Lọc theo tiêu chí","Đề xuất và giải thích"].map(t => `<span class="${(b.buoc_roi || "").startsWith(t) ? "on" : ""}">${t}</span>`).join("")}</div>
+  <h2>Lớp tín hiệu cần gia cố</h2>
+  <ul>${(b.lop_yeu || []).map(l => `<li>${e(l)}</li>`).join("")}</ul>
+  <h2>Kế hoạch 30 ngày</h2>
+  <div class="tuan">${(b.ke_hoach_30_ngay || []).map(t => `<div class="the"><b>Tuần ${e(t.tuan)}</b><ul>${(t.viec || []).map(v => `<li>${e(v)}</li>`).join("")}</ul></div>`).join("")}</div>
+  <h2>Nguyên văn câu trả lời</h2>
+  ${(b.ai || []).map(a => `<details><summary>${e(a.ten)} · ${(a.cau || []).length} câu</summary>${(a.cau || []).map(q => `<h3>${e(q.ma)}${q.nhac_brand ? ` <span class="huy-hieu t-xong">có nhắc</span>` : ""}${q.nhan && nhan[q.nhan] ? ` <span class="huy-hieu">${nhan[q.nhan]}</span>` : ""}</h3><blockquote>${e(q.loi || q.tra_loi)}</blockquote>`).join("")}</details>`).join("")}
+  <p style="margin-top:32px"><a class="nut phu" href="#/">Kiểm một thương hiệu khác</a></p>`;
+}
+
+/* ---------- bang dieu hanh engine ---------- */
+async function trangEngine() {
+  let p;
+  try { p = await goi("phien"); } catch { p = {user: "Guest"}; }
+  if (p.user === "Guest" || !p.dieu_hanh) {
+    $("#app").innerHTML = `<h1>Engine</h1><p class="dan">Bảng điều hành dành cho người nội bộ.</p>
+      <a class="nut" href="/login?redirect-to=${encodeURIComponent("/#/engine")}">Đăng nhập</a>`;
+    return;
+  }
+  CSRF = p.csrf;
+  $("#app").innerHTML = `<h1 style="margin-top:8px">Engine</h1>
+    <div class="dem" id="dem"></div>
+    <h2>Thợ</h2><div class="luoi" id="tho"></div>
+    <h2>Giao việc</h2>
+    <form class="the" id="giao"><div class="dong">
+      <div><label>Workflow</label><select name="workflow" id="wf"></select></div>
+      <div><label>Thợ</label><select name="muon_tho" id="mt"><option value="">Thợ rảnh nào cũng được</option></select></div></div>
+      <label>Đầu vào</label><textarea name="dau_vao" id="dv" required></textarea>
+      <p class="ghi" id="wfmota"></p>
+      <button class="nut">Giao</button> <span class="loi" id="gloi"></span></form>
+    <h2>Việc gần đây</h2><div class="the cuon"><table class="viec" id="viec"></table></div>
+    <p class="ghi">Quản trị đầy đủ: <a href="/app/lx-job">/app/lx-job</a> · <a href="/app/lx-worker">thợ</a> · <a href="/app/lx-workflow">workflow</a></p>`;
+  let wfs = [], daVeWf = false;
+  const ve = async () => {
+    let d; try { d = await goi("bang"); } catch (err) { return; }
+    const n = d.dem || {};
+    $("#dem").innerHTML = [["cho_duyet","Chờ duyệt"],["cho","Trong hàng"],["dang_chay","Đang chạy"],["xong","Xong"],["loi","Lỗi"]].map(([k, t]) => `<div><b>${n[k] || 0}</b>${t}</div>`).join("") + `<div><b>${d.workers.filter(w => w.trang_thai !== "offline").length}/${d.workers.length}</b>Thợ trực tuyến</div>`;
+    $("#tho").innerHTML = d.workers.map(w => `<div class="the tho"><div><span class="den ${e(w.trang_thai)}"></span><b>${e(w.ma)}</b> <span class="huy-hieu">${w.loai === "cloud" ? "cloud" : "máy"}</span></div>
+      <div class="ghi">${e(w.may || "")}${w.nhan ? ` · ${e(w.nhan)}` : ""}</div>
+      <div class="ghi">${TT[w.trang_thai] || w.trang_thai}${w.viec_hien_tai ? ` · ${e(w.viec_hien_tai)}` : ""}${w.tam_dung ? " · tạm dừng" : ""}</div></div>`).join("") || `<p class="ghi">Chưa có thợ nào.</p>`;
+    if (!daVeWf) {
+      wfs = d.workflows; daVeWf = true;
+      $("#wf").innerHTML = wfs.map(w => `<option value="${e(w.ma)}">${e(w.ten)}</option>`).join("");
+      $("#mt").innerHTML += d.workers.map(w => `<option value="${e(w.ma)}">${e(w.ma)}</option>`).join("");
+      const doi = () => { const w = wfs.find(x => x.ma === $("#wf").value) || {}; $("#wfmota").textContent = (w.mo_ta || "") + (w.nhan_can ? ` Cần thợ có nhãn: ${w.nhan_can}.` : ""); $("#dv").placeholder = w.vi_du || ""; };
+      $("#wf").onchange = doi; doi();
+    }
+    $("#viec").innerHTML = `<tr><th>Việc</th><th>Workflow</th><th>Trạng thái</th><th>Thợ</th><th>Đầu vào</th><th></th></tr>` + d.jobs.map(j => `<tr data-v="${e(j.name)}">
+      <td class="mono">${j.cha ? "↳ " : ""}${e(j.name)}</td><td>${e(j.workflow)}${j.nhan_viec ? ` <span class="ghi">· ${e(j.nhan_viec)}</span>` : ""}</td><td><span class="huy-hieu t-${e(j.trang_thai)}">${TT[j.trang_thai] || j.trang_thai}</span></td>
+      <td>${e(j.tho || j.muon_tho || "")}</td><td class="ngan">${e(j.dau_vao)}</td>
+      <td>${j.trang_thai === "cho_duyet" ? `<button class="nut nho" data-duyet="${e(j.name)}">Duyệt</button>` : ""}${["cho_duyet","cho","dang_chay"].includes(j.trang_thai) ? ` <button class="nut phu nho" data-huy="${e(j.name)}">Huỷ</button>` : ""}${["loi","huy"].includes(j.trang_thai) ? `<button class="nut phu nho" data-lai="${e(j.name)}">Chạy lại</button>` : ""}</td></tr>`).join("");
+  };
+  $("#viec").onclick = async ev => {
+    const t = ev.target;
+    if (t.dataset.duyet) { await goi("duyet_viec", {viec: t.dataset.duyet}, true); return ve(); }
+    if (t.dataset.lai) { await goi("chay_lai", {viec: t.dataset.lai}, true); return ve(); }
+    if (t.dataset.huy) { await goi("huy_viec", {viec: t.dataset.huy}, true); return ve(); }
+    const tr = t.closest("tr[data-v]"); if (tr) chiTiet(tr.dataset.v);
+  };
+  $("#giao").onsubmit = async ev => {
+    ev.preventDefault(); $("#gloi").textContent = "";
+    try { await goi("giao_viec", Object.fromEntries(new FormData(ev.target)), true); $("#dv").value = ""; ve(); }
+    catch (err) { $("#gloi").textContent = err.message; }
+  };
+  const lap = async () => { await ve(); hen = setTimeout(lap, 4000); };
+  lap();
+}
+
+async function chiTiet(v) {
+  const d = await goi("chi_tiet", {viec: v});
+  const k = document.createElement("div"); k.className = "ngankeo";
+  const link = d.ma_xem ? `${location.origin}/#/bao-cao/${d.name}/${d.ma_xem}` : "";
+  k.innerHTML = `<button class="nut phu nho" style="float:right">Đóng</button>
+    <h2 style="margin-top:0" class="mono">${e(d.name)}</h2>
+    <p><span class="huy-hieu t-${e(d.trang_thai)}">${TT[d.trang_thai] || d.trang_thai}</span> ${e(d.workflow)} · thợ ${e(d.tho || "—")} · ${d.so_giay ? Math.round(d.so_giay) + " giây" : ""} ${d.token_vao ? `· ${d.token_vao}/${d.token_ra} token` : ""}</p>
+    ${link ? `<p class="ghi">Link khách (${e(d.ten_khach || "")} ${e(d.email_khach || "")}): <a href="${e(link)}" target="_blank">${e(link)}</a></p>` : ""}
+    <h3>Đầu vào</h3><pre>${e(d.dau_vao)}</pre>
+    <h3>Kết quả</h3><pre>${e(d.ket_qua || "—")}</pre>
+    <h3>Nhật ký</h3><pre>${e(d.nhat_ky || "—")}</pre>`;
+  k.querySelector("button").onclick = () => k.remove();
+  document.body.appendChild(k);
+}
+
+function dinhTuyen() {
+  clearTimeout(hen); document.querySelectorAll(".ngankeo").forEach(x => x.remove());
+  const p = location.hash.replace(/^#\/?/, "").split("/");
+  if (p[0] === "bao-cao" && p[1] && p[2]) return trangBaoCao(p[1], p[2]);
+  if (p[0] === "engine") return trangEngine();
+  trangChu();
+}
+addEventListener("hashchange", dinhTuyen);
+dinhTuyen();
+</script>
+</body>
+</html>

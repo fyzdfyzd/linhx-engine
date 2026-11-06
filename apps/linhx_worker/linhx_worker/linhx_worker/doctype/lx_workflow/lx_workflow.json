@@ -1,0 +1,117 @@
+{
+ "doctype": "DocType",
+ "name": "LX Workflow",
+ "module": "LINHX Worker",
+ "custom": 0,
+ "autoname": "field:ma",
+ "naming_rule": "By fieldname",
+ "engine": "InnoDB",
+ "field_order": [
+  "ma",
+  "ten",
+  "mo_ta",
+  "bat",
+  "che_do",
+  "de_mau",
+  "nhan_can",
+  "tran_phut",
+  "vi_du"
+ ],
+ "fields": [
+  {
+   "fieldname": "ma",
+   "fieldtype": "Data",
+   "label": "Mã",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "ten",
+   "fieldtype": "Data",
+   "label": "Tên",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "mo_ta",
+   "fieldtype": "Small Text",
+   "label": "Mô tả"
+  },
+  {
+   "fieldname": "bat",
+   "fieldtype": "Check",
+   "label": "Bật",
+   "default": "1",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "che_do",
+   "fieldtype": "Select",
+   "label": "Chế độ chạy",
+   "options": "agy\nkiem\ngop",
+   "default": "agy",
+   "description": "agy = gọi agy -p; kiem = thợ tự trả lời (kiểm đường ống); gop = server tự chia việc con rồi gom, thợ không nhận"
+  },
+  {
+   "fieldname": "de_mau",
+   "fieldtype": "Long Text",
+   "label": "Đề mẫu",
+   "description": "dùng {dau_vao} để chèn đầu vào của việc"
+  },
+  {
+   "fieldname": "nhan_can",
+   "fieldtype": "Data",
+   "label": "Nhãn thợ cần",
+   "description": "thợ phải có nhãn này, vd repo:chiemtinhso"
+  },
+  {
+   "fieldname": "tran_phut",
+   "fieldtype": "Int",
+   "label": "Trần phút",
+   "default": "40"
+  },
+  {
+   "fieldname": "vi_du",
+   "fieldtype": "Small Text",
+   "label": "Ví dụ đầu vào"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "LX Operator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1
+  },
+  {
+   "role": "LX Worker",
+   "read": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-06 10:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-06 10:00:00.000000",
+ "title_field": "ten"
+}

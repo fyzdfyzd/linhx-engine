@@ -1,0 +1,5 @@
+deploy/.env
+runner/tho.env
+runner/viec/
+runner/tho.log
+__pycache__/

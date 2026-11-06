@@ -1,0 +1,18 @@
+[project]
+name = "linhx_worker"
+authors = [{ name = "LINHX", email = "dev@linhx.vn" }]
+description = "LINHX ENGINE: hang viec agy (cloud + may rieng cung keo viec)"
+requires-python = ">=3.10"
+readme = "README.md"
+version = "0.1.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["linhx_worker*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.html", "*.txt"]

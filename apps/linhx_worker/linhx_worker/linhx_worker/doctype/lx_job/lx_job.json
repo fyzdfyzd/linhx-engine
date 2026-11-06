@@ -1,0 +1,204 @@
+{
+ "doctype": "DocType",
+ "name": "LX Job",
+ "module": "LINHX Worker",
+ "custom": 0,
+ "autoname": "format:VIEC-{#####}",
+ "naming_rule": "Expression",
+ "engine": "InnoDB",
+ "field_order": [
+  "workflow",
+  "dau_vao",
+  "trang_thai",
+  "muon_tho",
+  "tho",
+  "nhan_luc",
+  "xong_luc",
+  "so_giay",
+  "de_gui",
+  "ket_qua",
+  "nhat_ky",
+  "token_vao",
+  "token_ra",
+  "lan_thu",
+  "cha",
+  "nhan_viec",
+  "nguon",
+  "ten_khach",
+  "email_khach",
+  "ma_xem"
+ ],
+ "fields": [
+  {
+   "fieldname": "workflow",
+   "fieldtype": "Link",
+   "label": "Workflow",
+   "options": "LX Workflow",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "dau_vao",
+   "fieldtype": "Long Text",
+   "label": "Đầu vào",
+   "reqd": 1
+  },
+  {
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "label": "Trạng thái",
+   "options": "cho_duyet\ncho\ndang_chay\nxong\nloi\nhuy",
+   "default": "cho",
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "muon_tho",
+   "fieldtype": "Link",
+   "label": "Muốn thợ",
+   "options": "LX Worker",
+   "description": "trống = thợ rảnh nào cũng được"
+  },
+  {
+   "fieldname": "tho",
+   "fieldtype": "Link",
+   "label": "Thợ nhận",
+   "options": "LX Worker",
+   "read_only": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "nhan_luc",
+   "fieldtype": "Datetime",
+   "label": "Nhận lúc",
+   "read_only": 1
+  },
+  {
+   "fieldname": "xong_luc",
+   "fieldtype": "Datetime",
+   "label": "Xong lúc",
+   "read_only": 1
+  },
+  {
+   "fieldname": "so_giay",
+   "fieldtype": "Float",
+   "label": "Số giây",
+   "read_only": 1
+  },
+  {
+   "fieldname": "de_gui",
+   "fieldtype": "Long Text",
+   "label": "Đề đã gửi agy",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ket_qua",
+   "fieldtype": "Long Text",
+   "label": "Kết quả",
+   "read_only": 1
+  },
+  {
+   "fieldname": "nhat_ky",
+   "fieldtype": "Long Text",
+   "label": "Nhật ký",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_vao",
+   "fieldtype": "Int",
+   "label": "Token vào",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_ra",
+   "fieldtype": "Int",
+   "label": "Token ra",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lan_thu",
+   "fieldtype": "Int",
+   "label": "Lần thử",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "cha",
+   "fieldtype": "Link",
+   "label": "Việc cha",
+   "options": "LX Job",
+   "read_only": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "nhan_viec",
+   "fieldtype": "Data",
+   "label": "Nhãn việc con",
+   "read_only": 1,
+   "description": "vd ChatGPT, viet-bao-cao"
+  },
+  {
+   "fieldname": "nguon",
+   "fieldtype": "Select",
+   "label": "Nguồn",
+   "options": "noi_bo\nkhach",
+   "default": "noi_bo",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "ten_khach",
+   "fieldtype": "Data",
+   "label": "Tên khách"
+  },
+  {
+   "fieldname": "email_khach",
+   "fieldtype": "Data",
+   "label": "Email khách",
+   "options": "Email"
+  },
+  {
+   "fieldname": "ma_xem",
+   "fieldtype": "Data",
+   "label": "Mã xem",
+   "read_only": 1,
+   "description": "khách mở /#/bao-cao/<VIEC>/<ma_xem> để xem kết quả"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "report": 1,
+   "export": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "LX Operator",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "report": 1
+  },
+  {
+   "role": "LX Worker",
+   "read": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-06 10:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-06 10:00:00.000000"
+}
