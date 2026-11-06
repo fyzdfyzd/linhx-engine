@@ -21,8 +21,10 @@ WORKFLOWS = [
      "de_mau": "", "vi_du": "brand: (tên thương hiệu)\nnganh: (ngành)\nthi_truong: Việt Nam\ndoi_thu: (một đối thủ)\nsu_that: (3 sự thật)"},
     {"ma": "hoi-mot-ai", "ten": "Hỏi một AI qua trình duyệt", "che_do": "agy", "tran_phut": 12, "nhan_can": "trinh-duyet",
      "mo_ta": "Bước 1 của báo cáo thương hiệu: agy mở một trang AI, hỏi 2–3 câu, chép nguyên văn.", "de_file": "hoi_mot_ai.md"},
-    {"ma": "viet-bao-cao", "ten": "Viết báo cáo thương hiệu", "che_do": "agy", "tran_phut": 15,
-     "mo_ta": "Bước 2: gán nhãn câu trả lời và viết nhận định. Thợ nào cũng nhận, kể cả cloud.", "de_file": "viet_bao_cao.md"},
+    {"ma": "cham-mot-ai", "ten": "Gán nhãn câu trả lời của một AI", "che_do": "agy", "tran_phut": 10,
+     "mo_ta": "Bước 2: gán nhãn đúng/sai/đề xuất và dữ kiện cho 8 câu của một AI. Thợ nào cũng nhận.", "de_file": "cham_mot_ai.md"},
+    {"ma": "viet-bao-cao", "ten": "Viết nhận định báo cáo thương hiệu", "che_do": "agy", "tran_phut": 10,
+     "mo_ta": "Bước 3: từ nhãn và chỉ số đã tính, viết điểm sai, bước rơi, lớp yếu, kế hoạch 30 ngày. Thợ nào cũng nhận.", "de_file": "viet_bao_cao.md"},
 ]
 
 

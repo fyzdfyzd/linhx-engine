@@ -22,9 +22,12 @@ QUY_TRINH = {
         ],
         # moi luot agy ngan (<5 phut): moi AI chia 3 nhom cau
         "nhom_cau": [["Q1", "Q2", "Q3"], ["Q4", "Q5", "Q8"], ["Q6", "Q7"]],
-        "buoc2": "viet-bao-cao",
+        "buoc2": "cham-mot-ai",    # moi AI mot viec gan nhan (dau vao ngan, nhan on dinh)
+        "buoc3": "viet-bao-cao",   # nhan dinh tu nhan da gan + trich ngan
     }
 }
+
+TRICH_TOI_DA = 700  # ky tu moi cau tra loi dua vao buoc viet nhan dinh
 
 
 def la_gop(workflow):
@@ -52,7 +55,9 @@ def _cac_con(cha):
 
 
 def tien_do(cha):
-    return [{"buoc": (c.nhan_viec or "").replace("|", " · "), "trang_thai": c.trang_thai} for c in _cac_con(cha)]
+    ten = {"hoi-mot-ai": "Hỏi", "cham-mot-ai": "Chấm", "viet-bao-cao": "Viết báo cáo"}
+    return [{"buoc": f"{ten.get(c.workflow, c.workflow)} {(c.nhan_viec or '').replace('|', ' · ') if c.workflow != 'viet-bao-cao' else ''}".strip(),
+             "trang_thai": c.trang_thai} for c in _cac_con(cha)]
 
 
 def _tra_loi_buoc1(con):
@@ -67,6 +72,8 @@ def _tra_loi_buoc1(con):
             a["cau"] += [{"ma": m, "tra_loi": "", "loi": ly_do, "nguon": []} for m in nhom.split(",") if m]
             continue
         a["mo_hinh"] = a["mo_hinh"] or d.get("mo_hinh") or ""
+        if d.get("loi") and not d.get("cau"):
+            a["cau"] += [{"ma": m, "tra_loi": "", "loi": d["loi"], "nguon": []} for m in nhom.split(",") if m]
         a["cau"] += d.get("cau") or []
     for a in theo_ai.values():
         a["cau"].sort(key=lambda x: x.get("ma", ""))
@@ -75,36 +82,71 @@ def _tra_loi_buoc1(con):
     return list(theo_ai.values())
 
 
+def _brand(dau_vao):
+    for dong in (dau_vao or "").splitlines():
+        if dong.startswith("brand:"):
+            return dong.split(":", 1)[1].strip()
+    return ""
+
+
+def _xong_het(ds):
+    return ds and not any(c.trang_thai in ("cho", "dang_chay") for c in ds)
+
+
 def gom(cha_name):
+    """Day quy trinh: buoc1 xong -> tao buoc2 moi AI -> buoc2 xong -> tao buoc3 -> buoc3 xong -> ket qua cha."""
     cha = frappe.get_doc("LX Job", cha_name)
     if cha.trang_thai != "dang_chay":
         return
     qt = QUY_TRINH[cha.workflow]
+    brand = _brand(cha.dau_vao)
     con = _cac_con(cha_name)
     b1 = [c for c in con if c.workflow == qt["buoc1"]]
     b2 = [c for c in con if c.workflow == qt["buoc2"]]
-    if any(c.trang_thai in ("cho", "dang_chay") for c in b1):
+    b3 = [c for c in con if c.workflow == qt["buoc3"]]
+    if not _xong_het(b1):
         return
     ai = _tra_loi_buoc1(b1)
-    if not b2:
-        if not any(a.get("cau") for a in ai):
-            cha.db_set({"trang_thai": "loi", "nhat_ky": "không AI nào hỏi được"}, notify=True)
-            return
-        _con(cha_name, qt["buoc2"], f"{cha.dau_vao}\n\nTRA_LOI:\n{json.dumps({'ai': ai}, ensure_ascii=False)}", "viet-bao-cao")
+    # code tu do 'co nhac ten' tren nguyen van, khong de AI gan nhan quyet
+    for a in ai:
+        for c in a.get("cau") or []:
+            c["nhac_brand"] = bao_cao.co_nhac(brand, c.get("tra_loi"))
+    co_tra_loi = [a for a in ai if any(c.get("tra_loi") for c in a.get("cau") or [])]
+    if not co_tra_loi:
+        cha.db_set({"trang_thai": "loi", "nhat_ky": "không AI nào hỏi được"}, notify=True)
         return
-    v = b2[-1]
+    if not b2:
+        for a in co_tra_loi:
+            goi = {"ten": a["ten"], "cau": [{"ma": c.get("ma"), "tra_loi": c.get("tra_loi"), "nhac_brand": c["nhac_brand"]} for c in a["cau"] if c.get("tra_loi")]}
+            _con(cha_name, qt["buoc2"], f"{cha.dau_vao}\n\nTRA_LOI:\n{json.dumps(goi, ensure_ascii=False)}", a["ten"])
+        return
+    if not _xong_het(b2):
+        return
+    # tron nhan buoc2 vao tung cau (giu nhac_brand cua code)
+    nhan = {}
+    for c in b2:
+        d = bao_cao.tach_json(c.ket_qua) if c.trang_thai == "xong" else None
+        for n in (d or {}).get("nhan_cau") or []:
+            nhan[(c.nhan_viec, n.get("ma"))] = n
+    for a in ai:
+        for c in a.get("cau") or []:
+            n = nhan.get((a["ten"], c.get("ma"))) or {}
+            c.update({k: x for k, x in n.items() if k in ("nhan", "de_xuat", "ly_do_sai", "du_kien")})
+    kq = {"ai": ai}
+    if not b3:
+        gon = [{"ten": a["ten"], "cau": [{k: (c.get(k) or "")[:TRICH_TOI_DA] if k == "tra_loi" else c.get(k)
+                                          for k in ("ma", "tra_loi", "nhac_brand", "nhan", "de_xuat", "du_kien")} for c in a.get("cau") or []]} for a in ai]
+        chi_so = bao_cao.tinh({"ai": ai})
+        _con(cha_name, qt["buoc3"], f"{cha.dau_vao}\n\nCHI_SO:\n{json.dumps(chi_so, ensure_ascii=False)}\n\nDA_GAN_NHAN:\n{json.dumps({'ai': gon}, ensure_ascii=False)}", "viet-bao-cao")
+        return
+    v = b3[-1]
     if v.trang_thai in ("cho", "dang_chay"):
         return
     nd = bao_cao.tach_json(v.ket_qua) if v.trang_thai == "xong" else None
-    kq = {"ai": ai}
     if nd:
-        nhan = {(n.get("ai"), n.get("ma")): n for n in nd.get("nhan_cau") or []}
-        for a in ai:
-            for c in a.get("cau") or []:
-                c.update({k: x for k, x in (nhan.get((a.get("ten"), c.get("ma"))) or {}).items() if k not in ("ai", "ma")})
         for k in ("trich_sai", "buoc_roi", "lop_yeu", "ke_hoach_30_ngay", "ket_luan"):
             kq[k] = nd.get(k)
-    kq["ngay"] = now_datetime().strftime("%Y-%m-%d %H:%M")  # gio server (Asia/Ho_Chi_Minh), khong lay gio agy tu ghi
+    kq["ngay"] = now_datetime().strftime("%Y-%m-%d %H:%M")  # gio server (Asia/Ho_Chi_Minh)
     cha.db_set({"trang_thai": "xong" if nd else "loi", "xong_luc": now_datetime(),
                 "ket_qua": json.dumps(kq, ensure_ascii=False),
                 "nhat_ky": "" if nd else f"bước viết báo cáo lỗi: {(v.nhat_ky or '')[-500:]}"}, notify=True)

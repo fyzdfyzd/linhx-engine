@@ -199,6 +199,22 @@ def chay_lai(viec):
 
 
 @frappe.whitelist(methods=["POST"])
+def gom_lai(viec):
+    """Giu ket qua hoi AI (buoc 1), xoa cac buoc sau roi cham + viet lai."""
+    _la_dieu_hanh()
+    job = frappe.get_doc("LX Job", viec)
+    qt = quy_trinh.QUY_TRINH.get(job.workflow)
+    if not qt:
+        frappe.throw("Không phải quy trình gộp")
+    for c in frappe.get_all("LX Job", filters={"cha": viec, "workflow": ["!=", qt["buoc1"]]}, pluck="name"):
+        frappe.delete_doc("LX Job", c, ignore_permissions=True, force=True)
+    job.db_set({"trang_thai": "dang_chay", "ket_qua": None}, notify=True)
+    quy_trinh.gom(viec)
+    frappe.db.commit()
+    return {"ok": True}
+
+
+@frappe.whitelist(methods=["POST"])
 def huy_viec(viec):
     _la_dieu_hanh()
     job = frappe.get_doc("LX Job", viec)

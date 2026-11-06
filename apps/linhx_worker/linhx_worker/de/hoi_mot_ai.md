@@ -15,6 +15,8 @@ Biến: {brand} = brand, {category} = nganh, {market} = thi_truong (trống thì
 - Q7: Tôi đang cân nhắc {brand} cho nhu cầu {category}. Tôi có nên chọn không, vì sao?
 - Q8: Website chính thức, trụ sở và kênh liên hệ của {brand} là gì?
 
+Dùng chế độ không lưu, không cá nhân hoá: ChatGPT bật Trò chuyện tạm thời; Claude bật Cuộc trò chuyện ẩn danh (Incognito); Gemini dùng cuộc trò chuyện tạm thời nếu có. Câu trả lời mở đầu bằng ghi chú riêng của người dùng (không liên quan câu hỏi) thì vẫn chép nguyên văn nhưng ghi vào "loi": "bị cá nhân hoá".
+
 Đợi mỗi câu trả lời xong (tối đa 90 giây) rồi chép NGUYÊN VĂN. Gặp đòi đăng nhập, captcha, hết hạn mức thì ghi vào "loi" của câu đó và đi tiếp. Không vào được trang thì ghi "loi" chung và dừng.
 
 ## Nộp: CHỈ in ra MỘT khối JSON hợp lệ, không thêm chữ nào khác

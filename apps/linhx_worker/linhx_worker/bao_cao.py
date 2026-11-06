@@ -11,6 +11,32 @@ DIEM_DE_XUAT = {"khuyen": 100, "co_dieu_kien": 60, "khong": 0}
 DU_KIEN = ("cong_ty", "nam", "san_pham", "website")
 
 
+TU_CHUNG = {"cong", "ty", "tap", "doan", "group", "jsc", "company", "the", "and", "viet", "nam", "vietnam", "summit", "brand"}
+
+
+def _bo_dau(s):
+    import unicodedata
+    s = unicodedata.normalize("NFD", (s or "").lower()).replace("đ", "d")
+    return "".join(c for c in s if unicodedata.category(c) != "Mn")
+
+
+def tu_khoa_brand(brand):
+    """Cac manh ten brand de do 'co nhac ten': ca ten va tung phan tach boi & , / - |,
+    da bo dau, bo khoang trang, bo nam (vd 'VSMCamp & CSMO Summit 2026' -> vsmcamp, csmosummit)."""
+    kq = []
+    for phan in [brand] + re.split(r"[&,/|+]|\s-\s", brand or ""):
+        k = re.sub(r"(19|20)\d\d", "", re.sub(r"[^a-z0-9]+", "", _bo_dau(phan)))
+        if len(k) >= 4 and k not in TU_CHUNG and k not in kq:
+            kq.append(k)
+    return kq
+
+
+def co_nhac(brand, van_ban):
+    """Code tu do: cau tra loi co nhac ten brand khong (khong phu thuoc AI gan nhan)."""
+    t = re.sub(r"[^a-z0-9]+", "", _bo_dau(van_ban))
+    return any(k in t for k in tu_khoa_brand(brand))
+
+
 def tach_json(chuoi):
     if not chuoi:
         return None
