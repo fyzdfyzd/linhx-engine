@@ -3,7 +3,7 @@
 # Nhánh tích hợp: main ở D:\LINHX\LINHX-ENGINE. Mỗi thợ: worktree D:\LINHX\ENGINE-t<N>, nhánh tu-dong/engine-t<N>.
 # Trạng thái ngoài repo: D:\LINHX\ENGINE-canh. Nhật ký agy từng phiếu: D:\LINHX\LINHX-ENGINE\.canh\log\<phieu>.jsonl (không commit).
 # Cổng: K1 vùng (canh/rao.py), K2 trần CHUA_DAT liền thì lùi về mốc, K3 đọc nhật ký agy, K4 chấm bảo mật thêm cho feature nhạy cảm.
-param([int]$Tho = 0)
+param([int]$Tho = 0, [switch]$ThuChon)  # -ThuChon: chỉ in feature sẽ giao cho thợ $Tho rồi thoát (không chấm, không gọi agy)
 $ErrorActionPreference = "Continue"
 $env:PYTHONUTF8 = "1"
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false); $OutputEncoding = [Text.UTF8Encoding]::new($false)
@@ -105,7 +105,7 @@ $tamTho = "$Wt\.canh-tho"; New-Item -ItemType Directory -Force $tamTho | Out-Nul
 
 # 1. Phiếu đang chạy: còn chạy, ngủ quên, quá giờ, hay xong
 $dangChay = $false
-if (Test-Path "$S\phieu.txt") {
+if (-not $ThuChon -and (Test-Path "$S\phieu.txt")) {
   $pid0, $bd, $ten, $fid, $loai = (Get-Content "$S\phieu.txt" -Encoding utf8) -split ";", 5
   if (-not $loai) { $loai = "moi" }
   $p = Get-Process -Id $pid0 -ErrorAction SilentlyContinue
@@ -128,7 +128,7 @@ if (Test-Path "$S\phieu.txt") {
 }
 
 # 2. Chấm phiếu vừa xong: rào cứng (K1, K3) + cổng kiểm + Claude đọc diff (+ K4 bảo mật), K2 trần
-if (-not $dangChay -and (Test-Path "$S\can-cham.txt")) {
+if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $fid, $ten, $loai, $dung, $bd, $phut = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
   $goc = (Get-Content "$S\goc.txt").Trim()
   $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
@@ -219,7 +219,7 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
 }
 
 # 3. Giao phiếu mới khi thợ rảnh
-if (-not $dangChay -and $dk.trang_thai -eq "chay") {
+if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
   $tatTH = @(TatCaF $dk $TichHop)
   $daDat = @{}; foreach ($y in $tatTH) { if ($y.passes) { $daDat[$y.id] = $true } }
   $coProto = -not (@($Proto | Where-Object { -not (Test-Path $_) }).Count)
@@ -242,6 +242,7 @@ if (-not $dangChay -and $dk.trang_thai -eq "chay") {
     } | Select-Object -First 1
   }
   $ram = [math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB, 1)
+  if ($ThuChon) { Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; Remove-Item $lk -Force -ErrorAction SilentlyContinue; exit 0 }
   if ($chon -and $ram -lt 1.5) { Ghi "RAM trống $ram GB < 1,5 GB, chưa giao $chon"; $chon = $null }
   if (-not $chon) { if (-not (Test-Path "$S\rong.txt")) { Ghi "không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)"; "" | Set-Content "$S\rong.txt" } }
   else {
