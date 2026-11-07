@@ -1,26 +1,52 @@
-﻿# Điều phối LINHX ENGINE đợt 1 trên máy công ty: Claude canh, agy làm.
+﻿# Điều phối LINHX ENGINE (repo riêng fyzdfyzd/linhx-engine) trên máy công ty: Claude canh, agy làm.
 # Lịch ENGINE-DieuPhoi gọi mỗi 10 phút qua chay-an.vbs (ẩn hoàn toàn, luật 2/11). -Tho 0 = lượt chính: gọi từng thợ rồi ghi tổng hợp.
-# Mỗi thợ: worktree D:\LINHX\LINHX-OPC\ENGINE-t<N>, nhánh tu-dong/engine-t<N>, trạng thái ngoài repo ở D:\LINHX\LINHX-OPC\ENGINE-canh\t<N>.
-# Nhánh tích hợp: claude/project-thread-imkbnt ở D:\LINHX\LINHX-OPC\CHIEMTINHSO-engine. Feature DAT mới được gộp vào đây.
+# Nhánh tích hợp: main ở D:\LINHX\LINHX-ENGINE. Mỗi thợ: worktree D:\LINHX\ENGINE-t<N>, nhánh tu-dong/engine-t<N>.
+# Trạng thái ngoài repo: D:\LINHX\ENGINE-canh. Nhật ký agy từng phiếu: D:\LINHX\LINHX-ENGINE\.canh\log\<phieu>.jsonl (không commit).
+# Cổng: K1 vùng (canh/rao.py), K2 trần CHUA_DAT liền thì lùi về mốc, K3 đọc nhật ký agy, K4 chấm bảo mật thêm cho feature nhạy cảm.
 param([int]$Tho = 0)
 $ErrorActionPreference = "Continue"
 $env:PYTHONUTF8 = "1"
 [Console]::OutputEncoding = [Text.UTF8Encoding]::new($false); $OutputEncoding = [Text.UTF8Encoding]::new($false)
-$TichHop = "D:\LINHX\LINHX-OPC\CHIEMTINHSO-engine"; $NhanhTH = "claude/project-thread-imkbnt"
-$Repo = "D:\LINHX\LINHX-OPC\CHIEMTINHSO"
-$Canh = "D:\LINHX\LINHX-OPC\ENGINE-canh"
+$TichHop = "D:\LINHX\LINHX-ENGINE"; $NhanhTH = "main"
+$Canh = "D:\LINHX\ENGINE-canh"
+$LogDir = "$TichHop\.canh\log"
 $LenhAgy = "$env:USERPROFILE\.gemini\bin\agy.exe"
-$FF = "linhx-engine\features-dot1.json"
-New-Item -ItemType Directory -Force "$Canh\nhan" | Out-Null
+$Proto = @("D:\LINHX\PROTO\03 OPC OS", "D:\LINHX\PROTO\01 Máy tạo nội dung")
+$CotPhieu = "luc_giao`tluc_xong`ttho`tphieu`tfeature`tloai`tdung`tket_luan`tphut`ttoken_vao`ttoken_ra"
+New-Item -ItemType Directory -Force "$Canh\nhan", "$Canh\tac", $LogDir | Out-Null
 function Ghi($s) { Add-Content -Encoding utf8 "$Canh\NHAT-KY.md" "- $(Get-Date -Format 'yyyy-MM-dd HH:mm') t${Tho}: $s" }
 function DocJson($p) { Get-Content $p -Raw -Encoding utf8 | ConvertFrom-Json }
 function KhoaTH { $m = New-Object System.Threading.Mutex($false, "Global\ENGINE-TichHop"); try { [void]$m.WaitOne(300000) } catch [System.Threading.AbandonedMutexException] {}; $m }
+function CacFile($dk) { if ($dk.cac_file_features) { @($dk.cac_file_features) } else { @("features-dot1.json") } }
+# Tìm feature trong các file features dưới thư mục $goc: trả @{ff = tên file; f = feature}
+function TimF($dk, $goc, $id) {
+  foreach ($ff in (CacFile $dk)) {
+    if (-not (Test-Path "$goc\$ff")) { continue }
+    $y = (DocJson "$goc\$ff").features | Where-Object id -eq $id
+    if ($y) { return @{ ff = $ff; f = $y } }
+  }
+  $null
+}
+function TatCaF($dk, $goc) { foreach ($ff in (CacFile $dk)) { if (Test-Path "$goc\$ff") { (DocJson "$goc\$ff").features } } }
+function SoTac($id) { [int]("0" + (Get-Content "$Canh\tac\$id.txt" -ErrorAction SilentlyContinue)) }
+function KeoTH { git -C $TichHop pull -q --no-rebase --no-edit origin $NhanhTH 2>&1 | Out-Null }
+function DayTH { git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null; if ($LASTEXITCODE -ne 0) { KeoTH; git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null } }
+# Gọi claude chấm; trả @{kl = DAT|CHUA_DAT; review = chữ}
+function ChamClaude($de, $tep, $nhan) {
+  $de | Set-Content -Encoding utf8 $tep
+  $rel = ".canh-tho/" + (Split-Path $tep -Leaf)
+  $raw = claude -p "Doc file $rel (UTF-8) va lam dung yeu cau trong do." --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
+  try { $j = $raw | ConvertFrom-Json; $rv = $j.result
+        Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`t$nhan`t$fid`t$([int]$j.usage.input_tokens + [int]$j.usage.cache_read_input_tokens)`t$($j.usage.output_tokens)`t" } catch { $rv = $raw }
+  $d1 = @("$rv" -split "`n" | Where-Object { $_.Trim().Trim('*', '#', ' ', [char]0xFEFF) -cmatch '^(DAT|CHUA_DAT)\b' }) | Select-Object -First 1
+  @{ kl = $(if ("$d1".Trim().Trim('*', '#', ' ', [char]0xFEFF) -like 'DAT*') { "DAT" } else { "CHUA_DAT" }); review = "$rv" }
+}
 
 # ---------- Lượt chính ----------
 if ($Tho -eq 0) {
   $mx = KhoaTH
-  git -C $TichHop pull -q --ff-only origin $NhanhTH 2>&1 | Out-Null
-  $dk = DocJson "$TichHop\linhx-engine\canh\dieu-khien.json"
+  KeoTH
+  $dk = DocJson "$TichHop\canh\dieu-khien.json"
   if ($dk.trang_thai -eq "dung_han") {
     Get-ChildItem "$Canh\t*\phieu.txt" -ErrorAction SilentlyContinue | ForEach-Object { $id = ((Get-Content $_.FullName) -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue }
     Ghi "dung_han: đã dừng agy"
@@ -29,215 +55,254 @@ if ($Tho -eq 0) {
       Start-Process powershell -WindowStyle Hidden -ArgumentList @("-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", "`"$PSCommandPath`"", "-Tho", "$i")
     }
   }
-  # Tổng hợp cho Linh: linhx-engine/.canh/TRANG-THAI.md trên nhánh tích hợp
-  $f = DocJson "$TichHop\$FF"
-  $dat = @($f.features | Where-Object passes | ForEach-Object id)
-  $bang = "# LINHX ENGINE đợt 1: trạng thái thợ`n`nCập nhật $(Get-Date -Format 'yyyy-MM-dd HH:mm') (giờ máy cty). Đạt: $($dat.Count)/$($f.features.Count) $(if ($dat) { '(' + ($dat -join ', ') + ')' })`n`n| Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |`n|---|---|---|---|`n"
+  # Tổng hợp cho Linh: .canh/TRANG-THAI.md, .canh/phieu.tsv, .canh/dang-chay.json trên main
+  $tat = @(TatCaF $dk $TichHop)
+  $dat = @($tat | Where-Object passes | ForEach-Object id)
+  $bang = "# LINHX ENGINE: trạng thái thợ`n`nCập nhật $(Get-Date -Format 'yyyy-MM-dd HH:mm') (giờ máy cty). Đạt: $($dat.Count)/$($tat.Count) $(if ($dat) { '(' + ($dat -join ', ') + ')' })`n`n| Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |`n|---|---|---|---|`n"
+  $dangChay = @()
   for ($i = 1; $i -le [int]$dk.so_tho; $i++) {
     $S = "$Canh\t$i"
     $dang = if (Test-Path "$S\dang.txt") { (Get-Content "$S\dang.txt").Trim() } else { "-" }
-    $ph = if (Test-Path "$S\phieu.txt") { $a = (Get-Content "$S\phieu.txt" -Encoding utf8) -split ";"; "$($a[2]) từ $($a[1])" } else { "rảnh" }
+    $ph = "rảnh"
+    if (Test-Path "$S\phieu.txt") { $a = (Get-Content "$S\phieu.txt" -Encoding utf8) -split ";"; $ph = "$($a[2]) từ $($a[1])"; $dangChay += [ordered]@{ tho = $i; phieu = $a[2]; feature = $a[3]; tu = $a[1] } }
     $kl = if (Test-Path "$S\TRANG-THAI.md") { $l = @(Get-Content "$S\TRANG-THAI.md" -TotalCount 3 -Encoding utf8); "$($l[0]) · $($l[2])" } else { "-" }
     $bang += "| $i | $dang | $ph | $kl |`n"
   }
   $bang += "`n## Chờ`n" + (($dk.cho.PSObject.Properties | ForEach-Object { "- $($_.Name): $($_.Value)" }) -join "`n") + "`n"
+  $tac = @(Get-ChildItem "$Canh\tac\*.txt" -ErrorAction SilentlyContinue | Where-Object { (SoTac $_.BaseName) -ge [int]$dk.tran_chua_dat } | ForEach-Object BaseName)
+  if ($tac) { $bang += "`n## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)`n" + (($tac | ForEach-Object { "- $_" }) -join "`n") + "`n" }
   if (Test-Path "$Canh\CAN-LINH.md") { $bang += "`n## Cần Linh`n" + (Get-Content "$Canh\CAN-LINH.md" -Raw -Encoding utf8) }
   $bang += "`n## Nhật ký gần nhất`n" + ((Get-Content "$Canh\NHAT-KY.md" -Tail 12 -Encoding utf8 -ErrorAction SilentlyContinue) -join "`n") + "`n"
-  New-Item -ItemType Directory -Force "$TichHop\linhx-engine\.canh\review" | Out-Null
-  $bang | Set-Content -Encoding utf8 "$TichHop\linhx-engine\.canh\TRANG-THAI.md"
-  Get-ChildItem "$Canh\t*\log\review-*.md" -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_.FullName "$TichHop\linhx-engine\.canh\review\$($_.Directory.Parent.Name)-$($_.Name)" -Force }
-  git -C $TichHop add linhx-engine/.canh 2>&1 | Out-Null
-  git -C $TichHop diff --cached --quiet -- linhx-engine/.canh; if ($LASTEXITCODE -ne 0) {
-    git -C $TichHop commit -q -m "canh: trạng thái thợ engine $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -- linhx-engine/.canh 2>&1 | Out-Null
-    git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null
+  New-Item -ItemType Directory -Force "$TichHop\.canh\review" | Out-Null
+  $bang | Set-Content -Encoding utf8 "$TichHop\.canh\TRANG-THAI.md"
+  if (Test-Path "$Canh\phieu.tsv") { Copy-Item "$Canh\phieu.tsv" "$TichHop\.canh\phieu.tsv" -Force }
+  ConvertTo-Json -InputObject @($dangChay) -Depth 3 | Set-Content -Encoding utf8 "$TichHop\.canh\dang-chay.json"
+  Get-ChildItem "$Canh\t*\log\review-*.md" -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_.FullName "$TichHop\.canh\review\$($_.Directory.Parent.Name)-$($_.Name)" -Force }
+  git -C $TichHop add .canh 2>&1 | Out-Null
+  git -C $TichHop diff --cached --quiet -- .canh; if ($LASTEXITCODE -ne 0) {
+    git -C $TichHop commit -q -m "canh: trạng thái thợ engine $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -- .canh 2>&1 | Out-Null
+    DayTH
   }
   $mx.ReleaseMutex()
   exit 0
 }
 
 # ---------- Lượt một thợ ----------
-$Wt = "D:\LINHX\LINHX-OPC\ENGINE-t$Tho"; $Nhanh = "tu-dong/engine-t$Tho"; $S = "$Canh\t$Tho"
+$Wt = "D:\LINHX\ENGINE-t$Tho"; $Nhanh = "tu-dong/engine-t$Tho"; $S = "$Canh\t$Tho"
 New-Item -ItemType Directory -Force "$S\log" | Out-Null
 $lk = "$S\luot.lock"
 if ((Test-Path $lk) -and ((Get-Date) - (Get-Item $lk).LastWriteTime).TotalMinutes -lt 15) { exit 0 }
 New-Item -ItemType File -Force $lk | Out-Null
-$dk = DocJson "$TichHop\linhx-engine\canh\dieu-khien.json"
+$dk = DocJson "$TichHop\canh\dieu-khien.json"
 $PhutToiDa = if ($dk.phut_toi_da) { [int]$dk.phut_toi_da } else { 40 }
+$Tran = if ($dk.tran_chua_dat) { [int]$dk.tran_chua_dat } else { 3 }
 if (-not (Test-Path $Wt)) {
-  git -C $Repo worktree add -B $Nhanh $Wt $NhanhTH 2>&1 | Out-Null
+  git -C $TichHop worktree add -B $Nhanh $Wt $NhanhTH 2>&1 | Out-Null
   Ghi "tạo worktree $Wt nhánh $Nhanh"
 }
 Set-Location $Wt
-$tamTho = "$Wt\linhx-engine\.canh-tho"; New-Item -ItemType Directory -Force $tamTho | Out-Null
+$tamTho = "$Wt\.canh-tho"; New-Item -ItemType Directory -Force $tamTho | Out-Null
 
 # 1. Phiếu đang chạy: còn chạy, ngủ quên, quá giờ, hay xong
 $dangChay = $false
 if (Test-Path "$S\phieu.txt") {
-  $pid0, $bd, $ten, $fid = (Get-Content "$S\phieu.txt" -Encoding utf8) -split ";", 4
+  $pid0, $bd, $ten, $fid, $loai = (Get-Content "$S\phieu.txt" -Encoding utf8) -split ";", 5
+  if (-not $loai) { $loai = "moi" }
   $p = Get-Process -Id $pid0 -ErrorAction SilentlyContinue
   if ($p -and $p.ProcessName -notmatch 'agy') { $p = $null }
   $phut = [int]((Get-Date) - [datetime]$bd).TotalMinutes
-  $dau = (git status --porcelain | Out-String) + (git rev-parse HEAD) + ((Get-Item "$S\log\agy-$ten.out", "$S\log\agy-$ten.err" -ErrorAction SilentlyContinue | ForEach-Object { $_.Length }) -join ",")
+  $dau = (git status --porcelain | Out-String) + (git rev-parse HEAD) + ((Get-Item "$LogDir\$ten.jsonl", "$S\log\agy-$ten.err" -ErrorAction SilentlyContinue | ForEach-Object { $_.Length }) -join ",")
   $nhip = "$S\nhip.txt"; $dauCu = if (Test-Path $nhip) { Get-Content $nhip -Raw -Encoding utf8 } else { "" }
   if ($dau -ne $dauCu) { $dau | Set-Content -Encoding utf8 -NoNewline $nhip }
   $ngu = $p -and ($dau -eq $dauCu) -and (((Get-Date) - (Get-Item $nhip).LastWriteTime).TotalMinutes -ge 15)
   if ($p -and $phut -lt $PhutToiDa -and -not $ngu) { $dangChay = $true }
   else {
-    if ($p) { Stop-Process -Id $pid0 -Force; Ghi "dừng agy phiếu $ten ($fid): $(if ($ngu) { '15 phút không đổi gì' } else { "quá $PhutToiDa phút" })" }
+    $dung = "xong"
+    if ($p) { Stop-Process -Id $pid0 -Force; $dung = if ($ngu) { "ngu" } else { "gio" }; Ghi "dừng agy phiếu $ten ($fid): $(if ($ngu) { '15 phút không đổi gì' } else { "quá $PhutToiDa phút" })" }
     # Phần dở không cất stash (bài học Z01): commit lại để phiếu sau làm tiếp
     if (git status --porcelain) { git add -A 2>&1 | Out-Null; git commit -q -m "${fid}: phần dở cuối phiếu $ten" 2>&1 | Out-Null; Ghi "commit phần dở của $fid" }
-    try { $j = Get-Content "$S\log\agy-$ten.out" -Raw -Encoding utf8 | ConvertFrom-Json; $tk = "$($j.usage.input_tokens)`t$($j.usage.output_tokens)" } catch { $tk = "khong-do-duoc`t" }
-    if (-not (Test-Path "$Canh\token.tsv")) { "luc`ttho`tphieu`tfeature`ttoken_vao`ttoken_ra`tphut" | Set-Content -Encoding utf8 "$Canh\token.tsv" }
-    Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`t$ten`t$fid`t$tk`t$phut"
-    "$fid;$ten" | Set-Content -Encoding utf8 "$S\can-cham.txt"
+    "$fid;$ten;$loai;$dung;$bd;$phut" | Set-Content -Encoding utf8 "$S\can-cham.txt"
     Remove-Item "$S\phieu.txt" -Force
     Ghi "agy xong phiếu $ten ($fid) sau $phut phút"
   }
 }
 
-# 2. Chấm phiếu vừa xong: rào cứng + cổng kiểm + Claude đọc diff
+# 2. Chấm phiếu vừa xong: rào cứng (K1, K3) + cổng kiểm + Claude đọc diff (+ K4 bảo mật), K2 trần
 if (-not $dangChay -and (Test-Path "$S\can-cham.txt")) {
-  $fid, $ten = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
+  $fid, $ten, $loai, $dung, $bd, $phut = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
   $goc = (Get-Content "$S\goc.txt").Trim()
-  $loi = @()
+  $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
+  $loi = @(); $luuY = @()
   if ((git rev-parse HEAD).Trim() -eq $goc) { $loi += "agy không commit gì" }
-  foreach ($f in @(git diff --name-only "$goc..HEAD")) {
-    if ($f -like "linhx-engine/tests/nghiem-thu/*" -or $f -like "*.khoa" -or $f -eq "linhx-engine/pytest.ini") { $loi += "Sửa file cấm: $f" }
-    elseif ($f -like "linhx-engine/canh/*" -or $f -like "linhx-engine/.canh/*") { $loi += "Sửa bộ điều phối: $f" }
-    elseif (-not ($f -like "linhx-engine/*" -or $f -like ".github/workflows/linhx-engine*")) { $loi += "Sửa ngoài linhx-engine: $f" }
-    if ($f -match '(^|/)(\.env|tho\.env)$' -or $f -match '(^|/)\.env\.(?!example$)' -or $f -match '\.(pem|key|p12)$') { $loi += "Commit file bí mật: $f" }
-  }
+  # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
+  $camNgoai = (@($TichHop, $Canh) + @(Get-ChildItem "D:\LINHX\ENGINE-t*" -Directory -ErrorAction SilentlyContinue | Where-Object FullName -ne $Wt | ForEach-Object FullName)) -join ";"
+  $rao = $null
+  try { $rao = py -3.12 "$TichHop\canh\rao.py" $Wt $goc $FF $fid --log "$LogDir\$ten.jsonl" --cam $camNgoai 2>&1 | Out-String | ConvertFrom-Json } catch {}
+  if ($rao) { $loi += @($rao.loi); $luuY += @($rao.luu_y) } else { $loi += "rao.py không chạy được: không chấm vùng" }
+  $tkV = if ($rao -and $null -ne $rao.token_vao) { $rao.token_vao } else { "" }; $tkR = if ($rao -and $null -ne $rao.token_ra) { $rao.token_ra } else { "" }
+  if (-not (Test-Path "$Canh\token.tsv")) { "luc`ttho`tphieu`tfeature`ttoken_vao`ttoken_ra`tphut" | Set-Content -Encoding utf8 "$Canh\token.tsv" }
+  Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`t$ten`t$fid`t$tkV`t$tkR`t$phut"
   $them = git diff "$goc..HEAD" -U0 | Select-String '^\+'
   if ($them | Select-String -Pattern 'pytest\.mark\.skip|@skip|xfail|\.skip\(|pytest\.skip|importorskip') { $loi += "Có test bị skip/xfail" }
   if ($them | Select-String -Pattern '(sk-ant-|AIza[0-9A-Za-z_-]{20}|-----BEGIN [A-Z ]*PRIVATE KEY|ghp_[A-Za-z0-9]{30}|github_pat_)') { $loi += "Có thứ giống khoá trong diff" }
-  $x = (DocJson $FF).features | Where-Object id -eq $fid
   if (-not $x.passes) { $loi += "$fid chưa đặt passes=true (thợ chưa báo xong)" }
-  # cổng kiểm bản của nhánh tích hợp (thợ không sửa được), chạy lenh_kiem trong worktree thợ
-  $ck = py -3.12 "$TichHop\scripts\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
+  # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ
+  $ck = py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
   if ($LASTEXITCODE -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
   git checkout -q -- $FF 2>&1 | Out-Null
-  Remove-Item "$Wt\linhx-engine\KIEM-features-dot1.json" -Force -ErrorAction SilentlyContinue
+  Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
   $de = @"
-Bạn là Bàng Thống, người canh LINHX ENGINE đợt 1. Review phần agy làm cho feature $fid trên nhánh ${Nhanh}: git diff $goc..HEAD (chỉ phần này).
+Bạn là Bàng Thống, người canh LINHX ENGINE. Review phần agy làm cho feature $fid trên nhánh ${Nhanh}: git diff $goc..HEAD (chỉ phần này).
 Feature $fid`: $($x.mo_ta)
 Tiêu chí:
 $tieuChi
-Hợp đồng: linhx-engine/tests/nghiem-thu/HOP-DONG.md và linhx-engine/tests/nghiem-thu/test_$($fid.ToLower()).py.
+Vùng được sửa: $(@($x.vung) -join ', ') (cổng vùng đã chạy bằng máy).
+Hợp đồng: tests/nghiem-thu/HOP-DONG.md và tests/nghiem-thu/test_$($fid.ToLower()).py.
 Kết quả cổng kiểm (đã chạy ngoài tay thợ, không cần tự chạy lại): $ck
 Chấm theo rủi ro: dữ liệu khách, quyền, tiền, bí mật là mức cao, lỗi là CHUA_DAT. Phần còn lại chỉ CHUA_DAT khi luồng chính sai hoặc làm cho qua test mà không làm thật
 (ví dụ bằng chứng VM bịa: log/JSON không giống đầu ra thật, thời điểm vô lý; hàm trả cứng theo đúng dữ liệu test).
 Lỗi nhỏ ghi mục "## Lưu ý" (file:dòng + việc), không chặn. Ý tưởng ngoài phạm vi để mục "## Ý tưởng".
 Trả lời: dòng 1 chỉ là DAT hoặc CHUA_DAT. Sau đó tối đa 10 gạch đầu dòng, mỗi dòng file:dòng và việc phải sửa. Không sửa file nào, đọc ít file nhất có thể.
 "@
-  $de | Set-Content -Encoding utf8 "$tamTho\de-review.txt"
-  $raw = claude -p "Doc file linhx-engine/.canh-tho/de-review.txt (UTF-8) va lam dung yeu cau trong do." --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
-  try { $j = $raw | ConvertFrom-Json; $review = $j.result
-        Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`tcham-$ten`t$fid`t$([int]$j.usage.input_tokens + [int]$j.usage.cache_read_input_tokens)`t$($j.usage.output_tokens)`t" } catch { $review = $raw }
-  $dong1 = @("$review" -split "`n" | Where-Object { $_.Trim().Trim('*', '#', ' ', [char]0xFEFF) -cmatch '^(DAT|CHUA_DAT)\b' }) | Select-Object -First 1
-  $kl = if ($loi.Count -gt 0 -or "$dong1".Trim().Trim('*', '#', ' ', [char]0xFEFF) -notlike 'DAT*') { "CHUA_DAT" } else { "DAT" }
+  $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten"
+  $review = $c.review
+  $kl = if ($loi.Count -gt 0 -or $c.kl -ne "DAT") { "CHUA_DAT" } else { "DAT" }
+  # K4: feature nhạy cảm qua thêm lượt chấm bảo mật trước khi gộp
+  if ($kl -eq "DAT" -and @($dk.bao_mat) -contains $fid) {
+    $deBM = @"
+Bạn là người chấm bảo mật LINHX ENGINE. Feature $fid ($($x.mo_ta)) vừa đạt nghiệm thu. Đọc toàn bộ phần của feature: git diff $NhanhTH...HEAD.
+Chỉ tìm lỗi bảo mật thật, có đường khai thác cụ thể: thiếu kiểm quyền hoặc kiểm khoá (webhook, API allow_guest), giá/số tiền nhận từ client,
+chống trùng giao dịch sai, lộ dữ liệu khách (email, SĐT, hồ sơ) ra API công khai hoặc log, SQL/lệnh ghép chuỗi từ dữ liệu ngoài,
+bí mật viết trong code, so khoá không hằng thời gian, đổi trạng thái tiền không trong giao dịch.
+Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT. Sau đó tối đa 8 gạch đầu dòng: file:dòng, cách khai thác, cách sửa. Không sửa file nào.
+"@
+    $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
+    $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
+    if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
+  }
   $sha = (git rev-parse --short HEAD).Trim()
   if ($kl -eq "DAT") {
-    # Gộp vào nhánh tích hợp (khoá chung giữa các thợ)
+    # Gộp vào main (khoá chung giữa các thợ)
     $mx = KhoaTH
     git push -q -u origin $Nhanh 2>&1 | Out-Null
-    git -C $TichHop pull -q --ff-only origin $NhanhTH 2>&1 | Out-Null
+    KeoTH
     git -C $TichHop merge -q --no-ff -m "canh: gộp $fid từ $Nhanh (DAT, commit $sha)" $Nhanh 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { git -C $TichHop merge --abort 2>&1 | Out-Null; $kl = "CHUA_DAT"; $loi += "Xung đột khi gộp vào ${NhanhTH}: gộp $NhanhTH vào nhánh này (git merge $NhanhTH), giải xung đột, chạy lại lệnh kiểm, commit" }
-    else { git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$S\tac-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
+    else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
   if ($kl -eq "CHUA_DAT") {
-    $n = 1 + [int]("0" + (Get-Content "$S\tac-$fid.txt" -ErrorAction SilentlyContinue)); "$n" | Set-Content "$S\tac-$fid.txt"
+    $n = 1 + (SoTac $fid); "$n" | Set-Content "$Canh\tac\$fid.txt"
     Ghi "$fid CHUA_DAT lần $n (commit $sha)"
-    if ($n -ge 3) { Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) $fid chưa đạt 3 lượt liền ở thợ $Tho, đã ngưng giao; cần Khổng Minh chia nhỏ hoặc Linh quyết" }
+    if ($n -ge $Tran) {
+      # K2: lùi về mốc (giữ bản hỏng ở nhánh cục bộ), ngưng giao, báo Linh
+      $moc = if (Test-Path "$S\moc-$fid.txt") { (Get-Content "$S\moc-$fid.txt").Trim() } else { $goc }
+      $hong = "hong/$fid-$(Get-Date -Format 'yyyyMMdd-HHmm')"
+      git branch -f $hong HEAD 2>&1 | Out-Null
+      git reset -q --hard $moc 2>&1 | Out-Null
+      Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue
+      Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) $fid CHUA_DAT $n lần liền (thợ $Tho): đã lùi $Nhanh về mốc $($moc.Substring(0, [math]::Min(8, $moc.Length))), bản hỏng giữ ở nhánh cục bộ $hong, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\$fid.txt"
+      Ghi "$fid chạm trần $n lần CHUA_DAT: lùi về mốc, dừng"
+    }
   }
+  if (-not (Test-Path "$Canh\phieu.tsv")) { $CotPhieu | Set-Content -Encoding utf8 "$Canh\phieu.tsv" }
+  Add-Content -Encoding utf8 "$Canh\phieu.tsv" "$bd`t$(Get-Date -Format s)`t$Tho`t$ten`t$fid`t$loai`t$dung`t$kl`t$phut`t$tkV`t$tkR"
   $nd = "$kl`n`nFeature $fid · commit $sha · nhánh $Nhanh · $(Get-Date -Format s)`n"
   if ($loi.Count) { $nd += "`n## Rào cứng`n" + (($loi | ForEach-Object { "- $_" }) -join "`n") + "`n" }
+  if ($luuY.Count) { $nd += "`n## Lưu ý máy`n" + (($luuY | ForEach-Object { "- $_" }) -join "`n") + "`n" }
   $nd += "`n## Claude review`n$review"
   $nd | Set-Content -Encoding utf8 "$S\TRANG-THAI.md"
   Copy-Item "$S\TRANG-THAI.md" "$S\log\review-$ten-$fid.md" -Force
+  if (Test-Path "$Wt\.canh-tho\anh") { New-Item -ItemType Directory -Force "$S\log\anh-$ten" | Out-Null; Copy-Item "$Wt\.canh-tho\anh\*" "$S\log\anh-$ten\" -Force -ErrorAction SilentlyContinue }
   Remove-Item "$S\can-cham.txt" -Force
 }
 
 # 3. Giao phiếu mới khi thợ rảnh
 if (-not $dangChay -and $dk.trang_thai -eq "chay") {
-  $ftH = DocJson "$TichHop\$FF"
-  $daDat = @{}; foreach ($y in $ftH.features) { if ($y.passes) { $daDat[$y.id] = $true } }
-  $cho = @($dk.cho.PSObject.Properties | ForEach-Object Name)
-  $vungBan = @(); $giuBoi = @{}
-  Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | ForEach-Object { $t = (Get-Content $_.FullName).Trim(); $giuBoi[$_.BaseName] = $t; if ($t -ne "$Tho") { $vungBan += $dk.vung.($_.BaseName) } }
+  $tatTH = @(TatCaF $dk $TichHop)
+  $daDat = @{}; foreach ($y in $tatTH) { if ($y.passes) { $daDat[$y.id] = $true } }
+  $coProto = -not (@($Proto | Where-Object { -not (Test-Path $_) }).Count)
+  $cho = @($dk.cho.PSObject.Properties | ForEach-Object Name | Where-Object { -not ($_ -eq "N2" -and $coProto) })
+  $nhomBan = @(); $giuBoi = @{}
+  Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | ForEach-Object { $t = (Get-Content $_.FullName).Trim(); $giuBoi[$_.BaseName] = $t; if ($t -ne "$Tho") { $nhomBan += $(if ($dk.nhom.($_.BaseName)) { $dk.nhom.($_.BaseName) } else { $_.BaseName }) } }
   $dang = if (Test-Path "$S\dang.txt") { (Get-Content "$S\dang.txt").Trim() } else { "" }
   $tt = if (Test-Path "$S\TRANG-THAI.md") { (Get-Content "$S\TRANG-THAI.md" -TotalCount 1 -Encoding utf8).Trim() } else { "" }
-  $them = ""
-  if ($dang -and -not $daDat[$dang]) {
-    if ([int]("0" + (Get-Content "$S\tac-$dang.txt" -ErrorAction SilentlyContinue)) -ge 3) { $chon = $null; Ghi "$dang đã tắc 3 lượt, không giao lại" }
-    else { $chon = $dang; if ($tt -eq "CHUA_DAT") { $them = "`n## Lượt sửa: người canh chấm CHUA_DAT, sửa đúng các điểm dưới đây, không làm việc mới`n" + (Get-Content "$S\TRANG-THAI.md" -Raw -Encoding utf8) } }
+  $them = ""; $loaiMoi = "moi"
+  if ($dang -and -not $daDat[$dang] -and (SoTac $dang) -lt $Tran) {
+    $chon = $dang
+    if ($tt -eq "CHUA_DAT") { $loaiMoi = "sua"; $them = "`n## Lượt sửa: người canh chấm CHUA_DAT, sửa đúng các điểm dưới đây, không làm việc mới`n" + (Get-Content "$S\TRANG-THAI.md" -Raw -Encoding utf8) }
   } else {
+    if ($dang) { Remove-Item "$S\dang.txt" -Force -ErrorAction SilentlyContinue }
     $chon = $dk.giao | Where-Object {
-      $id = $_; $y = $ftH.features | Where-Object id -eq $id
-      $y -and -not $daDat[$id] -and ($cho -notcontains $id) -and (-not $giuBoi[$id] -or $giuBoi[$id] -eq "$Tho") -and
-      (@($y.phu_thuoc | Where-Object { $_ -and -not $daDat[$_] }).Count -eq 0) -and ($vungBan -notcontains $dk.vung.$id) -and
-      (Test-Path "$TichHop\linhx-engine\tests\nghiem-thu\test_$($id.ToLower()).py")
+      $id = $_; $y = $tatTH | Where-Object id -eq $id; $nh = if ($dk.nhom.$id) { $dk.nhom.$id } else { $id }
+      $y -and -not $daDat[$id] -and ($cho -notcontains $id) -and (SoTac $id) -lt $Tran -and (-not $giuBoi[$id] -or $giuBoi[$id] -eq "$Tho") -and
+      (@($y.phu_thuoc | Where-Object { $_ -and -not $daDat[$_] }).Count -eq 0) -and ($nhomBan -notcontains $nh) -and
+      (Test-Path "$TichHop\tests\nghiem-thu\test_$($id.ToLower()).py")
     } | Select-Object -First 1
   }
   $ram = [math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB, 1)
   if ($chon -and $ram -lt 1.5) { Ghi "RAM trống $ram GB < 1,5 GB, chưa giao $chon"; $chon = $null }
-  if (-not $chon) { if (-not (Test-Path "$S\rong.txt")) { Ghi "không có feature giao được lúc này (chờ phụ thuộc, vùng, hoặc danh sách cho)"; "" | Set-Content "$S\rong.txt" } }
+  if (-not $chon) { if (-not (Test-Path "$S\rong.txt")) { Ghi "không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)"; "" | Set-Content "$S\rong.txt" } }
   else {
     Remove-Item "$S\rong.txt" -Force -ErrorAction SilentlyContinue
     "$Tho" | Set-Content "$Canh\nhan\$chon.txt"; $chon | Set-Content "$S\dang.txt"
     # lấy phần đã tích hợp (feature thợ khác đã đạt) trước khi làm
     git merge -q --no-edit $NhanhTH 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { git merge --abort 2>&1 | Out-Null; $them += "`n## Trước khi làm`nChạy git merge $NhanhTH, giải xung đột, giữ phần đã đạt của cả hai bên, commit `"${chon}: gộp tích hợp`"." }
-    $y = $ftH.features | Where-Object id -eq $chon
+    # K2: mốc = trạng thái nhánh lúc giao lần đầu feature này
+    if (-not (Test-Path "$S\moc-$chon.txt")) { (git rev-parse HEAD).Trim() | Set-Content "$S\moc-$chon.txt" }
+    $tf = TimF $dk $TichHop $chon; $y = $tf.f; $FF = $tf.ff
     $ten = "$(Get-Date -Format 'yyyyMMdd-HHmm')-t$Tho"
     $rieng = switch ($chon) {
-      "N1" { "- Riêng N1: được ``git push -u origin $Nhanh`` để CI GitHub chạy. Máy không có gh: đọc kết quả lượt chạy qua API GitHub (lấy quyền bằng git credential, KHÔNG in hay ghi token ra file). Workflow đặt ở .github/workflows/linhx-engine.yml, chỉ chạy phần linhx-engine." }
+      "N1" { "- Riêng N1: được ``git push -u origin $Nhanh`` để CI GitHub chạy. Máy không có gh: đọc kết quả lượt chạy qua API GitHub (lấy quyền bằng git credential, KHÔNG in hay ghi token ra file). Workflow đặt ở .github/workflows/linhx-engine.yml, chạy py canh/cong_kiem.py kiem cho từng features-dot1*.json." }
       "N2" { "- Riêng N2: chép từ D:\LINHX\PROTO\03 OPC OS và D:\LINHX\PROTO\01 Máy tạo nội dung. Bỏ .env*, khoá, token, file phiên, cơ sở dữ liệu, dữ liệu khách, node_modules, ảnh/video nặng." }
       default { "- VM thật: linhx-engine-1 (gcloud project linhx-engine, zone asia-southeast1-b). gcloud scp trên Windows dùng /home/ADMIN/ (không dùng ~). Bí mật chỉ ở /root/linhx-bi-mat.env trên VM: không chép về máy, không in ra log, không đưa vào bằng chứng." }
     }
     @"
-# Phiếu $ten · LINHX ENGINE đợt 1 · feature $chon
-Repo: $Wt, nhánh $Nhanh (thợ $Tho). AGENTS.md và CLAUDE.md ở gốc repo là luật của Chiêm Tinh Số: KHÔNG áp cho phiếu này, chỉ làm theo phiếu này.
+# Phiếu $ten · LINHX ENGINE · feature $chon
+Repo: $Wt (repo riêng linhx-engine), nhánh $Nhanh (thợ $Tho). Mọi đường dẫn tính từ gốc repo. Chỉ làm theo phiếu này.
 
 ## Việc
 $chon`: $($y.mo_ta)
 Tiêu chí:
 $(($y.tieu_chi | ForEach-Object { "- $_" }) -join "`n")
-Lệnh kiểm (chạy trong thư mục linhx-engine): ``$($y.lenh_kiem)``
-Hợp đồng đường dẫn, tên hàm, dạng bằng chứng: linhx-engine/tests/nghiem-thu/HOP-DONG.md và test_$($chon.ToLower()).py. Đọc, không sửa.
+Lệnh kiểm (chạy ở gốc repo): ``$($y.lenh_kiem)``
+Hợp đồng đường dẫn, tên hàm, dạng bằng chứng: tests/nghiem-thu/HOP-DONG.md và tests/nghiem-thu/test_$($chon.ToLower()).py. Đọc, không sửa.
 $them
 
 ## Luật
-- Chỉ sửa trong linhx-engine/ (N1 thêm .github/workflows/linhx-engine.yml). Cấm sửa: linhx-engine/tests/nghiem-thu/, *.khoa, linhx-engine/pytest.ini, linhx-engine/canh/, linhx-engine/.canh/, scripts/.
+- Vùng được sửa của ${chon}: $(@($y.vung) -join ', '), cộng bang-chung/$chon/. Sửa hay ghi file ngoài vùng (kể cả ghi rồi xoá) là CHUA_DAT máy, không ai đọc diff.
+- Cấm sửa: tests/nghiem-thu/, *.khoa, pytest.ini, canh/, .canh/.
 - Không skip/xfail test. Không commit .env, khoá, mật khẩu, dữ liệu khách. Không gọi SePay thật.
 - Bằng chứng phải từ lần chạy thật; không tự viết tay số liệu. Người canh đối chiếu lại.
 $rieng
-- Xong: trong linhx-engine/features-dot1.json chỉ đổi 2 trường của $chon`: "passes": true và "bang_chung": "<đường dẫn tương đối từ linhx-engine tới file bằng chứng>".
-- Trước commit chạy lệnh kiểm và ``py -3.12 scripts/cong_kiem.py kiem linhx-engine/features-dot1.json``, rồi ``git checkout -- linhx-engine/features-dot1.json`` nếu cổng kiểm hạ passes về false; xoá KIEM-*.json.
+- Xong: trong $FF chỉ đổi 2 trường của $chon`: "passes": true và "bang_chung": "<đường dẫn tương đối từ gốc repo tới file bằng chứng>".
+- Trước commit chạy lệnh kiểm và ``py -3.12 canh/cong_kiem.py kiem $FF``, rồi ``git checkout -- $FF`` nếu cổng kiểm hạ passes về false; xoá KIEM-*.json.
 - Commit trên nhánh hiện tại, thông điệp bắt đầu bằng ``${chon}: ``. Không tạo nhánh. Tắt server, tiến trình nền đã mở trước khi kết thúc.
 - Hộp giờ $PhutToiDa phút. Làm phần nhỏ nhất cho lệnh kiểm xanh. Hết giờ mà chưa xong thì commit phần đã chạy được.
+- Chưa đạt $Tran lượt liền thì nhánh bị lùi về mốc và feature dừng: mỗi lượt sửa đúng điểm người canh nêu.
 $(if ($dk.ghi_chu_cho_agy) { "- Ghi chú của Linh: $($dk.ghi_chu_cho_agy)" })
 
 ## Cuối lượt
-Thêm vào cuối linhx-engine/.canh-tho/CAI-TIEN-AGY.md, dưới tiêu đề ``### $ten``, đúng 3 dòng: Tri thức, Tránh, Cải thiện.
-Ý tưởng ngoài phạm vi: KHÔNG tự làm, thêm một dòng vào linhx-engine/.canh-tho/Y-TUONG.md.
+Thêm vào cuối .canh-tho/CAI-TIEN-AGY.md, dưới tiêu đề ``### $ten``, đúng 3 dòng: Tri thức, Tránh, Cải thiện.
+Ý tưởng ngoài phạm vi: KHÔNG tự làm, thêm một dòng vào .canh-tho/Y-TUONG.md.
 "@ | Set-Content -Encoding utf8 "$tamTho\PHIEU.md"
     Copy-Item "$tamTho\PHIEU.md" "$S\log\phieu-$ten.md"
     (git rev-parse HEAD).Trim() | Set-Content "$S\goc.txt"
-    $ts = @("-p", '"Doc va lam theo dung file linhx-engine/.canh-tho/PHIEU.md (tieng Viet). Thu muc lam viec la thu muc hien tai."', "--output-format", "json")
+    $dd = if ($dk.agy_dinh_dang) { $dk.agy_dinh_dang } else { "stream-json" }
+    $ts = @("-p", '"Doc va lam theo dung file .canh-tho/PHIEU.md (tieng Viet). Thu muc lam viec la thu muc hien tai."', "--output-format", $dd)
     if ($dk.agy_toan_quyen) { $ts += "--dangerously-skip-permissions" }
     if ($dk.agy_model) { $ts += @("--model", $dk.agy_model) }
     if ($dk.agy_effort) { $ts += @("--effort", $dk.agy_effort) }
     $p = Start-Process -FilePath $LenhAgy -WorkingDirectory $Wt -NoNewWindow -PassThru -ArgumentList $ts `
-          -RedirectStandardOutput "$S\log\agy-$ten.out" -RedirectStandardError "$S\log\agy-$ten.err"
-    "$($p.Id);$(Get-Date -Format s);$ten;$chon" | Set-Content -Encoding utf8 "$S\phieu.txt"
+          -RedirectStandardOutput "$LogDir\$ten.jsonl" -RedirectStandardError "$S\log\agy-$ten.err"
+    "$($p.Id);$(Get-Date -Format s);$ten;$chon;$loaiMoi" | Set-Content -Encoding utf8 "$S\phieu.txt"
     Remove-Item "$S\nhip.txt" -Force -ErrorAction SilentlyContinue
     # agy thoát là chấm ngay (lịch 10 phút vẫn là lưới an toàn)
     Start-Process powershell -WindowStyle Hidden -ArgumentList @("-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command",
       "Wait-Process -Id $($p.Id) -ErrorAction SilentlyContinue; Start-Sleep 5; & '$PSCommandPath' -Tho $Tho")
-    Ghi "giao agy phiếu $ten`: $chon$(if ($tt -eq 'CHUA_DAT' -and $chon -eq $dang) { ' (lượt sửa)' })"
+    Ghi "giao agy phiếu $ten`: $chon$(if ($loaiMoi -eq 'sua') { ' (lượt sửa)' })"
   }
 }
 Remove-Item $lk -Force -ErrorAction SilentlyContinue

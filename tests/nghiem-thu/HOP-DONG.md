@@ -1,13 +1,13 @@
-# Hợp đồng nghiệm thu LINHX ENGINE đợt 1
+# Hợp đồng nghiệm thu LINHX ENGINE đợt 1 và 1b
 
-Thư mục này là bộ nghiệm thu hộp đen, viết TRƯỚC khi làm. Thợ không sửa file nào ở đây và không sửa `features-dot1.json.khoa`.
-Mọi đường dẫn dưới đây tính từ `linhx-engine/`. Chạy: `python -m pytest tests/nghiem-thu/test_<id>.py -q` (cwd = linhx-engine).
+Thư mục này là bộ nghiệm thu hộp đen, viết TRƯỚC khi làm. Thợ không sửa file nào ở đây và không sửa `features-dot1*.json.khoa`.
+Repo riêng `fyzdfyzd/linhx-engine`: mọi đường dẫn dưới đây tính từ gốc repo. Chạy: `python -m pytest tests/nghiem-thu/test_<id>.py -q` (cwd = gốc repo).
 Test không gọi mạng thật, không gọi SePay thật. Phần cần VM thật được kiểm qua file bằng chứng trong `bang-chung/<ID>/`,
 ghi từ lần chạy thật trên VM `linhx-engine-1`; người canh đối chiếu lại trên VM trước khi chấm DAT.
 
 | ID | Thợ phải tạo | Bằng chứng |
 |---|---|---|
-| N1 | workflow `.github/workflows/linhx-engine.yml` (gốc repo) chạy trên push `tu-dong/*`, chạy `cong_kiem` hoặc `tests/nghiem-thu` của linhx-engine | `bang-chung/N1/ci.json` `{url, nhanh, ket_qua:"success"}` |
+| N1 | workflow `.github/workflows/linhx-engine.yml` chạy trên push `tu-dong/*`, chạy `canh/cong_kiem.py` hoặc `tests/nghiem-thu` | `bang-chung/N1/ci.json` `{url, nhanh, ket_qua:"success"}` |
 | N2 | `nguon/03-opc-os/`, `nguon/01-may-noi-dung/` (README.md + module.py gốc), `nguon/NGUON.md` (đường gốc + ngày YYYY-MM-DD). Không .env, khoá, .db/.xlsx/.sql, dữ liệu khách; < 50 MB; code trong apps/ không import nguon | – |
 | N3 | app `apps/linhx_core/` (pyproject.toml, linhx_core/{__init__.py có __version__, hooks.py app_name, modules.txt có crm, pay}); DocType Single `LX Cau Hinh` có Check `bat_crm`, `bat_pay`; `linhx_core/co_module.py` thuần Python: `module_bat(ten, cau_hinh)`, `doctype_bi_an(doctype, cau_hinh)`; hooks nối co_module vào has_permission/permission_query_conditions | `bang-chung/N3/install-app.log` |
 | N4 | `cli/linhx_cli` (`python -m linhx_cli tao-site <ten> --cau-hinh f.json --sites-dir D --chay-thu` in JSON `{"lenh":[...]}`, không chạy gì); site có sẵn thì không new-site/drop/reinstall/restore | `bang-chung/N4/tao-site.json` `{site, giay ≤ 600, lan_hai:{giay, ma_thoat:0, site_cu_ping:200}}` |
@@ -18,4 +18,23 @@ ghi từ lần chạy thật trên VM `linhx-engine-1`; người canh đối chi
 | C1 | `trang-bu/` Next.js, `npm run build` xuất tĩnh ra `trang-bu/out/`, đọc nội dung lúc dựng từ `NOI_DUNG_URL` (JSON `{tieu_de, mo_ta, muc:[{ten, mo_ta}]}`), thiếu thì `noi-dung.mau.json`; `npm ci` sẵn; trang không gọi ra ngoài (font tự host); 390 và 1280 không tràn ngang | – |
 
 Module thuần Python (co_module, gop_trung, quyen_dung) không `import frappe` ở đầu file; phần nối Frappe để ở controller/hooks.
-Các feature còn lại (A2–A5, B2–B5, C2–C3, D1–D3, E1–E2, T1–T2) viết nghiệm thu sau, chưa giao phiếu.
+| C3 | (nghiệm thu viết sau) khuôn `trang-bu` phải dựng được theo `SITE_JSON=<sites/ten/site.json>` (nội dung ở khoá `noi_dung`, NOI_DUNG_URL vẫn ưu tiên); ifagent đặt ở `sites/ifagent/site.json`. C4 dựa vào đây | – |
+
+## Đợt 1b (`features-dot1b.json`)
+
+| ID | Thợ phải tạo | Bằng chứng |
+|---|---|---|
+| W1 | `apps/linhx_worker/linhx_worker/bang_tho.py` thuần Python: `COT`, `doc_phieu(p)`, `tong_hop(ds, dang_chay)`; nguồn là `.canh/phieu.tsv`, `.canh/dang-chay.json` do bộ điều phối ghi; `api.py` thêm `bang_tho` (chỉ điều hành); `front/index.html` #/engine vẽ `#bang-tho`, `#cham-tran` | ảnh `.canh-tho/anh/w1-*.png` lúc kiểm |
+| Q1 | `pay/ban_bao_cao.py` (`goi_cong_khai`, `so_tien_don`), `pay/api_ban.py` (`goi`, `tao_don` allow_guest, gọi B2); `front/index.html` #/ có `[data-goi]`, `[data-tra-qr]`, `img[data-qr]`; không gửi giá từ client, không viết cứng giá | ảnh `.canh-tho/anh/q1-*.png` |
+| C4 | chỉ `sites/unikon/site.json` (+ ảnh); dựng bằng `SITE_JSON`; commit `C4:` không đụng khuôn | ảnh `.canh-tho/anh/c4-*.png` |
+| R1 | `apps/linhx_core/linhx_core/cts_adapter/hop_dong.py`: `tao_don(payload, danh_muc, kho)`, `nhan_webhook(payload, kho, authorization, khoa)` trả `(ma_http, than)` cùng dạng CTS; `cts_adapter/api.py` (`checkout`, `sepay_webhook`). 20 payload mẫu: `tests/nghiem-thu/du-lieu/cts/` | – |
+| R2 | `cts_adapter/bong.py`: `bat`, `nhan_don_bong`, `nhan_bong`, `so_lech`; cờ `bat_bong` tắt mặc định; dùng lại luật `hop_dong`; không giao hàng | – |
+
+Chi tiết từng hàm ghi ở đầu file `test_<id>.py`. Các feature còn lại của đợt 1 (A2–A5, B2–B5, C2–C3, D1–D3, E1–E2, T1–T2) viết nghiệm thu sau, chưa giao phiếu.
+
+## Vùng (cổng K1)
+
+Mỗi feature có trường `vung` (glob, `**` = nhiều cấp) trong `features-dot1*.json`. Người canh chạy `canh/rao.py`: file nào trong diff
+của phiếu nằm ngoài `vung` thì CHUA_DAT máy, không cần đọc. Luôn được thêm: `bang-chung/<ID>/**` và hai trường `passes`, `bang_chung`
+của chính feature đó. Luôn cấm: `tests/nghiem-thu/**`, `*.khoa`, `pytest.ini`, `canh/**`, `.canh/**`. Nhật ký agy (`.canh/log/<phieu>.jsonl`)
+cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit vẫn tính là lỗi (K3).

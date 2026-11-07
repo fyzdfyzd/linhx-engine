@@ -1,7 +1,7 @@
 """C1: khuôn Next.js Trang BU từ demo ifAgent, đọc nội dung từ API bản cài. Dựng tĩnh được, chụp 390 và 1280 không tràn ngang.
 
 Hợp đồng (HOP-DONG.md):
-- linhx-engine/trang-bu/: package.json có next, script "build" dựng tĩnh ra trang-bu/out/ (output: "export")
+- trang-bu/: package.json có next, script "build" dựng tĩnh ra trang-bu/out/ (output: "export")
 - Lúc dựng đọc nội dung từ URL ở biến môi trường NOI_DUNG_URL (API bản cài), JSON dạng
     {"tieu_de": str, "mo_ta": str, "muc": [{"ten": str, "mo_ta": str}]}
   thiếu biến thì dùng trang-bu/noi-dung.mau.json

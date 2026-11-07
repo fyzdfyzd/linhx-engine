@@ -11,10 +11,12 @@ import re
 import subprocess
 import sys
 
-GOC = pathlib.Path(__file__).resolve().parents[2]          # linhx-engine/
-REPO = GOC.parent                                         # gốc repo git
+GOC = pathlib.Path(__file__).resolve().parents[2]          # gốc repo linhx-engine
+REPO = GOC                                                # repo riêng fyzdfyzd/linhx-engine: gốc git = GOC
 CORE = GOC / "apps" / "linhx_core"                        # app Frappe linhx_core
 BANG_CHUNG = GOC / "bang-chung"
+ANH = GOC / ".canh-tho" / "anh"                           # ảnh chụp lúc kiểm (không commit), người canh xem
+DU_LIEU = pathlib.Path(__file__).resolve().parent / "du-lieu"
 
 BO_QUA_THU_MUC = {".git", "node_modules", "__pycache__", ".next", "out", ".canh", ".venv", "venv"}
 
@@ -119,3 +121,58 @@ def bang_chung_json(fid, ten_file):
 def git(*args, cwd=REPO):
     r = subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True, encoding="utf-8")
     return r.stdout
+
+
+def may_chu_web(thu_muc, api=None, ghi_nhan=None):
+    """Máy chủ 127.0.0.1 phục vụ file tĩnh trong thu_muc và API giả cùng gốc.
+    api: {"/api/method/x.y": ham(phuong_thuc, than_dict) -> (ma_http, obj | bytes, content_type)}
+    ghi_nhan: list, nhận (phuong_thuc, duong_dan, than_dict) của mọi lần gọi API."""
+    import functools
+    import http.server
+    import threading
+    from urllib.parse import urlparse
+
+    api = api or {}
+
+    class H(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def _api(self, pt):
+            duong = urlparse(self.path).path
+            if duong not in api:
+                return False
+            n = int(self.headers.get("Content-Length") or 0)
+            than = {}
+            if n:
+                raw = self.rfile.read(n)
+                try:
+                    than = json.loads(raw.decode("utf-8"))
+                except Exception:
+                    than = {"_raw": raw.decode("utf-8", "ignore")}
+            if ghi_nhan is not None:
+                ghi_nhan.append((pt, self.path, than))
+            ma, obj, ct = api[duong](pt, than)
+            b = obj if isinstance(obj, bytes) else json.dumps(obj, ensure_ascii=False).encode("utf-8")
+            self.send_response(ma)
+            self.send_header("Content-Type", ct or "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(b)))
+            self.end_headers()
+            self.wfile.write(b)
+            return True
+
+        def do_GET(self):
+            if not self._api("GET"):
+                super().do_GET()
+
+        def do_POST(self):
+            if not self._api("POST"):
+                self.send_error(404)
+
+    s = http.server.ThreadingHTTPServer(("127.0.0.1", 0), functools.partial(H, directory=str(thu_muc)))
+    threading.Thread(target=s.serve_forever, daemon=True).start()
+    return s, f"http://127.0.0.1:{s.server_address[1]}"
+
+
+PNG_1x1 = bytes.fromhex("89504e470d0a1a0a0000000d4948445200000001000000010806000000"
+                        "1f15c4890000000d49444154789c6360f8cfc0f01f0005000201e2b2a3f40000000049454e44ae426082")

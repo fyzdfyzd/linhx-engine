@@ -1,0 +1,22 @@
+{
+ "loai": "checkout",
+ "mo_ta": "sku có nhưng sai kênh",
+ "vao": {
+  "sku": "SKU-CT-3M-STD",
+  "kenh": "zalo",
+  "ho_so": {
+   "ho_ten": "Khách Mười",
+   "ngay_sinh": "1991-04-04",
+   "gio_sinh": "10:00",
+   "noi_sinh": "Hà Nội"
+  },
+  "email": "khach10@vidu.vn",
+  "dong_y_dieu_khoan": true
+ },
+ "ra": {
+  "http": 404,
+  "body": {
+   "detail": "Không tìm thấy sản phẩm 'SKU-CT-3M-STD' trên kênh 'zalo'"
+  }
+ }
+}

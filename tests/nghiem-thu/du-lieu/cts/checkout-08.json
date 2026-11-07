@@ -1,0 +1,22 @@
+{
+ "loai": "checkout",
+ "mo_ta": "email sai",
+ "vao": {
+  "sku": "SKU-CT-NATAL-FULL-STD",
+  "kenh": "web",
+  "ho_so": {
+   "ho_ten": "Khách Tám",
+   "ngay_sinh": "1991-04-04",
+   "gio_sinh": "10:00",
+   "noi_sinh": "Hà Nội"
+  },
+  "email": "khong-phai-email",
+  "dong_y_dieu_khoan": true
+ },
+ "ra": {
+  "http": 422,
+  "body": {
+   "detail": "Trường 'email' không hợp lệ"
+  }
+ }
+}

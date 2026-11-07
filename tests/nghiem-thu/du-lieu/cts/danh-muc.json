@@ -1,0 +1,45 @@
+{
+ "SKU-CT-NATAL-FULL-STD": {
+  "ten": "Bản đồ sao cá nhân đầy đủ",
+  "gia": 199000,
+  "kenh": [
+   "web",
+   "zalo",
+   "messenger"
+  ]
+ },
+ "SKU-CT-CHILD-STD": {
+  "ten": "Bản đồ sao cho em bé",
+  "gia": 199000,
+  "kenh": [
+   "web",
+   "zalo",
+   "messenger"
+  ]
+ },
+ "SKU-CT-SYN-STD": {
+  "ten": "Hợp đôi",
+  "gia": 299000,
+  "kenh": [
+   "web",
+   "zalo",
+   "messenger"
+  ]
+ },
+ "SKU-CT-YEAR-2027-STD": {
+  "ten": "Dự báo năm 2027",
+  "gia": 249000,
+  "kenh": [
+   "web",
+   "zalo",
+   "messenger"
+  ]
+ },
+ "SKU-CT-3M-STD": {
+  "ten": "Dự báo 3 tháng",
+  "gia": 99000,
+  "kenh": [
+   "web"
+  ]
+ }
+}

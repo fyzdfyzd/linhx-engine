@@ -20,7 +20,7 @@ def _cac_workflow():
 
 def test_ci_chay_nghiem_thu_tren_nhanh_tu_dong():
     wf = _cac_workflow()
-    assert wf, "thiếu workflow CI: .github/workflows/linhx-engine*.yml (gốc repo) hoặc linhx-engine/.github/workflows/*.yml"
+    assert wf, "thiếu workflow CI: .github/workflows/linhx-engine*.yml"
     hop = []
     for p in wf:
         chu = p.read_text(encoding="utf-8")

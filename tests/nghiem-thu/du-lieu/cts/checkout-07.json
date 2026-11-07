@@ -1,0 +1,21 @@
+{
+ "loai": "checkout",
+ "mo_ta": "thiếu đồng ý điều khoản",
+ "vao": {
+  "sku": "SKU-CT-NATAL-FULL-STD",
+  "kenh": "web",
+  "ho_so": {
+   "ho_ten": "Khách Bảy",
+   "ngay_sinh": "1991-04-04",
+   "gio_sinh": "10:00",
+   "noi_sinh": "Hà Nội"
+  },
+  "email": "khach07@vidu.vn"
+ },
+ "ra": {
+  "http": 422,
+  "body": {
+   "detail": "Bắt buộc xác nhận đồng ý điều khoản ('dong_y_dieu_khoan': true)"
+  }
+ }
+}

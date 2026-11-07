@@ -1,0 +1,52 @@
+{
+ "loai": "checkout",
+ "mo_ta": "hợp đôi qua zalo",
+ "vao": {
+  "sku": "SKU-CT-SYN-STD",
+  "kenh": "zalo",
+  "ho_so": {
+   "ho_ten": "Khách Ba",
+   "ngay_sinh": "1988-12-31",
+   "gio_sinh": "06:00",
+   "noi_sinh": "Huế"
+  },
+  "email": "khach03@vidu.vn",
+  "dong_y_dieu_khoan": true
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "order_id": "ord_0000000000000000",
+   "sku": "SKU-CT-SYN-STD",
+   "ten_san_pham": "Hợp đôi",
+   "kenh": "zalo",
+   "gia_goc": 299000,
+   "ma_giam": null,
+   "so_tien_giam": 0,
+   "tong": 299000,
+   "trang_thai": "cho_thanh_toan",
+   "la_qua": false,
+   "items": [],
+   "reports": [],
+   "so_mon": 1,
+   "ma_combo": null,
+   "giam_combo": 0,
+   "tuy_chon_them": null,
+   "phi_tuy_chon_them": 0,
+   "utm": null,
+   "ma_doi_tac": null,
+   "gia_lap": false,
+   "qr": {
+    "noi_dung_ck": "CTS2C3D4E5F60",
+    "so_tien": 299000,
+    "ngan_hang": "MB",
+    "so_tk": "0000000000",
+    "url": "https://api.example.vn/v1/pay/vietqr.png?acc=0000000000&bank=MB&amount=299000&des=CTS2C3D4E5F60"
+   },
+   "created_at": "2026-11-01T02:00:00+00:00",
+   "expires_at": "2026-11-01T04:00:00+00:00",
+   "la_thue_bao": false,
+   "he_nha": null
+  }
+ }
+}

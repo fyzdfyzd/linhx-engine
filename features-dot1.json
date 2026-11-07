@@ -3,12 +3,16 @@
  "dot": "1",
  "prd": "Claude Doc https://claude.ai/artifact/QaCuXJbnuTuxgQSmCSyom9 + 04-CHOT-KIEN-TRUC.md",
  "dich": "Một lead đi trọn đường và một đơn báo cáo trả QR tự giao, trên hai bản cài linhx và ifagent",
- "trang_thai": "Linh CHỐT 8/11 05:35 VN; chưa khoá, chờ tests/nghiem-thu",
+ "trang_thai": "Linh CHỐT 8/11 05:35 VN; khoá lại 8/11 khi thêm vung (cổng vùng K1, Linh duyệt)",
  "features": [
   {
    "id": "N1",
    "uu_tien": 1,
    "phu_thuoc": [],
+   "vung": [
+    ".github/workflows/**",
+    "README.md"
+   ],
    "mo_ta": "Repo linhx-engine có code ENGINE 0.1 (apps/linhx_worker, front, runner, deploy); CI chạy tests/nghiem-thu",
    "tieu_chi": [
     "CI xanh trên nhánh tu-dong/*",
@@ -23,6 +27,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "N1"
+   ],
+   "vung": [
+    "nguon/**"
    ],
    "mo_ta": "Chép PROTO 03 OPC OS và 01 Máy nội dung từ D:\\LINHX\\PROTO vào nguon/ (chỉ đọc, không chạy)",
    "tieu_chi": [
@@ -39,6 +46,9 @@
    "phu_thuoc": [
     "N1"
    ],
+   "vung": [
+    "apps/linhx_core/**"
+   ],
    "mo_ta": "Khung app Frappe linhx_core: cài được trên bench, mỗi module bật/tắt bằng cờ trong LX Cau Hinh",
    "tieu_chi": [
     "bench --site test install-app linhx_core chạy không lỗi",
@@ -53,6 +63,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "N3"
+   ],
+   "vung": [
+    "cli/**"
    ],
    "mo_ta": "Lệnh `linhx tao-site <ten> --cau-hinh <file>`: tạo bản cài mới, cài linhx_core + linhx_worker, bật module theo cấu hình",
    "tieu_chi": [
@@ -69,6 +82,9 @@
    "phu_thuoc": [
     "N4"
    ],
+   "vung": [
+    "deploy/**"
+   ],
    "mo_ta": "Tạo hai bản cài linhx và ifagent trên VM linhx-engine-1, mỗi bản một DB",
    "tieu_chi": [
     "GET /api/method/ping của cả hai trả 200",
@@ -83,6 +99,10 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "N5"
+   ],
+   "vung": [
+    "deploy/**",
+    "apps/linhx_core/**"
    ],
    "mo_ta": "Sao lưu DB hằng ngày mỗi bản cài + nhật ký truy cập dữ liệu khách",
    "tieu_chi": [
@@ -100,6 +120,9 @@
     "N2",
     "N3"
    ],
+   "vung": [
+    "apps/linhx_core/linhx_core/crm/**"
+   ],
    "mo_ta": "DocType LX Don Vi, LX To Chuc, LX Nguoi; khoá gộp trùng theo điện thoại, email, Zalo; chuyển từ PROTO 03 m04",
    "tieu_chi": [
     "Thêm hai Người cùng số điện thoại thì gộp một",
@@ -115,6 +138,9 @@
    "phu_thuoc": [
     "A1"
    ],
+   "vung": [
+    "apps/linhx_core/linhx_core/crm/**"
+   ],
    "mo_ta": "LX Quan He, LX Co Hoi; giao người phụ trách, báo việc chờ",
    "tieu_chi": [
     "Cơ hội mới có người phụ trách trong 1 giờ (kiểm bằng trường han_giao)"
@@ -128,6 +154,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "A1"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/crm/**"
    ],
    "mo_ta": "LX Dong Y theo mục đích (liên hệ, chuyển chéo, marketing), rút đồng ý, nhật ký",
    "tieu_chi": [
@@ -143,6 +172,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "A1"
+   ],
+   "vung": [
+    "apps/linhx_core/**"
    ],
    "mo_ta": "Quyền theo Đơn vị: người của đơn vị chỉ thấy dữ liệu đơn vị mình",
    "tieu_chi": [
@@ -160,6 +192,9 @@
     "A3",
     "N5"
    ],
+   "vung": [
+    "apps/linhx_core/**"
+   ],
    "mo_ta": "API chuyển lead giữa hai bản cài có ghi công (nguồn, đơn vị, thời điểm)",
    "tieu_chi": [
     "Lead từ ifagent sang linhx giữ trường ghi_cong",
@@ -176,6 +211,9 @@
     "N2",
     "N3"
    ],
+   "vung": [
+    "apps/linhx_core/linhx_core/pay/**"
+   ],
    "mo_ta": "LX Goi, LX Gia, LX Quyen Dung; chuyển từ PROTO 03 m02",
    "tieu_chi": [
     "Một Gói có giá sàn; quyền dùng cấp khi đơn trả"
@@ -190,6 +228,9 @@
    "phu_thuoc": [
     "B1"
    ],
+   "vung": [
+    "apps/linhx_core/linhx_core/pay/**"
+   ],
    "mo_ta": "LX Don + mã VietQR theo đơn; chuyển từ PROTO 03 m03",
    "tieu_chi": [
     "Đơn mới trả ảnh QR đúng số tiền và nội dung có mã đơn"
@@ -203,6 +244,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "B2"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/pay/**"
    ],
    "mo_ta": "Webhook SePay: đối soát, chống trùng tx_id, chuyển đơn sang da_tra",
    "tieu_chi": [
@@ -219,6 +263,10 @@
    "phu_thuoc": [
     "B3"
    ],
+   "vung": [
+    "apps/linhx_core/linhx_core/pay/**",
+    "apps/linhx_worker/**"
+   ],
    "mo_ta": "Đơn báo cáo 'AI nói gì' đã trả tự tạo LX Job, giao link báo cáo, bỏ duyệt tay",
    "tieu_chi": [
     "Đơn da_tra sinh Job trong 1 phút"
@@ -232,6 +280,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "B3"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/pay/**"
    ],
    "mo_ta": "Sổ S1a-HKD và báo đỏ khi doanh thu chạm ngưỡng; chuyển từ PROTO 03 m07",
    "tieu_chi": [
@@ -248,6 +299,9 @@
    "phu_thuoc": [
     "N1"
    ],
+   "vung": [
+    "trang-bu/**"
+   ],
    "mo_ta": "Khuôn Next.js Trang BU từ demo ifAgent, đọc nội dung từ API bản cài",
    "tieu_chi": [
     "Dựng tĩnh được, chụp 390 và 1280 không tràn ngang"
@@ -263,6 +317,10 @@
     "C1",
     "A3"
    ],
+   "vung": [
+    "trang-bu/**",
+    "apps/linhx_core/linhx_core/crm/**"
+   ],
    "mo_ta": "Form Trang BU ghi Người + Cơ hội + Đồng ý vào bản cài",
    "tieu_chi": [
     "Gửi form thì có Người, Cơ hội, Đồng ý mới"
@@ -277,6 +335,11 @@
    "phu_thuoc": [
     "C2"
    ],
+   "vung": [
+    "trang-bu/**",
+    "sites/ifagent/**",
+    "deploy/**"
+   ],
    "mo_ta": "ifagent.net bản mới trên khuôn, chạy trên IP VM (chưa đổi DNS)",
    "tieu_chi": [
     "Trang chạy trên IP, form về bản cài ifagent"
@@ -290,6 +353,10 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "C1"
+   ],
+   "vung": [
+    "trang-bu/**",
+    "sites/ifagent/**"
    ],
    "mo_ta": "Tool T1 Khám (LAB113) thành freebie trên Trang BU",
    "tieu_chi": [
@@ -306,6 +373,11 @@
     "D1",
     "A3"
    ],
+   "vung": [
+    "trang-bu/**",
+    "sites/ifagent/**",
+    "apps/linhx_core/linhx_core/crm/**"
+   ],
    "mo_ta": "Kết quả đầy đủ T1 đổi lấy email/Zalo, ghi Người + Đồng ý + tầng phễu",
    "tieu_chi": [
     "Nhập email nhận kết quả, có Người mới gắn nguồn T1"
@@ -320,6 +392,10 @@
    "phu_thuoc": [
     "A2",
     "B3"
+   ],
+   "vung": [
+    "apps/linhx_core/**",
+    "front/**"
    ],
    "mo_ta": "Bảng phễu 6 tầng bản 1 (biết, mồi, liên hệ, cơ hội/đơn, khách, quay lại) đếm từ crm + pay",
    "tieu_chi": [
@@ -336,6 +412,11 @@
     "A2",
     "B2"
    ],
+   "vung": [
+    "front/**",
+    "apps/linhx_core/**",
+    "apps/linhx_worker/**"
+   ],
    "mo_ta": "Bàn /#/engine thêm: việc chờ anh, lead mới, đơn mới",
    "tieu_chi": [
     "Lead và đơn mới hiện trên bàn trong 1 phút"
@@ -349,6 +430,10 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "N3"
+   ],
+   "vung": [
+    "front/**",
+    "apps/linhx_worker/**"
    ],
    "mo_ta": "Token và phút mỗi LX Job hiện trên bàn",
    "tieu_chi": [
@@ -367,6 +452,9 @@
     "A5",
     "E1"
    ],
+   "vung": [
+    "tests/e2e/**"
+   ],
    "mo_ta": "Playwright: một lead đi trọn (T1 → hồ sơ + đồng ý → cơ hội → giao người → thấy trên bàn), 390 và 1280",
    "tieu_chi": [
     "Hành trình xanh trên VM"
@@ -380,6 +468,9 @@
    "uu_tien": 1,
    "phu_thuoc": [
     "B4"
+   ],
+   "vung": [
+    "tests/e2e/**"
    ],
    "mo_ta": "Playwright: một đơn báo cáo trả QR (webhook giả lập SePay) rồi tự giao",
    "tieu_chi": [

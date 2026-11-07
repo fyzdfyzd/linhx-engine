@@ -1,0 +1,46 @@
+{
+ "loai": "webhook",
+ "mo_ta": "trả thiếu",
+ "vao": {
+  "id": 9100002,
+  "gateway": "MBBank",
+  "transactionDate": "2026-11-01 09:00:00",
+  "accountNumber": "0000000000",
+  "code": null,
+  "content": "CTS1B2C3D4E5F",
+  "transferType": "in",
+  "transferAmount": 100000,
+  "accumulated": 0,
+  "subAccount": null,
+  "referenceCode": "FT26305000002",
+  "description": "BankAPINotify CTS1B2C3D4E5F"
+ },
+ "truoc": {
+  "don": [
+   {
+    "order_id": "ord_w02",
+    "noi_dung_ck": "CTS1B2C3D4E5F",
+    "tong": 199000,
+    "da_nhan": 0,
+    "trang_thai": "cho_thanh_toan"
+   }
+  ],
+  "tx_da_co": []
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "ok": true,
+   "status": "matched",
+   "tx_id": "9100002",
+   "order_id": "ord_w02",
+   "trang_thai": "thieu_tien",
+   "da_nhan": 100000,
+   "chenh_lech": 0
+  }
+ },
+ "sau": {
+  "trang_thai": "thieu_tien",
+  "da_nhan": 100000
+ }
+}

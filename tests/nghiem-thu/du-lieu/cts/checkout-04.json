@@ -1,0 +1,53 @@
+{
+ "loai": "checkout",
+ "mo_ta": "dự báo năm, đồng ý nhận tin",
+ "vao": {
+  "sku": "SKU-CT-YEAR-2027-STD",
+  "kenh": "web",
+  "ho_so": {
+   "ho_ten": "Khách Bốn",
+   "ngay_sinh": "1995-07-07",
+   "gio_sinh": "12:00",
+   "noi_sinh": "TP Hồ Chí Minh"
+  },
+  "email": "khach04@vidu.vn",
+  "dong_y_dieu_khoan": true,
+  "dong_y_nhan_tin": true
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "order_id": "ord_0000000000000000",
+   "sku": "SKU-CT-YEAR-2027-STD",
+   "ten_san_pham": "Dự báo năm 2027",
+   "kenh": "web",
+   "gia_goc": 249000,
+   "ma_giam": null,
+   "so_tien_giam": 0,
+   "tong": 249000,
+   "trang_thai": "cho_thanh_toan",
+   "la_qua": false,
+   "items": [],
+   "reports": [],
+   "so_mon": 1,
+   "ma_combo": null,
+   "giam_combo": 0,
+   "tuy_chon_them": null,
+   "phi_tuy_chon_them": 0,
+   "utm": null,
+   "ma_doi_tac": null,
+   "gia_lap": false,
+   "qr": {
+    "noi_dung_ck": "CTS3D4E5F6071",
+    "so_tien": 249000,
+    "ngan_hang": "MB",
+    "so_tk": "0000000000",
+    "url": "https://api.example.vn/v1/pay/vietqr.png?acc=0000000000&bank=MB&amount=249000&des=CTS3D4E5F6071"
+   },
+   "created_at": "2026-11-01T02:00:00+00:00",
+   "expires_at": "2026-11-01T04:00:00+00:00",
+   "la_thue_bao": false,
+   "he_nha": null
+  }
+ }
+}

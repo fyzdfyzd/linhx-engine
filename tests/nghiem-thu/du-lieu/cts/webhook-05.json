@@ -1,0 +1,45 @@
+{
+ "loai": "webhook",
+ "mo_ta": "giao dịch trùng tx_id",
+ "vao": {
+  "id": 9100005,
+  "gateway": "MBBank",
+  "transactionDate": "2026-11-01 09:00:00",
+  "accountNumber": "0000000000",
+  "code": null,
+  "content": "CTS3D4E5F6071",
+  "transferType": "in",
+  "transferAmount": 199000,
+  "accumulated": 0,
+  "subAccount": null,
+  "referenceCode": "FT26305000005",
+  "description": "BankAPINotify CTS3D4E5F6071"
+ },
+ "truoc": {
+  "don": [
+   {
+    "order_id": "ord_w05",
+    "noi_dung_ck": "CTS3D4E5F6071",
+    "tong": 199000,
+    "da_nhan": 199000,
+    "trang_thai": "da_thanh_toan"
+   }
+  ],
+  "tx_da_co": [
+   "9100005"
+  ]
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "ok": true,
+   "idempotent": true,
+   "tx_id": "9100005",
+   "order_id": "ord_w05"
+  }
+ },
+ "sau": {
+  "trang_thai": "da_thanh_toan",
+  "da_nhan": 199000
+ }
+}

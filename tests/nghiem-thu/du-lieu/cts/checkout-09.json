@@ -1,0 +1,22 @@
+{
+ "loai": "checkout",
+ "mo_ta": "sku không có",
+ "vao": {
+  "sku": "SKU-KHONG-CO",
+  "kenh": "web",
+  "ho_so": {
+   "ho_ten": "Khách Chín",
+   "ngay_sinh": "1991-04-04",
+   "gio_sinh": "10:00",
+   "noi_sinh": "Hà Nội"
+  },
+  "email": "khach09@vidu.vn",
+  "dong_y_dieu_khoan": true
+ },
+ "ra": {
+  "http": 404,
+  "body": {
+   "detail": "Không tìm thấy sản phẩm 'SKU-KHONG-CO' trên kênh 'web'"
+  }
+ }
+}

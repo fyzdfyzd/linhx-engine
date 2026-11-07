@@ -1,0 +1,52 @@
+{
+ "loai": "checkout",
+ "mo_ta": "dự báo 3 tháng",
+ "vao": {
+  "sku": "SKU-CT-3M-STD",
+  "kenh": "web",
+  "ho_so": {
+   "ho_ten": "Khách Năm",
+   "ngay_sinh": "2000-03-03",
+   "gio_sinh": "03:33",
+   "noi_sinh": "Cần Thơ"
+  },
+  "email": "khach05@vidu.vn",
+  "dong_y_dieu_khoan": true
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "order_id": "ord_0000000000000000",
+   "sku": "SKU-CT-3M-STD",
+   "ten_san_pham": "Dự báo 3 tháng",
+   "kenh": "web",
+   "gia_goc": 99000,
+   "ma_giam": null,
+   "so_tien_giam": 0,
+   "tong": 99000,
+   "trang_thai": "cho_thanh_toan",
+   "la_qua": false,
+   "items": [],
+   "reports": [],
+   "so_mon": 1,
+   "ma_combo": null,
+   "giam_combo": 0,
+   "tuy_chon_them": null,
+   "phi_tuy_chon_them": 0,
+   "utm": null,
+   "ma_doi_tac": null,
+   "gia_lap": false,
+   "qr": {
+    "noi_dung_ck": "CTS4E5F607182",
+    "so_tien": 99000,
+    "ngan_hang": "MB",
+    "so_tk": "0000000000",
+    "url": "https://api.example.vn/v1/pay/vietqr.png?acc=0000000000&bank=MB&amount=99000&des=CTS4E5F607182"
+   },
+   "created_at": "2026-11-01T02:00:00+00:00",
+   "expires_at": "2026-11-01T04:00:00+00:00",
+   "la_thue_bao": false,
+   "he_nha": null
+  }
+ }
+}

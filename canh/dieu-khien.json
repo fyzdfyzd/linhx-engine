@@ -1,18 +1,63 @@
 {
-  "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE đợt 1 (dieu-phoi-engine.ps1 đọc mỗi lượt). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có nghiệm thu). cho: feature tạm giữ, kèm lý do. vung: hai thợ không cùng lúc giữ hai feature chung vùng.",
+  "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE (canh/dieu-phoi-engine.ps1 đọc mỗi lượt từ nhánh main). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có tests/nghiem-thu/test_<id>.py); feature tìm trong cac_file_features theo thứ tự. cho: feature tạm giữ, kèm lý do (N2 tự mở khi có D:\\LINHX\\PROTO). nhom: hai thợ không cùng lúc giữ hai feature cùng nhóm (khác với vung trong features: vung là rào file). tran_chua_dat: số lần CHUA_DAT liền thì lùi về mốc, dừng feature, ghi CAN-LINH (K2). bao_mat: feature phải qua thêm lượt chấm bảo mật sau khi đạt (K4). agy_dinh_dang: stream-json (để K3 đọc file agy ghi) hoặc json.",
   "trang_thai": "chay",
   "so_tho": 2,
   "agy_toan_quyen": true,
   "agy_model": "",
   "agy_effort": "",
+  "agy_dinh_dang": "stream-json",
   "phut_toi_da": 40,
-  "giao": ["N1", "N2", "N3", "A1", "B1", "C1", "N4", "N5", "N6"],
+  "tran_chua_dat": 3,
+  "cac_file_features": [
+    "features-dot1.json",
+    "features-dot1b.json"
+  ],
+  "giao": [
+    "N1",
+    "N2",
+    "N3",
+    "A1",
+    "B1",
+    "C1",
+    "N4",
+    "N5",
+    "N6",
+    "R1",
+    "R2",
+    "Q1",
+    "W1",
+    "C4"
+  ],
   "cho": {
-    "N2": "máy cty chưa có D:\\LINHX\\PROTO (03 OPC OS, 01 Máy tạo nội dung); Linh chép sang rồi xoá dòng này",
+    "N2": "máy cty chưa có D:\\LINHX\\PROTO (03 OPC OS, 01 Máy tạo nội dung); bộ điều phối tự mở khi thấy cả hai thư mục",
     "N4": "Linh chưa mở; đợt đầu chỉ N1-N3, A1, B1, C1",
     "N5": "Linh chưa mở",
     "N6": "Linh chưa mở"
   },
-  "vung": { "N1": "core", "N2": "nguon", "N3": "core", "A1": "core", "B1": "core", "C1": "front", "N4": "cli", "N5": "deploy", "N6": "deploy" },
+  "nhom": {
+    "N1": "ci",
+    "N2": "nguon",
+    "N3": "core",
+    "A1": "core",
+    "B1": "core",
+    "C1": "trang-bu",
+    "N4": "cli",
+    "N5": "deploy",
+    "N6": "deploy",
+    "R1": "cts",
+    "R2": "cts",
+    "Q1": "front",
+    "W1": "front",
+    "C4": "sites"
+  },
+  "bao_mat": [
+    "B2",
+    "B3",
+    "B4",
+    "A3",
+    "A5",
+    "R1",
+    "R2"
+  ],
   "ghi_chu_cho_agy": ""
 }

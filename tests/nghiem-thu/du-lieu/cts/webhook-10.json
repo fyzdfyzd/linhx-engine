@@ -1,0 +1,46 @@
+{
+ "loai": "webhook",
+ "mo_ta": "chuyển muộn vào đơn hết hạn",
+ "vao": {
+  "id": 9100010,
+  "gateway": "MBBank",
+  "transactionDate": "2026-11-01 09:00:00",
+  "accountNumber": "0000000000",
+  "code": null,
+  "content": "CTS6071829304",
+  "transferType": "in",
+  "transferAmount": 199000,
+  "accumulated": 0,
+  "subAccount": null,
+  "referenceCode": "FT26305000010",
+  "description": "BankAPINotify CTS6071829304"
+ },
+ "truoc": {
+  "don": [
+   {
+    "order_id": "ord_w10",
+    "noi_dung_ck": "CTS6071829304",
+    "tong": 199000,
+    "da_nhan": 0,
+    "trang_thai": "het_han"
+   }
+  ],
+  "tx_da_co": []
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "ok": true,
+   "status": "matched",
+   "tx_id": "9100010",
+   "order_id": "ord_w10",
+   "trang_thai": "can_hoan_tien",
+   "da_nhan": 199000,
+   "chenh_lech": 199000
+  }
+ },
+ "sau": {
+  "trang_thai": "can_hoan_tien",
+  "da_nhan": 199000
+ }
+}

@@ -1,0 +1,46 @@
+{
+ "loai": "webhook",
+ "mo_ta": "trả đủ, nội dung chữ thường",
+ "vao": {
+  "id": 9100001,
+  "gateway": "MBBank",
+  "transactionDate": "2026-11-01 09:00:00",
+  "accountNumber": "0000000000",
+  "code": null,
+  "content": "cts0a1b2c3d4e chuyen tien",
+  "transferType": "in",
+  "transferAmount": 199000,
+  "accumulated": 0,
+  "subAccount": null,
+  "referenceCode": "FT26305000001",
+  "description": "BankAPINotify cts0a1b2c3d4e chuyen tien"
+ },
+ "truoc": {
+  "don": [
+   {
+    "order_id": "ord_w01",
+    "noi_dung_ck": "CTS0A1B2C3D4E",
+    "tong": 199000,
+    "da_nhan": 0,
+    "trang_thai": "cho_thanh_toan"
+   }
+  ],
+  "tx_da_co": []
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "ok": true,
+   "status": "matched",
+   "tx_id": "9100001",
+   "order_id": "ord_w01",
+   "trang_thai": "da_thanh_toan",
+   "da_nhan": 199000,
+   "chenh_lech": 0
+  }
+ },
+ "sau": {
+  "trang_thai": "da_thanh_toan",
+  "da_nhan": 199000
+ }
+}

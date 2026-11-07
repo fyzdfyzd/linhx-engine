@@ -1,0 +1,43 @@
+{
+ "loai": "webhook",
+ "mo_ta": "nội dung không có mã CTS",
+ "vao": {
+  "id": 9100007,
+  "gateway": "MBBank",
+  "transactionDate": "2026-11-01 09:00:00",
+  "accountNumber": "0000000000",
+  "code": null,
+  "content": "chuyen khoan mua hang",
+  "transferType": "in",
+  "transferAmount": 199000,
+  "accumulated": 0,
+  "subAccount": null,
+  "referenceCode": "FT26305000007",
+  "description": "BankAPINotify chuyen khoan mua hang"
+ },
+ "truoc": {
+  "don": [
+   {
+    "order_id": "ord_w07",
+    "noi_dung_ck": "CTS5F60718293",
+    "tong": 199000,
+    "da_nhan": 0,
+    "trang_thai": "cho_thanh_toan"
+   }
+  ],
+  "tx_da_co": []
+ },
+ "ra": {
+  "http": 200,
+  "body": {
+   "ok": true,
+   "status": "unmatched",
+   "tx_id": "9100007",
+   "noi_dung_ck": null
+  }
+ },
+ "sau": {
+  "trang_thai": "cho_thanh_toan",
+  "da_nhan": 0
+ }
+}

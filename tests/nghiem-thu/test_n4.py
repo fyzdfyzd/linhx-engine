@@ -1,7 +1,7 @@
 """N4: lệnh `linhx tao-site <ten> --cau-hinh <file>` tạo bản cài mới, cài linhx_core + linhx_worker, bật module theo cấu hình.
 
 Hợp đồng (HOP-DONG.md):
-- Gói CLI ở linhx-engine/cli/linhx_cli (chạy: python -m linhx_cli ..., PYTHONPATH=linhx-engine/cli)
+- Gói CLI ở cli/linhx_cli (chạy: python -m linhx_cli ..., PYTHONPATH=cli)
 - `tao-site <ten> --cau-hinh <file.json> --sites-dir <thư mục sites của bench> --chay-thu`
   in ra stdout một JSON {"lenh": [chuỗi lệnh shell sẽ chạy, theo thứ tự]} và KHÔNG chạy gì
 - file cấu hình: {"modules": {"crm": true, "pay": false}}
