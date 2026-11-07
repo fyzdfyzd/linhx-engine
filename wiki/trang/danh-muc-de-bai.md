@@ -11,6 +11,7 @@ nguon: [features-dot1.json, features-dot1b.json, tests/nghiem-thu/HOP-DONG.md]
 
 | Đề | Ở đâu | Trạng thái |
 |---|---|---|
+| Bảng mọi feature engine, cập nhật tự động | [[tinh-nang]] | sinh bằng `scripts/wiki_tu_features.py` |
 | Engine đợt 1 (26 feature N, A, B, C, D, E, T) | `features-dot1.json` + `.khoa`, `tests/nghiem-thu/` repo này | đã khoá, đang giao thợ |
 | Engine đợt 1b (W1, Q1, C4, R1, R2) | `features-dot1b.json` | nháp, chờ nghiệm thu rồi khoá |
 | Đề agy cho workflow báo cáo | `apps/linhx_worker/linhx_worker/de/*.md` | đang chạy |

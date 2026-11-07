@@ -47,6 +47,7 @@
 | [quyet-dinh](trang/quyet-dinh.md) | Sổ quyết định của Linh, có ngày giờ | 2026-11-08 |
 | [cho-linh](trang/cho-linh.md) | Việc đang chờ Linh, máy nào, chặn gì | 2026-11-08 |
 | [danh-muc-artifact](trang/danh-muc-artifact.md) | Artifact và Claude Doc đang dùng, luật giữ URL | 2026-11-08 |
+| [tinh-nang](trang/tinh-nang.md) | Mọi feature engine theo đợt, khoá chưa, đạt bao nhiêu (sinh từ features-dot*.json) | tự động |
 | [danh-muc-de-bai](trang/danh-muc-de-bai.md) | features, nghiệm thu, đề agy ở đâu | 2026-11-08 |
 
 ## Nguồn gốc (chỉ đọc)

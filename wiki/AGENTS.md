@@ -19,6 +19,16 @@ Có quyết định mới, trạng thái mới, đường dẫn mới, đề bà
 5. Thêm một dòng cuối `LOG.md`: `YYYY-MM-DD HH:MMZ | ai | nap/sua/ra | trang | một câu`.
 6. Tài liệu gốc mới (bàn giao, đề, báo cáo): chép vào `nguon/` tên `YYYY-MM-DD-TEN-IN-HOA.md`. **Không sửa file trong `nguon/`** sau khi đã chép; bản mới là file mới.
 
+## Có tính năng hay đề bài mới cho engine
+| Việc | Ai | Ghi gì |
+|---|---|---|
+| Ý mới từ Linh (chưa thành đề) | thread nhận ý | một dòng vào trang nhóm/dự án liên quan, mục "Chờ"; nếu là quyết thì thêm `quyet-dinh` |
+| Viết hoặc sửa `features-dotN.json` | Claude | chạy `python scripts/wiki_tu_features.py` (trang `tinh-nang` tự sinh), sửa `lo-trinh`/`hop-nhat` nếu đổi chặng hay đường gộp, thêm LOG; commit chung với features |
+| Linh duyệt, khoá đợt | Claude | dòng `quyet-dinh`, xoá dòng ở `cho-linh` |
+| Feature đạt (passes:true sau cong_kiem) | Claude khi chấm | chạy lại `wiki_tu_features.py`, thêm LOG |
+| Đổi quy hoạch trên bảng Wyeq3 | Claude | chụp db thành `nguon/<ngay>-BANG-HE-THONG.json` mới, chạy `scripts/wiki_tu_bang.py` |
+`python scripts/ra_wiki.py` báo LỖI nếu trang `tinh-nang` lệch với features, nên quên chạy là bị bắt.
+
 ## Cấm
 - Không ghi bí mật: mật khẩu, token, khoá API, cookie, số tài khoản, dữ liệu khách. Chỉ ghi "nằm ở đâu".
 - Không xoá trang. Hết hiệu lực thì đổi `trang_thai: cu` và ghi trang thay thế.

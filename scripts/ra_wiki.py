@@ -2,7 +2,7 @@
 
 Dùng: python scripts/ra_wiki.py [--ngay-cu 14]   (thoát 1 nếu có lỗi chặn)
 """
-import re, sys, datetime
+import re, sys, datetime, subprocess
 from pathlib import Path
 
 GOC = Path(__file__).resolve().parent.parent / "wiki"
@@ -38,6 +38,9 @@ def main():
     for ten in trang:
         if ten not in duoc_tro and ten != "tong-quan":
             nhac.append(f"trang/{ten}.md: mồ côi (không trang nào trỏ tới)")
+    kq = subprocess.run([sys.executable, str(Path(__file__).with_name("wiki_tu_features.py")), "--kiem"], capture_output=True, text=True)
+    if kq.returncode:
+        loi.append(kq.stdout.strip().removeprefix("LỖI  "))
     for x in loi:
         print("LỖI ", x)
     for x in nhac:
