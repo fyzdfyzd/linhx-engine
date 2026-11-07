@@ -1,0 +1,100 @@
+{
+ "san_pham": "LINHX ENGINE nền",
+ "dot": "1b",
+ "prd": "Claude Doc https://claude.ai/artifact/QaCuXJbnuTuxgQSmCSyom9 mục 4 đích đợt 1 (Linh 8/11 05:58)",
+ "dich": "Bổ sung đợt 1: bảng thợ, trang bán báo cáo QR cho CSMO, Trang BU thứ hai chỉ bằng cấu hình, CTS sẵn sàng chuyển pay + đơn sang engine (chế độ bóng)",
+ "trang_thai": "Linh duyệt hướng 8/11; chờ nghiệm thu rồi khoá",
+ "features": [
+  {
+   "id": "W1",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "E2"
+   ],
+   "vung": [
+    "apps/linhx_worker/**",
+    "front/**"
+   ],
+   "mo_ta": "Bảng thợ trên /#/engine: phiếu đang chạy, phút, token, tỉ lệ phiếu sửa theo tuần, số lần chạm trần",
+   "tieu_chi": [
+    "Đọc từ VONG/nhật ký phiếu, khớp số phiếu thật",
+    "Tỉ lệ phiếu sửa tính đúng trên 10 phiếu mẫu"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_w1.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q1",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "B2"
+   ],
+   "vung": [
+    "front/**",
+    "apps/linhx_core/linhx_core/pay/**"
+   ],
+   "mo_ta": "Trang bán báo cáo 'AI nói gì về thương hiệu' trên template đã có của 0.1: nhập thương hiệu, chọn gói, nút trả QR gọi B2",
+   "tieu_chi": [
+    "Từ trang bán tới ảnh QR ≤ 3 bước, chụp 390 và 1280",
+    "Không lộ giá khác catalog"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q1.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "C4",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "C3"
+   ],
+   "vung": [
+    "sites/unikon/**"
+   ],
+   "mo_ta": "Trang BU thứ hai (unikon) dựng chỉ bằng file cấu hình trên khuôn C1, không sửa code khuôn",
+   "tieu_chi": [
+    "Thêm một file cấu hình là có site chạy",
+    "Diff không đụng thư mục khuôn"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c4.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "R1",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "B3"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/cts_adapter/**"
+   ],
+   "mo_ta": "Adapter CTS: endpoint engine nhận đúng payload tạo đơn và webhook SePay hiện nay của Chiêm Tinh Số, trả cùng dạng",
+   "tieu_chi": [
+    "Test hợp đồng chạy với 20 payload mẫu lấy từ CTS (đã ẩn danh), kết quả cùng dạng"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_r1.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "R2",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "R1"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/cts_adapter/**"
+   ],
+   "mo_ta": "Chế độ bóng: bản sao webhook SePay của CTS đẩy sang engine, engine ghi đơn bóng và báo lệch; cờ tắt mặc định, không giao hàng",
+   "tieu_chi": [
+    "100 đơn mẫu khớp số tiền, trạng thái",
+    "Cờ tắt thì engine không nhận"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_r2.py -q",
+   "passes": false,
+   "bang_chung": null
+  }
+ ]
+}
