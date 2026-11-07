@@ -1,0 +1,18 @@
+{
+  "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE đợt 1 (dieu-phoi-engine.ps1 đọc mỗi lượt). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có nghiệm thu). cho: feature tạm giữ, kèm lý do. vung: hai thợ không cùng lúc giữ hai feature chung vùng.",
+  "trang_thai": "chay",
+  "so_tho": 2,
+  "agy_toan_quyen": true,
+  "agy_model": "",
+  "agy_effort": "",
+  "phut_toi_da": 40,
+  "giao": ["N1", "N2", "N3", "A1", "B1", "C1", "N4", "N5", "N6"],
+  "cho": {
+    "N2": "máy cty chưa có D:\\LINHX\\PROTO (03 OPC OS, 01 Máy tạo nội dung); Linh chép sang rồi xoá dòng này",
+    "N4": "Linh chưa mở; đợt đầu chỉ N1-N3, A1, B1, C1",
+    "N5": "Linh chưa mở",
+    "N6": "Linh chưa mở"
+  },
+  "vung": { "N1": "core", "N2": "nguon", "N3": "core", "A1": "core", "B1": "core", "C1": "front", "N4": "cli", "N5": "deploy", "N6": "deploy" },
+  "ghi_chu_cho_agy": ""
+}
