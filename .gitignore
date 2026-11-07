@@ -3,3 +3,8 @@ runner/tho.env
 runner/viec/
 runner/tho.log
 __pycache__/
+KIEM-*.json
+trang-bu/node_modules/
+trang-bu/.next/
+trang-bu/out/
+.canh/log/
