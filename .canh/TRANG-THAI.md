@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 06:39 (giờ máy cty). Đạt: 0/31 
+Cập nhật 2026-11-08 06:49 (giờ máy cty). Đạt: 0/31 
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | - | rảnh | - |
+| 1 | N1 | rảnh | - |
 | 2 | - | rảnh | - |
 
 ## Chờ
@@ -14,5 +14,9 @@ Cập nhật 2026-11-08 06:39 (giờ máy cty). Đạt: 0/31
 - N6: Linh chưa mở
 
 ## Nhật ký gần nhất
-
+- 2026-11-08 06:39 t1: giao agy phiếu 20261108-0639-t1: N1
+- 2026-11-08 06:39 t2: giao agy phiếu 20261108-0639-t2: N1
+- 2026-11-08 06:40 canh: dừng phiếu 20261108-0639-t2 (N1 trùng thợ 1 do giao tranh nhau), sửa khoá giao
+- 2026-11-08 06:40 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-08 06:48 t1: agy xong phiếu 20261108-0639-t1 (N1) sau 9 phút
 
