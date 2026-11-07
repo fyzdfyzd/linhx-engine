@@ -220,6 +220,8 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
 
 # 3. Giao phiếu mới khi thợ rảnh
 if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
+  # khoá giao: chọn + giữ feature là một bước, hai thợ chạy cùng lúc không nhận trùng (lỗi 8/11 06:39)
+  $mxGiao = New-Object System.Threading.Mutex($false, "Global\ENGINE-Giao"); try { [void]$mxGiao.WaitOne(120000) } catch [System.Threading.AbandonedMutexException] {}
   $tatTH = @(TatCaF $dk $TichHop)
   $daDat = @{}; foreach ($y in $tatTH) { if ($y.passes) { $daDat[$y.id] = $true } }
   $coProto = -not (@($Proto | Where-Object { -not (Test-Path $_) }).Count)
@@ -242,12 +244,13 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
     } | Select-Object -First 1
   }
   $ram = [math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB, 1)
-  if ($ThuChon) { Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; Remove-Item $lk -Force -ErrorAction SilentlyContinue; exit 0 }
+  if ($ThuChon) { $mxGiao.ReleaseMutex(); Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; Remove-Item $lk -Force -ErrorAction SilentlyContinue; exit 0 }
   if ($chon -and $ram -lt 1.5) { Ghi "RAM trống $ram GB < 1,5 GB, chưa giao $chon"; $chon = $null }
+  if ($chon) { "$Tho" | Set-Content "$Canh\nhan\$chon.txt"; $chon | Set-Content "$S\dang.txt" }
+  $mxGiao.ReleaseMutex()
   if (-not $chon) { if (-not (Test-Path "$S\rong.txt")) { Ghi "không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)"; "" | Set-Content "$S\rong.txt" } }
   else {
     Remove-Item "$S\rong.txt" -Force -ErrorAction SilentlyContinue
-    "$Tho" | Set-Content "$Canh\nhan\$chon.txt"; $chon | Set-Content "$S\dang.txt"
     # lấy phần đã tích hợp (feature thợ khác đã đạt) trước khi làm
     git merge -q --no-edit $NhanhTH 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { git merge --abort 2>&1 | Out-Null; $them += "`n## Trước khi làm`nChạy git merge $NhanhTH, giải xung đột, giữ phần đã đạt của cả hai bên, commit `"${chon}: gộp tích hợp`"." }

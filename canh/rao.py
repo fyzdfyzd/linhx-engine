@@ -22,9 +22,9 @@ import sys
 LUON_CAM = ["tests/nghiem-thu/**", "**/*.khoa", "*.khoa", "pytest.ini", "canh/**", ".canh/**"]
 TU_GHI = {"write", "edit", "multiedit", "multi_edit", "create", "replace", "str_replace", "notebookedit",
           "write_file", "edit_file", "create_file", "replace_file_content", "write_to_file",
-          "multi_replace_file_content", "apply_patch", "patch"}
+          "multi_replace_file_content", "apply_patch", "patch", "sed_file", "notebook_edit"}
 KHOA_DUONG = ("file_path", "path", "filePath", "TargetFile", "target_file", "absolute_path",
-              "notebook_path", "AbsolutePath", "file")
+              "notebook_path", "AbsolutePath", "Path", "File", "FilePath", "TargetPath", "file")
 BI_MAT = re.compile(r"(^|/)(\.env|tho\.env)$|(^|/)\.env\.(?!example$|mau$|sample$)|\.(pem|key|p12|pfx)$")
 
 
