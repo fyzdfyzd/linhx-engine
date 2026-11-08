@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 10:59 (giờ máy cty). Đạt: 2/31 (N1, C1)
+Cập nhật 2026-11-08 11:09 (giờ máy cty). Đạt: 2/31 (N1, C1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | - | rảnh | CHUA_DAT · Feature N3 · commit 5e75e44 · nhánh tu-dong/engine-t1 · 2026-11-08T07:58:24 |
+| 1 | N3 | 20261108-1059-t1 từ 2026-11-08T10:59:40 | CHUA_DAT · Feature N3 · commit 5e75e44 · nhánh tu-dong/engine-t1 · 2026-11-08T07:58:24 |
 | 2 | - | rảnh | DAT · Feature C1 · commit 7f735d0 · nhánh tu-dong/engine-t2 · 2026-11-08T07:15:26 |
 
 ## Chờ
