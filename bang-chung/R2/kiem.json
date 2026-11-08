@@ -1,0 +1,38 @@
+{
+  "feature": "R2",
+  "luc": "2026-11-09T02:50:47+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 4 items",
+    "",
+    "tests/nghiem-thu/test_r2.py::test_co_tat_mac_dinh_thi_khong_nhan PASSED  [ 25%]",
+    "tests/nghiem-thu/test_r2.py::test_100_don_khop_so_tien_trang_thai PASSED [ 50%]",
+    "tests/nghiem-thu/test_r2.py::test_bao_lech_khi_khac PASSED               [ 75%]",
+    "tests/nghiem-thu/test_r2.py::test_khong_giao_hang_trong_ma PASSED        [100%]",
+    "",
+    "============================== 4 passed in 0.40s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 6 items",
+    "",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_thieu_cau_hinh_qr_bao_loi_va_khong_dung_gia_tri_gia PASSED [ 16%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_webhook_tu_choi_so_tien_am_hoac_khong PASSED [ 33%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_don_qua_expires_at_tu_chuyen_het_han_va_can_hoan_tien PASSED [ 50%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_doctype_pii_permissions_va_unique_tx_id PASSED [ 66%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_api_luu_db_va_chong_dua_webhook_dong_thoi PASSED [ 83%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_che_do_bong_r2_chi_tiet PASSED [100%]",
+    "",
+    "============================== 6 passed in 0.48s =============================="
+  ]
+}

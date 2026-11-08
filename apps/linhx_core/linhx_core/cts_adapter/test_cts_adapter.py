@@ -19,7 +19,7 @@ GOC_APP = pathlib.Path(__file__).resolve().parents[2]
 if str(GOC_APP) not in sys.path:
     sys.path.insert(0, str(GOC_APP))
 
-from linhx_core.cts_adapter import hop_dong
+from linhx_core.cts_adapter import bong, hop_dong
 
 
 class _DuplicateEntryError(Exception):
@@ -565,3 +565,68 @@ def test_api_luu_db_va_chong_dua_webhook_dong_thoi():
         frappe_mod._warnings.clear()
         api._doc_payload({"sku": "X"})
         assert len(frappe_mod._warnings) >= 2
+
+
+def test_che_do_bong_r2_chi_tiet():
+    assert bong.bat(None) is False
+    assert bong.bat({}) is False
+    assert bong.bat({"bat_bong": 1}) is False
+    assert bong.bat({"bat_bong": True}) is True
+
+    kho = {"don": [], "tx": []}
+    don_mau = {
+        "order_id": "ord_bong_01",
+        "noi_dung_ck": "cts1234567890",
+        "tong": 199000,
+        "da_nhan": 99999,
+        "trang_thai": "cho_thanh_toan",
+    }
+    # Cờ tắt -> không nhận
+    assert bong.nhan_don_bong(don_mau, {"bat_bong": False}, kho) is None
+    assert kho == {"don": [], "tx": []}
+
+    # Cờ bật -> chuẩn hoá mã CK chữ hoa và ghi da_nhan = 0
+    d_bong = bong.nhan_don_bong(don_mau, {"bat_bong": True}, kho)
+    assert d_bong is not None
+    assert d_bong["noi_dung_ck"] == "CTS1234567890"
+    assert d_bong["da_nhan"] == 0
+    assert len(kho["don"]) == 1
+
+    # Nhận webhook hợp lệ -> cập nhật da_nhan, trang_thai và luôn trả giao=False
+    wh = {
+        "id": 888001,
+        "content": "TT CTS1234567890",
+        "transferType": "in",
+        "transferAmount": 199000,
+    }
+    kq = bong.nhan_bong(wh, {"bat_bong": True}, kho)
+    assert kq == {
+        "tx_id": "888001",
+        "noi_dung_ck": "CTS1234567890",
+        "trang_thai": "da_thanh_toan",
+        "da_nhan": 199000,
+        "giao": False,
+    }
+
+    # Đối chiếu khi khớp hoàn toàn -> không lệch
+    cts_ds = [
+        {
+            "order_id": "ord_bong_01",
+            "noi_dung_ck": "CTS1234567890",
+            "tong": 199000,
+            "da_nhan": 199000,
+            "trang_thai": "da_thanh_toan",
+        }
+    ]
+    assert bong.so_lech(cts_ds, kho) == []
+
+    # Đơn chỉ có ở kho_bong -> báo thieu_don
+    assert bong.so_lech([], kho) == [
+        {
+            "noi_dung_ck": "CTS1234567890",
+            "truong": "thieu_don",
+            "cts": None,
+            "bong": "ord_bong_01",
+        }
+    ]
+
