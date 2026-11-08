@@ -1,0 +1,24 @@
+{
+  "feature": "Q1",
+  "luc": "2026-11-08T22:51:19+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 4 items",
+    "",
+    "tests/nghiem-thu/test_q1.py::test_catalog_cong_khai PASSED               [ 25%]",
+    "tests/nghiem-thu/test_q1.py::test_api_ban PASSED                         [ 50%]",
+    "tests/nghiem-thu/test_q1.py::test_front_khong_viet_cung_gia PASSED       [ 75%]",
+    "tests/nghiem-thu/test_q1.py::test_tu_trang_ban_toi_qr_3_buoc PASSED      [100%]",
+    "",
+    "============================== 4 passed in 2.80s =============================="
+  ],
+  "anh": [
+    ".canh-tho/anh/q1-390.png",
+    ".canh-tho/anh/q1-1280.png"
+  ]
+}
