@@ -83,7 +83,22 @@ def _loc_ung_vien_crm(frappe_mod, ds_user: list[str], don_vi: str | None) -> lis
 
 
 class LXCoHoi(Document):
+	def _gan_don_vi_tu_nguoi(self):
+		if not getattr(self, "don_vi", None) and getattr(self, "nguoi", None):
+			try:
+				import frappe
+
+				if getattr(frappe, "db", None):
+					dv = frappe.db.get_value("LX Nguoi", self.nguoi, "don_vi")
+					if dv:
+						self.don_vi = dv
+			except (ImportError, AttributeError):
+				pass
+			except Exception as exc:
+				_ghi_log_loi("LX Co Hoi: lỗi đọc đơn vị từ LX Nguoi", str(exc))
+
 	def validate(self):
+		self._gan_don_vi_tu_nguoi()
 		kiem_tra_quyen_doc(self, "validate")
 
 	def before_insert(self):
@@ -105,18 +120,8 @@ class LXCoHoi(Document):
 			except ValueError:
 				self.han_giao = han_toi_da
 
-		if not getattr(self, "don_vi", None) and getattr(self, "nguoi", None):
-			try:
-				import frappe
-
-				if getattr(frappe, "db", None):
-					dv = frappe.db.get_value("LX Nguoi", self.nguoi, "don_vi")
-					if dv:
-						self.don_vi = dv
-			except (ImportError, AttributeError):
-				pass
-			except Exception as exc:
-				_ghi_log_loi("LX Co Hoi: lỗi đọc đơn vị từ LX Nguoi", str(exc))
+		self._gan_don_vi_tu_nguoi()
+		kiem_tra_quyen_doc(self, "before_insert")
 
 		if not getattr(self, "phu_trach", None):
 			self._tu_giao_phu_trach()

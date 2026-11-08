@@ -326,11 +326,6 @@ def frappe_has_permission(doc, ptype=None, user=None, **kwargs):
     if ten_dt == "LX Co Hoi":
         if not dv_moi and doc_cu is None and don_vi_nguoi:
             dv_moi = don_vi_nguoi
-            if not isinstance(doc, dict):
-                try:
-                    doc.don_vi = don_vi_nguoi
-                except Exception:
-                    pass
         if dv_moi and don_vi_nguoi and dv_moi != don_vi_nguoi:
             return False
 
@@ -353,14 +348,8 @@ def kiem_tra_quyen_doc(doc, method=None) -> None:
         nguoi = _lay_thuoc_tinh(doc, "nguoi")
         don_vi_hien_tai = _lay_don_vi(doc)
         if nguoi:
-            don_vi_nguoi = _doc_don_vi_nguoi_tu_db(nguoi)
-            if not don_vi_hien_tai and don_vi_nguoi:
-                if isinstance(doc, dict):
-                    doc["don_vi"] = don_vi_nguoi
-                else:
-                    doc.don_vi = don_vi_nguoi
-                don_vi_hien_tai = don_vi_nguoi
-            if don_vi_hien_tai and don_vi_nguoi and don_vi_hien_tai != don_vi_nguoi:
+            don_vi_nguoi_db = _doc_don_vi_nguoi_tu_db(nguoi)
+            if don_vi_hien_tai and don_vi_nguoi_db and don_vi_hien_tai != don_vi_nguoi_db:
                 frappe.throw(
                     "Đơn vị của Cơ hội phải khớp với Đơn vị của Người",
                     frappe.PermissionError,
@@ -375,6 +364,8 @@ def kiem_tra_quyen_doc(doc, method=None) -> None:
     doc_cu = _doc_cu_tu_db(ten_dt, ten_doc, doc)
     don_vi_nguoi = _tim_don_vi_nguoi(ten_dt, doc, doc_cu)
     dv_moi = _lay_don_vi(doc)
+    if ten_dt == "LX Co Hoi" and not dv_moi and doc_cu is None and don_vi_nguoi:
+        dv_moi = don_vi_nguoi
 
     if ten_dt == "LX Co Hoi" and ten_doc and doc_cu is not None:
         nguoi_db = _doc_gia_tri_db("LX Co Hoi", ten_doc, "nguoi")
