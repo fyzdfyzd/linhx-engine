@@ -146,8 +146,20 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   if ($them | Select-String -Pattern 'pytest\.mark\.skip|@skip|xfail|\.skip\(|pytest\.skip|importorskip') { $loi += "Có test bị skip/xfail" }
   if ($them | Select-String -Pattern '(sk-ant-|AIza[0-9A-Za-z_-]{20}|-----BEGIN [A-Z ]*PRIVATE KEY|ghp_[A-Za-z0-9]{30}|github_pat_)') { $loi += "Có thứ giống khoá trong diff" }
   if (-not $x.passes) { $loi += "$fid chưa đặt passes=true (thợ chưa báo xong)" }
+  # môi trường của canh (không phải việc của agy): thư mục con có package.json (vd trang-bu) mà thiếu node_modules hoặc lock mới hơn thì cài trước khi chạy lệnh kiểm
+  Get-ChildItem $Wt -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch '^(node_modules|\.git|\.canh.*)$' -and (Test-Path "$($_.FullName)\package.json") } | ForEach-Object {
+    $d = $_.FullName; $lk = "$d\package-lock.json"; $nm = "$d\node_modules"
+    $can = -not (Test-Path "$nm\.bin") -or ((Test-Path $lk) -and (Get-Item $lk).LastWriteTime -gt (Get-Item $nm).LastWriteTime)
+    if ($can) {
+      Push-Location $d
+      $ra = if (Test-Path $lk) { & npm ci --no-audit --no-fund 2>&1 | Out-String } else { & npm install --no-audit --no-fund 2>&1 | Out-String }
+      $maN = $LASTEXITCODE; Pop-Location
+      Ghi "chuẩn bị node_modules $($_.Name) (mã $maN)"
+      if ($maN -ne 0) { $luuY += "npm cài $($_.Name) lỗi mã $maN`: $($ra.Substring([math]::Max(0, $ra.Length - 400)))" }
+    }
+  }
   # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ
-  $ck = py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
+  $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
   if ($LASTEXITCODE -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
