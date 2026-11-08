@@ -10,7 +10,7 @@ from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
 def _ds_goi() -> list[dict]:
     rows = frappe.get_all(
         "LX Goi",
-        fields=["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban"],
+        fields=["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban", "workflow"],
         ignore_permissions=True,
     )
     ket_qua: list[dict] = []
@@ -41,12 +41,23 @@ def goi() -> list[dict]:
 
 
 @frappe.whitelist(allow_guest=True)
-def tao_don(brand, goi, email=None) -> dict:
+def tao_don(
+    brand,
+    goi,
+    email=None,
+    nganh=None,
+    thi_truong=None,
+    doi_thu=None,
+    su_that=None,
+    dau_vao=None,
+) -> dict:
     """Tạo đơn báo cáo theo gói trong catalog (không nhận giá từ client) và trả thông tin VietQR."""
     ten_brand = str(brand or "").strip()
     ma_goi = str(goi or "").strip()
     if not ten_brand:
         frappe.throw("Vui lòng nhập tên thương hiệu")
+    if len(ten_brand) > 80:
+        frappe.throw("Tên thương hiệu không được vượt quá 80 ký tự")
     if not ma_goi:
         frappe.throw("Vui lòng chọn gói báo cáo")
 
@@ -70,7 +81,12 @@ def tao_don(brand, goi, email=None) -> dict:
             "noi_dung_ck": don["noi_dung_ck"],
             "qr_url": don["qr_url"],
             "brand": ten_brand,
-            "email": str(email or "").strip() or None,
+            "email": str(email or "").strip()[:120] or None,
+            "nganh": str(nganh or "").strip()[:80] or None,
+            "thi_truong": str(thi_truong or "").strip()[:60] or None,
+            "doi_thu": str(doi_thu or "").strip()[:120] or None,
+            "su_that": str(su_that or "").strip()[:600] or None,
+            "dau_vao": str(dau_vao or "").strip()[:4000] or None,
         }
     )
     doc.insert(ignore_permissions=True)

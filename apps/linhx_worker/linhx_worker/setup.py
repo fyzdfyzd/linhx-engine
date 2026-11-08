@@ -45,6 +45,17 @@ def after_install():
         else:
             # cau hinh workflow chuan lay tu code (ban moi nhat cua app); chi giu nguyen co 'bat'
             frappe.db.set_value("LX Workflow", wf["ma"], {k: v for k, v in wf.items() if k != "ma"})
+    if frappe.db.table_exists("LX Goi") and not frappe.db.exists("LX Goi", {"ma": "BC-AI"}):
+        frappe.get_doc({
+            "doctype": "LX Goi",
+            "ma": "BC-AI",
+            "ten": "Báo cáo AI nói gì về thương hiệu",
+            "gia": 99000,
+            "gia_san": 50000,
+            "mo_ta": "Khảo sát 8 câu chuẩn trên ChatGPT, Gemini, Claude và lập báo cáo 4 chỉ số.",
+            "ban": 1,
+            "workflow": "ai-noi-gi-ve-brand",
+        }).insert(ignore_permissions=True)
     frappe.db.commit()
 
 

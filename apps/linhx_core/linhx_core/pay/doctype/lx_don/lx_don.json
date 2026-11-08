@@ -15,7 +15,12 @@
   "tx_id",
   "qr_url",
   "brand",
-  "email"
+  "email",
+  "nganh",
+  "thi_truong",
+  "doi_thu",
+  "su_that",
+  "dau_vao"
  ],
  "fields": [
   {
@@ -70,12 +75,43 @@
   {
    "fieldname": "brand",
    "fieldtype": "Data",
-   "label": "Thương hiệu"
+   "label": "Thương hiệu",
+   "length": 80
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email khách"
+   "label": "Email khách",
+   "length": 120
+  },
+  {
+   "fieldname": "nganh",
+   "fieldtype": "Data",
+   "label": "Ngành",
+   "length": 80
+  },
+  {
+   "fieldname": "thi_truong",
+   "fieldtype": "Data",
+   "label": "Thị trường",
+   "length": 60
+  },
+  {
+   "fieldname": "doi_thu",
+   "fieldtype": "Data",
+   "label": "Đối thủ",
+   "length": 120
+  },
+  {
+   "fieldname": "su_that",
+   "fieldtype": "Small Text",
+   "label": "Sự thật thương hiệu",
+   "length": 600
+  },
+  {
+   "fieldname": "dau_vao",
+   "fieldtype": "Long Text",
+   "label": "Đầu vào báo cáo"
   }
  ],
  "permissions": [

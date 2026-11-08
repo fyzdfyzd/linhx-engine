@@ -3,6 +3,7 @@
 Tho:   heartbeat -> nhan_viec -> (chay agy) -> bao_ket_qua
 Mat tien (linhx-front): bang, giao_viec, huy_viec
 """
+import hmac
 import json
 
 import frappe
@@ -277,7 +278,9 @@ def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that=""
 @frappe.whitelist(allow_guest=True)
 def xem_bao_cao(viec, ma_xem):
     d = frappe.db.get_value("LX Job", viec, ["ma_xem", "trang_thai", "ket_qua", "dau_vao", "creation", "xong_luc", "nguon"], as_dict=True)
-    if not d or d.nguon != "khach" or not ma_xem or d.ma_xem != ma_xem:
+    ma_db = str((d or {}).get("ma_xem") or "")
+    ma_gui = str(ma_xem or "")
+    if not d or d.nguon not in ("khach", "don") or not ma_db or not ma_gui or not hmac.compare_digest(ma_db.encode("utf-8"), ma_gui.encode("utf-8")):
         frappe.throw("Không tìm thấy báo cáo", frappe.DoesNotExistError)
     tr = d.trang_thai
     truoc = 0
