@@ -1,5 +1,13 @@
 [
  {
+  "ten": "ip-scout",
+  "mo_ta": "Dùng khi chấm và xếp hạng IP (truyện, game, phim) để học cấu trúc làm world: lấy metadata từ Wikidata/Bangumi/AniList/Fandom, chấm 6 tiêu chí 1-5, viết bài học cấu trúc, xuất bảng xếp hạng.",
+  "duong_dan": "bo/linhx-artradar/skills/ip-scout",
+  "bo": "linhx-artradar",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
+ },
+ {
   "ten": "nguon-radar",
   "mo_ta": "Dùng trước mọi lần quét art/nhân vật/IP để kiểm nguồn có trong sổ nguồn, đọc luật robots, giới hạn tốc độ và điều khoản; thêm nguồn mới vào sổ.",
   "duong_dan": "bo/linhx-artradar/skills/nguon-radar",
@@ -32,28 +40,12 @@
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
-  "ten": "ip-scout",
-  "mo_ta": "Dùng khi chấm và xếp hạng IP (truyện, game, phim) để học cấu trúc làm world: lấy metadata từ Wikidata/Bangumi/AniList/Fandom, chấm 6 tiêu chí 1-5, viết bài học cấu trúc, xuất bảng xếp hạng.",
-  "duong_dan": "bo/linhx-artradar/skills/ip-scout",
-  "bo": "linhx-artradar",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
- },
- {
   "ten": "world-lore",
   "mo_ta": "Dùng khi dựng lorebook (world info) cho một IP để học cấu trúc hoặc cho world gốc của Linh: tách địa danh, phe, hệ sức mạnh, luật thế giới, sinh vật, vật phẩm, sự kiện thành mục có từ khoá, kiểm mâu thuẫn, xuất SillyTavern world info và ghi chú Obsidian.",
   "duong_dan": "bo/linhx-artradar/skills/world-lore",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
- },
- {
-  "ten": "audit-social",
-  "mo_ta": "Social content audit từ file xuất bài đăng (Meta Business Suite, TikTok Studio, CSV tự gõ): nhịp, tương tác theo dạng bài, trụ cột, chất lượng bài, đúng giọng brand, rủi ro quảng cáo. Ra điểm 0-100 và kế hoạch theo mức.",
-  "duong_dan": "bo/linhx-audit/skills/audit-social",
-  "bo": "linhx-audit",
-  "nhom": "tu-sua",
-  "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
  },
  {
   "ten": "audit",
@@ -72,6 +64,14 @@
   "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
  },
  {
+  "ten": "audit-social",
+  "mo_ta": "Social content audit từ file xuất bài đăng (Meta Business Suite, TikTok Studio, CSV tự gõ): nhịp, tương tác theo dạng bài, trụ cột, chất lượng bài, đúng giọng brand, rủi ro quảng cáo. Ra điểm 0-100 và kế hoạch theo mức.",
+  "duong_dan": "bo/linhx-audit/skills/audit-social",
+  "bo": "linhx-audit",
+  "nhom": "tu-sua",
+  "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
+ },
+ {
   "ten": "quy-trinh-nghiep-vu",
   "mo_ta": "Soạn hoặc chuẩn hoá quy trình nghiệp vụ ngân hàng (SOP) từ mô tả thô, ghi chú họp hoặc văn bản cũ, theo khung 10 mục có RACI, lưu đồ, điểm kiểm soát, SLA, rồi tự kiểm bằng script. Dùng khi người dùng nói soạn quy trình, viết SOP, chuẩn hoá quy trình, quy trình giải ngân, mở tài khoản, đối soát.",
   "duong_dan": "bo/linhx-bank-ops/skills/quy-trinh-nghiep-vu",
@@ -80,17 +80,9 @@
   "ban_goc": "thư mục chung/LAB072-BANK-OPS-KIT/src/linhx-bank-ops"
  },
  {
-  "ten": "soat-su-that",
-  "mo_ta": "Lượt biên tập 1, đối chiếu từng câu có số liệu, tên, sự kiện, luật với kho nguồn của bài; bắt chỗ nói nhiều hơn nguồn, bịa, sai thuật ngữ pháp lý. Dùng trong bien-tap-bai hoặc khi cần kiểm sự thật một bài.",
-  "duong_dan": "bo/linhx-bien-tap/skills/soat-su-that",
-  "bo": "linhx-bien-tap",
-  "nhom": "tu-sua",
-  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
- },
- {
-  "ten": "luong-hoa",
-  "mo_ta": "Lượng hoá bốn lớp kiểm trong đầu biên tập viên (hiểu, tin, ý, giọng) thành con số, bằng trích xuất lặp nhiều lượt đến khi ổn định rồi so với dải của bài Linh đã đăng. Dùng khi cần biết bài nặng lỗi văn máy đến đâu mà không chỉ dựa vào giám khảo cảm tính. Hiện chỉ số liệu/1000 chữ đủ tách để chặn; xem references/dai-luong-hoa.md.",
-  "duong_dan": "bo/linhx-bien-tap/skills/luong-hoa",
+  "ten": "bien-tap-bai",
+  "mo_ta": "Biên tập một bài tiếng Việt như một biên tập viên người, qua sáu lượt soát tách ngữ cảnh (máy, sự thật, cấu trúc, ngôn ngữ, chấm từng câu, độc giả ảo), ra phiếu biên tập và bản đã sửa. Dùng khi có bài nháp cần biên tập, chấm, hoặc duyệt trước khi giao.",
+  "duong_dan": "bo/linhx-bien-tap/skills/bien-tap-bai",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
@@ -104,9 +96,9 @@
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
-  "ten": "bien-tap-bai",
-  "mo_ta": "Biên tập một bài tiếng Việt như một biên tập viên người, qua sáu lượt soát tách ngữ cảnh (máy, sự thật, cấu trúc, ngôn ngữ, chấm từng câu, độc giả ảo), ra phiếu biên tập và bản đã sửa. Dùng khi có bài nháp cần biên tập, chấm, hoặc duyệt trước khi giao.",
-  "duong_dan": "bo/linhx-bien-tap/skills/bien-tap-bai",
+  "ten": "doc-gia-ao",
+  "mo_ta": "Lượt biên tập 5, hai hoặc ba độc giả Việt cụ thể đọc mù bài như người đọc thật và chỉ ra chỗ bỏ đọc, chỗ không hiểu, chỗ muốn cãi, chỗ nghe như Tây dịch, điều mang về. Dùng trong bien-tap-bai hoặc khi muốn thử bài trên người đọc.",
+  "duong_dan": "bo/linhx-bien-tap/skills/doc-gia-ao",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
@@ -120,25 +112,17 @@
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
-  "ten": "soat-ngon-ngu",
-  "mo_ta": "Lượt biên tập 3, soát câu chữ theo hai prompt gốc của Linh - Tổng biên tập CQS 6 trụ cột và máy dò văn AI APS - cộng luật học từ bản sửa của biên tập viên; ra điểm CQS, APS và danh sách sửa từng câu. Dùng trong bien-tap-bai hoặc khi cần soát ngôn ngữ.",
-  "duong_dan": "bo/linhx-bien-tap/skills/soat-ngon-ngu",
-  "bo": "linhx-bien-tap",
-  "nhom": "tu-sua",
-  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
- },
- {
-  "ten": "doc-gia-ao",
-  "mo_ta": "Lượt biên tập 5, hai hoặc ba độc giả Việt cụ thể đọc mù bài như người đọc thật và chỉ ra chỗ bỏ đọc, chỗ không hiểu, chỗ muốn cãi, chỗ nghe như Tây dịch, điều mang về. Dùng trong bien-tap-bai hoặc khi muốn thử bài trên người đọc.",
-  "duong_dan": "bo/linhx-bien-tap/skills/doc-gia-ao",
-  "bo": "linhx-bien-tap",
-  "nhom": "tu-sua",
-  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
- },
- {
   "ten": "hoc-luat-bien-tap",
   "mo_ta": "Rút luật biên tập từ bản sửa thật của một biên tập viên (Vân Anh, Linh) - Word track changes hoặc cặp bản trước/sau - thành hồ sơ LUAT.md có bằng chứng, rồi kiểm luật bằng cách để plugin sửa lại chính các bài mẫu. Dùng khi có bài mẫu đã sửa mới trong mau-sua/.",
   "duong_dan": "bo/linhx-bien-tap/skills/hoc-tu-ban-sua",
+  "bo": "linhx-bien-tap",
+  "nhom": "tu-sua",
+  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
+ },
+ {
+  "ten": "luong-hoa",
+  "mo_ta": "Lượng hoá bốn lớp kiểm trong đầu biên tập viên (hiểu, tin, ý, giọng) thành con số, bằng trích xuất lặp nhiều lượt đến khi ổn định rồi so với dải của bài Linh đã đăng. Dùng khi cần biết bài nặng lỗi văn máy đến đâu mà không chỉ dựa vào giám khảo cảm tính. Hiện chỉ số liệu/1000 chữ đủ tách để chặn; xem references/dai-luong-hoa.md.",
+  "duong_dan": "bo/linhx-bien-tap/skills/luong-hoa",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
@@ -152,41 +136,25 @@
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
+  "ten": "soat-ngon-ngu",
+  "mo_ta": "Lượt biên tập 3, soát câu chữ theo hai prompt gốc của Linh - Tổng biên tập CQS 6 trụ cột và máy dò văn AI APS - cộng luật học từ bản sửa của biên tập viên; ra điểm CQS, APS và danh sách sửa từng câu. Dùng trong bien-tap-bai hoặc khi cần soát ngôn ngữ.",
+  "duong_dan": "bo/linhx-bien-tap/skills/soat-ngon-ngu",
+  "bo": "linhx-bien-tap",
+  "nhom": "tu-sua",
+  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
+ },
+ {
+  "ten": "soat-su-that",
+  "mo_ta": "Lượt biên tập 1, đối chiếu từng câu có số liệu, tên, sự kiện, luật với kho nguồn của bài; bắt chỗ nói nhiều hơn nguồn, bịa, sai thuật ngữ pháp lý. Dùng trong bien-tap-bai hoặc khi cần kiểm sự thật một bài.",
+  "duong_dan": "bo/linhx-bien-tap/skills/soat-su-that",
+  "bo": "linhx-bien-tap",
+  "nhom": "tu-sua",
+  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
+ },
+ {
   "ten": "bang-su-that",
   "mo_ta": "Lập bảng sự thật (brand-facts.json) cho brand check chuẩn ABC, bằng phỏng vấn chủ thương hiệu hoặc chuyển từ brand.json chuẩn LBS. Dùng ở bước 1 của brand-check hoặc khi người dùng muốn khai/sửa sự thật về thương hiệu.",
   "duong_dan": "bo/linhx-brand-check/skills/bang-su-that",
-  "bo": "linhx-brand-check",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
- },
- {
-  "ten": "hoi-ai",
-  "mo_ta": "Hỏi nhiều mô hình AI bộ câu hỏi ABC như khách thật và lưu nguyên văn câu trả lời (claude -p, agy -p, codex, Gemini API, OpenRouter, hoặc dán tay từ ChatGPT/Gemini/Cốc Cốc/AI Hay). Dùng ở bước 3 của brand-check.",
-  "duong_dan": "bo/linhx-brand-check/skills/hoi-ai",
-  "bo": "linhx-brand-check",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
- },
- {
-  "ten": "cham",
-  "mo_ta": "Gán nhãn câu trả lời của AI theo bảng sự thật chuẩn ABC (đúng, sai, nhầm, bịa, cũ, không biết, chưa kiểm; có nhắc không; lời khuyên; định vị; cảm nhận; tác vụ agent). Dùng ở bước 4 của brand-check.",
-  "duong_dan": "bo/linhx-brand-check/skills/cham",
-  "bo": "linhx-brand-check",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
- },
- {
-  "ten": "brand-check",
-  "mo_ta": "Kiểm sức khoẻ thương hiệu trong thời đại AI agent theo chuẩn ABC (GEO, AEO, AI visibility, độ đúng, nhất quán, được đề xuất, truth signal, agent-readiness). Dùng khi được hỏi \"AI nói gì về thương hiệu X\", \"ChatGPT có gợi ý mình không\", audit GEO/AEO, brand health check, kiểm thương hiệu cho khách IF Agent, hay chuẩn bị báo cáo quét thương hiệu.",
-  "duong_dan": "bo/linhx-brand-check/skills/brand-check",
-  "bo": "linhx-brand-check",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
- },
- {
-  "ten": "kiem-tin-hieu",
-  "mo_ta": "Kiểm 5 lớp truth signal và mức sẵn sàng giao dịch với agent của một thương hiệu (robots cho bot AI, schema, llms.txt, nhất quán đa kênh, bên thứ ba, người đứng tên, review, feed/API/MCP/Zalo mini app). Dùng ở bước 5 của brand-check.",
-  "duong_dan": "bo/linhx-brand-check/skills/kiem-tin-hieu",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
@@ -200,12 +168,36 @@
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
-  "ten": "phat-trien-nhan-vat",
-  "mo_ta": "Phát triển nhân vật ảo sau khi duyệt casting: tủ đồ thời trang, trang điểm, chi tiết cơ thể, danh sách biểu cảm, tối đa chi tiết và có tham chiếu cụ thể, ra Character Bible và character sheet cuối cùng. Dùng khi Linh nói \"phát triển nhân vật\", \"tủ đồ nhân vật\", \"bảng biểu cảm\".",
-  "duong_dan": "bo/linhx-casting/skills/phat-trien-nhan-vat",
-  "bo": "linhx-casting",
+  "ten": "brand-check",
+  "mo_ta": "Kiểm sức khoẻ thương hiệu trong thời đại AI agent theo chuẩn ABC (GEO, AEO, AI visibility, độ đúng, nhất quán, được đề xuất, truth signal, agent-readiness). Dùng khi được hỏi \"AI nói gì về thương hiệu X\", \"ChatGPT có gợi ý mình không\", audit GEO/AEO, brand health check, kiểm thương hiệu cho khách IF Agent, hay chuẩn bị báo cáo quét thương hiệu.",
+  "duong_dan": "bo/linhx-brand-check/skills/brand-check",
+  "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
-  "ban_goc": "thư mục chung/LAB066-CASTING-GUONG-MAT/src/linhx-casting"
+  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
+ },
+ {
+  "ten": "cham",
+  "mo_ta": "Gán nhãn câu trả lời của AI theo bảng sự thật chuẩn ABC (đúng, sai, nhầm, bịa, cũ, không biết, chưa kiểm; có nhắc không; lời khuyên; định vị; cảm nhận; tác vụ agent). Dùng ở bước 4 của brand-check.",
+  "duong_dan": "bo/linhx-brand-check/skills/cham",
+  "bo": "linhx-brand-check",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
+ },
+ {
+  "ten": "hoi-ai",
+  "mo_ta": "Hỏi nhiều mô hình AI bộ câu hỏi ABC như khách thật và lưu nguyên văn câu trả lời (claude -p, agy -p, codex, Gemini API, OpenRouter, hoặc dán tay từ ChatGPT/Gemini/Cốc Cốc/AI Hay). Dùng ở bước 3 của brand-check.",
+  "duong_dan": "bo/linhx-brand-check/skills/hoi-ai",
+  "bo": "linhx-brand-check",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
+ },
+ {
+  "ten": "kiem-tin-hieu",
+  "mo_ta": "Kiểm 5 lớp truth signal và mức sẵn sàng giao dịch với agent của một thương hiệu (robots cho bot AI, schema, llms.txt, nhất quán đa kênh, bên thứ ba, người đứng tên, review, feed/API/MCP/Zalo mini app). Dùng ở bước 5 của brand-check.",
+  "duong_dan": "bo/linhx-brand-check/skills/kiem-tin-hieu",
+  "bo": "linhx-brand-check",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
   "ten": "casting-mat",
@@ -216,9 +208,17 @@
   "ban_goc": "thư mục chung/LAB066-CASTING-GUONG-MAT/src/linhx-casting"
  },
  {
-  "ten": "linhx",
-  "mo_ta": "Lệnh quản trị plugin linhx-core (xem luật đang bơm, kiểm skill, cài sang Antigravity). Dùng khi Linh gõ /linhx, hỏi \"luật LAB đang bơm gì\", \"cài skill LINHX cho agy\", hoặc sau khi sửa skill trong marketplace linhx-lab.",
-  "duong_dan": "bo/linhx-core/skills/linhx",
+  "ten": "phat-trien-nhan-vat",
+  "mo_ta": "Phát triển nhân vật ảo sau khi duyệt casting: tủ đồ thời trang, trang điểm, chi tiết cơ thể, danh sách biểu cảm, tối đa chi tiết và có tham chiếu cụ thể, ra Character Bible và character sheet cuối cùng. Dùng khi Linh nói \"phát triển nhân vật\", \"tủ đồ nhân vật\", \"bảng biểu cảm\".",
+  "duong_dan": "bo/linhx-casting/skills/phat-trien-nhan-vat",
+  "bo": "linhx-casting",
+  "nhom": "thiet-ke",
+  "ban_goc": "thư mục chung/LAB066-CASTING-GUONG-MAT/src/linhx-casting"
+ },
+ {
+  "ten": "chuan-code",
+  "mo_ta": "Chuẩn viết code của LINHX theo 4 nguyên tắc Karpathy: nghĩ trước khi code, tối giản, sửa đúng chỗ, làm theo mục tiêu kiểm được. Dùng khi viết, sửa, review hoặc refactor code, script, hook, plugin hay skill có script trong mọi lab.",
+  "duong_dan": "bo/linhx-core/skills/chuan-code",
   "bo": "linhx-core",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
@@ -240,9 +240,9 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
-  "ten": "chuan-code",
-  "mo_ta": "Chuẩn viết code của LINHX theo 4 nguyên tắc Karpathy: nghĩ trước khi code, tối giản, sửa đúng chỗ, làm theo mục tiêu kiểm được. Dùng khi viết, sửa, review hoặc refactor code, script, hook, plugin hay skill có script trong mọi lab.",
-  "duong_dan": "bo/linhx-core/skills/chuan-code",
+  "ten": "linhx",
+  "mo_ta": "Lệnh quản trị plugin linhx-core (xem luật đang bơm, kiểm skill, cài sang Antigravity). Dùng khi Linh gõ /linhx, hỏi \"luật LAB đang bơm gì\", \"cài skill LINHX cho agy\", hoặc sau khi sửa skill trong marketplace linhx-lab.",
+  "duong_dan": "bo/linhx-core/skills/linhx",
   "bo": "linhx-core",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
@@ -256,41 +256,9 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
-  "ten": "instructor-voice",
-  "mo_ta": "Dùng khi cần tổng hợp lời giảng tiếng Việt cho từng phân đoạn bài học bằng VieNeu-TTS (giọng preset hoặc giọng clone của giảng viên) và kiểm tra chất lượng phát âm tự động bằng ASR.",
-  "duong_dan": "bo/linhx-course/skills/instructor-voice",
-  "bo": "linhx-course",
-  "nhom": "giao-duc",
-  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
- },
- {
-  "ten": "lesson-script",
-  "mo_ta": "Dùng khi cần viết kịch bản lời giảng chi tiết và bố cục slide Slidev cho từng bài học theo cấu trúc Gagné rút gọn, bảo đảm độ dài mỗi đoạn và tổng số âm tiết khớp chuẩn đọc tiếng Việt.",
-  "duong_dan": "bo/linhx-course/skills/lesson-script",
-  "bo": "linhx-course",
-  "nhom": "giao-duc",
-  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
- },
- {
-  "ten": "instructor-avatar",
-  "mo_ta": "Dùng khi cần tạo video giảng viên AI nói khớp môi với lời giảng tiếng Việt bằng mô hình tự chạy trên máy, hỗ trợ cả nhánh từ video gốc (MuseTalk 1.5) và nhánh từ 1 ảnh chân dung tĩnh (SoulX-FlashHead Lite, JoyVASA).",
-  "duong_dan": "bo/linhx-course/skills/instructor-avatar",
-  "bo": "linhx-course",
-  "nhom": "giao-duc",
-  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
- },
- {
-  "ten": "lesson-slides",
-  "mo_ta": "Dùng khi cần kết xuất file slides.md của Slidev thành bộ ảnh PNG độ phân giải 1920x1080 theo từng bước click và sinh file segments.json đồng bộ từng khung hình với từng đoạn lời giảng.",
-  "duong_dan": "bo/linhx-course/skills/lesson-slides",
-  "bo": "linhx-course",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
- },
- {
-  "ten": "lesson-compose",
-  "mo_ta": "Dùng khi cần ghép ảnh các khung slide, các đoạn âm thanh lời giảng và video giảng viên AI thành video bài giảng hoàn chỉnh chuẩn 1920x1080 kèm phụ đề WebVTT và âm lượng chuẩn -16 LUFS.",
-  "duong_dan": "bo/linhx-course/skills/lesson-compose",
+  "ten": "course",
+  "mo_ta": "Dùng khi người dùng muốn biến một chủ đề thành khoá học e-learning hoàn chỉnh hoặc kiểm tra tiến độ hiện tại của khoá học để điều phối sang các skill thành phần.",
+  "duong_dan": "bo/linhx-course/skills/course",
   "bo": "linhx-course",
   "nhom": "giao-duc",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
@@ -312,11 +280,43 @@
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
-  "ten": "course",
-  "mo_ta": "Dùng khi người dùng muốn biến một chủ đề thành khoá học e-learning hoàn chỉnh hoặc kiểm tra tiến độ hiện tại của khoá học để điều phối sang các skill thành phần.",
-  "duong_dan": "bo/linhx-course/skills/course",
+  "ten": "instructor-avatar",
+  "mo_ta": "Dùng khi cần tạo video giảng viên AI nói khớp môi với lời giảng tiếng Việt bằng mô hình tự chạy trên máy, hỗ trợ cả nhánh từ video gốc (MuseTalk 1.5) và nhánh từ 1 ảnh chân dung tĩnh (SoulX-FlashHead Lite, JoyVASA).",
+  "duong_dan": "bo/linhx-course/skills/instructor-avatar",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
+ },
+ {
+  "ten": "instructor-voice",
+  "mo_ta": "Dùng khi cần tổng hợp lời giảng tiếng Việt cho từng phân đoạn bài học bằng VieNeu-TTS (giọng preset hoặc giọng clone của giảng viên) và kiểm tra chất lượng phát âm tự động bằng ASR.",
+  "duong_dan": "bo/linhx-course/skills/instructor-voice",
+  "bo": "linhx-course",
+  "nhom": "giao-duc",
+  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
+ },
+ {
+  "ten": "lesson-compose",
+  "mo_ta": "Dùng khi cần ghép ảnh các khung slide, các đoạn âm thanh lời giảng và video giảng viên AI thành video bài giảng hoàn chỉnh chuẩn 1920x1080 kèm phụ đề WebVTT và âm lượng chuẩn -16 LUFS.",
+  "duong_dan": "bo/linhx-course/skills/lesson-compose",
+  "bo": "linhx-course",
+  "nhom": "giao-duc",
+  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
+ },
+ {
+  "ten": "lesson-script",
+  "mo_ta": "Dùng khi cần viết kịch bản lời giảng chi tiết và bố cục slide Slidev cho từng bài học theo cấu trúc Gagné rút gọn, bảo đảm độ dài mỗi đoạn và tổng số âm tiết khớp chuẩn đọc tiếng Việt.",
+  "duong_dan": "bo/linhx-course/skills/lesson-script",
+  "bo": "linhx-course",
+  "nhom": "giao-duc",
+  "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
+ },
+ {
+  "ten": "lesson-slides",
+  "mo_ta": "Dùng khi cần kết xuất file slides.md của Slidev thành bộ ảnh PNG độ phân giải 1920x1080 theo từng bước click và sinh file segments.json đồng bộ từng khung hình với từng đoạn lời giảng.",
+  "duong_dan": "bo/linhx-course/skills/lesson-slides",
+  "bo": "linhx-course",
+  "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -344,14 +344,6 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
-  "ten": "viet-bai-du-thi",
-  "mo_ta": "Cùng Linh viết bài dự thi (tiểu luận, tản văn, bài báo, hồ sơ đề cử, kịch bản video) đúng thể lệ, giọng Linh, rồi tự phản biện theo tiêu chí chấm. Dùng sau khi cuộc thi đã qua thẩm định và Linh muốn viết.",
-  "duong_dan": "bo/linhx-cuoc-thi/skills/viet-bai-du-thi",
-  "bo": "linhx-cuoc-thi",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
- },
- {
   "ten": "theo-doi-ket-qua",
   "mo_ta": "Theo dõi kết quả các bài Linh đã nộp, cập nhật pipeline và sổ giải thưởng, rồi lên kế hoạch khai thác branding khi đạt giải. Dùng khi hỏi \"kết quả cuộc thi\", \"đã có giải chưa\", hoặc chạy định kỳ sau ngày công bố.",
   "duong_dan": "bo/linhx-cuoc-thi/skills/theo-doi-ket-qua",
@@ -360,9 +352,17 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
-  "ten": "hieu-khach",
-  "mo_ta": "Bước 1–4 của quy trình deck proposal - tiếp nhận và làm rõ đề bài, nghiên cứu nền có bảng bằng chứng, xác định người nghe và mục tiêu, pain–gain của khách. Dùng trong skill deck-proposal hoặc khi Linh nhờ \"phân tích khách\", \"nghiên cứu nền cho đề xuất\", \"pain gain của khách\".",
-  "duong_dan": "bo/linhx-deck/skills/hieu-khach",
+  "ten": "viet-bai-du-thi",
+  "mo_ta": "Cùng Linh viết bài dự thi (tiểu luận, tản văn, bài báo, hồ sơ đề cử, kịch bản video) đúng thể lệ, giọng Linh, rồi tự phản biện theo tiêu chí chấm. Dùng sau khi cuộc thi đã qua thẩm định và Linh muốn viết.",
+  "duong_dan": "bo/linhx-cuoc-thi/skills/viet-bai-du-thi",
+  "bo": "linhx-cuoc-thi",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
+ },
+ {
+  "ten": "deck-proposal",
+  "mo_ta": "Quy trình 15 bước làm deck proposal kiểu tư vấn chiến lược cho các BU của Linh (Sakedemy, Unikon, URAH, TUVA, IF Agent, Chiêm Tinh Số, [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]) hoặc brand LINHX. Dùng khi Linh nói \"làm deck\", \"làm proposal\", \"chào khách\", \"đề xuất cho đối tác\", \"pitch\", \"deck McKinsey\", hoặc đưa một brief/email khách và muốn ra bài trình bày.",
+  "duong_dan": "bo/linhx-deck/skills/deck-proposal",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
@@ -376,14 +376,6 @@
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
-  "ten": "phan-bien",
-  "mo_ta": "Hội đồng phản biện cho deck proposal - hai agent đọc ghost deck và deck như khách hàng khó tính và như partner tư vấn chiến lược, chấm theo rubric Nội dung, Mạch, Phong cách, Đúng pain, Khả thi, trả danh sách lỗi có mức độ. Dùng khi Linh nói \"phản biện deck\", \"soi deck\", hoặc deck giá trị lớn trước khi gửi.",
-  "duong_dan": "bo/linhx-deck/skills/phan-bien",
-  "bo": "linhx-deck",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
- },
- {
   "ten": "dung-deck",
   "mo_ta": "Bước 10 và 13 của quy trình deck proposal - viết ghost deck bằng tiêu đề kết luận, dựng 10-deck.json theo khung proposal 6 phần phong cách tư vấn chiến lược, kiểm bằng script, rồi xuất và đăng lên Claude Slides theo Design System của BU. Dùng khi dựng slide proposal, pitch, đề xuất cho khách.",
   "duong_dan": "bo/linhx-deck/skills/dung-deck",
@@ -392,17 +384,9 @@
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
-  "ten": "loi-the-offer",
-  "mo_ta": "Bước 5, 6, 7, 9 của quy trình deck proposal - lợi thế của Linh lấy từ hồ sơ năng lực LINHX, tìm khoảng trống và thiết kế offer giải nỗi đau khách có mapping năng lực, ba giải pháp, mô tả dịch vụ. Dùng trong deck-proposal hoặc khi Linh hỏi \"mình có lợi thế gì\", \"offer nào cho khách này\", \"đưa 3 phương án\".",
-  "duong_dan": "bo/linhx-deck/skills/loi-the-offer",
-  "bo": "linhx-deck",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
- },
- {
-  "ten": "deck-proposal",
-  "mo_ta": "Quy trình 15 bước làm deck proposal kiểu tư vấn chiến lược cho các BU của Linh (Sakedemy, Unikon, URAH, TUVA, IF Agent, Chiêm Tinh Số, [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]) hoặc brand LINHX. Dùng khi Linh nói \"làm deck\", \"làm proposal\", \"chào khách\", \"đề xuất cho đối tác\", \"pitch\", \"deck McKinsey\", hoặc đưa một brief/email khách và muốn ra bài trình bày.",
-  "duong_dan": "bo/linhx-deck/skills/deck-proposal",
+  "ten": "hieu-khach",
+  "mo_ta": "Bước 1–4 của quy trình deck proposal - tiếp nhận và làm rõ đề bài, nghiên cứu nền có bảng bằng chứng, xác định người nghe và mục tiêu, pain–gain của khách. Dùng trong skill deck-proposal hoặc khi Linh nhờ \"phân tích khách\", \"nghiên cứu nền cho đề xuất\", \"pain gain của khách\".",
+  "duong_dan": "bo/linhx-deck/skills/hieu-khach",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
@@ -416,17 +400,25 @@
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
+  "ten": "loi-the-offer",
+  "mo_ta": "Bước 5, 6, 7, 9 của quy trình deck proposal - lợi thế của Linh lấy từ hồ sơ năng lực LINHX, tìm khoảng trống và thiết kế offer giải nỗi đau khách có mapping năng lực, ba giải pháp, mô tả dịch vụ. Dùng trong deck-proposal hoặc khi Linh hỏi \"mình có lợi thế gì\", \"offer nào cho khách này\", \"đưa 3 phương án\".",
+  "duong_dan": "bo/linhx-deck/skills/loi-the-offer",
+  "bo": "linhx-deck",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
+ },
+ {
+  "ten": "phan-bien",
+  "mo_ta": "Hội đồng phản biện cho deck proposal - hai agent đọc ghost deck và deck như khách hàng khó tính và như partner tư vấn chiến lược, chấm theo rubric Nội dung, Mạch, Phong cách, Đúng pain, Khả thi, trả danh sách lỗi có mức độ. Dùng khi Linh nói \"phản biện deck\", \"soi deck\", hoặc deck giá trị lớn trước khi gửi.",
+  "duong_dan": "bo/linhx-deck/skills/phan-bien",
+  "bo": "linhx-deck",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
+ },
+ {
   "ten": "cham-nhanh",
   "mo_ta": "Chấm nhanh mức \"AI-ready\" của một file dữ liệu (Excel/CSV khách hàng, nhân sự, nhà cung cấp…) theo 6 chiều và chỉ ra 3 lỗi lớn nhất, có tính lỗi riêng của dữ liệu Việt. Dùng khi Linh gõ /cham-nhanh, gửi file hỏi \"dữ liệu này dùng cho AI được chưa\", hoặc cần trang chấm miễn phí để mời khách.",
   "duong_dan": "bo/linhx-du-lieu/skills/cham-nhanh",
-  "bo": "linhx-du-lieu",
-  "nhom": "tu-sua",
-  "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
- },
- {
-  "ten": "viet-chuan",
-  "mo_ta": "Tra cứu và chuẩn hoá từng giá trị dữ liệu Việt (SĐT đầu số cũ 11 số, CCCD/CMND, MST, ngày, tên không dấu, Unicode NFD, lỗi mã, bảng mã TCVN3/VNI, địa chỉ trước/sau sáp nhập 1/7/2025). Dùng khi Linh hỏi nhanh \"số này đổi sang gì\", \"địa chỉ mới của …\", hoặc khi viết recipe cần biết thao tác nào xử lý lỗi nào.",
-  "duong_dan": "bo/linhx-du-lieu/skills/viet-chuan",
   "bo": "linhx-du-lieu",
   "nhom": "tu-sua",
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
@@ -448,6 +440,22 @@
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
  },
  {
+  "ten": "viet-chuan",
+  "mo_ta": "Tra cứu và chuẩn hoá từng giá trị dữ liệu Việt (SĐT đầu số cũ 11 số, CCCD/CMND, MST, ngày, tên không dấu, Unicode NFD, lỗi mã, bảng mã TCVN3/VNI, địa chỉ trước/sau sáp nhập 1/7/2025). Dùng khi Linh hỏi nhanh \"số này đổi sang gì\", \"địa chỉ mới của …\", hoặc khi viết recipe cần biết thao tác nào xử lý lỗi nào.",
+  "duong_dan": "bo/linhx-du-lieu/skills/viet-chuan",
+  "bo": "linhx-du-lieu",
+  "nhom": "tu-sua",
+  "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
+ },
+ {
+  "ten": "linhx-nhiem-vu",
+  "mo_ta": "Chuẩn làm nhiệm vụ dài cho LINHX trong Gemini Task: luật nguồn, cấu trúc thư mục, checkpoint zip, tự kiểm bằng script, nối lượt. Dùng khi đề gọi @linhx-nhiem-vu hoặc khi làm nhiệm vụ thu thập dữ liệu, nghiên cứu, dựng file cho LINHX.",
+  "duong_dan": "bo/linhx-gemini-task/gemini-skills/linhx-nhiem-vu",
+  "bo": "linhx-gemini-task",
+  "nhom": "van-hanh",
+  "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
+ },
+ {
   "ten": "gemini-gui",
   "mo_ta": "Gửi một đề có sẵn vào Gemini Task trên tài khoản Ultra Art Urah (gemini.google.com/u/1, Nhiệm vụ, Argon) bằng Chrome của Linh, rồi ghi link vào sổ. Dùng khi Linh nói \"thả đề vào Gemini\", \"gửi đề Argon\", hoặc bước gửi của skill gemini-task.",
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-gui",
@@ -464,14 +472,6 @@
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
-  "ten": "gemini-task",
-  "mo_ta": "Giao việc cho Gemini Task (Gemini Ultra, chế độ Nhiệm vụ, model Argon) thay vì tự làm bằng token Claude. Dùng mỗi khi việc là nghiên cứu web diện rộng, gom dữ liệu nhiều nguồn, dựng kho CSV/SQLite, chạy dài nhiều giờ, dựng PDF/ảnh/GIF/MP4/PPTX hàng loạt, hoặc khi Linh nói \"giao Gemini\", \"thả đề Gemini\", \"dùng Argon\", \"Gemini Task\".",
-  "duong_dan": "bo/linhx-gemini-task/skills/gemini-task",
-  "bo": "linhx-gemini-task",
-  "nhom": "van-hanh",
-  "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
- },
- {
   "ten": "gemini-skill",
   "mo_ta": "Đóng gói một Skill cho Gemini (Gemini không có plugin; Skill là SKILL.md ở gốc + script, chỉ file chữ, ≤100 MB, script không gọi mạng, gọi bằng @tên) và cài Skill chuẩn linhx-nhiem-vu. Dùng khi cần cho Gemini Task dùng lại công cụ, dữ liệu, luật nhiều lần, hoặc khi Linh nói \"làm skill cho Gemini\".",
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-skill",
@@ -480,9 +480,9 @@
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
-  "ten": "linhx-nhiem-vu",
-  "mo_ta": "Chuẩn làm nhiệm vụ dài cho LINHX trong Gemini Task: luật nguồn, cấu trúc thư mục, checkpoint zip, tự kiểm bằng script, nối lượt. Dùng khi đề gọi @linhx-nhiem-vu hoặc khi làm nhiệm vụ thu thập dữ liệu, nghiên cứu, dựng file cho LINHX.",
-  "duong_dan": "bo/linhx-gemini-task/gemini-skills/linhx-nhiem-vu",
+  "ten": "gemini-task",
+  "mo_ta": "Giao việc cho Gemini Task (Gemini Ultra, chế độ Nhiệm vụ, model Argon) thay vì tự làm bằng token Claude. Dùng mỗi khi việc là nghiên cứu web diện rộng, gom dữ liệu nhiều nguồn, dựng kho CSV/SQLite, chạy dài nhiều giờ, dựng PDF/ảnh/GIF/MP4/PPTX hàng loạt, hoặc khi Linh nói \"giao Gemini\", \"thả đề Gemini\", \"dùng Argon\", \"Gemini Task\".",
+  "duong_dan": "bo/linhx-gemini-task/skills/gemini-task",
   "bo": "linhx-gemini-task",
   "nhom": "van-hanh",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
@@ -496,33 +496,17 @@
   "ban_goc": "thư mục chung/LAB088-GIAI-MA-HAI-VIRAL/src/linhx-giai-ma-hai"
  },
  {
-  "ten": "tao-bai",
-  "mo_ta": "Viết bài cho người ảo từ ghi chú tiêu hoá, theo persona, phong cách chung và luật viết; sinh nhiều ứng viên, tự chấm, đưa vào hàng duyệt. Dùng cho bước tao.",
-  "duong_dan": "bo/linhx-kenh-ao/skills/tao-bai",
+  "ten": "ban-dang",
+  "mo_ta": "Mở bàn đăng cho Linh: mọi bài, câu bình luận, câu trả lời và bài học của một hoặc nhiều persona đã soạn sẵn, Linh chỉ bấm Đăng, sửa hoặc Bỏ. Dùng khi Linh muốn duyệt và đăng nhanh, hoặc hỏi \"hôm nay có gì cần đăng\".",
+  "duong_dan": "bo/linhx-kenh-ao/skills/ban-dang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
-  "ten": "xuong-persona",
-  "mo_ta": "Tự học kiểu nhân vật nào làm người ta thích, chia sẻ, tranh luận; phát triển persona có character flaw theo phong cách chung. Dùng khi đọc được bài phản ứng mạnh, khi cần persona mới cho Persona OS, hoặc khi Linh hỏi \"persona nào đang ăn\".",
-  "duong_dan": "bo/linhx-kenh-ao/skills/xuong-persona",
-  "bo": "linhx-kenh-ao",
-  "nhom": "marketing",
-  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
- },
- {
-  "ten": "ket-than",
-  "mo_ta": "Xây quan hệ dựa trên niềm tin với người trong vòng: chọn ai để chạm, chạm thế nào, có mục đích gì, ghi nhận khi họ đáp lại. Dùng cho bước vong, cham.",
-  "duong_dan": "bo/linhx-kenh-ao/skills/ket-than",
-  "bo": "linhx-kenh-ao",
-  "nhom": "marketing",
-  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
- },
- {
-  "ten": "lang-thang",
-  "mo_ta": "Người ảo lang thang đọc bài người khác, xem trend và tiêu hoá thành ghi chú. Dùng cho bước doc, tieu_hoa, trend của phiên kênh ảo.",
-  "duong_dan": "bo/linhx-kenh-ao/skills/lang-thang",
+  "ten": "duyet-dang",
+  "mo_ta": "Đưa bài cho Linh duyệt (nhận, sửa, góp ý, bỏ), rút luật viết từ lần sửa, và đăng qua cổng. Dùng khi có bài chờ duyệt hoặc tới giờ đăng.",
+  "duong_dan": "bo/linhx-kenh-ao/skills/duyet-dang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
@@ -544,9 +528,9 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
-  "ten": "ban-dang",
-  "mo_ta": "Mở bàn đăng cho Linh: mọi bài, câu bình luận, câu trả lời và bài học của một hoặc nhiều persona đã soạn sẵn, Linh chỉ bấm Đăng, sửa hoặc Bỏ. Dùng khi Linh muốn duyệt và đăng nhanh, hoặc hỏi \"hôm nay có gì cần đăng\".",
-  "duong_dan": "bo/linhx-kenh-ao/skills/ban-dang",
+  "ten": "hop-thu",
+  "mo_ta": "Kéo bình luận và tin nhắn, phân loại xanh/vàng/đỏ, soạn trả lời đúng giọng nhân vật, gửi qua cổng, cập nhật điểm fan. Dùng cho bước hop_thu.",
+  "duong_dan": "bo/linhx-kenh-ao/skills/hop-thu",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
@@ -560,25 +544,41 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
-  "ten": "hop-thu",
-  "mo_ta": "Kéo bình luận và tin nhắn, phân loại xanh/vàng/đỏ, soạn trả lời đúng giọng nhân vật, gửi qua cổng, cập nhật điểm fan. Dùng cho bước hop_thu.",
-  "duong_dan": "bo/linhx-kenh-ao/skills/hop-thu",
+  "ten": "ket-than",
+  "mo_ta": "Xây quan hệ dựa trên niềm tin với người trong vòng: chọn ai để chạm, chạm thế nào, có mục đích gì, ghi nhận khi họ đáp lại. Dùng cho bước vong, cham.",
+  "duong_dan": "bo/linhx-kenh-ao/skills/ket-than",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
-  "ten": "duyet-dang",
-  "mo_ta": "Đưa bài cho Linh duyệt (nhận, sửa, góp ý, bỏ), rút luật viết từ lần sửa, và đăng qua cổng. Dùng khi có bài chờ duyệt hoặc tới giờ đăng.",
-  "duong_dan": "bo/linhx-kenh-ao/skills/duyet-dang",
+  "ten": "lang-thang",
+  "mo_ta": "Người ảo lang thang đọc bài người khác, xem trend và tiêu hoá thành ghi chú. Dùng cho bước doc, tieu_hoa, trend của phiên kênh ảo.",
+  "duong_dan": "bo/linhx-kenh-ao/skills/lang-thang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
-  "ten": "thu-link",
-  "mo_ta": "Thu metadata và link (không tải ảnh) từ bộ sưu tập Instagram KHO-Y-TUONG của Linh, Pinterest board, Behance, Bluesky hoặc link Linh dán, ghi vào kho minh hoạ ý tưởng.",
-  "duong_dan": "bo/linhx-kho-minh-hoa/skills/thu-link",
+  "ten": "tao-bai",
+  "mo_ta": "Viết bài cho người ảo từ ghi chú tiêu hoá, theo persona, phong cách chung và luật viết; sinh nhiều ứng viên, tự chấm, đưa vào hàng duyệt. Dùng cho bước tao.",
+  "duong_dan": "bo/linhx-kenh-ao/skills/tao-bai",
+  "bo": "linhx-kenh-ao",
+  "nhom": "marketing",
+  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
+ },
+ {
+  "ten": "xuong-persona",
+  "mo_ta": "Tự học kiểu nhân vật nào làm người ta thích, chia sẻ, tranh luận; phát triển persona có character flaw theo phong cách chung. Dùng khi đọc được bài phản ứng mạnh, khi cần persona mới cho Persona OS, hoặc khi Linh hỏi \"persona nào đang ăn\".",
+  "duong_dan": "bo/linhx-kenh-ao/skills/xuong-persona",
+  "bo": "linhx-kenh-ao",
+  "nhom": "marketing",
+  "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
+ },
+ {
+  "ten": "loc",
+  "mo_ta": "Lọc bản ghi mới của kho minh hoạ ý tưởng: bỏ mục NoAI, tải ảnh tạm, đánh dấu bài đăng lại bằng dHash, đưa vào hàng chờ phân loại; dọn ảnh tạm sau khi xong.",
+  "duong_dan": "bo/linhx-kho-minh-hoa/skills/loc",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
@@ -600,33 +600,9 @@
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
-  "ten": "xem-kho",
-  "mo_ta": "Dựng lại trang HTML tĩnh để lướt kho minh hoạ ý tưởng, lọc theo họ phong cách và cơ chế ý tưởng, chép công thức; chạy sau khi thêm hoặc sửa thẻ phong cách.",
-  "duong_dan": "bo/linhx-kho-minh-hoa/skills/xem-kho",
-  "bo": "linhx-kho-minh-hoa",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
- },
- {
   "ten": "so-nguon",
   "mo_ta": "Dùng trước mọi lần thu link cho kho minh hoạ ý tưởng: kiểm nguồn có trong sổ, thêm nguồn hoặc hoạ sĩ hạt giống mới, kiểm link hoạ sĩ.",
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/so-nguon",
-  "bo": "linhx-kho-minh-hoa",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
- },
- {
-  "ten": "the-phong-cach",
-  "mo_ta": "Gom các thẻ ảnh cùng họ trong kho minh hoạ ý tưởng thành thẻ phong cách có định nghĩa, dấu hiệu nhận diện, khi dùng, khi tránh và công thức prompt {y_tuong} không dùng tên hoạ sĩ.",
-  "duong_dan": "bo/linhx-kho-minh-hoa/skills/the-phong-cach",
-  "bo": "linhx-kho-minh-hoa",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
- },
- {
-  "ten": "loc",
-  "mo_ta": "Lọc bản ghi mới của kho minh hoạ ý tưởng: bỏ mục NoAI, tải ảnh tạm, đánh dấu bài đăng lại bằng dHash, đưa vào hàng chờ phân loại; dọn ảnh tạm sau khi xong.",
-  "duong_dan": "bo/linhx-kho-minh-hoa/skills/loc",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
@@ -640,36 +616,28 @@
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
-  "ten": "hien-tuong",
-  "mo_ta": "B1 radar khoảng trống. Quét top bài, top tác giả, top kênh trên Substack, Medium, kênh quan điểm (LinkedIn, X, Threads, Facebook), podcast, YouTube, cả quốc tế và Việt Nam, ghi vào 01-hien-tuong.jsonl. Dùng khi cần lấy dữ liệu hiện tượng cho LAB029.",
-  "duong_dan": "bo/linhx-khoang-trong/skills/hien-tuong",
-  "bo": "linhx-khoang-trong",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+  "ten": "the-phong-cach",
+  "mo_ta": "Gom các thẻ ảnh cùng họ trong kho minh hoạ ý tưởng thành thẻ phong cách có định nghĩa, dấu hiệu nhận diện, khi dùng, khi tránh và công thức prompt {y_tuong} không dùng tên hoạ sĩ.",
+  "duong_dan": "bo/linhx-kho-minh-hoa/skills/the-phong-cach",
+  "bo": "linhx-kho-minh-hoa",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
-  "ten": "soi-viet-nam",
-  "mo_ta": "B5 radar khoảng trống. Mang từng cụm nhu cầu về Việt Nam, xếp mức còn trống, mỏng hay đã có người chiếm trên từng nền tảng VN (Facebook, YouTube, TikTok, Substack, Spiderum, LinkedIn, Threads, podcast, sách, báo). Dùng sau B4 của LAB029.",
-  "duong_dan": "bo/linhx-khoang-trong/skills/soi-viet-nam",
-  "bo": "linhx-khoang-trong",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+  "ten": "thu-link",
+  "mo_ta": "Thu metadata và link (không tải ảnh) từ bộ sưu tập Instagram KHO-Y-TUONG của Linh, Pinterest board, Behance, Bluesky hoặc link Linh dán, ghi vào kho minh hoạ ý tưởng.",
+  "duong_dan": "bo/linhx-kho-minh-hoa/skills/thu-link",
+  "bo": "linhx-kho-minh-hoa",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
-  "ten": "radar-khoang-trong",
-  "mo_ta": "Chạy trọn radar khoảng trống độc giả 7 bước (hiện tượng → nhu cầu → ai thắng → quy mô → soi Việt Nam → khoảng trống → cơ hội kênh). Dùng khi Linh nói \"tìm khoảng trống độc giả\", \"chủ đề nào nên chiếm trước\", \"quét Medium Substack xem VN thiếu gì\", \"radar topic\".",
-  "duong_dan": "bo/linhx-khoang-trong/skills/radar-khoang-trong",
-  "bo": "linhx-khoang-trong",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
- },
- {
-  "ten": "nguoi-thang",
-  "mo_ta": "B3 radar khoảng trống. Với mỗi cụm nhu cầu, tìm 3 đến 5 kênh, tác giả đang thắng và chưng cất vì sao họ thắng theo 3 tầng (nhận thức, chiến lược, nội dung). Dùng sau B2 của LAB029.",
-  "duong_dan": "bo/linhx-khoang-trong/skills/nguoi-thang",
-  "bo": "linhx-khoang-trong",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+  "ten": "xem-kho",
+  "mo_ta": "Dựng lại trang HTML tĩnh để lướt kho minh hoạ ý tưởng, lọc theo họ phong cách và cơ chế ý tưởng, chép công thức; chạy sau khi thêm hoặc sửa thẻ phong cách.",
+  "duong_dan": "bo/linhx-kho-minh-hoa/skills/xem-kho",
+  "bo": "linhx-kho-minh-hoa",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
   "ten": "cham-khoang-trong",
@@ -688,9 +656,17 @@
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
-  "ten": "quy-mo-thi-truong",
-  "mo_ta": "B4 radar khoảng trống. Ước quy mô thị trường của mỗi cụm nhu cầu ở nguồn (tổng người theo, số kênh trả phí, tăng trưởng 4 tuần) và tính điểm cầu nguồn. Dùng sau B3 của LAB029.",
-  "duong_dan": "bo/linhx-khoang-trong/skills/quy-mo-thi-truong",
+  "ten": "hien-tuong",
+  "mo_ta": "B1 radar khoảng trống. Quét top bài, top tác giả, top kênh trên Substack, Medium, kênh quan điểm (LinkedIn, X, Threads, Facebook), podcast, YouTube, cả quốc tế và Việt Nam, ghi vào 01-hien-tuong.jsonl. Dùng khi cần lấy dữ liệu hiện tượng cho LAB029.",
+  "duong_dan": "bo/linhx-khoang-trong/skills/hien-tuong",
+  "bo": "linhx-khoang-trong",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+ },
+ {
+  "ten": "nguoi-thang",
+  "mo_ta": "B3 radar khoảng trống. Với mỗi cụm nhu cầu, tìm 3 đến 5 kênh, tác giả đang thắng và chưng cất vì sao họ thắng theo 3 tầng (nhận thức, chiến lược, nội dung). Dùng sau B2 của LAB029.",
+  "duong_dan": "bo/linhx-khoang-trong/skills/nguoi-thang",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
@@ -699,6 +675,30 @@
   "ten": "nhu-cau-doc-gia",
   "mo_ta": "B2 radar khoảng trống. Từ dữ liệu hiện tượng, tính chỉ số cầu/cung, bài vượt trung vị, bài của tác giả nhỏ mà nổ, rồi gom thành cụm NHU CẦU độc giả (không phải tag) kèm nỗi đau và từ khoá Anh, Việt. Dùng sau B1 của LAB029.",
   "duong_dan": "bo/linhx-khoang-trong/skills/nhu-cau-doc-gia",
+  "bo": "linhx-khoang-trong",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+ },
+ {
+  "ten": "quy-mo-thi-truong",
+  "mo_ta": "B4 radar khoảng trống. Ước quy mô thị trường của mỗi cụm nhu cầu ở nguồn (tổng người theo, số kênh trả phí, tăng trưởng 4 tuần) và tính điểm cầu nguồn. Dùng sau B3 của LAB029.",
+  "duong_dan": "bo/linhx-khoang-trong/skills/quy-mo-thi-truong",
+  "bo": "linhx-khoang-trong",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+ },
+ {
+  "ten": "radar-khoang-trong",
+  "mo_ta": "Chạy trọn radar khoảng trống độc giả 7 bước (hiện tượng → nhu cầu → ai thắng → quy mô → soi Việt Nam → khoảng trống → cơ hội kênh). Dùng khi Linh nói \"tìm khoảng trống độc giả\", \"chủ đề nào nên chiếm trước\", \"quét Medium Substack xem VN thiếu gì\", \"radar topic\".",
+  "duong_dan": "bo/linhx-khoang-trong/skills/radar-khoang-trong",
+  "bo": "linhx-khoang-trong",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
+ },
+ {
+  "ten": "soi-viet-nam",
+  "mo_ta": "B5 radar khoảng trống. Mang từng cụm nhu cầu về Việt Nam, xếp mức còn trống, mỏng hay đã có người chiếm trên từng nền tảng VN (Facebook, YouTube, TikTok, Substack, Spiderum, LinkedIn, Threads, podcast, sách, báo). Dùng sau B4 của LAB029.",
+  "duong_dan": "bo/linhx-khoang-trong/skills/soi-viet-nam",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
@@ -736,17 +736,17 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-linh-vuc"
  },
  {
-  "ten": "chan-doan-giai-doan",
-  "mo_ta": "Chẩn đoán một cộng đồng hoặc một người làm content đang ở tầng nào của chuỗi content → cộng đồng → bán (khung 5 tầng – 2 vòng) và giai đoạn 0→100 / 100→1.000 / 1.000+. Dùng khi Linh hoặc khách hỏi \"cộng đồng của tôi đang ở đâu\", \"nên làm gì tiếp\", hoặc trước khi lập kế hoạch 90 ngày.",
-  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/chan-doan-giai-doan",
+  "ten": "cau-hoi-thanh-noi-dung",
+  "mo_ta": "Vòng nhỏ của khung: gom câu hỏi lặp lại trong cộng đồng 14 ngày qua thành 3 đề bài nội dung trụ cho tuần sau (bài LinkedIn/Facebook, bản tin, buổi Zoom). Dùng khi Linh hỏi \"tuần sau viết gì\", \"học viên đang hỏi gì\".",
+  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/cau-hoi-thanh-noi-dung",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
-  "ten": "nhap-du-lieu",
-  "mo_ta": "Biến dữ liệu thô về thành viên, hoạt động và đơn hàng (danh sách lớp, form, ghi chép nhóm Zalo, bình luận Facebook, file chat xuất ra) thành CSV đúng mẫu rồi nhập vào CSDL cộng đồng. Dùng khi Linh đưa file hoặc dán nội dung nhóm và nói \"nhập\", \"cập nhật cộng đồng\".",
-  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/nhap-du-lieu",
+  "ten": "chan-doan-giai-doan",
+  "mo_ta": "Chẩn đoán một cộng đồng hoặc một người làm content đang ở tầng nào của chuỗi content → cộng đồng → bán (khung 5 tầng – 2 vòng) và giai đoạn 0→100 / 100→1.000 / 1.000+. Dùng khi Linh hoặc khách hỏi \"cộng đồng của tôi đang ở đâu\", \"nên làm gì tiếp\", hoặc trước khi lập kế hoạch 90 ngày.",
+  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/chan-doan-giai-doan",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
@@ -760,6 +760,14 @@
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
+  "ten": "de-xuat-tuan",
+  "mo_ta": "Biến danh sách đề xuất tuần (tín hiệu mua, champion sang sales, đã giúp người, sắp lên cấp, quay lại, im lặng) thành việc cụ thể và tin nháp cho Linh/SO. Dùng sau khi chạy nuoi.py tuan hoặc khi Linh hỏi \"tuần này nên chăm ai\".",
+  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/de-xuat-tuan",
+  "bo": "linhx-nuoi-cong-dong",
+  "nhom": "marketing",
+  "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
+ },
+ {
   "ten": "ke-hoach-90-ngay",
   "mo_ta": "Lập kế hoạch 90 ngày cho chuỗi content → cộng đồng → bán theo khung 5 tầng – 2 vòng, gồm thang offer, nhịp cộng đồng, SOP người mới và chỉ số. Dùng sau chẩn đoán, hoặc khi Linh nói \"lên kế hoạch cộng đồng\", \"kế hoạch 90 ngày\".",
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/ke-hoach-90-ngay",
@@ -768,9 +776,9 @@
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
-  "ten": "cau-hoi-thanh-noi-dung",
-  "mo_ta": "Vòng nhỏ của khung: gom câu hỏi lặp lại trong cộng đồng 14 ngày qua thành 3 đề bài nội dung trụ cho tuần sau (bài LinkedIn/Facebook, bản tin, buổi Zoom). Dùng khi Linh hỏi \"tuần sau viết gì\", \"học viên đang hỏi gì\".",
-  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/cau-hoi-thanh-noi-dung",
+  "ten": "nhap-du-lieu",
+  "mo_ta": "Biến dữ liệu thô về thành viên, hoạt động và đơn hàng (danh sách lớp, form, ghi chép nhóm Zalo, bình luận Facebook, file chat xuất ra) thành CSV đúng mẫu rồi nhập vào CSDL cộng đồng. Dùng khi Linh đưa file hoặc dán nội dung nhóm và nói \"nhập\", \"cập nhật cộng đồng\".",
+  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/nhap-du-lieu",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
@@ -784,28 +792,12 @@
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
-  "ten": "de-xuat-tuan",
-  "mo_ta": "Biến danh sách đề xuất tuần (tín hiệu mua, champion sang sales, đã giúp người, sắp lên cấp, quay lại, im lặng) thành việc cụ thể và tin nháp cho Linh/SO. Dùng sau khi chạy nuoi.py tuan hoặc khi Linh hỏi \"tuần này nên chăm ai\".",
-  "duong_dan": "bo/linhx-nuoi-cong-dong/skills/de-xuat-tuan",
-  "bo": "linhx-nuoi-cong-dong",
-  "nhom": "marketing",
-  "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
- },
- {
   "ten": "office",
   "mo_ta": "Mở, tắt, xem trạng thái hoặc chạy demo văn phòng ảo LINHX (2D pixel / 3D) hiển thị Claude Code, subagent và worker Antigravity đang làm gì; cài hook cho Antigravity CLI.",
   "duong_dan": "bo/linhx-office/skills/office",
   "bo": "linhx-office",
   "nhom": "van-hanh",
   "ban_goc": "D:/LINHX/LAB/LAB021-VAN-PHONG-AO-AGENT/src/linhx-office"
- },
- {
-  "ten": "onbrand-thi",
-  "mo_ta": "Đo năng lực bám chuẩn design của nhiều người hoặc nhiều AI trên cùng một brand: ra 5 đề chuẩn, thu bài, chấm onbrand từng bài, xếp hạng và chỉ ra điểm yếu theo mục. Dùng khi tuyển hoặc đánh giá designer, hoặc so công cụ AI tạo ảnh.",
-  "duong_dan": "bo/linhx-onbrand/skills/onbrand-thi",
-  "bo": "linhx-onbrand",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
   "ten": "onbrand-cham",
@@ -816,17 +808,25 @@
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
-  "ten": "onbrand-thiet-ke",
-  "mo_ta": "Thiết kế ấn phẩm (social, story, banner, slide, poster) đúng ngôn ngữ thiết kế của một brand đã nạp, dùng logo vector, font, hoạ tiết, ảnh thật của brand, xuất PNG và tự chấm onbrand đến khi đạt. Dùng khi cần làm ấn phẩm mới cho [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH], Listening Vietnam hoặc brand khác trong brands/.",
-  "duong_dan": "bo/linhx-onbrand/skills/onbrand-thiet-ke",
+  "ten": "onbrand-nap",
+  "mo_ta": "Nạp một brand guideline (PDF, AI, PPTX, thư mục logo) thành cây thư mục chuẩn và brand.json để chấm onbrand. Dùng khi có guideline mới hoặc guideline đổi.",
+  "duong_dan": "bo/linhx-onbrand/skills/onbrand-nap",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
-  "ten": "onbrand-nap",
-  "mo_ta": "Nạp một brand guideline (PDF, AI, PPTX, thư mục logo) thành cây thư mục chuẩn và brand.json để chấm onbrand. Dùng khi có guideline mới hoặc guideline đổi.",
-  "duong_dan": "bo/linhx-onbrand/skills/onbrand-nap",
+  "ten": "onbrand-thi",
+  "mo_ta": "Đo năng lực bám chuẩn design của nhiều người hoặc nhiều AI trên cùng một brand: ra 5 đề chuẩn, thu bài, chấm onbrand từng bài, xếp hạng và chỉ ra điểm yếu theo mục. Dùng khi tuyển hoặc đánh giá designer, hoặc so công cụ AI tạo ảnh.",
+  "duong_dan": "bo/linhx-onbrand/skills/onbrand-thi",
+  "bo": "linhx-onbrand",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
+ },
+ {
+  "ten": "onbrand-thiet-ke",
+  "mo_ta": "Thiết kế ấn phẩm (social, story, banner, slide, poster) đúng ngôn ngữ thiết kế của một brand đã nạp, dùng logo vector, font, hoạ tiết, ảnh thật của brand, xuất PNG và tự chấm onbrand đến khi đạt. Dùng khi cần làm ấn phẩm mới cho [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH], Listening Vietnam hoặc brand khác trong brands/.",
+  "duong_dan": "bo/linhx-onbrand/skills/onbrand-thiet-ke",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
@@ -856,9 +856,25 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-pipeline"
  },
  {
-  "ten": "them-nguon-su-kien",
-  "mo_ta": "Thêm hoặc sửa nguồn quét của event radar (lịch Luma, Meetup, RSS báo, trang lịch sự kiện của hiệp hội, truy vấn Google News, truy vấn tìm kiếm). Dùng khi Linh gửi một link lịch sự kiện, một cộng đồng mới, hoặc nói \"theo dõi thêm nguồn X\".",
-  "duong_dan": "bo/linhx-radar/skills/them-nguon-su-kien",
+  "ten": "ban-do-chu-de",
+  "mo_ta": "Tổng hợp định kỳ (tháng, quý) từ các sự kiện đã index và hấp thu: mọi người đang nói gì, ai nói hay, pain point lặp lại, solution mới, khoảng trống chưa ai nói, và nên đi event nào tiếp theo. Dùng khi Linh hỏi \"thị trường đang nói gì\", \"insight từ các event\", \"báo cáo tháng sự kiện\".",
+  "duong_dan": "bo/linhx-radar/skills/ban-do-chu-de",
+  "bo": "linhx-radar",
+  "nhom": "nghien-cuu",
+  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
+ },
+ {
+  "ten": "hap-thu-su-kien",
+  "mo_ta": "Hấp thu nội dung một sự kiện đã đi hoặc chỉ xem lại: từ ghi chú, ảnh slide, video YouTube, bài tường thuật, ra talk, pain point, solution, số liệu, chấm diễn giả, bài học áp dụng cho LINHX. Dùng khi Linh nói \"vừa đi event X\", \"tóm tắt event\", \"hấp thu hội thảo\", gửi ảnh slide hoặc link video.",
+  "duong_dan": "bo/linhx-radar/skills/hap-thu-su-kien",
+  "bo": "linhx-radar",
+  "nhom": "nghien-cuu",
+  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
+ },
+ {
+  "ten": "ho-so-doi-tuong",
+  "mo_ta": "Làm hồ sơ một doanh nghiệp hoặc KOL trong radar: họ đang nói gì, đã có gì, đau ở đâu, LINHX chia sẻ và bán được gì, cách tiếp cận, nháp lời mở. Dùng khi Linh hỏi \"tìm hiểu brand X\", \"KOL Y là ai\", \"nên tiếp cận ai trước\".",
+  "duong_dan": "bo/linhx-radar/skills/ho-so-doi-tuong",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
@@ -872,11 +888,11 @@
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
-  "ten": "them-cong-dong",
-  "mo_ta": "Thêm một hiệp hội, cộng đồng hoặc sự kiện mới vào radar: tìm đủ kênh, nhà tài trợ các mùa, KOL, chủ đề, pain point, họ đã có gì, rồi tạo nguồn quét. Dùng khi Linh nói \"thêm cộng đồng X\", \"theo dõi hội Y\", \"tìm các tổ chức giống CSMO\".",
-  "duong_dan": "bo/linhx-radar/skills/them-cong-dong",
+  "ten": "radar",
+  "mo_ta": "Radar LINHX hợp nhất. Chạy một lượt quét chung (cộng đồng, nhà tài trợ, KOL, sự kiện, giải thưởng, cuộc thi, quỹ tài trợ) và báo bản tin. Dùng khi Linh nói \"chạy radar\", \"tuần này có gì\", \"bản tin radar\", hoặc khi không rõ nên dùng radar con nào.",
+  "duong_dan": "bo/linhx-radar/skills/radar",
   "bo": "linhx-radar",
-  "nhom": "marketing",
+  "nhom": "nghien-cuu",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -885,6 +901,14 @@
   "duong_dan": "bo/linhx-radar/skills/radar-cong-dong",
   "bo": "linhx-radar",
   "nhom": "marketing",
+  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
+ },
+ {
+  "ten": "radar-giai-thuong",
+  "mo_ta": "Radar giải thưởng ở Việt Nam cho doanh nghiệp và cá nhân: giải nào LINHX, TUVA hoặc Linh nộp được, giải nào uy tín hay trả phí là có, ai vừa đoạt giải (danh sách khách hàng, đối tác tiềm năng), lễ trao giải nào nên dự. Dùng khi Linh hỏi \"có giải thưởng nào\", \"giải cho doanh nghiệp\", \"ai vừa đoạt giải X\", \"nên nộp giải nào\".",
+  "duong_dan": "bo/linhx-radar/skills/radar-giai-thuong",
+  "bo": "linhx-radar",
+  "nhom": "nghien-cuu",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -904,57 +928,25 @@
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
-  "ten": "ho-so-doi-tuong",
-  "mo_ta": "Làm hồ sơ một doanh nghiệp hoặc KOL trong radar: họ đang nói gì, đã có gì, đau ở đâu, LINHX chia sẻ và bán được gì, cách tiếp cận, nháp lời mở. Dùng khi Linh hỏi \"tìm hiểu brand X\", \"KOL Y là ai\", \"nên tiếp cận ai trước\".",
-  "duong_dan": "bo/linhx-radar/skills/ho-so-doi-tuong",
+  "ten": "them-cong-dong",
+  "mo_ta": "Thêm một hiệp hội, cộng đồng hoặc sự kiện mới vào radar: tìm đủ kênh, nhà tài trợ các mùa, KOL, chủ đề, pain point, họ đã có gì, rồi tạo nguồn quét. Dùng khi Linh nói \"thêm cộng đồng X\", \"theo dõi hội Y\", \"tìm các tổ chức giống CSMO\".",
+  "duong_dan": "bo/linhx-radar/skills/them-cong-dong",
+  "bo": "linhx-radar",
+  "nhom": "marketing",
+  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
+ },
+ {
+  "ten": "them-nguon-su-kien",
+  "mo_ta": "Thêm hoặc sửa nguồn quét của event radar (lịch Luma, Meetup, RSS báo, trang lịch sự kiện của hiệp hội, truy vấn Google News, truy vấn tìm kiếm). Dùng khi Linh gửi một link lịch sự kiện, một cộng đồng mới, hoặc nói \"theo dõi thêm nguồn X\".",
+  "duong_dan": "bo/linhx-radar/skills/them-nguon-su-kien",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
-  "ten": "radar-giai-thuong",
-  "mo_ta": "Radar giải thưởng ở Việt Nam cho doanh nghiệp và cá nhân: giải nào LINHX, TUVA hoặc Linh nộp được, giải nào uy tín hay trả phí là có, ai vừa đoạt giải (danh sách khách hàng, đối tác tiềm năng), lễ trao giải nào nên dự. Dùng khi Linh hỏi \"có giải thưởng nào\", \"giải cho doanh nghiệp\", \"ai vừa đoạt giải X\", \"nên nộp giải nào\".",
-  "duong_dan": "bo/linhx-radar/skills/radar-giai-thuong",
-  "bo": "linhx-radar",
-  "nhom": "nghien-cuu",
-  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
- },
- {
-  "ten": "hap-thu-su-kien",
-  "mo_ta": "Hấp thu nội dung một sự kiện đã đi hoặc chỉ xem lại: từ ghi chú, ảnh slide, video YouTube, bài tường thuật, ra talk, pain point, solution, số liệu, chấm diễn giả, bài học áp dụng cho LINHX. Dùng khi Linh nói \"vừa đi event X\", \"tóm tắt event\", \"hấp thu hội thảo\", gửi ảnh slide hoặc link video.",
-  "duong_dan": "bo/linhx-radar/skills/hap-thu-su-kien",
-  "bo": "linhx-radar",
-  "nhom": "nghien-cuu",
-  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
- },
- {
-  "ten": "ban-do-chu-de",
-  "mo_ta": "Tổng hợp định kỳ (tháng, quý) từ các sự kiện đã index và hấp thu: mọi người đang nói gì, ai nói hay, pain point lặp lại, solution mới, khoảng trống chưa ai nói, và nên đi event nào tiếp theo. Dùng khi Linh hỏi \"thị trường đang nói gì\", \"insight từ các event\", \"báo cáo tháng sự kiện\".",
-  "duong_dan": "bo/linhx-radar/skills/ban-do-chu-de",
-  "bo": "linhx-radar",
-  "nhom": "nghien-cuu",
-  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
- },
- {
-  "ten": "radar",
-  "mo_ta": "Radar LINHX hợp nhất. Chạy một lượt quét chung (cộng đồng, nhà tài trợ, KOL, sự kiện, giải thưởng, cuộc thi, quỹ tài trợ) và báo bản tin. Dùng khi Linh nói \"chạy radar\", \"tuần này có gì\", \"bản tin radar\", hoặc khi không rõ nên dùng radar con nào.",
-  "duong_dan": "bo/linhx-radar/skills/radar",
-  "bo": "linhx-radar",
-  "nhom": "nghien-cuu",
-  "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
- },
- {
-  "ten": "khung-nghien-cuu",
-  "mo_ta": "Bước 1–3 của linhx-report. Làm rõ đề bài báo cáo, dựng khung phân tích (cây vấn đề MECE, giả thuyết, bảng yêu cầu dữ liệu P0/P1/P2), rồi nghiên cứu song song bằng subagent và ghi sổ nguồn + sổ bằng chứng có trích nguyên văn. Dùng trong quy trình bao-cao, hoặc khi Linh cần một bộ nghiên cứu có nguồn cho báo cáo.",
-  "duong_dan": "bo/linhx-report/skills/khung-nghien-cuu",
-  "bo": "linhx-report",
-  "nhom": "thiet-ke",
-  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
- },
- {
-  "ten": "tim-mau-clone",
-  "mo_ta": "Bước 0 của linhx-report. Tìm cảm hứng và mẫu báo cáo đẹp (thư viện PDF của Linh, Envato Elements, Dribbble, Behance, Issuu, Pinterest, trang báo cáo của các hãng), rồi clone style và structure của mẫu chính thành phong cách dùng được. Dùng khi bắt đầu báo cáo mới, hoặc khi Linh nói \"clone style báo cáo này\", \"học bố cục từ mẫu này\", \"/bao-cao-clone\".",
-  "duong_dan": "bo/linhx-report/skills/tim-mau-clone",
+  "ten": "bao-cao",
+  "mo_ta": "Quy trình 13 bước ra báo cáo PDF cao cấp kiểu McKinsey, Kantar, Nielsen (sách trắng, báo cáo ngành, báo cáo khảo sát, báo cáo xu hướng) cho LINHX và các BU. Dùng khi Linh nói \"làm báo cáo\", \"viết report\", \"sách trắng\", \"whitepaper\", \"báo cáo thị trường\", \"báo cáo khảo sát\", \"PDF đẹp như McKinsey\", hoặc muốn biến một bộ nghiên cứu thành báo cáo dàn trang tạp chí.",
+  "duong_dan": "bo/linhx-report/skills/bao-cao",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
@@ -968,17 +960,25 @@
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
-  "ten": "bao-cao",
-  "mo_ta": "Quy trình 13 bước ra báo cáo PDF cao cấp kiểu McKinsey, Kantar, Nielsen (sách trắng, báo cáo ngành, báo cáo khảo sát, báo cáo xu hướng) cho LINHX và các BU. Dùng khi Linh nói \"làm báo cáo\", \"viết report\", \"sách trắng\", \"whitepaper\", \"báo cáo thị trường\", \"báo cáo khảo sát\", \"PDF đẹp như McKinsey\", hoặc muốn biến một bộ nghiên cứu thành báo cáo dàn trang tạp chí.",
-  "duong_dan": "bo/linhx-report/skills/bao-cao",
+  "ten": "hinh-du-lieu",
+  "mo_ta": "Bước 4 của linhx-report. Biến bằng chứng thành hình (exhibit) chuẩn báo cáo tư vấn: tiêu đề là câu kết luận, dòng đối tượng và đơn vị, nhãn số trực tiếp, một màu nhấn, nguồn có n, mỗi chuỗi số trỏ mã bằng chứng; vẽ bằng hinh.py ra SVG theo style. Dùng trong quy trình bao-cao hoặc khi cần vẽ hình báo cáo.",
+  "duong_dan": "bo/linhx-report/skills/hinh-du-lieu",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
-  "ten": "hinh-du-lieu",
-  "mo_ta": "Bước 4 của linhx-report. Biến bằng chứng thành hình (exhibit) chuẩn báo cáo tư vấn: tiêu đề là câu kết luận, dòng đối tượng và đơn vị, nhãn số trực tiếp, một màu nhấn, nguồn có n, mỗi chuỗi số trỏ mã bằng chứng; vẽ bằng hinh.py ra SVG theo style. Dùng trong quy trình bao-cao hoặc khi cần vẽ hình báo cáo.",
-  "duong_dan": "bo/linhx-report/skills/hinh-du-lieu",
+  "ten": "khung-nghien-cuu",
+  "mo_ta": "Bước 1–3 của linhx-report. Làm rõ đề bài báo cáo, dựng khung phân tích (cây vấn đề MECE, giả thuyết, bảng yêu cầu dữ liệu P0/P1/P2), rồi nghiên cứu song song bằng subagent và ghi sổ nguồn + sổ bằng chứng có trích nguyên văn. Dùng trong quy trình bao-cao, hoặc khi Linh cần một bộ nghiên cứu có nguồn cho báo cáo.",
+  "duong_dan": "bo/linhx-report/skills/khung-nghien-cuu",
+  "bo": "linhx-report",
+  "nhom": "thiet-ke",
+  "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
+ },
+ {
+  "ten": "tim-mau-clone",
+  "mo_ta": "Bước 0 của linhx-report. Tìm cảm hứng và mẫu báo cáo đẹp (thư viện PDF của Linh, Envato Elements, Dribbble, Behance, Issuu, Pinterest, trang báo cáo của các hãng), rồi clone style và structure của mẫu chính thành phong cách dùng được. Dùng khi bắt đầu báo cáo mới, hoặc khi Linh nói \"clone style báo cáo này\", \"học bố cục từ mẫu này\", \"/bao-cao-clone\".",
+  "duong_dan": "bo/linhx-report/skills/tim-mau-clone",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
@@ -1048,57 +1048,9 @@
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-tu-duy"
  },
  {
-  "ten": "deep-researcher",
-  "mo_ta": "Skill nghiên cứu chuyên sâu cho bài viết. Trigger khi chạy bước 3-4 của pipeline hoặc khi cần tìm kiếm dữ liệu, số liệu, trích dẫn triết học cho một chủ đề. Tạo 03_Research_Plan.md và 04_Raw_Research_Data.json.",
-  "duong_dan": "bo/linhx-viet-bai/skills/deep-researcher",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "review-article",
-  "mo_ta": "Chạy lại vòng Critic Loop 2-stage (AI Detector + Editorial QA) trên bài viết đã có. Hỗ trợ chọn variant cụ thể hoặc review toàn bộ.",
-  "duong_dan": "bo/linhx-viet-bai/skills/review-article",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "new-article",
-  "mo_ta": "Viết bài mới theo quy trình LinhX Write 9 bước của Linh (FLOW v FM): gieo ý → 11 câu hỏi Deep Inquiry → nghiên cứu → 30 tứ → 3 phương án A/B/C → viết → phản biện 2 tầng (AI Detector + Editorial QA) → chọn bản tốt nhất. Dùng khi Linh nói /new-article, \\\"viết bài về…\\\", hoặc đưa một ý tưởng thô cần thành bài.",
-  "duong_dan": "bo/linhx-viet-bai/skills/new-article",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "resume-article",
-  "mo_ta": "Tiếp tục viết bài dở dang từ checkpoint. Hỗ trợ --variant flag để chạy 1 variant cụ thể (dùng cho parallel execution).",
-  "duong_dan": "bo/linhx-viet-bai/skills/resume-article",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
   "ten": "chuyen-kenh",
   "mo_ta": "Đưa bài của Linh về đúng khuôn từng kênh (Dân trí Tâm điểm, Bloomberg Businessweek VN, VnExpress Góc nhìn, CafeBiz AI4BIZ, Facebook, Substack, LinkedIn): tên ký, độ dài, tít, sapo, cách viết số. Dùng ở trạm 7 của viet-bai, hoặc khi Linh nhờ \"chuyển bài này sang Facebook\", \"làm bản cho Bloomberg\", \"đặt tít\".",
   "duong_dan": "bo/linhx-viet-bai/skills/chuyen-kenh",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "viet-bai",
-  "mo_ta": "Quy trình viết bài chuẩn cho Linh (Lê Bích / Đinh Trần Tuấn Linh), từ đơn hàng đến bản giao, 7 trạm, không bịa chuyện. Dùng khi Linh nhờ viết bài báo, op-ed, tản văn, essay, bài Facebook, Substack, LinkedIn, hoặc nói \"viết giúp tôi bài…\", \"lên bài cho Dân trí/Bloomberg/CafeBiz\".",
-  "duong_dan": "bo/linhx-viet-bai/skills/viet-bai",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "giong-linh",
-  "mo_ta": "Sổ tay giọng văn của Linh (Lê Bích / Đinh Trần Tuấn Linh), 11 nước đi có bằng chứng từ bài đã in và mốc số đo. Dùng khi cần viết, sửa, nhận xét một đoạn \"cho giống giọng Linh\", hoặc khi các skill viet-bai, soat-giong, chuyen-kenh cần tra giọng.",
-  "duong_dan": "bo/linhx-viet-bai/skills/giong-linh",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
@@ -1120,6 +1072,14 @@
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
+  "ten": "deep-researcher",
+  "mo_ta": "Skill nghiên cứu chuyên sâu cho bài viết. Trigger khi chạy bước 3-4 của pipeline hoặc khi cần tìm kiếm dữ liệu, số liệu, trích dẫn triết học cho một chủ đề. Tạo 03_Research_Plan.md và 04_Raw_Research_Data.json.",
+  "duong_dan": "bo/linhx-viet-bai/skills/deep-researcher",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
   "ten": "gemini-reviewer",
   "mo_ta": "Module duyệt bài độc lập bằng Gemini CLI. 2-stage pipeline: AI Detector → Editorial QA. Antigravity gọi trực tiếp gemini CLI qua run_command. Fallback bằng Python REST API nếu CLI fail.",
   "duong_dan": "bo/linhx-viet-bai/skills/gemini-reviewer",
@@ -1128,25 +1088,9 @@
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
-  "ten": "y-tuong-bai",
-  "mo_ta": "Tìm tứ cho bài của Linh bằng vòng lặp ý tưởng tự tối ưu LAB024 (gieo 30 ý, khán giả ảo và giám khảo nghề chấm, giữ bản thắng, rút bài học), rồi đưa hướng thắng về trạm dàn ý của viet-bai. Dùng khi chủ đề còn mở, Linh chưa có góc nhìn, hoặc Linh nói \"nghĩ giúp tôi vài hướng\", \"bài này nên viết góc nào\".",
-  "duong_dan": "bo/linhx-viet-bai/skills/y-tuong-bai",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "idea-seeder",
-  "mo_ta": "Skill gieo mầm ý tưởng bài viết. Trigger khi user nhập một ý tưởng thô (seed idea) hoặc khi chạy bước 1-2 của pipeline viết bài. Tạo 01_Seed_Input.json và 02_Context_Expansion.json.",
-  "duong_dan": "bo/linhx-viet-bai/skills/idea-seeder",
-  "bo": "linhx-viet-bai",
-  "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
- },
- {
-  "ten": "time-tracker",
-  "mo_ta": "Skill đo thời gian thực thi pipeline bằng cách đọc file timestamps. Trigger khi cần tạo timelog cho một project, hoặc khi chạy /resume-article cần biết bước cuối chạy lúc nào. Đọc mtime của các file output trong Idea folder.",
-  "duong_dan": "bo/linhx-viet-bai/skills/time-tracker",
+  "ten": "giong-linh",
+  "mo_ta": "Sổ tay giọng văn của Linh (Lê Bích / Đinh Trần Tuấn Linh), 11 nước đi có bằng chứng từ bài đã in và mốc số đo. Dùng khi cần viết, sửa, nhận xét một đoạn \"cho giống giọng Linh\", hoặc khi các skill viet-bai, soat-giong, chuyen-kenh cần tra giọng.",
+  "duong_dan": "bo/linhx-viet-bai/skills/giong-linh",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
@@ -1160,6 +1104,38 @@
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
+  "ten": "idea-seeder",
+  "mo_ta": "Skill gieo mầm ý tưởng bài viết. Trigger khi user nhập một ý tưởng thô (seed idea) hoặc khi chạy bước 1-2 của pipeline viết bài. Tạo 01_Seed_Input.json và 02_Context_Expansion.json.",
+  "duong_dan": "bo/linhx-viet-bai/skills/idea-seeder",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
+  "ten": "new-article",
+  "mo_ta": "Viết bài mới theo quy trình LinhX Write 9 bước của Linh (FLOW v FM): gieo ý → 11 câu hỏi Deep Inquiry → nghiên cứu → 30 tứ → 3 phương án A/B/C → viết → phản biện 2 tầng (AI Detector + Editorial QA) → chọn bản tốt nhất. Dùng khi Linh nói /new-article, \\\"viết bài về…\\\", hoặc đưa một ý tưởng thô cần thành bài.",
+  "duong_dan": "bo/linhx-viet-bai/skills/new-article",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
+  "ten": "resume-article",
+  "mo_ta": "Tiếp tục viết bài dở dang từ checkpoint. Hỗ trợ --variant flag để chạy 1 variant cụ thể (dùng cho parallel execution).",
+  "duong_dan": "bo/linhx-viet-bai/skills/resume-article",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
+  "ten": "review-article",
+  "mo_ta": "Chạy lại vòng Critic Loop 2-stage (AI Detector + Editorial QA) trên bài viết đã có. Hỗ trợ chọn variant cụ thể hoặc review toàn bộ.",
+  "duong_dan": "bo/linhx-viet-bai/skills/review-article",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
   "ten": "soat-giong",
   "mo_ta": "Soát bài nháp tiếng Việt theo giọng Linh: chạy script kiem_van.py (dấu hiệu AP-01..AP-20, so mốc giọng, điểm 0-100) rồi đọc 3 lượt độc lập và sửa tối đa 2 vòng. Dùng khi Linh nhờ \"soát bài\", \"bỏ giọng AI\", \"biên tập lại\", \"xem bài này có giống tôi không\", hoặc ở trạm 6 của viet-bai.",
   "duong_dan": "bo/linhx-viet-bai/skills/soat-giong",
@@ -1168,12 +1144,28 @@
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
-  "ten": "viet-bai-giong-viet",
-  "mo_ta": "Viết bài tiếng Việt cùng Linh theo luồng của biên tập viên Vân Anh - máy tìm ý và dữ liệu, Linh viết nháp gạch đầu dòng, máy chỉ làm mượt từng ý của Linh rồi gửi biên tập. Dùng khi Linh đưa một đến ba ý gốc cho một bài.",
-  "duong_dan": "bo/linhx-viet-giong-viet/skills/viet-bai-giong-viet",
-  "bo": "linhx-viet-giong-viet",
+  "ten": "time-tracker",
+  "mo_ta": "Skill đo thời gian thực thi pipeline bằng cách đọc file timestamps. Trigger khi cần tạo timelog cho một project, hoặc khi chạy /resume-article cần biết bước cuối chạy lúc nào. Đọc mtime của các file output trong Idea folder.",
+  "duong_dan": "bo/linhx-viet-bai/skills/time-tracker",
+  "bo": "linhx-viet-bai",
   "nhom": "viet",
-  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-viet-giong-viet"
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
+  "ten": "viet-bai",
+  "mo_ta": "Quy trình viết bài chuẩn cho Linh (Lê Bích / Đinh Trần Tuấn Linh), từ đơn hàng đến bản giao, 7 trạm, không bịa chuyện. Dùng khi Linh nhờ viết bài báo, op-ed, tản văn, essay, bài Facebook, Substack, LinkedIn, hoặc nói \"viết giúp tôi bài…\", \"lên bài cho Dân trí/Bloomberg/CafeBiz\".",
+  "duong_dan": "bo/linhx-viet-bai/skills/viet-bai",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
+ },
+ {
+  "ten": "y-tuong-bai",
+  "mo_ta": "Tìm tứ cho bài của Linh bằng vòng lặp ý tưởng tự tối ưu LAB024 (gieo 30 ý, khán giả ảo và giám khảo nghề chấm, giữ bản thắng, rút bài học), rồi đưa hướng thắng về trạm dàn ý của viet-bai. Dùng khi chủ đề còn mở, Linh chưa có góc nhìn, hoặc Linh nói \"nghĩ giúp tôi vài hướng\", \"bài này nên viết góc nào\".",
+  "duong_dan": "bo/linhx-viet-bai/skills/y-tuong-bai",
+  "bo": "linhx-viet-bai",
+  "nhom": "viet",
+  "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
   "ten": "bien-tap",
@@ -1181,6 +1173,14 @@
   "duong_dan": "bo/linhx-viet-giong-viet/skills/bien-tap",
   "bo": "linhx-viet-giong-viet",
   "nhom": "tu-sua",
+  "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-viet-giong-viet"
+ },
+ {
+  "ten": "viet-bai-giong-viet",
+  "mo_ta": "Viết bài tiếng Việt cùng Linh theo luồng của biên tập viên Vân Anh - máy tìm ý và dữ liệu, Linh viết nháp gạch đầu dòng, máy chỉ làm mượt từng ý của Linh rồi gửi biên tập. Dùng khi Linh đưa một đến ba ý gốc cho một bài.",
+  "duong_dan": "bo/linhx-viet-giong-viet/skills/viet-bai-giong-viet",
+  "bo": "linhx-viet-giong-viet",
+  "nhom": "viet",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-viet-giong-viet"
  },
  {
@@ -1192,17 +1192,17 @@
   "ban_goc": "thư mục chung/LAB084-AGENT-CHAY-ADS/src/linhx-vong-ads"
  },
  {
-  "ten": "proposal-ideas",
-  "mo_ta": "Researches world event technology and proposes 4–6 scored activation ideas for a brief (including IFAGENT talking-character ideas where they fit), before the full proposal is built. Use when the user says \"đề xuất ý tưởng\", \"brainstorm hoạt động\", \"ý tưởng cho mascot\", \"có ý tưởng gì cho event\", \"nghiên cứu công nghệ event\".",
-  "duong_dan": "bo/proposal-studio/skills/proposal-ideas",
+  "ten": "proposal-brief",
+  "mo_ta": "Analyses a client brief for an event or activation proposal – extracts objectives, audience, constraints, insights and lists what the brief is missing. Use when the user says \"phân tích brief\", \"đọc brief giúp\", \"brief này thiếu gì\", \"tóm tắt brief\", or pastes a brief without asking for the full proposal yet.",
+  "duong_dan": "bo/proposal-studio/skills/proposal-brief",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"
  },
  {
-  "ten": "proposal-brief",
-  "mo_ta": "Analyses a client brief for an event or activation proposal – extracts objectives, audience, constraints, insights and lists what the brief is missing. Use when the user says \"phân tích brief\", \"đọc brief giúp\", \"brief này thiếu gì\", \"tóm tắt brief\", or pastes a brief without asking for the full proposal yet.",
-  "duong_dan": "bo/proposal-studio/skills/proposal-brief",
+  "ten": "proposal-ideas",
+  "mo_ta": "Researches world event technology and proposes 4–6 scored activation ideas for a brief (including IFAGENT talking-character ideas where they fit), before the full proposal is built. Use when the user says \"đề xuất ý tưởng\", \"brainstorm hoạt động\", \"ý tưởng cho mascot\", \"có ý tưởng gì cho event\", \"nghiên cứu công nghệ event\".",
+  "duong_dan": "bo/proposal-studio/skills/proposal-ideas",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"

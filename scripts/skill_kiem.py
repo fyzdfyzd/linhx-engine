@@ -43,8 +43,9 @@ def main():
     for loai in ('bo', 'le'):
         d0 = os.path.join(GOC, loai)
         for don_vi in sorted(os.listdir(d0)) if os.path.isdir(d0) else []:
-            for r, _, fs in os.walk(os.path.join(d0, don_vi)):
-                for f in fs:
+            for r, dd, fs in os.walk(os.path.join(d0, don_vi)):
+                dd.sort()
+                for f in sorted(fs):
                     fp = os.path.join(r, f); rel = os.path.relpath(fp, GOC)
                     if os.path.getsize(fp) > TRAN: loi.append(f'{rel}: file > 5 MB')
                     if any(fnmatch.fnmatch(f.lower(), x) for x in CAM) and not f.endswith('.example'): loi.append(f'{rel}: file bí mật')
