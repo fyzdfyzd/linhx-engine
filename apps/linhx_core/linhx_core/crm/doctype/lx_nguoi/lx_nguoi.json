@@ -62,7 +62,14 @@
    "delete": 1,
    "share": 1,
    "print": 1,
-   "email": 1
+   "email": 1,
+   "ignore_user_permissions": 1
+  },
+  {
+   "role": "LX Nhan Vien",
+   "read": 1,
+   "write": 1,
+   "create": 1
   }
  ],
  "sort_field": "modified",
@@ -72,7 +79,7 @@
  "actions": [],
  "links": [],
  "index_web_pages_for_search": 0,
- "modified": "2026-11-08 15:20:00.000000",
+ "modified": "2026-11-08 23:40:00.000000",
  "modified_by": "Administrator",
  "owner": "Administrator",
  "creation": "2026-11-08 06:55:00.000000"

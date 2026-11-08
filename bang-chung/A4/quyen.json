@@ -1,0 +1,44 @@
+{
+  "luc": "2026-11-09T00:27:10+07:00",
+  "site": "test",
+  "goi": [
+    {
+      "user": "bc-x-1794158828@test.local",
+      "don_vi_user": "DV-X-1794158828",
+      "don_vi_ban_ghi": "DV-X-1794158828",
+      "url": "/api/resource/LX Nguoi/qa86la6hc2",
+      "status": 200
+    },
+    {
+      "user": "bc-x-1794158828@test.local",
+      "don_vi_user": "DV-X-1794158828",
+      "don_vi_ban_ghi": "DV-Y-1794158828",
+      "url": "/api/resource/LX Nguoi/qaaso2bsdm",
+      "status": 403
+    },
+    {
+      "user": "bc-x-1794158828@test.local",
+      "don_vi_user": "DV-X-1794158828",
+      "don_vi_ban_ghi": "DV-Y-1794158828",
+      "method": "PUT",
+      "url": "/api/resource/LX Nguoi/qaaso2bsdm",
+      "status": 403
+    },
+    {
+      "user": "bc-x-1794158828@test.local",
+      "don_vi_user": "DV-X-1794158828",
+      "don_vi_ban_ghi": "DV-Y-1794158828",
+      "method": "POST",
+      "url": "/api/resource/LX Co Hoi",
+      "status": 403
+    },
+    {
+      "user": "bc-x-1794158828@test.local",
+      "don_vi_user": "DV-X-1794158828",
+      "don_vi_ban_ghi": "DV-Y-1794158828",
+      "url": "/api/method/frappe.client.get_list?doctype=LX%20Nguoi",
+      "status": 200,
+      "so_ban_ghi_don_vi_khac": 0
+    }
+  ]
+}

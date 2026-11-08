@@ -1,0 +1,10 @@
+[
+ {
+  "doctype": "Role",
+  "name": "LX Nhan Vien",
+  "role_name": "LX Nhan Vien",
+  "desk_access": 1,
+  "disabled": 0,
+  "is_custom": 0
+ }
+]
