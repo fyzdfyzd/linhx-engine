@@ -3,6 +3,7 @@ import logging
 from frappe.model.document import Document
 
 from linhx_core.crm import co_hoi
+from linhx_core.crm.quyen_don_vi import kiem_tra_quyen_doc
 
 logger = logging.getLogger(__name__)
 USER_LOAI_TRU = ("Administrator", "Guest")
@@ -82,6 +83,9 @@ def _loc_ung_vien_crm(frappe_mod, ds_user: list[str], don_vi: str | None) -> lis
 
 
 class LXCoHoi(Document):
+	def validate(self):
+		kiem_tra_quyen_doc(self, "validate")
+
 	def before_insert(self):
 		if not getattr(self, "trang_thai", None):
 			self.trang_thai = "moi"

@@ -3,6 +3,7 @@ import json
 from frappe.model.document import Document
 
 from linhx_core.crm import gop_trung
+from linhx_core.crm.quyen_don_vi import kiem_tra_quyen_doc
 from linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap import ghi_nhat_ky_truy_cap
 
 TRUONG_CO_BAN = ("ho_ten", "dien_thoai", "email", "zalo", "don_vi", "to_chuc", "ghi_cong")
@@ -34,6 +35,9 @@ class LXNguoi(Document):
 	def onload(self):
 		ghi_nhat_ky_truy_cap(self, "onload")
 
+	def validate(self):
+		kiem_tra_quyen_doc(self, "validate")
+
 	def before_insert(self):
 		self._gop_trung_khi_them()
 
@@ -54,7 +58,11 @@ class LXNguoi(Document):
 		except Exception:
 			return
 
+		dv_moi = str(ban_moi.get("don_vi") or "").strip()
 		for cu in ds_cu:
+			dv_cu = str(cu.get("don_vi") or "").strip()
+			if dv_moi and dv_cu and dv_moi != dv_cu:
+				continue
 			if gop_trung.khoa_gop(cu) & khoa_moi:
 				da_gop = gop_trung.gop([cu], ban_moi)[0]
 				for f in cac_truong:

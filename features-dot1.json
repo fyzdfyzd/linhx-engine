@@ -183,8 +183,8 @@
         "Đơn vị của user chỉ lấy từ User Permission"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a4.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A4/quyen.json"
     },
     {
       "id": "A5",
