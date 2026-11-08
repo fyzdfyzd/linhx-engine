@@ -1,6 +1,6 @@
 {
   "feature": "A2",
-  "luc": "2026-11-08T19:55:03+07:00",
+  "luc": "2026-11-08T20:30:29+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a2.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
@@ -15,7 +15,7 @@
     "tests/nghiem-thu/test_a2.py::test_giao_nguoi_it_viec_nhat PASSED         [ 60%]",
     "tests/nghiem-thu/test_a2.py::test_viec_cho_va_qua_han PASSED             [ 80%]",
     "tests/nghiem-thu/test_a2.py::test_thuan_python_va_controller PASSED      [100%]",
-    "============================= 5 passed in 12.72s =============================="
+    "============================== 5 passed in 1.29s =============================="
   ],
   "unit_test_returncode": 0,
   "unit_test_stdout": [
@@ -24,10 +24,12 @@
     "rootdir: D:\\LINHX\\ENGINE-t2",
     "configfile: pytest.ini",
     "plugins: anyio-4.15.1, platformdirs-4.14.0",
-    "collecting ... collected 2 items",
-    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_viec_cho_han_giao_sai_dinh_dang_va_thieu PASSED [ 50%]",
-    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_controller_before_insert_kep_han_giao_va_tu_giao PASSED [100%]",
-    "============================== 2 passed in 1.62s =============================="
+    "collecting ... collected 4 items",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_viec_cho_han_giao_sai_dinh_dang_va_thieu PASSED [ 25%]",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_parse_tg_chuoi_iso_co_mui_gio PASSED [ 50%]",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_controller_before_insert_kep_han_giao_va_tu_giao PASSED [ 75%]",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_co_hoi/test_lx_co_hoi.py::test_controller_nuot_loi_db_va_loc_vai_tro_crm PASSED [100%]",
+    "============================== 4 passed in 0.64s =============================="
   ],
   "doctypes": [
     "LX Quan He",

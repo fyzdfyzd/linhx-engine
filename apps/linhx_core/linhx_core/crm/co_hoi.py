@@ -24,14 +24,19 @@ def _parse_tg(gia_tri: object) -> datetime:
             gia_tri = gia_tri.astimezone().replace(tzinfo=None)
         return gia_tri.replace(microsecond=0)
     chu = str(gia_tri or "").strip()
+    if not chu:
+        raise ValueError("Thời gian trống")
+    try:
+        dt = datetime.fromisoformat(chu.replace("Z", "+00:00"))
+        if dt.tzinfo is not None:
+            dt = dt.astimezone().replace(tzinfo=None)
+        return dt.replace(microsecond=0)
+    except ValueError:
+        pass
     if "." in chu:
         chu = chu.split(".", 1)[0]
     if "T" in chu:
         chu = chu.replace("T", " ")
-    if "+" in chu:
-        chu = chu.split("+", 1)[0].strip()
-    if chu.endswith("Z"):
-        chu = chu[:-1].strip()
     return datetime.strptime(chu, DINH_DANG_TG)
 
 
