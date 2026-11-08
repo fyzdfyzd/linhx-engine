@@ -120,9 +120,11 @@ if ($Tho -eq 0) {
 # ---------- Lượt một thợ ----------
 $Wt = "D:\LINHX\ENGINE-t$Tho"; $Nhanh = "tu-dong/engine-t$Tho"; $S = "$Canh\t$Tho"
 New-Item -ItemType Directory -Force "$S\log" | Out-Null
-$lk = "$S\luot.lock"
-if ((Test-Path $lk) -and ((Get-Date) - (Get-Item $lk).LastWriteTime).TotalMinutes -lt 15) { exit 0 }
-New-Item -ItemType File -Force $lk | Out-Null
+# một lượt một thợ: mutex theo thợ (tự nhả khi tiến trình chết). Khoá file 15 phút cũ hỏng khi lượt chấm dài hơn 15 phút
+# (chờ cong_kiem tuần tự): lượt sau chấm lại cùng phiếu và giao đè phiếu (lỗi 8/11 19:19-19:38)
+$mxTho = New-Object System.Threading.Mutex($false, "Global\ENGINE-Tho$Tho")
+$coTho = $false; try { $coTho = $mxTho.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $coTho = $true }
+if (-not $coTho) { exit 0 }
 $dk = DocJson "$TichHop\canh\dieu-khien.json"
 $PhutToiDa = if ($dk.phut_toi_da) { [int]$dk.phut_toi_da } else { 40 }
 $Tran = if ($dk.tran_chua_dat) { [int]$dk.tran_chua_dat } else { 3 }
@@ -304,7 +306,7 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
     } | Select-Object -First 1
   }
   $ram = [math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB, 1)
-  if ($ThuChon) { $mxGiao.ReleaseMutex(); Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; Remove-Item $lk -Force -ErrorAction SilentlyContinue; exit 0 }
+  if ($ThuChon) { $mxGiao.ReleaseMutex(); Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; $mxTho.ReleaseMutex(); exit 0 }
   if ($chon -and $ram -lt 1.5) { Ghi "RAM trống $ram GB < 1,5 GB, chưa giao $chon"; $chon = $null }
   if ($chon) { "$Tho" | Set-Content "$Canh\nhan\$chon.txt"; $chon | Set-Content "$S\dang.txt" }
   $mxGiao.ReleaseMutex()
@@ -369,4 +371,4 @@ Thêm vào cuối .canh-tho/CAI-TIEN-AGY.md, dưới tiêu đề ``### $ten``, �
     Ghi "giao agy phiếu $ten`: $chon$(if ($loaiMoi -eq 'sua') { ' (lượt sửa)' })"
   }
 }
-Remove-Item $lk -Force -ErrorAction SilentlyContinue
+try { $mxTho.ReleaseMutex() } catch {}
