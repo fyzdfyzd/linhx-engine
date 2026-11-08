@@ -1,0 +1,36 @@
+{
+  "feature": "A1",
+  "luc": "2026-11-08T15:30:01+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_a1.py::test_co_ba_doctype PASSED                   [ 14%]",
+    "tests/nghiem-thu/test_a1.py::test_hai_nguoi_cung_so_dien_thoai_gop_mot PASSED [ 28%]",
+    "tests/nghiem-thu/test_a1.py::test_gop_theo_email_va_zalo PASSED          [ 42%]",
+    "tests/nghiem-thu/test_a1.py::test_khac_het_thi_khong_gop PASSED          [ 57%]",
+    "tests/nghiem-thu/test_a1.py::test_khoa_gop_chuan_hoa PASSED              [ 71%]",
+    "tests/nghiem-thu/test_a1.py::test_khong_viet_lai_logic_proto PASSED      [ 85%]",
+    "tests/nghiem-thu/test_a1.py::test_controller_goi_gop_trung PASSED        [100%]",
+    "",
+    "============================== 7 passed in 0.08s =============================="
+  ],
+  "nguon_proto": "nguon/03-opc-os/modules/04_quan_ly_user/module.py",
+  "bench_wsl": {
+    "luc": "2026-11-08T15:29:15+0700",
+    "site": "test",
+    "doctypes": [
+      "LX Don Vi",
+      "LX To Chuc",
+      "LX Nguoi"
+    ],
+    "n1_name": "v4nmf1a5nh",
+    "n2_name": "v4nmf1a5nh",
+    "gop_mot": true,
+    "sau_gop": {
+      "ho_ten": "Lan",
+      "dien_thoai": "0912 345 678",
+      "email": "lan@vd.vn",
+      "don_vi": "DV-A1",
+      "to_chuc": "TC-A1"
+    }
+  }
+}

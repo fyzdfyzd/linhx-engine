@@ -1,0 +1,72 @@
+{
+ "doctype": "DocType",
+ "name": "LX To Chuc",
+ "module": "crm",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "ma",
+  "ten",
+  "ma_so_thue",
+  "dien_thoai",
+  "email",
+  "don_vi"
+ ],
+ "fields": [
+  {
+   "fieldname": "ma",
+   "fieldtype": "Data",
+   "label": "Mã tổ chức"
+  },
+  {
+   "fieldname": "ten",
+   "fieldtype": "Data",
+   "label": "Tên tổ chức"
+  },
+  {
+   "fieldname": "ma_so_thue",
+   "fieldtype": "Data",
+   "label": "Mã số thuế"
+  },
+  {
+   "fieldname": "dien_thoai",
+   "fieldtype": "Data",
+   "label": "Điện thoại"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "don_vi",
+   "fieldtype": "Link",
+   "label": "Đơn vị",
+   "options": "LX Don Vi"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-08 15:20:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-08 15:20:00.000000"
+}
