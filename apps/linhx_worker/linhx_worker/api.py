@@ -8,7 +8,7 @@ import json
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_worker import bao_cao, quy_trinh
+from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
 
 PHIEN_BAN_API = "0.1"
@@ -145,6 +145,7 @@ def bang():
     jobs = frappe.get_all("LX Job", fields=["name", "workflow", "trang_thai", "tho", "muon_tho", "cha", "nhan_viec", "creation", "nhan_luc", "xong_luc", "so_giay", "dau_vao", "token_vao", "token_ra"], order_by="creation desc", limit=40)
     for j in jobs:
         j.dau_vao = (j.dau_vao or "")[:160]
+        j["phut"] = so_lieu.phut(j.get("so_giay"))
     dem = {r[0]: r[1] for r in frappe.db.sql("select trang_thai, count(*) from `tabLX Job` group by trang_thai")}
     return {"workers": workers, "workflows": workflows, "jobs": jobs, "dem": dem, "luc": now_datetime(), "user": frappe.session.user}
 

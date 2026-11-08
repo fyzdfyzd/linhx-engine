@@ -440,8 +440,8 @@
         "Job xong có token vào/ra và phút"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_e2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/E2/kiem.json"
     },
     {
       "id": "T1",
