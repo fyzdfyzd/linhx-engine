@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 03:00 (giờ máy cty). Đạt: 24/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1)
+Cập nhật 2026-11-09 03:09 (giờ máy cty). Đạt: 25/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature D1 · commit d4e2d44 · nhánh tu-dong/engine-t1 · 2026-11-09T01:36:08 |
-| 2 | R2 | rảnh | DAT · Feature R1 · commit e652f6b · nhánh tu-dong/engine-t2 · 2026-11-09T02:46:58 |
+| 2 | - | rảnh | DAT · Feature R2 · commit 1fd48d3 · nhánh tu-dong/engine-t2 · 2026-11-09T03:06:29 |
 | 3 | - | rảnh | DAT · Feature B5 · commit ee44cf7 · nhánh tu-dong/engine-t3 · 2026-11-09T02:35:04 |
 | 4 | - | rảnh | CHUA_DAT · Feature D2 · commit 61cd8a8 · nhánh tu-dong/engine-t4 · 2026-11-09T02:55:42 |
 
@@ -28,8 +28,6 @@ Cập nhật 2026-11-09 03:00 (giờ máy cty). Đạt: 24/32 (N1, N2, N3, N4, N
 - 2026-11-09T02:55:42 D2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc f16257a9, bản hỏng giữ ở nhánh cục bộ hong/D2-20261109-0255, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\D2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 02:26 t4: giao agy phiếu 20261109-0226-t4: D2 (lượt sửa)
-- 2026-11-09 02:27 t3: agy xong phiếu 20261109-0215-t3 (B5) sau 12 phút
 - 2026-11-09 02:34 t2: agy xong phiếu 20261109-0210-t2 (R1) sau 24 phút
 - 2026-11-09 02:35 t3: B5 DAT, đã gộp vào main
 - 2026-11-09 02:35 t3: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
@@ -40,4 +38,6 @@ Cập nhật 2026-11-09 03:00 (giờ máy cty). Đạt: 24/32 (N1, N2, N3, N4, N
 - 2026-11-09 02:55 t4: D2 CHUA_DAT lần 3 (commit 61cd8a8)
 - 2026-11-09 02:55 t4: D2 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
 - 2026-11-09 02:55 t4: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-09 03:06 t2: R2 DAT, đã gộp vào main
+- 2026-11-09 03:06 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 
