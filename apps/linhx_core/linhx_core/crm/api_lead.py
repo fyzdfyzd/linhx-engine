@@ -9,6 +9,8 @@ import frappe
 
 from linhx_core.crm import chuyen_lead, dong_y
 
+VAI_TRO_CHUYEN_LEAD = "LX Chuyen Lead"
+
 
 def _giai_ma_json(gia_tri: object) -> object:
     if isinstance(gia_tri, str):
@@ -22,63 +24,42 @@ def _giai_ma_json(gia_tri: object) -> object:
 
 
 def _chuan_site(ten: object) -> str:
-    s = str(ten or "").strip()
-    if s.endswith(".local"):
-        s = s[:-6]
-    return s
+    return str(ten or "").strip().removesuffix(".local")
 
 
 def _lay_cau_hinh_dich(site_dich: str) -> tuple[str, str]:
-    """Đọc URL và chuỗi xác thực API của bản cài đích từ site_config (frappe.conf)."""
+    """Đọc URL và chuỗi xác thực API (api_key:api_secret) của bản cài đích từ site_config['chuyen_lead_dich'][site_dich]."""
     conf = getattr(frappe, "conf", None) or {}
-    ds_dich = conf.get("chuyen_lead_dich") or conf.get("sites_dich") or {}
+    ds_dich = conf.get("chuyen_lead_dich")
     muc = ds_dich.get(site_dich) if isinstance(ds_dich, dict) else None
     if not isinstance(muc, dict):
-        muc = {}
+        frappe.throw(f"Thiếu cấu hình chuyen_lead_dich.{site_dich} trong site_config")
 
-    url = (
-        muc.get("url")
-        or conf.get(f"lead_dich_{site_dich}_url")
-        or conf.get("lead_dich_url")
-        or ""
-    )
-    xac_thuc = (
-        muc.get("xac_thuc")
-        or muc.get("auth")
-        or conf.get(f"lead_dich_{site_dich}_auth")
-        or conf.get("lead_dich_auth")
-        or ""
-    )
-    if not xac_thuc:
-        k = (
-            muc.get("key")
-            or muc.get("api_key")
-            or conf.get(f"lead_dich_{site_dich}_key")
-            or conf.get("lead_dich_key")
-            or ""
-        )
-        sec = (
-            muc.get("secret")
-            or muc.get("api_secret")
-            or conf.get(f"lead_dich_{site_dich}_secret")
-            or conf.get("lead_dich_secret")
-            or ""
-        )
-        if k and sec:
-            xac_thuc = f"{k}:{sec}"
-
-    url = str(url).strip().rstrip("/")
-    xac_thuc = str(xac_thuc).strip()
+    url = str(muc.get("url") or "").strip().rstrip("/")
+    xac_thuc = str(muc.get("xac_thuc") or "").strip()
     if not url or not xac_thuc:
-        frappe.throw(f"Thiếu cấu hình URL hoặc khoá xác thực cho bản cài đích {site_dich!r} trong site_config")
+        frappe.throw(f"Thiếu url hoặc xac_thuc trong chuyen_lead_dich.{site_dich} của site_config")
     return url, xac_thuc
+
+
+def _kiem_quyen_nhan_lead() -> None:
+    """Chặn Guest và user thường; chỉ cho phép user tích hợp bản cài nguồn (vai trò LX Chuyen Lead / chuyen_lead_user)."""
+    user = getattr(frappe.session, "user", "Guest") or "Guest"
+    if user == "Guest":
+        frappe.throw("Không cho phép khách gọi nhan_lead", frappe.PermissionError)
+
+    conf = getattr(frappe, "conf", None) or {}
+    user_nguon = str(conf.get("chuyen_lead_user") or "").strip()
+    if user_nguon and user not in (user_nguon, "Administrator"):
+        frappe.throw("Chỉ tài khoản tích hợp bản cài nguồn được phép gọi nhan_lead", frappe.PermissionError)
+
+    frappe.only_for(VAI_TRO_CHUYEN_LEAD)
 
 
 @frappe.whitelist()
 def nhan_lead(goi=None, **kwargs):
-    """Nhận gói chuyển lead từ bản cài nguồn (xác thực qua API key user riêng, không mở cho Guest)."""
-    if getattr(frappe.session, "user", "Guest") == "Guest":
-        frappe.throw("Không cho phép khách gọi nhan_lead", frappe.PermissionError)
+    """Nhận gói chuyển lead từ bản cài nguồn (xác thực qua API key user riêng có vai trò LX Chuyen Lead)."""
+    _kiem_quyen_nhan_lead()
 
     du_lieu = _giai_ma_json(goi)
     if not isinstance(du_lieu, dict):
@@ -119,11 +100,13 @@ def nhan_lead(goi=None, **kwargs):
 
     ten_nguoi = nguoi_nhan.get("name")
     if ten_nguoi:
+        doc = frappe.get_doc("LX Nguoi", ten_nguoi)
         for tr in ("ho_ten", "dien_thoai", "email", "zalo"):
-            if nguoi_nhan.get(tr):
-                frappe.db.set_value("LX Nguoi", ten_nguoi, tr, nguoi_nhan.get(tr), update_modified=True)
-        if gc_json:
-            frappe.db.set_value("LX Nguoi", ten_nguoi, "ghi_cong", gc_json, update_modified=True)
+            if not getattr(doc, tr, None) and nguoi_nhan.get(tr):
+                setattr(doc, tr, nguoi_nhan.get(tr))
+        if not getattr(doc, "ghi_cong", None) and gc_json:
+            doc.ghi_cong = gc_json
+        doc.save()
     else:
         doc = frappe.get_doc(
             {
@@ -135,48 +118,72 @@ def nhan_lead(goi=None, **kwargs):
                 "ghi_cong": gc_json,
             }
         )
-        doc.insert(ignore_permissions=True)
+        doc.insert()
         ten_nguoi = doc.name
-        if gc_json and not frappe.db.get_value("LX Nguoi", ten_nguoi, "ghi_cong"):
-            frappe.db.set_value("LX Nguoi", ten_nguoi, "ghi_cong", gc_json, update_modified=True)
 
-    frappe.db.commit()
     return {
         "nguoi_moi": ten_nguoi,
         "ghi_cong": gc_dict,
     }
 
 
+def _xac_dinh_don_vi_ghi_cong(doc_nguoi: dict, user: str, don_vi_tham_so: object) -> str:
+    """Ưu tiên đơn vị của bản ghi LX Nguoi trong DB, sau đó tới User Permission của người gọi."""
+    don_vi_db = str(doc_nguoi.get("don_vi") or "").strip()
+    if don_vi_db:
+        return don_vi_db
+
+    don_vi_up = frappe.get_all(
+        "User Permission",
+        filters={"user": user, "allow": "LX Don Vi"},
+        pluck="for_value",
+        order_by="creation asc",
+    )
+    if don_vi_up:
+        dv_client = str(don_vi_tham_so or "").strip()
+        if dv_client and dv_client in don_vi_up:
+            return dv_client
+        return str(don_vi_up[0]).strip()
+
+    conf = getattr(frappe, "conf", None) or {}
+    return str(conf.get("don_vi_mac_dinh") or don_vi_tham_so or "").strip()
+
+
 @frappe.whitelist()
 def gui_lead(nguoi, site_dich="linhx", don_vi=None):
-    """Kiểm đồng ý chuyển chéo và gửi lead từ bản cài hiện tại sang site_dich."""
-    if getattr(frappe.session, "user", "Guest") == "Guest":
+    """Kiểm quyền đọc, kiểm đồng ý chuyển chéo và gửi lead từ bản cài hiện tại sang site_dich."""
+    user = getattr(frappe.session, "user", "Guest") or "Guest"
+    if user == "Guest":
         frappe.throw("Không cho phép khách gọi gui_lead", frappe.PermissionError)
 
     nguoi_in = _giai_ma_json(nguoi)
     if isinstance(nguoi_in, str):
-        doc_nguoi = frappe.get_doc("LX Nguoi", nguoi_in).as_dict()
+        ma_nguoi = nguoi_in.strip()
     elif isinstance(nguoi_in, dict):
-        if nguoi_in.get("name") and not any(nguoi_in.get(k) for k in ("ho_ten", "dien_thoai", "email", "zalo")):
-            doc_nguoi = frappe.get_doc("LX Nguoi", nguoi_in["name"]).as_dict()
-        else:
-            doc_nguoi = dict(nguoi_in)
+        ma_nguoi = str(nguoi_in.get("name") or "").strip()
     else:
-        frappe.throw("Tham số nguoi không hợp lệ")
+        ma_nguoi = ""
 
-    ma_nguoi = str(doc_nguoi.get("name") or "").strip()
-    so_dong_y = []
-    if ma_nguoi:
-        so_dong_y = frappe.get_all(
-            "LX Dong Y",
-            filters={"nguoi": ma_nguoi},
-            fields=["nguoi", "muc_dich", "dong_y", "luc", "nguon"],
-            order_by="luc asc, creation asc",
-        )
+    if not ma_nguoi:
+        frappe.throw("Phải cung cấp mã bản ghi LX Nguoi (name) có trong hệ thống")
+
+    doc_obj = frappe.get_doc("LX Nguoi", ma_nguoi)
+    if not frappe.has_permission("LX Nguoi", "read", doc_obj):
+        frappe.throw("Không có quyền đọc hồ sơ LX Nguoi này", frappe.PermissionError)
+    if not frappe.has_permission("LX Dong Y", "read"):
+        frappe.throw("Không có quyền đọc sổ đồng ý LX Dong Y", frappe.PermissionError)
+
+    doc_nguoi = doc_obj.as_dict()
+    so_dong_y = frappe.get_list(
+        "LX Dong Y",
+        filters={"nguoi": ma_nguoi},
+        fields=["nguoi", "muc_dich", "dong_y", "luc", "nguon"],
+        order_by="luc asc, creation asc",
+    )
 
     conf = getattr(frappe, "conf", None) or {}
     site_nguon = _chuan_site(conf.get("site_nguon") or getattr(frappe.local, "site", "") or "ifagent")
-    don_vi_str = str(don_vi or doc_nguoi.get("don_vi") or conf.get("don_vi_mac_dinh") or "IFAGENT").strip()
+    don_vi_str = _xac_dinh_don_vi_ghi_cong(doc_nguoi, user, don_vi)
     luc_str = dong_y.bay_gio()
 
     try:
@@ -208,6 +215,8 @@ def gui_lead(nguoi, site_dich="linhx", don_vi=None):
     except urllib.error.HTTPError as exc:
         chi_tiet = exc.read().decode("utf-8", errors="ignore")
         frappe.throw(f"Bản cài đích trả lỗi HTTP {exc.code}: {chi_tiet}")
+    except (urllib.error.URLError, TimeoutError, OSError) as exc:
+        frappe.throw(f"Không thể kết nối tới bản cài đích {site_dich_chuan!r}: {exc}")
 
     ket_qua = phan_hoi.get("message") if isinstance(phan_hoi, dict) and "message" in phan_hoi else phan_hoi
     if not isinstance(ket_qua, dict):
