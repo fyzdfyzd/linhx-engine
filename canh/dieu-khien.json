@@ -2,7 +2,7 @@
   "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE (canh/dieu-phoi-engine.ps1 đọc mỗi lượt từ nhánh main). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có tests/nghiem-thu/test_<id>.py); feature tìm trong cac_file_features theo thứ tự. cho: feature tạm giữ, kèm lý do (N2 tự mở khi có D:\\LINHX\\PROTO). nhom: hai thợ không cùng lúc giữ hai feature cùng nhóm (khác với vung trong features: vung là rào file). tran_chua_dat: số lần CHUA_DAT liền thì lùi về mốc, dừng feature, ghi CAN-LINH (K2). bao_mat: feature phải qua thêm lượt chấm bảo mật sau khi đạt (K4). agy_dinh_dang: stream-json (để K3 đọc file agy ghi) hoặc json. tich_hop: {ID: file} kiểm tích hợp HTTP thật trên bench (tests/nghiem-thu/tich-hop) chạy sau khi đạt hộp đen (K7). Đối chiếu VM mỗi vòng: canh/doi_chieu_vm.py (K8).",
   "trang_thai": "chay",
   "so_tho": 3,
-  "xoa_tac": ["A2@0811-loi-may"],
+  "xoa_tac": ["A2@0811-loi-may", "B2@0811-loi-may"],
   "agy_toan_quyen": true,
   "agy_model": "",
   "agy_effort": "",
