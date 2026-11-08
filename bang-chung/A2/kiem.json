@@ -1,0 +1,41 @@
+{
+  "feature": "A2",
+  "luc": "2026-11-08T19:19:49+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "tests/nghiem-thu/test_a2.py::test_doctype PASSED                         [ 20%]",
+    "tests/nghiem-thu/test_a2.py::test_han_giao_mot_gio PASSED                [ 40%]",
+    "tests/nghiem-thu/test_a2.py::test_giao_nguoi_it_viec_nhat PASSED         [ 60%]",
+    "tests/nghiem-thu/test_a2.py::test_viec_cho_va_qua_han PASSED             [ 80%]",
+    "tests/nghiem-thu/test_a2.py::test_thuan_python_va_controller PASSED      [100%]",
+    "============================== 5 passed in 0.34s =============================="
+  ],
+  "doctypes": [
+    "LX Quan He",
+    "LX Co Hoi"
+  ],
+  "kiem_ham": {
+    "han_giao_2330": "2026-11-10 00:30:00",
+    "giao_it_viec_nhat": "c@x",
+    "viec_cho": [
+      {
+        "name": "CH3",
+        "phu_trach": "",
+        "han_giao": "2026-11-09 08:30:00",
+        "qua_han": true
+      },
+      {
+        "name": "CH1",
+        "phu_trach": null,
+        "han_giao": "2026-11-09 10:00:00",
+        "qua_han": false
+      }
+    ]
+  }
+}
