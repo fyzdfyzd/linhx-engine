@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 21:49 (giờ máy cty). Đạt: 11/31 (N1, N2, N3, N4, N5, N6, A1, A2, B1, E2, W1)
+Cập nhật 2026-11-08 22:00 (giờ máy cty). Đạt: 12/31 (N1, N2, N3, N4, N5, N6, A1, A2, B1, C1, E2, W1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
