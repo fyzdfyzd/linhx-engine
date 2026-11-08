@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 16:54 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
+Cập nhật 2026-11-08 17:10 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -16,8 +16,6 @@ Cập nhật 2026-11-08 16:54 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
 
 ## Nhật ký gần nhất
-- 2026-11-08 16:22 t4: chuẩn bị node_modules trang-bu (mã 1)
-- 2026-11-08 16:25 t4: A2 CHUA_DAT lần 1 (commit 3a4bbe5)
 - 2026-11-08 16:25 t4: giao agy phiếu 20261108-1625-t4: A2 (lượt sửa)
 - 2026-11-08 16:26 t2: W1 DAT, đã gộp vào main
 - 2026-11-08 16:26 t2: giao agy phiếu 20261108-1626-t2: B2
@@ -28,4 +26,6 @@ Cập nhật 2026-11-08 16:54 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N
 - 2026-11-08 16:37 t2: agy xong phiếu 20261108-1626-t2 (B2) sau 11 phút
 - 2026-11-08 16:40 t2: chuẩn bị node_modules trang-bu (mã 1)
 - 2026-11-08 16:43 t4: agy xong phiếu 20261108-1625-t4 (A2) sau 17 phút
+- 2026-11-08 17:00 t2: chuẩn bị node_modules trang-bu (mã 1)
+- 2026-11-08 17:10 t1: dừng agy phiếu 20261108-1620-t1 (A4): quá 40 phút
 
