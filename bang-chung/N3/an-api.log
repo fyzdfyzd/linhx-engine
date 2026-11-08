@@ -1,38 +1,46 @@
-=== 2026-11-08T11:21:42+07:00 Kiểm thử ẩn/hiện API thật trên Frappe bench WSL (site: test, http://127.0.0.1:8000) ===
+=== 2026-11-08T11:50:48+0700 Kiểm thử ẩn/hiện API thật trên Frappe bench WSL (site: test, http://127.0.0.1:8000) ===
 --- 0. Kiểm tra GET /api/method/ping ---
 {"message":"pong"}
 HTTP_STATUS:200
 
---- 1. Đăng nhập HTTP với user thường kiem@test.local và Administrator ---
+--- 1. Đăng nhập HTTP với quanly@test.local (System Manager), kiem@test.local (user thường) và Administrator ---
+{"message":"Logged In","home_page":"/app","full_name":"QuanLy"}
+HTTP_STATUS:200
 {"message":"No App","home_page":"/me","full_name":"Kiem"}
 HTTP_STATUS:200
 
 --- 2. Khi thiếu cờ trong tabSingles (chưa lưu LX Cau Hinh -> coi là tắt) ---
-[GET /api/resource/LX%20Nguoi (user: kiem@test.local, thiếu cờ)]
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], thiếu cờ)]
 HTTP_STATUS:403
 exc_type: PermissionError | message: frappe.exceptions.PermissionError: DocType LX Nguoi đang ẩn do module tắt
-[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: kiem@test.local, thiếu cờ)]
+[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: quanly@test.local [System Manager], thiếu cờ)]
 HTTP_STATUS:403
 exc_type: PermissionError | message: frappe.exceptions.PermissionError: DocType LX Nguoi đang ẩn do module tắt
 
 --- 3. Khi cờ bat_crm = 0, bat_pay = 1 (tắt CRM, bật Pay) ---
-[GET /api/resource/LX%20Nguoi (user: kiem@test.local, bat_crm=0)]
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=0)]
 HTTP_STATUS:403
 exc_type: PermissionError | message: frappe.exceptions.PermissionError: DocType LX Nguoi đang ẩn do module tắt
-[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: kiem@test.local, bat_crm=0)]
+[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=0)]
 HTTP_STATUS:403
 exc_type: PermissionError | message: frappe.exceptions.PermissionError: DocType LX Nguoi đang ẩn do module tắt
-[GET /api/resource/LX%20Goi (user: kiem@test.local, bat_crm=0, bat_pay=1)]
+[GET /api/resource/LX%20Goi (user: quanly@test.local [System Manager], bat_crm=0, bat_pay=1)]
 HTTP_STATUS:200
 {"data":[]}
 
---- 4. Khi cờ bat_crm = 1, bat_pay = 1 (bật CRM) ---
-[GET /api/resource/LX%20Nguoi (user: kiem@test.local, bat_crm=1)]
+--- 4. Khi cờ bat_crm = 1, bat_pay = 1 (bật CRM và Pay) ---
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=1)]
 HTTP_STATUS:200
 {"data":[]}
-[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: kiem@test.local, bat_crm=1)]
+[GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=1)]
 HTTP_STATUS:200
 {"message":[]}
+[GET /api/resource/LX%20Nguoi (user: kiem@test.local [user thường, đã bỏ quyền All], bat_crm=1)]
+HTTP_STATUS:403
+exc_type: PermissionError | message: frappe.exceptions.PermissionError
+[GET /api/resource/LX%20Goi (user: kiem@test.local [user thường, đã bỏ quyền All], bat_pay=1)]
+HTTP_STATUS:403
+exc_type: PermissionError | message: frappe.exceptions.PermissionError
 
 --- 5. Administrator được miễn chặn ngay cả khi bat_crm = 0 ---
 [GET /api/resource/LX%20Nguoi (user: Administrator, bat_crm=0)]
@@ -41,4 +49,4 @@ HTTP_STATUS:200
 [GET /api/method/frappe.client.get_list?doctype=LX%20Nguoi (user: Administrator, bat_crm=0)]
 HTTP_STATUS:200
 {"message":[]}
-=== 2026-11-08T11:21:45+07:00 Hoàn tất kiểm thử HTTP API (mã thoát 0) ===
+=== 2026-11-08T11:50:52+0700 Hoàn tất kiểm thử HTTP API (mã thoát 0) ===

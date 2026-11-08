@@ -20,10 +20,15 @@ permission_query_conditions = {
 }
 
 doc_events = {
-    dt: {
-        "before_insert": "linhx_core.co_module.frappe_kiem_tra_doc_event",
-        "validate": "linhx_core.co_module.frappe_kiem_tra_doc_event",
-        "on_trash": "linhx_core.co_module.frappe_kiem_tra_doc_event",
-    }
-    for dt in DOCTYPE_MODULE
+    **{
+        dt: {
+            "before_insert": "linhx_core.co_module.frappe_kiem_tra_doc_event",
+            "validate": "linhx_core.co_module.frappe_kiem_tra_doc_event",
+            "on_trash": "linhx_core.co_module.frappe_kiem_tra_doc_event",
+        }
+        for dt in DOCTYPE_MODULE
+    },
+    "LX Cau Hinh": {
+        "on_update": "linhx_core.co_module.xoa_cache_cau_hinh",
+    },
 }

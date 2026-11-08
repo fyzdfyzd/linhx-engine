@@ -43,10 +43,6 @@
    "share": 1,
    "print": 1,
    "email": 1
-  },
-  {
-   "role": "All",
-   "read": 1
   }
  ],
  "sort_field": "modified",

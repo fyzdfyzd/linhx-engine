@@ -4,24 +4,29 @@ import json
 import pathlib
 from urllib.parse import unquote
 
-DOCTYPE_MODULE = {
-    # Module crm
-    "LX Don Vi": "crm",
-    "LX To Chuc": "crm",
-    "LX Nguoi": "crm",
-    "LX Quan He": "crm",
-    "LX Co Hoi": "crm",
-    "LX Dong Y": "crm",
-    # Module pay
-    "LX Goi": "pay",
-    "LX Gia": "pay",
-    "LX Quyen Dung": "pay",
-    "LX Don": "pay",
-    "LX Giao Dich": "pay",
-    "LX So Doanh Thu": "pay",
-}
-
 CAC_MODULE_CO_CO = ("crm", "pay")
+
+
+def _quet_doctype_module() -> dict[str, str]:
+    """Tự động quét các DocType thuộc module có cờ (crm, pay) trong linhx_core."""
+    kq: dict[str, str] = {}
+    goc = pathlib.Path(__file__).resolve().parent
+    for p in sorted(goc.rglob("*.json")):
+        if "doctype" not in p.parts:
+            continue
+        try:
+            d = json.loads(p.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        if isinstance(d, dict) and d.get("doctype") == "DocType":
+            ten = str(d.get("name") or "").strip()
+            mod = str(d.get("module") or "").strip().lower()
+            if ten and mod in CAC_MODULE_CO_CO:
+                kq[ten] = mod
+    return kq
+
+
+DOCTYPE_MODULE = _quet_doctype_module()
 
 
 def _co_bat(gia_tri) -> bool:
@@ -70,15 +75,31 @@ def doctype_bi_an(ten_doctype: str, cau_hinh: dict) -> bool:
     return not module_bat(mod, cau_hinh)
 
 
+def xoa_cache_cau_hinh(doc=None, method=None):
+    """Xoá cache cờ module trên frappe.local khi bắt đầu request hoặc khi lưu LX Cau Hinh."""
+    try:
+        import frappe
+
+        local_obj = getattr(frappe, "local", None)
+        if local_obj is not None:
+            local_obj._lx_cau_hinh_cache = None
+    except Exception:
+        pass
+
+
 def _doc_cau_hinh_frappe() -> dict:
-    """Đọc cờ module từ Single DocType LX Cau Hinh. Thiếu hoặc lỗi cờ thì coi là tắt (0)."""
+    """Đọc cờ module từ Single DocType LX Cau Hinh (cache theo request trên frappe.local)."""
     import frappe
+
+    local_obj = getattr(frappe, "local", None)
+    co_req = getattr(local_obj, "request", None) is not None
+    if co_req:
+        da_cache = getattr(local_obj, "_lx_cau_hinh_cache", None)
+        if isinstance(da_cache, dict):
+            return dict(da_cache)
 
     cau_hinh = {f"bat_{m}": 0 for m in CAC_MODULE_CO_CO}
     try:
-        cache = getattr(frappe.db, "value_cache", None)
-        if isinstance(cache, dict):
-            cache.pop("LX Cau Hinh", None)
         for m in CAC_MODULE_CO_CO:
             co = f"bat_{m}"
             if hasattr(frappe.db, "sql"):
@@ -92,6 +113,9 @@ def _doc_cau_hinh_frappe() -> dict:
             cau_hinh[co] = int(_co_bat(val)) if val is not None else 0
     except Exception:
         return {f"bat_{m}": 0 for m in CAC_MODULE_CO_CO}
+
+    if co_req and local_obj is not None:
+        local_obj._lx_cau_hinh_cache = dict(cau_hinh)
     return cau_hinh
 
 
@@ -174,6 +198,7 @@ def frappe_before_request():
     """Hook before_request: chặn truy cập HTTP API tới DocType của module đang tắt (trừ Administrator)."""
     import frappe
 
+    xoa_cache_cau_hinh()
     nguoi_dung = getattr(getattr(frappe, "session", None), "user", None)
     if nguoi_dung in (None, "", "Guest") and frappe.get_request_header("Authorization"):
         try:
