@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linhx-cli"
+version = "0.1.0"
+description = "CLI tạo và quản trị bản cài LINHX ENGINE"
+requires-python = ">=3.10"
+
+[project.scripts]
+linhx = "linhx_cli.cli:main"
