@@ -1,0 +1,38 @@
+{
+  "feature": "B1",
+  "luc": "2026-11-08T16:05:22+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_b1.py::test_co_ba_doctype PASSED                   [ 20%]",
+    "tests/nghiem-thu/test_b1.py::test_gia_san PASSED                         [ 40%]",
+    "tests/nghiem-thu/test_b1.py::test_cap_quyen_khi_don_da_tra PASSED        [ 60%]",
+    "tests/nghiem-thu/test_b1.py::test_khong_cap_khi_chua_tra_hoac_duoi_gia_san PASSED [ 80%]",
+    "tests/nghiem-thu/test_b1.py::test_khong_viet_lai_logic_proto PASSED      [100%]",
+    "============================== 5 passed in 0.04s =============================="
+  ],
+  "nguon_proto": "nguon/03-opc-os/modules/02_thiet_ke_goi_gia/module.py",
+  "doctypes": [
+    "LX Goi",
+    "LX Gia",
+    "LX Quyen Dung"
+  ],
+  "bench_wsl": {
+    "luc": "2026-11-08T16:05:22.003660+07:00",
+    "site": "test",
+    "doctypes": [
+      "LX Goi",
+      "LX Gia",
+      "LX Quyen Dung"
+    ],
+    "goi_name": "BC-AI-B1",
+    "gia_san": 5000.0,
+    "gia_name": "k9gqlj6ii0",
+    "quyen_dung_name": "k9gkg8fdaq",
+    "quyen_dung": {
+      "goi": "BC-AI-B1",
+      "don": "DON-B1-1",
+      "so_tien": 5000.0,
+      "trang_thai": "hieu_luc"
+    }
+  }
+}

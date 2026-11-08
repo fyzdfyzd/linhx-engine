@@ -219,8 +219,8 @@
         "Một Gói có giá sàn; quyền dùng cấp khi đơn trả"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b1.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/B1/kiem.json"
     },
     {
       "id": "B2",

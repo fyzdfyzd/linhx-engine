@@ -1,0 +1,48 @@
+{
+  "feature": "W1",
+  "luc": "2026-11-08T09:04:41.288103+00:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "",
+    "tests/nghiem-thu/test_w1.py::test_cot_khop_bo_dieu_phoi PASSED           [ 20%]",
+    "tests/nghiem-thu/test_w1.py::test_tong_hop_10_phieu_mau PASSED           [ 40%]",
+    "tests/nghiem-thu/test_w1.py::test_khop_so_phieu_that PASSED              [ 60%]",
+    "tests/nghiem-thu/test_w1.py::test_api_bang_tho PASSED                    [ 80%]",
+    "tests/nghiem-thu/test_w1.py::test_ban_engine_hien_bang_tho PASSED        [100%]",
+    "",
+    "============================== 5 passed in 1.36s =============================="
+  ],
+  "tong_hop_that": {
+    "so_phieu": 11,
+    "dang_chay": [
+      {
+        "tho": 1,
+        "phieu": "20261108-1553-t1",
+        "feature": "B1",
+        "tu": "2026-11-08T15:53:15"
+      }
+    ],
+    "phut": 206,
+    "token_vao": 1676617,
+    "token_ra": 322780,
+    "cham_tran": 1,
+    "theo_tuan": [
+      {
+        "tuan": "2026-W45",
+        "so_phieu": 11,
+        "so_sua": 3,
+        "ti_le_sua": 0.27
+      }
+    ]
+  },
+  "anh": [
+    "w1-1280.png",
+    "w1-390.png"
+  ]
+}

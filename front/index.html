@@ -225,6 +225,8 @@ async function trangEngine() {
   CSRF = p.csrf;
   $("#app").innerHTML = `<h1 style="margin-top:8px">Engine</h1>
     <div class="dem" id="dem"></div>
+    <h2>Bảng thợ</h2>
+    <div class="the" id="bang-tho"><span class="ghi">Đang tải bảng thợ… (<span id="cham-tran">0</span> chạm trần)</span></div>
     <h2>Thợ</h2><div class="luoi" id="tho"></div>
     <h2>Giao việc</h2>
     <form class="the" id="giao"><div class="dong">
@@ -237,6 +239,26 @@ async function trangEngine() {
     <p class="ghi">Quản trị đầy đủ: <a href="/app/lx-job">/app/lx-job</a> · <a href="/app/lx-worker">thợ</a> · <a href="/app/lx-workflow">workflow</a></p>`;
   let wfs = [], daVeWf = false;
   const ve = async () => {
+    const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    try {
+      const bt = await goi("bang_tho");
+      if (bt && $("#bang-tho")) {
+        const dc = (bt.dang_chay || []).map(x => `<span class="huy-hieu t-dang_chay">Thợ ${e(x.tho)}: ${e(x.phieu)}${x.feature ? ` (${e(x.feature)})` : ""}</span>`).join(" ") || `<span class="ghi">Không có phiếu đang chạy</span>`;
+        const tuan = (bt.theo_tuan || []).map(t => {
+          const pct = Math.round((t.ti_le_sua ?? (t.so_phieu ? t.so_sua / t.so_phieu : 0)) * 100);
+          return `<span class="huy-hieu">${e(t.tuan)}: ${e(t.so_sua)}/${e(t.so_phieu)} sửa (${pct}%)</span>`;
+        }).join(" ") || `<span class="ghi">Chưa có tuần nào</span>`;
+        $("#bang-tho").innerHTML = `<div class="dem" style="margin:0 0 12px">
+          <div><b>${e(bt.so_phieu || 0)}</b>Tổng phiếu</div>
+          <div><b>${e(bt.phut || 0)}</b>Phút</div>
+          <div><b>${dinhSo(bt.token_vao)}</b>Token vào</div>
+          <div><b>${dinhSo(bt.token_ra)}</b>Token ra</div>
+          <div><b id="cham-tran">${e(bt.cham_tran || 0)}</b>Chạm trần</div>
+        </div>
+        <div style="margin-bottom:8px"><b style="font-size:14px">Phiếu đang chạy:</b> <span style="display:inline-flex;gap:6px;flex-wrap:wrap">${dc}</span></div>
+        <div><b style="font-size:14px">Tỉ lệ phiếu sửa theo tuần:</b> <span style="display:inline-flex;gap:6px;flex-wrap:wrap">${tuan}</span></div>`;
+      }
+    } catch (err) {}
     let d; try { d = await goi("bang"); } catch (err) { return; }
     const n = d.dem || {};
     $("#dem").innerHTML = [["cho_duyet","Chờ duyệt"],["cho","Trong hàng"],["dang_chay","Đang chạy"],["xong","Xong"],["loi","Lỗi"]].map(([k, t]) => `<div><b>${n[k] || 0}</b>${t}</div>`).join("") + `<div><b>${d.workers.filter(w => w.trang_thai !== "offline").length}/${d.workers.length}</b>Thợ trực tuyến</div>`;
@@ -250,7 +272,6 @@ async function trangEngine() {
       const doi = () => { const w = wfs.find(x => x.ma === $("#wf").value) || {}; $("#wfmota").textContent = (w.mo_ta || "") + (w.nhan_can ? ` Cần thợ có nhãn: ${w.nhan_can}.` : ""); $("#dv").placeholder = w.vi_du || ""; };
       $("#wf").onchange = doi; doi();
     }
-    const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
     const tinhPhut = j => j.phut !== undefined && j.phut !== null ? j.phut : (j.so_giay > 0 ? Math.round((j.so_giay / 60) * 10) / 10 : null);
     $("#viec").innerHTML = `<tr><th>Việc</th><th>Workflow</th><th>Trạng thái</th><th>Thợ</th><th>Đầu vào</th><th>Token vào</th><th>Token ra</th><th>Phút</th><th></th></tr>` + d.jobs.map(j => {
       const xong = j.trang_thai === "xong";
