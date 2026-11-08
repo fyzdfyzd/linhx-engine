@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 10:49 (giờ máy cty). Đạt: 2/31 (N1, C1)
+Cập nhật 2026-11-08 10:59 (giờ máy cty). Đạt: 2/31 (N1, C1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -12,9 +12,6 @@ Cập nhật 2026-11-08 10:49 (giờ máy cty). Đạt: 2/31 (N1, C1)
 - N4: Linh chưa mở; đợt đầu chỉ N1-N3, A1, B1, C1
 - N5: Linh chưa mở
 - N6: Linh chưa mở
-
-## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
-- N3
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
