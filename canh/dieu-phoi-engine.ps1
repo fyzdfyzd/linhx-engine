@@ -99,12 +99,19 @@ if ($Tho -eq 0) {
   }
   $mx.ReleaseMutex()
   # Đẩy dữ liệu bảng thợ lên VM (container backend bind mount ~/linhx-engine/.canh). Ẩn, quá 90 giây hay lỗi mạng thì bỏ qua.
+  # Chép vào .canh/moi/ trước rồi mv sang .canh/: scp đứt giữa chừng không để lại file cụt (bảng hiện 0 phiếu).
+  function GoiGc($ten, $thamSo) {
+    $p = Start-Process $gc -NoNewWindow -PassThru -RedirectStandardOutput "$Canh\scp-vm.out" -RedirectStandardError "$Canh\scp-vm.err" -ArgumentList $thamSo
+    $null = $p.Handle
+    if (-not $p.WaitForExit(90000)) { taskkill /PID $p.Id /T /F 2>&1 | Out-Null; Ghi "$ten bảng thợ lên VM quá 90 giây, bỏ qua"; return $false }
+    $p.ExitCode -eq 0
+  }
   try {
     $gc = (Get-Command gcloud.cmd -ErrorAction Stop).Source
     $tep = @("$TichHop\.canh\phieu.tsv", "$TichHop\.canh\dang-chay.json") | Where-Object { Test-Path $_ }
-    if ($tep) {
-      $p = Start-Process $gc -NoNewWindow -PassThru -RedirectStandardOutput "$Canh\scp-vm.out" -RedirectStandardError "$Canh\scp-vm.err" -ArgumentList (@("compute", "scp", "--project", "linhx-engine", "--zone", "asia-southeast1-b", "--quiet") + ($tep | ForEach-Object { "`"$_`"" }) + @("linhx-engine-1:linhx-engine/.canh/"))
-      if (-not $p.WaitForExit(90000)) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue; Ghi "scp bảng thợ lên VM quá 90 giây, bỏ qua" }
+    $vm = @("--project", "linhx-engine", "--zone", "asia-southeast1-b", "--quiet")
+    if ($tep -and (GoiGc "scp" (@("compute", "scp") + $vm + ($tep | ForEach-Object { "`"$_`"" }) + @("linhx-engine-1:linhx-engine/.canh/moi/")))) {
+      [void](GoiGc "mv" (@("compute", "ssh", "linhx-engine-1") + $vm + @("--command", "`"cd linhx-engine/.canh && for f in phieu.tsv dang-chay.json; do test -s moi/`$f && mv -f moi/`$f `$f; done`"")))
     }
   } catch { Ghi "scp bảng thợ lên VM lỗi: $($_.Exception.Message)" }
   exit 0
