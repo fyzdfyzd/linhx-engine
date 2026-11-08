@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "character card LAB020 (xuất được sang chara_card_v2)",
+  "type": "object",
+  "required": ["id", "type", "name", "source", "source_url", "works"],
+  "properties": {
+    "id": {"type": "string", "description": "nguồn:id, vd bangumi:123"},
+    "type": {"const": "character"},
+    "name": {"type": "string"}, "name_native": {"type": ["string", "null"]},
+    "source": {"type": "string"}, "source_url": {"type": "string"},
+    "works": {"type": "array"}, "gender": {"type": "string"}, "image_url": {"type": "string"},
+    "popularity": {"type": "number"}, "tom_tat_nguon": {"type": "string", "maxLength": 300},
+    "infobox": {"type": "object"}, "chu_de": {"type": "array"},
+    "mo_ta": {"type": "string"}, "hinh_khoi": {"type": "string"}, "bang_mau": {"type": "string"},
+    "dac_diem_nhan_dien": {"type": "string"}, "trang_phuc": {"type": "string"}, "ty_le": {"type": "string"},
+    "loai": {"type": "string", "description": "trục loai của tu-dien-nhan-vat.json (người, mèo, yêu/linh thú...)"},
+    "vai_tro": {"type": "string"}, "archetype": {"type": "string"},
+    "style_tags": {"type": "object"}, "dung_cho": {"type": "array"}, "ghi_chu": {"type": "string"}
+  }
+}

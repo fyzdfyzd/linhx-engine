@@ -1,0 +1,13 @@
+{
+  "user_agent": "LINHX-LAB-kho-minh-hoa/0.1 (personal reference; metadata and links only)",
+  "sources": [
+    {"id": "instagram-saved", "name": "Bộ sưu tập Instagram của Linh", "url": "https://www.instagram.com/<ten_linh>/saved/kho-y-tuong/<id>/", "method": "gallery-dl", "allowed": true, "delay_s": 6, "login": "cookie Chrome của Linh", "checked": "2026-10-13", "terms_note": "Dữ liệu Linh tự lưu; chỉ đọc metadata, chạy chậm, không chạy quá 1 lần/ngày."},
+    {"id": "pinterest-board", "name": "Pinterest board", "url": "https://www.pinterest.com/<ten>/<board>/", "method": "gallery-dl", "allowed": true, "delay_s": 4, "checked": "", "terms_note": "Ghi cả link nguồn gốc (pin.link) để truy tác giả."},
+    {"id": "behance", "name": "Behance", "url": "https://www.behance.net/search/projects?search=conceptual%20illustration", "method": "gallery-dl", "allowed": true, "delay_s": 4, "checked": "", "terms_note": "Đọc ToS khi chạy lần đầu."},
+    {"id": "bluesky", "name": "Bluesky", "url": "https://bsky.app/profile/<hoa_si>", "method": "gallery-dl", "allowed": true, "delay_s": 4, "checked": "", "terms_note": "Chỉ hồ sơ hoạ sĩ trong hat-giong.json."},
+    {"id": "web", "name": "Web chính chủ của hoạ sĩ", "url": "", "method": "manual", "allowed": true, "delay_s": 5, "checked": "", "terms_note": "Đọc tay qua Chrome, chỉ ghi link trang tác phẩm."},
+    {"id": "zcool", "name": "站酷 ZCOOL", "url": "https://www.zcool.com.cn", "method": "manual", "allowed": false, "delay_s": 6, "checked": "", "terms_note": "Thuộc PA4, chưa bật."},
+    {"id": "huaban", "name": "花瓣", "url": "https://huaban.com", "method": "manual", "allowed": false, "delay_s": 6, "checked": "", "terms_note": "Thuộc PA4, chưa bật."},
+    {"id": "linh-dan-tay", "name": "Link Linh dán", "url": "", "method": "manual", "allowed": true, "delay_s": 0, "checked": "2026-10-13", "terms_note": "Một link mỗi dòng trong nguon/dan-tay.txt."}
+  ]
+}

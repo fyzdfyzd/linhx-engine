@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Văn phòng LINHX 2D</title>
+<style>canvas{image-rendering:pixelated;display:block}</style>
+</head>
+<body>
+<div id="stage"><canvas id="cv"></canvas></div>
+<script src="/office-core.js"></script>
+<script>
+(() => {
+  const O = window.Office, L = O.LAYOUT, T = 16;           // 1 ô = 16 pixel gốc
+  const cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  O.buildUI('2d');
+
+  // ---------- Bảng màu ----------
+  const C = {
+    floorA: '#c99a69', floorB: '#bd8d5d', seam: '#a97b4f', wall: '#efe3cf', wallDark: '#d9c7ab', base: '#8a6748',
+    win: '#9fd3ec', winF: '#f7f1e6', desk: '#8b5e3c', deskTop: '#a8744b', deskEdge: '#6e4a2f',
+    mon: '#2d2f36', monOff: '#3c4049', chair: '#4a4f5c', rugLib: '#7aa37a', rugLounge: '#7d93c4', rugMeet: '#d6b98c',
+    shelf: '#6e4a2f', sofa: '#c4566a', sofaDark: '#9c3f52', table: '#e8d4b0', plant: '#4f9a52', plantDark: '#3a7a3d', pot: '#c06b46',
+    counter: '#7b5a44', counterTop: '#e9e1d4', machine: '#3a3d44', board: '#fbfbf7', boardF: '#9aa0a8', ink: '#2b2622',
+  };
+  const FUR = ['#f0a35e', '#f3e7d3', '#6b6b6b', '#2f2f33', '#c58a4a', '#e9c79a'];
+
+  // ---------- Nền tĩnh vẽ một lần ----------
+  const bg = document.createElement('canvas'); bg.width = L.W * T; bg.height = L.H * T;
+  const b = bg.getContext('2d');
+  const R = (x, y, w, h, c, g = b) => { g.fillStyle = c; g.fillRect(Math.round(x), Math.round(y), Math.round(w), Math.round(h)); };
+
+  function drawBackground() {
+    // sàn gỗ
+    for (let y = 0; y < L.H; y++) for (let x = 0; x < L.W; x++) {
+      R(x * T, y * T, T, T, (x + (y % 2) * 1) % 2 ? C.floorA : C.floorB);
+      R(x * T, y * T + T - 1, T, 1, C.seam);
+      if ((x + y) % 3 === 0) R(x * T + 7, y * T, 1, T - 1, C.seam);
+    }
+    // thảm các khu
+    R(1.6 * T, 2.2 * T, 11.8 * T, 1.6 * T, C.rugLib);
+    R(21.6 * T, 14.6 * T, 6 * T, 4 * T, C.rugLounge);
+    R(12.6 * T, 6.6 * T, 4.8 * T, 4.8 * T, C.rugMeet);
+    // tường trên
+    R(0, 0, L.W * T, 1.8 * T, C.wall); R(0, 1.8 * T - 3, L.W * T, 3, C.base);
+    for (const wx of [14, 18]) { R(wx * T - 18, 4, 36, 18, C.winF); R(wx * T - 16, 6, 32, 14, C.win); R(wx * T - 1, 6, 2, 14, C.winF); }
+    // tường bên + tường dưới có cửa
+    R(0, 0, 4, L.H * T, C.wallDark); R(L.W * T - 4, 0, 4, L.H * T, C.wallDark);
+    R(0, L.H * T - 4, (L.door.x - 1.2) * T, 4, C.wallDark); R((L.door.x + 1.2) * T, L.H * T - 4, L.W * T, 4, C.wallDark);
+    R((L.door.x - 1.2) * T, L.H * T - 3, 2.4 * T, 3, '#5a4636');
+    // kệ sách
+    const books = ['#c0392b', '#2e86c1', '#27ae60', '#f1c40f', '#8e44ad', '#e67e22', '#16a085'];
+    for (const s of L.shelves) {
+      const x0 = (s.x - s.w / 2) * T, y0 = 0.3 * T;
+      R(x0, y0, s.w * T, 1.5 * T, C.shelf);
+      for (let r = 0; r < 2; r++) for (let i = 0; i < s.w * 4 - 1; i++)
+        R(x0 + 2 + i * 4, y0 + 3 + r * 11, 3, 8, books[(i * 3 + r * 5 + Math.floor(s.x)) % books.length]);
+    }
+    // bảng trắng
+    R((L.board.x - L.board.w / 2) * T, 0.25 * T, L.board.w * T, 1.3 * T, C.boardF);
+    R((L.board.x - L.board.w / 2) * T + 2, 0.25 * T + 2, L.board.w * T - 4, 1.3 * T - 4, C.board);
+    // bàn làm việc
+    for (const d of [...L.claudeDesks, ...L.agyDesks]) if (!d.spare) drawDesk(d);
+    // bàn họp
+    const m = L.meeting;
+    R((m.x - m.w / 2) * T, (m.y - m.h / 2) * T, m.w * T, m.h * T, C.deskEdge);
+    R((m.x - m.w / 2) * T + 2, (m.y - m.h / 2) * T + 1, m.w * T - 4, m.h * T - 4, C.table);
+    // sofa + bàn trà
+    R(22 * T, 15 * T, 5 * T, 0.8 * T, C.sofaDark); R(22 * T, 15.3 * T, 5 * T, 0.6 * T, C.sofa);
+    R(21.6 * T, 15 * T, 0.7 * T, 3 * T, C.sofaDark); R(26.8 * T, 15 * T, 0.7 * T, 3 * T, C.sofaDark);
+    R(23.6 * T, 16.4 * T, 1.8 * T, 0.9 * T, C.table);
+    // quầy cà phê
+    R(1.4 * T, 17.9 * T, 6.6 * T, 1.6 * T, C.counter); R(1.4 * T, 17.9 * T, 6.6 * T, 0.5 * T, C.counterTop);
+    R(2 * T, 17.2 * T, 1 * T, 1.1 * T, C.machine); R(2.3 * T, 17.4 * T, 0.4 * T, 0.2 * T, '#e74c3c');
+    for (let i = 0; i < 4; i++) R((4 + i * 0.9) * T, 17.6 * T, 5, 6, '#fff');
+    // cây xanh
+    for (const p of L.plants) {
+      R(p.x * T - 4, p.y * T, 8, 6, C.pot);
+      R(p.x * T - 7, p.y * T - 9, 14, 10, C.plant); R(p.x * T - 4, p.y * T - 13, 8, 6, C.plantDark);
+    }
+    // nhãn khu
+    b.font = 'bold 7px system-ui, sans-serif'; b.fillStyle = 'rgba(43,38,34,.55)';
+    b.fillText('BÀN CLAUDE', 1.8 * T, 4.6 * T);
+    b.fillText('BÀN ANTIGRAVITY', 17.8 * T, 4.6 * T);
+    b.fillStyle = 'rgba(255,255,255,.8)'; b.fillText('THƯ VIỆN', 1.9 * T, 3.55 * T); b.fillStyle = 'rgba(43,38,34,.55)';
+    b.fillText('PHÒNG HỌP', 13.2 * T, 6.4 * T);
+    b.fillText('SOFA TRA CỨU', 22 * T, 14.3 * T);
+    b.fillText('QUẦY CÀ PHÊ', 1.6 * T, 16 * T - 6);
+    b.fillText('CỬA', (L.door.x - 0.4) * T, L.H * T - 6);
+  }
+
+  function drawDesk(d, g = b) {
+    const D = (x, y, w, h, c) => R(x, y, w, h, c, g);
+    const x = d.x * T, y = d.y * T;
+    D(x - 1.25 * T, y - 0.55 * T, 2.5 * T, 0.95 * T, C.deskEdge);
+    D(x - 1.25 * T, y - 0.55 * T, 2.5 * T, 0.75 * T, C.deskTop);
+    D(x - 1.1 * T, y + 0.4 * T, 3, 5, C.deskEdge); D(x + 1.1 * T - 3, y + 0.4 * T, 3, 5, C.deskEdge);
+    D(x - 6, y - 0.55 * T - 9, 12, 10, C.mon); D(x - 1, y - 0.55 * T, 2, 3, C.mon);  // màn hình
+    D(x - 7, y + 0.05 * T, 14, 3, '#d9d2c5');                                        // bàn phím
+    D(x - 5, y + 1.25 * T, 10, 6, C.chair);                                          // ghế
+  }
+
+  // ---------- Nhân vật mèo pixel ----------
+  function drawCat(a, t) {
+    const x = a.x * T, y = a.y * T;              // y = chân
+    const fur = FUR[a.hue], shirt = a.color;
+    const sitting = !a.walking && O.deskOf(a) && Math.hypot(a.x - O.deskOf(a).x, a.y - O.deskOf(a).y - 1.1) < 0.1;
+    const bob = a.walking ? Math.round(Math.sin(t * 14) * 1) : 0;
+    const top = y - 19 + bob + (sitting ? 2 : 0);
+    const g = ctx;
+    // bóng
+    g.fillStyle = 'rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(x, y, 6, 2.5, 0, 0, 7); g.fill();
+    // chân
+    const lp = a.walking ? (Math.sin(t * 14) > 0 ? 1 : -1) : 0;
+    R(x - 4, top + 15 + lp, 3, 4 - lp, '#3b3330', g); R(x + 1, top + 15 - lp, 3, 4 + lp, '#3b3330', g);
+    // đuôi (nhìn từ sau)
+    if (a.dir === 'up') { R(x + 4, top + 11, 2, 2, fur, g); R(x + 5, top + 8, 2, 4, fur, g); }
+    // thân áo
+    R(x - 5, top + 8, 10, 8, shirt, g); R(x - 5, top + 15, 10, 1, 'rgba(0,0,0,.2)', g);
+    // tay: gõ phím thì nhấp nhô, chờ thì giơ tay
+    const typing = !a.walking && ['writing', 'running', 'thinking'].includes(a.state);
+    const tp = typing ? (Math.sin(t * 22 + a.hue) > 0 ? 1 : 0) : 0;
+    if (a.state === 'waiting' && !a.walking) { R(x + 5, top + 1 + Math.round(Math.sin(t * 6)), 2, 8, fur, g); R(x - 7, top + 9, 2, 5, fur, g); }
+    else { R(x - 7, top + 9 + tp, 2, 5, fur, g); R(x + 5, top + 9 - tp, 2, 5, fur, g); }
+    // đầu + tai
+    R(x - 5, top, 10, 9, fur, g);
+    R(x - 5, top - 3, 3, 3, fur, g); R(x + 2, top - 3, 3, 3, fur, g);
+    R(x - 4, top - 2, 1, 2, '#f2a7a7', g); R(x + 3, top - 2, 1, 2, '#f2a7a7', g);
+    if (a.dir !== 'up') {
+      const ex = a.dir === 'left' ? -1 : a.dir === 'right' ? 1 : 0;
+      const blink = (Math.floor(t * 0.7 + a.hue) % 5 === 0 && (t * 0.7 + a.hue) % 1 < 0.12);
+      R(x - 3 + ex, top + 3, 2, blink ? 1 : 2, '#1d1b1a', g); R(x + 1 + ex, top + 3, 2, blink ? 1 : 2, '#1d1b1a', g);
+      R(x - 1 + ex, top + 6, 2, 1, '#c2706f', g);
+    }
+    // huy hiệu nguồn: chấm nhỏ trên áo
+    R(x - 1, top + 10, 2, 2, a.source === 'agy' ? '#fff' : 'rgba(255,255,255,.7)', g);
+    return top;
+  }
+
+  function roundRect(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+
+  // ---------- Khung hình ----------
+  let S = 2, ox = 0, oy = 0, selected = null, selectedAt = 0;
+  O.onSelect = (a) => { selected = a && a.id; selectedAt = performance.now(); };
+
+  function resize() {
+    const side = innerWidth > 760 ? 320 : 0, bottom = innerWidth > 760 ? 0 : innerHeight * 0.4;
+    cv.width = innerWidth; cv.height = innerHeight;
+    const aw = innerWidth - side - 24, ah = innerHeight - bottom - 70;
+    S = Math.max(1, Math.min(aw / bg.width, ah / bg.height));
+    S = S >= 2 ? Math.floor(S * 2) / 2 : S;
+    ox = Math.round(12 + (aw - bg.width * S) / 2); oy = Math.round(56 + (ah - bg.height * S) / 2);
+  }
+
+  function frame(now) {
+    const t = now / 1000;
+    O.step(Math.min(0.05, (now - (frame.last || now)) / 1000)); frame.last = now;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.imageSmoothingEnabled = false;
+    ctx.setTransform(S, 0, 0, S, ox, oy);
+    ctx.drawImage(bg, 0, 0);
+
+    const list = [...O.agents.values()];
+    // bàn dự phòng chỉ hiện khi có người
+    for (const a of list) { const d = O.deskOf(a); if (d && d.spare) drawDesk(d, ctx); }
+    // màn hình sáng khi chủ bàn đang ngồi làm
+    for (const a of list) {
+      const d = O.deskOf(a);
+      if (!d) continue;
+      const atDesk = !a.walking && Math.hypot(a.x - d.x, a.y - d.y - 1.1) < 0.15;
+      if (atDesk && ['writing', 'running', 'thinking', 'error', 'waiting'].includes(a.state)) {
+        const sx = d.x * T - 5, sy = d.y * T - 0.55 * T - 8;
+        R(sx, sy, 10, 8, a.state === 'error' ? '#7a1f1f' : a.state === 'waiting' ? '#6b5200' : '#123a2a', ctx);
+        for (let i = 0; i < 3; i++) R(sx + 1, sy + 1 + i * 2.5, 2 + ((Math.floor(t * 6) + i * 3) % 7), 1, a.source === 'agy' ? '#8fc1ff' : '#7dff9a', ctx);
+      }
+    }
+    // vạch đỏ nối hai agent cùng sửa một file
+    for (const a of list) {
+      const o = a.clash && O.agents.get(a.clash.with);
+      if (!o || a.id > o.id) continue;
+      ctx.strokeStyle = 'rgba(229,83,75,.85)'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 2]);
+      ctx.beginPath(); ctx.moveTo(a.x * T, a.y * T - 10); ctx.lineTo(o.x * T, o.y * T - 10); ctx.stroke(); ctx.setLineDash([]);
+    }
+    // nhân vật, vẽ theo chiều sâu
+    const tops = new Map();
+    for (const a of list.sort((p, q) => p.y - q.y)) {
+      if (selected === a.id && now - selectedAt < 4000) {
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(a.x * T, a.y * T, 9, 4, 0, 0, 7); ctx.stroke();
+      }
+      if (a.stuck) { ctx.strokeStyle = '#f39c12'; ctx.lineWidth = 1; ctx.beginPath(); ctx.ellipse(a.x * T, a.y * T, 8, 3.5, 0, 0, 7); ctx.stroke(); }
+      ctx.globalAlpha = a.leaving ? 0.6 : 1;
+      tops.set(a.id, drawCat(a, t));
+      ctx.globalAlpha = 1;
+    }
+    // bong bóng + tên vẽ ở toạ độ màn hình cho rõ chữ
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    for (const a of list) {
+      const sx = ox + a.x * T * S, top = oy + (tops.get(a.id) - 6) * S;
+      const glyph = O.BUBBLE[a.state] || '';
+      if (glyph && !a.walking) {
+        const pulse = a.state === 'waiting' ? 1 + 0.12 * Math.sin(t * 8) : 1;
+        const w = 26 * pulse, h = 20 * pulse;
+        ctx.fillStyle = a.state === 'waiting' ? '#f5c04a' : a.state === 'error' ? '#e5534b' : 'rgba(255,255,255,.95)';
+        roundRect(ctx, sx - w / 2, top - h - 6, w, h, 6); ctx.fill();
+        ctx.beginPath(); ctx.moveTo(sx - 4, top - 7); ctx.lineTo(sx + 4, top - 7); ctx.lineTo(sx, top - 1); ctx.fill();
+        ctx.fillStyle = a.state === 'error' ? '#fff' : '#2b2622';
+        ctx.font = `${a.state === 'waiting' ? 'bold 15' : '12'}px system-ui, "Segoe UI Emoji", sans-serif`;
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        const dots = a.state === 'thinking' ? '.'.repeat(1 + Math.floor(t * 3) % 3) : glyph;
+        ctx.fillText(dots, sx, top - h / 2 - 6);
+      }
+      ctx.font = '600 11px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      const label = a.name, lw = ctx.measureText(label).width + 10, ly = oy + a.y * T * S + 5;
+      ctx.fillStyle = 'rgba(30,26,22,.72)'; roundRect(ctx, sx - lw / 2, ly, lw, 16, 5); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.fillText(label, sx, ly + 2);
+      ctx.fillStyle = a.color; ctx.fillRect(sx - lw / 2 + 3, ly + 5, 3, 6);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  drawBackground();
+  addEventListener('resize', resize); resize();
+  O.connect();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

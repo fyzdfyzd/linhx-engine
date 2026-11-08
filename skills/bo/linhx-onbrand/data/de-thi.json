@@ -1,0 +1,11 @@
+{
+  "_ghi_chu": "5 đề chuẩn để đo năng lực bám chuẩn. Mỗi người (designer hoặc AI) làm cùng 5 đề cho cùng một brand. Nội dung chữ do đề cho sẵn để chỉ đo phần design.",
+  "de": [
+    {"ma": "D1-social", "ten": "Bài đăng mạng xã hội 1080x1080", "noi_dung": "Tuyển 50 tình nguyện viên lắng nghe người cao tuổi. Đăng ký trước 30/11.", "do_gi": "màu chủ đạo, logo góc, chữ tiêu đề, hoạ tiết"},
+    {"ma": "D2-banner", "ten": "Banner sự kiện 1920x600", "noi_dung": "Ngày hội Lắng nghe 2026 · Hà Nội · 15/12", "do_gi": "logo ngang, vùng an toàn, phân cấp chữ"},
+    {"ma": "D3-slide", "ten": "Bìa slide 16:9", "noi_dung": "Báo cáo tác động 2026", "do_gi": "nền, biến thể logo trên nền tối, font"},
+    {"ma": "D4-avatar", "ten": "Avatar + ảnh bìa fanpage", "noi_dung": "(không chữ ngoài logo)", "do_gi": "dùng biểu tượng đúng biến thể, cắt không phạm vùng an toàn"},
+    {"ma": "D5-anh", "ten": "Poster có ảnh người thật A4", "noi_dung": "Mỗi câu chuyện đều đáng được nghe.", "do_gi": "xử lý ảnh đúng phong cách, chữ trên ảnh, màu nhấn"}
+  ],
+  "nop_bai": "07-bai-thi/<ten-nguoi-hoac-ten-ai>/<ma-de>.png (hoặc .pdf/.pptx/.html)"
+}

@@ -1,0 +1,125 @@
+{
+ "_ghi_chu": "Chép từ LAB020 tu-dien-phong-cach.json (2026-10-13). Trục bề mặt cho thẻ ảnh: chọn tối đa 2 giá trị mỗi trục. Từ điển có kiểm soát để gắn style_tags. Mỗi thẻ chọn tối đa 2 giá trị mỗi trục. medium/movement lấy tập con từ clip-interrogator (MIT). Thêm giá trị mới phải sửa file này, không viết tự do.",
+ "medium": [
+  "digital painting",
+  "watercolor",
+  "gouache",
+  "ink drawing",
+  "pencil sketch",
+  "color pencil",
+  "pastel",
+  "oil painting",
+  "acrylic",
+  "vector illustration",
+  "pixel art",
+  "3d render",
+  "low poly",
+  "clay/plush",
+  "papercut",
+  "woodcut/print",
+  "mixed media"
+ ],
+ "movement": [
+  "art nouveau",
+  "art deco",
+  "ukiyo-e",
+  "shin hanga",
+  "superflat",
+  "pop surrealism",
+  "lowbrow",
+  "naive art",
+  "folk art",
+  "storybook illustration",
+  "chinese ink (guohua)",
+  "ligne claire",
+  "fantasy art",
+  "retrofuturism",
+  "minimalism"
+ ],
+ "dinh_dang": [
+  "single illustration",
+  "character sheet",
+  "single-panel comic",
+  "comic strip 3-4 panels",
+  "4-koma",
+  "webtoon vertical",
+  "manga page",
+  "picture book",
+  "sticker/emote",
+  "concept art",
+  "animation still"
+ ],
+ "ty_le": [
+  "chibi (2-3 đầu)",
+  "cute stylized (4-5 đầu)",
+  "stylized realistic (6-7 đầu)",
+  "realistic (7-8 đầu)",
+  "heroic (8+ đầu)",
+  "mascot/blob"
+ ],
+ "hinh_khoi": [
+  "tròn mềm",
+  "vuông khối",
+  "góc nhọn",
+  "thon dài",
+  "hình học đơn giản",
+  "chi tiết hữu cơ"
+ ],
+ "net_ve": [
+  "không viền",
+  "viền mảnh đều",
+  "viền dày đều",
+  "viền nét bút biến thiên",
+  "nét phác sketchy",
+  "viền màu (không đen)"
+ ],
+ "to_mau": [
+  "flat",
+  "cel shading",
+  "gradient mềm",
+  "painterly",
+  "textured/grain",
+  "halftone",
+  "đơn sắc"
+ ],
+ "bang_mau": [
+  "pastel",
+  "trầm/muted",
+  "bão hoà mạnh",
+  "tông ấm",
+  "tông lạnh",
+  "giới hạn ≤8 màu",
+  "đen trắng",
+  "neon"
+ ],
+ "chu_de": [
+  "mèo",
+  "động vật nhân hoá",
+  "sinh vật kỳ ảo",
+  "tiên hiệp/võ hiệp",
+  "cổ trang Á Đông",
+  "fantasy phương Tây",
+  "đời thường",
+  "kinh dị dễ thương",
+  "khoa học viễn tưởng",
+  "cổ tích/thần thoại",
+  "đồ ăn/đồ vật nhân hoá"
+ ],
+ "giong": [
+  "ấm áp",
+  "hài",
+  "hài đen",
+  "u buồn",
+  "kỳ bí",
+  "hùng tráng",
+  "châm biếm",
+  "chữa lành"
+ ],
+ "dung_cho": [
+  "làng mèo",
+  "tiên hiệp",
+  "học phong cách",
+  "nhân vật tham khảo",
+  "ý tưởng IP"
+ ]
+}

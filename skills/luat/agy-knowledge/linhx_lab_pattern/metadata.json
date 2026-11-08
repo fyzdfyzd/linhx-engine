@@ -1,0 +1,18 @@
+{
+    "title": "LINHX LAB Scanning Pattern",
+    "summary": "A standardized data organization and scanning framework (Config-Master-Profile pattern) used across multiple projects like AD CAMPAIGN, LEARN_SOCIAL_IMPACT, and TUNG TA TUNG TANG. It defines a formal directory structure for centralized configuration, master data persistence, and entity-specific profile documentation.",
+    "references": [
+        {
+            "type": "conversation_id",
+            "value": "dc3f2324-33ad-478e-bf35-e4be45453116"
+        },
+        {
+            "type": "file",
+            "value": "H:\\My Drive\\WORKFORCE\\BUSINESS\\@LINHX\\LINHX_LAB\\AD CAMPAIGN"
+        },
+        {
+            "type": "file",
+            "value": "H:\\My Drive\\WORKFORCE\\PROJECT\\TUNG TA TUNG TANG\\EVENT_DATA"
+        }
+    ]
+}

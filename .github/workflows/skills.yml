@@ -1,0 +1,22 @@
+name: skills
+
+on:
+  push:
+    paths: ["skills/**", "scripts/skill_*.py"]
+  pull_request:
+    paths: ["skills/**", "scripts/skill_*.py"]
+
+jobs:
+  kiem-skill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Kiểm skill (frontmatter, tên trùng, bí mật, file nặng)
+        run: python scripts/skill_kiem.py
+      - name: INDEX.md phải khớp skill thật
+        run: |
+          python scripts/skill_kiem.py --index
+          git diff --exit-code skills/INDEX.md skills/danh-muc.json

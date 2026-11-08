@@ -1,0 +1,23 @@
+[
+ {
+  "kenh": "Facebook",
+  "ten_hien_thi": "Lá Xanh Academy",
+  "bio": "Học để làm được ngay. AI cho dân văn phòng.",
+  "link": "https://laxanh.example",
+  "sdt": "0901 234 567"
+ },
+ {
+  "kenh": "TikTok",
+  "ten_hien_thi": "laxanh.ai",
+  "bio": "AI mỗi ngày",
+  "link": "https://linktr.ee/laxanh",
+  "sdt": "+84 901 234 567"
+ },
+ {
+  "kenh": "Zalo OA",
+  "ten_hien_thi": "La Xanh Academy",
+  "bio": "Học để làm được ngay",
+  "link": "https://laxanh.example/zalo",
+  "sdt": "0988 777 666"
+ }
+]

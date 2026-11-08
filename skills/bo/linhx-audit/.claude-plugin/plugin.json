@@ -1,0 +1,7 @@
+{
+  "name": "linhx-audit",
+  "version": "0.1.0",
+  "description": "Brand audit và social content audit theo kiến trúc claude-seo: một skill điều phối, agent chuyên từng nhóm chạy song song, script đo 0 token, điểm có trọng số, kế hoạch theo mức, so mốc theo thời gian.",
+  "author": {"name": "LINHX LAB"},
+  "keywords": ["brand-audit", "social-audit", "content-audit", "vietnamese"]
+}

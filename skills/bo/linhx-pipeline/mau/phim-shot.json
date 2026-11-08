@@ -1,0 +1,15 @@
+{
+ "ten": "phim ngắn theo shot",
+ "mo_ta": "LAB016: kịch bản và ảnh neo nhân vật để chung, mỗi shot đi prompt → ảnh khung → video → rà",
+ "don_vi": "shot",
+ "tang": [
+  {"id": "mo-ta", "can": [], "doc_chung": ["chung/kich-ban.md", "chung/nhan-vat.json"], "ra": "mo-ta.json", "ai": "claude",
+   "viec": "Mô tả shot: cảnh, nhân vật, góc máy, thoại, thời lượng", "cong": {"loai": "json-truong", "truong": ["canh", "goc_may", "giay"]}},
+  {"id": "anh-khung", "can": ["mo-ta"], "doc_chung": ["chung/anh-neo"], "ra": "khung.png", "ai": "flow-image",
+   "viec": "Ảnh khung đầu shot, ref ảnh neo nhân vật", "cong": {"loai": "anh"}},
+  {"id": "video", "can": ["anh-khung"], "ra": "shot.mp4", "ai": "flow-video",
+   "viec": "Tạo video từ ảnh khung; tốn credit nên chỉ chạy khi ảnh khung đã đạt", "cong": {"loai": "co-tep"}},
+  {"id": "ra-shot", "can": ["video"], "ra": "ra.json", "ai": "claude",
+   "viec": "Rà nhân vật đúng mặt, không méo tay, khớp thoại", "cong": {"loai": "json-truong", "truong": ["ket_luan"]}}
+ ]
+}

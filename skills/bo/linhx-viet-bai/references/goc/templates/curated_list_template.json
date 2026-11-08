@@ -1,0 +1,19 @@
+{
+    "selected_insights": [
+        {
+            "id": 1,
+            "content": "",
+            "type": "fact|paradox|metaphor|provocation",
+            "note": ""
+        }
+    ],
+    "personal_anecdotes": [
+        {
+            "content": "",
+            "placement_hint": ""
+        }
+    ],
+    "suggested_flow": [],
+    "rejected_insights": [],
+    "rejection_reasons": ""
+}

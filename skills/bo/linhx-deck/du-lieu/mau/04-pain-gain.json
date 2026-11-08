@@ -1,0 +1,27 @@
+{
+  "nguoi_nghe": [
+    "<vai người ra quyết định>"
+  ],
+  "pains": [
+    {
+      "id": "P1",
+      "mo_ta": "<nỗi đau, viết bằng lời của khách>",
+      "diem": 8,
+      "bang_chung": [
+        "BC01"
+      ],
+      "nhan": "co-bang-chung",
+      "trich": "<nguyên văn lời khách hoặc con số, bắt buộc khi diem ≥ 7>"
+    }
+  ],
+  "gains": [
+    {
+      "id": "G1",
+      "mo_ta": "<điều họ muốn đạt, đo được>",
+      "diem": 7,
+      "bang_chung": [],
+      "nhan": "gia-thuyet"
+    }
+  ],
+  "cong_viec": "<việc họ đang cố hoàn thành (job), một câu>"
+}

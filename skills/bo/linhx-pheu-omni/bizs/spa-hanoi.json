@@ -1,0 +1,95 @@
+{
+  "ten": "Spa chăm sóc da, 1 chi nhánh Hà Nội [ví dụ giả định]",
+  "loai": "B2C dịch vụ địa phương",
+  "aov": 1.2,
+  "bien_gop": 0.6,
+  "so_lan_mua_12t": 2.5,
+  "tre_ban_thang": 0,
+  "so_thang": 12,
+  "chi_phi_planning": [
+    [
+      "Nghiên cứu khách: 10 cuộc gọi khách cũ + persona ảo phản biện",
+      4
+    ],
+    [
+      "Bản đồ điểm chạm + kịch bản giao tiếp từng điểm",
+      3
+    ],
+    [
+      "Đo lường: UTM, pixel/CAPI, sổ khách (CRM) có cột nguồn, câu hỏi 'biết qua đâu'",
+      5
+    ],
+    [
+      "Giả lập + phản biện 10 phễu, chốt mix",
+      2
+    ],
+    [
+      "Dựng stack agent (Postiz, n8n, mẫu tin Zalo OA)",
+      3
+    ]
+  ],
+  "van_hanh_chung_thang": [
+    [
+      "Token Claude + công cụ + VPS",
+      2.5
+    ],
+    [
+      "1 người duyệt/trực inbox bán thời gian",
+      6
+    ]
+  ],
+  "pheu": {
+    "ads": {
+      "bat": true,
+      "ngan_sach": 15
+    },
+    "search": {
+      "bat": true,
+      "ngan_sach": 6
+    },
+    "seo": {
+      "bat": true,
+      "co_dinh": 4,
+      "dau_vao": [
+        600,
+        1500,
+        4000
+      ]
+    },
+    "content_hub": {
+      "bat": false
+    },
+    "personal_brand": {
+      "bat": true
+    },
+    "affiliate": {
+      "bat": true,
+      "hoa_hong": 0.15,
+      "dau_vao": [
+        3,
+        8,
+        20
+      ]
+    },
+    "cold_reach": {
+      "bat": false,
+      "_ly_do": "B2C gọi/nhắn lạnh dễ thành spam theo NĐ 91/2020, Luật BVDLCN 2026"
+    },
+    "offline": {
+      "bat": true,
+      "co_dinh": 6
+    },
+    "community": {
+      "bat": true
+    },
+    "group": {
+      "bat": true
+    }
+  },
+  "tran_khach_moi_thang": 120,
+  "he_so_biz": [
+    0.4,
+    1.0,
+    1.4
+  ]
+}

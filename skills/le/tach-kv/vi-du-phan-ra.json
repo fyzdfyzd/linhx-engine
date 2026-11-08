@@ -1,0 +1,24 @@
+{
+ "anh_goc": "VSMC_2026_KV_R5.jpg",
+ "ghi_chu": "Bản phân rã do Claude soạn từ ocr.json + nhìn ảnh. Toạ độ theo px ảnh gốc 3333x1875.",
+ "phan_tu": [
+  {"id": "anh-thanh-pho", "loai": "anh", "z": 1, "da_giac": [[2050,0],[2400,0],[1840,935],[1450,935]]},
+  {"id": "anh-khoi-lap-phuong", "loai": "anh", "z": 1, "da_giac": [[2560,250],[3010,230],[3110,520],[3080,790],[2830,790]]},
+  {"id": "anh-kinh-vr", "loai": "anh", "z": 1, "da_giac": [[1810,935],[2240,935],[1700,1875],[1317,1875]]},
+  {"id": "anh-bat-tay-robot", "loai": "anh", "z": 1, "da_giac": [[2650,935],[3060,935],[2525,1875],[2117,1875]]},
+  {"id": "logo-vsm-camp", "loai": "logo", "tach": "da_mau", "z": 2, "hop": [125,120,428,302]},
+  {"id": "logo-csmo-summit", "loai": "logo", "tach": "da_mau", "z": 2, "hop": [520,128,965,255]},
+  {"id": "tieu-de", "loai": "chu", "z": 3, "lan": 41, "mau": "#ffffff", "hop": [120,535,2060,955], "noi_dung": "THE\nAGENTIC\nMARKETPLACE"},
+  {"id": "tieu-de-phu", "loai": "chu", "z": 3, "hop": [120,990,1420,1162], "noi_dung": "KHI AI THAM GIA\nQUYỀN LỰA CHỌN"},
+  {"id": "mo-ta", "loai": "chu", "z": 3, "hop": [120,1200,1465,1350], "noi_dung": "Một thị trường mới đang hình thành, nơi lựa chọn không còn chỉ được quyết định bởi con người, mà còn được định hình bởi nền tảng, dữ liệu và các AI agent."},
+  {"id": "thoi-gian-dia-diem", "loai": "chu", "z": 3, "hop": [120,1415,1260,1540], "noi_dung": "Thời gian: 19-20.11.2026\nĐịa điểm: Khách sạn Ascott Tây Hồ, Hà Nội"},
+  {"id": "nhan-to-chuc", "loai": "chu", "z": 3, "mau": "#ffffff", "hop": [128,1650,248,1692], "noi_dung": "TỔ CHỨC"},
+  {"id": "nhan-thuc-hien", "loai": "chu", "z": 3, "mau": "#ffffff", "hop": [480,1652,617,1684], "noi_dung": "THỰC HIỆN"},
+  {"id": "nhan-chu-quan", "loai": "chu", "z": 3, "mau": "#ffffff", "hop": [752,1652,975,1684], "noi_dung": "ĐƠN VỊ CHỦ QUẢN"},
+  {"id": "logo-csmo-vietnam", "loai": "logo", "z": 3, "mau": "#ffffff", "hop": [128,1712,395,1792]},
+  {"id": "logo-lebros", "loai": "logo", "z": 3, "mau": "#ffffff", "hop": [476,1686,680,1798]},
+  {"id": "logo-kao", "loai": "logo", "z": 3, "mau": "#ffffff", "hop": [755,1698,925,1792]},
+  {"id": "hotline", "loai": "chu", "z": 3, "hop": [2650,1630,3022,1802], "noi_dung": "Hotline:\n090 354 6004\nThông tin chi tiết\nbit.ly/VSMCamp2026"},
+  {"id": "qr", "loai": "qr", "z": 3, "dem": 0, "hop": [3043,1553,3290,1798]}
+ ]
+}

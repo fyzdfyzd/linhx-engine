@@ -1,0 +1,7 @@
+{
+  "name": "linhx-khoang-trong",
+  "version": "0.1.0",
+  "description": "Radar khoảng trống độc giả: từ top bài, top tác giả, top kênh trên Medium, Substack và kênh quan điểm (LinkedIn, X, Threads, Facebook) suy ra nhu cầu độc giả, ai đang thắng, quy mô, rồi soi về Việt Nam để tìm chủ đề nên chiếm trước.",
+  "author": {"name": "LINHX LAB"},
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "linhx-du-lieu",
+  "version": "0.1.0",
+  "description": "Dọn dữ liệu AI-ready cho doanh nghiệp Việt: chấm nhanh 6 chiều, dọn bảng bằng recipe thao tác đóng (SĐT, CCCD, MST, ngày, tên, địa chỉ sau sáp nhập, bảng mã), kiểm định hậu điều kiện, nhật ký tái lập.",
+  "author": { "name": "LINHX LAB" },
+  "license": "MIT"
+}

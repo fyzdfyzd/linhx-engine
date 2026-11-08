@@ -1,0 +1,28 @@
+{
+  "muc_dich": "Danh sách khách hàng sạch để nạp CRM và cho AI agent chăm sóc khách: liên lạc được (SĐT/email đúng), không trùng người, địa chỉ theo đơn vị hành chính mới",
+  "buoc": [
+    {"op": "nfc", "cot": "*"},
+    {"op": "fix_mojibake", "cot": "*"},
+    {"op": "trim", "cot": "*"},
+    {"op": "flag_tcvn3", "cot": ["Họ tên", "Địa chỉ"]},
+    {"op": "name_vn", "cot": "Họ tên"},
+    {"op": "phone_vn", "cot": "SĐT"},
+    {"op": "email", "cot": "Email"},
+    {"op": "date_vn", "cot": "Ngày sinh"},
+    {"op": "cccd", "cot": "CCCD"},
+    {"op": "address_new", "cot": "Địa chỉ", "giu_cot_cu": true},
+    {"op": "drop_empty_rows"},
+    {"op": "drop_exact_dupes"},
+    {"op": "dedupe", "khoa": ["SĐT"]}
+  ],
+  "hau_dieu_kien": [
+    {"kiem": "khong_null", "cot": "Mã KH"},
+    {"kiem": "duy_nhat", "cot": "Mã KH"},
+    {"kiem": "hop_le", "cot": "SĐT", "kieu": "phone"},
+    {"kiem": "hop_le", "cot": "Email", "kieu": "email"},
+    {"kiem": "hop_le", "cot": "Ngày sinh", "kieu": "date"},
+    {"kiem": "hop_le", "cot": "CCCD", "kieu": "cccd"},
+    {"kiem": "so_dong_giam_toi_da", "pct": 5},
+    {"kiem": "ty_le_co_toi_da", "pct": 30}
+  ]
+}

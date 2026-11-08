@@ -1,0 +1,419 @@
+{
+ "chu_nguoi": 10854,
+ "chu_llm": 5319,
+ "cum": [
+  {
+   "cum": "trước khi",
+   "n": 2,
+   "llm_moi_1000": 1.692,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 36.7
+  },
+  {
+   "cum": "thói quen",
+   "n": 2,
+   "llm_moi_1000": 1.316,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 28.6
+  },
+  {
+   "cum": "một thói quen",
+   "n": 3,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 20.4
+  },
+  {
+   "cum": "được dùng",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 20.4
+  },
+  {
+   "cum": "thêm một",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 20.4
+  },
+  {
+   "cum": "điều đó",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 20.4
+  },
+  {
+   "cum": "có nghĩa là",
+   "n": 3,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "cách ta",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "một chút",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "kiểm chứng",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "nên có",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "cơ quan",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "điều đáng",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "ở chỗ",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 16.3
+  },
+  {
+   "cum": "không có nghĩa là",
+   "n": 4,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "điều này không",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "gặp khó khăn",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "nằm ở chỗ",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "không thể làm",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "tiết kiệm",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "lại một",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "trong ba",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "những bài",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "nhanh hơn",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "mình một",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "nên được",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "nếu một",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "một đoạn",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.0,
+   "ti_le": 12.2
+  },
+  {
+   "cum": "trách nhiệm",
+   "n": 2,
+   "llm_moi_1000": 1.504,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 10.9
+  },
+  {
+   "cum": "có người",
+   "n": 2,
+   "llm_moi_1000": 1.128,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 8.2
+  },
+  {
+   "cum": "không ai",
+   "n": 2,
+   "llm_moi_1000": 1.128,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 8.2
+  },
+  {
+   "cum": "một điều",
+   "n": 2,
+   "llm_moi_1000": 1.128,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 8.2
+  },
+  {
+   "cum": "nhưng không",
+   "n": 2,
+   "llm_moi_1000": 1.128,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 8.2
+  },
+  {
+   "cum": "không bao giờ",
+   "n": 3,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 6.8
+  },
+  {
+   "cum": "tôi nghĩ",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 6.8
+  },
+  {
+   "cum": "hơn là",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 6.8
+  },
+  {
+   "cum": "thể làm",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 6.8
+  },
+  {
+   "cum": "một người",
+   "n": 2,
+   "llm_moi_1000": 1.88,
+   "nguoi_moi_1000": 0.276,
+   "ti_le": 5.8
+  },
+  {
+   "cum": "cũng là",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 5.4
+  },
+  {
+   "cum": "là thứ",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 5.4
+  },
+  {
+   "cum": "phát hiện",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 5.4
+  },
+  {
+   "cum": "trong nhiều",
+   "n": 2,
+   "llm_moi_1000": 0.752,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 5.4
+  },
+  {
+   "cum": "cuối cùng",
+   "n": 2,
+   "llm_moi_1000": 1.128,
+   "nguoi_moi_1000": 0.184,
+   "ti_le": 4.9
+  },
+  {
+   "cum": "câu hỏi",
+   "n": 2,
+   "llm_moi_1000": 2.256,
+   "nguoi_moi_1000": 0.461,
+   "ti_le": 4.5
+  },
+  {
+   "cum": "không phải là",
+   "n": 3,
+   "llm_moi_1000": 1.692,
+   "nguoi_moi_1000": 0.369,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "mối quan hệ",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "một công ty",
+   "n": 3,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "được nhưng",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "mà là",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.184,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "quan hệ",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.184,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "không nằm",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "nằm ở",
+   "n": 2,
+   "llm_moi_1000": 1.316,
+   "nguoi_moi_1000": 0.276,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "công khai",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "đó không",
+   "n": 2,
+   "llm_moi_1000": 0.94,
+   "nguoi_moi_1000": 0.184,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "nói ấy",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "một lời",
+   "n": 2,
+   "llm_moi_1000": 1.316,
+   "nguoi_moi_1000": 0.276,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "việc này",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "nói thật",
+   "n": 2,
+   "llm_moi_1000": 0.564,
+   "nguoi_moi_1000": 0.092,
+   "ti_le": 4.1
+  },
+  {
+   "cum": "trả lời",
+   "n": 2,
+   "llm_moi_1000": 2.068,
+   "nguoi_moi_1000": 0.461,
+   "ti_le": 4.1
+  }
+ ]
+}

@@ -1,0 +1,151 @@
+{
+  "ten": "Cộng đồng học viên LINHX (CLB AI ứng dụng)",
+  "ghi_chu": "Hồ sơ v0.1. Số nào là [giả định] thì Linh sửa ở đây, không sửa trong script.",
+  "kenh_chinh": [
+    "zalo-cong-dong",
+    "zalo-oa",
+    "email",
+    "zoom"
+  ],
+  "trong_so_hoat_dong": {
+    "vao_nhom": 3,
+    "tra_loi_khao_sat": 4,
+    "cam_xuc": 1,
+    "binh_luan": 3,
+    "hoi": 4,
+    "tra_loi_giup": 8,
+    "chia_se_case": 10,
+    "du_zoom": 6,
+    "du_workshop": 8,
+    "gioi_thieu": 12,
+    "hoi_gia": 5,
+    "hoi_lich": 5,
+    "mua": 15
+  },
+  "loai_do_admin_tao": [
+    "admin_dang",
+    "admin_nhac"
+  ],
+  "cua_so_ngay": 90,
+  "cap": [
+    {
+      "so": 1,
+      "ten": "Champion",
+      "nguong": 60
+    },
+    {
+      "so": 2,
+      "ten": "Đóng góp",
+      "nguong": 25
+    },
+    {
+      "so": 3,
+      "ten": "Tham gia",
+      "nguong": 6
+    },
+    {
+      "so": 4,
+      "ten": "Khám phá",
+      "nguong": 0
+    }
+  ],
+  "sap_len_cap_ty_le": 0.8,
+  "im_lang_ngay": 30,
+  "tin_hieu_mua": [
+    "hoi_gia",
+    "hoi_lich",
+    "gioi_thieu"
+  ],
+  "tin_hieu_giup_nguoi": [
+    "tra_loi_giup",
+    "chia_se_case"
+  ],
+  "sop_nguoi_moi": [
+    {
+      "moc": 1,
+      "viec": "Chào trong nhóm + hỏi 1 câu chia nhánh (đang dùng AI cho việc gì)",
+      "mau": "chao-don"
+    },
+    {
+      "moc": 3,
+      "viec": "Gửi 1 mẹo đúng với tag nghề + mời đăng 'việc tôi muốn giao cho agent'",
+      "mau": "meo-theo-nghe"
+    },
+    {
+      "moc": 7,
+      "viec": "Mời buổi Zoom giải đáp tháng 'mang lỗi thật đến chữa'",
+      "mau": "moi-zoom"
+    },
+    {
+      "moc": 14,
+      "viec": "Hỏi 'đã thử được gì? tiết kiệm bao nhiêu giờ/tuần?'",
+      "mau": "hoi-ket-qua"
+    },
+    {
+      "moc": 30,
+      "viec": "Khảo sát 3 câu + xin case/testimonial nếu có kết quả",
+      "mau": "khao-sat-d30"
+    },
+    {
+      "moc": 90,
+      "viec": "Mời buổi Agentic Working 2.0 giá alumni hoặc giới thiệu cho HR/L&D",
+      "mau": "moi-2-0"
+    }
+  ],
+  "nhip_cong_dong": [
+    {
+      "thu": "T2",
+      "viec": "Đề bài tuần: 1 việc lặp lại giao cho agent (admin đăng)"
+    },
+    {
+      "thu": "T4",
+      "viec": "Hỏi đáp: thành viên hỏi, champion trả lời trước, Linh trả lời sau 24h"
+    },
+    {
+      "thu": "T6",
+      "viec": "Khoe kết quả: 1 case thành viên (xin phép trước)"
+    },
+    {
+      "thang": 1,
+      "viec": "Zoom giải đáp 60 phút 'mang lỗi thật đến chữa'"
+    },
+    {
+      "quy": 1,
+      "viec": "Workshop/sharing ngành, mời HR/L&D của công ty có champion"
+    }
+  ],
+  "thang_offer": [
+    {
+      "bac": 0,
+      "ten": "Miễn phí: CLB, bản tin, Zoom giải đáp tháng",
+      "gia": 0
+    },
+    {
+      "bac": 1,
+      "ten": "Workshop Hà Nội 15/11 (quản lý ngân hàng, CEO/CMO)",
+      "gia": null
+    },
+    {
+      "bac": 2,
+      "ten": "K2 Agentic Working 2.0 (3 giờ, giá alumni)",
+      "gia": null
+    },
+    {
+      "bac": 3,
+      "ten": "K3 AI Workflow + Coach / K4 AI-ready Data",
+      "gia": null
+    },
+    {
+      "bac": 4,
+      "ten": "Dự án dựng 1 workflow 6–8 tuần / tool HR & L&D",
+      "gia": null
+    }
+  ],
+  "toi_da_de_xuat_tuan": 25,
+  "loai_bai_dang": [
+    "binh_luan",
+    "hoi",
+    "tra_loi_giup",
+    "chia_se_case"
+  ]
+}

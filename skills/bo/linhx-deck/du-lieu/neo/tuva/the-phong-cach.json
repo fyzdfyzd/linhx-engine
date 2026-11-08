@@ -1,0 +1,100 @@
+{
+  "brand": "tuva",
+  "vong": 1,
+  "huong": [
+    {
+      "id": "H1",
+      "ten": "Đường cong xoắn ốc trên giấy ấm",
+      "mo_ta": "Minh hoạ phẳng kiểu biên tập: đường cong mảnh và mảng cong gợi vỏ ốc xoắn, nâu-hổ phách trên nền kem có vân giấy. Đúng phương án minh hoạ phẳng trong prompt-kit TUVA, không người.",
+      "anh": [
+        "08-moodboard/mb-03.png",
+        "08-moodboard/mb-01.jpg",
+        "08-moodboard/mb-02.png"
+      ],
+      "dai_dien": "08-moodboard/mb-03.png"
+    },
+    {
+      "id": "H2",
+      "ten": "Phong cảnh đồi cát ấm",
+      "mo_ta": "Đồi lượn, mặt trời tròn, đường đi uốn; ẩn dụ hành trình; ấm và mềm.",
+      "anh": [
+        "08-moodboard/mb-05.jpg",
+        "08-moodboard/mb-06.png",
+        "08-moodboard/mb-07.png"
+      ],
+      "dai_dien": "08-moodboard/mb-05.jpg"
+    },
+    {
+      "id": "H3",
+      "ten": "Hình khối đất nung",
+      "mo_ta": "Khối hình học Bauhaus nâu, vòng tròn và cột; mạnh, có nhịp, hơi lạnh với mảng xã hội.",
+      "anh": [
+        "08-moodboard/mb-08.png",
+        "08-moodboard/mb-09.jpg",
+        "08-moodboard/mb-04.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-08.png"
+    }
+  ],
+  "huong_chon": "H1",
+  "ly_do_chon": "Prompt-kit TUVA (LAB012) cho phép minh hoạ phẳng với đường cong gợi vỏ ốc xoắn, bảng nâu/hổ phách/be; không người nên tránh lỗi 'ảnh người bị AI quá' và quy định không dùng ảnh AI như ảnh tư liệu.",
+  "bang_mau": [
+    "#2A1E1A",
+    "#F9A61B",
+    "#E4DCD5",
+    "#FD6703",
+    "#EFEFEF"
+  ],
+  "bo_cuc": "one simple symbolic shape slightly off-centre, at least 40% calm negative space, warm beige paper background (#E4DCD5 to #EFEFEF) with subtle paper grain",
+  "chu": "theo Design System TUVA; chữ ghép trong deck, không chữ trong ảnh",
+  "anh_minh_hoa": "flat editorial illustration, soft curved lines and layered curved shapes echoing a spiral conch shell, warm brown #2A1E1A, amber #F9A61B and beige #E4DCD5 with a tiny orange #FD6703 accent, matte paper texture, gentle hand-made feel, calm and hopeful, no people",
+  "bieu_do": "phẳng, nâu đậm và be, hổ phách cho số cần nhấn",
+  "tu_mo_ho": {
+    "ấm": "nâu-hổ phách trên be, không xanh/tím",
+    "tối giản": "1 hình biểu tượng, ≥40% khoảng trống",
+    "nhân văn": "nét tay mềm, vân giấy, không hình người"
+  },
+  "nguon_anh": [
+    {
+      "tep": "08-moodboard/mb-01.jpg",
+      "nguon": "https://www.pinterest.com/pin/311241024272466358/"
+    },
+    {
+      "tep": "08-moodboard/mb-02.png",
+      "nguon": "https://www.pinterest.com/pin/60869032459957411/"
+    },
+    {
+      "tep": "08-moodboard/mb-03.png",
+      "nguon": "https://www.pinterest.com/pin/1266706142233462/"
+    },
+    {
+      "tep": "08-moodboard/mb-04.jpg",
+      "nguon": "https://www.pinterest.com/pin/393361348727849249/"
+    },
+    {
+      "tep": "08-moodboard/mb-05.jpg",
+      "nguon": "https://www.pinterest.com/pin/12807180188978065/"
+    },
+    {
+      "tep": "08-moodboard/mb-06.png",
+      "nguon": "https://www.pinterest.com/pin/71846556550893336/"
+    },
+    {
+      "tep": "08-moodboard/mb-07.png",
+      "nguon": "https://www.pinterest.com/pin/1829656095360781/"
+    },
+    {
+      "tep": "08-moodboard/mb-08.png",
+      "nguon": "https://www.pinterest.com/pin/168110998586666438/"
+    },
+    {
+      "tep": "08-moodboard/mb-09.jpg",
+      "nguon": "https://www.pinterest.com/pin/959689001834267115/"
+    }
+  ],
+  "neo_brand": {
+    "brand": "tuva",
+    "tu_deck": "test-3-tuva-msd",
+    "luc": "2026-10-13T16:21:24+07:00"
+  }
+}

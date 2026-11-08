@@ -1,0 +1,14 @@
+{
+  "chien-luoc": {
+    "so_nc_toi_thieu": 3,
+    "file": {
+      "ANCHOR.md": ["không phải"],
+      "BRIEF.md": ["mục tiêu"],
+      "PHAN-KHUC*.md": ["ma trận", "chân dung", "trích"],
+      "DOI-THU*.md": ["đối thủ", "SWOT", "định vị"],
+      "KHOANG-TRONG*.md": ["nhu cầu chưa", "ma trận"],
+      "QUYET-DINH*.md": ["tóm tắt điều hành", "phương án", "chấm", "Go/No-Go"],
+      "CHUNG-THUC*.md": ["luận điểm", "nguồn"]
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "linhx-office",
+  "version": "0.1.0",
+  "description": "Văn phòng ảo LINHX: xem Claude Code và worker Antigravity làm việc trong văn phòng 2D pixel hoặc 3D, chạy cục bộ.",
+  "author": {
+    "name": "LINHX LAB"
+  },
+  "license": "MIT"
+}

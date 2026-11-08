@@ -1,0 +1,226 @@
+{
+  "_ghi_chu": "Bảng màu slide rút từ tokens.json của 7 Design System LAB012 (bản 2026-10-08). toi = nền bìa/chương; sang = nền nội dung; xen = nền thẻ; tieu_de = màu tiêu đề trên nền sáng; nhan = điểm nhấn ≤10% (không làm chữ trên nền sáng trừ khi ghi chu_duoc); nhan_toi = nhấn trên nền tối; chu, chu_phu = chữ thân. Script kiem-deck đo tương phản lại mỗi lần chạy.",
+  "linhx": {
+    "ten": "LINHX (brand của Linh, phong cách tư vấn chiến lược)",
+    "ds_url": null,
+    "mau": {
+      "toi": "#0E2A47",
+      "sang": "#FAF9F6",
+      "xen": "#EEF1F4",
+      "tieu_de": "#0E2A47",
+      "nhan": "#D9822B",
+      "nhan_toi": "#F2B66D",
+      "chu": "#1F2933",
+      "chu_phu": "#52606D",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#C9D3DD",
+      "vien": "#D5DBE1",
+      "canh_bao": "#B3541E"
+    },
+    "font": {
+      "tieu_de": "Be Vietnam Pro",
+      "than": "Be Vietnam Pro"
+    },
+    "anh": "Poster ý tưởng tối giản, nền giấy sáng, một ẩn dụ 3D duy nhất ở giữa, xanh navy và cam đất, ánh sáng mềm. Không người, không chữ, không logo.",
+    "logo": "linhx-wordmark-tam.png",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB027-DECK-PROPOSAL\\src\\linhx-deck\\du-lieu\\logo\\linhx-wordmark-tam.png",
+    "logo_ghi_chu": "logo chữ tạm dựng bằng Be Vietnam Pro, chờ Linh gửi logo gốc",
+    "anh_en": "minimal conceptual 3D poster, one single metaphor, deep navy and burnt orange, soft light, no people, no text, no logos."
+  },
+  "sakedemy": {
+    "ten": "Sakedemy",
+    "ds_url": "https://claude.ai/artifact/NLcCVki7KdYjFGpJb4Nuqs",
+    "mau": {
+      "toi": "#02403B",
+      "sang": "#FFFFFF",
+      "xen": "#F0F0F0",
+      "tieu_de": "#02403B",
+      "nhan": "#A3D34F",
+      "nhan_toi": "#A3D34F",
+      "chu": "#414242",
+      "chu_phu": "#5C5E5E",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#CFE6DC",
+      "vien": "#D9D9D9",
+      "canh_bao": "#B3541E"
+    },
+    "font": {
+      "tieu_de": "Be Vietnam Pro",
+      "than": "Roboto"
+    },
+    "logo": "logo_SAKE-01.png",
+    "anh": "Poster ý tưởng (không người): nền xám nhạt vân giấy, một ẩn dụ 3D điện ảnh ở giữa, thế giới cũ xám pixel vỡ sang thế giới mới xanh lá phát sáng, thẻ kính mờ, hạt sáng. Màu #118056 #A3D34F #26CABE #02403B.",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\sakedemy\\assets\\logo_SAKE-01.png",
+    "anh_en": "conceptual poster with no people: light grey paper-textured background, one cinematic 3D metaphor in the middle, an old grey pixel world turning into a new glowing green world, frosted glass cards, soft light particles."
+  },
+  "btmh": {
+    "ten": "Bảo Tín Mạnh Hải",
+    "ds_url": "https://claude.ai/artifact/KYZyycmabCQoyuL6zA4SZh",
+    "mau": {
+      "toi": "#4A1F1C",
+      "sang": "#FFFFFF",
+      "xen": "#F7F3ED",
+      "tieu_de": "#7C0410",
+      "nhan": "#EDD0A7",
+      "nhan_toi": "#EDD0A7",
+      "chu": "#221F20",
+      "chu_phu": "#3A2E2A",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#EDD0A7",
+      "vien": "#E3D6C3",
+      "canh_bao": "#7C0410"
+    },
+    "font": {
+      "tieu_de": "Noto Serif",
+      "than": "Be Vietnam Pro"
+    },
+    "font_rieng": "SVN-Artifex CF (có trong Design System, cài qua project/ds/<folder>/fonts/)",
+    "logo": "btmh-logo-horizontal-red.svg",
+    "anh": "Ảnh trang sức vàng 24K trên nền kem đá, ánh sáng studio ấm, hoạ tiết truyền thống mảnh. Màu #7C0410 #EDD0A7 #4A1F1C. Không chữ, không logo.",
+    "anh_en": "24K gold jewellery-inspired still life on cream stone, warm studio light, fine traditional ornament, no text, no logos."
+  },
+  "unikon": {
+    "ten": "Unikon",
+    "ds_url": "https://claude.ai/artifact/6Fu18W8gFKb2eBob7mHpR3",
+    "mau": {
+      "toi": "#1C1720",
+      "sang": "#FFFFFF",
+      "xen": "#F7F4F8",
+      "tieu_de": "#5216A6",
+      "nhan": "#ED145B",
+      "nhan_toi": "#F7941D",
+      "chu": "#1C1720",
+      "chu_phu": "#58595B",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#D9D2E3",
+      "vien": "#E6E0EA",
+      "canh_bao": "#CC1150"
+    },
+    "font": {
+      "tieu_de": "Montserrat",
+      "than": "Be Vietnam Pro"
+    },
+    "logo": "unikon-logo-color.png",
+    "anh": "Hình chiến dịch sáng tạo, gradient cam #F7941D sang magenta #ED145B sang tím #5216A6, khối hình học mềm. Không chữ, không logo.",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\unikon\\assets\\unikon-logo-color.png",
+    "anh_en": "creative campaign visual, orange to magenta to violet gradient, soft geometric shapes, no text, no logos."
+  },
+  "urah": {
+    "ten": "URAH",
+    "ds_url": "https://claude.ai/artifact/3YaTsYGQzqxzcS7WyBU3cb",
+    "mau": {
+      "toi": "#19163A",
+      "sang": "#FFFFFF",
+      "xen": "#F8F8F8",
+      "tieu_de": "#232251",
+      "nhan": "#6430FE",
+      "nhan_toi": "#856CFF",
+      "chu": "#19163A",
+      "chu_phu": "#5B5C70",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#B5B6C7",
+      "vien": "#DADBED",
+      "canh_bao": "#C2410C"
+    },
+    "font": {
+      "tieu_de": "Montserrat",
+      "than": "Montserrat"
+    },
+    "logo": "urah-logo-primary-black.png",
+    "anh": "Khung hình điện ảnh, ánh sáng tím #6430FE và cam #FF6D33, phim trường, máy quay, chiều sâu. Không chữ, không logo.",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\urah\\assets\\urah-logo-primary-black.png",
+    "anh_en": "cinematic high-contrast studio look, deep navy-violet shadows, violet rim light, one small warm orange accent, production-grade finish, subtle film grain, no people.",
+    "tu_cam": [
+      "đột phá"
+    ]
+  },
+  "tuva": {
+    "ten": "TUVA",
+    "ds_url": "https://claude.ai/artifact/8Det4krpqxiBiC3okrScMQ",
+    "mau": {
+      "toi": "#2A1E1A",
+      "sang": "#FFFFFF",
+      "xen": "#F4EFEA",
+      "tieu_de": "#8A5300",
+      "nhan": "#F9A61B",
+      "nhan_toi": "#F9A61B",
+      "chu": "#2A1E1A",
+      "chu_phu": "#584E4C",
+      "tren_toi": "#EFEFEF",
+      "tren_toi_phu": "#AF948F",
+      "vien": "#E4DCD5",
+      "canh_bao": "#B34700"
+    },
+    "font": {
+      "tieu_de": "Montserrat",
+      "than": "Be Vietnam Pro"
+    },
+    "logo": "tuva-logo-vertical.png",
+    "anh": "Minh hoạ phát triển cộng đồng ấm áp, cam hổ phách #F9A61B và nâu đất, cảnh làng/đô thị Việt Nam. Không chữ, không logo.",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\tuva\\assets\\tuva-logo-vertical.png",
+    "nhan_anh_ai": "Ảnh minh hoạ tạo bằng AI",
+    "anh_en": "flat editorial illustration with soft curved lines echoing a spiral conch shell, warm brown, amber and beige on paper, calm and hopeful, no people.",
+    "tu_cam": [
+      "hành trình",
+      "toàn diện",
+      "đột phá"
+    ]
+  },
+  "chiemtinh": {
+    "ten": "Chiêm Tinh Số",
+    "ds_url": "https://claude.ai/artifact/8WeHvewJisWWgTPGptfo9M",
+    "mau": {
+      "toi": "#121212",
+      "sang": "#FFFAED",
+      "xen": "#F9F5F0",
+      "tieu_de": "#6E531F",
+      "nhan": "#E0AE55",
+      "nhan_toi": "#E0AE55",
+      "chu": "#292D32",
+      "chu_phu": "#616161",
+      "tren_toi": "#FFFAED",
+      "tren_toi_phu": "#D8CBB0",
+      "vien": "#F4D69F",
+      "canh_bao": "#6E531F"
+    },
+    "font": {
+      "tieu_de": "Playfair Display",
+      "than": "Montserrat"
+    },
+    "logo": "logo-wordmark-horizontal-derived.png",
+    "anh": "Bầu trời đêm, chòm sao vàng #E0AE55 trên nền đen ấm, tím #5B4B8A nhẹ, trang nhã. Không chữ, không logo, không biểu tượng mê tín.",
+    "tu_cam": [
+      "giải hạn",
+      "phán xui",
+      "đổi vận",
+      "chắc chắn sẽ"
+    ],
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\chiemtinh\\assets\\logo-wordmark-horizontal-derived.png"
+  },
+  "ifagent": {
+    "ten": "IF Agent",
+    "ds_url": "https://claude.ai/artifact/2Vo3bb37EomJU12TVR5FMb",
+    "mau": {
+      "toi": "#0D1117",
+      "sang": "#F7F8FA",
+      "xen": "#FFFFFF",
+      "tieu_de": "#0066CC",
+      "nhan": "#00D4AA",
+      "nhan_toi": "#00D4AA",
+      "chu": "#1A1D21",
+      "chu_phu": "#656D76",
+      "tren_toi": "#FFFFFF",
+      "tren_toi_phu": "#AEB6BF",
+      "vien": "#D0D7DE",
+      "canh_bao": "#C2410C"
+    },
+    "font": {
+      "tieu_de": "Be Vietnam Pro",
+      "than": "Inter"
+    },
+    "logo": "ifagent-logo-color.png",
+    "anh": "Sân khấu sự kiện công nghệ, màn LED xanh #0088FF sang ngọc #00D4AA, khán giả mờ phía xa (không mặt rõ). Không chữ, không logo.",
+    "logo_goc": "D:\\LINHX\\LAB\\LAB012-BRAND-STANDARD\\brands\\ifagent\\assets\\ifagent-logo-color.png"
+  },
+  "_ghi_chu_nhan_anh_ai": "nhan_anh_ai: brand bắt buộc ghi chú ảnh AI (TUVA, prompt-kit/image.md). Renderer in chú thích này dưới mọi ảnh AI."
+}

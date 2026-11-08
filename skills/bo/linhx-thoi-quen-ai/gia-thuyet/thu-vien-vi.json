@@ -1,0 +1,111 @@
+[
+ {
+  "id": "vi-khong-chi-ma-con",
+  "claim": "AI tiếng Việt lạm dụng 'không chỉ… mà còn'",
+  "source": "LAB049 cờ hai-vế (bài đăng báo 0-4%)",
+  "metric": {
+   "kind": "regex",
+   "pattern": "không (?:chỉ|những)[^.!?\\n]{1,80}?mà còn",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human",
+   "min_ratio": 2
+  }
+ },
+ {
+  "id": "vi-vai-tro-quan-trong",
+  "claim": "AI tiếng Việt hay viết 'đóng vai trò quan trọng / then chốt'",
+  "source": "LAB049 tu_may.py",
+  "metric": {
+   "kind": "regex",
+   "pattern": "đóng (?:một )?vai trò (?:quan trọng|then chốt|chủ chốt)",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human"
+  }
+ },
+ {
+  "id": "vi-trong-boi-canh",
+  "claim": "AI tiếng Việt mở đoạn bằng 'Trong bối cảnh…'",
+  "source": "nhận xét biên tập viên",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^trong bối cảnh",
+   "flags": "i",
+   "scope": "sentence_start",
+   "unit": "per_sentence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human"
+  }
+ },
+ {
+  "id": "vi-hay-cung",
+  "claim": "AI tiếng Việt rủ rê 'Hãy cùng… / Cùng tìm hiểu'",
+  "source": "nhận xét phổ biến",
+  "metric": {
+   "kind": "regex",
+   "pattern": "\\bhãy cùng\\b|\\bcùng tìm hiểu\\b",
+   "flags": "i",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human"
+  }
+ },
+ {
+  "id": "vi-tom-lai",
+  "claim": "AI tiếng Việt chốt 'Tóm lại / Nhìn chung / Có thể nói'",
+  "source": "nhận xét phổ biến",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^(?:tóm lại|nhìn chung|tổng kết lại|có thể nói)",
+   "flags": "i",
+   "scope": "sentence_start",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human"
+  }
+ },
+ {
+  "id": "vi-em-dash",
+  "claim": "AI tiếng Việt dùng gạch dài — dù văn báo Việt ít dùng",
+  "source": "mạng xã hội",
+  "metric": {
+   "kind": "regex",
+   "pattern": "—",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human",
+   "min_ratio": 2
+  }
+ },
+ {
+  "id": "vi-day-khong-phai",
+  "claim": "AI tiếng Việt mở câu bằng 'Đây/Đó/Điều này không phải (chỉ)…' để dựng đối lập",
+  "source": "LAB080 explore: Haiku 24% bài có câu mở 'Đây không'; Vân Anh VA so sánh hai vế",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^(?:đây|đó|điều này|điều đó|vấn đề) không (?:phải|chỉ|nằm)",
+   "flags": "i",
+   "scope": "sentence_start",
+   "unit": "per_sentence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "human"
+  }
+ }
+]

@@ -1,0 +1,34 @@
+{
+  "khoang_trong": [
+    {
+      "id": "K1",
+      "mo_ta": "<điều thị trường/đối thủ chưa làm tốt mà khách cần>",
+      "bang_chung": [
+        "BC01"
+      ]
+    }
+  ],
+  "offers": [
+    {
+      "id": "O1",
+      "ten": "<tên offer>",
+      "loi_hua": "<một câu: khách nhận được gì, đo bằng gì>",
+      "giai_pain": [
+        "P1"
+      ],
+      "tao_gain": [
+        "G1"
+      ],
+      "lap_khoang_trong": [
+        "K1"
+      ],
+      "nang_luc": [
+        "NL-01"
+      ],
+      "gia": "[Linh chốt]",
+      "nhan": "chinh",
+      "nang_luc_lam_gi": "<NL-01 làm phần nào của offer; năng lực đầu tiên là năng lực chính, quyết nhãn thi-diem>"
+    }
+  ],
+  "_ghi_chu": "nhan: chinh | thi-diem (năng lực chính chưa chứng minh) | phu (offer bổ trợ, được giải pain < 7, chỉ bán kèm offer chính)"
+}

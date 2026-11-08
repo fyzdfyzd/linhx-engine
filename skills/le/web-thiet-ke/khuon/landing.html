@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sakédemy · AI thực chiến cho chi nhánh ngân hàng</title>
+<link rel="stylesheet" href="tokens.css">
+<style>
+/* Bám guideline Sakédemy 2026, mục 3.5 Website: hero nền trắng, tiêu đề trái ~50%, ảnh lớp trong khung lá bên phải,
+   nút chính Rêu Đậm chữ trắng, nút phụ viền Rêu 2px; mọi hình là lá (bo góc trên trái + dưới phải). */
+@font-face{font-family:'Be Vietnam Pro';src:url(a/BeVietnamPro-Light.ttf);font-weight:300;font-display:swap}
+@font-face{font-family:'Be Vietnam Pro';src:url(a/BeVietnamPro-Regular.ttf);font-weight:400;font-display:swap}
+@font-face{font-family:'Be Vietnam Pro';src:url(a/BeVietnamPro-Bold.ttf);font-weight:700;font-display:swap}
+:root{--grad-chu:linear-gradient(90deg,#118056,#1CA571);--cham:radial-gradient(circle,rgba(2,64,59,.07) 1.2px,transparent 1.6px) 0 0/24px 24px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);font-size:var(--c-1);line-height:1.6;color:var(--chu);background:var(--nen)}
+img{display:block;max-width:100%}
+.w{max-width:1200px;margin:auto;padding-inline:clamp(16px,5vw,64px)}
+.nhan{font-size:var(--c-nhan);letter-spacing:.24em;text-transform:uppercase;color:var(--chu-xanh)}
+h1,h2{color:var(--brand-dam);font-weight:700;letter-spacing:-.01em}
+h1{font-size:clamp(36px,4.6vw,66px);line-height:1.06}
+h2{font-size:clamp(28px,3.4vw,48px);line-height:1.1}
+.gt{background:var(--grad-chu);-webkit-background-clip:text;background-clip:text;color:transparent}
+.la{border-radius:var(--bo,24px) 0 var(--bo,24px) 0}
+.nut{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 32px;font:700 17px var(--font);text-decoration:none;border:0;cursor:pointer;border-radius:16px 0 16px 0;transition:transform .15s}
+.nut:hover{transform:translateY(-2px)}
+.nut-chinh{background:var(--brand-dam);color:#fff}
+.nut-phu{color:var(--brand-dam);box-shadow:inset 0 0 0 2px var(--brand-dam)}
+:focus-visible{outline:3px solid var(--brand-dam);outline-offset:3px}
+.toi :focus-visible,.xanh :focus-visible{outline-color:var(--nhan-1)}
+
+/* nav */
+nav{display:flex;align-items:center;justify-content:space-between;padding-block:24px}
+nav img{width:156px}
+nav ul{display:none;list-style:none;gap:40px;font-size:16px}
+nav a{color:var(--chu);text-decoration:none}
+
+/* hero */
+.hero{display:grid;gap:48px;padding-block:32px 88px;align-items:center}
+.hero .nhan{margin-bottom:20px}
+.hero p.mo{font-size:clamp(17px,1.4vw,20px);margin:28px 0 36px;max-width:30em}
+.hero .cta{display:flex;flex-wrap:wrap;gap:16px}
+.hero .anh{position:relative}
+.hero .anh img{--bo:clamp(90px,12vw,200px);width:100%;aspect-ratio:79/82;object-fit:cover;object-position:60% center}
+.the-so{position:absolute;left:12px;bottom:20px;background:#fff;padding:18px 26px;box-shadow:0 20px 50px rgba(2,64,59,.18);--bo:28px}
+.the-so b{display:block;font-size:44px;line-height:1.1;color:var(--chu-xanh)}
+.the-so span{font-size:15px}
+
+/* khách */
+.khach{border-block:1px solid var(--vien);padding-block:28px}
+.khach .w{display:flex;flex-wrap:wrap;align-items:center;gap:12px 40px}
+.khach p{font-size:var(--c-nhan);letter-spacing:.2em;text-transform:uppercase;color:var(--chu-xanh);flex-basis:100%}
+.khach span{font-weight:700;font-size:18px;color:#5f6b66}
+
+/* chương trình */
+.khoi{padding-block:clamp(72px,9vw,120px)}
+.dau{max-width:640px;margin-bottom:48px}.dau .nhan{margin-bottom:16px}
+.ba{display:grid;gap:24px}
+.ba article{position:relative;overflow:hidden;background:var(--nen-nhat);padding:36px 32px 56px;--bo:56px}
+.ba article::after{content:"";position:absolute;right:-36px;bottom:-36px;width:110px;height:110px;background:url(a/hoa-tiet-la-cham-xanh.svg) 0 0/44px;opacity:.3}
+.ba i{font-style:normal;font-weight:700;font-size:15px;color:var(--chu-xanh);letter-spacing:.1em}
+.ba h3{font-size:22px;color:var(--brand-dam);margin:12px 0 10px;line-height:1.25}
+
+/* số liệu: mảng Xanh Lá lớn, chữ Rêu Đậm, gân lá mờ */
+.xanh{position:relative;overflow:hidden;background:var(--brand);color:var(--brand-dam)}
+.xanh::before{content:"";position:absolute;inset:0;background:url(a/hoa-tiet-gan-la-xanh-dam.svg) 0 0/96px;opacity:.08}
+.xanh .w{position:relative;padding-block:clamp(64px,8vw,104px);display:grid;gap:40px}
+.xanh .nhan{color:var(--brand-dam)}
+.so{display:grid;gap:32px}
+.so b{display:block;font-size:clamp(56px,7vw,104px);line-height:1}
+.so span{font-weight:700;font-size:18px;line-height:1.35;display:block;max-width:15em;margin-top:8px}
+
+/* lộ trình */
+.lo{display:grid;gap:48px;align-items:center}
+.lo .anh img{--bo:clamp(80px,10vw,160px);width:100%;aspect-ratio:4/5;object-fit:cover}
+.buoc{list-style:none;display:grid;gap:28px;margin-top:36px;counter-reset:b}
+.buoc li{display:grid;grid-template-columns:52px 1fr;gap:18px}
+.buoc li::before{counter-increment:b;content:"0" counter(b);display:grid;place-items:center;width:52px;height:52px;background:var(--brand-dam);color:#fff;font-weight:700;border-radius:18px 0 18px 0}
+.buoc b{display:block;color:var(--brand-dam);font-size:19px}
+
+/* trích dẫn: khối Rêu Đậm, lá lớn ở góc */
+.toi{position:relative;overflow:hidden;background:var(--brand-dam);color:#fff;--bo:clamp(60px,8vw,120px)}
+.toi::after{content:"";position:absolute;right:-60px;top:-60px;width:clamp(220px,30vw,380px);aspect-ratio:1;background:url(a/hoa-tiet-la-lon-trang.svg) center/contain no-repeat;opacity:.16}
+.toi .noi{position:relative;padding:clamp(48px,7vw,96px) clamp(24px,6vw,96px)}
+.toi .ngoac{font-size:72px;line-height:.6;color:var(--nhan-1);font-weight:700}
+.toi blockquote{font-size:clamp(30px,4vw,56px);font-weight:700;line-height:1.15;margin:20px 0 28px;max-width:14em}
+.toi blockquote em{font-style:normal;color:var(--nhan-1)}
+.toi p{color:#C8DAD4;font-size:16px}
+
+/* đăng ký */
+.dk{display:grid;gap:48px;align-items:start}
+.dk form{display:grid;gap:18px;background:#fff;padding:32px;box-shadow:0 20px 60px rgba(2,64,59,.12);--bo:40px}
+.dk label{display:grid;gap:6px;font-size:14px;font-weight:700;color:var(--brand-dam)}
+.dk input,.dk select{min-height:52px;border:1.5px solid #CFD8D3;border-radius:12px 0 12px 0;padding:0 16px;font:16px var(--font);color:var(--chu);background:#fff}
+.dk .bao{min-height:1.5em;font-size:15px;color:var(--chu-xanh)}
+.dk ul{list-style:none;margin-top:24px;display:grid;gap:12px}
+.dk li{padding-left:30px;position:relative}
+.dk li::before{content:"";position:absolute;left:0;top:7px;width:14px;height:14px;background:var(--brand);border-radius:7px 0 7px 0}
+
+footer{background:var(--nen-nhat) ;background-image:var(--cham)}
+footer .w{padding-block:48px;display:flex;flex-wrap:wrap;gap:20px 40px;justify-content:space-between;align-items:center;font-size:14px}
+footer img{width:140px}
+footer b{letter-spacing:.2em;color:var(--brand-dam)}
+
+@media(min-width:900px){
+  nav ul{display:flex}
+  .hero{grid-template-columns:1.2fr 1fr;gap:56px}
+  .ba{grid-template-columns:repeat(3,1fr)}
+  .xanh .w{grid-template-columns:1fr 2.2fr;align-items:end}
+  .so{grid-template-columns:repeat(3,1fr)}
+  .the-so{left:-24px;bottom:28px}
+  .lo{grid-template-columns:.9fr 1.1fr;gap:80px}
+  .dk{grid-template-columns:1fr 1fr;gap:80px}
+}
+</style>
+</head>
+<body>
+<header class="w">
+  <nav aria-label="Chính">
+    <a href="#"><img src="a/logo.svg" alt="Sakédemy"></a>
+    <ul><li><a href="#chuong-trinh">Đào tạo doanh nghiệp</a></li><li><a href="#">CLB AI Edge</a></li><li><a href="#">Khoá học online</a></li><li><a href="#dang-ky">Liên hệ</a></li></ul>
+  </nav>
+</header>
+
+<main>
+<section class="w hero">
+  <div>
+    <p class="nhan">AI ứng dụng cho doanh nghiệp</p>
+    <h1>AI thực chiến cho <span class="gt">chi nhánh ngân hàng</span></h1>
+    <p class="mo">Chương trình may đo theo nghiệp vụ và đội ngũ của bạn. Học trên việc thật, dùng được ngay sau buổi học.</p>
+    <div class="cta"><a class="nut nut-chinh" href="#dang-ky">Đăng ký tư vấn</a><a class="nut nut-phu" href="#chuong-trinh">Xem chương trình</a></div>
+  </div>
+  <div class="anh">
+    <img class="la" src="a/gpt2-anh-thuc-hanh.jpg" alt="Học viên thực hành AI trên laptop cùng giảng viên">
+    <div class="the-so la"><b>62+</b><span>số "Sống Cùng AI" trên VOV</span></div>
+  </div>
+</section>
+
+<section class="khach" aria-label="Doanh nghiệp đã đào tạo">
+  <div class="w"><p>Đã đào tạo cho</p><span>Vinhomes</span><span>Taseco</span><span>Tập đoàn ROX</span><span>Onsen Fuji</span><span>Viện FSB</span><span>ĐH Phenikaa</span></div>
+</section>
+
+<section class="w khoi" id="chuong-trinh">
+  <div class="dau"><p class="nhan">Chương trình cho chi nhánh</p><h2>Ba đầu việc, <span class="gt">làm được ngay</span></h2></div>
+  <div class="ba">
+    <article class="la"><i>01</i><h3>Soạn văn bản đúng mẫu</h3><p>Tờ trình, email khách, biên bản theo khuôn của ngân hàng bạn.</p></article>
+    <article class="la"><i>02</i><h3>Trả lời khách nhất quán</h3><p>Bộ câu trả lời sản phẩm, luôn có bước người kiểm trước khi gửi.</p></article>
+    <article class="la"><i>03</i><h3>Tổng hợp báo cáo tuần</h3><p>Từ số liệu thô thành bản tóm tắt gọn cho giám đốc.</p></article>
+  </div>
+</section>
+
+<section class="xanh" aria-label="Năng lực">
+  <div class="w">
+    <div><p class="nhan">Năng lực</p><h2 style="color:inherit;margin-top:14px">Đồng hành từ lớp học đến làn sóng</h2></div>
+    <div class="so">
+      <div><b>62+</b><span>số "Sống Cùng AI" đã lên sóng VOV</span></div>
+      <div><b>700+</b><span>sinh viên dự talkshow tại ĐH Phenikaa</span></div>
+      <div><b>11</b><span>mentor đồng hành trong CLB AI Edge</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="w khoi lo">
+  <div class="anh"><img class="la" src="a/anh-lop-vinhomes.jpg" alt="Lớp đào tạo AI của Sakédemy tại doanh nghiệp"></div>
+  <div>
+    <p class="nhan">Lộ trình học</p>
+    <h2 style="margin-top:16px">Học trên lớp, <span class="gt">dùng tại quầy</span></h2>
+    <ol class="buoc">
+      <li><div><b>Offline tại chi nhánh</b>Buổi thực hành với chính hồ sơ và mẫu biểu của đội.</div></li>
+      <li><div><b>Hybrid kèm cặp</b>Giảng viên theo sát khi đội áp dụng vào việc hằng ngày.</div></li>
+      <li><div><b>Học tiếp 24/7</b>CLB AI Edge và khoá online trên sakedemy.com nối dài sau lớp.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="w">
+  <figure class="toi la">
+    <div class="noi">
+      <div class="ngoac" aria-hidden="true">“</div>
+      <blockquote>Học cùng AI, <em>không học bằng AI.</em></blockquote>
+      <figcaption><p>Đinh Trần Tuấn Linh · Talkshow "Từ giấy bút đến thuật toán", ĐH Phenikaa</p></figcaption>
+    </div>
+  </figure>
+</section>
+
+<section class="w khoi dk" id="dang-ky">
+  <div>
+    <p class="nhan">Đăng ký tư vấn</p>
+    <h2 style="margin-top:16px">Nhận lộ trình <span class="gt">may đo</span> cho chi nhánh của bạn</h2>
+    <ul><li>Khảo sát nhanh ba đầu việc tốn thời gian nhất</li><li>Đề cương theo nghiệp vụ và quy định dữ liệu của ngân hàng</li><li>Phản hồi trong 2 ngày làm việc</li></ul>
+  </div>
+  <form class="la" onsubmit="event.preventDefault();var b=this.querySelector('button');b.disabled=true;b.textContent='Đang gửi…';setTimeout(()=>{this.querySelector('.bao').textContent='Đã nhận. Sakédemy sẽ liên hệ trong 2 ngày làm việc.';b.textContent='Đã gửi'},700)">
+    <label>Họ và tên (bắt buộc)<input name="ten" autocomplete="name" required></label>
+    <label>Số điện thoại (bắt buộc)<input name="sdt" type="tel" autocomplete="tel" pattern="[0-9 +.]{9,15}" title="Nhập 9 đến 15 chữ số" required></label>
+    <label>Đơn vị<input name="dv" autocomplete="organization" placeholder="Ví dụ: Chi nhánh Bắc Gia Lai"></label>
+    <label>Quy mô đội<select name="qm"><option>Dưới 20 người</option><option>20 đến 50 người</option><option>Trên 50 người</option></select></label>
+    <button class="nut nut-chinh" type="submit">Đăng ký tư vấn</button>
+    <p class="bao" role="status" aria-live="polite"></p>
+  </form>
+</section>
+</main>
+
+<footer>
+  <div class="w"><img src="a/logo.svg" alt="Sakédemy"><span>Khi sáng tạo gặp công nghệ</span><b>SAKEDEMY.COM</b></div>
+</footer>
+</body></html>

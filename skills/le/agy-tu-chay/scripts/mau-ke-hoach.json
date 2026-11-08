@@ -1,0 +1,684 @@
+{
+ "chien-luoc": [
+  {
+   "ma": "P01",
+   "viec": "Lập thư mục việc từ khuon/ của linhx-chuan; viết BRIEF.md (mục tiêu có số), ANCHOR.md, HANH-TRINH-NGUOI-XEM.md",
+   "doc": [
+    "chien-luoc/references/01-cau-truc-du-an.md"
+   ],
+   "dau_ra": [
+    "BRIEF.md",
+    "ANCHOR.md",
+    "STATUS.md",
+    "HANH-TRINH-NGUOI-XEM.md"
+   ],
+   "tieu_chi": [
+    "BRIEF có ≥1 mục tiêu bằng số",
+    "ANCHOR có mục 'không phải'"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha dau",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 30
+  },
+  {
+   "ma": "P02",
+   "viec": "Tìm ≥5 mẫu top tier cùng loại đầu ra, ghi THAM-CHIEU.md mỗi dòng có link và 'học:'",
+   "doc": [
+    "linhx-chuan/references/nguon-tham-chieu.md",
+    "linhx-chuan/references/high-standard.md"
+   ],
+   "dau_ra": [
+    "THAM-CHIEU.md"
+   ],
+   "tieu_chi": [
+    "≥5 link, mỗi link có 'học:'"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha dau",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P01"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "P03",
+   "viec": "Gửi đề Gemini Deep Research (Chrome máy công ty) cho NC1 thị trường tách lớp; lưu toàn văn vào bang-chung/; ghi INDEX.md",
+   "doc": [
+    "linhx-chuan/references/cong-cu.md"
+   ],
+   "dau_ra": [
+    "bang-chung/INDEX.md"
+   ],
+   "tieu_chi": [
+    "≥10 nguồn [BC-xxx] trong INDEX",
+    "link sống ≥80%"
+   ],
+   "lenh_kiem": "có file bang-chung/INDEX.md",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P01"
+   ]
+  },
+  {
+   "ma": "P04",
+   "viec": "Quét bằng crawler: website, sàn, fanpage của ≥4 đối thủ và bình luận khách; lưu nguyên văn vào bang-chung/",
+   "doc": [
+    "linhx-chuan/references/cong-cu.md"
+   ],
+   "dau_ra": [
+    "bang-chung/"
+   ],
+   "tieu_chi": [
+    "≥4 đối thủ có file quét",
+    "≥30 bình luận khách nguyên văn"
+   ],
+   "lenh_kiem": "có file bang-chung/",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P01"
+   ]
+  },
+  {
+   "ma": "P05",
+   "viec": "Viết NC1..NC3 từ bang-chung/, mỗi NC một file, cập nhật STATUS và DATA_GAPS sau mỗi file",
+   "doc": [
+    "chien-luoc/references/07-nghien-cuu-nen-va-ipo.md"
+   ],
+   "dau_ra": [
+    "NC1_*.md",
+    "NC2_*.md",
+    "NC3_*.md"
+   ],
+   "tieu_chi": [
+    "3 file NC",
+    "kiem.py DAT: mọi [BC-xxx] có trong INDEX",
+    "STATUS nhắc cả 3 file"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P03",
+    "P04"
+   ]
+  },
+  {
+   "ma": "P06",
+   "viec": "PHAN-KHUC: chân dung theo khung OMC 11 lớp, ma trận 2 trục, kế hoạch kiểm chứng",
+   "doc": [
+    "chien-luoc/references/02-phan-khuc-omc-11-lop.md"
+   ],
+   "dau_ra": [
+    "PHAN-KHUC_*.md"
+   ],
+   "tieu_chi": [
+    "≥4 chân dung đủ 12 mục khung",
+    "mỗi chân dung ≥2 trích lời có nguyên văn trong bang-chung"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "P05"
+   ]
+  },
+  {
+   "ma": "P07",
+   "viec": "DOI-THU: bảng ≥4 đối thủ có số, bản đồ 2 trục, SWOT có xác suất, câu định vị, canvas đại dương xanh",
+   "doc": [
+    "chien-luoc/references/03-doi-thu-dinh-vi.md"
+   ],
+   "dau_ra": [
+    "DOI-THU_*.md"
+   ],
+   "tieu_chi": [
+    "≥4 đối thủ, mỗi đối thủ ≥3 số có [BC]",
+    "canvas có ≥1 LOẠI BỎ và ≥2 TẠO MỚI"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "P05"
+   ]
+  },
+  {
+   "ma": "P08",
+   "viec": "KHOANG-TRONG: làm đủ 5 cách soi, bảng khoảng trống, chọn ≤3 trên ma trận, 1 trang trình cổng D2",
+   "doc": [
+    "chien-luoc/references/04-khoang-trong.md"
+   ],
+   "dau_ra": [
+    "KHOANG-TRONG_*.md"
+   ],
+   "tieu_chi": [
+    "≤3 khoảng trống đề xuất, mỗi cái có bằng chứng [BC] và cỡ thị trường"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P06",
+    "P07"
+   ]
+  },
+  {
+   "ma": "P09",
+   "viec": "QUYET-DINH: tóm tắt điều hành, PMF từng chân dung, CVP/USP/UVP, thông điệp tầng, ≥2 phương án chấm 12 tiêu chí, phương án lai, Go/No-Go",
+   "doc": [
+    "chien-luoc/references/05-quyet-dinh-pmf.md"
+   ],
+   "dau_ra": [
+    "QUYET-DINH_*.md"
+   ],
+   "tieu_chi": [
+    "≥2 phương án có tổng điểm /60",
+    "≥2 cổng Go/No-Go, mỗi cổng có ngưỡng bằng số"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "P08"
+   ],
+   "can_cong": "D2"
+  },
+  {
+   "ma": "P10",
+   "viec": "CHUNG-THUC: bảng luận điểm → nguồn nội bộ → nguồn ngoài; mở 5 số ngẫu nhiên",
+   "doc": [
+    "chien-luoc/references/06-chung-thuc.md"
+   ],
+   "dau_ra": [
+    "CHUNG-THUC_*.md"
+   ],
+   "tieu_chi": [
+    "100% số trong tóm tắt điều hành có dòng chứng thực",
+    "kiểm ngẫu nhiên 5/5 khớp"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "P09"
+   ]
+  },
+  {
+   "ma": "P11",
+   "viec": "Chấm chéo 3 phiếu theo linhx-chuan/cham.md (agy phiên mới, Gemini đóng vai khách khó tính, agy thứ ba); sửa ≤3 lỗi/vòng, ≤3 vòng",
+   "doc": [
+    "linhx-chuan/cham.md",
+    "linhx-chuan/references/vong-lap.md"
+   ],
+   "dau_ra": [
+    "cham/phieu-1.json",
+    "cham/phieu-2.json",
+    "cham/phieu-3.json"
+   ],
+   "tieu_chi": [
+    "trung vị mọi tiêu chí ≥4",
+    "2/3 phiếu DAT"
+   ],
+   "lenh_kiem": "có file cham/phieu-3.json",
+   "nguoi_cham": "linh",
+   "tho": "agy-moi",
+   "phu_thuoc": [
+    "P10"
+   ],
+   "chi_va": true
+  },
+  {
+   "ma": "P12",
+   "viec": "Duyệt như khán giả: mở bản cuối đúng thiết bị trong HANH-TRINH, chụp từng chặng, ghi DUYET-E2E.md và BAI-HOC.md",
+   "doc": [
+    "linhx-chuan/SKILL.md"
+   ],
+   "dau_ra": [
+    "DUYET-E2E.md",
+    "BAI-HOC.md"
+   ],
+   "tieu_chi": [
+    "mọi chặng DAT có ảnh",
+    "BAI-HOC ≥3 dòng"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi --loai chien-luoc",
+   "nguoi_cham": "linh",
+   "phu_thuoc": [
+    "P11"
+   ],
+   "can_cong": "D4"
+  }
+ ],
+ "thiet-ke-an-pham": [
+  {
+   "ma": "T01",
+   "viec": "Lập thư mục việc từ linhx-chuan/khuon; viết BRIEF (mục tiêu có số), ANCHOR, HANH-TRINH-NGUOI-XEM (khổ xem thật). Có bản cũ thì chép vào BAN-CU/",
+   "doc": [
+    "thiet-ke/SKILL.md",
+    "thiet-ke/references/an-pham.md"
+   ],
+   "dau_ra": [
+    "BRIEF.md",
+    "ANCHOR.md",
+    "STATUS.md",
+    "HANH-TRINH-NGUOI-XEM.md",
+    "DATA_GAPS.md"
+   ],
+   "tieu_chi": [
+    "BRIEF có ≥1 mục tiêu bằng số",
+    "HANH-TRINH có mục 'Xem ở đâu' ghi khổ bằng số mm hoặc px"
+   ],
+   "lenh_kiem": "có file HANH-TRINH-NGUOI-XEM.md",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 25
+  },
+  {
+   "ma": "T02",
+   "viec": "Chẩn đoán bản cũ theo chong-mui-ai.md mục A (lời chê nguyên văn, dấu hiệu, vị trí, phần giữ lại)",
+   "doc": [
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "CHAN-DOAN.md"
+   ],
+   "tieu_chi": [
+    "≥5 dấu hiệu có vị trí trên ảnh hoặc trang",
+    "có mục 'giữ lại'"
+   ],
+   "lenh_kiem": "có file CHAN-DOAN.md",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T01"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T03",
+   "viec": "Tìm ≥8 tham chiếu do người thật làm (Chrome máy công ty), tải ảnh vào tham-chieu/, ghi nguon.json (file, tac_gia, link, hoc) và THAM-CHIEU.md",
+   "doc": [
+    "thiet-ke/references/an-pham.md",
+    "linhx-chuan/references/nguon-tham-chieu.md"
+   ],
+   "dau_ra": [
+    "tham-chieu/nguon.json",
+    "THAM-CHIEU.md"
+   ],
+   "tieu_chi": [
+    "≥8 tham chiếu có file ảnh và tác giả",
+    "kiem_thiet_ke d1 DAT"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh an-pham --pha d1",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T01"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T04",
+   "viec": "Moodboard 1 trang (moodboard.png + MOODBOARD.md: bảng màu ≤3 màu chính, chữ, chất liệu, bố cục)",
+   "doc": [
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "MOODBOARD.md",
+    "moodboard.png"
+   ],
+   "tieu_chi": [
+    "≤3 màu chính",
+    "có file moodboard.png"
+   ],
+   "lenh_kiem": "có file moodboard.png",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T02",
+    "T03"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T05",
+   "viec": "3 hướng khác nhau thật (bố cục, chất liệu, chữ), mỗi hướng 1 phác nhanh trong pa/A, pa/B, pa/C; PHUONG-AN.md có '## Hướng A/B/C' và khuyến nghị",
+   "doc": [
+    "thiet-ke/SKILL.md",
+    "thiet-ke/references/an-pham.md"
+   ],
+   "dau_ra": [
+    "PHUONG-AN.md",
+    "pa/"
+   ],
+   "tieu_chi": [
+    "≥3 hướng có ảnh phác",
+    "kiem_thiet_ke d2 DAT"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh an-pham --pha d2",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "T04"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T06",
+   "viec": "Dựng SVG/HTML khổ thật theo hướng Linh chọn, chữ font thật đủ dấu, ảnh AI chỉ làm thành phần đã soi lỗi; không có bộ design gốc thì AI được vẽ logo/chữ, ghi từng chỗ vào THAY-SAU.md",
+   "doc": [
+    "thiet-ke/references/an-pham.md",
+    "linhx-chuan/references/van-viet-va-anh.md"
+   ],
+   "dau_ra": [
+    "pa/"
+   ],
+   "tieu_chi": [
+    "0 chữ do AI vẽ",
+    "có file nguồn sửa được (svg hoặc html) trong pa/"
+   ],
+   "lenh_kiem": "có file PHUONG-AN.md",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T05"
+   ],
+   "tran_phut": 40,
+   "can_cong": "D2"
+  },
+  {
+   "ma": "T07",
+   "viec": "Kiểm khổ thật: bản 8%, bản mờ 4px, bản đen trắng, PDF tràn lề 3mm, dpi; lưu vào kiem/",
+   "doc": [
+    "thiet-ke/references/an-pham.md"
+   ],
+   "dau_ra": [
+    "kiem/"
+   ],
+   "tieu_chi": [
+    "≥3 ảnh kiểm trong kiem/"
+   ],
+   "lenh_kiem": "có file kiem/ban-8.png",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T06"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T08",
+   "viec": "Chấm mù 3 người (agy phiên mới, Gemini Ultra, ChatGPT qua Chrome máy công ty) theo linhx-chuan/cham.md + tiêu chí thiết kế + câu hỏi mùi AI; ghi cham/*.json và CHAM-MU.md 'đoán AI: x/y'",
+   "doc": [
+    "linhx-chuan/cham.md",
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "cham/",
+    "CHAM-MU.md"
+   ],
+   "tieu_chi": [
+    "≥3 phiếu từ ≥2 người khác thợ",
+    "có mục 'đoán AI: x/y' trong CHAM-MU.md"
+   ],
+   "lenh_kiem": "có file CHAM-MU.md",
+   "nguoi_cham": "linh",
+   "tho": "agy-moi",
+   "phu_thuoc": [
+    "T07"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T09",
+   "viec": "Sửa ≤3 lỗi nặng nhất từ phiếu chấm, kiểm và chấm lại; ≤3 vòng, tệ hơn thì hoàn tác; ghi STATUS",
+   "doc": [
+    "linhx-chuan/references/vong-lap.md"
+   ],
+   "dau_ra": [
+    "pa/",
+    "cham/",
+    "CHAM-MU.md"
+   ],
+   "tieu_chi": [
+    "kiem_thiet_ke d4 DAT",
+    "trung vị mọi tiêu chí ≥4"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh an-pham --pha d4",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "T08"
+   ],
+   "tran_phut": 40,
+   "chi_va": true
+  },
+  {
+   "ma": "T10",
+   "viec": "DUYET-E2E (ảnh xem như người xem thật), BAI-HOC ≥3 dòng, xuất PDF in + PNG",
+   "doc": [
+    "linhx-chuan/khuon/DUYET-E2E.md"
+   ],
+   "dau_ra": [
+    "DUYET-E2E.md",
+    "BAI-HOC.md"
+   ],
+   "tieu_chi": [
+    "kiem.py --pha cuoi DAT",
+    "BAI-HOC ≥3 dòng"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T09"
+   ],
+   "tran_phut": 30,
+   "can_cong": "D4"
+  }
+ ],
+ "landing": [
+  {
+   "ma": "T01",
+   "viec": "Lập thư mục việc từ linhx-chuan/khuon; viết BRIEF (mục tiêu có số), ANCHOR, HANH-TRINH-NGUOI-XEM (khổ xem thật). Có bản cũ thì chép vào BAN-CU/",
+   "doc": [
+    "thiet-ke/SKILL.md",
+    "thiet-ke/references/landing.md"
+   ],
+   "dau_ra": [
+    "BRIEF.md",
+    "ANCHOR.md",
+    "STATUS.md",
+    "HANH-TRINH-NGUOI-XEM.md",
+    "DATA_GAPS.md"
+   ],
+   "tieu_chi": [
+    "BRIEF có ≥1 mục tiêu bằng số",
+    "HANH-TRINH có mục 'Xem ở đâu' ghi khổ bằng số mm hoặc px"
+   ],
+   "lenh_kiem": "có file HANH-TRINH-NGUOI-XEM.md",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 25
+  },
+  {
+   "ma": "T02",
+   "viec": "Chẩn đoán bản cũ theo chong-mui-ai.md mục A (lời chê nguyên văn, dấu hiệu, vị trí, phần giữ lại); đi thử trang hiện tại trên 360px, đếm số chạm tới QR",
+   "doc": [
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "CHAN-DOAN.md"
+   ],
+   "tieu_chi": [
+    "≥5 dấu hiệu có vị trí trên ảnh hoặc trang",
+    "có mục 'giữ lại'"
+   ],
+   "lenh_kiem": "có file CHAN-DOAN.md",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T01"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T03",
+   "viec": "Tìm ≥8 tham chiếu do người thật làm (Chrome máy công ty), tải ảnh vào tham-chieu/, ghi nguon.json (file, tac_gia, link, hoc) và THAM-CHIEU.md",
+   "doc": [
+    "thiet-ke/references/landing.md",
+    "linhx-chuan/references/nguon-tham-chieu.md"
+   ],
+   "dau_ra": [
+    "tham-chieu/nguon.json",
+    "THAM-CHIEU.md"
+   ],
+   "tieu_chi": [
+    "≥8 tham chiếu có file ảnh và tác giả",
+    "kiem_thiet_ke d1 DAT"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh landing --pha d1",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T01"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T04",
+   "viec": "Moodboard 1 trang (moodboard.png + MOODBOARD.md: bảng màu ≤3 màu chính, chữ, chất liệu, bố cục)",
+   "doc": [
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "MOODBOARD.md",
+    "moodboard.png"
+   ],
+   "tieu_chi": [
+    "≤3 màu chính",
+    "có file moodboard.png"
+   ],
+   "lenh_kiem": "có file moodboard.png",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T02",
+    "T03"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T05",
+   "viec": "3 hướng khác nhau thật (bố cục, chất liệu, chữ), mỗi hướng 1 phác nhanh trong pa/A, pa/B, pa/C; PHUONG-AN.md có '## Hướng A/B/C' và khuyến nghị",
+   "doc": [
+    "thiet-ke/SKILL.md",
+    "thiet-ke/references/landing.md"
+   ],
+   "dau_ra": [
+    "PHUONG-AN.md",
+    "pa/"
+   ],
+   "tieu_chi": [
+    "≥3 hướng có ảnh phác",
+    "kiem_thiet_ke d2 DAT"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh landing --pha d2",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "T04"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T06",
+   "viec": "Dựng HTML thật từ tokens.css theo hướng Linh chọn, mobile-first 360px, chữ thân ≥16px",
+   "doc": [
+    "thiet-ke/references/landing.md",
+    "linhx-chuan/references/van-viet-va-anh.md"
+   ],
+   "dau_ra": [
+    "pa/"
+   ],
+   "tieu_chi": [
+    "0 chữ do AI vẽ",
+    "có file nguồn sửa được (svg hoặc html) trong pa/"
+   ],
+   "lenh_kiem": "có file PHUONG-AN.md",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T05"
+   ],
+   "tran_phut": 40,
+   "can_cong": "D2"
+  },
+  {
+   "ma": "T07",
+   "viec": "Kiểm Playwright 360/390/768/1280, đi trọn tới QR, Lighthouse; ghi kiem/do.json và ảnh chụp",
+   "doc": [
+    "thiet-ke/references/landing.md"
+   ],
+   "dau_ra": [
+    "kiem/"
+   ],
+   "tieu_chi": [
+    "kiem/do.json có khổ 360 và 1280"
+   ],
+   "lenh_kiem": "có file kiem/do.json",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T06"
+   ],
+   "tran_phut": 30
+  },
+  {
+   "ma": "T08",
+   "viec": "Chấm mù 3 người (agy phiên mới, Gemini Ultra, ChatGPT qua Chrome máy công ty) theo linhx-chuan/cham.md + tiêu chí thiết kế + câu hỏi mùi AI; ghi cham/*.json và CHAM-MU.md 'đoán AI: x/y'",
+   "doc": [
+    "linhx-chuan/cham.md",
+    "thiet-ke/references/chong-mui-ai.md"
+   ],
+   "dau_ra": [
+    "cham/",
+    "CHAM-MU.md"
+   ],
+   "tieu_chi": [
+    "≥3 phiếu từ ≥2 người khác thợ",
+    "có mục 'đoán AI: x/y' trong CHAM-MU.md"
+   ],
+   "lenh_kiem": "có file CHAM-MU.md",
+   "nguoi_cham": "linh",
+   "tho": "agy-moi",
+   "phu_thuoc": [
+    "T07"
+   ],
+   "tran_phut": 40
+  },
+  {
+   "ma": "T09",
+   "viec": "Sửa ≤3 lỗi nặng nhất từ phiếu chấm, kiểm và chấm lại; ≤3 vòng, tệ hơn thì hoàn tác; ghi STATUS",
+   "doc": [
+    "linhx-chuan/references/vong-lap.md"
+   ],
+   "dau_ra": [
+    "pa/",
+    "cham/",
+    "CHAM-MU.md"
+   ],
+   "tieu_chi": [
+    "kiem_thiet_ke d4 DAT",
+    "trung vị mọi tiêu chí ≥4"
+   ],
+   "lenh_kiem": "python {SKILLS}/thiet-ke/scripts/kiem_thiet_ke.py . --nhanh landing --pha d4",
+   "nguoi_cham": "gemini",
+   "phu_thuoc": [
+    "T08"
+   ],
+   "tran_phut": 40,
+   "chi_va": true
+  },
+  {
+   "ma": "T10",
+   "viec": "DUYET-E2E (ảnh xem như người xem thật), BAI-HOC ≥3 dòng, đề sửa cho dev + bản HTML một file",
+   "doc": [
+    "linhx-chuan/khuon/DUYET-E2E.md"
+   ],
+   "dau_ra": [
+    "DUYET-E2E.md",
+    "BAI-HOC.md"
+   ],
+   "tieu_chi": [
+    "kiem.py --pha cuoi DAT",
+    "BAI-HOC ≥3 dòng"
+   ],
+   "lenh_kiem": "python {SKILLS}/linhx-chuan/scripts/kiem.py . --pha cuoi",
+   "nguoi_cham": "agy-moi",
+   "phu_thuoc": [
+    "T09"
+   ],
+   "tran_phut": 30,
+   "can_cong": "D4"
+  }
+ ]
+}

@@ -1,0 +1,100 @@
+{
+  "brand": "urah",
+  "vong": 1,
+  "huong": [
+    {
+      "id": "H1",
+      "ten": "Kính tím trong studio tối",
+      "mo_ta": "Vật thể kính/tinh thể tím lơ lửng trên nền navy-tím rất tối, rim light tím, một điểm sáng cam nhỏ; điện ảnh, chính xác. Đúng khối cố định trong prompt-kit URAH, không người.",
+      "anh": [
+        "08-moodboard/mb-01.jpg",
+        "08-moodboard/mb-02.jpg",
+        "08-moodboard/mb-03.png"
+      ],
+      "dai_dien": "08-moodboard/mb-01.jpg"
+    },
+    {
+      "id": "H2",
+      "ten": "Thiết bị điện ảnh dưới rim light",
+      "mo_ta": "Máy quay, ống kính, đèn như sản phẩm chụp studio; tương phản cao, gần đen trắng.",
+      "anh": [
+        "08-moodboard/mb-04.jpg",
+        "08-moodboard/mb-05.jpg",
+        "08-moodboard/mb-06.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-05.jpg"
+    },
+    {
+      "id": "H3",
+      "ten": "Cổng sáng",
+      "mo_ta": "Vòng/khe sáng trong phòng tối, phản chiếu; kịch tính nhưng dễ thành sáo rỗng 'AI'.",
+      "anh": [
+        "08-moodboard/mb-07.png",
+        "08-moodboard/mb-08.jpg",
+        "08-moodboard/mb-09.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-07.png"
+    }
+  ],
+  "huong_chon": "H1",
+  "ly_do_chon": "Khớp khối cố định của prompt-kit URAH (navy-tím #19163A, viền tím #856CFF, điểm cam #FF6D33 nhỏ, điện ảnh, hạt phim) và hợp nền tối của bìa, trang chương; tránh thiết bị quay thật (H2) và hình 'cổng AI' sáo rỗng (H3).",
+  "bang_mau": [
+    "#19163A",
+    "#232251",
+    "#6430FE",
+    "#856CFF",
+    "#FF6D33"
+  ],
+  "bo_cuc": "one hero object on the right third, large dark navy-violet negative space on the left for a white headline, clean background",
+  "chu": "Montserrat; chữ ghép trong deck, không chữ trong ảnh",
+  "anh_minh_hoa": "cinematic high-contrast studio 3D render: polished violet glass and crystal forms floating in deep navy-violet darkness (#19163A, #232251), crisp violet rim light (#856CFF) with electric violet highlights (#6430FE), one small warm orange accent light (#FF6D33), production-grade finish, subtle film grain, no people",
+  "bieu_do": "nền tối, vạch tím, cam chỉ cho số cần nhấn",
+  "tu_mo_ho": {
+    "điện ảnh": "tương phản cao, rim light, hạt phim nhẹ",
+    "chính xác": "cạnh sắc, vật thể sạch, không rối",
+    "cam nhỏ": "đốm cam ≤ 5% khung hình"
+  },
+  "nguon_anh": [
+    {
+      "tep": "08-moodboard/mb-01.jpg",
+      "nguon": "https://www.pinterest.com/pin/8585055536830770/"
+    },
+    {
+      "tep": "08-moodboard/mb-02.jpg",
+      "nguon": "https://www.pinterest.com/pin/5136987071241782/"
+    },
+    {
+      "tep": "08-moodboard/mb-03.png",
+      "nguon": "https://www.pinterest.com/pin/3588874698458954/"
+    },
+    {
+      "tep": "08-moodboard/mb-04.jpg",
+      "nguon": "https://www.pinterest.com/pin/156640893286592384/"
+    },
+    {
+      "tep": "08-moodboard/mb-05.jpg",
+      "nguon": "https://www.pinterest.com/pin/57983913949115740/"
+    },
+    {
+      "tep": "08-moodboard/mb-06.jpg",
+      "nguon": "https://www.pinterest.com/pin/3588874698696241/"
+    },
+    {
+      "tep": "08-moodboard/mb-07.png",
+      "nguon": "https://www.pinterest.com/pin/204913851799163836/"
+    },
+    {
+      "tep": "08-moodboard/mb-08.jpg",
+      "nguon": "https://www.pinterest.com/pin/3096293491088643/"
+    },
+    {
+      "tep": "08-moodboard/mb-09.jpg",
+      "nguon": "https://www.pinterest.com/pin/3307399721137202/"
+    }
+  ],
+  "neo_brand": {
+    "brand": "urah",
+    "tu_deck": "test-4-urah-[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]",
+    "luc": "2026-10-13T16:26:03+07:00"
+  }
+}

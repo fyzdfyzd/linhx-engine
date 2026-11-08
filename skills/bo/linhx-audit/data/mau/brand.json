@@ -1,0 +1,50 @@
+{
+ "ten": "Lá Xanh Academy",
+ "_ghi_chu": "Brand GIẢ LẬP để tự kiểm. Khuôn giống brand.json của LAB043, thêm khối social.",
+ "web": "https://laxanh.example",
+ "noi_dung": {
+  "tagline": "Học để làm được ngay",
+  "tu_cam": [
+   "số 1 Việt Nam",
+   "cam kết 100%",
+   "siêu khoá"
+  ],
+  "tu_nen_dung": [
+   "thực chiến",
+   "làm được ngay",
+   "cầm tay chỉ việc"
+  ]
+ },
+ "social": {
+  "nhip_tuan": 3,
+  "er_chuan": 0.02,
+  "tru_cot": {
+   "Mẹo dùng AI": {
+    "ty_le": 0.4,
+    "tu_khoa": [
+     "mẹo",
+     "prompt",
+     "chatgpt",
+     "claude"
+    ]
+   },
+   "Câu chuyện học viên": {
+    "ty_le": 0.3,
+    "tu_khoa": [
+     "học viên",
+     "chị",
+     "anh",
+     "sau khoá"
+    ]
+   },
+   "Lịch khai giảng": {
+    "ty_le": 0.3,
+    "tu_khoa": [
+     "khai giảng",
+     "đăng ký",
+     "lịch học"
+    ]
+   }
+  }
+ }
+}

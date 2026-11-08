@@ -1,0 +1,19 @@
+{
+  "ffmpeg": "ffmpeg",
+  "ffprobe": "ffprobe",
+  "node_dir": "local/.node/node-v22.12.0-win-x64",
+  "node_exe": "local/.node/node-v22.12.0-win-x64/node.exe",
+  "npm_cache": "local/.npm-cache",
+  "playwright_browsers": "local/.pw-browsers",
+  "slidev_workdir": "local/pilot/L01",
+  "hf_home": "local/.hf",
+  "uv_cache": "local/.uv-cache",
+  "vieneu_dir": "local/VieNeu-TTS",
+  "vieneu_python": "local/VieNeu-TTS/.venv/Scripts/python.exe",
+  "musetalk_dir": "local/MuseTalk",
+  "musetalk_python": "local/MuseTalk/.venv/Scripts/python.exe",
+  "flashhead_dir": "local/SoulX-FlashHead",
+  "flashhead_python": "local/SoulX-FlashHead/.venv/Scripts/python.exe",
+  "joyvasa_dir": "local/JoyVASA",
+  "joyvasa_python": "local/JoyVASA/.venv/Scripts/python.exe"
+}

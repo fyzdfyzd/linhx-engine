@@ -1,0 +1,83 @@
+{
+ "che_do": "trinh-bay",
+ "slides": [
+  {
+   "id": "bia",
+   "cam_xuc": "to-mo",
+   "tai": 1,
+   "moc": "moc-cau"
+  },
+  {
+   "id": "tom-tat",
+   "cam_xuc": "to-mo",
+   "tai": 3,
+   "moc": "khong"
+  },
+  {
+   "id": "c1",
+   "cam_xuc": "lo-lang",
+   "tai": 1,
+   "moc": "nghi"
+  },
+  {
+   "id": "khoang-trong",
+   "cam_xuc": "lo-lang",
+   "tai": 3,
+   "moc": "khong"
+  },
+  {
+   "id": "repo",
+   "cam_xuc": "cang",
+   "tai": 2,
+   "moc": "dat-lai"
+  },
+  {
+   "id": "c2",
+   "cam_xuc": "nhe-nhom",
+   "tai": 1,
+   "moc": "nghi"
+  },
+  {
+   "id": "nam-chang",
+   "cam_xuc": "tin-tuong",
+   "tai": 4,
+   "moc": "khong"
+  },
+  {
+   "id": "co-che",
+   "cam_xuc": "tin-tuong",
+   "tai": 3,
+   "moc": "khong"
+  },
+  {
+   "id": "anh",
+   "cam_xuc": "hao-hung",
+   "tai": 3,
+   "moc": "khoanh-khac"
+  },
+  {
+   "id": "phuong-an",
+   "cam_xuc": "tin-tuong",
+   "tai": 4,
+   "moc": "khong"
+  },
+  {
+   "id": "brand",
+   "cam_xuc": "tin-tuong",
+   "tai": 2,
+   "moc": "dat-lai"
+  },
+  {
+   "id": "ca-thu",
+   "cam_xuc": "san-sang",
+   "tai": 2,
+   "moc": "khong"
+  },
+  {
+   "id": "ket",
+   "cam_xuc": "san-sang",
+   "tai": 1,
+   "moc": "khong"
+  }
+ ]
+}

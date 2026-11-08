@@ -1,0 +1,9 @@
+{
+  "cau_hoi_chinh": "…?",
+  "khung_phan_tich": ["3C", "TAM-SAM-SOM"],
+  "nhanh": [
+    {"id": "N1", "ten": "…", "gia_thuyet": ["…"],
+     "du_lieu": [{"chi_so": "…", "uu_tien": "P0", "nguon_goi_y": "…", "tu_khoa": ["…"]}]}
+  ],
+  "chuong": [{"so": 1, "ten": "…", "nhanh": ["N1"]}]
+}

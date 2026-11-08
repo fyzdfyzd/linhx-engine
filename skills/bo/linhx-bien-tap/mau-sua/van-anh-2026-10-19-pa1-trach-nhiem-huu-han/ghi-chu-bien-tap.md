@@ -1,0 +1,20 @@
+- Van Anh Pham: Câu này quá tóm tắt kiểu AI, không thật
+- Van Anh Pham: Cách viết này khiến câu chuyện rất ko đáng tin cậy. Con số “đến tuần thứ ba” nghe cũng quá ngắn.
+- Van Anh Pham: Nếu mở bài bằng câu chuyện, thì việc câu chuyện nghe phải “thật” rất quan trọng.
+- Van Anh Pham: Cách viết đặc trưng của AI - so sánh 2 vế. Tần suất lớn đến mức 4 câu thì có 1 câu là so sánh kiểu này.
+- Van Anh Pham: Chính phủ nào?
+- Van Anh Pham: Lỗi AI hay mắc rất nặng đấy là lặp ý và ẩn dụ quá nhiều một cách thừa thãi. Ngay bên trên “Người làm OPC không có ai.” Thêm nữa là OPC xuất hiện lần đầu mà không có chú thích không có định nghĩa.
+- Van Anh Pham: Cụ thể có nhà kinh tế nào ko
+- Van Anh Pham: Con số này có thực sự quan trọng ko?
+- Van Anh Pham: Không chỉ - mà còn: Lỗi này cũng phổ biến quá mức.
+- Van Anh Pham: Dạng tiêu đề AI đặc trưng
+- Van Anh Pham: Văn US
+- Van Anh Pham: Có hội thảo cụ thể nào ko? Ý này hay nhưng cách kể khiến nó rất ko đáng tin.
+- Van Anh Pham: Bệnh drop fact, khiến fact vừa nhiều vừa rẻ.
+- Van Anh Pham: Lối ẩn dụ có liên hệ từ đoạn trước sang đoạn sau thực ra không thân thiện với người đọc Việt, nhất là người đọc ngoài ngành => tạo sức ép đọc hiểu. Nhất là ẩn dụ “lời hứa” vốn không hay gặp trong tiếng Việt.
+- Van Anh Pham: Triển khai không hết ý gây khó hiểu.
+- Van Anh Pham: Cái cách láy lại này cũng rất đặc trưng của văn AI, nhiều khủng khiếp.
+- Van Anh Pham: Câu bị cụt, và lại drop fact
+- Van Anh Pham: Chỉ bằng một câu cụt lủn sẽ gây khó hiểu cho người đọc và phí ý. Người đọc bình thường không thể ngay lập tức liên kết “Người làm một nghề đủ lâu” - “Người không phải đoán khách” - “Người làm nghề 15 năm”: Đặc trưng văn AI rất hay tạo ra các danh từ các định nghĩa các so sánh ẩn dụ liên tiếp, đọc nghe tưởng hay ho sâu sắc, nhưng chỉ người viết lệnh thấy hay, mà người đọc thì thấy rối.
+- Van Anh Pham: Cái tội tìm fact dễ nên thả fact lung tung, ý bài không chắc. Đến đoạn này nhắc bảng BCG thì người đọc cũng ko nhớ ra là bảng gì.
+- Van Anh Pham: Cách kết bài như này nghe cũng ảo cơ. Có cảm giác câu chuyện HE có giải pháp, khiến bài càng ảo.

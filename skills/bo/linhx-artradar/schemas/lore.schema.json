@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "mục lorebook LAB020 (xuất được sang SillyTavern world info)",
+  "type": "object",
+  "required": ["id", "ip", "loai", "keys", "noi_dung", "nguon"],
+  "properties": {
+    "id": {"type": "string", "description": "ip-slug, vd warrior-cats-thunderclan"},
+    "ip": {"type": "string", "description": "id thẻ IP trong data/ips.json, hoặc tên hạt giống world của ta"},
+    "loai": {"enum": ["địa danh", "phe", "hệ sức mạnh", "luật thế giới", "sinh vật", "vật phẩm", "sự kiện"]},
+    "keys": {"type": "array", "items": {"type": "string"}, "minItems": 1, "description": "từ khoá kích hoạt; key đầu là tên hiển thị"},
+    "noi_dung": {"type": "string", "description": "2-4 câu tự viết bằng lời mình"},
+    "nguon": {"type": "array", "items": {"type": "string"}, "description": "link nguồn; trích Fandom (CC BY-SA) phải ngắn và ghi nguồn"},
+    "lien_quan": {"type": "array", "items": {"type": "string"}, "description": "id các mục liên quan (dùng để kiểm mục mồ côi)"},
+    "constant": {"type": "boolean", "description": "luật thế giới luôn bật trong SillyTavern"}
+  }
+}

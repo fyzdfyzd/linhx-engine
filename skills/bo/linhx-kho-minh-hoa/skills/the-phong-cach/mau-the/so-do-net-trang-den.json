@@ -1,0 +1,48 @@
+{
+ "id": "so-do-net-trang-den",
+ "ten": "Sơ đồ ý tưởng nét trắng trên nền đen",
+ "ten_en": "Monoline idea diagram",
+ "alias": [
+  "idea diagram",
+  "visual thinking"
+ ],
+ "ho": "so-do-y-tuong",
+ "dinh_nghia": "Một chân lý đời sống nói bằng hình học cơ bản: đường cong, mũi tên, vòng tròn, Venn, kèm 1 dòng chữ ngắn.",
+ "dau_hieu": [
+  "nét đơn đều độ dày",
+  "nền đen nét trắng hoặc ngược lại",
+  "chỉ dùng hình học cơ bản",
+  "1 dòng chữ chú thích viết thường",
+  "không nhân vật hoặc người que"
+ ],
+ "co_che_hop": [
+  "bieu-do-gia",
+  "tuong-phan",
+  "chuoi-he-qua",
+  "le-loai"
+ ],
+ "khi_nao_dung": "post LinkedIn/Threads về tư duy, slide nguyên lý, bài viết dạng tiểu luận",
+ "khi_nao_tranh": "cần cảm xúc mạnh hoặc hình đẹp để bán hàng",
+ "nghe_si_tieu_bieu": [
+  {
+   "ten": "Visualize Value (Jack Butcher)",
+   "link": "https://visualizevalue.com"
+  },
+  {
+   "ten": "Sketchplanations (Jono Hey)",
+   "link": "https://sketchplanations.com"
+  }
+ ],
+ "anh_tham_khao": [],
+ "cong_thuc": {
+  "prompt": "Minimal monoline diagram explaining {y_tuong}. Pure white thin lines on solid black background, only basic geometry (circles, arrows, curves, axes), lots of negative space, one short lowercase caption in a clean sans-serif font at the bottom.",
+  "negative": "colour, shading, 3d, people with faces, decoration, multiple captions",
+  "ti_le_khung": "1:1",
+  "mo_hinh_da_thu": []
+ },
+ "anh_mau_tu_sinh": [],
+ "loi_hay_gap": [
+  "chữ hay sai chính tả tiếng Việt: sinh không chữ rồi thêm chữ bằng tay hoặc SVG"
+ ],
+ "ghi_cong": "Thẻ khởi đầu. Lưu ý giấy phép Sketchplanations CC BY-NC, bản phỏng theo phải ghi nguồn."
+}

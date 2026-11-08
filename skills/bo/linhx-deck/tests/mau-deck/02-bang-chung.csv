@@ -1,0 +1,9 @@
+id,du_kien,so_lieu,loai,nguon_ten,nguon_url,ngay,do_tin_cay,trich_doan,vay_thi_sao
+BC01,Đã clone và đọc code 22 repo quốc tế và 18 repo Trung Quốc về làm deck/proposal,22; 18; 40,noi-bo,LAB027-DECK-PROPOSAL/refs/REPOS-EN.md; refs/REPOS-CN.md,,2026-10-13,cao,,Nghiên cứu nền đủ rộng
+BC02,Không repo nào làm trọn chuỗi từ đề bài tới prototype; gần nhất chỉ phủ một khúc,0,noi-bo,LAB027-DECK-PROPOSAL/refs/REPOS-EN.md mục 20,,2026-10-13,cao,,Phải tự viết các bước pain-gain/offer
+BC03,Pinterest và Dribbble trả 403 từ container; điều khoản cả hai cấm scrape,403,noi-bo,LAB027-DECK-PROPOSAL/refs/REPOS-EN.md mục 19,,2026-10-13,cao,,Moodboard do Linh tự lưu
+BC04,Deck ONE VCB Bắc Gia Lai V3 có 28 slide và ghi chú người nói 28/28,28,noi-bo,D:\LINHX\EDU\EDU001-VCB-BGL\output,,2026-10-13,cao,,Mẫu deck chuẩn của Linh
+BC05,Hồ sơ năng lực LINHX có 33 năng lực; 15 đã chứng minh,33; 15,noi-bo,LAB027-DECK-PROPOSAL/data/nang-luc.json,,2026-10-13,cao,,Nguồn cho bước lợi thế và offer
+BC06,Ảnh người như chụp thật bị Linh chê bị AI quá; chuyển sang poster không người,,noi-bo,LAB027-DECK-PROPOSAL/refs/noi-bo/QUY-TRINH-CU.md mục d,,2026-10-13,cao,,Luật ảnh mặc định
+BC07,Bảy Design System BU đã có trên Claude (BTMH Unikon URAH Sakedemy TUVA Chiêm Tinh IF Agent),7,noi-bo,D:\LINHX\LAB\LAB012-BRAND-STANDARD\output\claude-ds-urls.json,,2026-10-13,cao,,Dùng lại cho deck
+BC08,Quy trình cũ thiếu pain-gain; lợi thế và offer; moodboard và rà ảnh cho proposal,,noi-bo,LAB027-DECK-PROPOSAL/refs/noi-bo/QUY-TRINH-CU.md mục e,,2026-10-13,cao,,Ba khúc cần dựng mới

@@ -1,0 +1,19 @@
+{
+  "brand": "sakedemy",
+  "huong": [
+    {"id": "H1", "ten": "<tên hướng>", "mo_ta": "<bố cục, chữ, ảnh, biểu đồ>", "anh": ["08-moodboard/01.jpg"]},
+    {"id": "H2", "ten": "", "mo_ta": "", "anh": []},
+    {"id": "H3", "ten": "", "mo_ta": "", "anh": []}
+  ],
+  "huong_chon": "H1",
+  "vong": 1,
+  "bang_mau": ["#02403B", "#118056", "#A3D34F"],
+  "bo_cuc": "<lưới, khoảng trắng, vị trí tiêu đề>",
+  "chu": "<cỡ, đậm nhạt, kiểu tiêu đề>",
+  "anh_minh_hoa": "<chất liệu, ánh sáng, góc máy, có người hay không>",
+  "bieu_do": "<kiểu biểu đồ ưa dùng>",
+  "tu_mo_ho": {"sang trọng": "nền tối ấm, nhiều khoảng trắng, serif mảnh"},
+  "nguon_anh": [
+    {"tep": "08-moodboard/01.jpg", "nguon": "<link Pinterest/Dribbble hoặc 'ảnh của Linh'>", "ghi_chu": "chỉ tham chiếu nội bộ"}
+  ]
+}

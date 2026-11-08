@@ -1,0 +1,7 @@
+{
+  "name": "linhx-thu-ky",
+  "version": "0.1.0",
+  "description": "Thư ký ảo LINHX: nhân vật video (bộ clip Live Character / If Agent) nói chuyện bằng giọng hoặc chữ, kể tình hình mọi dự án và giao việc cho Claude Code chạy trong từng thư mục. Chạy cục bộ.",
+  "author": { "name": "LINHX LAB" },
+  "license": "MIT"
+}

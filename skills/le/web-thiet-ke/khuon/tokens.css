@@ -1,0 +1,21 @@
+/* sinh từ sakedemy/brand.json — không sửa tay, sửa brand.json rồi chạy lại */
+:root {
+  --brand: #6EB264;
+  --brand-dam: #02403B;
+  --chu: #414141;
+  --nen: #FFFFFF;
+  --nen-nhat: #E9F6D3;
+  --vien: #F0F0F0;
+  --chu-xanh: #118056;
+  --nhan-1: #A3D34F;
+  --nhan-2: #26CABE;
+  --grad: linear-gradient(210deg, #A3D34F, #26CABE);
+  --font: 'Be Vietnam Pro', system-ui, sans-serif;
+  --r: 14px;
+  --la: 30% 8px;  /* khung hình lá: bo chéo trên trái + dưới phải */
+  --c-nhan: 13px;
+  --s1: 4px; --s2: 8px; --s3: 16px; --s4: 24px; --s5: 40px; --s6: 64px; --s7: 104px;
+  --c-1: clamp(16px, 0.4vw + 15px, 18px);
+  --c-2: clamp(20px, 1.4vw + 14px, 26px);
+  --c-3: clamp(30px, 3.6vw + 14px, 60px);
+}

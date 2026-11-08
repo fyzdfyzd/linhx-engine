@@ -1,0 +1,6 @@
+{
+  "name": "linhx-tai-tao-flow",
+  "version": "0.1.0",
+  "description": "Đọc một bài quảng cáo sản phẩm AI, tái tạo flow kỹ thuật phía sau, chấm khả thi, chấm khả năng kinh doanh, rồi đóng thành pack (khung plugin) nếu đáng làm.",
+  "author": { "name": "LINHX LAB" }
+}

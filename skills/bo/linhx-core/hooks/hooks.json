@@ -1,0 +1,20 @@
+{
+  "description": "linhx-core: bơm luật LINHX LAB khi mở phiên và nhắc PLAN.md của lab đang làm. Chỉ chạy khi thư mục làm việc nằm trong LINHX. Không chặn, luôn exit 0.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/khoi-dong.js\"", "timeout": 5 }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/nhac-plan.js\"", "timeout": 5 }
+        ]
+      }
+    ]
+  }
+}

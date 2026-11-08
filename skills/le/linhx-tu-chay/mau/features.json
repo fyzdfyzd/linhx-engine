@@ -1,0 +1,9 @@
+{
+  "san_pham": "<tên>",
+  "prd": "PRD.md",
+  "features": [
+    {"id": "F01", "uu_tien": 1, "mo_ta": "<một hành vi người dùng thấy được>",
+     "tieu_chi": ["<điều kiện đo được>"], "lenh_kiem": "<lệnh trả exit 0 khi đạt>",
+     "passes": false, "bang_chung": null}
+  ]
+}

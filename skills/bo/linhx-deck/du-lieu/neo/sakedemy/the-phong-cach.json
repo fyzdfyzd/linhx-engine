@@ -1,0 +1,100 @@
+{
+  "brand": "sakedemy",
+  "vong": 1,
+  "huong": [
+    {
+      "id": "H1",
+      "ten": "Kính xanh lá trên nền xám sáng",
+      "mo_ta": "Nền xám nhạt vân giấy, một vật thể 3D bằng kính mờ có lõi xanh lá phát sáng, khối pixel xám chuyển dần sang xanh; ánh sáng studio mềm. Sát mô tả ảnh của Design System Sakedemy.",
+      "anh": [
+        "08-moodboard/mb-01.png",
+        "08-moodboard/mb-02.png",
+        "08-moodboard/mb-03.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-01.png"
+    },
+    {
+      "id": "H2",
+      "ten": "Rêu sống trên đá xám",
+      "mo_ta": "Chất liệu tự nhiên: rêu, đá, khối cong xanh lá; ẩn dụ tăng trưởng hữu cơ, ít công nghệ.",
+      "anh": [
+        "08-moodboard/mb-04.jpg",
+        "08-moodboard/mb-05.jpg",
+        "08-moodboard/mb-06.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-04.jpg"
+    },
+    {
+      "id": "H3",
+      "ten": "Pixel xanh trong bóng tối",
+      "mo_ta": "Nền tối, khối pixel và thẻ kính phát sáng xanh ngọc, tia sáng điện ảnh; mạnh về công nghệ nhưng xa nền sáng của brand.",
+      "anh": [
+        "08-moodboard/mb-07.jpg",
+        "08-moodboard/mb-08.jpg",
+        "08-moodboard/mb-09.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-08.jpg"
+    }
+  ],
+  "huong_chon": "H1",
+  "ly_do_chon": "Khớp quy định ảnh của Sakedemy (nền xám nhạt vân giấy, thế giới pixel xám sang xanh lá phát sáng, thẻ kính mờ) và bảng màu #118056 #A3D34F #26CABE #02403B.",
+  "bang_mau": [
+    "#02403B",
+    "#118056",
+    "#A3D34F",
+    "#26CABE",
+    "#F0F0F0"
+  ],
+  "bo_cuc": "vertical poster, one hero object centered slightly low, at least 40% calm negative space, light warm-grey paper-textured background (#F0F0F0), soft contact shadow",
+  "chu": "Be Vietnam Pro đậm cho tiêu đề, Roboto cho thân; chữ ghép trong deck, không chữ trong ảnh",
+  "anh_minh_hoa": "cinematic minimal 3D poster: matte light-grey pixel cubes that gradually turn into frosted translucent glass glowing fresh green (#A3D34F to #118056, teal hints #26CABE), soft diffused studio light, subtle light particles, fine grain, optimistic and calm",
+  "bieu_do": "phẳng, xanh đậm #02403B và xám, xanh lá chỉ cho số cần nhấn",
+  "tu_mo_ho": {
+    "tối giản": "1 vật thể chính, ≥40% khoảng trống, nền xám sáng",
+    "chuyển đổi": "phần cũ là khối pixel xám mờ, phần mới là kính xanh phát sáng",
+    "hiện đại": "kính mờ, cạnh bo, ánh sáng mềm, không neon gắt"
+  },
+  "nguon_anh": [
+    {
+      "tep": "08-moodboard/mb-01.png",
+      "nguon": "https://www.pinterest.com/pin/4785143351545086/"
+    },
+    {
+      "tep": "08-moodboard/mb-02.png",
+      "nguon": "https://www.pinterest.com/pin/914862422042065/"
+    },
+    {
+      "tep": "08-moodboard/mb-03.jpg",
+      "nguon": "https://www.pinterest.com/pin/23081016837034314/"
+    },
+    {
+      "tep": "08-moodboard/mb-04.jpg",
+      "nguon": "https://www.pinterest.com/pin/10344274147745418/"
+    },
+    {
+      "tep": "08-moodboard/mb-05.jpg",
+      "nguon": "https://www.pinterest.com/pin/2111131072257702/"
+    },
+    {
+      "tep": "08-moodboard/mb-06.jpg",
+      "nguon": "https://www.pinterest.com/pin/267471665368315002/"
+    },
+    {
+      "tep": "08-moodboard/mb-07.jpg",
+      "nguon": "https://www.pinterest.com/pin/7670261862753497/"
+    },
+    {
+      "tep": "08-moodboard/mb-08.jpg",
+      "nguon": "https://www.pinterest.com/pin/38773246790343335/"
+    },
+    {
+      "tep": "08-moodboard/mb-09.jpg",
+      "nguon": "https://www.pinterest.com/pin/5559199538697566/"
+    }
+  ],
+  "neo_brand": {
+    "brand": "sakedemy",
+    "tu_deck": "test-1-sakedemy-vcb",
+    "luc": "2026-10-13T16:13:34+07:00"
+  }
+}

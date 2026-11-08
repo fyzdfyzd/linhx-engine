@@ -1,0 +1,12 @@
+{
+  "_ghi_chu": "Từ điển có kiểm soát cho thẻ nhân vật (M4). ty_le, hinh_khoi, bang_mau, chu_de, giong, dung_cho lấy từ tu-dien-phong-cach.json. Mỗi trục tối đa 2 giá trị. Thêm giá trị mới phải sửa file này.",
+  "loai": ["người", "mèo", "chó", "gấu", "thú có vú khác", "chim", "bò sát/lưỡng cư", "cá/sinh vật biển", "côn trùng", "yêu/linh thú", "ma/quỷ", "thần/tiên", "người-thú (thú nhân)", "robot/vật thể", "rồng"],
+  "vai_tro": ["nhân vật chính", "người dẫn đường/sư phụ", "bạn đồng hành", "đối thủ", "phản diện", "người yêu/tri kỷ", "chủ quán/người giữ chốn", "hài/làm nền", "người bảo hộ", "thủ lĩnh phe", "dân làng/thường dân", "kẻ lừa lọc"],
+  "archetype": ["anh hùng", "hiền giả", "kẻ ngây thơ", "người chăm sóc", "kẻ nổi loạn", "nhà thám hiểm", "kẻ cai trị", "người sáng tạo", "chú hề", "người thường", "kẻ quyến rũ", "pháp sư", "bóng tối"],
+  "tinh_cach": ["lười biếng", "điềm tĩnh", "nóng nảy", "tham ăn", "kiêu ngạo", "hiền lành", "tinh quái", "lạnh lùng", "lạc quan", "u sầu", "trung thành", "mưu mô", "vụng về", "tò mò", "nghiêm khắc", "dễ thương tự biết"],
+  "gioi_tinh": ["nam", "nữ", "khác/không rõ"],
+  "ty_le_alias": [
+    {"_ghi_chu": "Thú vẽ nguyên khối không đếm đầu được: khi lọc chibi thì mascot/blob cũng tính, trừ nhân vật dạng người.",
+     "tim": "chibi", "cung_khop": "mascot/blob", "tru_loai": ["người", "thần/tiên", "ma/quỷ", "người-thú (thú nhân)"]}
+  ]
+}

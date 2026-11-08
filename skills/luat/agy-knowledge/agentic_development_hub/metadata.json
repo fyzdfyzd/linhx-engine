@@ -1,0 +1,26 @@
+{
+    "title": "Agentic Development Hub",
+    "summary": "A comprehensive resource for building agentic AI ecosystems. Includes a repository of 600+ skills, implementation patterns for marketplace UIs (React/Vite/Tailwind), multi-agent architectures (Gemini-ready), and specialized automation frameworks (Facebook Focus). Covers design standards, prompting strategies, and robust verification fallbacks.",
+    "references": [
+        {
+            "type": "url",
+            "value": "https://github.com/sickn33/antigravity-awesome-skills"
+        },
+        {
+            "type": "conversation_id",
+            "value": "ae8efcbd-a1b6-4358-8cfc-4230aa7e2d38"
+        },
+        {
+            "type": "conversation_id",
+            "value": "de73822e-7b07-4bf4-b7e5-96d0cf6db38d"
+        },
+        {
+            "type": "conversation_id",
+            "value": "f7b0e095-df89-4d1b-9c8b-163e018e7fba"
+        },
+        {
+            "type": "conversation_id",
+            "value": "73c68379-397a-4c28-98e9-51ea1a6699ec"
+        }
+    ]
+}

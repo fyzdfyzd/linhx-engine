@@ -1,0 +1,24 @@
+{
+  "_ghi_chu": "Tuần 2 LAB020: ~100 nhân vật, 2 chủ đề. top = số nhân vật mỗi tác phẩm (chính trước, phụ sau).",
+  "bangumi": [
+    {"keyword": "凡人修仙传", "chu_de": ["tiên hiệp/võ hiệp"], "top": 7},
+    {"keyword": "仙逆", "chu_de": ["tiên hiệp/võ hiệp"], "top": 6, "_ghi_chu": "mọi bản trên Bangumi chỉ có ≤2 nhân vật"},
+    {"keyword": "仙王的日常生活", "chu_de": ["tiên hiệp/võ hiệp", "đời thường"], "top": 6},
+    {"keyword": "一念永恒", "chu_de": ["tiên hiệp/võ hiệp"], "top": 6},
+    {"keyword": "完美世界", "chu_de": ["tiên hiệp/võ hiệp"], "top": 6},
+    {"keyword": "剑来", "chu_de": ["tiên hiệp/võ hiệp"], "top": 6},
+    {"keyword": "天官赐福", "chu_de": ["tiên hiệp/võ hiệp", "cổ trang Á Đông"], "top": 6},
+    {"keyword": "大理寺日志", "chu_de": ["mèo", "cổ trang Á Đông", "động vật nhân hoá"], "top": 6},
+    {"keyword": "罗小黑战记", "chu_de": ["mèo", "sinh vật kỳ ảo", "tiên hiệp/võ hiệp"], "top": 7}
+  ],
+  "anilist": [
+    {"search": "Natsume Yuujinchou", "id": 4081, "chu_de": ["mèo", "sinh vật kỳ ảo"], "top": 6},
+    {"search": "Chi's Sweet Home", "chu_de": ["mèo", "đời thường"], "top": 6},
+    {"search": "Neko no Ongaeshi", "chu_de": ["mèo", "cổ tích/thần thoại"], "top": 6},
+    {"search": "Odd Taxi", "chu_de": ["động vật nhân hoá"], "top": 6},
+    {"search": "Shirokuma Cafe", "chu_de": ["động vật nhân hoá", "đời thường"], "top": 6},
+    {"search": "Hakumei to Mikochi", "chu_de": ["sinh vật kỳ ảo", "đời thường"], "top": 6},
+    {"search": "Aggretsuko", "chu_de": ["động vật nhân hoá", "đời thường"], "top": 6},
+    {"search": "Beastars", "chu_de": ["động vật nhân hoá"], "top": 6}
+  ]
+}

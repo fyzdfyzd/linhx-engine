@@ -1,0 +1,7 @@
+{
+  "name": "linhx-pipeline",
+  "version": "0.1.0",
+  "description": "Lõi pipeline dùng chung cho các plugin LinhX, rút từ cách Koharu tổ chức: bảng mục × tầng, chốt từng ô, tự đánh dấu ô cũ khi đầu vào đổi, khoá chỗ Linh sửa tay, lỗi hết tài nguyên chỉ thử lại một lần, SANG-NAY.md cho buổi sáng.",
+  "author": { "name": "LINHX LAB" },
+  "license": "MIT"
+}

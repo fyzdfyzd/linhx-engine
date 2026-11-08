@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "artist card LAB020",
+  "type": "object",
+  "required": ["id", "type", "name", "links", "found_in"],
+  "properties": {
+    "id": {"type": "string", "description": "nhãn:handle, vd instagram:abc"},
+    "type": {"const": "artist"},
+    "name": {"type": "string"},
+    "links": {"type": "object", "additionalProperties": {"type": "array", "items": {"type": "string"}}},
+    "found_in": {"type": "array", "items": {"type": "object", "properties": {"source": {"type": "string"}, "url": {"type": "string"}, "title": {"type": "string"}}}},
+    "thumbs": {"type": "array", "items": {"type": "string"}, "description": "chỉ link, không lưu file"},
+    "credits": {"type": "array", "items": {"type": "string"}},
+    "country": {"type": "string"},
+    "medium": {"type": "string"},
+    "style_tags": {"type": "object", "description": "trục -> [giá trị] theo tu-dien-phong-cach.json"},
+    "mo_ta_phong_cach": {"type": "string", "description": "2-4 câu do ta viết, không chép mô tả của nghệ sĩ"},
+    "chu_de": {"type": "array", "items": {"type": "string"}},
+    "dung_cho": {"type": "array", "items": {"type": "string"}},
+    "noai": {"type": "boolean"},
+    "ghi_chu": {"type": "string"}
+  }
+}

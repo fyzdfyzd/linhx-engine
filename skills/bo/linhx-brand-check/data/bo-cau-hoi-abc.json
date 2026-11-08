@@ -1,0 +1,475 @@
+{
+ "ten": "Bộ câu hỏi ABC v1.0",
+ "ghi_chu": "Mẫu câu hỏi tiếng Việt để AI/agent trả lời như khách thật. Biến: {brand} {category} {market} {product} {competitor} {persona} {need} {budget} {city}. goi: N=Nhanh(12 câu), C=Chuẩn(25 câu), S=Sâu(38 câu gốc nhân biến thể persona/không dấu/đối thủ, khoảng 40–60 tuỳ số persona, đối thủ, sản phẩm khai). loai: unbranded (không nêu tên), branded, so_sanh, agent_task. buoc: 1 Tìm, 2 Nhận diện, 3 Đối chiếu, 4 Lọc theo tiêu chí, 5 Đề xuất. giai_doan: kham_pha, can_nhac, so_sanh, quyet_dinh, sau_mua.",
+ "phan_bo_khuyen_nghi": {
+  "unbranded": 0.45,
+  "branded": 0.3,
+  "so_sanh": 0.15,
+  "agent_task": 0.1
+ },
+ "cau_hoi": [
+  {
+   "id": "U01",
+   "goi": "NCS",
+   "loai": "unbranded",
+   "buoc": 1,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A1",
+    "A2",
+    "A9"
+   ],
+   "text": "Những thương hiệu {category} nào được tin dùng nhất tại {market} hiện nay?"
+  },
+  {
+   "id": "U02",
+   "goi": "NCS",
+   "loai": "unbranded",
+   "buoc": 1,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A1",
+    "A2",
+    "A7"
+   ],
+   "text": "Gợi ý cho tôi 5 thương hiệu {category} tốt ở {market}, kèm lý do ngắn cho từng thương hiệu."
+  },
+  {
+   "id": "U03",
+   "goi": "NCS",
+   "loai": "unbranded",
+   "buoc": 5,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A1",
+    "A6"
+   ],
+   "text": "Tôi uỷ quyền cho bạn chọn giúp một thương hiệu {category} ở {market}. Bạn chọn thương hiệu nào, vì sao?"
+  },
+  {
+   "id": "U04",
+   "goi": "NCS",
+   "loai": "unbranded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A1",
+    "A7"
+   ],
+   "text": "Tôi là {persona}, cần {need}. Ở {market} nên dùng {category} của hãng nào?"
+  },
+  {
+   "id": "U05",
+   "goi": "CS",
+   "loai": "unbranded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A1",
+    "A2"
+   ],
+   "text": "Ngân sách khoảng {budget}, nên chọn {category} nào ở {market}?"
+  },
+  {
+   "id": "U06",
+   "goi": "CS",
+   "loai": "unbranded",
+   "buoc": 1,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A1",
+    "A9"
+   ],
+   "text": "{category} nào uy tín ở {city}? Cho tôi tên và địa chỉ cụ thể."
+  },
+  {
+   "id": "U07",
+   "goi": "CS",
+   "loai": "unbranded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A1",
+    "A7"
+   ],
+   "text": "Thương hiệu {category} nào ở {market} nổi tiếng nhất về chất lượng? Còn về giá tốt?"
+  },
+  {
+   "id": "U08",
+   "goi": "CS",
+   "loai": "unbranded",
+   "buoc": 1,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A1"
+   ],
+   "text": "top {category_khong_dau} viet nam 2026 nen mua loai nao"
+  },
+  {
+   "id": "U09",
+   "goi": "S",
+   "loai": "unbranded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A1",
+    "A7"
+   ],
+   "text": "Best {category} brand in Vietnam for {persona}? Trả lời bằng tiếng Việt."
+  },
+  {
+   "id": "U10",
+   "goi": "S",
+   "loai": "unbranded",
+   "buoc": 5,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A1",
+    "A6"
+   ],
+   "text": "Nếu là bạn, bạn sẽ tin dùng {category} của hãng nào nhất ở {market}, và tránh hãng nào?"
+  },
+  {
+   "id": "U11",
+   "goi": "S",
+   "loai": "unbranded",
+   "buoc": 1,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A1",
+    "A9"
+   ],
+   "text": "Có bài so sánh hay đánh giá độc lập nào về các hãng {category} ở {market} không? Hãng nào được đánh giá cao?"
+  },
+  {
+   "id": "U12",
+   "goi": "S",
+   "loai": "unbranded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A1"
+   ],
+   "text": "Mua {category} online ở {market} thì nên mua hãng nào, mua ở đâu cho chính hãng?"
+  },
+  {
+   "id": "B01",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 2,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A3",
+    "A4",
+    "A5"
+   ],
+   "text": "{brand} là thương hiệu gì? Công ty nào đứng sau, thành lập năm nào, sản phẩm chính là gì?"
+  },
+  {
+   "id": "B02",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4",
+    "A9"
+   ],
+   "text": "{brand} có điểm gì nổi bật? Có giải thưởng, chứng nhận hay con số nào đáng chú ý không? Nêu nguồn."
+  },
+  {
+   "id": "B03",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 2,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A4",
+    "A5"
+   ],
+   "text": "Website chính thức, trụ sở và kênh liên hệ của {brand} là gì?"
+  },
+  {
+   "id": "B04",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A4",
+    "A5"
+   ],
+   "text": "{product} của {brand} giá bao nhiêu? Mua chính hãng ở đâu?"
+  },
+  {
+   "id": "B05",
+   "goi": "CS",
+   "loai": "branded",
+   "buoc": 2,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4",
+    "A7"
+   ],
+   "text": "Ai là người sáng lập hoặc lãnh đạo {brand}? Họ có chuyên môn gì?"
+  },
+  {
+   "id": "B06",
+   "goi": "CS",
+   "loai": "branded",
+   "buoc": 4,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4",
+    "A7"
+   ],
+   "text": "{brand} dành cho ai, không phù hợp với ai?"
+  },
+  {
+   "id": "B07",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 4,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A4",
+    "A10"
+   ],
+   "text": "Chính sách bảo hành, đổi trả và giao hàng của {brand} thế nào?"
+  },
+  {
+   "id": "B08",
+   "goi": "CS",
+   "loai": "branded",
+   "buoc": 5,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A8",
+    "A9"
+   ],
+   "text": "Khách hàng đánh giá {brand} thế nào? Điểm cộng và phàn nàn thường gặp là gì?"
+  },
+  {
+   "id": "B09",
+   "goi": "CS",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4",
+    "A8"
+   ],
+   "text": "{brand} có từng dính tranh cãi, khủng hoảng hay vấn đề pháp lý nào không?"
+  },
+  {
+   "id": "B10",
+   "goi": "CS",
+   "loai": "branded",
+   "buoc": 2,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A3",
+    "A7"
+   ],
+   "text": "Tóm tắt {brand} trong 3 câu cho một người chưa biết gì."
+  },
+  {
+   "id": "B11",
+   "goi": "S",
+   "loai": "branded",
+   "buoc": 2,
+   "giai_doan": "kham_pha",
+   "chi_so": [
+    "A3"
+   ],
+   "text": "{brand_khong_dau} la gi? co uy tin khong"
+  },
+  {
+   "id": "B12",
+   "goi": "S",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "sau_mua",
+   "chi_so": [
+    "A4",
+    "A10"
+   ],
+   "text": "Tôi gặp lỗi với sản phẩm của {brand}, liên hệ ai và xử lý thế nào?"
+  },
+  {
+   "id": "B13",
+   "goi": "S",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4"
+   ],
+   "text": "{brand} có những dòng sản phẩm/dịch vụ nào? Liệt kê đầy đủ."
+  },
+  {
+   "id": "B14",
+   "goi": "S",
+   "loai": "branded",
+   "buoc": 3,
+   "giai_doan": "can_nhac",
+   "chi_so": [
+    "A4",
+    "A5"
+   ],
+   "text": "Những thông tin mới nhất về {brand} trong năm nay là gì?"
+  },
+  {
+   "id": "R01",
+   "goi": "NCS",
+   "loai": "branded",
+   "buoc": 5,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A6",
+    "A8"
+   ],
+   "text": "Tôi đang cân nhắc {brand} cho nhu cầu {category}. Tôi có nên chọn không, vì sao?"
+  },
+  {
+   "id": "R02",
+   "goi": "NCS",
+   "loai": "so_sanh",
+   "buoc": 5,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A6",
+    "A7"
+   ],
+   "text": "So với các lựa chọn khác ở {market}, {brand} hợp với ai và không hợp với ai? Bạn có khuyên chọn không?"
+  },
+  {
+   "id": "C01",
+   "goi": "NCS",
+   "loai": "so_sanh",
+   "buoc": 4,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A2",
+    "A6",
+    "A7"
+   ],
+   "text": "So sánh {brand} và {competitor}: giá, chất lượng, dịch vụ. Nên chọn bên nào?"
+  },
+  {
+   "id": "C02",
+   "goi": "CS",
+   "loai": "so_sanh",
+   "buoc": 4,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A2",
+    "A7"
+   ],
+   "text": "{brand} hay {competitor} tốt hơn cho {persona}?"
+  },
+  {
+   "id": "C03",
+   "goi": "CS",
+   "loai": "so_sanh",
+   "buoc": 4,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A2"
+   ],
+   "text": "Có lựa chọn nào thay thế {brand} tốt hơn không?"
+  },
+  {
+   "id": "C04",
+   "goi": "S",
+   "loai": "so_sanh",
+   "buoc": 4,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A2",
+    "A7"
+   ],
+   "text": "Lập bảng so sánh 4 thương hiệu {category} hàng đầu ở {market} theo giá, chất lượng, đổi trả, đánh giá khách hàng."
+  },
+  {
+   "id": "C05",
+   "goi": "S",
+   "loai": "so_sanh",
+   "buoc": 3,
+   "giai_doan": "so_sanh",
+   "chi_so": [
+    "A4",
+    "A5"
+   ],
+   "text": "Điểm khác biệt thật sự giữa {brand} và {competitor} là gì, có số liệu không?"
+  },
+  {
+   "id": "T01",
+   "goi": "CS",
+   "loai": "agent_task",
+   "buoc": 4,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A10"
+   ],
+   "text": "Hãy tìm giúp tôi một {category} ở {market} đáp ứng: {need}, giá dưới {budget}, giao trong 2 ngày, đổi trả được. Trả về 3 lựa chọn với link mua chính hãng và giá hiện tại."
+  },
+  {
+   "id": "T02",
+   "goi": "CS",
+   "loai": "agent_task",
+   "buoc": 5,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A10",
+    "A4"
+   ],
+   "text": "Tôi muốn mua {product} của {brand}. Hãy cho tôi các bước đặt mua chính hãng, giá, phí giao và cách thanh toán (MoMo, chuyển khoản, COD)."
+  },
+  {
+   "id": "T03",
+   "goi": "S",
+   "loai": "agent_task",
+   "buoc": 3,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A10",
+    "A4"
+   ],
+   "text": "Đọc trang web chính thức của {brand} và cho tôi biết: giá {product}, chính sách đổi trả, hotline. Chỉ dùng thông tin từ website, nêu link."
+  },
+  {
+   "id": "T04",
+   "goi": "S",
+   "loai": "agent_task",
+   "buoc": 4,
+   "giai_doan": "quyet_dinh",
+   "chi_so": [
+    "A10"
+   ],
+   "text": "Lập danh sách rút gọn 3 nhà cung cấp {category} cho doanh nghiệp của tôi ở {city}, kèm tiêu chí chấm và nguồn kiểm chứng cho từng tiêu chí."
+  },
+  {
+   "id": "T05",
+   "goi": "S",
+   "loai": "agent_task",
+   "buoc": 5,
+   "giai_doan": "sau_mua",
+   "chi_so": [
+    "A10"
+   ],
+   "text": "Tôi đã mua {product} của {brand} và muốn đổi trả. Hãy soạn yêu cầu và cho biết gửi tới đâu, cần giấy tờ gì."
+  }
+ ],
+ "bien_the": {
+  "persona": [
+   "sinh viên tiết kiệm",
+   "mẹ bỉm sữa ở Hà Nội",
+   "chủ doanh nghiệp vừa",
+   "người lớn tuổi ít dùng công nghệ",
+   "trưởng phòng mua hàng"
+  ],
+  "khong_dau": "bỏ dấu toàn câu cho 20% câu unbranded ở gói Sâu",
+  "tron_anh_viet": "thêm 'review', 'best', 'top', 'giá rẻ' như người dùng thật gõ"
+ }
+}
