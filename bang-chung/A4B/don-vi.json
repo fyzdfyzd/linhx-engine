@@ -1,0 +1,40 @@
+{
+  "luc": "2026-11-09T01:02:55+07:00",
+  "site": "test",
+  "goi": [
+    {
+      "user": "bc-a4bx-1794160974@test.local",
+      "don_vi_user": "DV-A4BX-1794160974",
+      "url": "/api/resource/LX%20Don%20Vi/DV-A4BX-1794160974",
+      "status": 200,
+      "so_don_vi_thay": 1
+    },
+    {
+      "user": "bc-a4bx-1794160974@test.local",
+      "don_vi_user": "DV-A4BX-1794160974",
+      "url": "/api/resource/LX%20Don%20Vi/DV-A4BY-1794160974",
+      "status": 403,
+      "so_don_vi_thay": 0
+    },
+    {
+      "user": "bc-a4bx-1794160974@test.local",
+      "don_vi_user": "DV-A4BX-1794160974",
+      "url": "/api/resource/LX%20Don%20Vi",
+      "status": 200,
+      "so_don_vi_thay": 1,
+      "don_vi_thay": [
+        "DV-A4BX-1794160974"
+      ]
+    },
+    {
+      "user": "bc-a4bx-1794160974@test.local",
+      "don_vi_user": "DV-A4BX-1794160974",
+      "url": "/api/method/frappe.client.get_list?doctype=LX%20Don%20Vi",
+      "status": 200,
+      "so_don_vi_thay": 1,
+      "don_vi_thay": [
+        "DV-A4BX-1794160974"
+      ]
+    }
+  ]
+}

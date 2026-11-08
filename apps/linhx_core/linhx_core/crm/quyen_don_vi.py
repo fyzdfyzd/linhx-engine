@@ -111,6 +111,45 @@ def dieu_kien(doctype: str, don_vi_cua_user: list[str], mien: bool) -> str:
     return f"`tab{ten_bang}`.`don_vi` in ({danh_sach_sql})"
 
 
+def dieu_kien_don_vi(don_vi_cua_user: list[str], mien: bool) -> str:
+    """Sinh biểu thức SQL cho permission_query_conditions của LX Don Vi.
+
+    - mien -> ""
+    - không đơn vị -> "1=0"
+    - còn lại -> "`tabLX Don Vi`.`name` in ('X', 'Y')" (đã escape dấu ')
+    """
+    if bool(mien):
+        return ""
+    ds = _chuan_hoa_ds_don_vi(don_vi_cua_user)
+    if not ds:
+        return "1=0"
+    danh_sach_sql = ", ".join(f"'{_escape_sql_don_vi(dv)}'" for dv in ds)
+    return f"`tabLX Don Vi`.`name` in ({danh_sach_sql})"
+
+
+def co_quyen_don_vi(ten_don_vi: str, don_vi_cua_user: list[str], mien: bool) -> bool:
+    """Kiểm tra quyền xem bản ghi LX Don Vi theo tên đơn vị.
+
+    - mien luôn True
+    - ten_don_vi trống -> False
+    - còn lại trả True khi ten_don_vi thuộc don_vi_cua_user
+    """
+    if bool(mien):
+        return True
+    if ten_don_vi is None:
+        return False
+    if isinstance(ten_don_vi, dict):
+        ten = str(ten_don_vi.get("name") or "").strip()
+    elif not isinstance(ten_don_vi, str) and hasattr(ten_don_vi, "name"):
+        ten = str(getattr(ten_don_vi, "name", "") or "").strip()
+    else:
+        ten = str(ten_don_vi or "").strip()
+    if not ten:
+        return False
+    ds = _chuan_hoa_ds_don_vi(don_vi_cua_user)
+    return ten in ds
+
+
 def don_vi_can_kiem(
     doc_moi: dict,
     doc_cu: dict | None,
@@ -291,9 +330,55 @@ def _tim_don_vi_nguoi(ten_dt: str | None, doc, doc_cu: dict | None) -> str | Non
     return None
 
 
+def frappe_has_permission_don_vi(doc, ptype=None, user=None, **kwargs):
+    """Hook has_permission cho LX Don Vi: giữ chặn cờ module N3 + kiểm quyền theo co_quyen_don_vi."""
+    import frappe
+
+    doc_kiem_module = (
+        doc if _lay_thuoc_tinh(doc, "doctype") else {"doctype": "LX Don Vi"}
+    )
+    kq_module = _co_module_has_permission(
+        doc_kiem_module, ptype=ptype, user=user, **kwargs
+    )
+    if kq_module is False:
+        return False
+
+    nguoi_dung = user or getattr(getattr(frappe, "session", None), "user", None)
+    mien = la_user_mien(nguoi_dung)
+    if mien:
+        return True
+
+    if ptype and ptype not in ("read", "select"):
+        return False
+
+    ds_don_vi = lay_don_vi_cua_user(nguoi_dung)
+    if not ds_don_vi:
+        return False
+    if doc is None or (isinstance(doc, str) and doc == "LX Don Vi"):
+        return bool(ds_don_vi)
+    if isinstance(doc, str):
+        return co_quyen_don_vi(doc.strip(), ds_don_vi, mien)
+
+    truoc = (
+        doc.get_doc_before_save()
+        if callable(getattr(doc, "get_doc_before_save", None))
+        else None
+    )
+    if truoc is not None:
+        ten_truoc = str(_lay_thuoc_tinh(truoc, "name") or "").strip()
+        if ten_truoc and not co_quyen_don_vi(ten_truoc, ds_don_vi, mien):
+            return False
+
+    ten_don_vi = str(_lay_thuoc_tinh(doc, "name") or "").strip()
+    return co_quyen_don_vi(ten_don_vi, ds_don_vi, mien)
+
+
 def frappe_has_permission(doc, ptype=None, user=None, **kwargs):
     """Hook has_permission cho LX Nguoi và LX Co Hoi: giữ chặn cờ module N3 + kiểm quyền theo Đơn vị."""
     import frappe
+
+    if _lay_thuoc_tinh(doc, "doctype") == "LX Don Vi" or doc == "LX Don Vi":
+        return frappe_has_permission_don_vi(doc, ptype=ptype, user=user, **kwargs)
 
     kq_module = _co_module_has_permission(doc, ptype=ptype, user=user, **kwargs)
     if kq_module is False:
@@ -336,13 +421,20 @@ def frappe_has_permission(doc, ptype=None, user=None, **kwargs):
 
 
 def kiem_tra_quyen_doc(doc, method=None) -> None:
-    """Hook doc_events (before_insert, validate, before_save, on_trash) cho LX Nguoi và LX Co Hoi:
+    """Hook doc_events (before_insert, validate, before_save, on_trash) cho LX Nguoi, LX Co Hoi, LX Don Vi:
     xét bản ghi trong DB bằng kiem_ghi, chặn ghi/sửa/xoá trái đơn vị.
     """
     import frappe
 
     ten_dt = _lay_thuoc_tinh(doc, "doctype")
     ten_doc = _lay_thuoc_tinh(doc, "name")
+
+    if ten_dt == "LX Don Vi":
+        if getattr(frappe, "session", None) is None:
+            return
+        if la_user_mien() or getattr(getattr(doc, "flags", None), "ignore_permissions", False):
+            return
+        frappe.throw("Không có quyền thao tác trên Đơn vị", frappe.PermissionError)
 
     if ten_dt == "LX Co Hoi":
         nguoi = _lay_thuoc_tinh(doc, "nguoi")
@@ -381,9 +473,32 @@ def kiem_tra_quyen_doc(doc, method=None) -> None:
         frappe.throw("Không được phép đổi đơn vị của bản ghi", frappe.PermissionError)
 
 
+def frappe_permission_query_conditions_don_vi(
+    user=None, doctype=None, **kwargs
+) -> str:
+    """Hook permission_query_conditions cho LX Don Vi: giữ chặn cờ module N3 + lọc theo dieu_kien_don_vi."""
+    import frappe
+
+    dk_module = _co_module_query_conditions(
+        user=user, doctype=doctype or "LX Don Vi", **kwargs
+    )
+    if dk_module:
+        return dk_module
+
+    nguoi_dung = user or getattr(getattr(frappe, "session", None), "user", None)
+    mien = la_user_mien(nguoi_dung)
+    ds_don_vi = [] if mien else lay_don_vi_cua_user(nguoi_dung)
+    return dieu_kien_don_vi(ds_don_vi, mien)
+
+
 def frappe_permission_query_conditions(user=None, doctype=None, **kwargs) -> str:
     """Hook permission_query_conditions cho LX Nguoi và LX Co Hoi: giữ chặn cờ module N3 + lọc theo Đơn vị."""
     import frappe
+
+    if doctype == "LX Don Vi":
+        return frappe_permission_query_conditions_don_vi(
+            user=user, doctype=doctype, **kwargs
+        )
 
     dk_module = _co_module_query_conditions(user=user, doctype=doctype, **kwargs)
     if dk_module:

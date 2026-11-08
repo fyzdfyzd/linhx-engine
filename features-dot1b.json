@@ -20,8 +20,8 @@
         "GET đơn vị khác trả 403"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a4b.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A4B/don-vi.json"
     },
     {
       "id": "W1",
