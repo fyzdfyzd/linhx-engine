@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 01:39 (giờ máy cty). Đạt: 22/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, C1, D1, D3, E1, E2, A4B, W1, Q1)
+Cập nhật 2026-11-09 01:49 (giờ máy cty). Đạt: 22/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, C1, D1, D3, E1, E2, A4B, W1, Q1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature D1 · commit d4e2d44 · nhánh tu-dong/engine-t1 · 2026-11-09T01:36:08 |
-| 2 | R1 | rảnh | DAT · Feature A4B · commit b853e4f · nhánh tu-dong/engine-t2 · 2026-11-09T01:20:24 |
+| 2 | R1 | 20261109-0140-t2 từ 2026-11-09T01:40:42 | CHUA_DAT · Feature R1 · commit 70c9172 · nhánh tu-dong/engine-t2 · 2026-11-09T01:40:32 |
 | 3 | B4 | rảnh | CHUA_DAT · Feature B4 · commit 56a7a6b · nhánh tu-dong/engine-t3 · 2026-11-09T01:26:46 |
 | 4 | D2 | 20261109-0137-t4 từ 2026-11-09T01:37:49 | DAT · Feature D3 · commit afdd593 · nhánh tu-dong/engine-t4 · 2026-11-09T01:37:37 |
 
@@ -24,8 +24,6 @@ Cập nhật 2026-11-09 01:39 (giờ máy cty). Đạt: 22/32 (N1, N2, N3, N4, N
 - 2026-11-09T01:05:03 C2 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 403d18a9, bản hỏng giữ ở nhánh cục bộ hong/C2-20261109-0105, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\C2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 01:20 t2: A4B DAT, đã gộp vào main
-- 2026-11-09 01:20 t2: giao agy phiếu 20261109-0120-t2: R1
 - 2026-11-09 01:21 t4: chuẩn bị node_modules trang-bu (mã 0)
 - 2026-11-09 01:26 t3: B4 CHUA_DAT lần 1 (commit 56a7a6b)
 - 2026-11-09 01:26 t3: giao agy phiếu 20261109-0126-t3: B4 (lượt sửa)
@@ -36,4 +34,6 @@ Cập nhật 2026-11-09 01:39 (giờ máy cty). Đạt: 22/32 (N1, N2, N3, N4, N
 - 2026-11-09 01:37 t4: D3 DAT, đã gộp vào main
 - 2026-11-09 01:37 t4: giao agy phiếu 20261109-0137-t4: D2
 - 2026-11-09 01:39 t3: agy xong phiếu 20261109-0126-t3 (B4) sau 13 phút
+- 2026-11-09 01:40 t2: R1 CHUA_DAT lần 1 (commit 70c9172)
+- 2026-11-09 01:40 t2: giao agy phiếu 20261109-0140-t2: R1 (lượt sửa)
 
