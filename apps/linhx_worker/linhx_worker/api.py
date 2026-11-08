@@ -151,6 +151,13 @@ def bang():
 
 
 @frappe.whitelist()
+def bang_tho():
+    _la_dieu_hanh()
+    from linhx_worker import bang_tho as _bt
+    return _bt.tong_hop(_bt.doc_phieu(), _bt.doc_dang_chay())
+
+
+@frappe.whitelist()
 def chi_tiet(viec):
     _la_dieu_hanh()
     return frappe.get_doc("LX Job", viec).as_dict()
