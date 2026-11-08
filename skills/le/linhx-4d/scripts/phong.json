@@ -1,0 +1,24 @@
+{
+  "tuong": {
+    "Lưu Bị":        {"ai": "Linh", "viec": ["duyet"], "ghi": "Chủ công: chỉ duyệt cổng D2 và D4, tiền, đăng công khai"},
+    "Khổng Minh":    {"ai": "Claude cloud", "viec": ["de", "phan-bien", "chot"], "ghi": "Quân sư: viết đề, phiếu, nghiệm thu; không làm thợ"},
+    "Bàng Thống":    {"ai": "Claude máy cty", "viec": ["cham"], "ghi": "Chấm theo thang high standard, đo hiệu suất thợ"},
+    "Thủy Kính":     {"ai": "agy", "viec": ["tham-chieu"], "ghi": "Tìm tham chiếu high standard trước mỗi pha"},
+    "Từ Thứ":        {"ai": "Gemini Deep Research", "viec": ["nghien-cuu"], "ghi": "Nghiên cứu sâu trên Chrome máy cty (Ultra)"},
+    "Tưởng Uyển":    {"ai": "LINHX crawler", "viec": ["quet"], "ghi": "Quét nguồn hàng loạt, 0 token"},
+    "Quách Gia":     {"ai": "agy", "viec": ["phan-tich"], "ghi": "Tổng hợp bằng chứng, persona, ma trận"},
+    "Tuân Úc":       {"ai": "agy", "viec": ["ke-hoach"], "ghi": "Kế hoạch, mốc, ngân sách"},
+    "Tào Tháo":      {"ai": "Gemini", "viec": ["phan-bien"], "ghi": "Phản biện bằng model khác, đóng vai đối thủ"},
+    "Tư Mã Ý":       {"ai": "agy", "viec": ["rui-ro"], "ghi": "Rủi ro, pháp lý, chỗ dễ hỏng"},
+    "Hoàng Nguyệt Anh": {"ai": "Gemini Ultra + ChatGPT Plus", "viec": ["anh", "thiet-ke"], "ghi": "Ảnh và thiết kế trên Chrome, nhiều ứng viên, tự soi lỗi"},
+    "Mã Lương":      {"ai": "agy", "viec": ["viet"], "ghi": "Viết tài liệu, giáo trình, slide chữ"},
+    "Chân Cơ":       {"ai": "agy", "viec": ["bien-tap"], "ghi": "Biên tập chống văn AI (LAB049, LAB080)"},
+    "Quan Vũ":       {"ai": "agy", "viec": ["lam"], "ghi": "Thợ code / dựng"},
+    "Trương Phi":    {"ai": "agy", "viec": ["lam"], "ghi": "Thợ code / dựng"},
+    "Triệu Vân":     {"ai": "agy", "viec": ["lam"], "ghi": "Thợ code / dựng"},
+    "Pháp Chính":    {"ai": "Playwright + agy", "viec": ["kiem-e2e"], "ghi": "Test đầu cuối, có ảnh mới tính"},
+    "Hoa Đà":        {"ai": "agy", "viec": ["sua"], "ghi": "Sửa lỗi theo phiếu trượt"}
+  },
+  "claude_khong_lam": ["lam", "viet", "nghien-cuu", "quet", "anh", "sua", "phan-tich", "tham-chieu"],
+  "tran_phut": 40
+}

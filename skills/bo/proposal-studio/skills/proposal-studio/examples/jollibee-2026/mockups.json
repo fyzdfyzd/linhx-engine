@@ -1,0 +1,526 @@
+{
+ "brand_name": "Jollibee · Joy Station",
+ "mascot_label": "MASCOT ONG BEE",
+ "theme": {
+  "primary": "#D7141A",
+  "secondary": "#FFC20E",
+  "dark": "#5A0B0E",
+  "text": "#2A1A12",
+  "bg": "#FFF8EC"
+ },
+ "screens": [
+  {
+   "id": "scr01_attract",
+   "device": "kiosk",
+   "layout": "attract",
+   "kicker": "Màn hình chờ",
+   "headline": "Lại đây chơi với Ong Bee nè!",
+   "sub": "Nói \"Xin chào\" hoặc chạm màn hình để bắt đầu",
+   "cta": "CHẠM ĐỂ CHƠI",
+   "corner": "Joy Station #01",
+   "footer_left": "Combo Tết cả nhà từ [giá]",
+   "footer_right": "Quà hôm nay: còn 128"
+  },
+  {
+   "id": "scr02_chat",
+   "device": "kiosk",
+   "layout": "chat",
+   "corner": "Đang trò chuyện",
+   "messages": [
+    {
+     "who": "ai",
+     "text": "Chào bé! Bé tên gì nè? Hôm nay đi chơi với ai vậy?"
+    },
+    {
+     "who": "guest",
+     "text": "Con tên Na, đi với ba mẹ ạ!"
+    },
+    {
+     "who": "ai",
+     "text": "Na ơi, mình chơi Nhảy Vui Vẻ hay chụp ảnh Tết cả nhà trước nè?"
+    }
+   ],
+   "chips": [
+    "Nhảy Vui Vẻ",
+    "Đố vui món ăn",
+    "Chụp ảnh Tết",
+    "Xem combo"
+   ],
+   "mic": "Ong Bee đang nghe…",
+   "footer_left": "Không có micro? Chạm để gõ chữ",
+   "footer_right": "03:00"
+  },
+  {
+   "id": "scr03_menu",
+   "device": "kiosk",
+   "layout": "menu",
+   "corner": "Chọn trò chơi",
+   "kicker": "Bước 2/4",
+   "headline": "Cả nhà muốn chơi gì?",
+   "options": [
+    {
+     "icon": "♫",
+     "label": "Nhảy Vui Vẻ",
+     "sub": "45 giây · 1–3 người"
+    },
+    {
+     "icon": "?",
+     "label": "Đố vui món ăn",
+     "sub": "3 câu · nhận điểm"
+    },
+    {
+     "icon": "◉",
+     "label": "Khung Tết Cả Nhà",
+     "sub": "Chụp và in ảnh"
+    },
+    {
+     "icon": "★",
+     "label": "Combo Tết",
+     "sub": "Gợi ý theo số người"
+    }
+   ],
+   "footer_left": "Mỗi lượt tối đa 3 phút",
+   "footer_right": "Joy Pass: 0/3 dấu"
+  },
+  {
+   "id": "scr04_dance",
+   "device": "kiosk",
+   "layout": "game",
+   "corner": "Nhảy Vui Vẻ",
+   "timer": "0:32",
+   "score": "1.240",
+   "combo": "x4",
+   "prompt": "Giơ hai tay lên như Ong Bee!",
+   "footer_left": "Camera xử lý tại chỗ, không lưu hình",
+   "footer_right": "Top hôm nay: 2.310"
+  },
+  {
+   "id": "scr05_quiz",
+   "device": "kiosk",
+   "layout": "quiz",
+   "corner": "Đố vui",
+   "kicker": "Câu 2/3",
+   "question": "Món nào ăn kèm nước sốt đặc trưng của Jollibee?",
+   "answers": [
+    "Gà Giòn Vui Vẻ",
+    "Kem sundae",
+    "Nước ngọt"
+   ],
+   "correct": 0,
+   "footer_left": "Trả lời bằng giọng nói hoặc chạm",
+   "footer_right": "+100 điểm"
+  },
+  {
+   "id": "scr06_photo",
+   "device": "kiosk",
+   "layout": "photo",
+   "corner": "Khung Tết Cả Nhà",
+   "frame_title": "Tết Vui Cả Nhà · 2027",
+   "countdown": "3",
+   "sub": "Cười lên nào! Ảnh in ra ngay và tải được qua QR",
+   "footer_left": "Ảnh xoá khỏi máy sau 24 giờ",
+   "footer_right": "Khung 2/6"
+  },
+  {
+   "id": "scr07_reward",
+   "device": "kiosk",
+   "layout": "reward",
+   "corner": "Nhận quà",
+   "kicker": "Joy Pass đủ 3 dấu",
+   "headline": "Cả nhà nhận quà nè!",
+   "value": "[Quà]",
+   "voucher": "Voucher combo Tết · dùng tại mọi cửa hàng",
+   "qr_note": "Quét để lưu voucher và tải ảnh (Zalo/app)",
+   "consent": "Tôi đồng ý cho Jollibee dùng số điện thoại để gửi voucher (phụ huynh xác nhận với khách dưới 16 tuổi)",
+   "cta": "LƯU VOUCHER",
+   "footer_left": "Hạn dùng: [ngày]",
+   "footer_right": "Mã: JS-XXXX"
+  },
+  {
+   "id": "scr08_leaderboard",
+   "device": "led",
+   "layout": "leaderboard",
+   "corner": "LED 3×2m",
+   "kicker": "Bảng vàng hôm nay",
+   "headline": "Vua Nhảy Vui Vẻ",
+   "rows": [
+    [
+     "Gia đình Na",
+     "2.310"
+    ],
+    [
+     "Bé Bin & bố",
+     "2.050"
+    ],
+    [
+     "Nhóm Gen Z Q7",
+     "1.980"
+    ],
+    [
+     "Bé Su",
+     "1.720"
+    ],
+    [
+     "Gia đình Tôm",
+     "1.650"
+    ]
+   ],
+   "footer_left": "Top 1 mỗi ngày nhận [quà lớn]",
+   "footer_right": "Cập nhật trực tiếp"
+  },
+  {
+   "id": "scr09_control",
+   "device": "tablet",
+   "layout": "control",
+   "title": "Điều khiển Joy Station · MC",
+   "corner": "Kiosk #01 đang chạy",
+   "groups": [
+    {
+     "title": "Tư thế mascot",
+     "buttons": [
+      "Vẫy tay",
+      "Nhảy",
+      "Thả tim",
+      "Cảm ơn",
+      "Về nghỉ"
+     ]
+    },
+    {
+     "title": "Cảnh overlay",
+     "buttons": [
+      "Combo Tết",
+      "Bảng vàng",
+      "Giờ vàng quà",
+      "Ẩn cảnh"
+     ]
+    },
+    {
+     "title": "Câu nói nhanh",
+     "buttons": [
+      "Mời vào chơi",
+      "Còn 5 phút giờ vàng",
+      "Chúc mừng năm mới",
+      "Cảm ơn cả nhà"
+     ]
+    },
+    {
+     "title": "Phiên",
+     "buttons": [
+      "Bắt đầu",
+      "Kết thúc",
+      "Chuyển chat chữ",
+      "Tải lại"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "scr10_dashboard",
+   "device": "tablet",
+   "layout": "dashboard",
+   "title": "Dashboard Joy Station",
+   "corner": "Cập nhật trực tiếp · 4 điểm",
+   "tiles": [
+    [
+     "Lượt đi ngang (camera)",
+     "[…]"
+    ],
+    [
+     "Lượt tương tác",
+     "[…]"
+    ],
+    [
+     "Joy Pass đủ 3 dấu",
+     "[…]"
+    ],
+    [
+     "Voucher đã đổi",
+     "[…]"
+    ]
+   ],
+   "chart_title": "Lượt chơi theo giờ",
+   "bars": [
+    [
+     "10h",
+     20
+    ],
+    [
+     "11h",
+     35
+    ],
+    [
+     "12h",
+     42
+    ],
+    [
+     "13h",
+     30
+    ],
+    [
+     "14h",
+     28
+    ],
+    [
+     "15h",
+     40
+    ],
+    [
+     "16h",
+     55
+    ],
+    [
+     "17h",
+     70
+    ],
+    [
+     "18h",
+     88
+    ],
+    [
+     "19h",
+     95
+    ],
+    [
+     "20h",
+     80
+    ],
+    [
+     "21h",
+     45
+    ]
+   ],
+   "list_title": "Câu hỏi hay gặp",
+   "list": [
+    [
+     "Combo Tết giá bao nhiêu?",
+     "…"
+    ],
+    [
+     "Có món cay không?",
+     "…"
+    ],
+    [
+     "Mấy giờ phát quà?",
+     "…"
+    ],
+    [
+     "Cửa hàng gần nhất?",
+     "…"
+    ],
+    [
+     "Sinh nhật đặt tiệc?",
+     "…"
+    ]
+   ]
+  },
+  {
+   "id": "tech_architecture",
+   "device": "diagram",
+   "layout": "diagram",
+   "kicker": "Minh hoạ kỹ thuật",
+   "title": "Joy Station chạy trên nền tảng IFAGENT",
+   "columns": [
+    {
+     "title": "Tại điểm (booth)",
+     "nodes": [
+      {
+       "title": "Kiosk mascot 55\" dọc",
+       "text": "Mini PC, mic thu xa, camera, loa"
+      },
+      {
+       "title": "Màn LED 3×2m + camera game",
+       "text": "Nhận dạng tư thế chạy trên máy"
+      },
+      {
+       "title": "Photobooth + máy in",
+       "text": "Khung Tết, in 4×6"
+      },
+      {
+       "title": "Tablet MC",
+       "text": "Điều khiển trực tiếp"
+      }
+     ]
+    },
+    {
+     "title": "IFAGENT Event Platform",
+     "nodes": [
+      {
+       "title": "Live Proxy (Gemini Live)",
+       "text": "Giọng nói thời gian thực, server dựng prompt"
+      },
+      {
+       "title": "Tri thức đã duyệt (RAG)",
+       "text": "Menu, combo, FAQ, giờ quà"
+      },
+      {
+       "title": "Overlay scenes + Control",
+       "text": "Widget combo, bảng vàng, giờ vàng"
+      },
+      {
+       "title": "Tracking + Leads",
+       "text": "Phễu khách, hội thoại đã che dữ liệu, đồng ý"
+      }
+     ]
+    },
+    {
+     "title": "Tích hợp",
+     "nodes": [
+      {
+       "title": "Voucher / CRM Jollibee",
+       "text": "API phát mã, đối soát đổi mã"
+      },
+      {
+       "title": "Zalo OA / app",
+       "text": "Gửi voucher, ảnh"
+      },
+      {
+       "title": "Dashboard + báo cáo",
+       "text": "Theo giờ, theo điểm, báo cáo tuần"
+      }
+     ]
+    }
+   ],
+   "note": "Trình duyệt không gọi AI trực tiếp; khoá API chỉ ở server. Camera xử lý tại chỗ, không gửi ảnh lên server. Mất mạng: game và photobooth chạy offline, mascot chuyển clip kịch bản sẵn."
+  },
+  {
+   "id": "booth_layout",
+   "device": "floorplan",
+   "layout": "floorplan",
+   "kicker": "Bố trí mặt bằng",
+   "title": "Joy Station tiêu chuẩn tại trung tâm thương mại",
+   "dims": "Khoảng 8m × 5m (40m²) · điều chỉnh theo mặt bằng",
+   "zones": [
+    {
+     "x": 2,
+     "y": 60,
+     "w": 20,
+     "h": 36,
+     "label": "① Cổng chào",
+     "text": "2 kiosk mascot dọc, chào khách, phát Joy Pass",
+     "strong": true
+    },
+    {
+     "x": 26,
+     "y": 6,
+     "w": 40,
+     "h": 46,
+     "label": "② Sân Nhảy Vui Vẻ",
+     "text": "LED 3×2m, camera, vạch đứng 2×2m, bảng vàng",
+     "strong": true
+    },
+    {
+     "x": 70,
+     "y": 6,
+     "w": 28,
+     "h": 46,
+     "label": "③ Khung Tết Cả Nhà",
+     "text": "Photobooth, đèn, máy in",
+     "strong": true
+    },
+    {
+     "x": 70,
+     "y": 58,
+     "w": 28,
+     "h": 38,
+     "label": "④ Quầy quà",
+     "text": "Đổi Joy Pass, PG hướng dẫn lưu voucher"
+    },
+    {
+     "x": 26,
+     "y": 58,
+     "w": 40,
+     "h": 38,
+     "label": "Hàng chờ + ghế phụ huynh",
+     "text": "Màn nhỏ chiếu combo Tết, lịch giờ vàng",
+     "color": "#FFFFFF"
+    }
+   ]
+  },
+  {
+   "id": "show_kiosk_a",
+   "device": "showcase",
+   "layout": "showcase",
+   "bg": "booth_render_3d",
+   "kicker": "Màn hình kiosk · 1/2",
+   "title": "Chào, trò chuyện, chọn trò chơi",
+   "items": [
+    {
+     "image": "scr01_attract",
+     "label": "1 · Màn hình chờ"
+    },
+    {
+     "image": "scr02_chat",
+     "label": "2 · Trò chuyện"
+    },
+    {
+     "image": "scr03_menu",
+     "label": "3 · Chọn trò"
+    }
+   ],
+   "bottom": 110
+  },
+  {
+   "id": "show_kiosk_b",
+   "device": "showcase",
+   "layout": "showcase",
+   "bg": "kv_hero",
+   "kicker": "Màn hình kiosk · 2/2",
+   "title": "Chơi, chụp ảnh, nhận quà",
+   "items": [
+    {
+     "image": "scr04_dance",
+     "label": "4 · Nhảy Vui Vẻ",
+     "w": 300
+    },
+    {
+     "image": "scr05_quiz",
+     "label": "5 · Đố vui",
+     "w": 300
+    },
+    {
+     "image": "scr06_photo",
+     "label": "6 · Khung Tết",
+     "w": 300
+    },
+    {
+     "image": "scr07_reward",
+     "label": "7 · Nhận quà",
+     "w": 300
+    }
+   ],
+   "gap": 40,
+   "bottom": 110
+  },
+  {
+   "id": "show_ops",
+   "device": "showcase",
+   "layout": "showcase",
+   "bg": "booth_render_3d",
+   "kicker": "Vận hành",
+   "title": "Bảng vàng LED, tablet MC và dashboard",
+   "items": [
+    {
+     "image": "scr08_leaderboard",
+     "device": "led",
+     "label": "LED 3×2m · Bảng vàng",
+     "w": 620
+    },
+    {
+     "image": "scr09_control",
+     "device": "tablet",
+     "label": "Tablet MC",
+     "w": 520
+    },
+    {
+     "image": "scr10_dashboard",
+     "device": "tablet",
+     "label": "Dashboard",
+     "w": 520
+    }
+   ],
+   "gap": 36,
+   "bottom": 110
+  }
+ ],
+ "mascot_image": "mascot/ong-bee-idle.png"
+}

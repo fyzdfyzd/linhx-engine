@@ -1,0 +1,67 @@
+{
+  "brand_id": "ten-brand",
+  "ten": "Tên brand",
+  "nguon": "00-goc/<file guideline>",
+  "phien_ban_chuan": "0.1",
+  "mau": {
+    "nguong_delta_e": 8,
+    "toi_thieu_phu_mau_thuong_hieu": 0.85,
+    "chinh": [
+      {
+        "ten": "Primary",
+        "hex": "#000000",
+        "cmyk": "",
+        "vai_tro": ""
+      }
+    ],
+    "phu": [
+      {
+        "ten": "White",
+        "hex": "#FFFFFF",
+        "cmyk": "0 0 0 0",
+        "vai_tro": "nền"
+      }
+    ],
+    "nhan": [],
+    "mau_khi_in_ra_man_hinh": {
+      "_ghi_chu": "màu đo được khi guideline CMYK render ra RGB"
+    }
+  },
+  "chu": {
+    "font_cho_phep": [
+      "Tên font"
+    ],
+    "trong_luong": [
+      "Regular",
+      "Bold"
+    ],
+    "font_logo_suy_doan": "",
+    "font_thay_the_web": []
+  },
+  "logo": {
+    "thanh_phan": "",
+    "bien_the": [],
+    "vung_an_toan": "",
+    "cam": []
+  },
+  "hinh_anh": {
+    "phong_cach": "",
+    "mau_tham_khao": "04-hinh-anh/"
+  },
+  "do_hoa": {
+    "hoa_tiet": "",
+    "icon": ""
+  },
+  "noi_dung": {
+    "tu_cam": [
+      "lorem ipsum"
+    ]
+  },
+  "trong_so_diem": {
+    "mau": 30,
+    "chu": 20,
+    "logo": 25,
+    "hinh_bo_cuc": 15,
+    "noi_dung": 10
+  }
+}

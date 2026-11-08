@@ -1,0 +1,102 @@
+{
+  "vong": 1,
+  "huong": [
+    {
+      "id": "H1",
+      "ten": "Ánh cam trong đêm navy",
+      "mo_ta": "Nền navy sâu gần như phẳng, một vật thể ẩn dụ duy nhất phát ánh cam ấm, quầng sáng chuyển sắc mềm; thêm chất kính mờ cho vật thể. Hợp bìa và trang chương nền navy của deck.",
+      "anh": [
+        "08-moodboard/mb-01.jpg",
+        "08-moodboard/mb-03.png",
+        "08-moodboard/mb-02.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-01.jpg"
+    },
+    {
+      "id": "H2",
+      "ten": "Kính mờ trên nền giấy",
+      "mo_ta": "Nền giấy sáng, khối kính mờ 3D xếp tầng, ánh sáng studio mềm, navy chỉ là bóng và viền, cam là điểm nhỏ. Sạch, kiểu báo cáo thường niên.",
+      "anh": [
+        "08-moodboard/mb-04.jpg",
+        "08-moodboard/mb-05.jpg",
+        "08-moodboard/mb-06.jpg"
+      ],
+      "dai_dien": "08-moodboard/mb-05.jpg"
+    },
+    {
+      "id": "H3",
+      "ten": "Kiến trúc siêu thực",
+      "mo_ta": "Khối kiến trúc trắng hoặc be, bóng đổ gắt, một quả cầu cam làm điểm nhấn, trời xanh đậm. Kịch tính, kiểu poster triển lãm.",
+      "anh": [
+        "08-moodboard/mb-07.jpg",
+        "08-moodboard/mb-08.png"
+      ],
+      "dai_dien": "08-moodboard/mb-07.jpg"
+    }
+  ],
+  "huong_chon": "H1",
+  "ly_do_chon": "Gần brand LINHX nhất: đúng cặp navy #0E2A47 + cam đất #D9822B, ảnh nằm trên bìa và trang chương nền navy nên không bị lệch nền; một ẩn dụ duy nhất, nhiều khoảng trống. Lấy thêm chất kính mờ của H2 cho vật thể.",
+  "bang_mau": [
+    "#0E2A47",
+    "#D9822B",
+    "#F2B66D",
+    "#FAF9F6",
+    "#C9D3DD"
+  ],
+  "bo_cuc": "vertical poster, one hero object centered slightly low, at least 40% calm negative space, deep navy (#0E2A47) background with very subtle gradient, no horizon clutter",
+  "chu": "Be Vietnam Pro đậm cho tiêu đề, chữ ghép trong deck, không chữ trong ảnh; slide theo mb-09, mb-10: số lớn, thẻ gọn, nền sáng xen nền navy",
+  "anh_minh_hoa": "minimal conceptual 3D poster, matte navy surfaces and frosted translucent glass, a single warm burnt-orange light source (#D9822B to #F2B66D glow), soft volumetric light, fine grain, calm and premium",
+  "bieu_do": "phẳng, navy và xám, cam chỉ cho số cần nhấn",
+  "tu_mo_ho": {
+    "tối giản": "1 vật thể chính, ≥40% khoảng trống, ≤3 màu chính",
+    "cao cấp": "bề mặt mờ, ánh sáng mềm, hạt nhẹ, không bóng loá",
+    "ấm": "nguồn sáng cam #D9822B → #F2B66D, phần còn lại lạnh navy"
+  },
+  "nguon_anh": [
+    {
+      "tep": "08-moodboard/mb-01.jpg",
+      "nguon": "https://www.pinterest.com/pin/15692298699179814/"
+    },
+    {
+      "tep": "08-moodboard/mb-02.jpg",
+      "nguon": "https://www.pinterest.com/pin/181832903702707488/"
+    },
+    {
+      "tep": "08-moodboard/mb-03.png",
+      "nguon": "https://www.pinterest.com/pin/38139928100065809/"
+    },
+    {
+      "tep": "08-moodboard/mb-04.jpg",
+      "nguon": "https://www.pinterest.com/pin/23432860626403152/"
+    },
+    {
+      "tep": "08-moodboard/mb-05.jpg",
+      "nguon": "https://www.pinterest.com/pin/672021575700210812/"
+    },
+    {
+      "tep": "08-moodboard/mb-06.jpg",
+      "nguon": "https://www.pinterest.com/pin/412501647143826516/"
+    },
+    {
+      "tep": "08-moodboard/mb-07.jpg",
+      "nguon": "https://www.pinterest.com/pin/24277285508299248/"
+    },
+    {
+      "tep": "08-moodboard/mb-08.png",
+      "nguon": "https://www.pinterest.com/pin/585890232825193547/"
+    },
+    {
+      "tep": "08-moodboard/mb-09.jpg",
+      "nguon": "https://dribbble.com/shots/27736858-Seiless-Pitch-Deck-Presentation-Design-for-a-Positioning-Firm"
+    },
+    {
+      "tep": "08-moodboard/mb-10.png",
+      "nguon": "https://dribbble.com/shots/27674538-All-House-Energy-Secure-Living-B2B-Proposal-Deck"
+    }
+  ],
+  "neo_brand": {
+    "brand": "linhx",
+    "tu_deck": "deck-gioi-thieu-quy-trinh",
+    "luc": "2026-10-13T16:05:25+07:00"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "phien_ban": "0.1",
+  "muc_tu_dong": {
+    "A3": "AI tự làm, không cần người",
+    "A2": "AI làm, Linh duyệt theo lô mỗi tuần",
+    "A1": "AI soạn sẵn, Linh tự bấm/ký",
+    "A0": "Chỉ người làm được"
+  },
+  "khau": [
+    {"ma": "K01", "giai_doan": "DUNG_BE", "ten": "Luận đề bệ phóng: số OPC mỗi quý, ngân sách tiền + token, ngưỡng giết", "pham_vi": "chung", "tu_dong": "A1", "lab": [], "cong_nguoi": true},
+    {"ma": "K02", "giai_doan": "DUNG_BE", "ten": "Đội agent của bệ (thay cho tuyển người): vai, model, lịch chạy", "pham_vi": "chung", "tu_dong": "A2", "lab": ["XUONG-AI", "LAB026"]},
+    {"ma": "K03", "giai_doan": "DUNG_BE", "ten": "Bộ dụng cụ khởi nghiệp TTPP: mẫu pháp lý/thuế, công cụ, đối tác, bảng việc", "pham_vi": "chung", "tu_dong": "A1", "lab": ["LAB060", "LAB068", "LAB046", "LAB058"], "cong_nguoi": true},
+    {"ma": "K04", "giai_doan": "Y_TUONG", "ten": "Máy ý tưởng: radar mô hình + tái tạo flow quảng cáo + chuyển mô hình đã chứng minh", "pham_vi": "chung", "tu_dong": "A3", "lab": ["LAB050", "LAB077", "LAB024", "LAB035"]},
+    {"ma": "K05", "giai_doan": "Y_TUONG", "ten": "Kiểm ý tưởng: double diamond, persona pretest, cửa giả QR 7 ngày", "pham_vi": "chung", "tu_dong": "A2", "lab": ["LAB079", "LAB048", "LAB060"]},
+    {"ma": "K06", "giai_doan": "Y_TUONG", "ten": "Cổng chọn: OPC nào được launch (danh sách ngắn + cửa giả có tiền thật)", "pham_vi": "rieng", "tu_dong": "A1", "lab": ["LAB079"], "cong_nguoi": true},
+    {"ma": "K07", "giai_doan": "LAUNCH", "ten": "Gương mặt + giọng thương hiệu (thay brand bible, logo)", "pham_vi": "rieng", "tu_dong": "A2", "lab": ["LAB066", "LAB043", "LAB049"]},
+    {"ma": "K08", "giai_doan": "LAUNCH", "ten": "MVP từ động cơ chung (report, web, phim, khoá học)", "pham_vi": "rieng", "tu_dong": "A2", "lab": ["LAB046", "LAB058", "LAB059", "LAB075"]},
+    {"ma": "K09", "giai_doan": "LAUNCH", "ten": "Chức năng chung: thu tiền QR, sổ thuế, CSKH bot, phễu", "pham_vi": "chung", "tu_dong": "A2", "lab": ["LAB060", "LAB073"]},
+    {"ma": "K10", "giai_doan": "LAUNCH", "ten": "Kho số chung: 1 bảng KPI cho mọi OPC, báo cáo ngày/tuần", "pham_vi": "chung", "tu_dong": "A3", "lab": ["LAB053"]},
+    {"ma": "K11", "giai_doan": "LAUNCH", "ten": "Gieo hạt: nhật ký build-in-public của bệ, công cụ miễn phí làm phễu, kênh người ảo", "pham_vi": "chung", "tu_dong": "A2", "lab": ["LAB062", "LAB040", "LAB068", "LAB067"], "cong_nguoi": true},
+    {"ma": "K12", "giai_doan": "SCALE", "ten": "Học từ số: đọc KPI tuần, đổi phễu/giá", "pham_vi": "rieng", "tu_dong": "A3", "lab": ["LAB073"]},
+    {"ma": "K13", "giai_doan": "SCALE", "ten": "Tự động hoá việc tay còn lại, chuyển agent thử thành lịch cố định", "pham_vi": "rieng", "tu_dong": "A2", "lab": ["XUONG-AI"]},
+    {"ma": "K14", "giai_doan": "SCALE", "ten": "Học chéo giữa các OPC: sổ cách làm tốt, so KPI dạng bản đồ nhiệt", "pham_vi": "chung", "tu_dong": "A3", "lab": []},
+    {"ma": "K15", "giai_doan": "SCALE", "ten": "Cổng độc lập: OPC tự nuôi được thì giữ, không thì giết, trả module về bệ", "pham_vi": "rieng", "tu_dong": "A1", "lab": [], "cong_nguoi": true}
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "ghi_chu": "Ảnh moodboard chỉ để tham chiếu nội bộ, không đưa lên deck gửi khách.",
+  "anh": [
+    {
+      "tep": "08-moodboard/mb-01.jpg",
+      "nguon": "https://www.pinterest.com/pin/15692298699179814/",
+      "anh_url": "https://i.pinimg.com/originals/ef/b3/1b/efb31b2f0372e931d8ea6642deaf469d.jpg",
+      "tieu_de": "Đèn treo, quầng sáng cam trên nền navy",
+      "ly_do": "Đúng cặp màu navy + cam, một vật thể, nhiều khoảng trống",
+      "kich_thuoc": [
+        1200,
+        2133
+      ],
+      "luc": "2026-10-13T14:56:11+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-02.jpg",
+      "nguon": "https://www.pinterest.com/pin/181832903702707488/",
+      "anh_url": "https://i.pinimg.com/originals/04/df/fd/04dffdff309f12e3e2e348520f155137.jpg",
+      "tieu_de": "Cột đèn cam trên trời xanh đậm",
+      "ly_do": "Poster tối giản, vật thể cam nổi trên nền xanh, bóng mềm",
+      "kich_thuoc": [
+        960,
+        1200
+      ],
+      "luc": "2026-10-13T14:56:13+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-03.png",
+      "nguon": "https://www.pinterest.com/pin/38139928100065809/",
+      "anh_url": "https://i.pinimg.com/originals/dd/02/ee/dd02eeb88582b309993fbf83fecdf4b0.png",
+      "tieu_de": "Gradient cam-xanh, khối kiến trúc mờ",
+      "ly_do": "Chuyển sắc cam sang navy, cảm giác chiều sâu, khổ đứng",
+      "kich_thuoc": [
+        429,
+        760
+      ],
+      "luc": "2026-10-13T14:56:15+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-04.jpg",
+      "nguon": "https://www.pinterest.com/pin/23432860626403152/",
+      "anh_url": "https://i.pinimg.com/originals/ca/e3/a1/cae3a15d0c484ca34312171d37651667.jpg",
+      "tieu_de": "Tấm kính mờ uốn cong 3D",
+      "ly_do": "Chất liệu kính mờ xanh, ánh sáng studio mềm",
+      "kich_thuoc": [
+        1080,
+        1301
+      ],
+      "luc": "2026-10-13T14:56:16+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-05.jpg",
+      "nguon": "https://www.pinterest.com/pin/672021575700210812/",
+      "anh_url": "https://i.pinimg.com/originals/92/bc/1c/92bc1c6b2a154dddfd07bcfcf2aa5424.jpg",
+      "tieu_de": "Khối kính mờ xếp tầng",
+      "ly_do": "Khối lập phương kính mờ xếp bậc, hợp ẩn dụ bước và tầng",
+      "kich_thuoc": [
+        1200,
+        675
+      ],
+      "luc": "2026-10-13T14:56:18+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-06.jpg",
+      "nguon": "https://www.pinterest.com/pin/412501647143826516/",
+      "anh_url": "https://i.pinimg.com/originals/5a/95/9f/5a959fe7e4246b35640577517003e3e3.jpg",
+      "tieu_de": "Kính gân, đá trắng, ánh nắng",
+      "ly_do": "Tĩnh vật biên tập, tông giấy ấm gần màu paper",
+      "kich_thuoc": [
+        1200,
+        1800
+      ],
+      "luc": "2026-10-13T14:56:19+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-07.jpg",
+      "nguon": "https://www.pinterest.com/pin/24277285508299248/",
+      "anh_url": "https://i.pinimg.com/originals/06/79/c9/0679c9a11a95990d1bfb652a008fc6ce.jpg",
+      "tieu_de": "Vòm cam, quả cầu cam giữa tường trắng",
+      "ly_do": "Kiến trúc siêu thực, điểm nhấn cam, ánh sáng hoàng hôn",
+      "kich_thuoc": [
+        810,
+        1440
+      ],
+      "luc": "2026-10-13T14:56:21+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-08.png",
+      "nguon": "https://www.pinterest.com/pin/585890232825193547/",
+      "anh_url": "https://i.pinimg.com/originals/f3/63/13/f363134c3c171a7ca33bd3755d76cb98.png",
+      "tieu_de": "Kiến trúc siêu thực, mặt trời đỏ",
+      "ly_do": "Khối kiến trúc lớn, bóng đổ gắt, phong cách poster",
+      "kich_thuoc": [
+        1536,
+        2304
+      ],
+      "luc": "2026-10-13T14:56:24+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-09.jpg",
+      "nguon": "https://dribbble.com/shots/27736858-Seiless-Pitch-Deck-Presentation-Design-for-a-Positioning-Firm",
+      "anh_url": "https://cdn.dribbble.com/userupload/49042674/file/d61dad2c4ee259392ebaef094fd7964c.jpg",
+      "tieu_de": "Seiless pitch deck",
+      "ly_do": "Bố cục deck tư vấn: số lớn, thẻ, nền sáng xen nền navy",
+      "kich_thuoc": [
+        4500,
+        3000
+      ],
+      "luc": "2026-10-13T14:56:26+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    },
+    {
+      "tep": "08-moodboard/mb-10.png",
+      "nguon": "https://dribbble.com/shots/27674538-All-House-Energy-Secure-Living-B2B-Proposal-Deck",
+      "anh_url": "https://cdn.dribbble.com/userupload/48812248/file/58a9e0387d11c300db08680dc9a38771.png",
+      "tieu_de": "B2B proposal deck",
+      "ly_do": "Bố cục proposal: ảnh lớn một nửa, chữ một nửa, bảng gọn",
+      "kich_thuoc": [
+        1920,
+        1080
+      ],
+      "luc": "2026-10-13T14:56:28+07:00",
+      "ghi_chu": "chỉ tham chiếu nội bộ"
+    }
+  ]
+}

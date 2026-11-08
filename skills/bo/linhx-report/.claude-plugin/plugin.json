@@ -1,0 +1,7 @@
+{
+  "name": "linhx-report",
+  "version": "0.1.0",
+  "description": "Quy trình 13 bước ra báo cáo PDF cao cấp kiểu McKinsey, Kantar, Nielsen: tìm mẫu và clone phong cách, nghiên cứu có sổ bằng chứng, viết theo lập luận tư vấn, dàn trang tạp chí bằng Typst, cổng kiểm bằng script.",
+  "author": {"name": "LINHX"},
+  "keywords": ["report", "bao-cao", "pdf", "typst", "mckinsey", "magazine"]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "linhx-course",
+  "version": "0.2.0",
+  "description": "Biến một chủ đề thành khoá học e-learning hoàn chỉnh: thiết kế mục tiêu theo Bloom, viết kịch bản và slide Slidev, giọng clone tiếng Việt VieNeu-TTS, giảng viên AI tự chạy trên máy (MuseTalk, FlashHead, JoyVASA), kiểm lời ASR và đóng gói SCORM 1.2."
+}

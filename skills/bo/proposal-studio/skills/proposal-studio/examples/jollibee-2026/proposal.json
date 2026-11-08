@@ -1,0 +1,1071 @@
+{
+ "meta": {
+  "title": "Jollibee Joy Station – Đề xuất hoạt động mascot tương tác mùa lễ hội 2026–2027",
+  "client": "Jollibee Việt Nam",
+  "file": "Jollibee-JoyStation-Proposal",
+  "footer": "Jollibee Joy Station · Đề xuất từ IFAGENT · Bản nháp 30/09/2026",
+  "version": "v0.1 – brief giả định"
+ },
+ "theme": {
+  "primary": "#D7141A",
+  "secondary": "#FFC20E",
+  "dark": "#5A0B0E",
+  "text": "#2A1A12",
+  "bg": "#FFF8EC",
+  "light": "#FFF1D6",
+  "muted": "#6B5A4E",
+  "line": "#EAD9C0",
+  "font_head": "Segoe UI",
+  "font_body": "Segoe UI"
+ },
+ "slides": [
+  {
+   "type": "cover",
+   "image": "kv_hero",
+   "kicker": "Đề xuất hoạt động · Mùa lễ hội 2026–2027",
+   "title": "Jollibee Joy Station",
+   "subtitle": "Trạm vui có mascot Ong Bee biết trò chuyện, nhảy cùng bé và chụp ảnh Tết cho cả nhà, chạy trên nền tảng IFAGENT",
+   "meta": "Kính gửi: Jollibee Việt Nam · 30/09/2026 · v0.1",
+   "notes": "Mở đầu: cảm ơn, nói ngắn đề xuất gồm gì và vì sao trạm vui hợp với mùa Tết của gia đình."
+  },
+  {
+   "type": "bullets",
+   "kicker": "Tóm tắt",
+   "title": "Đề xuất trong 1 trang",
+   "image": "kv_hero",
+   "lead": "Biến mascot Ong Bee thành “người dẫn chương trình” biết nói chuyện, đưa cả nhà qua 4 bước: Chào → Chơi → Chụp → Nhận quà.",
+   "bullets": [
+    "Ý tưởng chủ đạo: Joy Station, trạm vui 40m² tại trung tâm thương mại và cửa hàng flagship, từ Noel 2026 tới Tết Đinh Mùi 2027.",
+    "Công nghệ: mascot AI giọng nói (IFAGENT Live Character), game vận động bằng camera, photobooth khung Tết, Joy Pass QR.",
+    "Kết quả mong muốn: tương tác gia đình, ảnh chia sẻ tự nhiên, dữ liệu khách có đồng ý, voucher kéo khách về cửa hàng.",
+    "Đo được từng bước trên dashboard: khách đi ngang → tương tác → chơi → nhận voucher → đổi voucher.",
+    "3 gói triển khai (1 điểm thử / 4 điểm / 4 điểm + flagship), chuẩn bị 6 tuần."
+   ]
+  },
+  {
+   "type": "section",
+   "number": "01",
+   "title": "Hiểu brief",
+   "subtitle": "Tóm tắt yêu cầu, bối cảnh thương hiệu và những điểm cần làm rõ",
+   "image": "idea_01_live_mascot"
+  },
+  {
+   "type": "table",
+   "kicker": "01 · Brief",
+   "title": "Tóm tắt brief (bản giả định để làm mẫu)",
+   "lead": "Chưa có brief chính thức. Các ô có [ ] là giả định, cần khách hàng xác nhận.",
+   "columns": [
+    "Hạng mục",
+    "Nội dung"
+   ],
+   "col_widths": [
+    1,
+    4
+   ],
+   "rows": [
+    [
+     "Thương hiệu",
+     "Jollibee Việt Nam, mascot Ong Bee"
+    ],
+    [
+     "Mục tiêu",
+     "Tạo trải nghiệm mascot tương tác mùa lễ hội; tăng lượt ghé cửa hàng và đổi voucher; thu dữ liệu khách có đồng ý"
+    ],
+    [
+     "Đối tượng",
+     "Gia đình có con 4–12 tuổi (chính); học sinh, sinh viên, Gen Z (phụ)"
+    ],
+    [
+     "Thời gian",
+     "[12/2026 – 02/2027]: 4 cuối tuần Noel + 3 tuần trước Tết"
+    ],
+    [
+     "Địa điểm",
+     "[4 trung tâm thương mại (2 TP.HCM, 2 Hà Nội)] + [1 cửa hàng flagship]"
+    ],
+    [
+     "Ngân sách",
+     "[Chưa có], đề xuất 3 gói để khách chọn"
+    ],
+    [
+     "KPI khách quan tâm",
+     "[Lượt tương tác, UGC, dữ liệu, tỷ lệ đổi voucher]"
+    ],
+    [
+     "Ràng buộc",
+     "Dùng mascot đúng guideline; an toàn dữ liệu trẻ em; mặt bằng TTTM ~40m²; môi trường ồn"
+    ]
+   ]
+  },
+  {
+   "type": "cards",
+   "kicker": "01 · Phân tích",
+   "title": "Bối cảnh và insight",
+   "cols": 2,
+   "size": 12.5,
+   "cards": [
+    {
+     "tag": "Bối cảnh",
+     "title": "Thương hiệu gà rán số 1, mascot đã quen mặt",
+     "text": "Jollibee được Euromonitor xếp là thương hiệu QSR dẫn đầu Việt Nam theo doanh số 2025, hơn 250 cửa hàng, vào Việt Nam từ 2005. Ong Bee xuất hiện trong mọi hoạt động kỷ niệm 20 năm."
+    },
+    {
+     "tag": "Insight gia đình",
+     "title": "Bé muốn được “chơi với” mascot, không chỉ chụp cùng",
+     "text": "Mascot hoá trang chỉ có mặt vài giờ và không nói chuyện. Bé muốn mascot gọi đúng tên, rủ chơi; bố mẹ muốn có ảnh Tết đẹp và một món quà nhỏ."
+    },
+    {
+     "tag": "Insight Gen Z",
+     "title": "Thứ gì vui và có thứ hạng thì sẽ được chia sẻ",
+     "text": "Chiến dịch Tuần Lộc 12/2025 cho thấy nội dung vui, cá nhân hoá lan toả mạnh (320 triệu lượt xem, 70% earned media). Bảng vàng và ảnh khung Tết là chất liệu để chia sẻ."
+    },
+    {
+     "tag": "Bài toán",
+     "title": "Vui tại chỗ phải dẫn về cửa hàng và đo được",
+     "text": "Hoạt động ở TTTM thường thiếu dữ liệu sau sự kiện. Cần một mã chung (Joy Pass) nối lượt chơi, dữ liệu đồng ý và voucher đổi tại cửa hàng."
+    }
+   ]
+  },
+  {
+   "type": "cards",
+   "kicker": "01 · Cần làm rõ",
+   "title": "Brief còn thiếu gì: cần khách hàng xác nhận",
+   "cols": 3,
+   "size": 12,
+   "cards": [
+    {
+     "title": "Ngân sách và số điểm",
+     "text": "Khung ngân sách, số TTTM, số ngày chạy, có cửa hàng flagship không."
+    },
+    {
+     "title": "Guideline mascot",
+     "text": "Bộ asset chính thức (3D/2D, video), điều mascot được và không được nói/làm, giọng nói mascot."
+    },
+    {
+     "title": "Đại sứ thương hiệu",
+     "text": "Có được dùng hình ảnh đại sứ 2026 trong booth không? Không dùng giọng/hình AI của người thật nếu chưa có hợp đồng."
+    },
+    {
+     "title": "Hệ thống voucher và dữ liệu",
+     "text": "Jollibee có app/Zalo OA/CRM nào để phát và đối soát mã? Ai giữ dữ liệu khách?"
+    },
+    {
+     "title": "KPI ưu tiên",
+     "text": "Xếp thứ tự: nhận biết, UGC, dữ liệu, doanh số combo. KPI quyết định cơ chế quà."
+    },
+    {
+     "title": "Quà và pháp lý khuyến mại",
+     "text": "Giá trị quà, số lượng, ai đăng ký chương trình khuyến mại với Sở Công Thương."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "number": "02",
+   "title": "Công nghệ event thế giới",
+   "subtitle": "Xu hướng 2025–2026 và bài học từ các thương hiệu thức ăn nhanh",
+   "image": "idea_02_dance"
+  },
+  {
+   "type": "cards",
+   "kicker": "02 · Xu hướng",
+   "title": "6 xu hướng công nghệ trải nghiệm đáng chú ý",
+   "cols": 3,
+   "size": 11.5,
+   "cards": [
+    {
+     "tag": "CES 2026",
+     "title": "Avatar AI và hologram",
+     "text": "Trợ lý ảo dạng nhân vật 3D, hologram không cần kính; AARP dùng hologram hội thoại đa ngôn ngữ."
+    },
+    {
+     "tag": "CES 2026",
+     "title": "Photobooth AI tạo ảnh",
+     "text": "Ảnh cá nhân hoá tạo tại chỗ, như AI Aura Photo ở Coachella; khách mang ảnh về và chia sẻ."
+    },
+    {
+     "tag": "CES 2026",
+     "title": "Game bằng thị giác máy tính",
+     "text": "Southwest Airlines làm game theo cử động người chơi trong khu vực chỉ 5–8 feet."
+    },
+    {
+     "tag": "Xu hướng 2026",
+     "title": "Tham gia chủ động",
+     "text": "82% người tiêu dùng nói hoạt động tương tác là đáng nhớ nhất (Seeker). Bảng xếp hạng giữ khách ở lại."
+    },
+    {
+     "tag": "Xu hướng 2026",
+     "title": "Dữ liệu first-party",
+     "text": "Hộ chiếu số, quét QR, đăng ký có đồng ý trở thành sản phẩm chính của activation."
+    },
+    {
+     "tag": "Xu hướng 2026",
+     "title": "Không in ấn, đo theo thời gian thực",
+     "text": "Dashboard trực tiếp, cơ chế số thay tờ rơi; tối ưu ngay trong ngày chạy."
+    }
+   ]
+  },
+  {
+   "type": "cards",
+   "kicker": "02 · Case study",
+   "title": "Bài học từ các activation tham khảo",
+   "cols": 3,
+   "size": 12,
+   "cards": [
+    {
+     "tag": "KFC Nam Phi · 09/2025",
+     "title": "Nhân vật AI “chiếm” loa drive-thru",
+     "text": "KAIIA trò chuyện trực tiếp với khách, đưa QR sang trang AI để nói tiếp và nhận voucher. Bài học: nhân vật AI có cá tính + QR nối sang kênh số."
+    },
+    {
+     "tag": "KFC · khai trương",
+     "title": "Photobooth AI biến khách thành Colonel",
+     "text": "Hơn 300 ảnh in và chia sẻ, dữ liệu thu theo GDPR. Bài học: ảnh in mang về là quà được giữ lâu nhất."
+    },
+    {
+     "tag": "Jollibee VN · 11/2025",
+     "title": "The Jolly Day 20 năm",
+     "text": "Hơn 15.000 người dự, booth game theo món ăn, Ong Bee đồng hành mọi hoạt động. Bài học: game gắn với món ăn chủ lực tạo nhớ thương hiệu."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "number": "03",
+   "title": "Đề xuất ý tưởng",
+   "subtitle": "5 ý tưởng hoạt động, chấm điểm và phương án khuyến nghị",
+   "image": "idea_03_photobooth"
+  },
+  {
+   "type": "cards",
+   "kicker": "03 · Ý tưởng",
+   "title": "5 ý tưởng hoạt động cho mascot Ong Bee",
+   "cols": 5,
+   "size": 10.5,
+   "title_size": 13,
+   "cards": [
+    {
+     "image": "idea_01_live_mascot",
+     "tag": "IFAGENT",
+     "title": "Trò chuyện cùng Ong Bee",
+     "text": "Kiosk dọc: mascot chào khi khách tới, gọi tên bé, hỏi đáp menu, gợi ý combo theo số người, phát Joy Pass."
+    },
+    {
+     "image": "idea_02_dance",
+     "tag": "Camera",
+     "title": "Nhảy Vui Vẻ",
+     "text": "Bắt chước điệu nhảy của Ong Bee trước LED 45 giây, chấm điểm theo tư thế, bảng vàng mỗi ngày."
+    },
+    {
+     "image": "idea_03_photobooth",
+     "tag": "Photobooth",
+     "title": "Khung Tết Cả Nhà",
+     "text": "Ảnh gia đình với mascot (asset chính thức) trong khung Tết; in 4×6 và tải qua QR."
+    },
+    {
+     "image": "idea_04_hunt",
+     "tag": "QR / AR",
+     "title": "Săn Lì Xì Vui",
+     "text": "Quét 5 điểm quanh TTTM và cửa hàng, gom dấu đổi lì xì voucher. Kéo khách từ booth vào cửa hàng."
+    },
+    {
+     "image": "idea_05_holo",
+     "tag": "Hologram",
+     "title": "Ong Bee 3D Hologram",
+     "text": "Hộp hologram tại flagship, mascot nói chuyện qua IFAGENT; điểm check-in lâu dài sau mùa lễ."
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "03 · Chấm điểm",
+   "title": "So sánh và lựa chọn",
+   "lead": "Điểm 1–5 (5 là tốt nhất; với chi phí và độ khó vận hành: 5 là rẻ/dễ). Chấm theo brief giả định.",
+   "columns": [
+    "Ý tưởng",
+    "Gắn thương hiệu",
+    "Gia đình tham gia",
+    "Thu dữ liệu",
+    "Chi phí",
+    "Dễ vận hành",
+    "Tổng",
+    "Khuyến nghị"
+   ],
+   "col_widths": [
+    2.3,
+    1.1,
+    1.1,
+    1,
+    0.9,
+    1,
+    0.8,
+    1.6
+   ],
+   "rows": [
+    [
+     "1. Trò chuyện cùng Ong Bee",
+     "5",
+     "5",
+     "5",
+     "4",
+     "4",
+     "23",
+     "Lõi, bắt buộc"
+    ],
+    [
+     "2. Nhảy Vui Vẻ",
+     "4",
+     "5",
+     "3",
+     "3",
+     "3",
+     "18",
+     "Chọn"
+    ],
+    [
+     "3. Khung Tết Cả Nhà",
+     "4",
+     "5",
+     "4",
+     "4",
+     "4",
+     "21",
+     "Chọn"
+    ],
+    [
+     "4. Săn Lì Xì Vui",
+     "3",
+     "3",
+     "4",
+     "4",
+     "3",
+     "17",
+     "Tuỳ chọn gói 3"
+    ],
+    [
+     "5. Ong Bee Hologram",
+     "5",
+     "3",
+     "3",
+     "2",
+     "3",
+     "16",
+     "Tuỳ chọn flagship"
+    ]
+   ],
+   "note": "Khuyến nghị: gộp 1 + 2 + 3 thành một hành trình (Joy Station). 4 và 5 là phần mở rộng theo ngân sách."
+  },
+  {
+   "type": "bigidea",
+   "image": "kv_hero",
+   "kicker": "Ý tưởng chủ đạo",
+   "title": "Joy Station: Ghé là vui, chơi là có quà",
+   "text": "Một trạm vui 4 bước. Ong Bee chào và trò chuyện, cả nhà nhảy cùng mascot, chụp ảnh Tết, rồi nhận voucher qua Joy Pass để mang niềm vui về cửa hàng."
+  },
+  {
+   "type": "full",
+   "image": "show_kiosk_b",
+   "title": "Hành trình trên kiosk",
+   "caption": "Chơi → Chụp → Nhận quà: 4 màn hình chính của hành trình"
+  },
+  {
+   "type": "steps",
+   "kicker": "04 · Cách hoạt động",
+   "title": "Joy Station hoạt động thế nào",
+   "steps": [
+    {
+     "title": "Thu hút",
+     "text": "Màn hình chờ có Ong Bee vẫy tay. Camera phát hiện người đứng gần (xử lý tại máy), mascot tự chào."
+    },
+    {
+     "title": "Trò chuyện",
+     "text": "Ong Bee hỏi tên, đi cùng ai, gợi ý trò chơi. Nói bằng giọng hoặc chạm; nơi ồn tự mở chat chữ."
+    },
+    {
+     "title": "Chơi",
+     "text": "Nhảy Vui Vẻ 45 giây hoặc Đố vui 3 câu về món ăn. Mỗi trò đóng 1 dấu Joy Pass."
+    },
+    {
+     "title": "Chụp",
+     "text": "Khung Tết Cả Nhà: đếm ngược, in ảnh 4×6, QR tải ảnh gốc."
+    },
+    {
+     "title": "Nhận quà",
+     "text": "Đủ 3 dấu: khách đồng ý nhận voucher qua Zalo/app; phụ huynh xác nhận với trẻ nhỏ."
+    },
+    {
+     "title": "Về cửa hàng",
+     "text": "Đổi voucher combo Tết tại cửa hàng; hệ thống đối soát để đo tỷ lệ đổi."
+    }
+   ],
+   "note": "Một mã Joy Pass nối cả 6 bước · mỗi bước đều có số đo trên dashboard · cả hành trình 6–8 phút"
+  },
+  {
+   "type": "table",
+   "kicker": "04 · Tiến trình chơi",
+   "title": "Hành trình một gia đình (khoảng 6–8 phút)",
+   "columns": [
+    "Bước",
+    "Thời lượng",
+    "Khách làm gì",
+    "Mascot / hệ thống làm gì",
+    "Dữ liệu ghi nhận"
+   ],
+   "col_widths": [
+    1.2,
+    0.9,
+    2.2,
+    2.6,
+    1.8
+   ],
+   "size": 10.5,
+   "rows": [
+    [
+     "1. Đến cổng",
+     "10 giây",
+     "Đi ngang, dừng lại nhìn",
+     "Mascot vẫy tay, chào “Lại đây chơi nè!”",
+     "Lượt đi ngang, lượt dừng"
+    ],
+    [
+     "2. Trò chuyện",
+     "1–2 phút",
+     "Nói tên, chọn trò",
+     "Hỏi đáp, gợi ý combo theo số người, phát Joy Pass",
+     "Câu hỏi, chủ đề (đã che dữ liệu)"
+    ],
+    [
+     "3. Nhảy Vui Vẻ",
+     "45 giây + 30 giây",
+     "Nhảy theo mascot trên LED",
+     "Chấm điểm tư thế, cập nhật bảng vàng",
+     "Lượt chơi, điểm"
+    ],
+    [
+     "4. Đố vui (tuỳ chọn)",
+     "1 phút",
+     "Trả lời 3 câu",
+     "Mascot khen, giải thích món ăn",
+     "Tỷ lệ trả lời đúng"
+    ],
+    [
+     "5. Chụp ảnh",
+     "1–2 phút",
+     "Tạo dáng cùng mascot",
+     "Đếm ngược, in ảnh, tạo QR",
+     "Số ảnh in / tải"
+    ],
+    [
+     "6. Nhận quà",
+     "1 phút",
+     "Quét QR, đồng ý nhận voucher",
+     "Gửi voucher qua Zalo/app",
+     "Opt-in, voucher phát"
+    ],
+    [
+     "7. Sau sự kiện",
+     "7–30 ngày",
+     "Đổi voucher tại cửa hàng",
+     "Nhắc hạn voucher (nếu khách đồng ý)",
+     "Tỷ lệ đổi, cửa hàng đổi"
+    ]
+   ]
+  },
+  {
+   "type": "full",
+   "image": "show_kiosk_a",
+   "title": "Màn hình kiosk (tổng quan)",
+   "caption": "Mockup màn hình kiosk dọc 55\" · mascot hiển thị bằng file chính thức của Jollibee"
+  },
+  {
+   "type": "screens",
+   "kicker": "05 · Màn hình kiosk (1/3)",
+   "title": "Chào, trò chuyện và chọn trò chơi",
+   "screens": [
+    {
+     "image": "scr01_attract",
+     "tag": "Màn hình 1",
+     "title": "Lời mời",
+     "points": [
+      "Mascot chuyển động lặp, tự chào khi có người tới",
+      "Chân trang chạy combo Tết và số quà còn lại",
+      "Chạm hoặc nói “Xin chào” để bắt đầu"
+     ]
+    },
+    {
+     "image": "scr02_chat",
+     "tag": "Màn hình 2",
+     "title": "Ong Bee biết gọi tên bé",
+     "points": [
+      "Hội thoại giọng nói thời gian thực, phụ đề trên màn",
+      "Nút gợi ý cho khách ngại nói",
+      "Tri thức đã duyệt: menu, combo, giờ quà"
+     ]
+    },
+    {
+     "image": "scr03_menu",
+     "tag": "Màn hình 3",
+     "title": "4 lựa chọn lớn",
+     "points": [
+      "Chọn bằng giọng hoặc chạm",
+      "Hiện số dấu Joy Pass",
+      "Giới hạn 3 phút/lượt để tránh hàng dài"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "screens",
+   "kicker": "05 · Màn hình kiosk (2/3)",
+   "title": "Chơi và chụp",
+   "screens": [
+    {
+     "image": "scr04_dance",
+     "tag": "Màn hình 4",
+     "title": "Nhảy cùng mascot",
+     "points": [
+      "Nhận dạng khung xương chạy trên máy, không lưu hình",
+      "Điểm, combo, đồng hồ 45 giây",
+      "Mascot góc phải làm mẫu động tác"
+     ]
+    },
+    {
+     "image": "scr05_quiz",
+     "tag": "Màn hình 5",
+     "title": "3 câu về món ăn",
+     "points": [
+      "Câu hỏi xoay theo ngày, gắn món chủ lực",
+      "Trả lời bằng giọng hoặc chạm",
+      "Mascot giải thích ngắn sau mỗi câu"
+     ]
+    },
+    {
+     "image": "scr06_photo",
+     "tag": "Màn hình 6",
+     "title": "Khung Tết Cả Nhà",
+     "points": [
+      "6 khung Tết, mascot là asset chính thức",
+      "Đếm ngược 3 giây, chụp 2 kiểu",
+      "In 4×6 tại chỗ, ảnh xoá sau 24 giờ"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "screens",
+   "kicker": "05 · Màn hình (3/3)",
+   "title": "Nhận quà và bảng vàng",
+   "screens": [
+    {
+     "image": "scr07_reward",
+     "tag": "Màn hình 7",
+     "title": "Joy Pass đủ 3 dấu",
+     "points": [
+      "Voucher và QR lưu qua Zalo/app",
+      "Ô đồng ý rõ ràng, phụ huynh xác nhận",
+      "Mã đối soát khi đổi tại cửa hàng"
+     ]
+    },
+    {
+     "image": "scr08_leaderboard",
+     "portrait": false,
+     "tag": "Màn hình 8",
+     "title": "Bảng vàng Nhảy Vui Vẻ",
+     "points": [
+      "Cập nhật trực tiếp, tên do khách tự đặt",
+      "Top 1 mỗi ngày nhận quà lớn"
+     ]
+    }
+   ]
+  },
+  {
+   "type": "full",
+   "image": "show_ops",
+   "title": "Màn hình vận hành (tổng quan)",
+   "caption": "LED bảng vàng, tablet MC điều khiển mascot, dashboard theo dõi trực tiếp"
+  },
+  {
+   "type": "visual",
+   "kicker": "05 · Màn hình vận hành",
+   "title": "Tablet điều khiển cho MC",
+   "image": "scr09_control",
+   "bullets": [
+    "MC bấm để mascot vẫy tay, nhảy, thả tim đúng lúc sân khấu cần.",
+    "Bật cảnh combo Tết, bảng vàng, giờ vàng quà trên màn kiosk.",
+    "Câu nói nhanh: mascot đọc đúng câu MC chọn.",
+    "Chuyển sang chat chữ khi quá ồn; tải lại kiosk từ xa.",
+    "Có sẵn trong IFAGENT (trang Điều khiển)."
+   ]
+  },
+  {
+   "type": "visual",
+   "kicker": "05 · Màn hình báo cáo",
+   "title": "Dashboard theo dõi trực tiếp",
+   "image": "scr10_dashboard",
+   "bullets": [
+    "Phễu: đi ngang → tương tác → chơi → đủ Joy Pass → đổi voucher.",
+    "Lượt chơi theo giờ để xếp ca PG và giờ vàng quà.",
+    "Câu hỏi hay gặp và câu mascot chưa trả lời được, để bổ sung tri thức trong ngày.",
+    "Báo cáo tuần do AI tổng hợp; số điện thoại đã che với tài khoản xem."
+   ]
+  },
+  {
+   "type": "visual",
+   "kicker": "06 · Minh hoạ kỹ thuật",
+   "title": "Kiến trúc hệ thống",
+   "image": "tech_architecture",
+   "bullets": [
+    "Kiosk chỉ nói chuyện với server IFAGENT; khoá AI không nằm trên máy tại điểm.",
+    "Server dựng lời dặn mascot, tri thức đã duyệt và danh sách công cụ; kiosk không sửa được.",
+    "Công cụ AI: đổi cảm xúc mascot, hiện cảnh combo, mở form nhận quà.",
+    "Xuất bản có phiên bản: sửa kịch bản trên bản nháp, duyệt rồi mới đưa lên kiosk.",
+    "Dự phòng mất mạng: game, photobooth chạy offline; mascot phát clip kịch bản."
+   ]
+  },
+  {
+   "type": "bigidea",
+   "image": "booth_render_3d",
+   "kicker": "06 · Phối cảnh",
+   "title": "Joy Station tại trung tâm thương mại",
+   "text": "Cổng chào với 2 kiosk mascot, sân Nhảy Vui Vẻ trước LED 3×2m, góc Khung Tết Cả Nhà, quầy quà và khu chờ cho phụ huynh. Logo và mascot chính thức đặt tại bảng trắng trên cổng và trên màn kiosk."
+  },
+  {
+   "type": "visual",
+   "kicker": "06 · Mặt bằng",
+   "title": "Bố trí Joy Station (khoảng 40m²)",
+   "image": "booth_layout",
+   "bullets": [
+    "Dòng khách một chiều: cổng chào → sân nhảy → photobooth → quầy quà.",
+    "Hàng chờ có ghế phụ huynh và màn chiếu combo.",
+    "Sân nhảy vạch 2×2m, camera đặt trên LED.",
+    "Kiosk quay ra lối đi chính để bắt khách đi ngang.",
+    "Kích thước điều chỉnh theo từng TTTM sau khảo sát."
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "06 · Thiết bị",
+   "title": "Cấu hình thiết bị cho 1 Joy Station",
+   "columns": [
+    "Hạng mục",
+    "Cấu hình đề xuất",
+    "SL",
+    "Ghi chú"
+   ],
+   "col_widths": [
+    1.8,
+    3.2,
+    0.6,
+    2.4
+   ],
+   "size": 11,
+   "rows": [
+    [
+     "Kiosk mascot",
+     "Màn 55\" dọc 1080×1920, mini PC, mic thu xa khử ồn, camera, loa",
+     "2",
+     "Chạy IFAGENT, có chế độ chat chữ"
+    ],
+    [
+     "Sân Nhảy Vui Vẻ",
+     "LED 3×2m, PC có GPU rời, camera góc rộng, loa",
+     "1",
+     "Nhận dạng tư thế tại máy"
+    ],
+    [
+     "Photobooth",
+     "Máy ảnh/webcam 4K, đèn, máy in nhiệt 4×6",
+     "1",
+     "~[ ] ảnh/ngày, dự trù giấy"
+    ],
+    [
+     "Tablet MC",
+     "Tablet 10–11\" + tai nghe",
+     "1",
+     "Trang Điều khiển IFAGENT"
+    ],
+    [
+     "Mạng",
+     "Internet cáp + 4G/5G dự phòng, router riêng",
+     "1",
+     "Tối thiểu [ ] Mbps upload"
+    ],
+    [
+     "Điện",
+     "Tủ điện riêng, UPS cho kiosk và PC",
+     "1",
+     "Tuân quy định TTTM"
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "07 · Vận hành",
+   "title": "Nhân sự và vận hành mỗi điểm",
+   "columns": [
+    "Vai trò",
+    "SL/ca",
+    "Nhiệm vụ"
+   ],
+   "col_widths": [
+    1.6,
+    0.7,
+    5.5
+   ],
+   "size": 11.5,
+   "rows": [
+    [
+     "MC / Host",
+     "1",
+     "Dẫn hoạt động, gọi khách, điều khiển mascot qua tablet, giờ vàng quà"
+    ],
+    [
+     "PG hướng dẫn",
+     "2",
+     "Giữ hàng chờ, hướng dẫn sân nhảy và photobooth, hỗ trợ lưu voucher"
+    ],
+    [
+     "Kỹ thuật",
+     "1",
+     "Theo dõi dashboard, xử lý thiết bị, đổi giấy in, chuyển chế độ dự phòng"
+    ],
+    [
+     "Mascot hoá trang (tuỳ chọn)",
+     "1",
+     "Xuất hiện theo khung giờ cao điểm, phối hợp với mascot trên màn"
+    ],
+    [
+     "Trực tri thức (từ xa)",
+     "1",
+     "Đọc câu mascot chưa trả lời, cập nhật tri thức đã duyệt trong ngày"
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "07 · KPI",
+   "title": "KPI và cách đo",
+   "lead": "Công suất tính theo thời lượng mỗi lượt. Mục tiêu cuối cùng chốt sau khảo sát lượng khách từng TTTM.",
+   "columns": [
+    "Chỉ số",
+    "Cách đo",
+    "Công suất tối đa / điểm / ngày 12h",
+    "Mục tiêu"
+   ],
+   "col_widths": [
+    2,
+    2.6,
+    2,
+    1.2
+   ],
+   "size": 11,
+   "rows": [
+    [
+     "Lượt tương tác mascot",
+     "Phiên hội thoại trên dashboard",
+     "2 kiosk × 20 lượt/giờ × 12h = 480",
+     "[ ]"
+    ],
+    [
+     "Lượt chơi Nhảy Vui Vẻ",
+     "Lượt game ghi nhận",
+     "~40 lượt/giờ × 12h = 480",
+     "[ ]"
+    ],
+    [
+     "Ảnh in / tải",
+     "Bộ đếm photobooth + lượt quét QR",
+     "~30 lượt/giờ × 12h = 360",
+     "[ ]"
+    ],
+    [
+     "Dữ liệu có đồng ý",
+     "Form nhận quà (có ô đồng ý)",
+     "Theo số Joy Pass đủ dấu",
+     "[ ]% lượt chơi"
+    ],
+    [
+     "Tỷ lệ đổi voucher",
+     "Đối soát mã với POS/CRM",
+     "–",
+     "[ ]%"
+    ],
+    [
+     "UGC và thảo luận",
+     "Hashtag, social listening",
+     "–",
+     "[ ]"
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "08 · Tiến độ",
+   "title": "Kế hoạch triển khai (6 tuần chuẩn bị)",
+   "columns": [
+    "Thời gian",
+    "Công việc",
+    "Bàn giao / duyệt"
+   ],
+   "col_widths": [
+    1.4,
+    4.2,
+    2.2
+   ],
+   "size": 11,
+   "rows": [
+    [
+     "Tuần 1",
+     "Chốt brief, KPI, cơ chế quà; nhận asset mascot và guideline",
+     "Biên bản chốt phạm vi"
+    ],
+    [
+     "Tuần 2",
+     "Kịch bản hội thoại, tính cách, tri thức (menu, combo, FAQ); bộ clip cử chỉ từ asset chính thức",
+     "Duyệt kịch bản vòng 1"
+    ],
+    [
+     "Tuần 3",
+     "Dựng game Nhảy Vui Vẻ, khung photobooth, màn hình kiosk, tích hợp voucher",
+     "Demo nội bộ"
+    ],
+    [
+     "Tuần 4",
+     "Chạy thử tại văn phòng, kiểm thử ≥ 90% bộ câu hỏi, kiểm thử tải",
+     "UAT với khách hàng"
+    ],
+    [
+     "Tuần 5",
+     "Khảo sát và lắp đặt điểm đầu, chạy thử 1 ngày, đào tạo MC/PG",
+     "Nghiệm thu điểm 1"
+    ],
+    [
+     "Tuần 6 →",
+     "Nhân rộng các điểm, vận hành, báo cáo tuần và tối ưu theo dashboard",
+     "Báo cáo tuần, báo cáo tổng"
+    ]
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "08 · Ngân sách",
+   "title": "3 gói để lựa chọn",
+   "lead": "Đơn giá điền sau khi chốt số ngày và mặt bằng. Tham chiếu mẫu báo giá Live Character.",
+   "columns": [
+    "Hạng mục",
+    "Gói 1 · Thử nghiệm",
+    "Gói 2 · Joy Station",
+    "Gói 3 · Joy Season"
+   ],
+   "col_widths": [
+    2.2,
+    1.9,
+    1.9,
+    1.9
+   ],
+   "size": 11,
+   "rows": [
+    [
+     "Số điểm",
+     "1 TTTM, 2 cuối tuần",
+     "4 TTTM, 7 cuối tuần",
+     "4 TTTM + 1 flagship"
+    ],
+    [
+     "Trò chuyện cùng Ong Bee",
+     "✓ 1 kiosk",
+     "✓ 2 kiosk/điểm",
+     "✓ 2 kiosk/điểm"
+    ],
+    [
+     "Nhảy Vui Vẻ + LED",
+     "–",
+     "✓",
+     "✓"
+    ],
+    [
+     "Khung Tết Cả Nhà",
+     "✓",
+     "✓",
+     "✓"
+    ],
+    [
+     "Săn Lì Xì Vui",
+     "–",
+     "–",
+     "✓"
+    ],
+    [
+     "Hologram flagship",
+     "–",
+     "–",
+     "✓ (giữ lâu dài)"
+    ],
+    [
+     "Dashboard + báo cáo",
+     "✓",
+     "✓",
+     "✓ + báo cáo tổng"
+    ],
+    [
+     "Tổng trước thuế",
+     "[ ]",
+     "[ ]",
+     "[ ]"
+    ]
+   ],
+   "note": "Chưa gồm: quà tặng, thuê mặt bằng TTTM, mascot hoá trang, chi phí AI theo phút thực tế (xem dashboard)."
+  },
+  {
+   "type": "table",
+   "kicker": "09 · Rủi ro",
+   "title": "Rủi ro và phương án dự phòng",
+   "columns": [
+    "Rủi ro",
+    "Phòng ngừa",
+    "Khi xảy ra"
+   ],
+   "col_widths": [
+    2,
+    3,
+    3
+   ],
+   "size": 11,
+   "rows": [
+    [
+     "TTTM quá ồn, mascot nghe sai",
+     "Mic thu xa khử ồn, nút gợi ý, câu hỏi ngắn",
+     "Tự chuyển chat chữ; MC dùng câu nói nhanh"
+    ],
+    [
+     "Mất mạng",
+     "Cáp + 4G dự phòng",
+     "Game, photobooth chạy offline; mascot phát clip kịch bản"
+    ],
+    [
+     "Mascot trả lời sai / lạc đề",
+     "Chỉ dùng tri thức đã duyệt, chặn chủ đề ngoài lề",
+     "MC điều khiển trực tiếp, ghi lại để sửa trong ngày"
+    ],
+    [
+     "Hàng dài giờ cao điểm",
+     "Giới hạn 3 phút/lượt, giờ vàng rải đều",
+     "Mở thêm lượt nhóm, PG phát số thứ tự"
+    ],
+    [
+     "Sai guideline mascot",
+     "Chỉ dùng asset chính thức, duyệt từng clip",
+     "Gỡ cảnh/clip từ xa trong vài phút"
+    ],
+    [
+     "Hết quà sớm",
+     "Chia quà theo ngày trên dashboard",
+     "Chuyển sang voucher số"
+    ]
+   ]
+  },
+  {
+   "type": "bullets",
+   "kicker": "09 · Pháp lý và an toàn",
+   "title": "Dữ liệu, trẻ em và khuyến mại",
+   "bullets": [
+    "Tuân Luật Bảo vệ dữ liệu cá nhân (hiệu lực từ 01/01/2026) và văn bản hướng dẫn: chỉ thu số điện thoại khi khách tick đồng ý, nêu rõ mục đích.",
+    "Trẻ em: phụ huynh xác nhận thay; không lưu ảnh khuôn mặt trên server; camera game và nhận diện người đến chỉ xử lý tại máy.",
+    "Nhật ký hội thoại tự che số điện thoại, email, dãy số dài; tự xoá sau [N] ngày.",
+    "Ảnh photobooth xoá khỏi máy sau 24 giờ; link tải ảnh hết hạn sau [7] ngày.",
+    "Chương trình khuyến mại (voucher, quà) do [Jollibee / đơn vị tổ chức] thông báo hoặc đăng ký với cơ quan quản lý theo quy định.",
+    "Không dùng hình ảnh hay giọng AI của đại sứ, người nổi tiếng nếu chưa có hợp đồng quyền hình ảnh."
+   ]
+  },
+  {
+   "type": "cards",
+   "kicker": "10 · Năng lực",
+   "title": "Vì sao chọn IFAGENT",
+   "cols": 3,
+   "size": 12,
+   "cards": [
+    {
+     "title": "Nền tảng đã chạy thật",
+     "text": "Nhân vật ảo trò chuyện bằng giọng nói trên kiosk dọc và ngang, overlay 13 loại widget, đã dựng nhiều nhân vật."
+    },
+    {
+     "title": "Đủ 4 chế độ",
+     "text": "Studio dựng nhân vật, kiosk chạy, trang Điều khiển cho MC, dashboard theo dõi và báo cáo tuần."
+    },
+    {
+     "title": "An toàn theo thiết kế",
+     "text": "Khoá AI chỉ ở server, tri thức chỉ dùng tài liệu đã duyệt, che dữ liệu cá nhân, xuất bản có phiên bản."
+    },
+    {
+     "title": "Onboarding 8 bước",
+     "text": "Quy trình từ brief tới go-live có cổng duyệt từng bước, dễ kiểm soát tiến độ với thương hiệu."
+    },
+    {
+     "title": "Đo được",
+     "text": "Phễu khách, câu hỏi phổ biến, câu chưa trả lời, phút AI và chi phí theo từng điểm."
+    },
+    {
+     "title": "Dùng lại sau mùa lễ",
+     "text": "Mascot AI và tri thức giữ lại cho cửa hàng flagship, tiệc sinh nhật, hoạt động trường học."
+    }
+   ]
+  },
+  {
+   "type": "table",
+   "kicker": "Phụ lục",
+   "title": "Nguồn tham khảo",
+   "size": 10,
+   "bold_first": false,
+   "columns": [
+    "Nội dung",
+    "Nguồn"
+   ],
+   "col_widths": [
+    3,
+    4
+   ],
+   "rows": [
+    [
+     "Jollibee dẫn đầu QSR Việt Nam 2025, hơn 250 cửa hàng, vào VN từ 2005",
+     "Tuổi Trẻ News, 04/05/2026 (Euromonitor)"
+    ],
+    [
+     "Đại sứ thương hiệu 2026",
+     "Brands Vietnam, công bố 31/12/2025"
+    ],
+    [
+     "Chiến dịch Tuần Lộc: 320 triệu lượt xem, ROMI 250%",
+     "Advertising Vietnam, BSI Awards 2026"
+    ],
+    [
+     "The Jolly Day 20 năm: hơn 15.000 người tham dự",
+     "Advertising Vietnam"
+    ],
+    [
+     "Xu hướng CES 2026: hologram, photobooth AI, game thị giác máy tính",
+     "Groove Jones; IV.com"
+    ],
+    [
+     "82% người tiêu dùng nhớ nhất hoạt động tương tác",
+     "Seeker, 5 Experiential Marketing Trends 2026"
+    ],
+    [
+     "KFC KAIIA drive-thru (09/2025); KFC AI photobooth 300+ ảnh",
+     "ididthat.co; YORD Studio"
+    ]
+   ]
+  },
+  {
+   "type": "closing",
+   "title": "Bước tiếp theo",
+   "image": "idea_05_holo",
+   "bullets": [
+    "Buổi làm việc 60 phút để chốt brief và KPI.",
+    "Nhận asset mascot và guideline chính thức.",
+    "Demo Ong Bee trò chuyện trên kiosk thật trong 7 ngày sau khi có asset.",
+    "Chốt gói, khảo sát điểm đầu tiên."
+   ],
+   "contact": "IFAGENT · event.ifagent.net · [Người liên hệ] · [SĐT]"
+  }
+ ]
+}

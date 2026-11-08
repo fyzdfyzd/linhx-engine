@@ -1,0 +1,366 @@
+[
+ {
+  "ma": "A1",
+  "ten": "Của cải khác tiền, khác địa vị",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Việc này để lại một **tài sản** sống tiếp sau khi mình dừng tay, hay chỉ mang lại tiền lần này?"
+ },
+ {
+  "ma": "A2",
+  "ten": "Kiến thức đặc thù (specific knowledge)",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Việc gì mình thấy như chơi mà người khác thấy là việc nặng? Thứ gì mình biết mà khó viết thành giáo trình?"
+ },
+ {
+  "ma": "A3",
+  "ten": "Đòn bẩy: vốn, người, code, media",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Nếu làm việc này 100 lần, chi phí lần thứ 100 có gần bằng 0 không? Nếu không thì đòn bẩy nằm ở đâu?"
+ },
+ {
+  "ma": "A4",
+  "ten": "Trách nhiệm đứng tên (accountability)",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Mình có dám ký tên thật dưới sản phẩm này không? Nếu không, vì sao?"
+ },
+ {
+  "ma": "A5",
+  "ten": "Sản phẩm hoá chính mình",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Sản phẩm này có mang \"chữ ký\" của mình không, hay ai cũng làm ra y hệt được?"
+ },
+ {
+  "ma": "A6",
+  "ten": "Đừng bán thời gian",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Với giá giờ mơ ước, ví dụ 5 triệu/giờ, việc này có đáng để mình tự làm không?"
+ },
+ {
+  "ma": "A7",
+  "ten": "Học bán, học xây",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Tuần này mình đã xây gì? Đã bán gì, hay đã thuyết phục được ai?"
+ },
+ {
+  "ma": "A8",
+  "ten": "Ưu tiên độc lập hơn lương",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Lựa chọn này làm mình tự do hơn hay phụ thuộc hơn sau 2 năm?"
+ },
+ {
+  "ma": "A9",
+  "ten": "Bốn loại may mắn",
+  "bo": "naval",
+  "nhom": "lam-giau",
+  "cau_kich_hoat": "Thành công này có lặp lại được ở 999/1.000 vũ trụ không, hay chỉ là may mắn mù?"
+ },
+ {
+  "ma": "B1",
+  "ten": "Phán đoán quan trọng hơn chăm chỉ",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Đây là việc cần phán đoán (mình phải làm) hay việc cần sức (máy làm được)?"
+ },
+ {
+  "ma": "B2",
+  "ten": "Hướng đi quan trọng hơn tốc độ",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Nếu việc này thành công 100%, nó có đưa mình tới nơi mình muốn trong 3 năm tới không?"
+ },
+ {
+  "ma": "B3",
+  "ten": "Không quyết được thì câu trả lời là KHÔNG",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Nếu đề nghị này đến vào sáng mai thì mình có hào hứng nhận ngay không?"
+ },
+ {
+  "ma": "B4",
+  "ten": "Chạy lên dốc",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Trong hai đường, đường nào mình đang né chỉ vì nó khó chịu ngay bây giờ?"
+ },
+ {
+  "ma": "B5",
+  "ten": "Đảo ngược (inversion)",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Làm sao để dự án này **chắc chắn thất bại**? Mình có đang làm điều nào trong số đó không?"
+ },
+ {
+  "ma": "B6",
+  "ten": "Kết luận có lợi cho mình phải qua ngưỡng cao hơn",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Nếu kết luận ngược lại, mình có chấp nhận nó dễ như vậy không?"
+ },
+ {
+  "ma": "B7",
+  "ten": "Biết càng sâu, càng tập trung",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Mình đang dàn trải vì thiếu hiểu biết, hay vì sợ bỏ lỡ?"
+ },
+ {
+  "ma": "B8",
+  "ten": "Ba quyết định lớn: sống ở đâu, với ai, làm gì",
+  "bo": "naval",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Quyết định này có chạm tới nơi sống, người đồng hành hay việc chính không? Nếu có thì đi chậm lại."
+ },
+ {
+  "ma": "C1",
+  "ten": "Tiến hoá",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Hành vi này giúp người ta sống sót, hay giúp họ được nhóm chấp nhận?"
+ },
+ {
+  "ma": "C2",
+  "ten": "Lãi kép",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Việc này có cộng dồn không? Lần sau có dễ hơn lần trước không?"
+ },
+ {
+  "ma": "C3",
+  "ten": "Người uỷ thác và người thừa hành (principal–agent)",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Người hoặc agent làm việc này được thưởng vì cái gì? Cái đó có trùng với điều mình thật sự muốn không?"
+ },
+ {
+  "ma": "C4",
+  "ten": "Hệ phức hợp: không ai dự đoán được",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Kế hoạch này còn đứng được không nếu giả định chính sai?"
+ },
+ {
+  "ma": "C5",
+  "ten": "Thiên nga đen",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Phần lỗ tối đa ở đây là bao nhiêu? Phần lời có trần không?"
+ },
+ {
+  "ma": "C6",
+  "ten": "Có thể bác bỏ (falsifiability)",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Kết quả nào sẽ chứng minh mình sai? Mình đã ghi nó ra trước khi thử chưa?"
+ },
+ {
+  "ma": "C7",
+  "ten": "Toán cơ bản: số học, xác suất, thống kê",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Con số gốc là bao nhiêu? Mẫu bao nhiêu người? Tỷ lệ nền (base rate) là gì?"
+ },
+ {
+  "ma": "C8",
+  "ten": "Giải tích: tốc độ thay đổi",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Con số này đang tăng hay giảm, và tốc độ tăng đang nhanh lên hay chậm lại?"
+ },
+ {
+  "ma": "C9",
+  "ten": "Giải thích tốt thì khó biến đổi (Deutsch)",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Nếu đổi một chi tiết trong lời giải thích hay thiết kế này, nó có còn đúng không? Nếu vẫn đúng thì nó còn lỏng."
+ },
+ {
+  "ma": "C10",
+  "ten": "Tránh rủi ro phá sản (Kelly, ergodicity)",
+  "bo": "naval",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Kịch bản xấu nhất có làm mình về 0 (tiền, sức khoẻ, uy tín) không? Nếu có thì kỳ vọng đẹp cỡ nào cũng không chơi."
+ },
+ {
+  "ma": "D1",
+  "ten": "Ham muốn là hợp đồng tự làm mình khổ",
+  "bo": "naval",
+  "nhom": "ban-than",
+  "cau_kich_hoat": "Đâu là MỘT ham muốn lớn của mình quý này? Những cái còn lại có đáng để mình khổ không?"
+ },
+ {
+  "ma": "D2",
+  "ten": "Nóng vội với hành động, kiên nhẫn với kết quả",
+  "bo": "naval",
+  "nhom": "ban-than",
+  "cau_kich_hoat": "Mình đang sốt ruột vì hành động chậm, hay vì kết quả chưa đến? Chỉ cái đầu mới đáng sốt ruột."
+ },
+ {
+  "ma": "D3",
+  "ten": "Bạn trở thành thói quen của bạn",
+  "bo": "naval",
+  "nhom": "ban-than",
+  "cau_kich_hoat": "Thói quen nào hôm nay, nếu lặp 1.000 lần, sẽ biến mình thành người mình muốn?"
+ },
+ {
+  "ma": "D4",
+  "ten": "Đổi nó, chấp nhận nó, hoặc rời nó",
+  "bo": "naval",
+  "nhom": "ban-than",
+  "cau_kich_hoat": "Với chuyện đang làm mình bực, mình chọn đổi, chấp nhận hay rời?"
+ },
+ {
+  "ma": "D5",
+  "ten": "Bình yên là hạnh phúc khi đứng yên",
+  "bo": "naval",
+  "nhom": "ban-than",
+  "cau_kich_hoat": "Mình có ngồi yên được 30 phút mà không thấy thiếu gì không? Quyết định này đang ra từ tâm yên hay tâm hoảng?"
+ },
+ {
+  "ma": "E1",
+  "ten": "Trò chơi dài hạn với người dài hạn",
+  "bo": "naval",
+  "nhom": "quan-he",
+  "cau_kich_hoat": "Mình sẽ còn làm việc với người này sau 10 năm không? Nếu có thì hành xử như vậy ngay từ hôm nay."
+ },
+ {
+  "ma": "E2",
+  "ten": "Chọn cộng sự: thông minh, năng lượng, và trên hết là chính trực",
+  "bo": "naval",
+  "nhom": "quan-he",
+  "cau_kich_hoat": "Mình có muốn làm việc với người này cả đời không?"
+ },
+ {
+  "ma": "G1",
+  "ten": "Không ai cần mức trung bình",
+  "bo": "naval",
+  "nhom": "cong-nghe-ai",
+  "cau_kich_hoat": "Nếu ai cũng nhờ AI làm được bản này trong 10 phút, phần nào của nó vẫn chỉ mình làm được?"
+ },
+ {
+  "ma": "G2",
+  "ten": "Miền kiểm chứng được sẽ bị tự động hoá: người thành người kiểm chứng",
+  "bo": "naval",
+  "nhom": "cong-nghe-ai",
+  "cau_kich_hoat": "Trong quy trình này, ai là người kiểm chứng? Tiêu chí kiểm chứng đã viết ra chưa?"
+ },
+ {
+  "ma": "M1",
+  "ten": "Lưới mô hình đa ngành (latticework)",
+  "bo": "munger-fs",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Mình đang nhìn vấn đề này bằng mấy ngành? Một ngành khác sẽ thấy gì?"
+ },
+ {
+  "ma": "M2",
+  "ten": "Bản đồ không phải lãnh thổ",
+  "bo": "munger-fs",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Con số hay báo cáo này bỏ sót điều gì? Lần cuối mình ra \"thực địa\" là khi nào?"
+ },
+ {
+  "ma": "M3",
+  "ten": "Vòng tròn năng lực",
+  "bo": "munger-fs",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Mình có giải thích được vì sao việc này thành hay bại, đủ để người khác bắt bẻ không?"
+ },
+ {
+  "ma": "M4",
+  "ten": "Nguyên lý đầu tiên (first principles)",
+  "bo": "munger-fs",
+  "nhom": "tu-duy-nen",
+  "cau_kich_hoat": "Bỏ hết thói quen ngành đi thì mình chắc chắn biết điều gì về việc này?"
+ },
+ {
+  "ma": "M5",
+  "ten": "Tư duy bậc hai",
+  "bo": "munger-fs",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Rồi sao nữa? Sau 6 tháng ai sẽ đổi hành vi vì việc này?"
+ },
+ {
+  "ma": "M6",
+  "ten": "Chi phí cơ hội",
+  "bo": "munger-fs",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Nếu không làm việc này, thời gian ấy sẽ dùng cho việc tốt nhất nào?"
+ },
+ {
+  "ma": "M7",
+  "ten": "Biên an toàn",
+  "bo": "munger-fs",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Nếu mình sai 30% (thời gian, chi phí, doanh thu), kế hoạch có còn sống không?"
+ },
+ {
+  "ma": "M8",
+  "ten": "Tránh ngu hơn là cố khôn",
+  "bo": "munger-fs",
+  "nhom": "quyet-dinh",
+  "cau_kich_hoat": "Sai lầm ngớ ngẩn nào mình hay lặp lại trong loại việc này?"
+ },
+ {
+  "ma": "M9",
+  "ten": "Sức mạnh của động cơ",
+  "bo": "munger-fs",
+  "nhom": "con-nguoi",
+  "cau_kich_hoat": "Ai được gì nếu mình tin điều này? Mình đang đo cái gì, và người ta sẽ tối ưu đúng cái đó ra sao?"
+ },
+ {
+  "ma": "M10",
+  "ten": "Hiệu ứng lollapalooza",
+  "bo": "munger-fs",
+  "nhom": "con-nguoi",
+  "cau_kich_hoat": "Có bao nhiêu lực tâm lý đang cùng đẩy mình về một phía ngay lúc này?"
+ },
+ {
+  "ma": "M11",
+  "ten": "Dao cạo Hanlon",
+  "bo": "munger-fs",
+  "nhom": "con-nguoi",
+  "cau_kich_hoat": "Có cách giải thích nào bình thường hơn \"họ cố tình\" không?"
+ },
+ {
+  "ma": "M12",
+  "ten": "Bằng chứng xã hội",
+  "bo": "munger-fs",
+  "nhom": "con-nguoi",
+  "cau_kich_hoat": "Nếu không ai khác làm việc này, mình có còn muốn làm không?"
+ },
+ {
+  "ma": "M13",
+  "ten": "Vòng phản hồi",
+  "bo": "munger-fs",
+  "nhom": "he-thong",
+  "cau_kich_hoat": "Kết quả của việc này có quay lại làm việc này dễ hơn hoặc khó hơn không?"
+ },
+ {
+  "ma": "M14",
+  "ten": "Nút thắt (bottleneck)",
+  "bo": "munger-fs",
+  "nhom": "he-thong",
+  "cau_kich_hoat": "Nếu chỉ được sửa một khâu tuần này, khâu nào làm cả hệ nhanh lên?"
+ },
+ {
+  "ma": "M15",
+  "ten": "Dao cạo Occam",
+  "bo": "munger-fs",
+  "nhom": "he-thong",
+  "cau_kich_hoat": "Giải thích này cần bao nhiêu điều cùng đúng? Có giải thích nào cần ít hơn không?"
+ },
+ {
+  "ma": "M16",
+  "ten": "Nhật ký quyết định",
+  "bo": "munger-fs",
+  "nhom": "thuc-hanh",
+  "cau_kich_hoat": "Mình sẽ chấm quyết định này vào ngày nào, bằng tiêu chí nào?"
+ }
+]

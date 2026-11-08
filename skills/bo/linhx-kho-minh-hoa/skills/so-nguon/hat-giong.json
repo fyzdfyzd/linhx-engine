@@ -1,0 +1,29 @@
+{
+  "_ghi_chu": "Hoạ sĩ/kênh hạt giống. kiem=da-kiem: Claude mở web chính chủ ngày 2026-10-13 và thấy tên + Instagram đúng. kiem=chua: Linh hoặc lần chạy trên máy kiểm tiếp. Chỉ dùng để tra cứu và ghi công, không đưa tên vào prompt sinh ảnh.",
+  "hat_giong": [
+    {"ten": "Noma Bar", "ho": ["khong-gian-am"], "web": "https://www.nomabar.com", "instagram": "", "kiem": "da-kiem-web", "ghi_chu": "web chính chủ, chưa thấy Instagram; đại diện Dutch Uncle"},
+    {"ten": "Tang Yau Hoong", "ho": ["khong-gian-am", "an-du-toi-gian"], "web": "https://www.tangyauhoong.com", "instagram": "tangyauhoong", "kiem": "da-kiem"},
+    {"ten": "Malika Favre", "ho": ["khong-gian-am", "an-du-toi-gian"], "web": "https://www.malikafavre.com", "instagram": "malikafavre", "kiem": "da-kiem"},
+    {"ten": "Andrea Ucini", "ho": ["an-du-toi-gian"], "web": "https://www.andreaucini.com", "instagram": "andrea_ucini", "kiem": "da-kiem"},
+    {"ten": "Jean Jullien", "ho": ["an-du-toi-gian", "vat-the-ve-them"], "web": "https://www.jeanjullien.com", "instagram": "jean_jullien", "kiem": "da-kiem"},
+    {"ten": "Christoph Niemann", "ho": ["vat-the-ve-them", "an-du-toi-gian"], "web": "https://www.christophniemann.com", "instagram": "abstractsunday", "kiem": "da-kiem"},
+    {"ten": "Alessandro Gottardo (Shout)", "ho": ["an-du-toi-gian"], "web": "https://www.alessandrogottardo.com", "instagram": "", "kiem": "chua", "ghi_chu": "trang chuyển hướng, chưa xác nhận"},
+    {"ten": "Eiko Ojala", "ho": ["an-du-toi-gian"], "web": "https://www.ploom.tv", "instagram": "", "kiem": "da-kiem-web", "ghi_chu": "giấy cắt đổ bóng, editorial"},
+    {"ten": "John Holcroft", "ho": ["biem-hoa-xa-hoi"], "web": "https://www.johnholcroft.com", "instagram": "", "kiem": "da-kiem-web", "ghi_chu": "editorial giả in lụa retro"},
+    {"ten": "Steve Cutts", "ho": ["biem-hoa-xa-hoi"], "web": "https://www.stevecutts.com", "instagram": "steve_cutts_official", "kiem": "da-kiem"},
+    {"ten": "Marco Melgrati", "ho": ["biem-hoa-xa-hoi"], "web": "https://www.marcomelgrati.com", "instagram": "m_melgrati", "kiem": "da-kiem"},
+    {"ten": "Pawel Kuczynski", "ho": ["biem-hoa-xa-hoi"], "web": "https://www.pawelkuczynski.com", "instagram": "", "kiem": "chua", "ghi_chu": "web chặn bot đọc, kiểm trên máy"},
+    {"ten": "Al Margen", "ho": ["biem-hoa-xa-hoi"], "web": "", "instagram": "", "kiem": "chua", "ghi_chu": "almargen.com.ar là tạp chí khác, KHÔNG phải hoạ sĩ; cần tìm lại"},
+    {"ten": "Visualize Value (Jack Butcher)", "ho": ["so-do-y-tuong"], "web": "https://visualizevalue.com", "instagram": "visualizevalue", "kiem": "da-kiem"},
+    {"ten": "Sketchplanations (Jono Hey)", "ho": ["so-do-y-tuong"], "web": "https://sketchplanations.com", "instagram": "", "kiem": "da-kiem-web", "giay_phep": "CC BY-NC 4.0; bản AI phỏng theo phải ghi 'Adapted from Sketchplanations' trên ảnh"},
+    {"ten": "Behavior Gap (Carl Richards)", "ho": ["so-do-y-tuong"], "web": "https://www.behaviorgap.com", "instagram": "", "kiem": "da-kiem-web", "ghi_chu": "từng là cột Sketch Guy trên NYT 10 năm"},
+    {"ten": "Indexed (Jessica Hagy)", "ho": ["so-do-y-tuong"], "web": "https://thisisindexed.com", "instagram": "", "kiem": "da-kiem-web", "ghi_chu": "thẻ chỉ mục Venn/biểu đồ, còn đăng 9/2026"},
+    {"ten": "Liz Fosslien (Liz + Mollie)", "ho": ["so-do-y-tuong", "nguoi-que-giai-thich"], "web": "https://www.lizandmollie.com", "instagram": "lizandmollie", "kiem": "da-kiem"},
+    {"ten": "Wait But Why", "ho": ["nguoi-que-giai-thich"], "web": "https://waitbutwhy.com", "instagram": "", "kiem": "chua"},
+    {"ten": "xkcd", "ho": ["nguoi-que-giai-thich"], "web": "https://xkcd.com", "instagram": "", "kiem": "chua", "giay_phep": "CC BY-NC 2.5"},
+    {"ten": "Chema Madoz", "ho": ["ghep-sieu-thuc"], "web": "https://www.chemamadoz.com", "instagram": "", "kiem": "chua", "ghi_chu": "web chặn bot đọc"},
+    {"ten": "Javier Pérez", "ho": ["vat-the-ve-them"], "web": "", "instagram": "", "kiem": "chua"},
+    {"ten": "Ji Lee (Word as Image)", "ho": ["chu-thanh-hinh"], "web": "https://pleaseenjoy.com/word-as-image/", "instagram": "", "kiem": "da-kiem-web"},
+    {"ten": "Isotype (Otto Neurath)", "ho": ["isometric-he-thong"], "web": "https://en.wikipedia.org/wiki/Isotype_(picture_language)", "instagram": "", "kiem": "chua", "ghi_chu": "lịch sử, phạm vi công cộng một phần"}
+  ]
+}

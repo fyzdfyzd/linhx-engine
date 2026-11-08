@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Thẻ ảnh (một tác phẩm tham khảo, chỉ metadata + link)",
+  "type": "object",
+  "required": ["id", "link_goc", "tac_gia", "nguon", "ho_phong_cach", "co_che", "y_tuong_1_cau", "ngay_quet"],
+  "properties": {
+    "id": {"type": "string", "description": "nguon:ma_bai, vd instagram:CxYz123"},
+    "link_goc": {"type": "string"},
+    "tac_gia": {"type": "object", "properties": {"ten": {"type": "string"}, "link": {"type": "string"}}},
+    "nguon": {"enum": ["instagram-saved", "pinterest-board", "behance", "bluesky", "reddit", "web", "zcool", "huaban", "xiaohongshu", "linh-dan-tay"]},
+    "ho_phong_cach": {"type": "array", "maxItems": 2, "items": {"type": "string"}, "description": "id trong tu-dien-y-tuong.json"},
+    "co_che": {"type": "array", "maxItems": 2, "items": {"type": "string"}},
+    "chu_de": {"type": "array", "items": {"type": "string"}, "description": "công nghệ, tiền, công việc, môi trường, gia đình..."},
+    "y_tuong_1_cau": {"type": "string", "description": "hình này nói gì, do Claude viết"},
+    "be_mat": {"type": "object", "description": "trục LAB020: chat_lieu, net_ve, to_mau, so_mau, bo_cuc"},
+    "chu_thich_goc": {"type": "string", "description": "caption, hashtag, accessibility_caption nếu có"},
+    "tuong_tac": {"type": "integer"},
+    "co_noai": {"type": "boolean", "description": "true thì bỏ, không phân loại"},
+    "trung_voi": {"type": "string", "description": "id thẻ gốc nếu là bài đăng lại (imagededup)"},
+    "ngay_quet": {"type": "string", "format": "date"}
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "_ghi_chu": "Thông số nền 10 phễu cho SME Việt Nam, đơn vị tiền: triệu đồng/tháng. Bộ ba [thấp, hay gặp, cao] dùng phân phối tam giác. Mọi số là [giả định] đầu vào, phải thay bằng số thật của biz sau 4-8 tuần chạy. 'dau_vao' = lượt đầu phễu mỗi tháng khi đã chín; với phễu trả tiền thì tính theo mỗi 1 triệu chi. 'tang_thuc' = phần đơn THẬT SỰ do phễu tạo ra (trừ đơn đằng nào cũng có), đây là chỗ hay bị thổi phồng nhất.",
+  "pheu": {
+    "ads": {
+      "ten": "Phễu ads (Meta/TikTok) → inbox/form → đơn",
+      "kieu": "tra_tien",
+      "ngan_sach": 20,
+      "bao_hoa": 0.8,
+      "co_dinh": 3,
+      "setup": 5,
+      "thang_chin": 1,
+      "dau_vao": [
+        170,
+        300,
+        500
+      ],
+      "don_vi_dau_vao": "click / 1 triệu",
+      "buoc": [
+        [
+          "click → lead (inbox, form)",
+          0.03,
+          0.08,
+          0.15
+        ],
+        [
+          "lead → đơn",
+          0.05,
+          0.12,
+          0.25
+        ]
+      ],
+      "tang_thuc": [
+        0.5,
+        0.7,
+        0.9
+      ]
+    },
+    "seo": {
+      "ten": "Phễu SEO → lead",
+      "kieu": "tu_nhien",
+      "co_dinh": 8,
+      "setup": 10,
+      "thang_chin": 6,
+      "dau_vao": [
+        1500,
+        4000,
+        10000
+      ],
+      "don_vi_dau_vao": "lượt truy cập/tháng khi chín",
+      "buoc": [
+        [
+          "truy cập → lead",
+          0.005,
+          0.015,
+          0.03
+        ],
+        [
+          "lead → đơn",
+          0.05,
+          0.1,
+          0.2
+        ]
+      ],
+      "tang_thuc": [
+        0.7,
+        0.85,
+        0.95
+      ]
+    },
+    "content_hub": {
+      "ten": "Phễu content hub → newsletter",
+      "kieu": "tich_luy",
+      "co_dinh": 6,
+      "setup": 5,
+      "thang_chin": 6,
+      "dau_vao": [
+        800,
+        2500,
+        6000
+      ],
+      "don_vi_dau_vao": "người đọc/tháng khi chín",
+      "buoc": [
+        [
+          "người đọc → đăng ký",
+          0.01,
+          0.03,
+          0.06
+        ]
+      ],
+      "mua_moi_thang": [
+        0.003,
+        0.01,
+        0.02
+      ],
+      "roi_bo_thang": 0.03,
+      "tang_thuc": [
+        0.6,
+        0.8,
+        0.9
+      ]
+    },
+    "personal_brand": {
+      "ten": "Phễu personal brand → lead",
+      "kieu": "tu_nhien",
+      "co_dinh": 5,
+      "setup": 3,
+      "thang_chin": 4,
+      "dau_vao": [
+        5000,
+        30000,
+        150000
+      ],
+      "don_vi_dau_vao": "lượt xem/tháng khi chín",
+      "buoc": [
+        [
+          "xem → nhắn tin/để lại lead",
+          0.0003,
+          0.001,
+          0.003
+        ],
+        [
+          "lead → đơn",
+          0.08,
+          0.15,
+          0.3
+        ]
+      ],
+      "tang_thuc": [
+        0.8,
+        0.9,
+        1.0
+      ]
+    },
+    "affiliate": {
+      "ten": "Phễu affiliate → đơn",
+      "kieu": "tu_nhien",
+      "co_dinh": 2,
+      "setup": 5,
+      "thang_chin": 3,
+      "dau_vao": [
+        5,
+        15,
+        40
+      ],
+      "don_vi_dau_vao": "affiliate hoạt động",
+      "buoc": [
+        [
+          "affiliate → đơn/tháng",
+          0.5,
+          2,
+          5
+        ]
+      ],
+      "hoa_hong": 0.2,
+      "tang_thuc": [
+        0.6,
+        0.8,
+        0.9
+      ]
+    },
+    "cold_reach": {
+      "ten": "Phễu cold reach → hot",
+      "kieu": "tu_nhien",
+      "co_dinh": 6,
+      "setup": 4,
+      "thang_chin": 2,
+      "dau_vao": [
+        300,
+        600,
+        1000
+      ],
+      "don_vi_dau_vao": "liên hệ đúng đối tượng/tháng",
+      "buoc": [
+        [
+          "liên hệ → trả lời",
+          0.02,
+          0.05,
+          0.1
+        ],
+        [
+          "trả lời → hot (hẹn gặp)",
+          0.2,
+          0.35,
+          0.5
+        ],
+        [
+          "hot → đơn",
+          0.1,
+          0.2,
+          0.35
+        ]
+      ],
+      "tang_thuc": [
+        0.9,
+        0.95,
+        1.0
+      ]
+    },
+    "offline": {
+      "ten": "Offline engagement (workshop, sự kiện, hội chợ)",
+      "kieu": "tu_nhien",
+      "co_dinh": 12,
+      "setup": 3,
+      "thang_chin": 1,
+      "dau_vao": [
+        20,
+        40,
+        80
+      ],
+      "don_vi_dau_vao": "người dự/tháng (1 sự kiện)",
+      "buoc": [
+        [
+          "người dự → lead",
+          0.3,
+          0.5,
+          0.7
+        ],
+        [
+          "lead → đơn",
+          0.05,
+          0.12,
+          0.25
+        ]
+      ],
+      "tang_thuc": [
+        0.8,
+        0.9,
+        1.0
+      ]
+    },
+    "search": {
+      "ten": "Phễu search (Google Ads tìm kiếm, Maps, AI search)",
+      "kieu": "tra_tien",
+      "ngan_sach": 10,
+      "bao_hoa": 0.75,
+      "co_dinh": 2,
+      "setup": 3,
+      "thang_chin": 1,
+      "dau_vao": [
+        125,
+        200,
+        330
+      ],
+      "don_vi_dau_vao": "click / 1 triệu",
+      "buoc": [
+        [
+          "click → lead",
+          0.05,
+          0.1,
+          0.2
+        ],
+        [
+          "lead → đơn",
+          0.1,
+          0.2,
+          0.3
+        ]
+      ],
+      "tang_thuc": [
+        0.3,
+        0.5,
+        0.8
+      ]
+    },
+    "community": {
+      "ten": "Phễu community riêng (CLB, Zalo Cộng đồng)",
+      "kieu": "tich_luy",
+      "co_dinh": 5,
+      "setup": 3,
+      "thang_chin": 4,
+      "dau_vao": [
+        50,
+        150,
+        400
+      ],
+      "don_vi_dau_vao": "thành viên mới/tháng khi chín",
+      "buoc": [],
+      "mua_moi_thang": [
+        0.005,
+        0.015,
+        0.03
+      ],
+      "roi_bo_thang": 0.03,
+      "tang_thuc": [
+        0.6,
+        0.8,
+        0.9
+      ]
+    },
+    "group": {
+      "ten": "Phễu group (seeding vào group FB/Zalo của người khác)",
+      "kieu": "tu_nhien",
+      "co_dinh": 4,
+      "setup": 1,
+      "thang_chin": 2,
+      "dau_vao": [
+        10,
+        30,
+        80
+      ],
+      "don_vi_dau_vao": "lead/tháng",
+      "buoc": [
+        [
+          "lead → đơn",
+          0.05,
+          0.1,
+          0.2
+        ]
+      ],
+      "tang_thuc": [
+        0.7,
+        0.85,
+        0.95
+      ]
+    }
+  }
+}

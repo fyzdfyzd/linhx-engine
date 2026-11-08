@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Thẻ phong cách (một mục trong kho, kiểu case.yaml của JimmyLv)",
+  "type": "object",
+  "required": ["id", "ten", "ho", "dinh_nghia", "dau_hieu", "cong_thuc", "anh_tham_khao"],
+  "properties": {
+    "id": {"type": "string"},
+    "ten": {"type": "string"}, "ten_en": {"type": "string"}, "alias": {"type": "array", "items": {"type": "string"}},
+    "ho": {"type": "string"},
+    "dinh_nghia": {"type": "string"},
+    "dau_hieu": {"type": "array", "items": {"type": "string"}, "description": "5-7 dấu hiệu nhận ra bằng mắt"},
+    "co_che_hop": {"type": "array", "items": {"type": "string"}},
+    "khi_nao_dung": {"type": "string"}, "khi_nao_tranh": {"type": "string"},
+    "nghe_si_tieu_bieu": {"type": "array", "items": {"type": "object", "properties": {"ten": {"type": "string"}, "link": {"type": "string"}}}, "description": "chỉ để tra cứu, không đưa vào prompt"},
+    "anh_tham_khao": {"type": "array", "items": {"type": "string"}, "description": "id thẻ ảnh"},
+    "cong_thuc": {"type": "object", "properties": {
+      "prompt": {"type": "string", "description": "có {y_tuong}, mô tả bằng tính chất hình, không tên hoạ sĩ"},
+      "negative": {"type": "string"}, "ti_le_khung": {"type": "string"}, "mo_hinh_da_thu": {"type": "array", "items": {"type": "string"}}}},
+    "anh_mau_tu_sinh": {"type": "array", "items": {"type": "string"}, "description": "ảnh do ta sinh với 3 đề chuẩn"},
+    "loi_hay_gap": {"type": "array", "items": {"type": "string"}},
+    "ghi_cong": {"type": "string"}
+  }
+}

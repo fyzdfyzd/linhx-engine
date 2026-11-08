@@ -1,0 +1,34 @@
+{
+ "_huong_dan": "Bảng sự thật chuẩn ABC. Mỗi dòng facts có status confirmed/proposed và source. previous + valid_from cho dữ kiện đã đổi (để chấm nhãn Cũ). kiem_kenh=true: dò giá trị này trên các kênh (B2).",
+ "brand": "Tên thương hiệu",
+ "aliases": ["tên viết tắt", "tên không dấu"],
+ "website": "example.vn",
+ "category": "ngành hàng, ví dụ sữa tươi",
+ "market": "Việt Nam",
+ "city": "TP. Hồ Chí Minh",
+ "need": "nhu cầu điển hình của khách",
+ "budget": "dưới 500.000 đồng",
+ "personas": ["mẹ bỉm sữa ở Hà Nội", "chủ doanh nghiệp vừa"],
+ "products": [{"name": "Sản phẩm chủ lực", "price": "120.000 đồng", "url": "https://example.vn/sp"}],
+ "competitors": [{"name": "Đối thủ A", "domain": "doithua.vn", "aliases": []}],
+ "positioning": ["thuộc tính muốn được biết 1", "thuộc tính 2", "thuộc tính 3"],
+ "not_for": "không dành cho ai",
+ "forbidden_claims": ["số 1 Việt Nam"],
+ "facts": [
+  {"id": "company", "label": "Công ty đứng sau", "value": "Công ty CP ...", "status": "confirmed", "source": "giấy phép KD", "kiem_kenh": true},
+  {"id": "founded", "label": "Năm thành lập", "value": "2015", "status": "confirmed", "source": ""},
+  {"id": "hq", "label": "Trụ sở", "value": "Quận 1, TP. Hồ Chí Minh", "status": "confirmed", "source": "", "previous": "Quận 3", "valid_from": "2024-01", "kiem_kenh": true},
+  {"id": "hotline", "label": "Hotline", "value": "1900 0000", "status": "confirmed", "source": "", "kiem_kenh": true},
+  {"id": "founder", "label": "Người sáng lập / lãnh đạo", "value": "Nguyễn Văn A", "status": "confirmed", "source": ""},
+  {"id": "proof", "label": "Giải thưởng, chứng nhận, con số", "value": "...", "status": "confirmed", "source": "link"},
+  {"id": "policy", "label": "Đổi trả, bảo hành, giao hàng", "value": "...", "status": "confirmed", "source": "link"}
+ ],
+ "channels": [
+  {"type": "website", "url": "https://example.vn"},
+  {"type": "facebook", "url": "https://facebook.com/example"},
+  {"type": "shopee", "url": "https://shopee.vn/example"},
+  {"type": "google_business", "url": ""},
+  {"type": "masothue", "url": ""}
+ ],
+ "abc": {"cau_hoi_them": []}
+}

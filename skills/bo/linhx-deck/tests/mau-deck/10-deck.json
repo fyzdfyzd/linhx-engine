@@ -1,0 +1,337 @@
+{
+ "ten": "Quy trình 15 bước làm deck proposal",
+ "brand": "linhx",
+ "chan_trang": "LINHX LAB · LAB027 · 10/2026",
+ "slides": [
+  {
+   "id": "bia",
+   "kieu": "bia",
+   "tieu_de": "Quy trình 15 bước làm deck proposal cho các BU",
+   "phu_de": "LAB027 · plugin linhx-deck v0.1 cho Claude Code và Antigravity",
+   "khach": "Cho Linh và các BU của LINHX",
+   "ngay": "13/10/2026",
+   "ghi_chu": "Deck này vừa giới thiệu quy trình, vừa là deck đầu tiên dựng bằng chính plugin: dữ liệu ở 10-deck.json, xuất bằng deck.py xuat."
+  },
+  {
+   "id": "tom-tat",
+   "kieu": "tom-tat",
+   "phan": "Tóm tắt",
+   "tieu_de": "Một deck kỹ cần 15 tệp có cổng kiểm chứ không cần thêm phần mềm",
+   "diem": [
+    "Trong 40 repo đã đọc code, chưa repo nào làm trọn chuỗi từ đề bài tới bàn giao.",
+    "Mỗi bước ghi một tệp; script kiểm cổng, AI không được tự tuyên bố đạt.",
+    "Offer chỉ được nói khi có năng lực đã chứng minh trong hồ sơ 33 năng lực của Linh.",
+    "Ảnh làm trong ChatGPT Plus theo ảnh neo, Claude rà 8 luật trước khi đưa vào deck."
+   ],
+   "ket_luan": "Linh duyệt 5 cổng; phần còn lại Claude chạy và báo khi cần Linh.",
+   "bang_chung": [
+    "BC01",
+    "BC02",
+    "BC05"
+   ],
+   "ghi_chu": "Nếu chỉ đọc một trang thì đọc trang này. Bốn ý: chưa có công cụ làm sẵn, cổng do máy kiểm, offer bám năng lực thật, ảnh có tham chiếu.",
+   "diem_chinh": "Linh chỉ duyệt năm cổng, phần còn lại máy kiểm",
+   "hinh_thuc": "cau"
+  },
+  {
+   "id": "c1",
+   "kieu": "chuong",
+   "so": "01",
+   "tieu_de": "Vì sao cần quy trình mới",
+   "phu_de": "Quy trình cũ làm tốt deck đào tạo, nhưng proposal cần thêm ba khúc"
+  },
+  {
+   "id": "khoang-trong",
+   "kieu": "the",
+   "phan": "01 | Khoảng trống",
+   "tieu_de": "Quy trình cũ tốt cho deck đào tạo nhưng thiếu ba khúc của proposal",
+   "muc": [
+    {
+     "tieu_de": "Pain–gain",
+     "noi_dung": "Chưa có khung ghi nỗi đau và mong muốn của khách kèm bằng chứng và điểm mạnh yếu."
+    },
+    {
+     "tieu_de": "Lợi thế và offer",
+     "noi_dung": "Năng lực nằm rải rác nhiều thư mục, offer và giá chưa nối với nỗi đau cụ thể."
+    },
+    {
+     "tieu_de": "Moodboard và rà ảnh",
+     "noi_dung": "Có quy trình ảnh cho deck đào tạo, chưa có cho deck chào khách theo brand đối tác."
+    }
+   ],
+   "dai": "Các deck cũ có khách sẵn; proposal phải tự chứng minh vì sao khách nên chọn Linh.",
+   "bang_chung": [
+    "BC08"
+   ],
+   "nguon": "QUY-TRINH-CU.md",
+   "ghi_chu": "Đây là ba chỗ quy trình trong EDU chưa có, vì mọi deck cũ đều là deck đào tạo cho khách đã chốt.",
+   "diem_chinh": "Thiếu ba khúc nên proposal không tự chứng minh được",
+   "hinh_thuc": "so-do",
+   "nhan_manh": 1
+  },
+  {
+   "id": "repo",
+   "kieu": "so-lon",
+   "phan": "01 | Nghiên cứu nền",
+   "tieu_de": "Bốn mươi repo đã đọc code nhưng không repo nào phủ đủ quy trình",
+   "so": [
+    {
+     "gia_tri": "22",
+     "nhan": "repo quốc tế đã clone và đọc code"
+    },
+    {
+     "gia_tri": "18",
+     "nhan": "repo Trung Quốc đã clone và đọc code"
+    },
+    {
+     "gia_tri": "0",
+     "nhan": "repo làm trọn chuỗi từ đề bài tới bàn giao"
+    }
+   ],
+   "bang_chung": [
+    "BC01",
+    "BC02"
+   ],
+   "nguon": "REPOS-EN.md, REPOS-CN.md",
+   "ghi_chu": "Repo tốt chỉ phủ một khúc: dàn ý kiểu tư vấn, ảnh có tham chiếu, hoặc kiểm deck. Pain-gain, offer, ba giải pháp, prototype phải tự viết.",
+   "diem_chinh": "Không repo nào làm trọn chuỗi đề bài tới bàn giao",
+   "hinh_thuc": "so-lon",
+   "so_chinh": 2
+  },
+  {
+   "id": "c2",
+   "kieu": "chuong",
+   "so": "02",
+   "tieu_de": "Quy trình 15 bước",
+   "phu_de": "Năm chặng, năm cổng Linh duyệt"
+  },
+  {
+   "id": "nam-chang",
+   "kieu": "bang",
+   "phan": "02 | Quy trình",
+   "tieu_de": "Mười lăm bước gom thành năm chặng và Linh chỉ duyệt năm cổng",
+   "cot": [
+    "Chặng",
+    "Bước",
+    "Tệp ra",
+    "Linh duyệt"
+   ],
+   "dong": [
+    [
+     "Hiểu khách",
+     "1–4",
+     "đề bài, bằng chứng, người nghe, pain–gain",
+     "cổng 1"
+    ],
+    [
+     "Chiến lược",
+     "5–7, 9",
+     "lợi thế, offer, ba giải pháp, dịch vụ",
+     "cổng 6, 7"
+    ],
+    [
+     "Hình ảnh",
+     "8, 11, 12",
+     "moodboard, gói ảnh, rà ảnh",
+     "cổng 8"
+    ],
+    [
+     "Deck",
+     "10, 13",
+     "ghost deck, Claude Slides",
+     "cổng 10"
+    ],
+    [
+     "Bàn giao",
+     "14–15",
+     "demo, gói bàn giao, thư nháp",
+     "không"
+    ]
+   ],
+   "cot_nhan": 3,
+   "so_la_nhan": true,
+   "ghi_chu": "Linh duyệt đề bài, offer, ba giải pháp, hướng phong cách và ghost deck. Linh vắng quá 10 phút thì Claude duyệt theo khuyến nghị, trừ việc gửi khách.",
+   "diem_chinh": "Năm chặng, Linh chỉ dừng lại ở năm cổng",
+   "hinh_thuc": "bang",
+   "dong_nhan": 3
+  },
+  {
+   "id": "co-che",
+   "kieu": "the",
+   "phan": "02 | Chất lượng",
+   "tieu_de": "Ba cơ chế giữ chất lượng do máy kiểm chứ không do AI tự khen",
+   "muc": [
+    {
+     "tieu_de": "Bảng bằng chứng",
+     "noi_dung": "Mỗi số trên slide trỏ về một dòng có nguồn, ngày đọc và trích đoạn để kiểm lại."
+    },
+    {
+     "tieu_de": "Đối chiếu offer",
+     "noi_dung": "Offer không giải nỗi đau lớn hoặc không có năng lực đã chứng minh bị chặn hoặc phải gắn nhãn thí điểm."
+    },
+    {
+     "tieu_de": "Kiểm deck",
+     "noi_dung": "Tiêu đề phải là câu kết luận, trần chữ theo kiểu slide, từ cấm từng BU, tương phản màu."
+    }
+   ],
+   "so_la_nhan": true,
+   "ghi_chu": "Cách làm mượn từ các repo nghiêm túc nhất: cổng là tệp và script, quyền miễn trừ nằm trong mã.",
+   "diem_chinh": "Máy kiểm cổng, AI không được tự khen",
+   "hinh_thuc": "so-do",
+   "nhan_manh": 0
+  },
+  {
+   "id": "anh",
+   "kieu": "lo-trinh",
+   "phan": "02 | Hình ảnh",
+   "tieu_de": "Ảnh đi qua năm chặng có tham chiếu trước khi vào deck",
+   "buoc": [
+    {
+     "moc": "BƯỚC 8",
+     "ten": "Moodboard",
+     "viec": "Linh tự lưu 6–10 ảnh Pinterest, Dribbble"
+    },
+    {
+     "moc": "BƯỚC 8",
+     "ten": "Thẻ phong cách",
+     "viec": "Claude rút 3 hướng, Linh chọn bằng mắt"
+    },
+    {
+     "moc": "BƯỚC 11",
+     "ten": "Ảnh neo",
+     "viec": "Duyệt một ảnh neo trước khi làm cả bộ"
+    },
+    {
+     "moc": "BƯỚC 11",
+     "ten": "Gói prompt",
+     "viec": "Mỗi prompt kèm câu tham chiếu cố định"
+    },
+    {
+     "moc": "BƯỚC 12",
+     "ten": "Rà 8 luật",
+     "viec": "Không chữ, không logo, không người, đúng tỉ lệ"
+    }
+   ],
+   "so_la_nhan": true,
+   "bang_chung": [
+    "BC03",
+    "BC06"
+   ],
+   "ghi_chu": "Pinterest và Dribbble cấm cào và chặn máy chủ, nên Linh tự lưu ảnh. Ảnh người như chụp thật từng bị chê bị AI quá, nên mặc định là poster không người.",
+   "diem_chinh": "Mọi ảnh đều có ảnh neo và vòng sửa",
+   "hinh_thuc": "so-do",
+   "nhan_manh": 2
+  },
+  {
+   "id": "phuong-an",
+   "kieu": "so-sanh",
+   "phan": "03 | Phương án",
+   "tieu_de": "Khuyến nghị dựng plugin có cổng và chỉ gọi phản biện khi cần",
+   "phuong_an": [
+    {
+     "ten": "PA1 Một skill",
+     "mo_ta": "Một tệp hướng dẫn dài kèm mẫu.",
+     "diem": [
+      "Xong nhanh",
+      "AI tự kiểm nên dễ bỏ bước"
+     ]
+    },
+    {
+     "ten": "PA2 Plugin có cổng",
+     "mo_ta": "Bảy skill, script kiểm cổng, xuất Claude Slides.",
+     "diem": [
+      "Cổng do máy kiểm",
+      "Dùng lại bảy Design System",
+      "Phản biện là lệnh gọi riêng"
+     ],
+     "khuyen_nghi": true
+    },
+    {
+     "ten": "PA3 Phản biện mặc định",
+     "mo_ta": "Như PA2, mỗi deck chạy thêm hai agent phản biện.",
+     "diem": [
+      "Soi kỹ nhất",
+      "Tốn token, chậm hơn"
+     ]
+    }
+   ],
+   "so_la_nhan": true,
+   "ghi_chu": "PA4 xưởng pptx không đưa lên đây vì Claude Slides đã tải được pptx và PDF.",
+   "diem_chinh": "Plugin có cổng: chắc mà không tốn gấp đôi",
+   "hinh_thuc": "so-do"
+  },
+  {
+   "id": "brand",
+   "kieu": "the",
+   "phan": "03 | Brand",
+   "tieu_de": "Deck của từng BU dùng lại Design System có sẵn thay vì dựng mẫu mới",
+   "muc": [
+    {
+     "tieu_de": "Màu và chữ",
+     "noi_dung": "Lấy từ tokens của bảy Design System trong LAB012, kiểm tương phản mỗi lần xuất."
+    },
+    {
+     "tieu_de": "Logo",
+     "noi_dung": "Sao từ Design System hoặc tệp gốc, không bao giờ để AI vẽ lại."
+    },
+    {
+     "tieu_de": "Luật riêng",
+     "noi_dung": "Mỗi BU có danh sách từ cấm, ví dụ Chiêm Tinh Số không dùng chữ giải hạn."
+    }
+   ],
+   "bang_chung": [
+    "BC07"
+   ],
+   "so_la_nhan": true,
+   "ghi_chu": "Brand LINHX dùng phong cách tư vấn navy và cam đất cho deck chào khách bằng tên Linh.",
+   "diem_chinh": "Dùng lại Design System, không bao giờ vẽ lại logo",
+   "hinh_thuc": "so-do",
+   "nhan_manh": 1
+  },
+  {
+   "id": "ca-thu",
+   "kieu": "lo-trinh",
+   "phan": "04 | Bước tiếp",
+   "tieu_de": "Ca thử đầu tiên chạy đủ quy trình trên một đề bài thật",
+   "buoc": [
+    {
+     "moc": "NGÀY 1",
+     "ten": "Đề bài",
+     "viec": "Linh gửi brief thật, Claude chạy bước 1–4"
+    },
+    {
+     "moc": "NGÀY 1",
+     "ten": "Offer",
+     "viec": "Linh duyệt offer và ba giải pháp"
+    },
+    {
+     "moc": "NGÀY 2",
+     "ten": "Hình ảnh",
+     "viec": "Linh lưu moodboard, tạo ảnh theo gói"
+    },
+    {
+     "moc": "NGÀY 2",
+     "ten": "Deck",
+     "viec": "Claude dựng deck, phản biện, đóng gói"
+    }
+   ],
+   "so_la_nhan": true,
+   "ghi_chu": "Thời gian Linh bỏ ra mục tiêu dưới 90 phút cho một deck, chủ yếu là duyệt cổng và tạo ảnh.",
+   "diem_chinh": "Hai ngày cho một deck thật, Linh dưới 90 phút",
+   "hinh_thuc": "so-do",
+   "nhan_manh": 3
+  },
+  {
+   "id": "ket",
+   "kieu": "ket",
+   "tieu_de": "Linh cần làm hai việc để bắt đầu",
+   "buoc_tiep": [
+    "Chọn phương án trên thẻ trong thread, mặc định là PA2.",
+    "Gửi một đề bài thật đang cần làm deck."
+   ],
+   "lien_he": "LAB027-DECK-PROPOSAL · D:\\LINHX\\LAB",
+   "so_la_nhan": true,
+   "hanh_dong_chinh": "Gửi một đề bài thật để chạy ca thử đầu tiên"
+  }
+ ]
+}

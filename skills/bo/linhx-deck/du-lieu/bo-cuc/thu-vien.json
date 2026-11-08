@@ -1,0 +1,129 @@
+{
+ "ghi_chu": "Thư viện bố cục slide (học từ deck đẹp, chỉ tham chiếu nội bộ). Mỗi deck chọn bố cục cho từng kiểu slide ở bước 8b (deck.py bo-cuc chon).",
+ "bo_cuc": [
+  {
+   "id": "toan-trang",
+   "mau": "b01",
+   "ten": "Ảnh nền toàn trang, chữ ở phía tối",
+   "loai": "anh-nen",
+   "chu_y": "Ảnh kể chuyện chiếm cả slide, chủ thể ở một phần ba, phía còn lại tối/đặc màu brand để chữ đứng; mắt đi: chủ thể → tiêu đề.",
+   "hop_voi": [
+    "bia",
+    "chuong",
+    "ket",
+    "khang-dinh"
+   ],
+   "cong_thuc": "img position:absolute 0,0,1920×1080 object-fit:cover (con đầu tiên) + div phủ linear-gradient(90deg, màu nền 0% → màu nền 40% → trong suốt 75%) + nội dung trong 55% bên trái",
+   "anh_can": "ảnh 16:9 toàn cảnh, chủ thể ở 1/3 phải, 2/3 trái tối/đặc màu brand, không khung, không bệ",
+   "anh": "du-lieu/bo-cuc/toan-trang.jpg",
+   "nguon": "https://dribbble.com/shots/27700328-Presentation-Design-Film-Pitch-Deck-World-Building-Slide",
+   "anh_url": "https://cdn.dribbble.com/userupload/48908325/file/defef298c403ccf0e68e31486f829230.png",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "nua-trang",
+   "mau": "b05",
+   "ten": "Nửa slide là ảnh tràn mép, nửa là chữ",
+   "loai": "anh-nen",
+   "chu_y": "Ảnh và chữ chia đôi, mép ảnh tan vào nền bằng dải gradient; hợp slide kể bối cảnh, trích dẫn.",
+   "hop_voi": [
+    "hai-cot",
+    "bia",
+    "trich-dan"
+   ],
+   "cong_thuc": "img position:absolute right:0 top:0 960×1080 cover + div phủ linear-gradient(90deg, màu nền → trong suốt) rộng 320px ở mép trái ảnh",
+   "anh_can": "ảnh 16:9 hoặc 4:5, cạnh giáp chữ là vùng tối/sáng trơn cùng tông nền",
+   "anh": "du-lieu/bo-cuc/nua-trang.jpg",
+   "nguon": "https://dribbble.com/shots/27648357-Corvyn-Real-Estate-Editorial-Deck",
+   "anh_url": "https://cdn.dribbble.com/userupload/48715403/file/3fbd32f7896efd36a3a4285b0eda7f7e.png",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "so-lon-hero",
+   "mau": "b08",
+   "ten": "Một con số anh hùng",
+   "loai": "tieu-diem",
+   "chu_y": "Một con số rất to màu nhấn là tiêu điểm duy nhất; các số phụ nhỏ, màu trầm.",
+   "hop_voi": [
+    "so-lon"
+   ],
+   "cong_thuc": "số chính 200px màu nhấn + nhãn 34px; số phụ 64px màu chữ phụ; chỉ một chỗ dùng màu nhấn",
+   "anh": "du-lieu/bo-cuc/so-lon-hero.jpg",
+   "nguon": "https://dribbble.com/shots/27361479-Startup-Investment-Pitch-Deck-Slides",
+   "anh_url": "https://cdn.dribbble.com/userupload/47676331/file/96df1ce62fe51e8d8621712de5c9bc1a.png",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "nen-mem",
+   "mau": "b14",
+   "ten": "Nền chuyển sắc mềm màu brand, không vật thể",
+   "loai": "nghi",
+   "chu_y": "Slide nghỉ/nhấn ý: một câu lớn trên nền gradient mềm; nhịp thở giữa các slide nặng.",
+   "hop_voi": [
+    "khang-dinh",
+    "muc-luc",
+    "tom-tat"
+   ],
+   "cong_thuc": "background: radial-gradient(ellipse at 80% 20%, màu nhấn nhạt 0%, màu nền 60%) hoặc ảnh neo mờ 0.25 phía sau",
+   "anh": "du-lieu/bo-cuc/nen-mem.jpg",
+   "nguon": "https://www.pinterest.com/pin/484137028718982159/",
+   "anh_url": "https://i.pinimg.com/originals/89/ec/c2/89ecc2e4ad3f33d0fff3762719f429f3.jpg",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "the-nhan-manh",
+   "mau": "b03",
+   "ten": "Hàng thẻ, một thẻ đậm làm tiêu điểm",
+   "loai": "tieu-diem",
+   "chu_y": "Nhiều thẻ cùng cỡ thì mắt bị chia; một thẻ đổi nền tối và to hơn để kéo mắt.",
+   "hop_voi": [
+    "doi-ngu",
+    "lo-trinh",
+    "so-sanh",
+    "the"
+   ],
+   "cong_thuc": "thẻ chính: nền tối, chữ sáng, flex 1.4; thẻ phụ: nền xen, chữ phụ, flex 1",
+   "anh": "du-lieu/bo-cuc/the-nhan-manh.jpg",
+   "nguon": "https://dribbble.com/shots/27771780-Oddwell-Studio-Creative-Agency-Design-Pitch-Deck",
+   "anh_url": "https://cdn.dribbble.com/userupload/49174343/file/a8110dfb835f0d104ea43f6b3f62e424.jpg",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "bieu-do-hero",
+   "mau": "b06",
+   "ten": "Biểu đồ là tiêu điểm, cột chính màu nhấn",
+   "loai": "tieu-diem",
+   "chu_y": "Biểu đồ chiếm 60% slide, chỉ cột/điểm chứng minh diem_chinh mang màu nhấn, còn lại xám.",
+   "hop_voi": [
+    "bieu-do"
+   ],
+   "cong_thuc": "svg nội tuyến 1100×600; cột chính màu nhấn, cột khác màu viền; nhãn số trên cột; nguồn ở chân trang",
+   "anh": "du-lieu/bo-cuc/bieu-do-hero.jpg",
+   "nguon": "https://dribbble.com/shots/26654500-Partnership-Deck-Design-High-Impact-Financial-Metrics",
+   "anh_url": "https://cdn.dribbble.com/userupload/45325380/file/ed8c2c1045b837bc560602de5a74036e.png",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  },
+  {
+   "id": "bang-nhan-dong",
+   "mau": "b06",
+   "ten": "Bảng có một dòng nhấn",
+   "loai": "tieu-diem",
+   "chu_y": "Bảng nhạt, dòng then chốt đậm nền nhấn nhạt; các dòng khác chữ phụ.",
+   "hop_voi": [
+    "bang"
+   ],
+   "cong_thuc": "tr nhấn: background màu xen đậm + chữ đậm; tr khác: chữ phụ",
+   "anh": "du-lieu/bo-cuc/bang-nhan-dong.jpg",
+   "nguon": "https://dribbble.com/shots/26654500-Partnership-Deck-Design-High-Impact-Financial-Metrics",
+   "anh_url": "https://cdn.dribbble.com/userupload/45325380/file/ed8c2c1045b837bc560602de5a74036e.png",
+   "luc": "2026-10-13",
+   "ghi_chu": "ảnh tham chiếu nội bộ, không đưa lên deck gửi khách"
+  }
+ ]
+}

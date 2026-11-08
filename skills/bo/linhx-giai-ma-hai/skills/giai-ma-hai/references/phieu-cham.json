@@ -1,0 +1,9 @@
+{"huong_dan": "Persona LAB048 v2: viết tiểu sử 3 câu trước, rồi trả xác suất từng phương án. Mỗi biến thể chấm riêng, trộn thứ tự, chèn 1 mẫu gốc làm mốc.",
+ "cau": [
+  {"id": "hieu", "hoi": "Đọc/xem xong bạn hiểu chỗ buồn cười không?", "pa": ["hiểu ngay", "hiểu sau vài giây", "không hiểu"]},
+  {"id": "cuoi", "hoi": "Buồn cười cỡ nào?", "pa": ["1", "2", "3", "4", "5"]},
+  {"id": "lanh", "hoi": "Có thấy khó chịu hoặc bị xúc phạm không?", "pa": ["không", "hơi", "có"]},
+  {"id": "gui", "hoi": "Bạn sẽ gửi cho ai?", "pa": ["không gửi", "bạn thân", "nhóm chat", "đăng lên tường"]},
+  {"id": "dien", "hoi": "Bạn có muốn tự làm một bản của mình theo kiểu này không?", "pa": ["có", "không"]}
+ ],
+ "luat_qua": "hieu_ngay+sau >= 0.7, cuoi>=4 >= 0.3, lanh=co <= 0.1; xếp theo gui(nhóm chat+tường) rồi dien."}

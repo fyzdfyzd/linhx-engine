@@ -1,0 +1,15 @@
+{
+  "mau": [
+    {"ten": "mck-state-ai-2026", "nguon": "Thư viện báo cáo AI của Linh", "duong_dan": "00-mau/mck-state-ai-2026/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": true, "vi_sao": "Kỷ luật exhibit, khoảng trắng rộng"},
+    {"ten": "envato-annual-report-x", "nguon": "https://elements.envato.com/...", "duong_dan": "00-mau/envato-annual-report-x/tong-quan.jpg", "loai_giay_phep": "dung-duoc", "chon": false, "vi_sao": "Mở chương ảnh tràn"},
+    {"ten": "behance-y", "nguon": "https://www.behance.net/...", "duong_dan": "00-mau/behance-y/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": false, "vi_sao": "Trang số lớn"}
+  ],
+  "trang": [
+    {"so": 1, "kieu": "T01", "ghi_chu": "bìa ảnh tràn, tiêu đề serif góc dưới trái"}
+  ],
+  "nhip": "Mỗi chương: mở chương → trang lai chữ và hình → hình trọn trang → số lớn; không quá 2 trang chữ liền.",
+  "bai_hoc": [
+    "Tiêu đề hình là câu kết luận có dấu chấm, nhãn HÌNH N nhỏ màu nhấn ở trên",
+    "Lề treo trái khoảng 20% cho nhãn mục, chữ thân cột phải"
+  ]
+}

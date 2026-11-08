@@ -1,0 +1,61 @@
+{
+ "brand_id": "btmh-2026",
+ "ten": "Bảo Tín Mạnh Hải",
+ "nguon": "BTMH Guideline 2026 (Linh chốt 30/10/2026, thay bộ màu brand.json LAB043)",
+ "mau": {
+  "nguong_delta_e": 8,
+  "chinh": [
+   {
+    "ten": "Lacquer Red",
+    "hex": "#970001"
+   },
+   {
+    "ten": "Gold",
+    "hex": "#DBC28C"
+   }
+  ],
+  "phu": [
+   {
+    "ten": "Silk",
+    "hex": "#F6F4E5"
+   },
+   {
+    "ten": "Chữ tối ấm",
+    "hex": "#2A1A16"
+   },
+   {
+    "ten": "Xám ấm",
+    "hex": "#8C857C"
+   },
+   {
+    "ten": "Trắng",
+    "hex": "#FFFFFF"
+   }
+  ]
+ },
+ "chu": {
+  "font_cho_phep": [
+   "Artifex CF",
+   "Google Sans",
+   "Product Sans",
+   "Arial"
+  ],
+  "vai_tro": {
+   "Artifex CF": "tên thương hiệu, tiêu đề sang trọng",
+   "Google Sans": "quảng bá online/offline, tài liệu tiếp thị, brochure (Product Sans là tên file cũ của Google Sans)",
+   "Arial": "văn phòng (Word, Excel, PowerPoint) và dự phòng lỗi font"
+  },
+  "trong_luong": [
+   "Light",
+   "Regular",
+   "Bold"
+  ],
+  "file_font": "03-chu/ (SVN-ArtifexCF Light/Bold, ProductSans Regular/Bold): font bản quyền, chỉ dùng nội bộ",
+  "font_logo_suy_doan": "",
+  "font_thay_the_web": [
+   "Noto Serif Display",
+   "Google Sans",
+   "Arial"
+  ]
+ }
+}

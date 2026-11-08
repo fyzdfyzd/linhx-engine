@@ -1,0 +1,47 @@
+{
+ "id": "khong-gian-am-2-mau",
+ "ten": "Không gian âm hai nghĩa",
+ "ten_en": "Negative-space double image",
+ "alias": [
+  "negative space",
+  "figure-ground",
+  "图底反转"
+ ],
+ "ho": "khong-gian-am",
+ "dinh_nghia": "Khoảng trống giữa các hình tạo thành hình thứ hai, nên người xem 'ngộ ra' ý sau một nhịp.",
+ "dau_hieu": [
+  "đúng 2 màu tương phản",
+  "hình bóng (silhouette) không chi tiết bên trong",
+  "viền ngoài của hình A chính là viền của hình B",
+  "đọc được hai cách",
+  "bố cục đối xứng hoặc gần đối xứng"
+ ],
+ "co_che_hop": [
+  "hai-nghia",
+  "tuong-phan"
+ ],
+ "khi_nao_dung": "logo ý tưởng, bìa sách, câu chuyện hai mặt",
+ "khi_nao_tranh": "ý cần nhiều vật; mô hình sinh ảnh hay làm sai nên cần chỉnh tay",
+ "nghe_si_tieu_bieu": [
+  {
+   "ten": "Noma Bar",
+   "link": "https://www.nomabar.com"
+  },
+  {
+   "ten": "Tang Yau Hoong",
+   "link": "https://www.tangyauhoong.com"
+  }
+ ],
+ "anh_tham_khao": [],
+ "cong_thuc": {
+  "prompt": "Clever negative space illustration about {y_tuong}: the silhouette of [HÌNH A] whose empty space forms [HÌNH B]. Strictly two flat colours (black and warm yellow), bold silhouettes, no interior detail, symmetrical, poster style.",
+  "negative": "gradient, shading, texture, extra objects, text, third colour",
+  "ti_le_khung": "1:1",
+  "mo_hinh_da_thu": []
+ },
+ "anh_mau_tu_sinh": [],
+ "loi_hay_gap": [
+  "mô hình thường vẽ hai hình cạnh nhau thay vì lồng nhau; cần nêu rõ hình A và hình B, hoặc vẽ phác bằng tay rồi cho mô hình tô"
+ ],
+ "ghi_cong": "Thẻ khởi đầu."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "linhx-viet-bai",
+  "version": "0.2.0",
+  "description": "Quy trình LinhX Write 9 bước gốc của Linh (FLOW v FM, D:\\@WF\\TOOL\\00_WRITING) chuyển sang plugin: 11 câu hỏi Deep Inquiry, 30 tứ, 3 phương án, phản biện 2 tầng AI Detector + Editorial QA qua Gemini, chọn bản tốt nhất.",
+  "author": { "name": "LINHX LAB" },
+  "license": "MIT"
+}

@@ -1,0 +1,28 @@
+{
+ "ten": "deck theo slide",
+ "mo_ta": "Bước 10-13 của linhx-deck tách theo từng slide; bước 1-9 nằm trong chung/",
+ "don_vi": "slide",
+ "tang": [
+  {"id": "noi-dung", "can": [], "doc_chung": ["chung/01-de-bai.md", "chung/02-bang-chung.csv", "chung/06-offer.json"],
+   "ra": "noi-dung.json", "ai": "claude",
+   "viec": "Viết nội dung một slide: tiêu đề kết luận, kiểu slide, mã bằng chứng BCxx cho mọi con số",
+   "cong": {"loai": "json-truong", "truong": ["id", "kieu", "tieu_de"]}},
+  {"id": "anh-prompt", "can": ["noi-dung"], "doc_chung": ["chung/08-the-phong-cach.json"],
+   "ra": "anh-prompt.json", "ai": "claude",
+   "viec": "Viết prompt ảnh nền 16:9 không chữ, kèm danh sách ảnh ref (ảnh neo + moodboard); slide không cần ảnh thì bo-qua",
+   "cong": {"loai": "json-truong", "truong": ["prompt", "ref"]}},
+  {"id": "tao-anh", "can": ["anh-prompt"], "ra": "anh.png", "ai": "gpt-image",
+   "viec": "Tạo ảnh trên ChatGPT Plus qua Chrome với đúng prompt và ref; hết lượt thì `loi --tai-nguyen`",
+   "cong": {"loai": "anh"}},
+  {"id": "ra-anh", "can": ["tao-anh"], "ra": "ra-anh.json", "ai": "claude",
+   "viec": "Rà ảnh theo H1-H8; không đạt thì ghi 'sua' và lam-lai tầng tao-anh (tối đa 3 vòng)",
+   "cong": {"loai": "json-truong", "truong": ["ket_luan"]}},
+  {"id": "bo-cuc", "can": ["noi-dung"], "ra": "bo-cuc.json", "ai": "claude",
+   "viec": "Chọn kiểu slide trong thư viện bố cục của linhx-deck, vị trí chữ, biểu đồ nếu có",
+   "cong": {"loai": "json-truong", "truong": ["kieu"]}},
+  {"id": "dung", "can": ["bo-cuc", "ra-anh"], "doc_chung": ["chung/thuong-hieu.json"],
+   "ra": "slide.json", "ai": "claude",
+   "viec": "Ghép nội dung, bố cục, ảnh đã duyệt thành một slide cho Claude Slides",
+   "cong": {"loai": "json-truong", "truong": ["id", "kieu", "tieu_de"]}}
+ ]
+}

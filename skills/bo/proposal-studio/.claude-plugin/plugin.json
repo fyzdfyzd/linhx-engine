@@ -1,0 +1,7 @@
+{
+  "name": "proposal-studio",
+  "version": "0.1.0",
+  "description": "Brief → phân tích, nghiên cứu công nghệ event, ý tưởng (có IFAGENT), mockup màn hình, minh hoạ kỹ thuật, prompt ảnh ChatGPT/Flow và deck PPTX thay thế được.",
+  "author": {"name": "LinhX / IFAGENT"},
+  "keywords": ["proposal", "event", "activation", "mascot", "ifagent", "pitch"]
+}

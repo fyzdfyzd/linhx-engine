@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": "Bash|Edit|Write|MultiEdit|mcp__.*", "hooks": [{"type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/scripts/hook_chan.py\""}]}
+    ]
+  }
+}

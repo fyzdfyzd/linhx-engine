@@ -1,0 +1,19 @@
+{
+  "ten": "P4 Tạp chí",
+  "goc": "Nhịp tạp chí của báo cáo xu hướng (đo từ Deloitte Tech Trends 2026, Kearney 2026): thân serif 2 cột, mở chương nửa trang màu, chữ hoa thả, một màu nhấn.",
+  "kho": "a4",
+  "le": {"tren": 22, "duoi": 24, "ngoai": 18},
+  "le_treo": 0,
+  "cot": 2,
+  "ranh_cot": 7,
+  "font": {"tieu_de": "Be Vietnam Pro", "than": "Source Serif 4", "phu": "Be Vietnam Pro"},
+  "co": {"than": 9.8, "chu_thich": 7, "h1": 28, "h2": 11.5, "sapo": 12.5, "hinh_tieu_de": 10.5, "so_lon": 30, "bia": 42},
+  "gian_dong": 1.4,
+  "can_deu": true,
+  "mau": {"chinh": "#14213D", "nhan": "#E4572E", "nhan_toi": "#FFB59E", "chu": "#1D2433", "chu_phu": "#5C677D",
+          "nen_phu": "#F3EFEA", "ke": "#D5CFC6", "bieu_do": ["#14213D", "#E4572E", "#8D99AE", "#D9C6B5", "#B0B7C3"]},
+  "hinh": {"nhan": "Hình", "vach_tren": true},
+  "mo_chuong": "nua-trang",
+  "dropcap": true,
+  "nguong": {"phu_chu": [0.26, 0.38], "ky_tu_trang_trung_vi": [2000, 3600], "ty_le_trang_co_hinh": [0.35, 0.7]}
+}

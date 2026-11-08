@@ -1,0 +1,7 @@
+{
+  "name": "linhx-linh-vuc",
+  "version": "0.1.0",
+  "description": "Skill lĩnh vực cho LINHX LAB, mượn từ K-Dense Scientific Agent Skills (MIT): hồ sơ tài trợ, nghiên cứu thị trường, tổng quan tài liệu.",
+  "author": { "name": "LINHX LAB" },
+  "license": "MIT"
+}

@@ -1,0 +1,46 @@
+{
+ "id": "an-du-phang-2-mau",
+ "ten": "Ẩn dụ phẳng hai màu",
+ "ten_en": "Flat two-colour visual metaphor",
+ "alias": [
+  "minimal conceptual illustration",
+  "editorial metaphor"
+ ],
+ "ho": "an-du-toi-gian",
+ "dinh_nghia": "Một hình, một ý: khái niệm trừu tượng được nói bằng một vật cụ thể, vẽ phẳng 2-3 màu trên nền nhiều khoảng trống.",
+ "dau_hieu": [
+  "1 chủ thể chính, không có cảnh phụ",
+  "2-3 màu phẳng, không gradient",
+  "khoảng trắng chiếm hơn nửa khung",
+  "người không mặt hoặc mặt chấm đơn giản",
+  "hình học tròn/chữ nhật bo góc",
+  "không chữ hoặc chỉ 1 chữ"
+ ],
+ "co_che_hop": [
+  "a-la-b",
+  "doi-ti-le",
+  "ghep-vat"
+ ],
+ "khi_nao_dung": "bìa bài viết, slide 1 ý, post nói một nhận định",
+ "khi_nao_tranh": "khi cần giải thích quy trình nhiều bước",
+ "nghe_si_tieu_bieu": [
+  {
+   "ten": "Andrea Ucini",
+   "link": "https://www.andreaucini.com"
+  },
+  {
+   "ten": "Alessandro Gottardo (Shout)",
+   "link": ""
+  }
+ ],
+ "anh_tham_khao": [],
+ "cong_thuc": {
+  "prompt": "Minimal flat editorial illustration depicting {y_tuong}, expressed as a single visual metaphor. One central subject, large empty background, simple geometric shapes, faceless figures. Two or three flat colours only (deep navy, warm coral, off-white paper), subtle grain texture. Centered composition, no text.",
+  "negative": "gradient, 3d, photorealistic, detailed background, multiple scenes, text, watermark, outlines",
+  "ti_le_khung": "4:5",
+  "mo_hinh_da_thu": []
+ },
+ "anh_mau_tu_sinh": [],
+ "loi_hay_gap": [],
+ "ghi_cong": "Thẻ khởi đầu viết từ hiểu biết chung về dòng editorial tối giản, chưa đối chiếu thẻ ảnh."
+}

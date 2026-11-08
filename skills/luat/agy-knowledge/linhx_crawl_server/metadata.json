@@ -1,0 +1,14 @@
+{
+    "title": "LinhX Crawl Server (Waterfall Crawler)",
+    "summary": "A high-performance, multi-tier web crawling service implementing a 'Waterfall' fallback pattern (httpx → Crawl4AI → Firecrawl → Playwright). It provides structured markdown extraction, batch processing, and sitemap discovery while remaining 100% self-hosted. Successfully applied to scan real-world event hubs for the TUNG TA TUNG TANG project, proving its effectiveness on complex sites like Ticketbox and Hanoigrapevine.",
+    "references": [
+        {
+            "type": "conversation_id",
+            "value": "dc3f2324-33ad-478e-bf35-e4be45453116"
+        },
+        {
+            "type": "file",
+            "value": "H:\\My Drive\\WORKFORCE\\TOOL\\CRAWLER"
+        }
+    ]
+}

@@ -1,0 +1,231 @@
+<title>Bàn đăng LINHX</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Bàn đăng: hàng việc của một ngày, mỗi thẻ một việc ra ngoài; nút chính luôn ở cùng một chỗ để bấm liền tay */
+:root {
+  --bg: #F1F4F2; --panel: #FFFFFF; --ink: #18241F; --muted: #5B6B64; --line: #CFD9D4;
+  --jade: #0F7A68; --jade-ink: #FFFFFF; --jade-soft: #D6EDE7;
+  --clay: #B4562A; --clay-soft: #F5E1D6; --gold: #8A6C10; --gold-soft: #F3EBCF;
+  --f-display: "Bricolage Grotesque", "Be Vietnam Pro", system-ui, sans-serif;
+  --f-body: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0F1513; --panel: #17201D; --ink: #E4ECE8; --muted: #93A49C; --line: #2B3833;
+  --jade: #4CC3AD; --jade-ink: #0B1A16; --jade-soft: #173A33; --clay: #E58A5C; --clay-soft: #3A2318;
+  --gold: #D2B04A; --gold-soft: #33290F; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #0F1513; --panel: #17201D; --ink: #E4ECE8; --muted: #93A49C; --line: #2B3833;
+  --jade: #4CC3AD; --jade-ink: #0B1A16; --jade-soft: #173A33; --clay: #E58A5C; --clay-soft: #3A2318;
+  --gold: #D2B04A; --gold-soft: #33290F; color-scheme: dark }
+* { box-sizing: border-box }
+[hidden] { display: none !important }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--f-body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 24px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; }
+h1 { font: 700 clamp(26px, 5vw, 36px)/1.1 var(--f-display); margin: 0; letter-spacing: -0.01em; text-wrap: balance }
+.sub { color: var(--muted); font-size: 13px }
+.demo { background: var(--gold-soft); color: var(--gold); border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-top: 12px }
+.dem { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 18px 0 10px }
+.dem button { all: unset; cursor: pointer; background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0 }
+.dem button[aria-pressed="true"] { border-color: var(--jade); box-shadow: inset 0 0 0 1px var(--jade) }
+.dem b { display: block; font: 700 24px/1 var(--f-display) }
+.dem span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em }
+.loc { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 16px }
+.chip { all: unset; cursor: pointer; font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel) }
+.chip[aria-pressed="true"] { background: var(--jade-soft); border-color: var(--jade); color: var(--ink) }
+.list { display: grid; gap: 12px }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; gap: 10px; min-width: 0 }
+.card.xong { opacity: .55 }
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13px; color: var(--muted) }
+.ava { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; background: var(--jade-soft); color: var(--jade); font: 700 13px var(--f-display) }
+.ten { color: var(--ink); font-weight: 600 }
+.nt { font: 600 11px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; border: 1px solid var(--line); border-radius: 4px; padding: 1px 6px }
+.ctx { font-size: 13px; color: var(--muted); border-left: 3px solid var(--line); padding-left: 10px; min-width: 0; overflow-wrap: anywhere }
+textarea { width: 100%; min-height: 84px; resize: vertical; font: 15px/1.55 var(--f-body); color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px }
+textarea:focus { outline: 2px solid var(--jade); outline-offset: 1px }
+.meta { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12.5px; color: var(--muted) }
+.meta b { color: var(--ink); font-weight: 600 }
+.chan { background: var(--clay-soft); color: var(--clay); border-radius: 8px; padding: 8px 10px; font-size: 13px }
+.chan ul { margin: 4px 0 0; padding-left: 18px }
+.act { display: flex; flex-wrap: wrap; align-items: center; gap: 8px }
+.btn { all: unset; cursor: pointer; font-weight: 600; font-size: 14px; padding: 9px 18px; border-radius: 10px; text-align: center }
+.btn.chinh { background: var(--jade); color: var(--jade-ink) }
+.btn.chinh[disabled] { background: var(--line); color: var(--muted); cursor: not-allowed }
+.btn.phu { border: 1px solid var(--line); color: var(--muted) }
+.btn:focus-visible { outline: 2px solid var(--jade); outline-offset: 2px }
+.bo { display: flex; flex-wrap: wrap; gap: 6px }
+.ket { font-size: 13px; color: var(--jade); font-weight: 600 }
+.ket.loi { color: var(--clay) }
+.luot { margin: 0; padding-left: 22px; display: grid; gap: 4px; font-size: 14px; max-height: 260px; overflow-y: auto }
+.luot a { color: var(--jade); font-weight: 600; text-decoration: none }
+.trong { text-align: center; color: var(--muted); padding: 40px 0 }
+.phim { font-size: 12px; color: var(--muted); margin-top: 18px }
+kbd { font: 11px var(--f-mono); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px }
+@media (max-width: 520px) { .dem { grid-template-columns: repeat(2, minmax(0, 1fr)) } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Bàn đăng</h1>
+    <div class="sub" id="sub">đang tải…</div>
+  </header>
+  <div class="demo" id="demo" hidden>Bản xem thử với dữ liệu chạy thử 90 ngày của Mây. Bấm vẫn chạy cổng giả lập trong trang, không đăng thật. Bản thật chạy trên máy: <code>kenhao ban-dang --phuc-vu --goc &lt;thư mục kênh&gt;</code>.</div>
+  <div class="dem" id="dem"></div>
+  <div class="loc" id="loc"></div>
+  <div class="list" id="list"></div>
+  <p class="phim">Phím tắt: <kbd>J</kbd>/<kbd>K</kbd> chuyển thẻ, <kbd>Ctrl</kbd>+<kbd>Enter</kbd> bấm nút chính của thẻ đang chọn. Mỗi lần bấm, sửa hay bỏ đều là dữ liệu để kênh tự học tối nay.</p>
+</div>
+
+<script>
+window.DEMO = /*DEMO*/null;
+const MA = "__MA_PHIEN__";
+const NHOM = [["bai", "Bài đăng"], ["cham", "Chạm"], ["tra_loi", "Trả lời"], ["bai_hoc", "Bài học"]];
+const KIEU = { thich: "thích", luu: "lưu", theo_doi: "theo dõi", binh_luan: "bình luận", nhan: "nhắn" };
+const THANG = { chua_biet: "chưa biết", da_doc: "đã đọc", da_cham: "đã chạm", da_gop_chuyen: "đã góp chuyện", duoc_dap: "được đáp", hai_chieu: "hai chiều", dong_minh: "đồng minh" };
+let D = null, nhom = "bai", loc = "tat_ca", chon = 0, ket = {};
+
+function luu(k, v) { try { localStorage.setItem(k, v) } catch (e) {} }
+function doc(k) { try { return localStorage.getItem(k) } catch (e) { return null } }
+nhom = doc("bd-nhom") || "bai";
+
+async function api(p, than) {
+  if (window.DEMO) return demoApi(p, than);
+  const r = await fetch(p, { method: than ? "POST" : "GET", headers: { "X-Ma-Phien": MA, "Content-Type": "application/json" }, body: than ? JSON.stringify(than) : undefined });
+  return r.json();
+}
+
+// Bản xem thử: mô phỏng cổng tối thiểu ngay trong trang
+function demoApi(p, than) {
+  if (!than) return Promise.resolve(window.DEMO);
+  const m = window.DEMO.muc.find(x => x.loai === than.loai && x.id === than.id);
+  if (than.hanh_dong === "bo") { m._xong = "bo"; return Promise.resolve({ ok: true, trang_thai: "bo" }) }
+  if (m.chan && m.chan.length) return Promise.resolve({ ok: false, ly_do: m.chan });
+  m._xong = "ok";
+  const tt = { bai: "đã duyệt, đăng đúng giờ hẹn", cham: "đã ghi là làm xong", tra_loi: "đã gửi", bai_hoc: "đã thành luật viết" }[than.loai];
+  return Promise.resolve({ ok: true, trang_thai: tt });
+}
+
+function esc(s) { return String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]) }
+function gio(s) { return s ? s.slice(5, 10).split("-").reverse().join("/") + " " + s.slice(11, 16) : "" }
+
+function ve() {
+  const ds = D.muc.filter(m => loc === "tat_ca" || m.persona === loc);
+  document.getElementById("dem").innerHTML = NHOM.map(([k, t]) =>
+    `<button aria-pressed="${k === nhom}" data-nhom="${k}"><b>${ds.filter(m => m.loai === k && !m._xong).length}</b><span>${t}</span></button>`).join("");
+  const ps = [...new Map(D.persona.map(p => [p.persona, p])).values()];
+  document.getElementById("loc").innerHTML = ps.length > 1 ? [`<button class="chip" data-loc="tat_ca" aria-pressed="${loc === "tat_ca"}">Tất cả</button>`]
+    .concat(ps.map(p => `<button class="chip" data-loc="${esc(p.persona)}" aria-pressed="${loc === p.persona}">${esc(p.ten)} · ${esc(p.giai_doan)}</button>`)).join("") : "";
+  const p0 = D.persona[0];
+  document.getElementById("sub").textContent = ps.length > 1 ? `${ps.length} persona · cập nhật ${gio(D.luc)}`
+    : `${p0.ten} · ${p0.giai_doan} ${p0.ten_giai_doan} · ngày tuổi ${p0.tuoi_ngay} · cập nhật ${gio(D.luc)}`;
+  const the = ds.filter(m => m.loai === nhom);
+  const el = document.getElementById("list");
+  if (!the.length) { el.innerHTML = `<div class="trong">Không còn việc ở mục này.</div>`; return }
+  let html = "";
+  if (nhom === "cham") {
+    // Thích, lưu, theo dõi không có chữ: gom thành một lượt mỗi persona, mở từng link rồi bấm "Xong cả lượt"
+    const nhe = the.filter(m => LUOT.includes(m.kieu) && !(m.chan || []).length);
+    const theo = [...new Set(nhe.map(m => m.persona))];
+    html += theo.map(p => luot(p, nhe.filter(m => m.persona === p))).join("");
+  }
+  html += the.map((m, i) => (nhom === "cham" && LUOT.includes(m.kieu) && !(m.chan || []).length) ? "" : card(m, i)).join("");
+  el.innerHTML = html;
+}
+
+const LUOT = ["thich", "luu", "theo_doi"];
+function luot(p, ds) {
+  const k = "luot-" + p, kq = ket[k], cho = ds.filter(m => !m._xong);
+  const dong = ds.map(m => `<li><a href="${esc(m.url || "#")}" target="_blank" rel="noopener" data-mo="${esc(m.loai + m.id)}">${esc(KIEU[m.kieu])} · ${esc(m.nguoi)}</a> <span class="sub">${esc(THANG[m.thang] || m.thang)}${m.bai_ho ? " · " + esc(m.bai_ho.slice(0, 60)) + "…" : ""}</span></li>`).join("");
+  return `<article class="card ${kq ? "xong" : ""}">
+    <div class="top"><span class="ava">${esc((ds[0].ten || "?")[0])}</span><span class="ten">${esc(ds[0].ten)}</span><span>lượt thích, lưu, theo dõi · ${ds.length} việc</span></div>
+    <div class="ctx">Không có chữ để viết, chỉ cần mở từng bài và bấm đúng nút trên app. Mỗi việc đã qua cổng: đã đọc người đó, đúng mục đích, không trùng bài.</div>
+    <ol class="luot">${dong}</ol>
+    <div class="act">${kq ? `<span class="ket">${esc(kq.text)}</span>` : `<button class="btn chinh" data-luot="${esc(p)}">Xong cả lượt (${cho.length})</button>`}</div></article>`;
+}
+
+function card(m, i) {
+  const k = m.loai + m.id, kq = ket[k];
+  const chan = (m.chan || []).length ? `<div class="chan">Cổng sẽ chặn nếu bấm bây giờ:<ul>${m.chan.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : "";
+  let ctx = "", meta = "";
+  if (m.loai === "bai") {
+    meta = `<span>Mục đích <b>${esc(m.muc_dich)}</b></span><span>Cho <b>${esc(m.cho_ai)}</b></span><span>Hook <b>${esc(m.hook)}</b></span><span>Critic <b>${m.critic ?? "?"}</b></span><span>Dự báo vượt trung vị <b>${Math.round((m.du_doan ?? .5) * 100)}%</b></span>`;
+  } else if (m.loai === "cham") {
+    ctx = `<div class="ctx">${esc(KIEU[m.kieu] || m.kieu)} cho <b>${esc(m.nguoi)}</b> (${esc(THANG[m.thang] || m.thang)}, điểm tin ${m.diem_tin})${m.bai_ho ? `<br>Bài của họ: “${esc(m.bai_ho)}”` : ""}</div>`;
+    meta = `<span>Mục đích <b>${esc(m.muc_dich)}</b></span><span>Vì sao <b>${esc(m.vi_sao)}</b></span>`;
+  } else if (m.loai === "tra_loi") {
+    ctx = `<div class="ctx"><b>${esc(m.fan)}</b> (hạng ${esc(m.hang)}, ${esc(m.nhan)}): “${esc(m.tin)}”</div>`;
+  } else {
+    meta = `<span>Nguồn <b>${esc(m.nguon)}</b></span>` + (m.bang_chung && m.bang_chung.p ? `<span>Độ tin <b>${Math.round(m.bang_chung.p * 100)}%</b></span>` : "");
+  }
+  const sua = m.loai === "cham" && !m.noi_dung ? "" : `<textarea data-k="${k}" aria-label="Nội dung">${esc(m.noi_dung)}</textarea>`;
+  const tat = (m.chan || []).length ? "disabled" : "";
+  const nut = kq ? `<span class="ket ${kq.ok ? "" : "loi"}">${esc(kq.text)}</span>` :
+    `<button class="btn chinh" data-bam="${i}" ${tat}>${esc(m.nut)}</button>
+     <button class="btn phu" data-bo-mo="${i}">Bỏ</button>
+     <div class="bo" id="bo-${k}" hidden>${D.ly_do_bo.map(l => `<button class="chip" data-bo="${i}" data-ly="${esc(l)}">${esc(l)}</button>`).join("")}</div>`;
+  return `<article class="card ${kq ? "xong" : ""}" data-i="${i}" tabindex="-1">
+    <div class="top"><span class="ava">${esc((m.ten || "?")[0])}</span><span class="ten">${esc(m.ten)}</span>${m.nen_tang ? `<span class="nt">${esc(m.nen_tang)}</span>` : ""}${m.luc ? `<span>${gio(m.luc)}</span>` : ""}</div>
+    ${ctx}${sua}${meta ? `<div class="meta">${meta}</div>` : ""}${chan}<div class="act">${nut}</div></article>`;
+}
+
+function hienTai() { const ds = D.muc.filter(m => (loc === "tat_ca" || m.persona === loc) && m.loai === nhom); return ds }
+
+async function bam(i, hanh_dong, ly_do) {
+  const m = hienTai()[i], k = m.loai + m.id;
+  const ta = document.querySelector(`textarea[data-k="${k}"]`);
+  const nd = ta ? ta.value : null;
+  if (m.loai === "cham" && hanh_dong !== "bo") {
+    if (nd) { try { await navigator.clipboard.writeText(nd) } catch (e) { ta.select() } }
+    if (m.url && !window.DEMO) window.open(m.url, "_blank", "noopener");
+  }
+  if (m.loai === "bai" && m.trang_thai === "duyet" && hanh_dong === "dang") hanh_dong = "dang_ngay";
+  const r = await api("/api/bam", { persona: m.persona, loai: m.loai, id: m.id, hanh_dong, noi_dung: nd, ly_do });
+  let text = r.ok ? ({ bo: `Đã bỏ (${ly_do})` }[r.trang_thai] || r.ghi_chu || (r.ma_ngoai ? `Đã đăng · ${r.ma_ngoai}` : `Xong · ${r.trang_thai}`)) : "Bị chặn: " + (r.ly_do || []).join("; ");
+  if (m.loai === "cham" && r.ok && hanh_dong !== "bo") text = window.DEMO ? `Đã chép câu bình luận (bản thật sẽ mở ${m.url || "bài"})` : "Đã chép câu, đã mở bài. Dán và gửi.";
+  ket[k] = { ok: r.ok, text };
+  if (r.ok) m._xong = 1;
+  ve();
+}
+
+async function xongLuot(p) {
+  const ds = D.muc.filter(m => m.loai === "cham" && m.persona === p && LUOT.includes(m.kieu) && !(m.chan || []).length && !m._xong);
+  let ok = 0;
+  for (const m of ds) { const r = await api("/api/bam", { persona: p, loai: "cham", id: m.id, hanh_dong: "xong" }); if (r.ok) { ok++; m._xong = 1 } }
+  ket["luot-" + p] = { ok: true, text: `Đã ghi ${ok}/${ds.length} việc là xong` };
+  ve();
+}
+
+document.addEventListener("click", e => {
+  const a = e.target.closest("a[data-mo]");
+  if (a && window.DEMO) { e.preventDefault(); a.style.textDecoration = "line-through"; return }
+  if (a) { a.style.textDecoration = "line-through"; return }
+  const t = e.target.closest("button"); if (!t) return;
+  if (t.dataset.nhom) { nhom = t.dataset.nhom; luu("bd-nhom", nhom); chon = 0; ve() }
+  else if (t.dataset.loc) { loc = t.dataset.loc; ve() }
+  else if (t.dataset.bam) bam(+t.dataset.bam, "dang");
+  else if (t.dataset.boMo) { const m = hienTai()[+t.dataset.boMo]; document.getElementById("bo-" + m.loai + m.id).hidden ^= 1 }
+  else if (t.dataset.bo) bam(+t.dataset.bo, "bo", t.dataset.ly);
+  else if (t.dataset.luot) xongLuot(t.dataset.luot);
+});
+document.addEventListener("keydown", e => {
+  const cs = [...document.querySelectorAll(".card")]; if (!cs.length) return;
+  if (e.target.tagName !== "TEXTAREA" && (e.key === "j" || e.key === "k")) {
+    chon = Math.max(0, Math.min(cs.length - 1, chon + (e.key === "j" ? 1 : -1))); cs[chon].focus(); cs[chon].scrollIntoView({ block: "nearest" });
+  }
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+    const c = e.target.closest(".card") || cs[chon]; const b = c && c.querySelector("[data-bam]"); if (b && !b.disabled) b.click();
+  }
+});
+
+(async () => {
+  if (window.DEMO) document.getElementById("demo").hidden = false;
+  D = await api("/api/muc");
+  ve();
+})();
+</script>

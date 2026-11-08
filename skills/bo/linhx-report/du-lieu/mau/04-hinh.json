@@ -1,0 +1,7 @@
+{"hinh": [
+  {"id": "H01", "loai": "thanh-ngang", "tieu_de": "Câu kết luận có số, kết thúc bằng dấu chấm.", "doi_tuong": "% người trả lời, n = 1.200", "don_vi": "%",
+   "nhan": ["A", "B", "C"], "chuoi": [{"ten": "2026", "gia_tri": [39, 24, 12], "bc": "BC01"}], "nhan_manh": "A",
+   "nguon": "Đơn vị, tên khảo sát, tháng/năm, n = …", "ghi_chu": null, "rong": "full"},
+  {"id": "H02", "loai": "bang", "tieu_de": "Câu kết luận của bảng.", "doi_tuong": "Đơn vị", "bang": {"cot": ["Tên", "Giá"], "dong": [["…", "…"]]},
+   "bc": ["BC01"], "nguon": "…"}
+]}

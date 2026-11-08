@@ -1,0 +1,18 @@
+{
+    "title": "Personal Brand DTL Strategy & Implementation",
+    "summary": "Specific implementation details for the personal brand of Đinh Trần Tuấn Linh. Includes agent persona definitions ('Linh's Alt'), content creation workflows (including humorous tech-analogies), and deep research modules on psychological/social topics (e.g., infidelity) used to establish thought leadership.",
+    "references": [
+        {
+            "type": "conversation_id",
+            "value": "81e07c56-7cb2-4b83-a963-f408ac4ce89f"
+        },
+        {
+            "type": "task_id",
+            "value": "0bbe6dd3-23dc-4358-ad5e-199f1436719d"
+        },
+        {
+            "type": "file",
+            "value": "d:/@work/AGWORKSPACE/02_WORKFORCE/Agents_Roster/brand_strategist.md"
+        }
+    ]
+}

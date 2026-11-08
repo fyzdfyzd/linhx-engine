@@ -1,0 +1,221 @@
+[
+ {
+  "id": "em-dash",
+  "claim": "AI dùng gạch ngang dài (—) dày đặc",
+  "source": "Wikipedia Signs of AI writing; mạng xã hội 2024-25; humanizer #8",
+  "metric": {
+   "kind": "regex",
+   "pattern": "—",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "dash-any",
+  "claim": "AI dùng gạch nối câu (— hoặc – có cách hai bên) dày đặc",
+  "source": "LAB080: Gemma dùng – thay —, regex chỉ — bỏ sót",
+  "metric": {
+   "kind": "regex",
+   "pattern": "—|\\s–\\s",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "delve-family",
+  "claim": "AI hay dùng delve / tapestry / testament / realm / landscape / intricate / underscore / pivotal",
+  "source": "Kobak 2024-25 excess vocabulary; Juzek & Ward 2025",
+  "metric": {
+   "kind": "regex",
+   "pattern": "\\b(delv\\w*|tapestry|testament|realm|landscape|intricat\\w*|underscor\\w*|pivotal|showcas\\w*|meticulous\\w*|nuanced?)\\b",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "not-x-but-y",
+  "claim": "AI hay dựng câu đối lập 'not just X but Y' / 'it's not X, it's Y'",
+  "source": "humanizer #1; Antislop 2025 regex",
+  "metric": {
+   "kind": "regex",
+   "pattern": "\\bnot (?:just|only|merely|simply)\\b[^.!?\\n]{1,80}?\\bbut\\b|\\b(?:it|this|that)(?:'s|’s| is)n?(?:'t|’t)? (?:not )?(?:about )?[^.!?\\n]{1,40}?[.;,—–-]\\s*(?:it|this|that)(?:'s|’s| is)\\b",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "opener-sycophant",
+  "claim": "AI mở bài bằng 'Certainly! / Sure! / Great question / Absolutely'",
+  "source": "Wikipedia: chatbot residue",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^\\s*(?:certainly|sure|absolutely|of course|great question|what a)\\b",
+   "flags": "i",
+   "scope": "first_sentence",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "closer-offer",
+  "claim": "AI kết bằng lời mời 'Let me know if... / I hope this helps / Feel free to'",
+  "source": "Wikipedia: chatbot residue",
+  "metric": {
+   "kind": "regex",
+   "pattern": "let me know|hope this helps|feel free to|would you like me to|happy to help",
+   "flags": "i",
+   "scope": "text",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "in-conclusion",
+  "claim": "AI chốt bằng 'In conclusion / Ultimately / Overall'",
+  "source": "nhận xét phổ biến",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^(?:in conclusion|ultimately|overall|in summary|to sum up)\\b",
+   "flags": "i",
+   "scope": "sentence_start",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "in-todays-world",
+  "claim": "AI mở đầu kiểu 'In today's fast-paced/ever-evolving world'",
+  "source": "nhận xét phổ biến",
+  "metric": {
+   "kind": "regex",
+   "pattern": "\\bin today'?s\\b|\\bever[- ](?:evolving|changing)\\b|\\bfast[- ]paced\\b",
+   "flags": "i",
+   "unit": "presence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "triad",
+  "claim": "AI hay liệt kê bộ ba 'X, Y, and Z'",
+  "source": "humanizer #6 forced triads",
+  "metric": {
+   "kind": "regex",
+   "pattern": "\\b\\w+(?: \\w+)?, \\w+(?: \\w+)?,? and \\w+",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "ing-rider",
+  "claim": "AI gắn mệnh đề -ing nông ở cuối câu (', highlighting/ensuring/fostering...')",
+  "source": "Reinhart et al. PNAS 2025: present participial clauses 2-5x; humanizer #15",
+  "metric": {
+   "kind": "regex",
+   "pattern": ", (?:highlighting|underscoring|emphasizing|ensuring|fostering|reflecting|showcasing|making it|allowing|enabling|creating|paving)\\b",
+   "flags": "i",
+   "unit": "per_1k_words"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "bold",
+  "claim": "AI in đậm trang trí khắp nơi",
+  "source": "Sun et al. 2025 markdown là vân tay; humanizer #19",
+  "metric": {
+   "kind": "stat",
+   "name": "bold_per_1k"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "bullets",
+  "claim": "AI biến bài văn thành gạch đầu dòng",
+  "source": "The Last Fingerprint 2026",
+  "metric": {
+   "kind": "stat",
+   "name": "bullet_share"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "uniform-sentences",
+  "claim": "Câu của AI dài đều nhau (ít biến thiên, burstiness thấp)",
+  "source": "smellcheck sentence-uniformity; GPTZero burstiness",
+  "metric": {
+   "kind": "stat",
+   "name": "sentence_len_cv"
+  },
+  "expect": {
+   "direction": "lower",
+   "against": "others"
+  }
+ },
+ {
+  "id": "same-opener",
+  "claim": "AI mở các câu liền nhau bằng cùng một chữ",
+  "source": "humanizer #7",
+  "metric": {
+   "kind": "stat",
+   "name": "opener_repeat"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ },
+ {
+  "id": "additionally",
+  "claim": "AI mở câu bằng Additionally / Furthermore / Moreover",
+  "source": "nhận xét phổ biến",
+  "metric": {
+   "kind": "regex",
+   "pattern": "^(?:additionally|furthermore|moreover)\\b",
+   "flags": "i",
+   "scope": "sentence_start",
+   "unit": "per_sentence"
+  },
+  "expect": {
+   "direction": "higher",
+   "against": "others"
+  }
+ }
+]

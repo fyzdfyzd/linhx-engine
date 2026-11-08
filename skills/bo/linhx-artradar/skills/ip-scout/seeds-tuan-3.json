@@ -1,0 +1,25 @@
+{
+  "_ghi_chu": "Tuần 3 LAB020: 20 IP, 2 nhóm. wikidata = QID đã kiểm nhãn (wikidata_search chỉ dùng khi chưa biết, lấy kết quả đầu). bangumi = subject id, anilist = media id, fandom = tên miền con (API Fandom trả 403 với UA của lab, chỉ giữ link).",
+  "ips": [
+    {"id": "warrior-cats", "ten": "Warrior Cats", "ten_goc": "Warriors", "nhom": "Làng Mèo", "loai_hinh": "tiểu thuyết", "fandom": "warriors", "wikidata": "Q739702"},
+    {"id": "animal-crossing", "ten": "Animal Crossing", "ten_goc": "どうぶつの森", "nhom": "Làng Mèo", "loai_hinh": "game", "fandom": "animalcrossing", "wikidata": "Q1139803"},
+    {"id": "redwall", "ten": "Redwall", "ten_goc": "Redwall", "nhom": "Làng Mèo", "loai_hinh": "tiểu thuyết", "fandom": "redwall", "wikidata": "Q1247790"},
+    {"id": "hollow-knight", "ten": "Hollow Knight", "ten_goc": "Hollow Knight", "nhom": "Làng Mèo", "loai_hinh": "game", "fandom": "hollowknight", "wikidata": "Q29300592"},
+    {"id": "ori", "ten": "Ori and the Blind Forest", "ten_goc": "Ori and the Blind Forest", "nhom": "Làng Mèo", "loai_hinh": "game", "fandom": "ori", "wikidata": "Q17513672"},
+    {"id": "stray", "ten": "Stray", "ten_goc": "Stray", "nhom": "Làng Mèo", "loai_hinh": "game", "wikidata": "Q96247255"},
+    {"id": "zootopia", "ten": "Zootopia", "ten_goc": "Zootopia", "nhom": "Làng Mèo", "loai_hinh": "phim", "fandom": "zootopia", "wikidata": "Q116753708"},
+    {"id": "natsume", "ten": "Natsume Yuujinchou", "ten_goc": "夏目友人帳", "nhom": "Làng Mèo", "loai_hinh": "manga/anime", "anilist": 4081, "wikidata": "Q641767"},
+    {"id": "luo-xiaohei", "ten": "罗小黑战记 (The Legend of Hei)", "ten_goc": "罗小黑战记", "nhom": "Làng Mèo", "loai_hinh": "web anime/phim", "bangumi": 13603, "wikidata": "Q15915049"},
+    {"id": "chi", "ten": "Chi's Sweet Home", "ten_goc": "チーズスイートホーム", "nhom": "Làng Mèo", "loai_hinh": "manga/anime", "anilist": 31397, "wikidata": "Q1075127"},
+    {"id": "fanren", "ten": "凡人修仙传 (A Record of a Mortal's Journey to Immortality)", "ten_goc": "凡人修仙传", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 260829, "wikidata": "Q48896715"},
+    {"id": "guimi", "ten": "诡秘之主 (Lord of the Mysteries)", "ten_goc": "诡秘之主", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 290411, "fandom": "lordofthemysteries", "wikidata": "Q109342457"},
+    {"id": "jianlai", "ten": "剑来 (Sword of Coming)", "ten_goc": "剑来", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 345825, "wikidata": "Q137533256"},
+    {"id": "wanmei", "ten": "完美世界 (Perfect World)", "ten_goc": "完美世界", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 244224, "_ghi_chu": "Wikidata chưa có mục cho tiểu thuyết 完美世界 (辰东): tìm zh/en đều chỉ ra game/công ty Perfect World"},
+    {"id": "yinian", "ten": "一念永恒 (A Will Eternal)", "ten_goc": "一念永恒", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 244226, "wikidata": "Q136298380"},
+    {"id": "xianwang", "ten": "仙王的日常生活 (The Daily Life of the Immortal King)", "ten_goc": "仙王的日常生活", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 247977, "wikidata": "Q107313336"},
+    {"id": "tgcf", "ten": "天官赐福 (Heaven Official's Blessing)", "ten_goc": "天官赐福", "nhom": "Tiên hiệp", "loai_hinh": "tiểu thuyết mạng/donghua", "bangumi": 289101, "wikidata": "Q104520894"},
+    {"id": "dalisi", "ten": "大理寺日志 (Dali Temple Diary)", "ten_goc": "大理寺日志", "nhom": "Tiên hiệp", "loai_hinh": "manhua/donghua", "bangumi": 183957, "wikidata": "Q137122813"},
+    {"id": "guigu", "ten": "鬼谷八荒 (Tale of Immortal)", "ten_goc": "鬼谷八荒", "nhom": "Tiên hiệp", "loai_hinh": "game", "bangumi": 326898, "wikidata": "Q105366554"},
+    {"id": "wukong", "ten": "黑神话：悟空 (Black Myth: Wukong)", "ten_goc": "黑神话：悟空", "nhom": "Tiên hiệp", "loai_hinh": "game", "bangumi": 313495, "wikidata": "Q98582386"}
+  ]
+}

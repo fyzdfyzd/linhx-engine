@@ -1,0 +1,17 @@
+{
+ "ten": "báo cáo theo chương",
+ "mo_ta": "linhx-report: dàn ý chung, mỗi chương chạy nội dung, biểu đồ và ảnh song song rồi dàn trang",
+ "don_vi": "chuong",
+ "tang": [
+  {"id": "noi-dung", "can": [], "doc_chung": ["chung/dan-y.md", "chung/bang-chung.csv"], "ra": "noi-dung.md", "ai": "claude",
+   "viec": "Viết chương theo dàn ý, mọi số có nguồn", "cong": {"loai": "md-muc", "muc": ["# "]}},
+  {"id": "bieu-do", "can": ["noi-dung"], "ra": "bieu-do.json", "ai": "claude",
+   "viec": "Dữ liệu và kiểu biểu đồ cho chương; chương không có số thì bo-qua", "cong": {"loai": "json-truong", "truong": ["bieu_do"]}},
+  {"id": "anh-mo-chuong", "can": [], "doc_chung": ["chung/phong-cach.json"], "ra": "anh.png", "ai": "gpt-image",
+   "viec": "Ảnh mở chương theo phong cách chung, có ref", "cong": {"loai": "anh"}},
+  {"id": "dan-trang", "can": ["noi-dung", "bieu-do", "anh-mo-chuong"], "ra": "chuong.typ", "ai": "claude",
+   "viec": "Dàn trang Typst cho chương", "cong": {"loai": "co-tep"}},
+  {"id": "cham", "can": ["dan-trang"], "ra": "cham.json", "ai": "claude",
+   "viec": "Chấm rubric tạp chí 5 tiêu chí từng trang, TB >= 3,5, không tiêu chí < 3", "cong": {"loai": "json-truong", "truong": ["diem_tb"]}}
+ ]
+}

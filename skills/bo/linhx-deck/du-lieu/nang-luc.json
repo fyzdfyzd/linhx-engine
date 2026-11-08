@@ -1,0 +1,462 @@
+[
+  {
+    "id": "NL-01",
+    "ten": "Đào tạo AI may đo cho doanh nghiệp và ngân hàng",
+    "mo_ta": "Lớp T1/T2/T3 tại tập đoàn, ngân hàng; khách đi qua Talentpool và Sakedemy",
+    "bang_chung": [
+      "Sakedemy: 13 khách DN 2025, Vinhomes, MB Bank, Sacombank, LPBank, Viettel (sakedemy-brand-guideline.pdf)",
+      "VCB Nam Bình Dương 10/10, Vũng Tàu 11/10 (D:\\LINHX\\EDU\\EDU002, EDU003)",
+      "ONE VCB Bắc Gia Lai V3 (D:\\LINHX\\EDU\\EDU001-VCB-BGL)",
+      "T10-T11/2026 đã chốt 20 ngày dạy (D:\\LINHX\\PLAN\\10_LINHX\\A1_LX-RES\\_data\\NGUON_THU.md)"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-02",
+    "ten": "Khung 3 tầng giáo trình T1/T2/T3 và thang bán",
+    "mo_ta": "T1 nhân viên, T2 trưởng phòng workflow-agent, T3 lãnh đạo; bán T3 rồi T2 rồi T1 và dự án agent",
+    "bang_chung": [
+      "D:\\LINHX\\PLAN\\10_LINHX\\A3_EDU\\E1_EDU-CORP\\E1_EDU-CORP_AREA.md",
+      "D:\\LINHX\\EDU\\EDU007-KHUNG-3GT (nháp v0.1)"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-03",
+    "ten": "Khoá lãnh đạo ngân hàng (MSB, [NGÂN HÀNG ĐỐI TÁC ĐÃ ẨN DANH] x VinUni)",
+    "mo_ta": "Bộ gốc 10 buổi [NGÂN HÀNG ĐỐI TÁC ĐÃ ẨN DANH] cho Giám đốc chi nhánh, bài giảng MSB; bản mới là nháp. Cần đối chiếu Thông tư 53/2026/TT-NHNN",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU011-TCB-VINUNI\\README.md",
+      "D:\\LINHX\\EDU\\EDU012-MSB-LEAD\\README.md",
+      "D:\\@WF\\PROJECT\\AIX\\GIAO_TRINH_[NGÂN HÀNG ĐỐI TÁC ĐÃ ẨN DANH]_10_BUOI (chưa đọc trực tiếp)"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-04",
+    "ten": "AI for Marketing cho đội marketing nhãn hàng (Carlsberg)",
+    "mo_ta": "Khung 1 ngày 4 module, mỗi người ra về với 1 agent cá nhân; song ngữ; chưa có ngày dạy",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU009-CARLSBERG\\README.md",
+      "D:\\LINHX\\EDU\\EDU009-CARLSBERG\\GIAO_TRINH_KHUNG_v0.1.md"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-05",
+    "ten": "Dạy xây và chữa agent ([TẬP ĐOÀN DƯỢC ĐÃ ẨN DANH])",
+    "mo_ta": "Buổi chia sẻ 30/09 Tư duy đúng khi bắt tay làm Agent; khung 6 buổi, thang chấm 60 điểm",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU010-AZ-AGENT\\README.md",
+      "D:\\LINHX\\EDU\\[TẬP ĐOÀN DƯỢC ĐÃ ẨN DANH]\\Tư duy đúng khi bắt tay làm Agent.pptx"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-06",
+    "ten": "Đào tạo Claude cho tập đoàn (Vinhomes)",
+    "mo_ta": "Giai đoạn 1 tư vấn đã làm (biên bản 19/08/2026); giai đoạn 2 dạy 22/10 trên Claude, 2 phương án",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU006-VINHOMES-P2\\README.md",
+      "sakedemy-brand-guideline.pdf (Vinhomes là khách đã đào tạo)"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-07",
+    "ten": "Lớp nâng cao quy mô 100 người thiên thực hành",
+    "mo_ta": "74% thực hành, 20 nhóm x 5 track nghiệp vụ, trợ giảng, checkpoint (VCB Hưng Yên 17/10)",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU005-VCB-HYEN\\README.md"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-08",
+    "ten": "Khoá public AI cho chủ SME",
+    "mo_ta": "4+1 buổi, khai giảng 01/11, case Mộc An, cùng MAS Edu/Kén",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU008-MAS-SME\\README.md",
+      "D:\\LINHX\\PLAN\\20_BU\\KE_HOACH_TONG_BU_Q4_2026.md (10 HV đã đóng khoá 1)"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-09",
+    "ten": "Industry sharing 60-90 phút theo ngành",
+    "mo_ta": "6 bài (marketing, event, content, data for AI, vibeworking, ngân hàng) làm cửa vào C-level",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU013-SHARE-NGANH\\README.md"
+    ],
+    "bu": [
+      "Sakedemy",
+      "Linh cá nhân"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-10",
+    "ten": "SOP đào tạo corp và chăm sau khoá",
+    "mo_ta": "Phễu vào, onboard, thiết kế, dạy thử, chăm D+1/D+7/D+30, chào gói workflow cuối lớp T2",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU017-SOP-CORP",
+      "E1_EDU-CORP_AREA.md"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-11",
+    "ten": "AI cho thanh thiếu niên và AI for Fundraising (NGO)",
+    "mo_ta": "Nghiên cứu và giáo trình v0.1, chưa có lớp thử",
+    "bang_chung": [
+      "D:\\LINHX\\EDU\\EDU014-TEEN-AI",
+      "D:\\LINHX\\EDU\\EDU015-AI4GOOD",
+      "D:\\LINHX\\EDU\\TONG_HOP_NHAP_2026-10-12.md"
+    ],
+    "bu": [
+      "Sakedemy",
+      "TUVA"
+    ],
+    "muc_do": "y-tuong"
+  },
+  {
+    "id": "NL-12",
+    "ten": "Quy trình e-learning với giảng viên AI",
+    "mo_ta": "7 bước, 45-60 phút Linh mỗi bài; LAB017 nghiên cứu 80 repo, khuyến nghị giảng viên AI self-host",
+    "bang_chung": [
+      "/mnt/project-files/LAB017-ELEARNING-AI/OVERVIEW.md",
+      "D:\\LINHX\\EDU\\EDU016-ELEARN-QT"
+    ],
+    "bu": [
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-13",
+    "ten": "Xây giải pháp agent hoặc phần mềm cho doanh nghiệp",
+    "mo_ta": "CXOS và QR platform chạy thật ở [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH] (đã bàn giao Tech); BespokeAI v0.1. Chưa có số đo trước-sau công bố",
+    "bang_chung": [
+      "D:\\LINHX\\PLAN\\10_LINHX\\A2_LX-AGENT\\A2_LX-AGENT_AREA.md",
+      "D:\\LINHX\\PLAN\\10_LINHX\\A2_LX-AGENT\\_data\\02_PROTOTYPE.md",
+      "D:\\LINHX\\PRJ\\BESPOKEAI"
+    ],
+    "bu": [
+      "Unikon",
+      "[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]",
+      "Agent Force"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-14",
+    "ten": "Nền tảng nghiên cứu song ngữ cho đối tác quốc tế (VWAI)",
+    "mo_ta": "v0.2 nghiệm thu, 11/11 test PASS, Cloud Run, VIE/ENG; tư vấn khoảng 1.000 USD/tháng; demo 15/10 chưa diễn ra. File P8 có thông tin nhạy cảm, không trích",
+    "bang_chung": [
+      "D:\\LINHX\\PLAN\\30_PROJECTS\\P8_PRJ-VWAI\\P8_PRJ-VWAI_AREA.md"
+    ],
+    "bu": [
+      "Linh cá nhân"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-15",
+    "ten": "Ngân hàng ý tưởng agent có chấm điểm ưu tiên",
+    "mo_ta": "22 ý tưởng, 14 prototype (campaign generator, ambassador AI OS, affiliate, call scanner, report engine, AI cho BOD...)",
+    "bang_chung": [
+      "D:\\LINHX\\PLAN\\10_LINHX\\A2_LX-AGENT\\_data\\02_PROTOTYPE.md",
+      "D:\\LINHX\\PLAN\\10_LINHX\\A2_LX-AGENT\\_data\\06_NGAN_HANG_Y_TUONG.md"
+    ],
+    "bu": [
+      "Agent Force",
+      "Unikon",
+      "ifAgent"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-16",
+    "ten": "Giả lập kết quả kinh doanh bằng AI",
+    "mo_ta": "LAB007 WORKS trên 2 case (nhẫn [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH], KGBG), hiệu chỉnh bằng số thật",
+    "bang_chung": [
+      "D:\\LINHX\\LAB\\INDEX.md (LAB007)"
+    ],
+    "bu": [
+      "[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]",
+      "Unikon"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-17",
+    "ten": "Brand Truth Detection",
+    "mo_ta": "Hỏi nhiều LLM, đối chiếu brand.json LBS, chấm Sai/Nhầm/Bịa, xuất brand report, công cụ QR",
+    "bang_chung": [
+      "/mnt/project-files/LAB015-BRAND-TRUTH/OVERVIEW.md",
+      "/mnt/project-files/LAB015-BRAND-TRUTH/STANDARD-BTS.md"
+    ],
+    "bu": [
+      "Unikon",
+      "URAH"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-18",
+    "ten": "Radar và viết hồ sơ tài trợ, cuộc thi",
+    "mo_ta": "Quét call/quỹ/RFP, nháp hồ sơ EU NSA cho TUVA, radar cuộc thi",
+    "bang_chung": [
+      "/mnt/project-files/LAB013-CALL-TRACKER/OVERVIEW.md",
+      "/mnt/project-files/LAB018-GRANT-WRITER/OVERVIEW.md",
+      "/mnt/project-files/LAB022-CUOC-THI-RADAR/OVERVIEW.md"
+    ],
+    "bu": [
+      "TUVA"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-19",
+    "ten": "Sản xuất chiến dịch Generative AI quy mô lớn",
+    "mo_ta": "MMA Smarties Global Silver 2020, Clear x Tóc Tiên cùng T&A Ogilvy; khách Unilever, Suntory PepsiCo, Heineken, Nutifood, [NGÂN HÀNG ĐỐI TÁC ĐÃ ẨN DANH], VPBank, VTV3. Vai trò cá nhân Linh cần xác nhận",
+    "bang_chung": [
+      "/mnt/project-files/unikon-brand-guideline.pdf",
+      "/mnt/project-files/LAB014-CSMO-TALK/OVERVIEW.md"
+    ],
+    "bu": [
+      "Unikon"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-20",
+    "ten": "Sản xuất phim và video quảng cáo bằng AI",
+    "mo_ta": "Khoảng 80 dự án, 8 nhóm dịch vụ, series Mì Gấu Đỏ; năm hoạt động chưa thống nhất 2016/2019",
+    "bang_chung": [
+      "/mnt/project-files/urah-brand-guideline.pdf"
+    ],
+    "bu": [
+      "URAH"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-21",
+    "ten": "Short drama AI tiết kiệm credit (Flow Pack)",
+    "mo_ta": "7 skill, nghiên cứu 38 repo, Linh render tay trong Google Flow",
+    "bang_chung": [
+      "/mnt/project-files/LAB016-PHIM-NGAN-AI/OVERVIEW.md"
+    ],
+    "bu": [
+      "URAH"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-22",
+    "ten": "AI Event Tech",
+    "mo_ta": "Chú Tễu và Thần Kim Quy (A80) 10K+ tương tác, [NGÂN HÀNG ĐỐI TÁC ĐÃ ẨN DANH] Marathon 40K+ video AI, GE Vernova board tương tác, độ trễ dưới 200ms; sắp VEEW 17-19/10",
+    "bang_chung": [
+      "/mnt/project-files/ifagent-brand-guideline.pdf",
+      "D:\\LINHX\\PLAN\\20_BU\\U5_BU-IFAGENT\\U5_BU-IFAGENT_AREA.md"
+    ],
+    "bu": [
+      "ifAgent"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-23",
+    "ten": "Nhân vật ảo và livestream (Ambassador AI OS)",
+    "mo_ta": "Live Character kiosk Gemini Live cho [DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH], Hộp Trân Bảo, Lê Bích Bụng Phệ, nhân vật If Agent điều phối (LAB026)",
+    "bang_chung": [
+      "D:\\LINHX\\PRJ\\LIVE CHARACTER",
+      "D:\\LINHX\\PRJ\\INDEX.md",
+      "D:\\LINHX\\PLAN\\10_LINHX\\A2_LX-AGENT\\_data\\02_PROTOTYPE.md (P-007)"
+    ],
+    "bu": [
+      "ifAgent",
+      "URAH",
+      "[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-24",
+    "ten": "Truyền thông phát triển, nghiên cứu và social listening cho NGO",
+    "mo_ta": "41 dự án, khoảng 10,9 tỷ HĐ; Nhà Nhiều Cột, Genderation, Goodvertising, Beijing+30, IOM Social Listening",
+    "bang_chung": [
+      "/mnt/project-files/tuva-brand-guideline.pdf",
+      "D:\\LINHX\\PRJ\\INDEX.md (P1 Listening)"
+    ],
+    "bu": [
+      "TUVA"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-25",
+    "ten": "Viết sách, báo và giọng trào phúng (Lê Bích)",
+    "mo_ta": "Sách Chiêm Tinh Học Nhập Môn; VnExpress 2017; 6 bài Dân trí; fanpage Lê Bích khoảng 254 nghìn; plugin linhx-viet-bai v0.1. Một số bài 2025-2026 có dấu hiệu pha AI",
+    "bang_chung": [
+      "/mnt/project-files/chiemtinh-brand-guideline.pdf",
+      "/tmp/claude/memory/team/silo/lab025-quy-trinh-viet-bai.md",
+      "D:\\LINHX\\PLAN\\10_LINHX\\A1_LX-RES\\_data\\NGUON_THU.md"
+    ],
+    "bu": [
+      "Chiêm Tinh Số",
+      "Linh cá nhân",
+      "URAH"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-26",
+    "ten": "Thương hiệu cá nhân và diễn giả",
+    "mo_ta": "Brand OS 4 mặt trận, FB 18.685 follower, hồ sơ diễn giả CSMO Topic 07, podcast Sống Cùng AI trên VOV",
+    "bang_chung": [
+      "D:\\LINHX\\PLAN\\10_LINHX\\A4_LX-BRAND\\_data\\00_BRAND_OS.md",
+      "/mnt/project-files/LAB014-CSMO-TALK/OVERVIEW.md"
+    ],
+    "bu": [
+      "Linh cá nhân",
+      "Sakedemy"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-27",
+    "ten": "Sản phẩm số B2C tự động và vận hành OPC",
+    "mo_ta": "Engine báo cáo PDF và 12 mẫu, chiemtinh.vn; quy chuẩn OPC v1.0. Chưa có đơn từ người lạ",
+    "bang_chung": [
+      "/mnt/project-files/KHA-THI-LINHX-B2C.md",
+      "/mnt/project-files/QUY-CHUAN-OPC.md",
+      "D:\\LINHX\\LINHX-OPC\\OPC001-CHIEMTINH-VN"
+    ],
+    "bu": [
+      "Chiêm Tinh Số"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-28",
+    "ten": "Chuẩn thương hiệu máy-đọc-được (LBS)",
+    "mo_ta": "7 brand guideline có nhãn nguồn, xuất Design System; LAB012 PARTIAL",
+    "bang_chung": [
+      "/mnt/project-files/[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]-brand-guideline.pdf",
+      "/mnt/project-files/unikon-brand-guideline.pdf",
+      "/mnt/project-files/urah-brand-guideline.pdf",
+      "/mnt/project-files/sakedemy-brand-guideline.pdf",
+      "/mnt/project-files/tuva-brand-guideline.pdf",
+      "/mnt/project-files/chiemtinh-brand-guideline.pdf",
+      "/mnt/project-files/ifagent-brand-guideline.pdf"
+    ],
+    "bu": [
+      "[DOANH NGHIỆP BÁN LẺ ĐÃ ẨN DANH]",
+      "Unikon",
+      "URAH",
+      "Sakedemy",
+      "TUVA",
+      "Chiêm Tinh Số",
+      "IF Agent"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-29",
+    "ten": "Thế giới game và IP (Làng Mèo, tiên hiệp, art style)",
+    "mo_ta": "Làng thú và làng mèo 3D chạy được; GDD Làng Mèo pixel; radar art style",
+    "bang_chung": [
+      "D:\\LINHX\\LAB\\INDEX.md (LAB006)",
+      "/mnt/project-files/LAB019-TIEN-HIEP-WORLD/OVERVIEW.md",
+      "/mnt/project-files/LAB020-ART-STYLE-RADAR/OVERVIEW.md"
+    ],
+    "bu": [
+      "URAH"
+    ],
+    "muc_do": "dang-thu"
+  },
+  {
+    "id": "NL-30",
+    "ten": "Nghiên cứu nền có nhãn nguồn và quét prior art",
+    "mo_ta": "Mọi lab có nghiên cứu nền và quét repo EN/CN; thư viện 188 báo cáo AI; báo cáo AIX",
+    "bang_chung": [
+      "/tmp/claude/memory/team/silo/thu-vien-bao-cao-ai.md",
+      "/tmp/claude/memory/team/silo/linh-lab-prior-art-code.md",
+      "/mnt/project-files/LAB014-CSMO-TALK/01-NGHIEN-CUU-NEN.md"
+    ],
+    "bu": [
+      "TUVA",
+      "Agent Force"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-31",
+    "ten": "Hệ điều hành tri thức LINHX",
+    "mo_ta": "D:\\LINHX second brain: AGENTS.md, 3 vault, PLAN daily, quy trình LAB-PROTOTYPE-PRJ",
+    "bang_chung": [
+      "D:\\LINHX\\AGENTS.md",
+      "/mnt/project-files/LINHX-second-brain/README.md"
+    ],
+    "bu": [
+      "Linh cá nhân"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-32",
+    "ten": "Làm plugin và skill cho Claude Code, Antigravity",
+    "mo_ta": "linhx-core, linhx-linh-vuc, linhx-office, linhx-viet-bai, linhx-cuoc-thi; v0.1, chưa thử Windows và agy thật",
+    "bang_chung": [
+      "/tmp/claude/memory/team/silo/lab023-claude-code-he-thong.md",
+      "/tmp/claude/memory/team/silo/lab021-van-phong-ao-agent.md",
+      "/tmp/claude/memory/team/silo/lab025-quy-trinh-viet-bai.md"
+    ],
+    "bu": [
+      "Agent Force"
+    ],
+    "muc_do": "da-chung-minh"
+  },
+  {
+    "id": "NL-33",
+    "ten": "Quản lý agent nhiều tầng (Claude quản lý, Antigravity làm worker) và ideation tự tối ưu",
+    "mo_ta": "LAB004 PARTIAL, LAB024 hai lượt thử xong",
+    "bang_chung": [
+      "D:\\LINHX\\LAB\\INDEX.md (LAB004)",
+      "/tmp/claude/memory/team/silo/lab024-y-tuong-tu-toi-uu.md"
+    ],
+    "bu": [
+      "Agent Force"
+    ],
+    "muc_do": "dang-thu"
+  }
+]

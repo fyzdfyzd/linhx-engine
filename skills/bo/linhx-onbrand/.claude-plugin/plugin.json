@@ -1,0 +1,7 @@
+{
+  "name": "linhx-onbrand",
+  "version": "0.2.0",
+  "description": "Design onbrand: nạp brand guideline thành cây thư mục + brand.json, tự thiết kế ấn phẩm đúng ngôn ngữ brand từ khuôn HTML, chấm thiết kế (ảnh, PDF, PPTX, HTML) theo 5 mục màu, chữ, logo, hình/bố cục, nội dung trên thang 100, và ra đề thi để đo năng lực bám chuẩn của designer hoặc AI.",
+  "author": {"name": "LINHX LAB"},
+  "license": "MIT"
+}

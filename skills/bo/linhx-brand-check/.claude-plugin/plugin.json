@@ -1,0 +1,7 @@
+{
+  "name": "linhx-brand-check",
+  "version": "0.1.0",
+  "description": "Brand check thời đại agent theo chuẩn ABC v1.0: hỏi nhiều AI bộ câu hỏi tiếng Việt như khách thật, chấm 7 nhãn theo bảng sự thật, kiểm 5 lớp truth signal trên web và kênh, tính 16 chỉ số và AVI = √(Reputation × Verifiable Data), chỉ ra thương hiệu rơi ở bước nào của agent, ra báo cáo và kế hoạch 30 ngày. Nền ai-visibility-skill (MIT).",
+  "author": {"name": "LINHX LAB"},
+  "license": "MIT"
+}

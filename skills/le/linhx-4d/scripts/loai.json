@@ -1,0 +1,397 @@
+{
+  "_chung": {
+    "DISCOVER": {
+      "dau_ra": [
+        "THAM-CHIEU.md",
+        "KHAM-PHA.md",
+        "bang-chung/INDEX.md"
+      ],
+      "cong": "Bàng Thống chấm; Khổng Minh chốt",
+      "phieu": [
+        {
+          "tuong": "Thủy Kính",
+          "viec": "tham-chieu",
+          "cong_cu": "Chrome máy cty",
+          "dau_ra": "THAM-CHIEU.md",
+          "tieu_chi": "≥5 mẫu high standard, mỗi mẫu ghi nguồn + học gì (bố cục, cấu trúc, giọng)",
+          "lenh_kiem": "qc4d.py cong . DISCOVER"
+        },
+        {
+          "tuong": "Từ Thứ",
+          "viec": "nghien-cuu",
+          "cong_cu": "Gemini Deep Research",
+          "dau_ra": "bang-chung/gemini-dr.md",
+          "tieu_chi": "≥1 báo cáo Deep Research lưu nguyên văn, ≥15 link nguồn",
+          "lenh_kiem": "test -s bang-chung/gemini-dr.md"
+        },
+        {
+          "tuong": "Tưởng Uyển",
+          "viec": "quet",
+          "cong_cu": "LINHX crawler",
+          "dau_ra": "bang-chung/quet.csv",
+          "tieu_chi": "≥30 nguồn có URL + ngày",
+          "lenh_kiem": "test -s bang-chung/quet.csv"
+        },
+        {
+          "tuong": "Quách Gia",
+          "viec": "phan-tich",
+          "cong_cu": "agy",
+          "dau_ra": "KHAM-PHA.md",
+          "tieu_chi": "≥10 [BC-xxx], ≥5 trích lời người dùng, đối thủ có tên, bảng số có nguồn",
+          "lenh_kiem": "qc4d.py cong . DISCOVER"
+        }
+      ]
+    },
+    "DEFINE": {
+      "dau_ra": [
+        "DINH-NGHIA.md",
+        "TINH-HUONG.md"
+      ],
+      "cong": "Lưu Bị duyệt (đổi mục tiêu là việc của Linh)",
+      "phieu": [
+        {
+          "tuong": "Quách Gia",
+          "viec": "phan-tich",
+          "cong_cu": "agy",
+          "dau_ra": "DINH-NGHIA.md",
+          "tieu_chi": "ma trận phân khúc 2 trục, ≥3 persona khung cố định, vấn đề HMW, CVP, mục tiêu có số",
+          "lenh_kiem": "qc4d.py cong . DEFINE"
+        },
+        {
+          "tuong": "Tào Tháo",
+          "viec": "phan-bien",
+          "cong_cu": "Gemini",
+          "dau_ra": "phan-bien-define.md",
+          "tieu_chi": "≥5 phản biện, mỗi cái có đề xuất sửa",
+          "lenh_kiem": "test -s phan-bien-define.md"
+        },
+        {
+          "tuong": "Khổng Minh",
+          "viec": "de",
+          "cong_cu": "Claude",
+          "dau_ra": "TINH-HUONG.md",
+          "tieu_chi": "≥3 TH-xxx, mỗi cái thành 1 test đầu cuối",
+          "lenh_kiem": "qc4d.py cong . DEFINE"
+        }
+      ]
+    },
+    "DEVELOP": {
+      "dau_ra": [
+        "UNG-VIEN.md",
+        "PHAN-BIEN.md"
+      ],
+      "cong": "Pháp Chính chạy thử bản nháp; Khổng Minh chọn",
+      "phieu": [
+        {
+          "tuong": "Thủy Kính",
+          "viec": "tham-chieu",
+          "cong_cu": "Chrome máy cty",
+          "dau_ra": "THAM-CHIEU-PT.md",
+          "tieu_chi": "≥3 mẫu sát định dạng đầu ra",
+          "lenh_kiem": "test -s THAM-CHIEU-PT.md"
+        },
+        {
+          "tuong": "Mã Lương",
+          "viec": "viet",
+          "cong_cu": "agy",
+          "dau_ra": "UNG-VIEN.md",
+          "tieu_chi": "≥3 phương án PA-1..PA-3 khác nhau thật, chấm cặp",
+          "lenh_kiem": "qc4d.py cong . DEVELOP"
+        },
+        {
+          "tuong": "Tào Tháo",
+          "viec": "phan-bien",
+          "cong_cu": "Gemini",
+          "dau_ra": "PHAN-BIEN.md",
+          "tieu_chi": "đóng vai khách khó tính chấm 3 PA",
+          "lenh_kiem": "test -s PHAN-BIEN.md"
+        }
+      ]
+    },
+    "DELIVER": {
+      "dau_ra": [
+        "BANG-CHUNG.md",
+        "BAN-GIAO.md",
+        "BAI-HOC.md"
+      ],
+      "cong": "Lưu Bị duyệt bản cuối",
+      "phieu": [
+        {
+          "tuong": "Pháp Chính",
+          "viec": "kiem-e2e",
+          "cong_cu": "Playwright",
+          "dau_ra": "BANG-CHUNG.md",
+          "tieu_chi": "mọi TH-xxx có dòng DAT + ảnh",
+          "lenh_kiem": "qc4d.py cong . DELIVER"
+        },
+        {
+          "tuong": "Chân Cơ",
+          "viec": "bien-tap",
+          "cong_cu": "agy",
+          "dau_ra": "BAN-GIAO.md",
+          "tieu_chi": "qua danh sách văn AI LAB080, 0 lỗi nặng",
+          "lenh_kiem": "test -s BAN-GIAO.md"
+        },
+        {
+          "tuong": "Bàng Thống",
+          "viec": "cham",
+          "cong_cu": "Claude",
+          "dau_ra": "BAI-HOC.md",
+          "tieu_chi": "≥3 dòng bài học đưa vào skill",
+          "lenh_kiem": "test -s BAI-HOC.md"
+        }
+      ]
+    }
+  },
+  "giao-trinh": {
+    "ten": "Giáo trình / khoá học",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "khảo sát người học, 5 khoá top thế giới + VN, đề cương đối thủ"
+    },
+    "DEFINE": {
+      "them_dau_ra": [
+        "CHUAN-DAU-RA.md"
+      ],
+      "ghi": "chuẩn đầu ra từng bài theo Bloom, persona học viên"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "bai-mau/"
+      ],
+      "ghi": "3 khung khoá, 1 bài mẫu đủ (slide + bài tập), persona LAB048 học thử"
+    },
+    "DELIVER": {
+      "them_dau_ra": [
+        "khoa/"
+      ],
+      "ghi": "e2e: persona làm bài kiểm cuối đạt ngưỡng; slide qua vls.py"
+    },
+    "phieu_them": [
+      {
+        "pha": "DEVELOP",
+        "tuong": "Hoàng Nguyệt Anh",
+        "viec": "anh",
+        "cong_cu": "Gemini Ultra + ChatGPT Plus",
+        "dau_ra": "bai-mau/anh/",
+        "tieu_chi": "mỗi ảnh ≥3 ứng viên, soi lỗi, ≤3 vòng sửa",
+        "lenh_kiem": "ls bai-mau/anh",
+        "ung_vien": 3,
+        "vong_sua": 3
+      }
+    ]
+  },
+  "phan-mem-opc": {
+    "ten": "Phần mềm OPC",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "đối thủ, giá, hành trình mua, luật"
+    },
+    "DEFINE": {
+      "them_dau_ra": [
+        "DE-BAI-DEV.md"
+      ],
+      "ghi": "JTBD + ngân sách bước, module, P0–P3 (quy chuẩn tự chạy)"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "html-tinh/",
+        "features-dot0.json"
+      ],
+      "ghi": "3 PA HTML tĩnh, Linh duyệt màn mốc, features khoá"
+    },
+    "DELIVER": {
+      "them_dau_ra": [],
+      "ghi": "cong_kiem + CI xanh + E01..E07 Playwright trên staging"
+    },
+    "phieu_them": [
+      {
+        "pha": "DELIVER",
+        "tuong": "Quan Vũ",
+        "viec": "lam",
+        "cong_cu": "agy",
+        "dau_ra": "features-dotN",
+        "tieu_chi": "cong_kiem kiem đạt",
+        "lenh_kiem": "python scripts/cong_kiem.py kiem features-dot1.json"
+      }
+    ]
+  },
+  "ung-dung": {
+    "ten": "Ứng dụng (web/mini app)",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "10 app cùng loại, đánh giá store, luồng onboarding"
+    },
+    "DEFINE": {
+      "them_dau_ra": [
+        "DESIGN.md"
+      ],
+      "ghi": "JTBD, luồng ≤4 bước, token thiết kế"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "html-tinh/"
+      ],
+      "ghi": "3 PA màn chính, vòng Playwright chấm ≤3 vòng"
+    },
+    "DELIVER": {
+      "them_dau_ra": [],
+      "ghi": "E2E trên máy thật (mobile 360px), Lighthouse ≥90"
+    },
+    "phieu_them": [
+      {
+        "pha": "DEVELOP",
+        "tuong": "Hoàng Nguyệt Anh",
+        "viec": "thiet-ke",
+        "cong_cu": "Gemini Ultra + ChatGPT Plus",
+        "dau_ra": "html-tinh/",
+        "tieu_chi": "3 PA màn chính có tham chiếu",
+        "lenh_kiem": "ls html-tinh",
+        "ung_vien": 3,
+        "vong_sua": 3
+      }
+    ]
+  },
+  "slide": {
+    "ten": "Slide / deck",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "≥5 deck mẫu (Envato, Behance, bộ HIGHSTANDARD), khán giả là ai"
+    },
+    "DEFINE": {
+      "them_dau_ra": [
+        "THONG-DIEP.md"
+      ],
+      "ghi": "1 ý lớn → trụ cột → bằng chứng; mỗi slide 1 thông điệp"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "mau-slide/"
+      ],
+      "ghi": "3 template ứng viên, 3 người chấm chọn; ảnh ≥3 ứng viên"
+    },
+    "DELIVER": {
+      "them_dau_ra": [
+        "deck/"
+      ],
+      "ghi": "vls.py: mọi slide đạt; xuất PPTX + PDF; AI không vẽ chữ"
+    },
+    "phieu_them": [
+      {
+        "pha": "DEVELOP",
+        "tuong": "Hoàng Nguyệt Anh",
+        "viec": "anh",
+        "cong_cu": "Gemini Ultra + ChatGPT Plus",
+        "dau_ra": "mau-slide/anh/",
+        "tieu_chi": "ảnh rời, không chữ, ≥3 ứng viên",
+        "lenh_kiem": "ls mau-slide/anh",
+        "ung_vien": 3,
+        "vong_sua": 3
+      }
+    ]
+  },
+  "ke-hoach": {
+    "ten": "Kế hoạch / chiến lược",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "quy mô thị trường có mốc dự báo + nguồn, SWOT, đối thủ có tên"
+    },
+    "DEFINE": {
+      "them_dau_ra": [],
+      "ghi": "ma trận phân khúc 2 trục, CVP, mục tiêu số"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "TAI-CHINH.md"
+      ],
+      "ghi": "3 phương án chiến lược, mô hình giá + cách tính doanh thu"
+    },
+    "DELIVER": {
+      "them_dau_ra": [
+        "LO-TRINH.md"
+      ],
+      "ghi": "mốc có người + ngày, KPI, cổng Go/No-Go có hành động khi trượt"
+    },
+    "phieu_them": [
+      {
+        "pha": "DELIVER",
+        "tuong": "Tuân Úc",
+        "viec": "ke-hoach",
+        "cong_cu": "agy",
+        "dau_ra": "LO-TRINH.md",
+        "tieu_chi": "100% mốc có người + ngày + KPI, ≥1 cổng Go/No-Go",
+        "lenh_kiem": "qc4d.py cong . DELIVER"
+      }
+    ]
+  },
+  "_cham": {
+    "DISCOVER": {
+      "do_phu": "đủ 3 góc thị trường, đối thủ, người dùng chưa",
+      "bang_chung": "mỗi khẳng định có nguồn, cỡ mẫu",
+      "tieng_noi": "có lời người dùng thật, không bịa",
+      "insight": "có câu 'vì vậy' sau mỗi bảng, không dán số trần",
+      "ngang_mau": "đặt cạnh tham chiếu high standard có lạc hạng không",
+      "gon": "bỏ được gì nữa không"
+    },
+    "DEFINE": {
+      "van_de_dung": "vấn đề đáng giải, có bằng chứng từ Discover",
+      "phan_khuc": "ma trận 2 trục, chọn có lý do",
+      "persona": "khung cố định, có trích lời",
+      "cvp_khop": "CVP trả đúng nỗi đau",
+      "muc_tieu_do_duoc": "mục tiêu có số, có hạn, có cổng Go/No-Go",
+      "ngang_mau": "cùng hạng tham chiếu"
+    },
+    "DEVELOP": {
+      "khac_biet": "3 PA khác nhau thật, không phải 1 PA đổi chữ",
+      "khop_dinh_vi": "giải pháp khớp vấn đề và CVP đã duyệt",
+      "kha_thi": "làm được trong ngân sách, thời gian",
+      "phan_bien_da_xu_ly": "đã trả lời từng ý của Tào Tháo",
+      "toi_gian": "ít yếu tố, không thừa",
+      "ngang_mau": "cùng hạng tham chiếu"
+    },
+    "DELIVER": {
+      "dung_tieu_chi": "mọi TH đạt có ảnh",
+      "ngang_mau": "cùng hạng tham chiếu",
+      "toi_gian": "bỏ được gì nữa không",
+      "nhat_quan": "như một người làm cả bộ",
+      "nguoi_la_dung_duoc": "người lạ dùng được không cần hướng dẫn",
+      "ban_giao": "người sau đọc BAN-GIAO là làm tiếp được"
+    }
+  },
+  "nghien-cuu": {
+    "ten": "Nghiên cứu nền",
+    "DISCOVER": {
+      "them_dau_ra": [],
+      "ghi": "tài liệu sơ cấp sẵn có + Deep Research + báo, mạng xã hội; mỗi số có [BC]"
+    },
+    "DEFINE": {
+      "them_dau_ra": [
+        "CAU-HOI.md"
+      ],
+      "ghi": "câu hỏi nghiên cứu, phân khúc, khoảng trống dữ liệu, ai dùng kết quả"
+    },
+    "DEVELOP": {
+      "them_dau_ra": [
+        "KHUNG.md"
+      ],
+      "ghi": "3 khung phân tích/hướng ứng dụng, chấm cặp"
+    },
+    "DELIVER": {
+      "them_dau_ra": [
+        "BAO-CAO-NEN.md"
+      ],
+      "ghi": "báo cáo nền: tóm tắt 1 trang đầu, mọi số có nguồn; e2e: mở lại 10 số ngẫu nhiên khớp nguồn"
+    },
+    "phieu_them": [
+      {
+        "pha": "DELIVER",
+        "tuong": "Tư Mã Ý",
+        "viec": "rui-ro",
+        "cong_cu": "agy",
+        "dau_ra": "KIEM-DINH.md",
+        "tieu_chi": "10 số chọn ngẫu nhiên, ≥10/10 khớp nguồn gốc",
+        "lenh_kiem": "test -s KIEM-DINH.md"
+      }
+    ]
+  }
+}

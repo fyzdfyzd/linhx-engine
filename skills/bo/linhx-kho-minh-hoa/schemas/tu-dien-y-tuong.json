@@ -1,0 +1,40 @@
+{
+  "_ghi_chu": "Từ điển đóng cho kho minh hoạ ý tưởng. Mỗi ảnh gắn 1 họ phong cách (tối đa 2) và 1-2 cơ chế ý tưởng. Trục chất liệu/nét/màu dùng lại LAB020 tu-dien-phong-cach.json. Tên hoạ sĩ chỉ để tra cứu và ghi công, KHÔNG đưa vào prompt sinh ảnh. Link hoạ sĩ chưa kiểm: bước M1 phải kiểm.",
+  "ho_phong_cach": [
+    {"id": "an-du-toi-gian", "ten": "Ẩn dụ tối giản (editorial)", "alias": ["minimal conceptual illustration", "editorial metaphor", "极简概念插画"],
+     "dau_hieu": "1 ý duy nhất, 2-4 màu phẳng, nhiều khoảng trắng, nhân vật không mặt hoặc mặt đơn giản, hình khối hình học", "tham_khao": ["Alessandro Gottardo (Shout)", "Andrea Ucini", "Jean Jullien", "Christoph Niemann"]},
+    {"id": "khong-gian-am", "ten": "Không gian âm, hình hai nghĩa", "alias": ["negative space", "figure-ground", "图底反转"],
+     "dau_hieu": "khoảng trống giữa hai hình tạo thành hình thứ ba; thường 2 màu", "tham_khao": ["Noma Bar", "Tang Yau Hoong"]},
+    {"id": "biem-hoa-xa-hoi", "ten": "Biếm hoạ xã hội", "alias": ["satirical illustration", "social commentary art", "讽刺插画"],
+     "dau_hieu": "cảnh chi tiết, màu ấm hoặc retro, phê phán công nghệ/tiêu dùng/chính trị, không cần chữ", "tham_khao": ["Pawel Kuczynski", "Steve Cutts", "John Holcroft", "Al Margen", "Marco Melgrati"]},
+    {"id": "so-do-y-tuong", "ten": "Sơ đồ ý tưởng nét đơn", "alias": ["idea diagram", "visual thinking", "napkin sketch", "思维图解"],
+     "dau_hieu": "nét đen trên nền trắng/đen, hình học + mũi tên + 1 dòng chữ, biểu đồ giả, Venn, đường cong", "tham_khao": ["Visualize Value (Jack Butcher)", "Sketchplanations (Jono Hey)", "Behavior Gap (Carl Richards)", "Indexed (Jessica Hagy)", "Liz Fosslien"]},
+    {"id": "nguoi-que-giai-thich", "ten": "Người que giải thích", "alias": ["stick figure explainer", "火柴人"],
+     "dau_hieu": "nhân vật que, hội thoại, nhiều khung, hài", "tham_khao": ["Wait But Why", "xkcd"]},
+    {"id": "vat-the-ve-them", "ten": "Vật thật + nét vẽ", "alias": ["object doodle", "creative object", "实物涂鸦"],
+     "dau_hieu": "ảnh chụp đồ vật thật được vẽ thêm vài nét để thành hình khác", "tham_khao": ["Christoph Niemann (Sunday Sketch)", "Javier Pérez"]},
+    {"id": "ghep-sieu-thuc", "ten": "Ghép siêu thực tối giản", "alias": ["minimal surreal", "photo manipulation concept", "超现实合成"],
+     "dau_hieu": "ghép 2 vật không liên quan thành một, nền trơn, ánh sáng studio", "tham_khao": ["Chema Madoz"]},
+    {"id": "mot-net", "ten": "Một nét liền", "alias": ["one line drawing", "continuous line", "一笔画"],
+     "dau_hieu": "1 đường liền không nhấc bút, đơn sắc", "tham_khao": []},
+    {"id": "chu-thanh-hinh", "ten": "Chữ thành hình", "alias": ["typographic concept", "word as image", "字体图形"],
+     "dau_hieu": "chữ cái hoặc từ được biến hình để tự nói nghĩa của nó", "tham_khao": ["Ji Lee (Word as Image)"]},
+    {"id": "isometric-he-thong", "ten": "Isometric và biểu tượng hệ thống", "alias": ["isometric", "isotype", "pictogram"],
+     "dau_hieu": "góc 30 độ, mô-đun lặp lại, dùng cho quy trình/hệ thống", "tham_khao": ["Otto Neurath (Isotype)"]}
+  ],
+  "co_che_y_tuong": [
+    {"id": "a-la-b", "ten": "A là B (ẩn dụ)", "mo_ta": "vẽ khái niệm A bằng hình của vật B", "vi_du": "điện thoại là chiếc lồng"},
+    {"id": "ghep-vat", "ten": "Ghép hai vật", "mo_ta": "hai vật hoà thành một hình lai", "vi_du": "bóng đèn + não"},
+    {"id": "doi-ti-le", "ten": "Đổi tỉ lệ", "mo_ta": "phóng to/thu nhỏ bất thường để nói tầm quan trọng", "vi_du": "người tí hon dưới con trỏ chuột khổng lồ"},
+    {"id": "hai-nghia", "ten": "Hai nghĩa / không gian âm", "mo_ta": "một hình đọc được hai cách", "vi_du": "khoảng trống giữa hai mặt người thành chiếc bình"},
+    {"id": "tuong-phan", "ten": "Tương phản / trước–sau", "mo_ta": "hai nửa đối lập đặt cạnh nhau", "vi_du": "kỳ vọng và thực tế"},
+    {"id": "dao-vai", "ten": "Đảo vai", "mo_ta": "đổi chỗ kẻ mạnh và kẻ yếu, người và đồ vật", "vi_du": "điện thoại dắt người đi dạo"},
+    {"id": "thanh-ngu-hoa", "ten": "Hiện thực hoá thành ngữ", "mo_ta": "vẽ đúng nghĩa đen của một câu nói", "vi_du": "'chết chìm trong email'"},
+    {"id": "bieu-do-gia", "ten": "Biểu đồ giả", "mo_ta": "dùng trục, đường cong, Venn để nói một chân lý đời sống", "vi_du": "đường cong kỳ vọng – nỗ lực"},
+    {"id": "le-loai", "ten": "Một cái khác loạt", "mo_ta": "lặp nhiều hình giống nhau, một hình phá lệ", "vi_du": "một con cá bơi ngược"},
+    {"id": "ho-lo-ben-trong", "ten": "Hé lộ bên trong", "mo_ta": "cắt lát, lật mặt nạ, tảng băng chìm", "vi_du": "tảng băng thành công"},
+    {"id": "chuoi-he-qua", "ten": "Chuỗi hệ quả", "mo_ta": "domino, vòng lặp, hiệu ứng dây chuyền", "vi_du": "một đồng xu đổ cả hàng domino"}
+  ],
+  "dung_de": ["bìa bài viết", "minh hoạ trong bài", "slide 1 ý", "post mạng xã hội", "thumbnail video", "sách / ebook", "infographic"],
+  "do_phuc_tap": ["1 hình 1 ý", "cảnh có nhân vật", "nhiều khung"]
+}

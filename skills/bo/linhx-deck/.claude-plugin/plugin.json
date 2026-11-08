@@ -1,0 +1,9 @@
+{
+  "name": "linhx-deck",
+  "version": "0.3.0",
+  "description": "Quy trình 15 bước làm deck proposal kiểu tư vấn chiến lược cho các BU của Linh: hiểu khách, pain-gain, lợi thế từ hồ sơ năng lực LINHX, offer, 3 giải pháp, moodboard, ghost deck, ảnh ChatGPT Plus có tham chiếu, rà ảnh, xuất Claude Slides theo Design System BU, demo, bàn giao. Cổng từng bước do script kiểm.",
+  "author": {
+    "name": "LINHX LAB"
+  },
+  "license": "MIT"
+}

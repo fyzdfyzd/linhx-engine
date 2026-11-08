@@ -1,0 +1,14 @@
+{
+    "title": "Hanoi Events Database (TUNG TA TUNG TANG)",
+    "summary": "Specific research, architecture, and data collection for a comprehensive Hanoi events database. This project implements the LINHX LAB Scanning Pattern to catalog events in Hanoi for March 2026. After rejecting initial generated data, it pivoted to real-time browser scanning via the LinhX Crawl Server, reaching an initial milestone of 38 verified real-world events (concerts, exhibitions, heritage festivals) and expanding the venue registry to 150+ locations in Hanoi.",
+    "references": [
+        {
+            "type": "conversation_id",
+            "value": "dc3f2324-33ad-478e-bf35-e4be45453116"
+        },
+        {
+            "type": "file",
+            "value": "H:\\My Drive\\WORKFORCE\\PROJECT\\TUNG TA TUNG TANG\\EVENT_DATA"
+        }
+    ]
+}

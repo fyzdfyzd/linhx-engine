@@ -1,0 +1,22 @@
+{
+    "title": "Antigravity Workforce Orchestration Framework",
+    "summary": "A framework for managing a team of AI agents as a 'Living Organism', now aligned with Google Antigravity standards (v2.2). It defines a standard directory tree anchored by a 'System Constitution' that governs Core Tenets, Native Operating Rules (with frontmatter), operating modes, and the mandatory 'Artifact Loop' (Plan-Execute-Verify). Implementation includes automated mirroring of laws and operational state.",
+    "references": [
+        {
+            "type": "url",
+            "value": "https://antigravity.google/docs/agent"
+        },
+        {
+            "type": "conversation_id",
+            "value": "73c68379-397a-4c28-98e9-51ea1a6699ec"
+        },
+        {
+            "type": "conversation_id",
+            "value": "a68455c3-5c53-4b0d-bcc1-7cbbeec471ee"
+        },
+        {
+            "type": "conversation_id",
+            "value": "81e07c56-7cb2-4b83-a963-f408ac4ce89f"
+        }
+    ]
+}

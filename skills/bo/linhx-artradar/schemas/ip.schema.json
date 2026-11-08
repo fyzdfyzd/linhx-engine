@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "thẻ IP LAB020 (M6 ip-scout)",
+  "type": "object",
+  "required": ["id", "ten", "nhom", "link", "diem"],
+  "properties": {
+    "id": {"type": "string"},
+    "ten": {"type": "string"}, "ten_goc": {"type": "string"},
+    "nhom": {"type": "string", "description": "Làng Mèo | Tiên hiệp"},
+    "chu_so_huu": {"type": "array", "items": {"type": "string"}, "description": "nhà phát hành/hãng/chủ sở hữu (Wikidata P123/P178/P127/P272)"},
+    "tac_gia": {"type": "array", "items": {"type": "string"}},
+    "loai_hinh": {"type": "array", "items": {"type": "string"}, "description": "Wikidata P31"},
+    "loai_hinh_seed": {"type": "string"},
+    "nam": {"type": "array", "items": {"type": "string"}, "description": "từ Wikidata P577/P571, có thể là năm bản dịch/bản in sau"},
+    "nam_goc": {"type": "string", "description": "năm ra mắt bản gốc, Claude kiểm và ghi"},
+    "so_nhan_vat_co_ca_tinh": {"type": ["integer", "string"], "description": "ước lượng của Claude, ghi cách đếm"},
+    "link": {"type": "object", "properties": {"wikidata": {"type": "string"}, "bangumi": {"type": "string"}, "anilist": {"type": "string"}, "fandom": {"type": "string"}}},
+    "so_lieu": {"type": "object", "description": "số đếm lấy từ API: số nhân vật Bangumi/AniList, lượt thu thập, popularity, số bài Fandom"},
+    "diem": {
+      "type": "object",
+      "properties": {
+        "do_sau_the_gioi": {"type": "integer", "minimum": 1, "maximum": 5},
+        "nhan_vat_co_ca_tinh": {"type": "integer", "minimum": 1, "maximum": 5},
+        "kha_nang_mo_rong": {"type": "integer", "minimum": 1, "maximum": 5},
+        "cong_dong_fan": {"type": "integer", "minimum": 1, "maximum": 5},
+        "khac_biet_hinh_anh": {"type": "integer", "minimum": 1, "maximum": 5},
+        "ban_quyen_kha_nang_hoc": {"type": "integer", "minimum": 1, "maximum": 5, "description": "5 = tài liệu công khai nhiều, cấu trúc dễ tách để học; IP vẫn là của người khác"}
+      }
+    },
+    "bai_hoc": {"type": "array", "items": {"type": "string"}, "description": "3-5 dòng bài học cấu trúc"},
+    "ghi_chu": {"type": "string"}
+  }
+}

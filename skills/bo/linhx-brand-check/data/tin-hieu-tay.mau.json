@@ -1,0 +1,8 @@
+{
+ "_huong_dan": "Skill kiem-tin-hieu điền bằng tra web, mỗi mục phải có link. Điểm do abc_tinhieu.py tính.",
+ "B2": {"kenh": [{"kenh": "shopee", "url": "", "khop": ["ten", "hotline"], "lech": ["gia: web 120k, sàn 135k"]}]},
+ "B3": {"nguon_doc_lap": ["https://vnexpress.net/..."], "giai_thuong_co_link": 0, "wikipedia": false},
+ "B4": {"nguoi_dung_ten": [{"ten": "", "vai_tro": "", "ho_so_url": ""}], "schema_person": false},
+ "B5": {"diem_review": 4.6, "so_review": 1200, "phan_hoi_khieu_nai": true, "chinh_sach_doi_tra_cong_khai": true, "nguon": ["link Google Maps/sàn"]},
+ "B6": {"feed_san_pham": false, "api_mcp": false, "zalo_mini_app": false, "thanh_toan_online": true, "gia_ton_kho_tren_web": false}
+}

@@ -1,0 +1,24 @@
+{
+  "user_agent": "LINHX-LAB-artradar/0.1 (research; metadata and links only)",
+  "sources": [
+    {"id": "boredpanda", "name": "Bored Panda", "url": "https://www.boredpanda.com", "method": "sitemap", "allowed": true, "delay_s": 4,
+     "focus": "art, illustration, comics, character design", "checked": "2026-10-10",
+     "terms_note": "robots cho phép trang bài, chặn /contributor/ và wp-json; ToS: người đăng giữ quyền ảnh, ta không có quyền với ảnh -> chỉ lấy tên nghệ sĩ + link gốc."},
+    {"id": "artstation", "name": "ArtStation", "url": "https://www.artstation.com", "method": "gallery-dl", "allowed": true, "delay_s": 4,
+     "focus": "character design, concept art", "checked": "", "terms_note": "Cần đọc ToS khi pilot; bỏ project gắn NoAI."},
+    {"id": "behance", "name": "Behance", "url": "https://www.behance.net", "method": "gallery-dl", "allowed": true, "delay_s": 4,
+     "focus": "illustration, character, IP mascot", "checked": "", "terms_note": "Cần đọc ToS khi pilot."},
+    {"id": "reddit-comics", "name": "Reddit r/comics", "url": "https://www.reddit.com/r/comics", "method": "gallery-dl", "allowed": true, "delay_s": 4,
+     "focus": "webcomic artists", "checked": "", "terms_note": "Reddit giới hạn API; chỉ lấy tiêu đề, tác giả, link."},
+    {"id": "webtoon-canvas", "name": "Webtoon Canvas", "url": "https://www.webtoons.com/en/canvas", "method": "manual", "allowed": true, "delay_s": 5,
+     "focus": "webcomic series, world building", "checked": "", "terms_note": "Không có extractor; đọc tay trang series, không tải trang truyện."},
+    {"id": "bangumi", "name": "Bangumi", "url": "https://api.bgm.tv/v0", "method": "api", "allowed": true, "delay_s": 2,
+     "focus": "nhân vật manhua/donghua tiên hiệp", "checked": "", "terms_note": "API công khai, cần User-Agent riêng."},
+    {"id": "anilist", "name": "AniList", "url": "https://graphql.anilist.co", "method": "api", "allowed": true, "delay_s": 2,
+     "focus": "nhân vật anime/manga", "checked": "", "terms_note": "Giới hạn tốc độ ~90 req/phút."},
+    {"id": "wikidata", "name": "Wikidata", "url": "https://query.wikidata.org/sparql", "method": "api", "allowed": true, "delay_s": 2,
+     "focus": "IP, vũ trụ hư cấu, chủ sở hữu", "checked": "", "terms_note": "CC0."},
+    {"id": "fandom", "name": "Fandom wikis", "url": "https://www.fandom.com", "method": "api", "allowed": true, "delay_s": 3,
+     "focus": "lore thế giới", "checked": "", "terms_note": "Chữ CC BY-SA: ghi nguồn, viết lại bằng lời mình."}
+  ]
+}

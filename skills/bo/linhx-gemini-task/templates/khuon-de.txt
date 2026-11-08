@@ -1,0 +1,41 @@
+@linhx-nhiem-vu
+(Dòng trên gọi Skill chuẩn LINHX nếu đã cài trong Gemini. Chưa cài thì xoá dòng đó và giữ nguyên khối "Thực tế máy" bên dưới.)
+
+NHIỆM VỤ {{MA}}: <TIÊU ĐỀ NGẮN>
+
+Bạn có một máy làm việc riêng với Python và công cụ tìm, duyệt web. Hãy dùng thật: mở trang, chạy script, tự kiểm, đóng gói. Không hỏi lại tôi giữa chừng; chỗ nào phải chọn thì tự chọn hợp lý và ghi lý do vào NHAT-KY.md.
+
+## 1. Vai và mục tiêu
+{{MUC_TIEU}}
+<Vài dòng: kết quả này dùng vào việc gì, người đọc là ai, chất lượng quan trọng ở điểm nào.>
+
+{{MAY}}
+
+## 2. Luật
+- Không bịa. Mỗi dòng dữ liệu có URL đã thật sự mở được.
+- Bản quyền: không lưu toàn văn tài liệu có bản quyền; chỉ URL, tiêu đề, trích ngắn ≤ 40 từ trong ngoặc kép và tóm ý viết lại. Tài liệu phạm vi công cộng thì được lưu, ghi giấy phép.
+- Tôn trọng robots.txt, tối đa 1 yêu cầu/giây/tên miền, không đăng nhập, không vượt paywall.
+- Tài liệu viết tiếng Việt, câu đầy đủ; tên cột và mã không dấu.
+
+## 3. Cấu trúc thư mục (giữ đúng tên để tôi chấm bằng máy)
+{{MA}}/
+  TIEN-DO.md        cập nhật sau mỗi pha
+  NHAT-KY.md        các lựa chọn và lý do
+  data/<...>.csv    <cột: ...>
+  TONG-KET.md       đã làm gì, số liệu do script đếm
+  TIEP-THEO.md      chỉ khi chưa xong
+  scripts/          mã bạn viết, kèm tests/ dùng unittest
+
+## 4. Các pha (mỗi pha có đích đếm được và một checkpoint)
+Pha 1. <việc> → đích: <≥ N dòng / file>. Xong pha: cập nhật TIEN-DO.md và nén `{{MA}}-pha-1.zip`.
+Pha 2. <việc> → đích: <...>. Checkpoint `{{MA}}-pha-2.zip`.
+Pha 3. <việc> → đích: <...>. Checkpoint `{{MA}}-pha-3.zip`.
+
+## 5. Tự kiểm bắt buộc
+Chạy script `tu_kiem.py` của Skill linhx-nhiem-vu trên thư mục {{MA}} (; nếu không có thì tự viết script tương đương): đếm file, dòng, cột; số đoạn không kết thúc bằng dấu câu; số URL bọc google; file trùng tên thư viện. Dán nguyên log vào TONG-KET.md.
+
+## 6. Nối lượt
+Nếu hết thời gian mà chưa xong: ghi TIEP-THEO.md (đang dừng ở pha nào, còn gì, lượt sau bắt đầu từ đâu). Lượt sau tôi sẽ đính kèm zip này.
+
+## 7. Đầu ra cuối
+Nén `{{MA}}-FULL.zip` gồm toàn bộ thư mục, đưa link tải. Trả lời tôi đúng 10 dòng: đã làm gì, số liệu chính (do script đếm), chưa làm được gì và vì sao.

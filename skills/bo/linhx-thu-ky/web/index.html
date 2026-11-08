@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thư ký LINHX</title>
+  <link rel="stylesheet" href="/thu-ky.css">
+</head>
+<body>
+<main class="app">
+  <section class="stage">
+    <div class="char">
+      <div id="char-placeholder" class="placeholder"><span id="ph-name">Thư ký</span></div>
+      <img id="char-img" alt="" style="display:none">
+      <video id="char-video" muted playsinline preload="auto"></video>
+      <video id="char-video-b" muted playsinline preload="auto"></video>
+    </div>
+    <div class="topbar">
+      <div class="id"><b id="char-name">Thư ký LINHX</b><span id="status">Chưa kết nối</span></div>
+      <span class="mode" id="mode"></span>
+    </div>
+    <div class="subtitle" id="subtitle" aria-live="polite"></div>
+    <div class="controls">
+      <button id="btn-connect" class="primary">Kết nối</button>
+      <button id="btn-mic" title="Bật/tắt micro" disabled>Micro: tắt</button>
+      <form id="form" class="ask">
+        <input id="text" autocomplete="off" maxlength="1000" placeholder="Gõ cho thư ký, ví dụ: tình hình LAB025">
+        <button type="submit">Gửi</button>
+      </form>
+    </div>
+  </section>
+  <aside class="side">
+    <h2>Việc đã giao</h2>
+    <ul id="jobs" class="jobs"><li class="empty">Chưa có việc nào.</li></ul>
+    <h2>Nhật ký</h2>
+    <ol id="log" class="log"></ol>
+  </aside>
+</main>
+<script src="/vendor/clip-plan.js"></script>
+<script src="/vendor/avatar.js"></script>
+<script src="/vendor/audio.js"></script>
+<script src="/thu-ky.js"></script>
+</body>
+</html>

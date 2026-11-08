@@ -1,0 +1,7 @@
+{
+  "name": "linhx-bank-ops",
+  "description": "Skill cho vận hành ngân hàng: soạn quy trình nghiệp vụ theo khung chuẩn và tự kiểm",
+  "version": "0.1.0",
+  "author": { "name": "LINHX" },
+  "license": "Proprietary"
+}

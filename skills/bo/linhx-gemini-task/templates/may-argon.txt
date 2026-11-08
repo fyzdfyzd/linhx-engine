@@ -1,0 +1,7 @@
+## Thực tế máy của bạn (đã đo ở lượt trước, 17/10/2026)
+- Debian 12 trong sandbox, 2 vCPU, 5 GiB RAM, khoảng 5 GiB đĩa; Python 3.11, Node 18, pandas, sqlite3, Jinja2, WeasyPrint, Chromium headless, Pillow, python-pptx, LibreOffice, font Noto tiếng Việt.
+- Bash trong máy KHÔNG ra được mạng (curl, pip, npm bị chặn) và không cài thêm được thư viện. Lấy trang web bằng công cụ tìm kiếm và duyệt web của bạn, lưu nội dung đọc được vào file, rồi xử lý bằng Python có sẵn.
+- Không có pytest: kiểm thử bằng `unittest`. Không tạo file trùng tên thư viện (pytest.py, json.py…). In phiên bản công cụ và log chạy test đầy đủ.
+- Mọi đoạn văn phải là câu trọn vẹn: TUYỆT ĐỐI không cắt theo số chữ hay số ký tự; script tự kiểm mỗi đoạn kết thúc bằng dấu câu và báo số đoạn vi phạm.
+- Mọi con số trong báo cáo tổng kết phải do script đếm (in log), không ước lượng.
+- Ghi URL gốc vào CSV (không bọc google.com/search). Mọi kết quả phải nằm trong file và zip, không để kết quả chỉ trong canvas.

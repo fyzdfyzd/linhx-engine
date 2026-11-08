@@ -1,0 +1,7 @@
+{
+  "name": "linhx-gemini-task",
+  "version": "0.1.0",
+  "description": "Giao việc cho Gemini Task (tài khoản Ultra, model Argon) mỗi khi có thể: chọn việc nên giao, viết đề theo khuôn, gửi qua Chrome, ghi sổ, lấy kết quả, chấm máy, đóng gói Skill cho Gemini.",
+  "author": {"name": "LINHX LAB"},
+  "license": "MIT"
+}

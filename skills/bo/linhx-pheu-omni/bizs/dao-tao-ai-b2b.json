@@ -1,0 +1,137 @@
+{
+  "ten": "Khoá đào tạo AI cho doanh nghiệp [ví dụ giả định]",
+  "loai": "B2B dịch vụ giá trị cao",
+  "aov": 40,
+  "bien_gop": 0.55,
+  "so_lan_mua_12t": 1.3,
+  "tre_ban_thang": 2,
+  "so_thang": 12,
+  "chi_phi_planning": [
+    [
+      "Nghiên cứu khách: 8 phỏng vấn HR/L&D + persona ảo phản biện",
+      6
+    ],
+    [
+      "Bản đồ điểm chạm buying committee (người dùng, HR, sếp duyệt)",
+      4
+    ],
+    [
+      "Đo lường: UTM, CRM có giai đoạn deal, câu hỏi 'biết qua đâu'",
+      6
+    ],
+    [
+      "Giả lập + phản biện 10 phễu, chốt mix",
+      3
+    ],
+    [
+      "Dựng stack agent (Postiz, listmonk, danh sách cold có nguồn hợp lệ)",
+      6
+    ]
+  ],
+  "van_hanh_chung_thang": [
+    [
+      "Token Claude + công cụ + VPS",
+      3
+    ],
+    [
+      "1 người sales/CS bán thời gian",
+      10
+    ]
+  ],
+  "pheu": {
+    "ads": {
+      "bat": true,
+      "ngan_sach": 8,
+      "he_so_buoc_cuoi": 0.1
+    },
+    "search": {
+      "bat": true,
+      "ngan_sach": 5,
+      "he_so_buoc_cuoi": 0.15,
+      "dau_vao": [
+        60,
+        120,
+        200
+      ]
+    },
+    "seo": {
+      "bat": true,
+      "he_so_buoc_cuoi": 0.2,
+      "dau_vao": [
+        500,
+        1500,
+        4000
+      ]
+    },
+    "content_hub": {
+      "bat": true,
+      "mua_moi_thang": [
+        0.0005,
+        0.0015,
+        0.003
+      ]
+    },
+    "personal_brand": {
+      "bat": true,
+      "he_so_buoc_cuoi": 0.25,
+      "dau_vao": [
+        3000,
+        15000,
+        60000
+      ]
+    },
+    "affiliate": {
+      "bat": true,
+      "hoa_hong": 0.1,
+      "dau_vao": [
+        2,
+        5,
+        10
+      ],
+      "buoc": [
+        [
+          "đối tác → đơn/tháng",
+          0.05,
+          0.15,
+          0.4
+        ]
+      ]
+    },
+    "cold_reach": {
+      "bat": true,
+      "dau_vao": [
+        150,
+        300,
+        500
+      ],
+      "he_so_buoc_cuoi": 0.5
+    },
+    "offline": {
+      "bat": true,
+      "he_so_buoc_cuoi": 0.3
+    },
+    "community": {
+      "bat": true,
+      "dau_vao": [
+        20,
+        60,
+        150
+      ],
+      "mua_moi_thang": [
+        0.002,
+        0.005,
+        0.01
+      ]
+    },
+    "group": {
+      "bat": false,
+      "_ly_do": "HR/L&D ít mua qua group seeding"
+    }
+  },
+  "tran_khach_moi_thang": 6,
+  "he_so_biz": [
+    0.4,
+    1.0,
+    1.4
+  ]
+}
