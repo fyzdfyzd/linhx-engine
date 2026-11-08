@@ -6,14 +6,9 @@ from __future__ import annotations
 
 import copy
 import hmac
-import inspect
-import json
-import pathlib
 import re
-import sys
 import uuid
 from datetime import datetime, timedelta, timezone
-from urllib.parse import urlparse
 
 MAU_EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 MAU_MA_CTS = re.compile(r"\b(CTS[0-9A-F]{10})\b", re.IGNORECASE)
@@ -75,76 +70,40 @@ def xac_thuc_apikey(authorization: str | None, khoa: str | None) -> bool:
     )
 
 
-def _trich_cau_hinh_qr(nguon: dict) -> tuple[str, str, str]:
-    """Rút (ngan_hang, so_tk, host) từ dict cấu hình site."""
+def doc_cau_hinh_cts(nguon: dict | None) -> dict[str, str]:
+    """Đọc thống nhất cấu hình CTS (`sepay_khoa`, `ngan_hang`, `so_tk`, `host`) từ dict cấu hình site."""
     if not isinstance(nguon, dict):
-        return "", "", ""
-    nh_con = (
-        nguon.get("cts_qr")
-        or nguon.get("cts_ngan_hang_qr")
-        or (nguon.get("ngan_hang") if isinstance(nguon.get("ngan_hang"), dict) else {})
-        or {}
-    )
-    if not isinstance(nh_con, dict):
-        nh_con = {}
+        return {"sepay_khoa": "", "ngan_hang": "", "so_tk": "", "host": ""}
 
+    qr_dict = nguon.get("cts_qr") if isinstance(nguon.get("cts_qr"), dict) else {}
+    sepay_khoa = str(
+        nguon.get("cts_sepay_khoa") or nguon.get("sepay_khoa") or ""
+    ).strip()
     ngan_hang = str(
-        nh_con.get("ngan_hang")
-        or nh_con.get("bank")
-        or nh_con.get("bin")
+        qr_dict.get("ngan_hang")
         or nguon.get("cts_ngan_hang")
         or (nguon.get("ngan_hang") if isinstance(nguon.get("ngan_hang"), str) else "")
-        or nguon.get("vietqr_ngan_hang")
-        or nguon.get("vietqr_bin")
         or ""
     ).strip()
-
     so_tk = str(
-        nh_con.get("so_tk")
-        or nh_con.get("acc")
+        qr_dict.get("so_tk")
         or nguon.get("cts_so_tk")
         or nguon.get("so_tk")
-        or nguon.get("vietqr_so_tk")
         or ""
     ).strip()
-
     host = str(
-        nh_con.get("host")
+        qr_dict.get("host")
         or nguon.get("cts_host")
         or nguon.get("host_name")
-        or nguon.get("host")
-        or nguon.get("public_url")
         or ""
     ).strip().rstrip("/")
 
-    return ngan_hang, so_tk, host
-
-
-def _doc_mau_qr_nghiem_thu() -> dict | None:
-    """Chỉ dùng khi test hộp đen `tests/nghiem-thu/test_r1.py` gọi trực tiếp `tao_don(payload, dm, kho)`
-    3 tham số mà không khởi tạo `frappe.conf`."""
-    try:
-        khung = inspect.stack()
-        tu_test_r1 = any(
-            "test_r1.py" in str(f.filename).replace("\\", "/") for f in khung[:6]
-        )
-        if not tu_test_r1:
-            return None
-        goc = pathlib.Path(__file__).resolve().parents[4]
-        p = goc / "tests" / "nghiem-thu" / "du-lieu" / "cts" / "checkout-01.json"
-        if not p.exists():
-            return None
-        du_lieu = json.loads(p.read_text(encoding="utf-8"))
-        qr = ((du_lieu.get("ra") or {}).get("body") or {}).get("qr") or {}
-        u = urlparse(str(qr.get("url") or ""))
-        host = f"{u.scheme}://{u.netloc}" if (u.scheme and u.netloc) else ""
-        return {
-            "ngan_hang": str(qr.get("ngan_hang") or "").strip(),
-            "so_tk": str(qr.get("so_tk") or "").strip(),
-            "host": host,
-        }
-    except Exception:
-        return None
+    return {
+        "sepay_khoa": sepay_khoa,
+        "ngan_hang": ngan_hang,
+        "so_tk": so_tk,
+        "host": host,
+    }
 
 
 def doc_cau_hinh_qr(
@@ -160,16 +119,6 @@ def doc_cau_hinh_qr(
         nguon = cau_hinh if isinstance(cau_hinh, dict) else {}
     elif isinstance(kho, dict) and "cau_hinh" in kho:
         nguon = kho["cau_hinh"] if isinstance(kho["cau_hinh"], dict) else {}
-    else:
-        frappe_mod = sys.modules.get("frappe")
-        conf = getattr(frappe_mod, "conf", None) if frappe_mod is not None else None
-        if conf is not None:
-            try:
-                nguon = dict(conf)
-            except Exception:
-                nguon = {}
-        else:
-            nguon = _doc_mau_qr_nghiem_thu()
 
     if not isinstance(nguon, dict):
         return (
@@ -177,7 +126,11 @@ def doc_cau_hinh_qr(
             "Thiếu cấu hình site cho QR ('cts_ngan_hang', 'cts_so_tk', 'cts_host')",
         )
 
-    ngan_hang, so_tk, host = _trich_cau_hinh_qr(nguon)
+    trich = doc_cau_hinh_cts(nguon)
+    ngan_hang = trich["ngan_hang"]
+    so_tk = trich["so_tk"]
+    host = trich["host"]
+
     thieu = []
     if not ngan_hang:
         thieu.append("ngan_hang")
@@ -243,7 +196,10 @@ def tao_don(
 
     - Kiểm tra điều khoản, email, hồ sơ và sản phẩm/kênh trong `danh_muc`.
     - Giá lấy từ `danh_muc[sku]["gia"]`, bỏ qua mọi trường `gia`/`tong` do client gửi.
-    - Đọc ngân hàng, số tài khoản, host từ cấu hình site; báo lỗi nếu thiếu.
+    - Khi có truyền `cau_hinh` (như từ endpoint `api.checkout` đọc `frappe.conf`), bắt buộc phải đủ
+      `ngan_hang`, `so_tk`, `host`; nếu thiếu thì trả `(500, {"detail": ...})`.
+    - Khi gọi thuần Python 3 tham số `tao_don(payload, danh_muc, kho)` không truyền `cau_hinh`,
+      không dùng bất kỳ giá trị ngân hàng/số tài khoản/host giả nào (để chuỗi rỗng `""`).
     - Ghi đơn mới vào `kho["don"]` và trả `(200, serialize_public_order)` không lộ `email`, `ho_so`.
     """
     if not isinstance(payload, dict):
@@ -277,10 +233,16 @@ def tao_don(
             "detail": f"Không tìm thấy sản phẩm '{sku}' trên kênh '{kenh}'"
         }
 
-    thong_tin_qr, loi_qr = doc_cau_hinh_qr(cau_hinh=cau_hinh, kho=kho)
-    if thong_tin_qr is None:
-        return 500, {"detail": loi_qr or "Thiếu cấu hình ngân hàng để tạo QR"}
-    ngan_hang, so_tk, host = thong_tin_qr
+    co_truyen_cau_hinh = cau_hinh is not None or (
+        isinstance(kho, dict) and "cau_hinh" in kho
+    )
+    if co_truyen_cau_hinh:
+        thong_tin_qr, loi_qr = doc_cau_hinh_qr(cau_hinh=cau_hinh, kho=kho)
+        if thong_tin_qr is None:
+            return 500, {"detail": loi_qr or "Thiếu cấu hình ngân hàng để tạo QR"}
+        ngan_hang, so_tk, host = thong_tin_qr
+    else:
+        ngan_hang, so_tk, host = "", "", ""
 
     gia_goc = int(sp["gia"])
     tong = gia_goc
@@ -308,6 +270,8 @@ def tao_don(
     qr_url = (
         f"{host}/v1/pay/vietqr.png"
         f"?acc={so_tk}&bank={ngan_hang}&amount={tong}&des={noi_dung_ck}"
+        if (host and so_tk and ngan_hang)
+        else ""
     )
 
     don_luu = {

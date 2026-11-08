@@ -16,14 +16,15 @@ _logger = logging.getLogger(__name__)
 
 
 def _ghi_log_canh_bao(thong_diep: str, exc: Exception) -> None:
+    loai_loi = type(exc).__name__
     try:
         log_fn = getattr(frappe, "logger", None)
         if callable(log_fn):
-            log_fn().warning("%s: %s", thong_diep, exc)
+            log_fn().warning("%s (%s)", thong_diep, loai_loi)
             return
     except Exception:
         pass
-    _logger.warning("%s: %s", thong_diep, exc)
+    _logger.warning("%s (%s)", thong_diep, loai_loi)
 
 
 def _doc_payload(kwargs: dict) -> dict:
@@ -46,26 +47,24 @@ def _doc_payload(kwargs: dict) -> dict:
     return {k: v for k, v in (kwargs or {}).items() if k != "cmd"}
 
 
-def _doc_secret_webhook() -> str:
-    conf = getattr(frappe, "conf", None) or {}
-    gia_tri = conf.get("cts_sepay_khoa") or conf.get("sepay_khoa")
-    return str(gia_tri or "").strip()
-
-
-def _doc_danh_muc() -> dict:
-    conf = getattr(frappe, "conf", None) or {}
-    dm = conf.get("cts_danh_muc")
-    if isinstance(dm, dict) and dm:
-        return dm
-    return dict(hop_dong.DANH_MUC_MAC_DINH)
-
-
 def _doc_cau_hinh_site() -> dict:
     conf = getattr(frappe, "conf", None) or {}
     try:
         return dict(conf)
     except Exception:
         return {}
+
+
+def _doc_secret_webhook() -> str:
+    return hop_dong.doc_cau_hinh_cts(_doc_cau_hinh_site())["sepay_khoa"]
+
+
+def _doc_danh_muc() -> dict:
+    conf = _doc_cau_hinh_site()
+    dm = conf.get("cts_danh_muc")
+    if isinstance(dm, dict) and dm:
+        return dm
+    return dict(hop_dong.DANH_MUC_MAC_DINH)
 
 
 def _la_loi_trung_db(exc: Exception) -> bool:
@@ -120,28 +119,16 @@ def _luu_don_cts_db(don_luu: dict) -> None:
     frappe.db.commit()
 
 
-def _tap_ma_da_co_db() -> dict[str, list[dict]]:
-    """Đọc các mã `order_id` và `noi_dung_ck` đang có trong `LX Don CTS` để tránh sinh trùng."""
-    try:
-        rows = frappe.get_all(
-            "LX Don CTS",
-            fields=["order_id", "noi_dung_ck"],
-            ignore_permissions=True,
-            limit_page_length=1000,
-        )
-        return {"don": [dict(r) for r in (rows or [])], "tx": []}
-    except Exception as exc:
-        _ghi_log_canh_bao("Không đọc được danh sách mã đơn CTS hiện có", exc)
-        return {"don": [], "tx": []}
-
-
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 def checkout(**kwargs):
-    """Nhận yêu cầu tạo đơn CTS (POST /v1/checkout), lưu vào DocType `LX Don CTS` và trả kết quả cùng dạng CTS."""
+    """Nhận yêu cầu tạo đơn CTS (POST /v1/checkout), lưu vào DocType `LX Don CTS` và trả kết quả cùng dạng CTS.
+
+    Chống trùng mã đơn dựa vào ràng buộc `unique` trên `order_id` và `noi_dung_ck` trong DB kết hợp vòng thử lại.
+    """
     payload = _doc_payload(kwargs)
     danh_muc = _doc_danh_muc()
     cau_hinh = _doc_cau_hinh_site()
-    kho = _tap_ma_da_co_db()
+    kho: dict[str, list[dict]] = {"don": [], "tx": []}
 
     for _lan_thu in range(3):
         so_don_truoc = len(kho["don"])
@@ -174,7 +161,14 @@ def checkout(**kwargs):
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 def sepay_webhook(**kwargs):
-    """Nhận webhook SePay của CTS (POST /v1/pay/sepay/webhook), khoá dòng DB (`FOR UPDATE`) và lưu giao dịch."""
+    """Nhận webhook SePay của CTS (POST /v1/pay/sepay/webhook), khoá dòng DB (`FOR UPDATE`) và lưu giao dịch.
+
+    Ghi chú theo hành vi gốc của CTS (`handle_sepay_webhook`):
+    - Chỉ khi `status == "matched"` mới ghi bản ghi `LX Giao Dich CTS` (cột `tx_id` unique) và cập nhật `LX Don CTS`.
+    - Các webhook `unmatched` (không tìm thấy mã đơn tương ứng) hoặc `ignored` (`transferType != "in"`)
+      không ghi vào `LX Giao Dich CTS`, nên nếu SePay hoặc người vận hành gửi lại sau khi đơn đã có mặt
+      thì giao dịch sẽ được đối soát lại bình thường.
+    """
     authorization = frappe.get_request_header("Authorization")
     secret = _doc_secret_webhook()
     payload = _doc_payload(kwargs)
@@ -241,6 +235,9 @@ def sepay_webhook(**kwargs):
             _gan_ma_http(200)
             return than
 
+        # Ghi chú: chỉ lưu LX Giao Dich CTS khi khớp đơn (status == "matched").
+        # Với status == "unmatched" hoặc "ignored", không lưu tx_id vào LX Giao Dich CTS
+        # (khớp đúng hành vi handle_sepay_webhook hiện nay của CTS) để có thể xử lý lại khi gửi lại.
         if than.get("status") == "matched" and ds_don:
             don_sau = ds_don[0]
             doc_tx = frappe.get_doc(
@@ -265,7 +262,7 @@ def sepay_webhook(**kwargs):
                     don_sau.get("name") or don_sau["order_id"],
                 ),
             )
-            frappe.db.commit()
+        frappe.db.commit()
 
         _gan_ma_http(200)
         return than

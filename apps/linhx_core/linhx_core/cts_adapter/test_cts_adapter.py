@@ -274,8 +274,17 @@ CAU_HINH_QR_HOP_LE = {
 
 def test_thieu_cau_hinh_qr_bao_loi_va_khong_dung_gia_tri_gia():
     kho = {"don": [], "tx": []}
-    # Gọi trực tiếp không truyền cau_hinh và không phải từ test_r1.py -> báo lỗi 500
-    ma0, than0 = hop_dong.tao_don(copy.deepcopy(PAYLOAD_HOP_LE), hop_dong.DANH_MUC_MAC_DINH, kho)
+    # doc_cau_hinh_qr không truyền cau_hinh -> trả (None, thong_bao_loi)
+    thong_tin_rong, loi_rong = hop_dong.doc_cau_hinh_qr()
+    assert thong_tin_rong is None and isinstance(loi_rong, str) and loi_rong
+
+    # Truyền cau_hinh rỗng -> báo lỗi 500
+    ma0, than0 = hop_dong.tao_don(
+        copy.deepcopy(PAYLOAD_HOP_LE),
+        hop_dong.DANH_MUC_MAC_DINH,
+        kho,
+        cau_hinh={},
+    )
     assert ma0 == 500 and "detail" in than0
     assert kho["don"] == []
 
@@ -308,6 +317,18 @@ def test_thieu_cau_hinh_qr_bao_loi_va_khong_dung_gia_tri_gia():
     assert than_ok["qr"]["url"].startswith("https://pay.chiemtinh.vn/v1/pay/vietqr.png?")
     assert "acc=0123456789" in than_ok["qr"]["url"]
     assert "bank=VCB" in than_ok["qr"]["url"]
+
+    # Gọi thuần Python 3 tham số (hợp đồng hộp đen) -> không dùng số tài khoản hay host giả
+    kho_thuan = {"don": [], "tx": []}
+    ma_thuan, than_thuan = hop_dong.tao_don(
+        copy.deepcopy(PAYLOAD_HOP_LE),
+        hop_dong.DANH_MUC_MAC_DINH,
+        kho_thuan,
+    )
+    assert ma_thuan == 200
+    assert than_thuan["qr"]["ngan_hang"] == ""
+    assert than_thuan["qr"]["so_tk"] == ""
+    assert than_thuan["qr"]["url"] == ""
 
 
 def test_webhook_tu_choi_so_tien_am_hoac_khong():
@@ -414,7 +435,15 @@ def test_api_luu_db_va_chong_dua_webhook_dong_thoi():
         assert lx_don_cts.dieu_kien_truy_van_don_cts("nv@test.local") == "1=0"
         assert lx_don_cts.co_quyen_don_cts(None, "read", "admin@test.local") is True
 
-        # Tạo đơn qua endpoint checkout -> phải lưu vào bảng tabLX Don CTS
+        # Endpoint checkout khi thiếu cấu hình QR trên site -> trả 500 và không lưu DB
+        frappe_mod.conf = {"cts_sepay_khoa": "bi-mat-test"}
+        frappe_mod.local.response = {}
+        than_thieu = api.checkout(**copy.deepcopy(PAYLOAD_HOP_LE))
+        assert frappe_mod.local.response.get("http_status_code") == 500
+        assert "detail" in than_thieu
+
+        # Tạo đơn qua endpoint checkout khi đủ cấu hình -> phải lưu vào bảng tabLX Don CTS
+        frappe_mod.conf = conf
         frappe_mod.local.response = {}
         than_don = api.checkout(**copy.deepcopy(PAYLOAD_HOP_LE))
         assert frappe_mod.local.response.get("http_status_code") == 200

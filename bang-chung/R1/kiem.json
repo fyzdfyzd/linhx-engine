@@ -1,6 +1,6 @@
 {
   "feature": "R1",
-  "luc": "2026-11-09T01:57:37+07:00",
+  "luc": "2026-11-09T02:29:49+07:00",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "============================= test session starts =============================",
@@ -16,7 +16,7 @@
     "tests/nghiem-thu/test_r1.py::test_webhook_sai_khoa_401_va_khong_doi_kho PASSED [ 80%]",
     "tests/nghiem-thu/test_r1.py::test_tao_don_roi_tra_tien_tron_vong PASSED  [100%]",
     "",
-    "============================== 5 passed in 4.94s =============================="
+    "============================== 5 passed in 0.44s =============================="
   ],
   "unit_test_returncode": 0,
   "unit_test_stdout": [
@@ -33,6 +33,6 @@
     "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_doctype_pii_permissions_va_unique_tx_id PASSED [ 80%]",
     "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_api_luu_db_va_chong_dua_webhook_dong_thoi PASSED [100%]",
     "",
-    "============================== 5 passed in 1.23s =============================="
+    "============================== 5 passed in 0.69s =============================="
   ]
 }
