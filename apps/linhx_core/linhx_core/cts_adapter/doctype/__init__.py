@@ -1,0 +1,1 @@
+"""DocType cho CTS Adapter."""

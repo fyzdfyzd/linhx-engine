@@ -1,0 +1,85 @@
+{
+ "doctype": "DocType",
+ "name": "LX Giao Dich CTS",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "autoname": "field:tx_id",
+ "field_order": [
+  "tx_id",
+  "order_id",
+  "noi_dung_ck",
+  "loai_gd",
+  "so_tien",
+  "trang_thai_ket_qua",
+  "noi_dung_goc"
+ ],
+ "fields": [
+  {
+   "fieldname": "tx_id",
+   "fieldtype": "Data",
+   "label": "Mã giao dịch SePay",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "order_id",
+   "fieldtype": "Link",
+   "label": "Đơn CTS",
+   "options": "LX Don CTS",
+   "search_index": 1
+  },
+  {
+   "fieldname": "noi_dung_ck",
+   "fieldtype": "Data",
+   "label": "Mã chuyển khoản",
+   "search_index": 1
+  },
+  {
+   "fieldname": "loai_gd",
+   "fieldtype": "Data",
+   "label": "Loại giao dịch"
+  },
+  {
+   "fieldname": "so_tien",
+   "fieldtype": "Currency",
+   "label": "Số tiền"
+  },
+  {
+   "fieldname": "trang_thai_ket_qua",
+   "fieldtype": "Select",
+   "label": "Kết quả đối soát",
+   "options": "matched\nunmatched\nignored"
+  },
+  {
+   "fieldname": "noi_dung_goc",
+   "fieldtype": "Small Text",
+   "label": "Nội dung gốc"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "permlevel": 0,
+   "read": 1,
+   "write": 0,
+   "create": 1,
+   "delete": 0,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 01:45:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 01:45:00.000000"
+}
