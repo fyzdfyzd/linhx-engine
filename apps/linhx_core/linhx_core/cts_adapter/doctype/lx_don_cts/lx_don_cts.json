@@ -1,0 +1,160 @@
+{
+ "doctype": "DocType",
+ "name": "LX Don CTS",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "autoname": "field:order_id",
+ "field_order": [
+  "order_id",
+  "noi_dung_ck",
+  "sku",
+  "ten_san_pham",
+  "kenh",
+  "gia_goc",
+  "tong",
+  "da_nhan",
+  "trang_thai",
+  "email",
+  "ho_so",
+  "dong_y_dieu_khoan",
+  "dong_y_nhan_tin",
+  "created_at",
+  "expires_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "order_id",
+   "fieldtype": "Data",
+   "label": "Mã đơn CTS",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "noi_dung_ck",
+   "fieldtype": "Data",
+   "label": "Nội dung chuyển khoản",
+   "reqd": 1,
+   "unique": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "sku",
+   "fieldtype": "Data",
+   "label": "Mã sản phẩm (SKU)",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ten_san_pham",
+   "fieldtype": "Data",
+   "label": "Tên sản phẩm"
+  },
+  {
+   "fieldname": "kenh",
+   "fieldtype": "Data",
+   "label": "Kênh",
+   "reqd": 1
+  },
+  {
+   "fieldname": "gia_goc",
+   "fieldtype": "Currency",
+   "label": "Giá gốc",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tong",
+   "fieldtype": "Currency",
+   "label": "Tổng tiền",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "da_nhan",
+   "fieldtype": "Currency",
+   "label": "Đã nhận"
+  },
+  {
+   "default": "cho_thanh_toan",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "label": "Trạng thái",
+   "options": "cho_thanh_toan\nthieu_tien\nda_thanh_toan\nhet_han\nda_huy\ncan_hoan_tien",
+   "search_index": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email khách (PII)",
+   "options": "Email",
+   "permlevel": 1
+  },
+  {
+   "fieldname": "ho_so",
+   "fieldtype": "Code",
+   "label": "Hồ sơ khách (PII)",
+   "options": "JSON",
+   "permlevel": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "dong_y_dieu_khoan",
+   "fieldtype": "Check",
+   "label": "Đồng ý điều khoản"
+  },
+  {
+   "default": "0",
+   "fieldname": "dong_y_nhan_tin",
+   "fieldtype": "Check",
+   "label": "Đồng ý nhận tin"
+  },
+  {
+   "fieldname": "created_at",
+   "fieldtype": "Data",
+   "label": "Thời điểm tạo (ISO)"
+  },
+  {
+   "fieldname": "expires_at",
+   "fieldtype": "Data",
+   "label": "Thời điểm hết hạn (ISO)"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "permlevel": 0,
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "System Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "LX Operator",
+   "permlevel": 0,
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 01:45:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 01:45:00.000000"
+}

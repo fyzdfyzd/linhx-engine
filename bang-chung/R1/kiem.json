@@ -1,6 +1,6 @@
 {
   "feature": "R1",
-  "luc": "2026-11-09T01:25:00+07:00",
+  "luc": "2026-11-09T01:57:37+07:00",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "============================= test session starts =============================",
@@ -16,6 +16,23 @@
     "tests/nghiem-thu/test_r1.py::test_webhook_sai_khoa_401_va_khong_doi_kho PASSED [ 80%]",
     "tests/nghiem-thu/test_r1.py::test_tao_don_roi_tra_tien_tron_vong PASSED  [100%]",
     "",
-    "============================== 5 passed in 0.15s =============================="
+    "============================== 5 passed in 4.94s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_thieu_cau_hinh_qr_bao_loi_va_khong_dung_gia_tri_gia PASSED [ 20%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_webhook_tu_choi_so_tien_am_hoac_khong PASSED [ 40%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_don_qua_expires_at_tu_chuyen_het_han_va_can_hoan_tien PASSED [ 60%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_doctype_pii_permissions_va_unique_tx_id PASSED [ 80%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_api_luu_db_va_chong_dua_webhook_dong_thoi PASSED [100%]",
+    "",
+    "============================== 5 passed in 1.23s =============================="
   ]
 }
