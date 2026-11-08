@@ -164,8 +164,8 @@
         "Mỗi thay đổi có dòng nhật ký"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a3.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A3/kiem.json"
     },
     {
       "id": "A4",

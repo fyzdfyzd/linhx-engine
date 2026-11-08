@@ -1,0 +1,39 @@
+{
+  "feature": "A3",
+  "luc": "2026-11-08T21:52:13+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a3.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "tests/nghiem-thu/test_a3.py::test_doctype PASSED                         [ 20%]",
+    "tests/nghiem-thu/test_a3.py::test_moi_thay_doi_mot_dong_nhat_ky PASSED   [ 40%]",
+    "tests/nghiem-thu/test_a3.py::test_rut_dong_y_thi_chuyen_cheo_tu_choi PASSED [ 60%]",
+    "tests/nghiem-thu/test_a3.py::test_theo_luc_moi_nhat_khong_theo_thu_tu_ghi PASSED [ 80%]",
+    "tests/nghiem-thu/test_a3.py::test_thuan_python PASSED                    [100%]",
+    "============================== 5 passed in 0.23s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_dong_y/test_lx_dong_y.py::test_ghi_va_hieu_luc_cung_thoi_diem_hoac_iso PASSED [ 33%]",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_dong_y/test_lx_dong_y.py::test_controller_chan_sua_va_xoa_ban_ghi_cu PASSED [ 66%]",
+    "apps/linhx_core/linhx_core/crm/doctype/lx_dong_y/test_lx_dong_y.py::test_controller_kiem_tra_muc_dich_va_nguoi PASSED [100%]",
+    "============================== 3 passed in 0.05s =============================="
+  ],
+  "doctype": "LX Dong Y",
+  "muc_dich": [
+    "lien_he",
+    "chuyen_cheo",
+    "marketing"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+ "doctype": "DocType",
+ "name": "LX Dong Y",
+ "module": "crm",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "nguoi",
+  "muc_dich",
+  "dong_y",
+  "luc",
+  "nguon"
+ ],
+ "fields": [
+  {
+   "fieldname": "nguoi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Người",
+   "options": "LX Nguoi",
+   "reqd": 1
+  },
+  {
+   "fieldname": "muc_dich",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Mục đích",
+   "options": "lien_he\nchuyen_cheo\nmarketing",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "dong_y",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Đồng ý"
+  },
+  {
+   "default": "Now",
+   "fieldname": "luc",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Thời điểm"
+  },
+  {
+   "fieldname": "nguon",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Nguồn"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "luc",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-08 21:50:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-08 21:50:00.000000"
+}
