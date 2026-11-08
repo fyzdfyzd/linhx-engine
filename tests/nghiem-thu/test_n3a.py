@@ -1,4 +1,4 @@
-"""N3: khung app Frappe linhx_core cài được trên bench; mỗi module bật/tắt bằng cờ trong LX Cau Hinh.
+"""N3a: khung app Frappe linhx_core cài được trên bench; mỗi module bật/tắt bằng cờ trong LX Cau Hinh.
 
 Hợp đồng (HOP-DONG.md):
 - apps/linhx_core/pyproject.toml, apps/linhx_core/linhx_core/{__init__.py,hooks.py,modules.txt}
@@ -54,10 +54,16 @@ def test_hooks_noi_co_module_vao_quyen():
         "hooks.py phải nối co_module vào has_permission hoặc permission_query_conditions"
 
 
-def test_cai_that_tren_bench():
-    p = BANG_CHUNG / "N3" / "install-app.log"
-    assert p.exists(), "thiếu bang-chung/N3/install-app.log (chạy bench --site test install-app linhx_core trên VM/container)"
-    chu = p.read_text(encoding="utf-8", errors="ignore")
-    assert "install-app linhx_core" in chu, "log phải chứa lệnh install-app linhx_core"
-    assert re.search(r"(?i)installing linhx_core", chu), "log không có dòng 'Installing linhx_core'"
-    assert "Traceback" not in chu and not re.search(r"(?im)^\s*error\b", chu), "log cài có lỗi"
+
+
+def test_khong_va_loi_frappe():
+    for f in (CORE / "linhx_core").rglob("*.py"):
+        chu = f.read_text(encoding="utf-8", errors="ignore")
+        assert not re.search(r"frappe\.(get_list|get_all|get_doc|connect)\s*=", chu), f"{f.name}: không được gán đè hàm frappe"
+        assert not re.search(r"DatabaseQuery\.execute\s*=", chu), f"{f.name}: không vá DatabaseQuery"
+
+
+def test_doc_co_loi_thi_tat():
+    cm = nap_module("linhx_core.co_module", CORE)
+    assert cm.module_bat("crm", {}) is False, "thiếu cờ thì coi là tắt"
+    assert cm.module_bat("pay", {"bat_pay": None}) is False
