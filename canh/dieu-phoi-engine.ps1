@@ -51,6 +51,13 @@ if ($Tho -eq 0) {
     Get-ChildItem "$Canh\t*\phieu.txt" -ErrorAction SilentlyContinue | ForEach-Object { $id = ((Get-Content $_.FullName) -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue }
     Ghi "dung_han: đã dừng agy"
   } else {
+    # Thợ dư (số > so_tho, khi giảm thợ): dừng agy, nhả feature đang giữ để thợ khác nhận
+    Get-ChildItem "$Canh\t*" -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^t(\d+)$' -and [int]$Matches[1] -gt [int]$dk.so_tho } | ForEach-Object {
+      $n = $_.Name.Substring(1)
+      if (Test-Path "$($_.FullName)\phieu.txt") { $id = ((Get-Content "$($_.FullName)\phieu.txt") -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue; Remove-Item "$($_.FullName)\phieu.txt" -Force; Ghi "t${n}: nghỉ (so_tho $($dk.so_tho)), đã dừng agy" }
+      Remove-Item "$($_.FullName)\dang.txt" -Force -ErrorAction SilentlyContinue
+      Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | Where-Object { (Get-Content $_.FullName -Raw).Trim() -eq $n } | ForEach-Object { Remove-Item $_.FullName -Force; Ghi "t${n}: nhả $($_.BaseName)" }
+    }
     for ($i = 1; $i -le [int]$dk.so_tho; $i++) {
       Start-Process powershell -WindowStyle Hidden -ArgumentList @("-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-File", "`"$PSCommandPath`"", "-Tho", "$i")
     }
