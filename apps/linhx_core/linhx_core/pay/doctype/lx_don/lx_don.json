@@ -21,8 +21,7 @@
   {
    "fieldname": "ma",
    "fieldtype": "Data",
-   "label": "Mã đơn",
-   "reqd": 1
+   "label": "Mã đơn"
   },
   {
    "fieldname": "goi",

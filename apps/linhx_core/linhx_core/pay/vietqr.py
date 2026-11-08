@@ -18,8 +18,11 @@ NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 def noi_dung_ck(ma_don: str) -> str:
     """Sinh nội dung chuyển khoản chuẩn VietQR từ `ma_don`.
 
-    Chỉ gồm chữ hoa và số (không dấu cách), dài 6..25 ký tự, bắt đầu bằng `"LX"`,
-    chứa `ma_don` đã bỏ ký tự lạ; hai mã đơn khác nhau luôn cho hai nội dung khác nhau.
+    Chỉ gồm chữ hoa và số (không dấu cách), dài 6..25 ký tự, luôn ghép tiền tố `"LX"`
+    vào đầu phần mã đã làm sạch (không cắt `"LX"` có sẵn trong `ma_don`, nên mã `"LX5"`
+    thành `"LXLX5..."` để tránh va chạm với mã `"5"`). Khi `ma_don` có ký tự bị lược bỏ
+    hoặc dài hơn 23 ký tự, giữ tối đa 15 ký tự đầu và nối 8 ký tự hex SHA-256 của `ma_don`
+    gốc để hai mã đơn khác nhau luôn cho hai nội dung khác nhau.
     """
     raw = str(ma_don or "").strip()
     if not raw:
@@ -31,11 +34,11 @@ def noi_dung_ck(ma_don: str) -> str:
 
     bam_phu = hashlib.sha256(raw.encode("utf-8")).hexdigest().upper()
     if raw != sach:
-        than = f"{than[:19]}{bam_phu[:4]}"
+        than = f"{than[:15]}{bam_phu[:8]}"
     elif len(than) < 4:
-        than = (than + bam_phu)[:4]
+        than = f"{than}{bam_phu[:8]}"
     elif len(than) > 23:
-        than = f"{than[:19]}{bam_phu[:4]}"
+        than = f"{than[:15]}{bam_phu[:8]}"
 
     return f"LX{than}"
 
