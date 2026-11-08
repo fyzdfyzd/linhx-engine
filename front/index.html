@@ -270,6 +270,15 @@ async function trangEngine() {
       <div class="the"><b>Lead mới</b><div id="lead-moi" style="margin-top:6px"><span class="ghi">Chưa có lead mới</span></div></div>
       <div class="the"><b>Đơn mới</b><div id="don-moi" style="margin-top:6px"><span class="ghi">Chưa có đơn mới</span></div></div>
     </div>
+    <h2>Bảng phễu</h2>
+    <div class="the" id="bang-pheu"><div class="dem" style="margin:0">
+      <div data-tang="biet"><b>0</b>Biết</div>
+      <div data-tang="moi"><b>0</b>Mồi</div>
+      <div data-tang="lien_he"><b>0</b>Liên hệ</div>
+      <div data-tang="co_hoi_don"><b>0</b>Cơ hội / Đơn</div>
+      <div data-tang="khach"><b>0</b>Khách</div>
+      <div data-tang="quay_lai"><b>0</b>Quay lại</div>
+    </div></div>
     <h2>Bảng thợ</h2>
     <div class="the" id="bang-tho"><span class="ghi">Đang tải bảng thợ… (<span id="cham-tran">0</span> chạm trần)</span></div>
     <h2>Thợ</h2><div class="luoi" id="tho"></div>
@@ -285,6 +294,14 @@ async function trangEngine() {
   let wfs = [], daVeWf = false;
   const ve = async () => {
     const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    try {
+      const ph = await goi("linhx_core.api_pheu.pheu");
+      if (ph && $("#bang-pheu")) {
+        $("#bang-pheu").innerHTML = `<div class="dem" style="margin:0">` +
+          [["biet","Biết"],["moi","Mồi"],["lien_he","Liên hệ"],["co_hoi_don","Cơ hội / Đơn"],["khach","Khách"],["quay_lai","Quay lại"]].map(([k, nhan]) => `<div data-tang="${k}"><b>${e(ph[k] ?? 0)}</b>${nhan}</div>`).join("") +
+          `</div>`;
+      }
+    } catch (err) {}
     try {
       const bd = await goi("linhx_core.api_ban_dieu_hanh.ban");
       if (bd) {
