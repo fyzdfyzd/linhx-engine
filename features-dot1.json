@@ -55,8 +55,8 @@
         "Tắt cờ crm thì DocType crm ẩn khỏi API"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_n3.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/N3/install-app.log"
     },
     {
       "id": "N4",

@@ -1,0 +1,32 @@
+=== 2026-11-08T11:14:49 bắt đầu: sudo service mariadb start >/dev/null; sudo service redis-server start >/dev/null; bench --site test install-app linhx_core
+
+Installing linhx_core...
+
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating Dashboard for linhx_core
+
+=== 2026-11-08T11:14:57 xong, mã thoát 0
+
+=== 2026-11-08T11:14:57 bắt đầu: sudo service mariadb start >/dev/null; sudo service redis-server start >/dev/null; bench --site test migrate
+Migrating test
+
+Updating DocTypes for frappe        : [========================================] 100%
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating Dashboard for frappe
+Updating Dashboard for linhx_core
+Executing `after_migrate` hooks...
+
+Queued rebuilding of search index for test
+
+=== 2026-11-08T11:15:01 xong, mã thoát 0
+
+=== 2026-11-08T11:16:07 bắt đầu: sudo service mariadb start >/dev/null; sudo service redis-server start >/dev/null; bench --site test list-apps
+
+frappe     15.126.0 version-15
+linhx_core 0.1.0    UNVERSIONED
+
+=== 2026-11-08T11:16:08 xong, mã thoát 0
