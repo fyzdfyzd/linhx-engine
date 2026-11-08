@@ -167,6 +167,10 @@ def main(argv):
     if not vung:
         kq["loi"].append(f"{fid} chưa có vung trong {ff}: không chấm được cổng vùng")
     duoc = vung + [f"bang-chung/{fid}/**", ".canh-tho/**"]
+    # So với chỗ rẽ khỏi main, không chỉ mốc phiếu: phần dở các phiếu trước (vd đổi passes feature khác) cũng sẽ vào main khi gộp (lỗi 8/11 A2 hạ C1)
+    mb = git(wt, "merge-base", "HEAD", "main").strip()
+    if mb:
+        goc = mb
     doi = [x for x in git(wt, "diff", "--name-only", f"{goc}..HEAD").splitlines() if x.strip()]
     kq["file_doi"] = doi
     for x in doi:

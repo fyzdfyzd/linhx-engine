@@ -307,7 +307,7 @@
         "Dựng tĩnh được, chụp 390 và 1280 không tràn ngang"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c1.py -q",
-      "passes": false,
+      "passes": true,
       "bang_chung": "bang-chung/C1/dung-tinh.json"
     },
     {
