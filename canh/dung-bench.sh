@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Dựng Frappe bench v15 trong WSL Ubuntu-24.04 trên máy cty cho thợ cài thật (N3, A1, B1...). Chạy lại được nhiều lần.
-# Gọi (từ Windows): wsl -d Ubuntu-24.04 -u root -- bash /mnt/d/LINHX/LINHX-ENGINE/canh/dung-bench.sh
+# Dựng Frappe bench v15 trong WSL Ubuntu trên máy cty cho thợ cài thật (N3, A1, B1...). Chạy lại được nhiều lần.
+# Gọi (từ Windows): wsl -d Ubuntu -u root -- bash /mnt/d/LINHX/LINHX-ENGINE/canh/dung-bench.sh
 # Kết quả: user "frappe", bench ở /home/frappe/frappe-bench, site "test" (Administrator mật khẩu admin, chỉ dùng cục bộ),
 #          user thường kiem@test.local (mật khẩu kiem-thuong-123) để kiểm "ẩn khỏi API" qua HTTP.
+# Distro "Ubuntu" trên máy cty là 26.04 (python3 hệ thống 3.14, apt không có 3.12): Python 3.12 lấy qua uv, Node 18 lấy bản chính thức nodejs.org.
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 echo "== $(date -Is) bắt đầu dựng bench"
@@ -34,11 +35,15 @@ echo "frappe ALL=(ALL) NOPASSWD:ALL" >/etc/sudoers.d/frappe
 
 sudo -iu frappe bash <<'EOF'
 set -euo pipefail
-pipx install frappe-bench >/dev/null 2>&1 || pipx upgrade frappe-bench >/dev/null 2>&1 || true
 export PATH="$HOME/.local/bin:$PATH"
+command -v uv >/dev/null || curl -LsSf https://astral.sh/uv/install.sh | sh
+uv python install 3.12
+PY312="$(uv python find 3.12)"
+"$PY312" --version
+command -v bench >/dev/null || pipx install --python "$PY312" frappe-bench
 grep -q '.local/bin' ~/.bashrc || echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
 if [ ! -d ~/frappe-bench/apps/frappe ]; then
-  bench init --frappe-branch version-15 --skip-redis-config-generation ~/frappe-bench
+  bench init --frappe-branch version-15 --python "$PY312" --skip-redis-config-generation ~/frappe-bench
 fi
 cd ~/frappe-bench
 bench set-config -g redis_cache redis://127.0.0.1:6379 && bench set-config -g redis_queue redis://127.0.0.1:6379 && bench set-config -g redis_socketio redis://127.0.0.1:6379

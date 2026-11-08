@@ -5,7 +5,7 @@
 #   powershell -File canh/bench.ps1 dung
 # Log: D:\LINHX\ENGINE-canh\bench\<yyyyMMdd>.log (mỗi lần: lúc bắt đầu, lệnh, toàn bộ đầu ra, lúc xong, mã thoát).
 param([Parameter(Position = 0)][string]$Viec = "chay", [int]$Tho = 0, [Parameter(ValueFromRemainingArguments = $true)][string[]]$Con)
-$Distro = "Ubuntu-24.04"
+$Distro = "Ubuntu"
 $Log = "D:\LINHX\ENGINE-canh\bench"; New-Item -ItemType Directory -Force $Log | Out-Null
 $tep = "$Log\$(Get-Date -Format yyyyMMdd).log"
 function Wsl($lenh) {
