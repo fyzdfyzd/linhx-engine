@@ -84,6 +84,15 @@ if ($Tho -eq 0) {
     DayTH
   }
   $mx.ReleaseMutex()
+  # Đẩy dữ liệu bảng thợ lên VM (container backend bind mount ~/linhx-engine/.canh). Ẩn, quá 90 giây hay lỗi mạng thì bỏ qua.
+  try {
+    $gc = (Get-Command gcloud.cmd -ErrorAction Stop).Source
+    $tep = @("$TichHop\.canh\phieu.tsv", "$TichHop\.canh\dang-chay.json") | Where-Object { Test-Path $_ }
+    if ($tep) {
+      $p = Start-Process $gc -NoNewWindow -PassThru -RedirectStandardOutput "$Canh\scp-vm.out" -RedirectStandardError "$Canh\scp-vm.err" -ArgumentList (@("compute", "scp", "--project", "linhx-engine", "--zone", "asia-southeast1-b", "--quiet") + ($tep | ForEach-Object { "`"$_`"" }) + @("linhx-engine-1:linhx-engine/.canh/"))
+      if (-not $p.WaitForExit(90000)) { Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue; Ghi "scp bảng thợ lên VM quá 90 giây, bỏ qua" }
+    }
+  } catch { Ghi "scp bảng thợ lên VM lỗi: $($_.Exception.Message)" }
   exit 0
 }
 

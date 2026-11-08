@@ -173,7 +173,7 @@ async function trangBaoCao(viec, ma) {
       const thu = ["cho_duyet", "cho", "dang_chay", "xong"], i = thu.indexOf(d.trang_thai);
       $("#app").innerHTML = `<h1>${e(vao.brand)}</h1>
         <div class="buoc">${["Chờ duyệt","Trong hàng","Đang hỏi AI","Xong"].map((t, k) => `<span class="${k < i ? "xong" : k === i ? "on" : ""}">${k < i ? "✓ " : ""}${t}</span>`).join("")}</div>
-        ${(d.tien_do || []).length ? `<div class="the" style="margin:12px 0">${d.tien_do.map(t => `<div style="display:flex;justify-content:space-between;padding:6px 0"><span>${e(t.buoc)}</span><span class="huy-hieu t-${e(t.trang_thai)}">${TT[t.trang_thai] || t.trang_thai}</span></div>`).join("")}</div>` : ""}
+        ${(d.tien_do || []).length ? `<div class="the" style="margin:12px 0">${d.tien_do.map(t => `<div style="display:flex;justify-content:space-between;padding:6px 0"><span>${t.buoc === "viet-bao-cao" ? "Viết báo cáo" : "Hỏi " + e(t.buoc)}</span><span class="huy-hieu t-${e(t.trang_thai)}">${TT[t.trang_thai] || t.trang_thai}</span></div>`).join("")}</div>` : ""}
         <p class="dan">${d.trang_thai === "loi" || d.trang_thai === "huy" ? "Yêu cầu này chưa chạy được, chúng tôi sẽ liên hệ lại." : d.trang_thai === "dang_chay" ? "Trợ lý đang hỏi ba AI, thường mất 10 đến 20 phút." : `Yêu cầu đã nhận${d.truoc ? `, còn ${d.truoc} việc trước bạn` : ""}. Trang tự cập nhật, bạn có thể lưu đường dẫn này và quay lại sau.`}</p>
         <button class="nut phu nho" onclick="navigator.clipboard.writeText(location.href);this.textContent='Đã chép'">Chép đường dẫn</button>`;
       if (!["loi", "huy"].includes(d.trang_thai)) hen = setTimeout(ve, 6000);
