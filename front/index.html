@@ -109,7 +109,7 @@ const TT = {cho_duyet:"Chờ duyệt",cho:"Trong hàng",dang_chay:"Đang chạy"
 
 async function goi(m, data, post) {
   const o = {headers: {Accept: "application/json"}, credentials: "same-origin"};
-  let url = API + m;
+  let url = m.startsWith("/") ? m : (m.includes(".") ? "/api/method/" + m : API + m);
   if (post) {
     o.method = "POST"; o.headers["Content-Type"] = "application/json";
     if (CSRF) o.headers["X-Frappe-CSRF-Token"] = CSRF;
@@ -225,6 +225,11 @@ async function trangEngine() {
   CSRF = p.csrf;
   $("#app").innerHTML = `<h1 style="margin-top:8px">Engine</h1>
     <div class="dem" id="dem"></div>
+    <div class="ba" style="margin:12px 0 20px">
+      <div class="the"><b>Việc chờ anh</b><div id="viec-cho" style="margin-top:6px"><span class="ghi">Chưa có việc chờ</span></div></div>
+      <div class="the"><b>Lead mới</b><div id="lead-moi" style="margin-top:6px"><span class="ghi">Chưa có lead mới</span></div></div>
+      <div class="the"><b>Đơn mới</b><div id="don-moi" style="margin-top:6px"><span class="ghi">Chưa có đơn mới</span></div></div>
+    </div>
     <h2>Bảng thợ</h2>
     <div class="the" id="bang-tho"><span class="ghi">Đang tải bảng thợ… (<span id="cham-tran">0</span> chạm trần)</span></div>
     <h2>Thợ</h2><div class="luoi" id="tho"></div>
@@ -240,6 +245,23 @@ async function trangEngine() {
   let wfs = [], daVeWf = false;
   const ve = async () => {
     const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    try {
+      const bd = await goi("linhx_core.api_ban_dieu_hanh.ban");
+      if (bd) {
+        if ($("#viec-cho")) {
+          const vc = bd.viec_cho || [];
+          $("#viec-cho").innerHTML = vc.length ? vc.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.workflow ? ` · <span class="ghi">${e(x.workflow)}</span>` : ""}${x.ten_khach ? ` · ${e(x.ten_khach)}` : ""}</div>`).join("") : `<span class="ghi">Chưa có việc chờ</span>`;
+        }
+        if ($("#don-moi")) {
+          const dm = bd.don_moi || [];
+          $("#don-moi").innerHTML = dm.length ? dm.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.ma && x.ma !== x.name ? ` (${e(x.ma)})` : ""}${x.so_tien !== undefined && x.so_tien !== null ? ` · <span class="mono">${dinhSo(x.so_tien)}</span>` : ""}</div>`).join("") : `<span class="ghi">Chưa có đơn mới</span>`;
+        }
+        if ($("#lead-moi")) {
+          const lm = bd.lead_moi || [];
+          $("#lead-moi").innerHTML = lm.length ? lm.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.ho_ten ? ` · <b>${e(x.ho_ten)}</b>` : ""}${x.email || x.dien_thoai ? ` <span class="ghi">(${e(x.email || x.dien_thoai)})</span>` : ""}</div>`).join("") : `<span class="ghi">Chưa có lead mới</span>`;
+        }
+      }
+    } catch (err) {}
     try {
       const bt = await goi("bang_tho");
       if (bt && $("#bang-tho")) {
