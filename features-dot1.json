@@ -267,7 +267,8 @@
       ],
       "vung": [
         "apps/linhx_core/linhx_core/pay/**",
-        "apps/linhx_worker/**"
+        "apps/linhx_worker/**",
+        "apps/linhx_core/linhx_core/hooks.py"
       ],
       "mo_ta": "Đơn báo cáo 'AI nói gì' đã trả tự tạo LX Job, giao link báo cáo, bỏ duyệt tay",
       "tieu_chi": [
@@ -323,9 +324,11 @@
         "trang-bu/**",
         "apps/linhx_core/linhx_core/crm/**"
       ],
-      "mo_ta": "Form Trang BU ghi Người + Cơ hội + Đồng ý vào bản cài",
+      "mo_ta": "Form Trang BU ghi Người + Cơ hội + Đồng ý vào bản cài. Đồng ý ghi một bước theo ô khách tick (Linh duyệt 9/11); xác minh chủ email/SĐT để sau ở C2B, không chặn feature này",
       "tieu_chi": [
-        "Gửi form thì có Người, Cơ hội, Đồng ý mới"
+        "Gửi form thì có Người, Cơ hội, Đồng ý mới",
+        "Người đã có: không ghi đè dòng rút đồng ý (dong_y=0) và không ghi đè dữ liệu cũ bằng dữ liệu form",
+        "Không nhận nguon từ client; giới hạn độ dài trường; phản hồi API công khai không lộ dữ liệu cũ của Người (họ tên, email, điểm), giữ các trường test_c3 cần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c2.py -q",
       "passes": false,
@@ -380,9 +383,11 @@
         "sites/ifagent/**",
         "apps/linhx_core/linhx_core/crm/**"
       ],
-      "mo_ta": "Kết quả đầy đủ T1 đổi lấy email/Zalo, ghi Người + Đồng ý + tầng phễu",
+      "mo_ta": "Kết quả đầy đủ T1 đổi lấy email/Zalo, ghi Người + Đồng ý + tầng phễu. Đồng ý ghi một bước theo ô khách tick (Linh duyệt 9/11); xác minh chủ email/SĐT để sau ở C2B, không chặn feature này",
       "tieu_chi": [
-        "Nhập email nhận kết quả, có Người mới gắn nguồn T1"
+        "Nhập email nhận kết quả, có Người mới gắn nguồn T1",
+        "Người đã có: không ghi đè dòng rút đồng ý (dong_y=0) và không ghi đè dữ liệu cũ bằng dữ liệu form",
+        "Không nhận nguon từ client; giới hạn độ dài trường; phản hồi API công khai không lộ dữ liệu cũ của Người (họ tên, email, điểm), giữ các trường test_c3 cần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_d2.py -q",
       "passes": false,

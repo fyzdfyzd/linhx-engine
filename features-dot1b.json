@@ -113,6 +113,28 @@
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_r2.py -q",
       "passes": true,
       "bang_chung": "bang-chung/R2/kiem.json"
+    },
+    {
+      "id": "C2B",
+      "uu_tien": 2,
+      "phu_thuoc": [
+        "C2",
+        "D2"
+      ],
+      "vung": [
+        "trang-bu/**",
+        "sites/ifagent/**",
+        "apps/linhx_core/linhx_core/crm/**"
+      ],
+      "mo_ta": "Xác minh chủ email/SĐT trước khi đồng ý marketing có hiệu lực (double opt-in) cho form C2 và T1 D2 (tách từ C2/D2 9/11)",
+      "tieu_chi": [
+        "Đồng ý marketing qua form công khai chỉ có hiệu lực sau khi chủ kênh xác nhận",
+        "Link xác nhận cần thao tác của người (POST), bộ quét mail mở GET không ghi đồng ý",
+        "Mã xác nhận lưu DB có hạn dùng, dùng một lần"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c2b.py -q",
+      "passes": false,
+      "bang_chung": null
     }
   ]
 }
