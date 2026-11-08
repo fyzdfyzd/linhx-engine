@@ -176,9 +176,11 @@
       "vung": [
         "apps/linhx_core/**"
       ],
-      "mo_ta": "Quyền theo Đơn vị: người của đơn vị chỉ thấy dữ liệu đơn vị mình",
+      "mo_ta": "Quyền theo Đơn vị: người của đơn vị chỉ thấy và sửa dữ liệu đơn vị mình, xét theo bản ghi trong DB",
       "tieu_chi": [
-        "User đơn vị X gọi API Người của đơn vị Y nhận 403"
+        "User đơn vị X gọi API Người của đơn vị Y nhận 403",
+        "Sửa bản ghi của Y mà gửi don_vi = X vẫn 403; tạo Cơ hội trỏ tới Người của Y bị chặn",
+        "Đơn vị của user chỉ lấy từ User Permission"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a4.py -q",
       "passes": false,

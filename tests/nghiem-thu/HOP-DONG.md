@@ -39,7 +39,8 @@ Chi tiết từng hàm ghi ở đầu file `test_<id>.py`.
 |---|---|---|
 | A2 | DocType LX Quan He, LX Co Hoi (han_giao); `crm/co_hoi.py` `han_giao`, `giao`, `viec_cho`; lx_co_hoi.py gọi | – |
 | A3 | DocType LX Dong Y (track_changes, chặn xoá); `crm/dong_y.py` `MUC_DICH`, `TuChoi`, `ghi`, `hieu_luc`, `kiem_chuyen_cheo` | – |
-| A4 | `crm/quyen_don_vi.py` `co_quyen`, `dieu_kien`; hooks has_permission + permission_query_conditions cho LX Nguoi, LX Co Hoi | `bang-chung/A4/quyen.json` từ bench WSL |
+| A4 | `crm/quyen_don_vi.py` `co_quyen`, `dieu_kien`, `don_vi_can_kiem`, `kiem_ghi` (xét bản ghi trong DB, đơn vị chỉ từ User Permission); hooks has_permission + permission_query_conditions cho LX Nguoi, LX Co Hoi | `bang-chung/A4/quyen.json` từ bench WSL |
+| A4B | `crm/quyen_don_vi.py` `dieu_kien_don_vi`, `co_quyen_don_vi`; hooks cho LX Don Vi (tách từ A4 8/11) | `bang-chung/A4B/don-vi.json` từ bench WSL |
 | A5 | `crm/chuyen_lead.py` `goi_di`, `nhan`; `crm/api_lead.py` `nhan_lead` (không allow_guest), `gui_lead` | `bang-chung/A5/chuyen.json` từ VM |
 | B2 | DocType LX Don; `pay/vietqr.py` `noi_dung_ck`, `qr_url`, `tao_don`; ghi nguồn PROTO | – |
 | B3 | `pay/sepay.py` `xu_ly`; `pay/api_sepay.py` `webhook` (khoá từ site_config, for_update) | – |
@@ -66,5 +67,5 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 
 ## Kiểm thêm của canh (8/11, Linh duyệt "làm")
 
-- K7 tích hợp bench: sau khi đạt hộp đen, B3, A4, C2 chạy thêm `tests/nghiem-thu/tich-hop/th_<id>.py` (HTTP thật trên site test của bench WSL, qua `canh/bench.ps1 th`). Trượt là CHUA_DAT. Hợp đồng thêm: B3 đọc khoá `sepay_khoa` trong site_config; A4 có vai trò `LX Nhan Vien` và đơn vị lấy từ User Permission.
+- K7 tích hợp bench: sau khi đạt hộp đen, B3, A4, A4B, C2 chạy thêm `tests/nghiem-thu/tich-hop/th_<id>.py` (HTTP thật trên site test của bench WSL, qua `canh/bench.ps1 th`). Trượt là CHUA_DAT. Hợp đồng thêm: B3 đọc khoá `sepay_khoa` trong site_config; A4 có vai trò `LX Nhan Vien` và đơn vị lấy từ User Permission.
 - K8 đối chiếu VM: mỗi vòng tổng hợp, `canh/doi_chieu_vm.py` gọi lại URL trong bằng chứng N5, C3, T1, T2. Sai 2 lượt liền thì passes về false, thợ làm lại.

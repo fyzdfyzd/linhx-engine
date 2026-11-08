@@ -6,7 +6,8 @@
     "A2@0811-loi-may",
     "B2@0811-loi-may",
     "B2@0811-mo-coi",
-    "A2@0811-timeout"
+    "A2@0811-timeout",
+    "A4@0811-chia"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",
@@ -33,6 +34,7 @@
     "A2",
     "A3",
     "A4",
+    "A4B",
     "B2",
     "B3",
     "C2",
@@ -52,8 +54,7 @@
     "C4"
   ],
   "cho": {
-    "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG",
-    "A4": "Linh khoá 08/11 22:40: CHUA_DAT 3 lần (bản hỏng ở hong/A4-20261108-2141); chờ chia nhỏ hoặc Linh mở"
+    "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG"
   },
   "nhom": {
     "N1": "ci",
@@ -86,7 +87,8 @@
     "E1": "front",
     "E2": "front",
     "T1": "e2e",
-    "T2": "e2e"
+    "T2": "e2e",
+    "A4B": "core"
   },
   "bao_mat": [
     "B2",
@@ -98,12 +100,14 @@
     "R2",
     "A4",
     "C2",
-    "D2"
+    "D2",
+    "A4B"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {
     "B3": "th_b3.py",
     "A4": "th_a4.py",
-    "C2": "th_c2.py"
+    "C2": "th_c2.py",
+    "A4B": "th_a4b.py"
   }
 }

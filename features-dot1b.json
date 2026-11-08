@@ -3,8 +3,26 @@
   "dot": "1b",
   "prd": "Claude Doc https://claude.ai/artifact/QaCuXJbnuTuxgQSmCSyom9 mục 4 đích đợt 1 (Linh 8/11 05:58)",
   "dich": "Bổ sung đợt 1: bảng thợ, trang bán báo cáo QR cho CSMO, Trang BU thứ hai chỉ bằng cấu hình, CTS sẵn sàng chuyển pay + đơn sang engine (chế độ bóng)",
-  "trang_thai": "Linh duyệt hướng 8/11; nghiệm thu W1, Q1, C4, R1, R2 viết 8/11, đã khoá",
+  "trang_thai": "Linh duyệt hướng 8/11; nghiệm thu W1, Q1, C4, R1, R2 viết 8/11, đã khoá; A4B thêm 8/11 (chia A4, Linh chọn)",
   "features": [
+    {
+      "id": "A4B",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "A4"
+      ],
+      "vung": [
+        "apps/linhx_core/**"
+      ],
+      "mo_ta": "Người của đơn vị chỉ thấy LX Don Vi của mình (tách từ A4 8/11)",
+      "tieu_chi": [
+        "get_list LX Don Vi bằng user thường chỉ thấy đơn vị của mình",
+        "GET đơn vị khác trả 403"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a4b.py -q",
+      "passes": false,
+      "bang_chung": null
+    },
     {
       "id": "W1",
       "uu_tien": 1,
