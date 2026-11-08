@@ -8,7 +8,11 @@
  "field_order": [
   "ma",
   "ten",
-  "gia_san"
+  "gia",
+  "gia_san",
+  "mo_ta",
+  "ban",
+  "workflow"
  ],
  "fields": [
   {
@@ -22,9 +26,30 @@
    "label": "Tên gói"
   },
   {
+   "fieldname": "gia",
+   "fieldtype": "Currency",
+   "label": "Giá bán"
+  },
+  {
    "fieldname": "gia_san",
    "fieldtype": "Currency",
    "label": "Giá sàn"
+  },
+  {
+   "fieldname": "mo_ta",
+   "fieldtype": "Small Text",
+   "label": "Mô tả"
+  },
+  {
+   "default": "1",
+   "fieldname": "ban",
+   "fieldtype": "Check",
+   "label": "Đang bán"
+  },
+  {
+   "fieldname": "workflow",
+   "fieldtype": "Data",
+   "label": "Workflow"
   }
  ],
  "permissions": [
@@ -46,7 +71,7 @@
  "actions": [],
  "links": [],
  "index_web_pages_for_search": 0,
- "modified": "2026-11-08 06:55:00.000000",
+ "modified": "2026-11-08 15:58:00.000000",
  "modified_by": "Administrator",
  "owner": "Administrator",
  "creation": "2026-11-08 06:55:00.000000"
