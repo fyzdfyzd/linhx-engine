@@ -1,0 +1,44 @@
+=== 2026-11-08T11:50:38+0700 bắt đầu: bench --site test install-app linhx_core
+
+Installing linhx_core...
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating Dashboard for linhx_core
+
+=== 2026-11-08T11:50:41+0700 xong, mã thoát 0
+
+=== 2026-11-08T11:50:41+0700 bắt đầu: bench --site test migrate
+Migrating test
+Updating DocTypes for frappe        : [========================================] 100%
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating Dashboard for frappe
+Updating Dashboard for linhx_core
+Executing `after_migrate` hooks...
+Queued rebuilding of search index for test
+
+=== 2026-11-08T11:50:44+0700 xong, mã thoát 0
+
+=== 2026-11-08T11:50:44+0700 bắt đầu: bench --site test list-apps
+
+frappe     15.126.0 version-15
+linhx_core 0.1.0    UNVERSIONED
+
+=== 2026-11-08T11:50:45+0700 xong, mã thoát 0
+
+=== Tham chiếu bằng chứng ẩn/hiện API: bang-chung/N3/an-api.log ===
+=== 2026-11-08T11:50:48+0700 Kiểm thử ẩn/hiện API thật trên Frappe bench WSL (site: test, http://127.0.0.1:8000) ===
+--- 2. Khi thiếu cờ trong tabSingles (chưa lưu LX Cau Hinh -> coi là tắt) ---
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], thiếu cờ)] -> HTTP_STATUS:403 (PermissionError: DocType LX Nguoi đang ẩn do module tắt)
+--- 3. Khi cờ bat_crm = 0, bat_pay = 1 (tắt CRM, bật Pay) ---
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=0)] -> HTTP_STATUS:403 (PermissionError: DocType LX Nguoi đang ẩn do module tắt)
+[GET /api/resource/LX%20Goi (user: quanly@test.local [System Manager], bat_crm=0, bat_pay=1)] -> HTTP_STATUS:200 ({"data":[]})
+--- 4. Khi cờ bat_crm = 1, bat_pay = 1 (bật CRM và Pay) ---
+[GET /api/resource/LX%20Nguoi (user: quanly@test.local [System Manager], bat_crm=1)] -> HTTP_STATUS:200 ({"data":[]})
+[GET /api/resource/LX%20Nguoi (user: kiem@test.local [user thường, đã bỏ quyền All], bat_crm=1)] -> HTTP_STATUS:403 (PermissionError)
+[GET /api/resource/LX%20Goi (user: kiem@test.local [user thường, đã bỏ quyền All], bat_pay=1)] -> HTTP_STATUS:403 (PermissionError)
+--- 5. Administrator được miễn chặn ngay cả khi bat_crm = 0 ---
+[GET /api/resource/LX%20Nguoi (user: Administrator, bat_crm=0)] -> HTTP_STATUS:200 ({"data":[]})
+=== 2026-11-08T11:50:52+0700 Hoàn tất kiểm thử HTTP API (mã thoát 0, chi tiết tại bang-chung/N3/an-api.log) ===
