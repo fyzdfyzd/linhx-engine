@@ -7,7 +7,8 @@ function docKham() {
   const ungVien = [];
   const siteJson = process.env.SITE_JSON;
   if (siteJson && siteJson.trim()) {
-    const thuMucSite = path.dirname(path.resolve(siteJson.trim()));
+    const pSite = path.resolve(siteJson.trim());
+    const thuMucSite = path.dirname(pSite);
     ungVien.push(path.join(thuMucSite, "kham.json"));
   }
   ungVien.push(path.resolve(process.cwd(), "..", "sites", "ifagent", "kham.json"));
@@ -30,8 +31,26 @@ export async function getStaticProps() {
   const raw = docKham();
   const kham = {
     tieu_de: typeof raw?.tieu_de === "string" ? raw.tieu_de : "T1 Khám",
-    cau: Array.isArray(raw?.cau) ? raw.cau : [],
-    muc: Array.isArray(raw?.muc) ? raw.muc : [],
+    cau: Array.isArray(raw?.cau)
+      ? raw.cau.map((c) => ({
+          ma: String(c?.ma || ""),
+          hoi: String(c?.hoi || ""),
+          lua_chon: Array.isArray(c?.lua_chon)
+            ? c.lua_chon.map((l) => ({
+                nhan: String(l?.nhan || ""),
+                diem: Number(l?.diem ?? 0),
+              }))
+            : [],
+        }))
+      : [],
+    muc: Array.isArray(raw?.muc)
+      ? raw.muc.map((m) => ({
+          tu: Number(m?.tu ?? 0),
+          den: Number(m?.den ?? 0),
+          ten: String(m?.ten || ""),
+          tom_tat: String(m?.tom_tat || ""),
+        }))
+      : [],
   };
 
   return {

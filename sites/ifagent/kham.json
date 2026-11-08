@@ -136,7 +136,7 @@
   ],
   "muc": [
     {
-      "tu": 0,
+      "tu": 6,
       "den": 11,
       "ten": "Chưa sẵn sàng",
       "tom_tat": "Quy trình tiếp nhận khách hàng và dữ liệu hiện tại còn phân mảnh, phụ thuộc nhiều vào thao tác thủ công. Bạn nên ưu tiên chuẩn hoá nguồn thu thập Lead, thiết lập lưu trữ đồng ý của khách hàng và kiểm tra hiện diện thương hiệu trên AI trước khi mở rộng tự động hoá."
