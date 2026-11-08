@@ -1,13 +1,13 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 02:40 (giờ máy cty). Đạt: 23/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1)
+Cập nhật 2026-11-09 02:49 (giờ máy cty). Đạt: 24/32 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature D1 · commit d4e2d44 · nhánh tu-dong/engine-t1 · 2026-11-09T01:36:08 |
-| 2 | R1 | rảnh | CHUA_DAT · Feature R1 · commit 7e32a98 · nhánh tu-dong/engine-t2 · 2026-11-09T02:10:18 |
+| 2 | R2 | 20261109-0247-t2 từ 2026-11-09T02:47:01 | DAT · Feature R1 · commit e652f6b · nhánh tu-dong/engine-t2 · 2026-11-09T02:46:58 |
 | 3 | - | rảnh | DAT · Feature B5 · commit ee44cf7 · nhánh tu-dong/engine-t3 · 2026-11-09T02:35:04 |
-| 4 | D2 | 20261109-0226-t4 từ 2026-11-09T02:26:48 | CHUA_DAT · Feature D2 · commit 7f2e864 · nhánh tu-dong/engine-t4 · 2026-11-09T02:26:35 |
+| 4 | D2 | rảnh | CHUA_DAT · Feature D2 · commit 7f2e864 · nhánh tu-dong/engine-t4 · 2026-11-09T02:26:35 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -26,9 +26,6 @@ Cập nhật 2026-11-09 02:40 (giờ máy cty). Đạt: 23/32 (N1, N2, N3, N4, N
 - 2026-11-09T02:15:37 B4 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 82bc65c2, bản hỏng giữ ở nhánh cục bộ hong/B4-20261109-0215, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\B4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 02:10 t2: R1 CHUA_DAT lần 2 (commit 7e32a98)
-- 2026-11-09 02:10 t2: giao agy phiếu 20261109-0210-t2: R1 (lượt sửa)
-- 2026-11-09 02:15 t3: B4 CHUA_DAT lần 3 (commit a0ca862)
 - 2026-11-09 02:15 t3: B4 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
 - 2026-11-09 02:15 t3: giao agy phiếu 20261109-0215-t3: B5
 - 2026-11-09 02:19 t4: agy xong phiếu 20261109-0203-t4 (D2) sau 16 phút
@@ -38,4 +35,7 @@ Cập nhật 2026-11-09 02:40 (giờ máy cty). Đạt: 23/32 (N1, N2, N3, N4, N
 - 2026-11-09 02:34 t2: agy xong phiếu 20261109-0210-t2 (R1) sau 24 phút
 - 2026-11-09 02:35 t3: B5 DAT, đã gộp vào main
 - 2026-11-09 02:35 t3: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-09 02:46 t2: R1 DAT, đã gộp vào main
+- 2026-11-09 02:47 t2: giao agy phiếu 20261109-0247-t2: R2
+- 2026-11-09 02:47 t4: agy xong phiếu 20261109-0226-t4 (D2) sau 21 phút
 
