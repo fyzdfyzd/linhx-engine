@@ -1,7 +1,7 @@
 # Cho thợ dùng Frappe bench trong WSL máy cty (dựng bằng canh/dung-bench.sh). Mọi lần gọi ghi log có thời điểm và mã thoát.
 #   powershell -File canh/bench.ps1 gan -Tho 1           chép (rsync) apps linhx_core, linhx_worker từ worktree D:\LINHX\ENGINE-t1 vào ~/frappe-bench/apps (ổ Linux, không chạy từ /mnt/d), pip install -e, cài lên site test, migrate
 #   powershell -File canh/bench.ps1 chay -- <lệnh bench>  vd: chay -- --site test migrate ; chay -- --site test console
-#   powershell -File canh/bench.ps1 serve                 chạy bench serve ở cổng 8000 (Windows gọi được http://localhost:8000), dừng: bench.ps1 dung
+#   powershell -File canh/bench.ps1 serve                 chạy bench serve ở cổng 8000 trong WSL (wsl.exe ẩn giữ distro sống; kiểm HTTP từ trong WSL: curl http://127.0.0.1:8000, vì cổng 8000 phía Windows đã có LINHX-Server8000), dừng: bench.ps1 dung
 #   powershell -File canh/bench.ps1 dung
 # Log: D:\LINHX\ENGINE-canh\bench\<yyyyMMdd>.log (mỗi lần: lúc bắt đầu, lệnh, toàn bộ đầu ra, lúc xong, mã thoát).
 param([Parameter(Position = 0)][string]$Viec = "chay", [int]$Tho = 0, [Parameter(ValueFromRemainingArguments = $true)][string[]]$Con)
@@ -30,7 +30,7 @@ try {
       exit ($kq | Select-Object -Last 1)
     }
     "serve" {
-      Start-Process wsl.exe -WindowStyle Hidden -ArgumentList @("-d", $Distro, "-u", "frappe", "--", "bash", "-lc", "cd ~/frappe-bench && sudo service mariadb start && sudo service redis-server start && nohup bench serve --port 8000 > /tmp/bench-serve.log 2>&1 &")
+      Start-Process wsl.exe -WindowStyle Hidden -ArgumentList @("-d", $Distro, "-u", "frappe", "--", "bash", "-lc", "cd ~/frappe-bench && sudo service mariadb start && sudo service redis-server start && exec bench serve --port 8000 > /tmp/bench-serve.log 2>&1")
       Add-Content -Encoding utf8 $tep "=== $(Get-Date -Format s) bench serve cổng 8000"
       Write-Output "bench serve: http://localhost:8000 (site test). Dừng: canh/bench.ps1 dung"
     }

@@ -3,7 +3,7 @@
 # Gọi (từ Windows): wsl -d Ubuntu -u root -- bash /mnt/d/LINHX/LINHX-ENGINE/canh/dung-bench.sh
 # Kết quả: user "frappe", bench ở /home/frappe/frappe-bench, site "test" (Administrator mật khẩu admin, chỉ dùng cục bộ),
 #          user thường kiem@test.local (mật khẩu kiem-thuong-123) để kiểm "ẩn khỏi API" qua HTTP.
-# Distro "Ubuntu" trên máy cty là 26.04 (python3 hệ thống 3.14, apt không có 3.12): Python 3.12 lấy qua uv, Node 18 lấy bản chính thức nodejs.org.
+# Distro "Ubuntu" trên máy cty là 26.04 (python3 hệ thống 3.14, apt không có 3.12): Python 3.12 lấy qua uv (bench init --python), Node 18 qua nodesource.
 set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 echo "== $(date -Is) bắt đầu dựng bench"
