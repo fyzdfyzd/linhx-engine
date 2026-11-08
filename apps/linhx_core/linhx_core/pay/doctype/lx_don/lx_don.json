@@ -21,13 +21,15 @@
   {
    "fieldname": "ma",
    "fieldtype": "Data",
-   "label": "Mã đơn"
+   "label": "Mã đơn",
+   "reqd": 1
   },
   {
    "fieldname": "goi",
    "fieldtype": "Link",
    "label": "Gói",
-   "options": "LX Goi"
+   "options": "LX Goi",
+   "reqd": 1
   },
   {
    "fieldname": "nguoi",
@@ -38,7 +40,8 @@
   {
    "fieldname": "so_tien",
    "fieldtype": "Currency",
-   "label": "Số tiền"
+   "label": "Số tiền",
+   "reqd": 1
   },
   {
    "default": "cho_tra",

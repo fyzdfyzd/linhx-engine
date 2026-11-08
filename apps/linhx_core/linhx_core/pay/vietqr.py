@@ -25,16 +25,17 @@ def noi_dung_ck(ma_don: str) -> str:
     if not raw:
         raise ValueError("ma_don không được để trống")
     sach = re.sub(r"[^A-Z0-9]", "", raw.upper())
-    if sach.startswith("LX") and len(sach) > 2:
-        than = sach[2:]
-    else:
-        than = sach
+    if not sach:
+        raise ValueError("ma_don phải chứa ít nhất một chữ cái hoặc chữ số")
+    than = sach
 
     bam_phu = hashlib.sha256(raw.encode("utf-8")).hexdigest().upper()
-    if len(than) < 4:
+    if raw != sach:
+        than = f"{than[:19]}{bam_phu[:4]}"
+    elif len(than) < 4:
         than = (than + bam_phu)[:4]
     elif len(than) > 23:
-        than = than[-19:] + bam_phu[:4]
+        than = f"{than[:19]}{bam_phu[:4]}"
 
     return f"LX{than}"
 
