@@ -1,0 +1,8 @@
+{
+  "ten": "linhx",
+  "mo_ta": "Bản cài LINHX chính (CRM + Pay)",
+  "modules": {
+    "crm": true,
+    "pay": true
+  }
+}

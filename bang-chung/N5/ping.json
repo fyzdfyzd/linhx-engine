@@ -1,0 +1,28 @@
+{
+  "luc": "2026-11-08T15:37:12+07:00",
+  "may": "linhx-engine-1",
+  "sites": [
+    {
+      "ten": "linhx",
+      "url": "http://35.198.251.2/linhx/api/method/ping",
+      "url_host": "http://linhx.local/api/method/ping",
+      "status": 200,
+      "status_host": 200,
+      "phan_hoi": {
+        "message": "pong"
+      },
+      "db_name": "_c13d5aa049657d6a"
+    },
+    {
+      "ten": "ifagent",
+      "url": "http://35.198.251.2/ifagent/api/method/ping",
+      "url_host": "http://ifagent.local/api/method/ping",
+      "status": 200,
+      "status_host": 200,
+      "phan_hoi": {
+        "message": "pong"
+      },
+      "db_name": "_bb61cc14981cb25c"
+    }
+  ]
+}

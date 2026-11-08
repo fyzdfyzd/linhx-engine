@@ -1,5 +1,47 @@
 {$SITE_ADDR::80} {
 	encode gzip
+
+	handle_path /linhx/* {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name linhx
+			header_up Host linhx
+		}
+	}
+	handle_path /ifagent/* {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name ifagent
+			header_up Host ifagent
+		}
+	}
+	handle_path /sites/linhx/* {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name linhx
+			header_up Host linhx
+		}
+	}
+	handle_path /sites/ifagent/* {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name ifagent
+			header_up Host ifagent
+		}
+	}
+
+	@host_linhx header_regexp Host ^linhx(\..+)?(:[0-9]+)?$
+	handle @host_linhx {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name linhx
+			header_up Host linhx
+		}
+	}
+
+	@host_ifagent header_regexp Host ^ifagent(\..+)?(:[0-9]+)?$
+	handle @host_ifagent {
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name ifagent
+			header_up Host ifagent
+		}
+	}
+
 	@frappe path /api/* /app /app/* /assets/* /files/* /private/* /socket.io/* /login /login* /desk* /website_script.js /logout /update-password* /me
 	handle @frappe {
 		reverse_proxy frontend:8080

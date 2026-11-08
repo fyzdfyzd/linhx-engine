@@ -25,6 +25,9 @@ services:
     <<: *frappe
     build: { context: .., dockerfile: deploy/Dockerfile }
     restart: "no"
+    environment:
+      DB_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
     entrypoint: [bash, -c]
     command:
       - |
@@ -37,12 +40,19 @@ services:
         bench set-config -gp socketio_port 9000
         if [ ! -f sites/${SITE}/site_config.json ]; then
           wait-for-it -t 120 db:3306
-          bench new-site ${SITE} --mariadb-user-host-login-scope=% --db-root-password ${DB_ROOT_PASSWORD} --admin-password ${ADMIN_PASSWORD} --install-app linhx_worker --set-default
+          bench new-site ${SITE} --mariadb-user-host-login-scope=% --db-root-password "${DB_ROOT_PASSWORD}" --admin-password "${ADMIN_PASSWORD}" --install-app linhx_worker --set-default
         else
           bench --site ${SITE} migrate
         fi
         bench --site ${SITE} set-config host_name ${PUBLIC_URL}
         bench --site ${SITE} enable-scheduler
+        for s in linhx ifagent; do
+          if [ -f "deploy/sites/$$s.json" ]; then
+            wait-for-it -t 120 db:3306
+            ./env/bin/python -m linhx_cli tao-site "$$s" --cau-hinh "deploy/sites/$$s.json" --sites-dir sites --bench-dir /home/frappe/frappe-bench
+            bench --site "$$s" enable-scheduler
+          fi
+        done
     depends_on: { db: { condition: service_healthy }, redis: { condition: service_started } }
 
   backend:
