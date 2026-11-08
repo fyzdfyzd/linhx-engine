@@ -1,0 +1,54 @@
+{
+  "feature": "D1",
+  "phieu": "20261109-0105-t1",
+  "luc": "2026-11-08T18:14:50.303739+00:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_d1.py -q",
+  "ket_qua_pytest": "2 passed",
+  "so_cau": 6,
+  "cac_muc": [
+    {
+      "tu": 6,
+      "den": 11,
+      "ten": "Chưa sẵn sàng"
+    },
+    {
+      "tu": 12,
+      "den": 18,
+      "ten": "Sẵn sàng một phần"
+    },
+    {
+      "tu": 19,
+      "den": 24,
+      "ten": "Sẵn sàng"
+    }
+  ],
+  "out_kham_bytes": 20321,
+  "kiem_trinh_duyet": {
+    "390": {
+      "viewport": 390,
+      "chon": "max",
+      "tong_diem": 24,
+      "scrollWidth": 390,
+      "khong_tran_ngang": true,
+      "goi_ra_ngoai": [],
+      "tom_tat_hien_thi": [
+        "Tổng điểm: 24 · Mức đánh giá",
+        "Sẵn sàng",
+        "Hệ thống dữ liệu, quy trình phản hồi và đo lường chuyển đổi của bạn đã có cấu trúc vững chắc. Doanh nghiệp hoàn toàn sẵn sàng vận hành khép kín trên nền LINHX ENGINE: từ công cụ phễu tự động, VietQR tự giao báo cáo đến bàn điều hành theo dõi thời gian thực."
+      ]
+    },
+    "1280": {
+      "viewport": 1280,
+      "chon": "min",
+      "tong_diem": 6,
+      "scrollWidth": 1280,
+      "khong_tran_ngang": true,
+      "goi_ra_ngoai": [],
+      "tom_tat_hien_thi": [
+        "Tổng điểm: 6 · Mức đánh giá",
+        "Chưa sẵn sàng",
+        "Quy trình tiếp nhận khách hàng và dữ liệu hiện tại còn phân mảnh, phụ thuộc nhiều vào thao tác thủ công. Bạn nên ưu tiên chuẩn hoá nguồn thu thập Lead, thiết lập lưu trữ đồng ý của khách hàng và kiểm tra hiện diện thương hiệu trên AI trước khi mở rộng tự động hoá."
+      ]
+    }
+  }
+}
