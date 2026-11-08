@@ -256,8 +256,8 @@
         "Sai số tiền thì không chuyển da_tra"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b3.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/B3/kiem.json"
     },
     {
       "id": "B4",
