@@ -14,7 +14,9 @@ Hợp đồng (HOP-DONG.md):
         - đúng số tiền -> đơn trang_thai "da_tra", tx_id ghi vào đơn; sai số tiền -> đơn giữ cho_tra, ghi kho["lech"]
         - mọi tx hợp lệ (có id, đúng khoá) ghi vào kho["tx"] đúng một lần
 - linhx_core/pay/api_sepay.py: @frappe.whitelist(allow_guest=True, methods=["POST"]) `webhook` đọc header Authorization,
-  khoá từ site_config (frappe.conf), không viết khoá trong code; khoá cập nhật đơn (for update) khi chuyển da_tra.
+  khoá từ site_config khoá tên "sepay_khoa" (frappe.conf.sepay_khoa), không viết khoá trong code; khoá dòng đơn (for_update)
+  khi chuyển da_tra; ghi tx_id vào LX Don. Sai khoá trả 401 hoặc 403.
+- Sau khi đạt hộp đen, bộ điều phối chạy thêm kiểm tích hợp HTTP thật trên bench: tests/nghiem-thu/tich-hop/th_b3.py.
 """
 import copy
 
@@ -83,6 +85,6 @@ def test_api():
     p = CORE / "linhx_core" / "pay" / "api_sepay.py"
     chu = p.read_text(encoding="utf-8")
     assert "allow_guest=True" in chu and "def webhook(" in chu and "Authorization" in chu
-    assert "frappe.conf" in chu or "get_site_config" in chu, "khoá SePay đọc từ site_config"
+    assert "sepay_khoa" in chu, "khoá SePay đọc từ site_config tên sepay_khoa"
     assert "for_update" in chu or "for update" in chu.lower(), "khoá dòng đơn khi chuyển da_tra"
     khong_import_frappe_dau_file(CORE / "linhx_core" / "pay" / "sepay.py")

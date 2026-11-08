@@ -63,3 +63,8 @@ Mỗi feature có trường `vung` (glob, `**` = nhiều cấp) trong `features-
 của phiếu nằm ngoài `vung` thì CHUA_DAT máy, không cần đọc. Luôn được thêm: `bang-chung/<ID>/**` và hai trường `passes`, `bang_chung`
 của chính feature đó. Luôn cấm: `tests/nghiem-thu/**`, `*.khoa`, `pytest.ini`, `canh/**`, `.canh/**`. Nhật ký agy (`.canh/log/<phieu>.jsonl`)
 cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit vẫn tính là lỗi (K3).
+
+## Kiểm thêm của canh (8/11, Linh duyệt "làm")
+
+- K7 tích hợp bench: sau khi đạt hộp đen, B3, A4, C2 chạy thêm `tests/nghiem-thu/tich-hop/th_<id>.py` (HTTP thật trên site test của bench WSL, qua `canh/bench.ps1 th`). Trượt là CHUA_DAT. Hợp đồng thêm: B3 đọc khoá `sepay_khoa` trong site_config; A4 có vai trò `LX Nhan Vien` và đơn vị lấy từ User Permission.
+- K8 đối chiếu VM: mỗi vòng tổng hợp, `canh/doi_chieu_vm.py` gọi lại URL trong bằng chứng N5, C3, T1, T2. Sai 2 lượt liền thì passes về false, thợ làm lại.
