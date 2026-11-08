@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 06:59 (giờ máy cty). Đạt: 1/31 (N1)
+Cập nhật 2026-11-08 07:09 (giờ máy cty). Đạt: 1/31 (N1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | N3 | 20261108-0652-t1 từ 2026-11-08T06:52:57 | DAT · Feature N1 · commit 75bea8f · nhánh tu-dong/engine-t1 · 2026-11-08T06:52:55 |
-| 2 | - | rảnh | - |
+| 1 | N3 | rảnh | DAT · Feature N1 · commit 75bea8f · nhánh tu-dong/engine-t1 · 2026-11-08T06:52:55 |
+| 2 | C1 | rảnh | - |
 
 ## Chờ
 - N2: máy cty chưa có D:\LINHX\PROTO (03 OPC OS, 01 Máy tạo nội dung); bộ điều phối tự mở khi thấy cả hai thư mục
@@ -21,4 +21,7 @@ Cập nhật 2026-11-08 06:59 (giờ máy cty). Đạt: 1/31 (N1)
 - 2026-11-08 06:48 t1: agy xong phiếu 20261108-0639-t1 (N1) sau 9 phút
 - 2026-11-08 06:52 t1: N1 DAT, đã gộp vào main
 - 2026-11-08 06:52 t1: giao agy phiếu 20261108-0652-t1: N3
+- 2026-11-08 06:59 t2: giao agy phiếu 20261108-0659-t2: C1
+- 2026-11-08 07:06 t1: agy xong phiếu 20261108-0652-t1 (N3) sau 13 phút
+- 2026-11-08 07:09 t2: agy xong phiếu 20261108-0659-t2 (C1) sau 10 phút
 
