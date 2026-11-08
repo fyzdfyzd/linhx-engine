@@ -1,0 +1,23 @@
+{
+  "luc_kiem": "2026-11-08T16:22:47+07:00",
+  "may": "linhx-engine-1",
+  "sites": [
+    {
+      "ten": "linhx",
+      "file": "sites/linhx/private/backups/20261108_162028-linhx-database.sql.gz",
+      "luc": "2026-11-08T16:20:28+07:00",
+      "kich_thuoc_bytes": 249704
+    },
+    {
+      "ten": "ifagent",
+      "file": "sites/ifagent/private/backups/20261108_162026-ifagent-database.sql.gz",
+      "luc": "2026-11-08T16:20:27+07:00",
+      "kich_thuoc_bytes": 249520
+    }
+  ],
+  "khoi_phuc_thu": {
+    "site_tam": "tam-khoi-phuc.local",
+    "tu_file": "sites/linhx/private/backups/20261108_162028-linhx-database.sql.gz",
+    "ping": 200
+  }
+}

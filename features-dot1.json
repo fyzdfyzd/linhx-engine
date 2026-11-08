@@ -110,8 +110,8 @@
         "Khôi phục thử được vào site tạm"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_n6.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/N6/sao-luu.json"
     },
     {
       "id": "A1",
