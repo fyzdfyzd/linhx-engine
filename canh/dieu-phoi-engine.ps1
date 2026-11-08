@@ -51,6 +51,9 @@ if ($Tho -eq 0) {
     Get-ChildItem "$Canh\t*\phieu.txt" -ErrorAction SilentlyContinue | ForEach-Object { $id = ((Get-Content $_.FullName) -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue }
     Ghi "dung_han: đã dừng agy"
   } else {
+    # xoa_tac: ["ID@nhan"] xoá đếm CHUA_DAT một lần (Khổng Minh giao lại sau lỗi máy)
+    foreach ($xt in @($dk.xoa_tac)) { if (-not $xt) { continue }; $id = ($xt -split "@")[0]; $dau = "$Canh\tac\da-xoa-$($xt -replace '[^A-Za-z0-9]', '_').txt"
+      if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
     # Thợ dư (số > so_tho, khi giảm thợ): dừng agy, nhả feature đang giữ để thợ khác nhận
     Get-ChildItem "$Canh\t*" -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^t(\d+)$' -and [int]$Matches[1] -gt [int]$dk.so_tho } | ForEach-Object {
       $n = $_.Name.Substring(1)
@@ -152,7 +155,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $fid, $ten, $loai, $dung, $bd, $phut = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
   $goc = (Get-Content "$S\goc.txt").Trim()
   $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
-  $loi = @(); $luuY = @()
+  $loi = @(); $luuY = @(); $loiMay = $false
   if ((git rev-parse HEAD).Trim() -eq $goc) { $loi += "agy không commit gì" }
   # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
   $camNgoai = (@($TichHop, $Canh) + @(Get-ChildItem "D:\LINHX\ENGINE-t*" -Directory -ErrorAction SilentlyContinue | Where-Object FullName -ne $Wt | ForEach-Object FullName)) -join ";"
@@ -172,15 +175,20 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     $can = -not (Test-Path "$nm\.bin") -or ((Test-Path $lk) -and (Get-Item $lk).LastWriteTime -gt (Get-Item $nm).LastWriteTime)
     if ($can) {
       Push-Location $d
-      $ra = if (Test-Path $lk) { & npm ci --no-audit --no-fund 2>&1 | Out-String } else { & npm install --no-audit --no-fund 2>&1 | Out-String }
+      # npm.cmd, không gọi npm (shim npm.ps1 đọc sai đối số khi chạy ẩn: "Unknown command: pm")
+      $ra = if (Test-Path $lk) { & npm.cmd ci --no-audit --no-fund 2>&1 | Out-String } else { & npm.cmd install --no-audit --no-fund 2>&1 | Out-String }
       $maN = $LASTEXITCODE; Pop-Location
       Ghi "chuẩn bị node_modules $($_.Name) (mã $maN)"
-      if ($maN -ne 0) { $luuY += "npm cài $($_.Name) lỗi mã $maN`: $($ra.Substring([math]::Max(0, $ra.Length - 400)))" }
+      if ($maN -ne 0) { $loiMay = $true; $luuY += "npm cài $($_.Name) lỗi mã $maN`: $($ra.Substring([math]::Max(0, $ra.Length - 400)))" }
     }
   }
-  # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ
+  # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ; một thợ một lúc (next build ăn RAM)
+  $mxK = New-Object System.Threading.Mutex($false, "Global\ENGINE-CongKiem"); try { [void]$mxK.WaitOne(1200000) } catch [System.Threading.AbandonedMutexException] {}
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
-  if ($LASTEXITCODE -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
+  $maCk = $LASTEXITCODE
+  try { $mxK.ReleaseMutex() } catch {}
+  if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
+  if ($ck -match 'SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
@@ -233,7 +241,11 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
     else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
-  if ($kl -eq "CHUA_DAT") {
+  if ($kl -eq "CHUA_DAT" -and $loiMay -and $c.kl -eq "DAT") {
+    # lỗi máy (npm/next build/RAM), không phải lỗi thợ: không tính vào trần K2
+    Ghi "$fid trượt do lỗi máy (commit $sha), không tính lần"
+    $luuY += "Lượt này trượt do lỗi máy của canh (npm, next build, RAM), không tính vào trần. Không cần sửa gì vì lý do này."
+  } elseif ($kl -eq "CHUA_DAT") {
     $n = 1 + (SoTac $fid); "$n" | Set-Content "$Canh\tac\$fid.txt"
     Ghi "$fid CHUA_DAT lần $n (commit $sha)"
     if ($n -ge $Tran) {
