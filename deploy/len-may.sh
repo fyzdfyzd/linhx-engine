@@ -38,8 +38,9 @@ if [ ! -f $BI ]; then
   printf "LINHX_URL=%s\nTOKEN_MAY_CTY=%s\nTOKEN_CLOUD_1=%s\nLINH_EMAIL=tuanlinh@urah.vn\nLINH_MAT_KHAU=%s\n" "$URL" "$TK_MAY" "$TK_CLOUD" "$MK_LINH" > $BI
   sed -i "s/^THO_CLOUD_TOKEN=.*/THO_CLOUD_TOKEN=$TK_CLOUD/" .env
 fi
-chmod +x sao-luu.sh
-sed "s|/home/ADMIN/linhx-engine/deploy|$(pwd)|g" linhx-sao-luu.cron > /etc/cron.d/linhx-sao-luu
+DEPLOY_DIR="$(cd "$(dirname "$0")" && pwd)"
+chmod +x "$DEPLOY_DIR/sao-luu.sh" "$DEPLOY_DIR/khoi-phuc-thu.sh"
+sed "s|/home/ADMIN/linhx-engine/deploy|$DEPLOY_DIR|g" "$DEPLOY_DIR/linhx-sao-luu.cron" > /etc/cron.d/linhx-sao-luu
 chmod 644 /etc/cron.d/linhx-sao-luu
 docker compose --profile tho-cloud up -d --build tho-cloud || echo "tho-cloud chua len (xem README)"
 docker compose ps --format "{{.Service}} {{.Status}}"

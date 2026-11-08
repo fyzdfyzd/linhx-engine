@@ -1,23 +1,26 @@
 {
-  "luc_kiem": "2026-11-08T16:22:47+07:00",
+  "luc_kiem": "2026-11-08T17:16:13+07:00",
   "may": "linhx-engine-1",
+  "script": "deploy/khoi-phuc-thu.sh",
   "sites": [
     {
       "ten": "linhx",
-      "file": "sites/linhx/private/backups/20261108_162028-linhx-database.sql.gz",
-      "luc": "2026-11-08T16:20:28+07:00",
-      "kich_thuoc_bytes": 249704
+      "file": "sites/linhx/private/backups/20261108_171517-linhx-database.sql.gz",
+      "luc": "2026-11-08T17:15:17+07:00",
+      "kich_thuoc_bytes": 249708,
+      "sha256": "ec8c8431d6ac146ddbaa1dc7ef5df29a9d96b483d678ed7e2250b38b4d263462"
     },
     {
       "ten": "ifagent",
-      "file": "sites/ifagent/private/backups/20261108_162026-ifagent-database.sql.gz",
-      "luc": "2026-11-08T16:20:27+07:00",
-      "kich_thuoc_bytes": 249520
+      "file": "sites/ifagent/private/backups/20261108_171519-ifagent-database.sql.gz",
+      "luc": "2026-11-08T17:15:19+07:00",
+      "kich_thuoc_bytes": 249524,
+      "sha256": "b497f2ab1a77e66341d76c9ab69869c8e93e7f1d00a09411a8a0b721ba60c3ce"
     }
   ],
   "khoi_phuc_thu": {
     "site_tam": "tam-khoi-phuc.local",
-    "tu_file": "sites/linhx/private/backups/20261108_162028-linhx-database.sql.gz",
+    "tu_file": "sites/linhx/private/backups/20261108_171517-linhx-database.sql.gz",
     "ping": 200
   }
 }
