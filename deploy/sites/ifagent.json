@@ -1,0 +1,8 @@
+{
+  "ten": "ifagent",
+  "mo_ta": "Bản cài ifAgent (CRM + Pay)",
+  "modules": {
+    "crm": true,
+    "pay": true
+  }
+}

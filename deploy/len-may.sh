@@ -23,6 +23,9 @@ fi
 docker compose up -d --build
 echo "cho Frappe san sang..."
 for i in $(seq 1 60); do docker compose exec -T backend curl -sf -H "Host: engine.local" localhost:8000/api/method/ping >/dev/null 2>&1 && break; sleep 5; done
+for s in linhx ifagent; do
+  for i in $(seq 1 30); do docker compose exec -T backend curl -sf -H "Host: $s" localhost:8000/api/method/ping >/dev/null 2>&1 && break; sleep 2; done
+done
 BI=/root/linhx-bi-mat.env
 if [ ! -f $BI ]; then
   X="docker compose exec -T backend bench --site engine.local execute"
