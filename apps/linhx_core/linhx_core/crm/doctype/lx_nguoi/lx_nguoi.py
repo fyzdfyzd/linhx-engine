@@ -1,9 +1,11 @@
+import json
+
 from frappe.model.document import Document
 
 from linhx_core.crm import gop_trung
 from linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap import ghi_nhat_ky_truy_cap
 
-TRUONG_CO_BAN = ("ho_ten", "dien_thoai", "email", "zalo", "don_vi", "to_chuc")
+TRUONG_CO_BAN = ("ho_ten", "dien_thoai", "email", "zalo", "don_vi", "to_chuc", "ghi_cong")
 TRUONG_HE_THONG = {
 	"name",
 	"creation",
@@ -70,6 +72,8 @@ class LXNguoi(Document):
 			for f in self._cac_truong_du_lieu():
 				val = getattr(self, f, None)
 				if val is not None:
+					if isinstance(val, (dict, list)):
+						val = json.dumps(val, ensure_ascii=False)
 					frappe.db.set_value("LX Nguoi", ten_cu, f, val, update_modified=True)
 			return
 		return super().db_insert(*args, **kwargs)

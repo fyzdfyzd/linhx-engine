@@ -203,8 +203,8 @@
         "Thiếu đồng ý chuyển chéo thì từ chối"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a5.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A5/chuyen.json"
     },
     {
       "id": "B1",

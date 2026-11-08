@@ -11,7 +11,8 @@
   "email",
   "zalo",
   "don_vi",
-  "to_chuc"
+  "to_chuc",
+  "ghi_cong"
  ],
  "fields": [
   {
@@ -45,6 +46,11 @@
    "fieldtype": "Link",
    "label": "Tổ chức",
    "options": "LX To Chuc"
+  },
+  {
+   "fieldname": "ghi_cong",
+   "fieldtype": "JSON",
+   "label": "Ghi công"
   }
  ],
  "permissions": [
