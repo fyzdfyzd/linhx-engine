@@ -133,6 +133,18 @@ export default function TrangBU({ noiDung }) {
           border-radius: 999px;
           background: var(--nhan-nhat);
           color: var(--nhan);
+          text-decoration: none;
+        }
+        .nut-kham {
+          display: inline-block;
+          margin-top: 16px;
+          padding: 10px 16px;
+          border-radius: 10px;
+          background: var(--nhan);
+          color: #ffffff;
+          font-size: 14px;
+          font-weight: 600;
+          text-decoration: none;
         }
         .hero {
           padding: 40px 0 28px;
@@ -204,6 +216,9 @@ export default function TrangBU({ noiDung }) {
           <section className="hero">
             <h1 id="tieu-de-trang">{tieu_de}</h1>
             {mo_ta && <p id="mo-ta-trang">{mo_ta}</p>}
+            <a href="/kham" className="nut-kham">
+              Chạy T1 Khám miễn phí (LAB113)
+            </a>
           </section>
 
           <section className="luoi-muc" aria-label="Danh sách mục">

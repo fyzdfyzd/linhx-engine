@@ -1,0 +1,29 @@
+{
+  "feature": "D3",
+  "luc": "2026-11-08T18:15:14.749652+00:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "",
+    "tests/nghiem-thu/test_d3.py::test_dem_khop_ban_ghi PASSED                [ 20%]",
+    "tests/nghiem-thu/test_d3.py::test_api PASSED                             [ 40%]",
+    "tests/nghiem-thu/test_d3.py::test_ban_hien_6_tang PASSED                 [ 60%]",
+    "apps/linhx_core/linhx_core/test_pheu.py::test_dem_6_tang PASSED          [ 80%]",
+    "apps/linhx_core/linhx_core/test_pheu.py::test_api_pheu_quyen_va_du_lieu PASSED [100%]",
+    "",
+    "============================== 5 passed in 1.89s =============================="
+  ],
+  "mau_dem": {
+    "biet": 120,
+    "moi": 2,
+    "lien_he": 5,
+    "co_hoi_don": 4,
+    "khach": 2,
+    "quay_lai": 1
+  }
+}

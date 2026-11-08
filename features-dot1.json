@@ -365,8 +365,8 @@
         "Người dùng chạy T1 và thấy bản tóm tắt"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_d1.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/D1/kiem.json"
     },
     {
       "id": "D2",
@@ -404,8 +404,8 @@
         "Số mỗi tầng khớp số bản ghi thật"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_d3.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/D3/kiem.json"
     },
     {
       "id": "E1",
