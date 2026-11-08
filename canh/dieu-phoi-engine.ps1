@@ -11,7 +11,7 @@ $TichHop = "D:\LINHX\LINHX-ENGINE"; $NhanhTH = "main"
 $Canh = "D:\LINHX\ENGINE-canh"
 $LogDir = "$TichHop\.canh\log"
 $LenhAgy = "$env:USERPROFILE\.gemini\bin\agy.exe"
-$Proto = @("D:\LINHX\PROTO\03 OPC OS", "D:\LINHX\PROTO\01 Máy tạo nội dung")
+$Proto = @("D:\LINHX\PROTO\03_OPC_OS", "D:\LINHX\PROTO\01_MAY_TAO_NOI_DUNG")
 $CotPhieu = "luc_giao`tluc_xong`ttho`tphieu`tfeature`tloai`tdung`tket_luan`tphut`ttoken_vao`ttoken_ra"
 New-Item -ItemType Directory -Force "$Canh\nhan", "$Canh\tac", $LogDir | Out-Null
 function Ghi($s) { Add-Content -Encoding utf8 "$Canh\NHAT-KY.md" "- $(Get-Date -Format 'yyyy-MM-dd HH:mm') t${Tho}: $s" }
@@ -272,7 +272,7 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
     $ten = "$(Get-Date -Format 'yyyyMMdd-HHmm')-t$Tho"
     $rieng = switch ($chon) {
       "N1" { "- Riêng N1: được ``git push -u origin $Nhanh`` để CI GitHub chạy. Máy không có gh: đọc kết quả lượt chạy qua API GitHub (lấy quyền bằng git credential, KHÔNG in hay ghi token ra file). Workflow đặt ở .github/workflows/linhx-engine.yml, chạy py canh/cong_kiem.py kiem cho từng features-dot1*.json." }
-      "N2" { "- Riêng N2: chép từ D:\LINHX\PROTO\03 OPC OS và D:\LINHX\PROTO\01 Máy tạo nội dung. Bỏ .env*, khoá, token, file phiên, cơ sở dữ liệu, dữ liệu khách, node_modules, ảnh/video nặng." }
+      "N2" { "- Riêng N2: chép từ D:\LINHX\PROTO\03_OPC_OS và D:\LINHX\PROTO\01_MAY_TAO_NOI_DUNG. Bỏ .env*, khoá, token, file phiên, cơ sở dữ liệu, dữ liệu khách, node_modules, ảnh/video nặng." }
       default { "- VM thật: linhx-engine-1 (gcloud project linhx-engine, zone asia-southeast1-b). gcloud scp trên Windows dùng /home/ADMIN/ (không dùng ~). Bí mật chỉ ở /root/linhx-bi-mat.env trên VM: không chép về máy, không in ra log, không đưa vào bằng chứng." }
     }
     @"
