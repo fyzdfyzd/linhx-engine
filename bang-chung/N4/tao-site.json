@@ -1,0 +1,34 @@
+{
+  "site": "n4.local",
+  "giay": 61.27,
+  "lan_hai": {
+    "giay": 6.39,
+    "ma_thoat": 0,
+    "site_cu_ping": 200,
+    "site_test_ping": 200
+  },
+  "luc_bat_dau": "2026-11-08T12:41:50+07:00",
+  "luc_ket_thuc": "2026-11-08T12:43:07+07:00",
+  "moi_truong": "Frappe bench WSL (/home/frappe/frappe-bench, Ubuntu WSL2 trên máy cty theo bổ sung HOP-DONG 8/11: không cài vào container 0.1 trên linhx-engine-1)",
+  "cau_hinh": {
+    "modules": {
+      "crm": true,
+      "pay": false
+    }
+  },
+  "lan_mot": {
+    "giay": 61.27,
+    "ma_thoat": 0,
+    "apps_da_cai": [
+      "frappe",
+      "linhx_core",
+      "linhx_worker"
+    ],
+    "lx_cau_hinh": {
+      "bat_crm": 1,
+      "bat_pay": 0,
+      "bat_bong": 0
+    }
+  },
+  "log_chi_tiet": "bang-chung/N4/tao-site.log"
+}

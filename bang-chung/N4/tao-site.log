@@ -1,0 +1,57 @@
+=== 2026-11-08T12:41:50+07:00 [1] Chạy thử lần 1 (khi chưa có site n4.local) ===
+{"lenh": ["bench new-site n4.local --mariadb-user-host-login-scope=% --db-root-password \"${DB_ROOT_PASSWORD:?}\" --admin-password \"${ADMIN_PASSWORD:?}\"", "bench --site n4.local install-app linhx_core", "bench --site n4.local install-app linhx_worker", "bench --site n4.local execute frappe.client.set_value --kwargs '{\"doctype\": \"LX Cau Hinh\", \"name\": \"LX Cau Hinh\", \"fieldname\": {\"bat_crm\": 1, \"bat_pay\": 0}}'"]}
+
+=== 2026-11-08T12:41:50+07:00 [2] Chạy thật lần 1: tạo site n4.local ===
+Warning: MariaDB version ['11.8', '6'] is more than 10.8 which is not yet tested with Frappe Framework.
+
+Installing frappe...
+Updating DocTypes for frappe        : [========================================] 100%
+Updating Dashboard for frappe
+*** Scheduler is disabled ***
+
+Installing linhx_core...
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating Dashboard for linhx_core
+
+Installing linhx_worker...
+Updating DocTypes for linhx_worker  : [=============                           ] 33%
+Updating DocTypes for linhx_worker  : [==========================              ] 66%
+Updating DocTypes for linhx_worker  : [========================================] 100%
+Updating Dashboard for linhx_worker
+{"name": "LX Cau Hinh", "owner": "Administrator", "creation": null, "modified": "2026-11-08 12:42:51.792063", "modified_by": "Administrator", "docstatus": 0, "idx": "0", "bat_crm": 1, "bat_pay": 0, "bat_bong": 0, "doctype": "LX Cau Hinh"}
+=== 2026-11-08T12:42:52+07:00 Xong lần 1: ma_thoat=0, giay=61.27 ===
+
+=== 2026-11-08T12:42:52+07:00 [3] Kiểm tra apps và cờ LX Cau Hinh sau lần 1 ===
+frappe       15.126.0 version-15
+linhx_core   0.1.0    UNVERSIONED
+linhx_worker 0.1.0    UNVERSIONED
+{"name": "LX Cau Hinh", "owner": "Administrator", "creation": null, "modified": "2026-11-08 12:42:51.792063", "modified_by": "Administrator", "docstatus": 0, "idx": "0", "bat_crm": 1, "bat_pay": 0, "bat_bong": 0, "doctype": "LX Cau Hinh"}
+
+=== 2026-11-08T12:42:55+07:00 [4] Chạy thử lần 2 (khi đã có site n4.local) ===
+{"lenh": ["bench --site n4.local list-apps | grep -E '^linhx_core([[:space:]]|$)' >/dev/null || bench --site n4.local install-app linhx_core", "bench --site n4.local list-apps | grep -E '^linhx_worker([[:space:]]|$)' >/dev/null || bench --site n4.local install-app linhx_worker", "bench --site n4.local migrate", "bench --site n4.local execute frappe.client.set_value --kwargs '{\"doctype\": \"LX Cau Hinh\", \"name\": \"LX Cau Hinh\", \"fieldname\": {\"bat_crm\": 1, \"bat_pay\": 0}}'"]}
+
+=== 2026-11-08T12:42:55+07:00 [5] Chạy thật lần 2 trên site đã có n4.local ===
+Migrating n4.local
+Updating DocTypes for frappe        : [========================================] 100%
+Updating DocTypes for linhx_core    : [=============                           ] 33%
+Updating DocTypes for linhx_core    : [==========================              ] 66%
+Updating DocTypes for linhx_core    : [========================================] 100%
+Updating DocTypes for linhx_worker  : [=============                           ] 33%
+Updating DocTypes for linhx_worker  : [==========================              ] 66%
+Updating DocTypes for linhx_worker  : [========================================] 100%
+Updating Dashboard for frappe
+Updating Dashboard for linhx_core
+Updating Dashboard for linhx_worker
+Executing `after_migrate` hooks...
+
+Queued rebuilding of search index for n4.local
+
+{"name": "LX Cau Hinh", "owner": "Administrator", "creation": null, "modified": "2026-11-08 12:43:01.469974", "modified_by": "Administrator", "docstatus": 0, "idx": "0", "bat_crm": 1, "bat_pay": 0, "bat_bong": 0, "doctype": "LX Cau Hinh"}
+=== 2026-11-08T12:43:01+07:00 Xong lần 2: ma_thoat=0, giay=6.39 ===
+
+=== 2026-11-08T12:43:01+07:00 [6] Kiểm tra HTTP /api/method/ping sau lần 2 ===
+PING n4.local: HTTP 200 {"message":"pong"}
+PING test (site cũ): HTTP 200 {"message":"pong"}
+=== 2026-11-08T12:43:07+07:00 Hoàn tất kiểm thử N4 ===
