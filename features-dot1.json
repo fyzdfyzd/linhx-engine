@@ -129,8 +129,8 @@
         "Không viết lại logic đã có ở PROTO 03"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a1.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A1/kiem.json"
     },
     {
       "id": "A2",
