@@ -31,7 +31,31 @@ Module thuần Python (co_module, gop_trung, quyen_dung) không `import frappe` 
 | R1 | `apps/linhx_core/linhx_core/cts_adapter/hop_dong.py`: `tao_don(payload, danh_muc, kho)`, `nhan_webhook(payload, kho, authorization, khoa)` trả `(ma_http, than)` cùng dạng CTS; `cts_adapter/api.py` (`checkout`, `sepay_webhook`). 20 payload mẫu: `tests/nghiem-thu/du-lieu/cts/` | – |
 | R2 | `cts_adapter/bong.py`: `bat`, `nhan_don_bong`, `nhan_bong`, `so_lech`; cờ `bat_bong` tắt mặc định; dùng lại luật `hop_dong`; không giao hàng | – |
 
-Chi tiết từng hàm ghi ở đầu file `test_<id>.py`. Các feature còn lại của đợt 1 (A2–A5, B2–B5, C2–C3, D1–D3, E1–E2, T1–T2) viết nghiệm thu sau, chưa giao phiếu.
+Chi tiết từng hàm ghi ở đầu file `test_<id>.py`.
+
+## Đợt 1 phần sau (viết 8/11, Linh duyệt "ok hết")
+
+| ID | Thợ phải tạo (chi tiết ở đầu test_<id>.py) | Bằng chứng |
+|---|---|---|
+| A2 | DocType LX Quan He, LX Co Hoi (han_giao); `crm/co_hoi.py` `han_giao`, `giao`, `viec_cho`; lx_co_hoi.py gọi | – |
+| A3 | DocType LX Dong Y (track_changes, chặn xoá); `crm/dong_y.py` `MUC_DICH`, `TuChoi`, `ghi`, `hieu_luc`, `kiem_chuyen_cheo` | – |
+| A4 | `crm/quyen_don_vi.py` `co_quyen`, `dieu_kien`; hooks has_permission + permission_query_conditions cho LX Nguoi, LX Co Hoi | `bang-chung/A4/quyen.json` từ bench WSL |
+| A5 | `crm/chuyen_lead.py` `goi_di`, `nhan`; `crm/api_lead.py` `nhan_lead` (không allow_guest), `gui_lead` | `bang-chung/A5/chuyen.json` từ VM |
+| B2 | DocType LX Don; `pay/vietqr.py` `noi_dung_ck`, `qr_url`, `tao_don`; ghi nguồn PROTO | – |
+| B3 | `pay/sepay.py` `xu_ly`; `pay/api_sepay.py` `webhook` (khoá từ site_config, for_update) | – |
+| B4 | `pay/sau_tra.py` `viec_can_tao`, `link_bao_cao`; doc_events LX Don; LX Job thêm `don`, nguon "don" | – |
+| B5 | DocType LX So S1a, Single LX Cau Hinh Pay; `pay/so_s1a.py`; `pay/api_thue.py` `canh_bao_thue`; ghi nguồn PROTO | – |
+| C2 | `crm/form.py` `xu_ly`; `crm/api_form.py` `nhan_form` (allow_guest + giới hạn tần suất); trang-bu `form[data-lead]`, API_GOC lúc dựng | – |
+| C3 | `sites/ifagent/site.json`; trang-bu đọc SITE_JSON; deploy/ phục vụ ifagent | `bang-chung/C3/chay.json` từ VM (URL là IP) |
+| D1 | `sites/ifagent/kham.json`; trang `/kham` `[data-cau]`, `[data-tom-tat]`, chạy không mạng | – |
+| D2 | `crm/t1.py` `ghi_ket_qua`; LX Nguoi thêm nguon, tang_pheu; `api_form.nhan_ket_qua_t1`; `form[data-nhan-ket-qua]`, `[data-ket-qua-day-du]` | – |
+| D3 | `linhx_core/pheu.py` `TANG`, `dem`; `api_pheu.pheu`; #/engine `[data-tang]` | – |
+| E1 | `linhx_core/ban.py` `tong_hop`; `api_ban_dieu_hanh.ban`; #/engine `#viec-cho`, `#lead-moi`, `#don-moi`, làm mới ≤ 60 giây | – |
+| E2 | `linhx_worker/so_lieu.py` `phut`, `dong`; `bang` trả phut; bảng #viec cột Token vào, Token ra, Phút | – |
+| T1 | `tests/e2e/test_hanh_trinh_lead.py` (URL, mật khẩu từ biến môi trường) | `bang-chung/T1/e2e.json` + `e2e.log` từ VM |
+| T2 | `tests/e2e/test_don_bao_cao.py` (webhook giả lập, không gọi SePay thật) | `bang-chung/T2/e2e.json` + `e2e.log` từ VM |
+
+Hàm dùng chung mới trong `_chung.py`: `dung_trang_bu`, `chan_ra_ngoai`, `trang_front_engine`, `ghi_nguon_proto`, `khong_import_frappe_dau_file`.
 
 ## Vùng (cổng K1)
 

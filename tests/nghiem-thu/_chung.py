@@ -176,3 +176,82 @@ def may_chu_web(thu_muc, api=None, ghi_nhan=None):
 
 PNG_1x1 = bytes.fromhex("89504e470d0a1a0a0000000d4948445200000001000000010806000000"
                         "1f15c4890000000d49444154789c6360f8cfc0f01f0005000201e2b2a3f40000000049454e44ae426082")
+
+
+# ---------- dùng chung cho nghiệm thu đợt 1 phần sau (viết 8/11) ----------
+
+TRANG_BU = GOC / "trang-bu"
+
+
+def dung_trang_bu(env_them=None, bo=("NOI_DUNG_URL", "SITE_JSON", "API_GOC")):
+    """Dựng tĩnh trang-bu (npm run build) với biến môi trường thêm. Trả thư mục out/."""
+    import os
+    import shutil
+    assert (TRANG_BU / "node_modules").is_dir(), "chạy `npm ci` trong trang-bu trước khi kiểm"
+    out = TRANG_BU / "out"
+    shutil.rmtree(out, ignore_errors=True)
+    env = {k: v for k, v in os.environ.items() if k not in bo}
+    env.update(NEXT_TELEMETRY_DISABLED="1", **(env_them or {}))
+    npm = shutil.which("npm") or "npm"
+    r = subprocess.run([npm, "run", "build"], cwd=TRANG_BU, env=env, capture_output=True, text=True,
+                       encoding="utf-8", errors="ignore", timeout=420)
+    assert r.returncode == 0, "dựng tĩnh lỗi:\n" + (r.stdout + r.stderr)[-2000:]
+    assert (out / "index.html").exists(), "dựng xong phải có trang-bu/out/index.html"
+    return out
+
+
+def chan_ra_ngoai(pg, goc_url):
+    """Chặn mọi request không về máy chủ thử; trả list URL đã bị chặn."""
+    bi_chan = []
+
+    def r(route):
+        u = route.request.url
+        if u.startswith((goc_url, "data:", "blob:")):
+            route.continue_()
+        else:
+            bi_chan.append(u)
+            route.abort()
+    pg.route("**/*", r)
+    return bi_chan
+
+
+def trang_front_engine(api_them, rong=1280, hash_="#/engine", cho=None):
+    """Mở front/index.html#/engine với API giả (người điều hành đã đăng nhập). Trả (playwright, browser, page, server, ghi_nhan)."""
+    from playwright.sync_api import sync_playwright
+    ghi = []
+    api = {
+        "/api/method/linhx_worker.api.phien": lambda pt, b: (200, {"message": {"user": "dh@test.local", "dieu_hanh": True, "csrf": "x"}}, None),
+        "/api/method/linhx_worker.api.bang": lambda pt, b: (200, {"message": {"workers": [], "workflows": [], "jobs": [], "dem": {}, "luc": "2026-11-09 09:00:00", "user": "dh@test.local"}}, None),
+    }
+    api.update(api_them)
+    s, url = may_chu_web(GOC / "front", api, ghi_nhan=ghi)
+    p = sync_playwright().start()
+    b = p.chromium.launch()
+    pg = b.new_page(viewport={"width": rong, "height": 900})
+    chan_ra_ngoai(pg, url)
+    pg.goto(url + "/index.html" + hash_)
+    if cho:
+        pg.wait_for_selector(cho, timeout=15000)
+    return p, b, pg, s, ghi
+
+
+def dong_trang(p, b, s):
+    try:
+        b.close()
+        p.stop()
+    finally:
+        s.shutdown()
+
+
+def ghi_nguon_proto(p, thu_muc="nguon/03-opc-os/"):
+    """File p phải ghi chuyển từ file có thật trong nguon/... (chống viết lại từ đầu)."""
+    chu = pathlib.Path(p).read_text(encoding="utf-8")
+    m = re.findall(re.escape(thu_muc) + r"[\w./-]+", chu)
+    assert m, f"{pathlib.Path(p).name} phải ghi chuyển từ file nào trong {thu_muc}"
+    assert any((GOC / x.rstrip(".")).exists() for x in m), f"đường dẫn nguồn ghi trong {pathlib.Path(p).name} không có thật"
+
+
+def khong_import_frappe_dau_file(p):
+    chu = pathlib.Path(p).read_text(encoding="utf-8")
+    dau = [d for d in chu.splitlines() if re.match(r"^(import|from)\s", d)]
+    assert not any(re.match(r"^(import frappe|from frappe)", d) for d in dau), f"{pathlib.Path(p).name} phải thuần Python (import frappe trong hàm)"
