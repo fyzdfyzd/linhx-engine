@@ -54,6 +54,14 @@ if ($Tho -eq 0) {
     # xoa_tac: ["ID@nhan"] xoá đếm CHUA_DAT một lần (Khổng Minh giao lại sau lỗi máy)
     foreach ($xt in @($dk.xoa_tac)) { if (-not $xt) { continue }; $id = ($xt -split "@")[0]; $dau = "$Canh\tac\da-xoa-$($xt -replace '[^A-Za-z0-9]', '_').txt"
       if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
+    # nhả giữ cũ: nhan\<ID>.txt trỏ tới thợ mà dang.txt của thợ đó không còn là ID (phiếu bị giao đè, lỗi 8/11 D1 giữ nhóm trang-bu)
+    $mxG = New-Object System.Threading.Mutex($false, "Global\ENGINE-Giao"); try { [void]$mxG.WaitOne(120000) } catch [System.Threading.AbandonedMutexException] {}
+    Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | ForEach-Object {
+      $n = (Get-Content $_.FullName -Raw).Trim(); $dg = "$Canh\t$n\dang.txt"
+      $dangN = if (Test-Path $dg) { (Get-Content $dg -Raw).Trim() } else { "" }
+      if ($dangN -ne $_.BaseName -and -not (Test-Path "$Canh\t$n\can-cham.txt")) { Remove-Item $_.FullName -Force; Ghi "nhả giữ cũ $($_.BaseName) của t$n (thợ đang $dangN)" }
+    }
+    try { $mxG.ReleaseMutex() } catch {}
     # Thợ dư (số > so_tho, khi giảm thợ): dừng agy, nhả feature đang giữ để thợ khác nhận
     Get-ChildItem "$Canh\t*" -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -match '^t(\d+)$' -and [int]$Matches[1] -gt [int]$dk.so_tho } | ForEach-Object {
       $n = $_.Name.Substring(1)
