@@ -93,8 +93,8 @@
         "Test hợp đồng chạy với 20 payload mẫu lấy từ CTS (đã ẩn danh), kết quả cùng dạng"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_r1.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/R1/kiem.json"
     },
     {
       "id": "R2",

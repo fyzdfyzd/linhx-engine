@@ -1,0 +1,21 @@
+{
+  "feature": "R1",
+  "luc": "2026-11-09T01:25:00+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "",
+    "tests/nghiem-thu/test_r1.py::test_thuan_python_va_co_endpoint PASSED     [ 20%]",
+    "tests/nghiem-thu/test_r1.py::test_tao_don_cung_dang_cts PASSED           [ 40%]",
+    "tests/nghiem-thu/test_r1.py::test_webhook_dung_luat_cts PASSED           [ 60%]",
+    "tests/nghiem-thu/test_r1.py::test_webhook_sai_khoa_401_va_khong_doi_kho PASSED [ 80%]",
+    "tests/nghiem-thu/test_r1.py::test_tao_don_roi_tra_tien_tron_vong PASSED  [100%]",
+    "",
+    "============================== 5 passed in 0.15s =============================="
+  ]
+}
