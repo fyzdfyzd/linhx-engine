@@ -250,10 +250,19 @@ async function trangEngine() {
       const doi = () => { const w = wfs.find(x => x.ma === $("#wf").value) || {}; $("#wfmota").textContent = (w.mo_ta || "") + (w.nhan_can ? ` Cần thợ có nhãn: ${w.nhan_can}.` : ""); $("#dv").placeholder = w.vi_du || ""; };
       $("#wf").onchange = doi; doi();
     }
-    $("#viec").innerHTML = `<tr><th>Việc</th><th>Workflow</th><th>Trạng thái</th><th>Thợ</th><th>Đầu vào</th><th></th></tr>` + d.jobs.map(j => `<tr data-v="${e(j.name)}">
+    const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    const tinhPhut = j => j.phut !== undefined && j.phut !== null ? j.phut : (j.so_giay > 0 ? Math.round((j.so_giay / 60) * 10) / 10 : null);
+    $("#viec").innerHTML = `<tr><th>Việc</th><th>Workflow</th><th>Trạng thái</th><th>Thợ</th><th>Đầu vào</th><th>Token vào</th><th>Token ra</th><th>Phút</th><th></th></tr>` + d.jobs.map(j => {
+      const xong = j.trang_thai === "xong";
+      const ph = tinhPhut(j);
+      return `<tr data-v="${e(j.name)}">
       <td class="mono">${j.cha ? "↳ " : ""}${e(j.name)}</td><td>${e(j.workflow)}${j.nhan_viec ? ` <span class="ghi">· ${e(j.nhan_viec)}</span>` : ""}</td><td><span class="huy-hieu t-${e(j.trang_thai)}">${TT[j.trang_thai] || j.trang_thai}</span></td>
       <td>${e(j.tho || j.muon_tho || "")}</td><td class="ngan">${e(j.dau_vao)}</td>
-      <td>${j.trang_thai === "cho_duyet" ? `<button class="nut nho" data-duyet="${e(j.name)}">Duyệt</button>` : ""}${["cho_duyet","cho","dang_chay"].includes(j.trang_thai) ? ` <button class="nut phu nho" data-huy="${e(j.name)}">Huỷ</button>` : ""}${["loi","huy"].includes(j.trang_thai) ? `<button class="nut phu nho" data-lai="${e(j.name)}">Chạy lại</button>` : ""}</td></tr>`).join("");
+      <td class="mono">${xong || j.token_vao ? dinhSo(j.token_vao) : "–"}</td>
+      <td class="mono">${xong || j.token_ra ? dinhSo(j.token_ra) : "–"}</td>
+      <td class="mono">${xong && ph !== null ? e(ph) : "–"}</td>
+      <td>${j.trang_thai === "cho_duyet" ? `<button class="nut nho" data-duyet="${e(j.name)}">Duyệt</button>` : ""}${["cho_duyet","cho","dang_chay"].includes(j.trang_thai) ? ` <button class="nut phu nho" data-huy="${e(j.name)}">Huỷ</button>` : ""}${["loi","huy"].includes(j.trang_thai) ? `<button class="nut phu nho" data-lai="${e(j.name)}">Chạy lại</button>` : ""}</td></tr>`;
+    }).join("");
   };
   $("#viec").onclick = async ev => {
     const t = ev.target;

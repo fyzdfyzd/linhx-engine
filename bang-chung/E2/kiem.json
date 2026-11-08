@@ -1,0 +1,28 @@
+{
+  "feature": "E2",
+  "luc": "2026-11-08T08:55:41.128461+00:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_e2.py::test_so_lieu PASSED                         [ 33%]",
+    "tests/nghiem-thu/test_e2.py::test_api_bang_tra_phut PASSED               [ 66%]",
+    "tests/nghiem-thu/test_e2.py::test_ban_hien_token_va_phut PASSED          [100%]",
+    "",
+    "============================== 3 passed in 2.56s =============================="
+  ],
+  "mau_so_lieu": {
+    "phut_754": 12.6,
+    "phut_0": null,
+    "dong_mau": {
+      "token_vao": 250000,
+      "token_ra": 34000,
+      "phut": 25.0
+    }
+  }
+}
