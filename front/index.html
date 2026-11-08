@@ -256,7 +256,8 @@ async function trangEngine() {
           <div><b id="cham-tran">${e(bt.cham_tran || 0)}</b>Chạm trần</div>
         </div>
         <div style="margin-bottom:8px"><b style="font-size:14px">Phiếu đang chạy:</b> <span style="display:inline-flex;gap:6px;flex-wrap:wrap">${dc}</span></div>
-        <div><b style="font-size:14px">Tỉ lệ phiếu sửa theo tuần:</b> <span style="display:inline-flex;gap:6px;flex-wrap:wrap">${tuan}</span></div>`;
+        <div><b style="font-size:14px">Tỉ lệ phiếu sửa theo tuần:</b> <span style="display:inline-flex;gap:6px;flex-wrap:wrap">${tuan}</span></div>
+        ${(() => { if (!bt.cap_nhat) return `<div class="ghi" style="margin-top:8px;color:#c0392b">Chưa có số liệu từ máy điều phối</div>`; const ph = Math.round((Date.now() / 1000 - bt.cap_nhat) / 60); const cu = ph > 30; return `<div class="ghi" style="margin-top:8px${cu ? ";color:#c0392b;font-weight:600" : ""}">Cập nhật lúc ${new Date(bt.cap_nhat * 1000).toLocaleString("vi-VN")} (${ph} phút trước)${cu ? " · quá 30 phút, máy điều phối có thể đang tắt" : ""}</div>`; })()}`;
       }
     } catch (err) {}
     let d; try { d = await goi("bang"); } catch (err) { return; }
