@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 14:49 (giờ máy cty). Đạt: 4/31 (N1, N3, N4, C1)
+Cập nhật 2026-11-08 14:59 (giờ máy cty). Đạt: 4/31 (N1, N3, N4, C1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -8,9 +8,7 @@ Cập nhật 2026-11-08 14:49 (giờ máy cty). Đạt: 4/31 (N1, N3, N4, C1)
 | 2 | - | rảnh | DAT · Feature C1 · commit 7f735d0 · nhánh tu-dong/engine-t2 · 2026-11-08T07:15:26 |
 
 ## Chờ
-- N2: máy cty chưa có D:\LINHX\PROTO (03 OPC OS, 01 Máy tạo nội dung); bộ điều phối tự mở khi thấy cả hai thư mục
-- N5: Linh chưa mở
-- N6: Linh chưa mở
+- N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
