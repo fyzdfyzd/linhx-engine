@@ -228,3 +228,40 @@ def test_gop_trung_khong_chiem_ban_ghi_trong_don_vi_hoac_khac_don_vi(monkeypatch
     ng_cung.db_insert()
     assert any(x[1] == "NGUOI-A" and x[2] == "zalo" and x[3] == "zl_a" for x in da_set_value)
     assert not any(x[2] == "don_vi" for x in da_set_value)
+
+
+def test_quyen_lx_don_vi_a4b(monkeypatch):
+    _cai_frappe_gia(
+        monkeypatch,
+        user="nv_a@test.local",
+        roles=("LX Nhan Vien",),
+        user_perms=("DV-A",),
+    )
+    dv_a = _GiaDoc("LX Don Vi", name="DV-A")
+    dv_b = _GiaDoc("LX Don Vi", name="DV-B")
+    assert q.frappe_has_permission_don_vi(dv_a, ptype="read") is True
+    assert q.frappe_has_permission_don_vi(dv_b, ptype="read") is False
+    assert q.frappe_has_permission_don_vi(dv_a, ptype="write") is False
+    assert q.frappe_permission_query_conditions_don_vi(user="nv_a@test.local") == "`tabLX Don Vi`.`name` in ('DV-A')"
+    with pytest.raises(_GiaPermissionError):
+        q.kiem_tra_quyen_doc(dv_a)
+
+    _cai_frappe_gia(
+        monkeypatch,
+        user="nv_rong@test.local",
+        roles=("LX Nhan Vien",),
+        user_perms=(),
+    )
+    assert q.frappe_has_permission_don_vi(dv_a, ptype="read") is False
+    assert q.frappe_permission_query_conditions_don_vi(user="nv_rong@test.local") == "1=0"
+
+    _cai_frappe_gia(
+        monkeypatch,
+        user="nv_a@test.local",
+        roles=("LX Nhan Vien",),
+        user_perms=("DV-A",),
+        bat_crm=0,
+    )
+    assert q.frappe_has_permission_don_vi(dv_a, ptype="read") is False
+    assert q.frappe_permission_query_conditions_don_vi(user="nv_a@test.local") == "1=0"
+

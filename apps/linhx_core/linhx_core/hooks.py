@@ -22,7 +22,7 @@ after_migrate = ["linhx_core.crm.quyen_don_vi.dam_bao_vai_tro"]
 NHAT_KY_HOOK = "linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap.ghi_nhat_ky_truy_cap"
 QUYEN_DON_VI_DOC_HOOK = "linhx_core.crm.quyen_don_vi.kiem_tra_quyen_doc"
 DOCTYPE_KHACH = ("LX Nguoi", "LX To Chuc", "LX Don Vi")
-DOCTYPE_QUYEN_DON_VI = ("LX Nguoi", "LX Co Hoi")
+DOCTYPE_QUYEN_DON_VI = ("LX Nguoi", "LX Co Hoi", "LX Don Vi")
 
 before_request = ["linhx_core.co_module.frappe_before_request"]
 after_request = ["linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap.ghi_nhat_ky_tu_request"]
@@ -34,6 +34,7 @@ has_permission = {
     },
     "LX Nguoi": "linhx_core.crm.quyen_don_vi.frappe_has_permission",
     "LX Co Hoi": "linhx_core.crm.quyen_don_vi.frappe_has_permission",
+    "LX Don Vi": "linhx_core.crm.quyen_don_vi.frappe_has_permission_don_vi",
 }
 
 permission_query_conditions = {
@@ -43,6 +44,7 @@ permission_query_conditions = {
     },
     "LX Nguoi": "linhx_core.crm.quyen_don_vi.frappe_permission_query_conditions",
     "LX Co Hoi": "linhx_core.crm.quyen_don_vi.frappe_permission_query_conditions",
+    "LX Don Vi": "linhx_core.crm.quyen_don_vi.frappe_permission_query_conditions_don_vi",
 }
 
 doc_events = {
