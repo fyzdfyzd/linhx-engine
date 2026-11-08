@@ -1,0 +1,22 @@
+{
+  "ten": "ifagent",
+  "ban_cai": "ifagent",
+  "noi_dung": {
+    "tieu_de": "ifAgent — Trang BU Trợ lý AI & Tự động hoá",
+    "mo_ta": "Giải pháp chuẩn hoá quy trình kinh doanh, chăm sóc khách hàng và vận hành tự động trên nền LINHX ENGINE.",
+    "muc": [
+      {
+        "ten": "Tự động hoá tiếp nhận Lead",
+        "mo_ta": "Gom và chuẩn hoá thông tin khách hàng tiềm năng từ nhiều kênh, gộp trùng thông minh theo SĐT, Email và Zalo."
+      },
+      {
+        "ten": "Khám sức khoẻ thương hiệu AI",
+        "mo_ta": "Đo lường độ hiện diện, độ chính xác và mức độ đề xuất của thương hiệu trên các mô hình AI lớn."
+      },
+      {
+        "ten": "Thanh toán & Bàn giao tức thì",
+        "mo_ta": "Tích hợp VietQR tự động đối soát và khởi chạy tiến trình tạo báo cáo ngay khi hoàn tất thanh toán."
+      }
+    ]
+  }
+}

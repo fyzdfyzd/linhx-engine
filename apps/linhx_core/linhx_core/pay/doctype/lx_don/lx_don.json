@@ -1,0 +1,102 @@
+{
+ "doctype": "DocType",
+ "name": "LX Don",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "ma",
+  "goi",
+  "nguoi",
+  "so_tien",
+  "trang_thai",
+  "noi_dung_ck",
+  "tx_id",
+  "qr_url",
+  "brand",
+  "email"
+ ],
+ "fields": [
+  {
+   "fieldname": "ma",
+   "fieldtype": "Data",
+   "label": "Mã đơn"
+  },
+  {
+   "fieldname": "goi",
+   "fieldtype": "Link",
+   "label": "Gói",
+   "options": "LX Goi",
+   "reqd": 1
+  },
+  {
+   "fieldname": "nguoi",
+   "fieldtype": "Link",
+   "label": "Người",
+   "options": "LX Nguoi"
+  },
+  {
+   "fieldname": "so_tien",
+   "fieldtype": "Currency",
+   "label": "Số tiền",
+   "reqd": 1
+  },
+  {
+   "default": "cho_tra",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "label": "Trạng thái",
+   "options": "cho_tra\nda_tra\nhuy"
+  },
+  {
+   "fieldname": "noi_dung_ck",
+   "fieldtype": "Data",
+   "label": "Nội dung chuyển khoản",
+   "unique": 1
+  },
+  {
+   "fieldname": "tx_id",
+   "fieldtype": "Data",
+   "label": "Mã giao dịch"
+  },
+  {
+   "fieldname": "qr_url",
+   "fieldtype": "Small Text",
+   "label": "URL ảnh QR"
+  },
+  {
+   "fieldname": "brand",
+   "fieldtype": "Data",
+   "label": "Thương hiệu"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email khách"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-08 19:40:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-08 19:40:00.000000"
+}

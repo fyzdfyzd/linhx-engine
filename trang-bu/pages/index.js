@@ -5,7 +5,10 @@ import Head from "next/head";
 async function docNoiDung() {
   const url = process.env.NOI_DUNG_URL;
   if (url && url.trim()) {
-    const res = await fetch(url.trim(), { cache: "no-store" });
+    const res = await fetch(url.trim(), {
+      cache: "no-store",
+      headers: { Connection: "close" },
+    });
     if (!res.ok) {
       throw new Error(`Không đọc được NOI_DUNG_URL (${res.status}): ${url}`);
     }
@@ -16,9 +19,11 @@ async function docNoiDung() {
   const siteJson = process.env.SITE_JSON;
   if (siteJson && siteJson.trim()) {
     const p = path.resolve(siteJson.trim());
-    const raw = fs.readFileSync(p, "utf-8");
-    const data = JSON.parse(raw);
-    return data?.noi_dung || data;
+    if (fs.existsSync(p)) {
+      const raw = fs.readFileSync(p, "utf-8");
+      const data = JSON.parse(raw);
+      return data?.noi_dung || data;
+    }
   }
 
   const mauPath = path.join(process.cwd(), "noi-dung.mau.json");
@@ -82,7 +87,6 @@ export default function TrangBU({ noiDung }) {
           padding: 0;
           width: 100%;
           max-width: 100%;
-          overflow-x: hidden;
           background: var(--bg);
           color: var(--chu);
           font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",

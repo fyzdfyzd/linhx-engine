@@ -1,0 +1,17 @@
+{
+  "feature": "B2",
+  "luc": "2026-11-08T21:44:57+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_b2.py::test_doctype PASSED                         [ 20%]",
+    "tests/nghiem-thu/test_b2.py::test_noi_dung_ck PASSED                     [ 40%]",
+    "tests/nghiem-thu/test_b2.py::test_qr_dung_so_tien_va_noi_dung PASSED     [ 60%]",
+    "tests/nghiem-thu/test_b2.py::test_tao_don PASSED                         [ 80%]",
+    "tests/nghiem-thu/test_b2.py::test_khong_viet_so_tai_khoan_va_ghi_nguon PASSED [100%]",
+    "============================== 5 passed in 0.04s =============================="
+  ],
+  "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py",
+  "doctypes": [
+    "LX Don"
+  ]
+}

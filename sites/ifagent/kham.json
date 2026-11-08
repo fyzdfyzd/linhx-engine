@@ -1,0 +1,157 @@
+{
+  "tieu_de": "T1 Khám — Chẩn đoán mức độ sẵn sàng AI & Tự động hoá (LAB113)",
+  "cau": [
+    {
+      "ma": "du_lieu_khach",
+      "hoi": "1. Dữ liệu khách hàng tiềm năng (Lead) hiện đang được lưu trữ và quản lý như thế nào?",
+      "lua_chon": [
+        {
+          "nhan": "Rời rạc trên tin nhắn Zalo, Facebook, sổ tay cá nhân của từng nhân viên",
+          "diem": 1
+        },
+        {
+          "nhan": "Gom thủ công vào các file Excel hoặc Google Sheets định kỳ",
+          "diem": 2
+        },
+        {
+          "nhan": "Có phần mềm CRM nhưng vẫn phải nhập tay và hay bị trùng lặp hồ sơ",
+          "diem": 3
+        },
+        {
+          "nhan": "Tự động gom từ mọi kênh về một hệ thống chung, tự gộp trùng theo SĐT/Email/Zalo",
+          "diem": 4
+        }
+      ]
+    },
+    {
+      "ma": "toc_do_phan_hoi",
+      "hoi": "2. Khi có khách hàng mới để lại thông tin, mất bao lâu để có người phụ trách tiếp nhận?",
+      "lua_chon": [
+        {
+          "nhan": "Thường trên 24 giờ hoặc đôi khi bị bỏ sót không ai liên hệ",
+          "diem": 1
+        },
+        {
+          "nhan": "Trong ngày làm việc (từ 4 đến 8 giờ sau khi khách điền thông tin)",
+          "diem": 2
+        },
+        {
+          "nhan": "Trong vòng 1 đến 4 giờ nhờ quản lý phân công thủ công",
+          "diem": 3
+        },
+        {
+          "nhan": "Dưới 1 giờ, hệ thống tự động giao người phụ trách và nhắc việc chờ",
+          "diem": 4
+        }
+      ]
+    },
+    {
+      "ma": "hien_dien_ai",
+      "hoi": "3. Khi khách hàng hỏi các công cụ AI (ChatGPT, Gemini, Claude) về lĩnh vực của bạn, thương hiệu của bạn xuất hiện ra sao?",
+      "lua_chon": [
+        {
+          "nhan": "Chưa từng kiểm tra hoặc hoàn toàn không được AI nhắc tới",
+          "diem": 1
+        },
+        {
+          "nhan": "Thỉnh thoảng xuất hiện nhưng thông tin sai lệch hoặc thiếu thế mạnh cốt lõi",
+          "diem": 2
+        },
+        {
+          "nhan": "Xuất hiện đúng thông tin cơ bản ở một số câu hỏi thương hiệu trực tiếp",
+          "diem": 3
+        },
+        {
+          "nhan": "Được AI đề xuất chính xác kèm lý do chọn trong các truy vấn so sánh ngành",
+          "diem": 4
+        }
+      ]
+    },
+    {
+      "ma": "tuan_thu_dong_y",
+      "hoi": "4. Việc ghi nhận sự đồng ý của khách hàng (liên hệ, tiếp thị, chia sẻ nội bộ) đang được thực hiện thế nào?",
+      "lua_chon": [
+        {
+          "nhan": "Không có bước xin đồng ý hay lưu nhật ký nào",
+          "diem": 1
+        },
+        {
+          "nhan": "Có dòng chữ nhỏ trên form nhưng không lưu trạng thái theo từng khách",
+          "diem": 2
+        },
+        {
+          "nhan": "Có lưu trạng thái đồng ý lúc đăng ký nhưng khó tra cứu khi khách yêu cầu rút lại",
+          "diem": 3
+        },
+        {
+          "nhan": "Quản lý đồng ý theo từng mục đích, có nhật ký thay đổi và chặn tự động khi rút đồng ý",
+          "diem": 4
+        }
+      ]
+    },
+    {
+      "ma": "thanh_toan_ban_giao",
+      "hoi": "5. Quy trình từ lúc khách thanh toán gói dịch vụ/báo cáo đến khi nhận kết quả diễn ra như thế nào?",
+      "lua_chon": [
+        {
+          "nhan": "Khách chụp ảnh màn hình chuyển khoản, kế toán kiểm tra tay rồi mới báo bộ phận chuyên môn",
+          "diem": 1
+        },
+        {
+          "nhan": "Có mã QR thanh toán nhưng vẫn phải duyệt tay để kích hoạt đơn hàng",
+          "diem": 2
+        },
+        {
+          "nhan": "Tự động xác nhận thanh toán nhưng bước tạo và gửi báo cáo vẫn làm thủ công",
+          "diem": 3
+        },
+        {
+          "nhan": "VietQR đối soát tự động theo mã đơn, lập tức khởi chạy tiến trình và giao kết quả",
+          "diem": 4
+        }
+      ]
+    },
+    {
+      "ma": "do_luong_pheu",
+      "hoi": "6. Ban điều hành theo dõi tỷ lệ chuyển đổi toàn phễu và chi phí vận hành AI/nhân sự bằng cách nào?",
+      "lua_chon": [
+        {
+          "nhan": "Ước lượng cảm tính, cuối tháng mới tổng hợp số liệu doanh thu",
+          "diem": 1
+        },
+        {
+          "nhan": "Nhân viên báo cáo thủ công hàng tuần qua tin nhắn hoặc bảng tính",
+          "diem": 2
+        },
+        {
+          "nhan": "Có bảng thống kê từng kênh nhưng chưa nối thông suốt từ Lead tới Đơn đã trả",
+          "diem": 3
+        },
+        {
+          "nhan": "Bàn điều hành cập nhật trực tiếp 6 tầng phễu, việc chờ và chi phí từng tác vụ",
+          "diem": 4
+        }
+      ]
+    }
+  ],
+  "muc": [
+    {
+      "tu": 0,
+      "den": 11,
+      "ten": "Chưa sẵn sàng",
+      "tom_tat": "Quy trình tiếp nhận khách hàng và dữ liệu hiện tại còn phân mảnh, phụ thuộc nhiều vào thao tác thủ công. Bạn nên ưu tiên chuẩn hoá nguồn thu thập Lead, thiết lập lưu trữ đồng ý của khách hàng và kiểm tra hiện diện thương hiệu trên AI trước khi mở rộng tự động hoá."
+    },
+    {
+      "tu": 12,
+      "den": 18,
+      "ten": "Sẵn sàng một phần",
+      "tom_tat": "Doanh nghiệp đã có nền tảng quy trình cơ bản nhưng các khâu giữa tiếp nhận Lead, phân công chăm sóc và đối soát thanh toán chưa nối liền mạch. Đây là thời điểm phù hợp để áp dụng tự động hoá gộp trùng hồ sơ, giao việc có hạn giờ và chẩn đoán sâu thương hiệu trên AI."
+    },
+    {
+      "tu": 19,
+      "den": 24,
+      "ten": "Sẵn sàng",
+      "tom_tat": "Hệ thống dữ liệu, quy trình phản hồi và đo lường chuyển đổi của bạn đã có cấu trúc vững chắc. Doanh nghiệp hoàn toàn sẵn sàng vận hành khép kín trên nền LINHX ENGINE: từ công cụ phễu tự động, VietQR tự giao báo cáo đến bàn điều hành theo dõi thời gian thực."
+    }
+  ]
+}

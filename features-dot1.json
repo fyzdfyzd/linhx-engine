@@ -236,8 +236,8 @@
         "Đơn mới trả ảnh QR đúng số tiền và nội dung có mã đơn"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/B2/kiem.json"
     },
     {
       "id": "B3",
