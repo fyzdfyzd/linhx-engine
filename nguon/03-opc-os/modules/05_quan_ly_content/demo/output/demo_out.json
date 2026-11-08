@@ -1,0 +1,25 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "domain": "astrology",
+  "character_name": "Luna Nguyệt Mai",
+  "character_never_rules": [
+    "Phán sức khỏe",
+    "Phán tiền bạc",
+    "Bảo ai chia tay",
+    "Hù dọa số phận",
+    "Bói ngày mất"
+  ],
+  "publish_status": "pending_founder_approval",
+  "governance_rule": "Nội dung công khai do hệ thống soạn PHẢI được người phụ trách duyệt trước khi đăng (QUY-CHUAN 6.2 & 12.1).",
+  "slop_check": {
+    "engine": "01_MAY_TAO_NOI_DUNG.kiemChatLuong",
+    "score": 90.5,
+    "passed": false,
+    "errors": 1
+  },
+  "draft_post": {
+    "topic": "Sao Thuỷ nghịch hành tháng 11: Cách rà soát lại kế hoạch công việc mà không hoang mang",
+    "channel": "TikTok @chiemtinh.vn",
+    "body_markdown": "# Sao Thuỷ nghịch hành tháng 11: Cách rà soát lại kế hoạch công việc mà không hoang mang\n\n| Hạng mục truy vết | Giá trị |\n|---|---|\n| Dịch vụ | Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn) |\n| Kênh dự kiến | TikTok @chiemtinh.vn |\n| Nhân vật đồng hành | Luna Nguyệt Mai |\n\nMỗi dịp nhìn lại kế hoạch cá nhân, nhiều bạn thường tự hỏi vì sao mình dễ ra quyết định nhanh bằng trực giác hoặc luôn cần hệ thống hoá đầy đủ dữ kiện trước khi bắt tay vào hành động.\n\nGóc nhìn chiêm tinh ứng dụng dựa trên ngày giờ sinh giúp bạn quan sát lại điểm mạnh tự nhiên, nhịp làm việc và cách cân bằng cảm xúc trong đời sống hằng ngày. Các vì sao chỉ gợi mở câu hỏi để bạn tự chiêm nghiệm, còn người cầm lái cuộc đời vẫn luôn là chính bạn.\n\nBạn có thể xem trước bản tóm tắt miễn phí tại trang chủ để tự khám phá ba trụ cột tính cách của mình. Báo cáo mang tính giải trí và tự khám phá bản thân, không phán vận mệnh, không thay thế tư vấn y tế, tài chính hay pháp lý."
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "opc_id": "opc002_bank_prompt_kit",
+  "code": "OPC002",
+  "name": "Bộ Prompt & Template AI Cá Nhân Hoá Cho Dân Ngân Hàng [GIẢ LẬP]",
+  "founder": "Đinh Trần Tuấn Linh",
+  "stage": "SETUP",
+  "order_prefix": "BK",
+  "domain": "bank_prompt_kit",
+  "default_product": "bo-prompt-ngan-hang-ca-nhan",
+  "delivery_format": "zip+pdf",
+  "form_schema": {
+    "required": ["ten", "vi_tri", "nghiep_vu_chinh", "ba_viec_ton_gio", "cong_cu_ai", "consent"],
+    "optional": []
+  },
+  "pricing": {
+    "default_price": 199000,
+    "tiers": [
+      {
+        "id": "free_sop_skill",
+        "name": "Phễu miễn phí: 1 Skill chuẩn hoá quy trình SOP ngân hàng",
+        "price": 0,
+        "product": "bo-prompt-ngan-hang-ca-nhan"
+      },
+      {
+        "id": "personal_bank_kit",
+        "name": "Bộ riêng cá nhân hoá: 18 Prompt + 3 Template + Lịch tập 7 ngày (ZIP + PDF)",
+        "price": 199000,
+        "product": "bo-prompt-ngan-hang-ca-nhan"
+      },
+      {
+        "id": "team_5_bank_kit",
+        "name": "Gói Phòng Giao Dịch / Nhóm 5 chuyên viên kèm cẩm nang SOP",
+        "price": 799000,
+        "product": "bo-prompt-ngan-hang-ca-nhan"
+      }
+    ],
+    "coupons": [
+      {
+        "code": "BANKAI2026",
+        "discount_percent": 10,
+        "expires": "2026-12-31",
+        "occasion": "Ưu đãi học viên khoá AI Ngân hàng"
+      }
+    ]
+  },
+  "payment_account_env_ref": {
+    "shared_pool_id": "VAN_ANH_HKD",
+    "bank_env": "SEPAY_BANK_CODE",
+    "account_env": "SEPAY_ACCOUNT_NUMBER",
+    "holder_env": "SEPAY_ACCOUNT_NAME",
+    "api_key_env": "SEPAY_API_KEY",
+    "note": "Dùng chung tài khoản nhận tiền Vân Anh với OPC001 và OPC003; cộng gộp vào ngưỡng báo đỏ 400 triệu."
+  },
+  "channels": [
+    "LinkedIn Đinh Trần Tuấn Linh",
+    "Cộng đồng Học viên Ngân hàng (VCB, MSB, TCB)",
+    "Zalo Nhóm AI Ngân Hàng Thực Chiến"
+  ],
+  "character": {
+    "id": "minh-bank-ops",
+    "name": "Chuyên gia Minh Bank Ops [GIẢ LẬP]",
+    "role": "Cố vấn Chuẩn hoá Quy trình & Ứng dụng AI Ngân hàng",
+    "source_seed": "vendor/LAB072/KHAO-SAT.md",
+    "author_authority": "Đinh Trần Tuấn Linh (Giảng viên 25+ khoá AI Doanh nghiệp & Ngân hàng)"
+  },
+  "thresholds": {
+    "red_alert_cumulative_revenue_vnd": 400000000,
+    "investment_cap_vnd": 200000000,
+    "ad_spend_max_ratio_7d": 0.4,
+    "cac_gates": {
+      "scale_max_vnd": 80000,
+      "retarget_max_vnd": 150000,
+      "stop_above_vnd": 150000
+    },
+    "ai_cost_max_ratio": 0.1,
+    "manual_review_first_n_reports": 20,
+    "order_expiry_seconds": 1800,
+    "smoke_test_budget_7d_vnd": 1000000
+  },
+  "compliance": {
+    "sector": "đào tạo kỹ năng & năng suất làm việc ngân hàng",
+    "require_lawyer_review": false,
+    "require_hkd_mst_before_live": true,
+    "hkd_deadline": "2026-11-15",
+    "require_consent_checkbox": true,
+    "allow_data_erasure": true,
+    "disclaimer": "[GIẢ LẬP] Bộ công cụ dùng để soạn thảo văn bản mẫu và rèn luyện kỹ năng. Tuyệt đối không đưa dữ liệu định danh khách hàng thật (CIF, CCCD, sao kê thật) lên AI đám mây; mọi căn cứ văn bản pháp quy phải đối chiếu thực tế tại các mục đánh dấu [CẦN XÁC MINH].",
+    "banned_phrases": [
+      "cam kết duyệt vay 100%",
+      "lách quy định tín dụng",
+      "bỏ qua bước kiểm soát"
+    ]
+  },
+  "enabled_modules": [
+    "01_nghien_cuu_thiet_ke_report",
+    "02_thiet_ke_goi_gia",
+    "03_flow_thanh_toan_sinh_report",
+    "04_quan_ly_user",
+    "05_quan_ly_content",
+    "06_cskh_da_kenh",
+    "07_chi_phi_loi_nhuan",
+    "08_keo_khach",
+    "09_tuan_thu",
+    "10_giam_sat_kpi"
+  ]
+}

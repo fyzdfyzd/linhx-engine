@@ -1,0 +1,34 @@
+{
+  "module_id": "08_keo_khach",
+  "name": "Kéo khách, Landing Page, UTM/Pixel, Đo phễu 5 bước & Thử khói ≤ 1 triệu/7 ngày",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Kể Chuyện (CMO)",
+  "submodules": [
+    "8.1_landing_page_config",
+    "8.2_utm_pixel_tracker",
+    "8.3_do_pheu_5_buoc",
+    "8.4_thu_khoi_1tr_7ngay"
+  ],
+  "events_in": ["don.tao_moi", "don.da_tra", "report.xong"],
+  "events_out": ["pheu.cap_nhat_cac"],
+  "input_schema": {
+    "type": "object",
+    "required": ["opc_id", "funnel_data", "smoke_test_spend_7d_vnd"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "funnel_data": {"type": "object"},
+      "smoke_test_spend_7d_vnd": {"type": "integer"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["opc_id", "conversion_rates", "cac_vnd", "cac_gate_decision", "smoke_test_budget_ok"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "conversion_rates": {"type": "object"},
+      "cac_vnd": {"type": "integer"},
+      "cac_gate_decision": {"type": "string"},
+      "smoke_test_budget_ok": {"type": "boolean"}
+    }
+  }
+}

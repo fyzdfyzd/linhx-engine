@@ -1,0 +1,222 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "prior_cumulative_revenue_vnd": 399250000,
+  "description": "10 đơn giả chuẩn kiểm thử OPC001 Chiêm Tinh Số: bình thường (6), trùng tx (1), sai khoá 401 (1), thiếu tiền (1), hết hạn (1), đẩy luỹ kế qua 400 triệu báo đỏ từ đơn số 8.",
+  "orders": [
+    {
+      "scenario_id": "ORD-01",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 910001,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 15,
+      "customer_input": {
+        "ten": "Trần Minh Anh",
+        "ten_goi": "Minh Anh",
+        "ngay_sinh": "1994-08-21",
+        "gio_sinh": "07:30",
+        "noi_sinh": "Hà Nội",
+        "lat": 21.03,
+        "lng": 105.85,
+        "tz": 7,
+        "contact": "minhanh@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-02",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 910002,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 12,
+      "customer_input": {
+        "ten": "Nguyễn Thảo Vy",
+        "ten_goi": "Thảo Vy",
+        "ngay_sinh": "1996-04-12",
+        "gio_sinh": "09:15",
+        "noi_sinh": "TP. Hồ Chí Minh",
+        "lat": 10.78,
+        "lng": 106.7,
+        "tz": 7,
+        "contact": "thaovy@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-03",
+      "scenario_type": "normal_high_tier",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 349000,
+      "tx_id": 910003,
+      "transfer_amount": 349000,
+      "auth_mode": "valid",
+      "delay_seconds": 20,
+      "customer_input": {
+        "ten": "Lê Hoàng Nam",
+        "ten_goi": "Hoàng Nam",
+        "ngay_sinh": "1992-11-05",
+        "gio_sinh": "14:20",
+        "noi_sinh": "Đà Nẵng",
+        "lat": 16.05,
+        "lng": 108.2,
+        "tz": 7,
+        "contact": "hoangnam@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-04",
+      "scenario_type": "duplicate_webhook",
+      "expected_outcome": "duplicate_tx_ignored",
+      "reuse_order_from": "ORD-02",
+      "amount": 199000,
+      "tx_id": 910002,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 30,
+      "customer_input": {
+        "ten": "Nguyễn Thảo Vy (Webhook gửi lặp)",
+        "ngay_sinh": "1996-04-12",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-05",
+      "scenario_type": "wrong_api_key",
+      "expected_outcome": "unauthorized_api_key",
+      "amount": 199000,
+      "tx_id": 910005,
+      "transfer_amount": 199000,
+      "auth_mode": "invalid_key",
+      "delay_seconds": 10,
+      "customer_input": {
+        "ten": "Vũ Đức Minh",
+        "ten_goi": "Đức Minh",
+        "ngay_sinh": "1991-02-18",
+        "gio_sinh": "06:45",
+        "noi_sinh": "Hải Phòng",
+        "lat": 20.84,
+        "lng": 106.68,
+        "tz": 7,
+        "contact": "ducminh@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-06",
+      "scenario_type": "underpaid_amount",
+      "expected_outcome": "underpaid_amount",
+      "amount": 199000,
+      "tx_id": 910006,
+      "transfer_amount": 50000,
+      "auth_mode": "valid",
+      "delay_seconds": 18,
+      "customer_input": {
+        "ten": "Đỗ Lan Hương",
+        "ten_goi": "Lan Hương",
+        "ngay_sinh": "1998-07-30",
+        "gio_sinh": "21:00",
+        "noi_sinh": "Cần Thơ",
+        "lat": 10.04,
+        "lng": 105.74,
+        "tz": 7,
+        "contact": "lanhuong@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-07",
+      "scenario_type": "expired_order",
+      "expected_outcome": "order_expired",
+      "amount": 199000,
+      "tx_id": 910007,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 3600,
+      "customer_input": {
+        "ten": "Hoàng Gia Bảo",
+        "ten_goi": "Gia Bảo",
+        "ngay_sinh": "1995-12-10",
+        "gio_sinh": "11:30",
+        "noi_sinh": "Huế",
+        "lat": 16.46,
+        "lng": 107.59,
+        "tz": 7,
+        "contact": "giabao@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-08",
+      "scenario_type": "cross_400m_red_alert",
+      "expected_outcome": "paid_and_dispatched",
+      "triggers_red_alert_400m": true,
+      "amount": 199000,
+      "tx_id": 910008,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 14,
+      "customer_input": {
+        "ten": "Phạm Thanh Hằng",
+        "ten_goi": "Thanh Hằng",
+        "ngay_sinh": "1993-09-25",
+        "gio_sinh": "16:40",
+        "noi_sinh": "Hà Nội",
+        "lat": 21.03,
+        "lng": 105.85,
+        "tz": 7,
+        "contact": "thanhhang@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-09",
+      "scenario_type": "normal_with_weird_birth_time",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 910009,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 16,
+      "customer_input": {
+        "ten": "Ngô Minh Tuấn",
+        "ten_goi": "Minh Tuấn",
+        "ngay_sinh": "1990-03-14",
+        "gio_sinh": "25:99",
+        "noi_sinh": "Nha Trang",
+        "lat": 12.24,
+        "lng": 109.19,
+        "tz": 7,
+        "contact": "minhtuan@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "ORD-10",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 910010,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 11,
+      "customer_input": {
+        "ten": "Bùi Ngọc Ánh",
+        "ten_goi": "Ngọc Ánh",
+        "ngay_sinh": "1999-10-08",
+        "gio_sinh": "05:20",
+        "noi_sinh": "Vũng Tàu",
+        "lat": 10.35,
+        "lng": 107.08,
+        "tz": 7,
+        "contact": "ngocanh@example.com",
+        "consent": true
+      }
+    }
+  ]
+}

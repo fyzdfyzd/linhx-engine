@@ -1,0 +1,30 @@
+{
+  "OwiOAsFuc2a32A": {
+    "token": "OwiOAsFuc2a32A",
+    "code": "CT00001",
+    "opc_id": "opc001_chiemtinh",
+    "order_seq_index": 1,
+    "domain": "astrology",
+    "product": "ban-do-sao-ca-nhan",
+    "amount": 199000,
+    "status": "paid",
+    "created_at": 1792918862,
+    "expires_at": 1792920662,
+    "customer_input": {
+      "ten": "Nguyễn Thảo Vy",
+      "ten_goi": "Vy",
+      "ngay_sinh": "1996-04-12",
+      "gio_sinh": "09:15",
+      "noi_sinh": "TP. Hồ Chí Minh",
+      "contact": "vy.nguyen@example.com",
+      "consent": true
+    },
+    "tx_id": 880001,
+    "paid_at": "2026-10-25 13:15:00",
+    "report": null,
+    "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\03_flow_thanh_toan_sinh_report\\demo\\output\\data\\order_pages\\order_CT00001.html",
+    "paid_amount": 199000,
+    "reference_code": "FT26298DEMO",
+    "tx_content": "CT00001 thanh toan"
+  }
+}

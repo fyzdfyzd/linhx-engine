@@ -1,0 +1,119 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "code": "OPC001",
+  "name": "Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn)",
+  "founder": "Đinh Trần Tuấn Linh",
+  "stage": "SETUP",
+  "order_prefix": "CT",
+  "domain": "astrology",
+  "default_product": "ban-do-sao-ca-nhan",
+  "delivery_format": "pdf",
+  "form_schema": {
+    "required": ["ten", "ngay_sinh", "gio_sinh", "noi_sinh", "consent"],
+    "optional": ["cau_hoi_rieng"]
+  },
+  "pricing": {
+    "default_price": 199000,
+    "tiers": [
+      {
+        "id": "free_preview",
+        "name": "Tóm tắt 1 trang miễn phí (Mặt Trời, Mặt Trăng, Cung Mọc)",
+        "price": 0,
+        "product": "ban-do-sao-ca-nhan"
+      },
+      {
+        "id": "natal_personal",
+        "name": "Báo cáo Bản đồ sao cá nhân đầy đủ (PDF ~34 trang)",
+        "price": 199000,
+        "product": "ban-do-sao-ca-nhan"
+      },
+      {
+        "id": "synastry_couple",
+        "name": "Báo cáo Tương hợp Cặp đôi (Quà Valentine 14/02/2027)",
+        "price": 349000,
+        "product": "ban-do-sao-ca-nhan"
+      }
+    ],
+    "coupons": [
+      {
+        "code": "TET2027",
+        "discount_percent": 15,
+        "expires": "2027-02-06",
+        "occasion": "Quà Tết Đinh Mùi 2027"
+      },
+      {
+        "code": "VALENTINE1402",
+        "discount_percent": 10,
+        "expires": "2027-02-14",
+        "occasion": "Lễ Tình Nhân Valentine"
+      }
+    ]
+  },
+  "payment_account_env_ref": {
+    "shared_pool_id": "VAN_ANH_HKD",
+    "bank_env": "SEPAY_BANK_CODE",
+    "account_env": "SEPAY_ACCOUNT_NUMBER",
+    "holder_env": "SEPAY_ACCOUNT_NAME",
+    "api_key_env": "SEPAY_API_KEY",
+    "note": "Đọc từ D:\\LINHX\\PROTO\\03_OPC_OS\\.env do anh Linh tạo. Không ghi khoá thật vào file."
+  },
+  "channels": [
+    "Web chiemtinh.vn",
+    "TikTok @chiemtinh.vn",
+    "Facebook Đinh Trần Tuấn Linh",
+    "Zalo OA Chiêm Tinh Số"
+  ],
+  "character": {
+    "id": "luna-vy",
+    "name": "Luna Nguyệt Mai",
+    "role": "Chủ studio Chiêm Tinh · Đồng hành giải mã bản đồ sao",
+    "source_seed": "vendor/AmbassadorOS/seed/luna-vy.json",
+    "author_authority": "Đinh Trần Tuấn Linh (Tác giả sách Chiêm Tinh Học Nhập Môn)"
+  },
+  "thresholds": {
+    "red_alert_cumulative_revenue_vnd": 400000000,
+    "tax_legal_ceiling_note": "Báo đỏ ở 400.000.000 VNĐ tính gộp cả 3 OPC chung TK Vân Anh (chờ Hoa chốt ngưỡng 500tr hay 1 tỷ)",
+    "investment_cap_vnd": 200000000,
+    "ad_spend_max_ratio_7d": 0.4,
+    "cac_gates": {
+      "scale_max_vnd": 80000,
+      "retarget_max_vnd": 150000,
+      "stop_above_vnd": 150000
+    },
+    "ai_cost_max_ratio": 0.1,
+    "manual_review_first_n_reports": 20,
+    "order_expiry_seconds": 1800,
+    "smoke_test_budget_7d_vnd": 1000000
+  },
+  "compliance": {
+    "sector": "tâm linh - văn hoá - tự khám phá",
+    "require_lawyer_review": true,
+    "require_hkd_mst_before_live": true,
+    "hkd_deadline": "2026-11-15",
+    "require_consent_checkbox": true,
+    "allow_data_erasure": true,
+    "disclaimer": "Báo cáo mang tính giải trí và tự khám phá bản thân, không phán vận mệnh, không thay thế tư vấn y tế, tài chính hay pháp lý.",
+    "banned_phrases": [
+      "giải hạn",
+      "cúng giải",
+      "cúng sao",
+      "bùa",
+      "trừ tà",
+      "chắc chắn sẽ chết",
+      "chắc chắn sẽ ly hôn",
+      "chắc chắn sẽ phá sản"
+    ]
+  },
+  "enabled_modules": [
+    "01_nghien_cuu_thiet_ke_report",
+    "02_thiet_ke_goi_gia",
+    "03_flow_thanh_toan_sinh_report",
+    "04_quan_ly_user",
+    "05_quan_ly_content",
+    "06_cskh_da_kenh",
+    "07_chi_phi_loi_nhuan",
+    "08_keo_khach",
+    "09_tuan_thu",
+    "10_giam_sat_kpi"
+  ]
+}

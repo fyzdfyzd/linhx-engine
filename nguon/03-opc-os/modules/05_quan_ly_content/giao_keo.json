@@ -1,0 +1,35 @@
+{
+  "module_id": "05_quan_ly_content",
+  "name": "Quản lý Content, Lịch bài, Nhân vật Luna (AmbassadorOS) & Chống AI Slop (Đề 01)",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Kể Chuyện (CMO)",
+  "submodules": [
+    "5.1_nhan_vat_persona",
+    "5.2_lich_noi_dung",
+    "5.3_xuat_bai_may_tao_noi_dung",
+    "5.4_kho_bai_cho_duyet",
+    "5.5_do_luong_bai"
+  ],
+  "events_in": ["content.yeu_cau_soan"],
+  "events_out": ["content.cho_founder_duyet"],
+  "input_schema": {
+    "type": "object",
+    "required": ["opc_id", "topic", "channel"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "topic": {"type": "string"},
+      "channel": {"type": "string"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["opc_id", "character_name", "publish_status", "slop_check", "draft_post"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "character_name": {"type": "string"},
+      "publish_status": {"type": "string"},
+      "slop_check": {"type": "object"},
+      "draft_post": {"type": "object"}
+    }
+  }
+}

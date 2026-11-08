@@ -1,0 +1,34 @@
+{
+  "module_id": "10_giam_sat_kpi",
+  "name": "Giám sát vận hành, KPI ngày 06:00, Cảnh báo lỗi, Sao lưu DB & Báo cáo tuần",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Giữ Két (CFO) & Anh Vận Hành (COO)",
+  "submodules": [
+    "10.1_kpi_ngay_06h00",
+    "10.2_canh_bao_bat_thuong",
+    "10.3_sao_luu_db_hang_ngay",
+    "10.4_bao_cao_tuan_chu_nhat"
+  ],
+  "events_in": ["don.da_tra", "don.loi_thanh_toan", "don.het_han", "report.xong", "canh_bao.doanh_thu_400tr"],
+  "events_out": ["kpi.cap_nhat"],
+  "input_schema": {
+    "type": "object",
+    "required": ["opcs_metrics", "cumulative_revenue_vnd"],
+    "properties": {
+      "opcs_metrics": {"type": "array"},
+      "cumulative_revenue_vnd": {"type": "integer"},
+      "webhook_errors_count": {"type": "integer"},
+      "stuck_orders_over_5m": {"type": "integer"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["daily_kpi_0600", "alerts", "backup_status", "weekly_report_md_path"],
+    "properties": {
+      "daily_kpi_0600": {"type": "object"},
+      "alerts": {"type": "array"},
+      "backup_status": {"type": "object"},
+      "weekly_report_md_path": {"type": "string"}
+    }
+  }
+}

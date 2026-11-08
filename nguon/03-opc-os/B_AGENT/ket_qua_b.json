@@ -1,0 +1,304 @@
+{
+  "method": "B_AGENT",
+  "opc_id": "opc001_chiemtinh",
+  "money_layer_deterministic_code": true,
+  "total_scenarios": 10,
+  "scenarios_matched_100pct": 10,
+  "failed_orders_out_of_10": 0,
+  "paid_orders_count": 6,
+  "timing_paid_orders_seconds": {
+    "avg_seconds": 9.596,
+    "max_seconds": 11.236,
+    "min_seconds": 8.533
+  },
+  "cost_per_paid_order": {
+    "avg_input_tokens": 601,
+    "avg_output_tokens": 540,
+    "avg_ai_cost_vnd": 10.77,
+    "total_ai_cost_vnd": 64.63
+  },
+  "quality": {
+    "avg_report_core_17rules_score": 94.53,
+    "avg_proto01_slop_score": 75.2,
+    "deterministic_rerun_identical": true
+  },
+  "edge_cases_3": {
+    "auto_resolved_count": 2,
+    "details": [
+      {
+        "case_type": "wrong_birth_time",
+        "mode": "B_AGENT",
+        "channel": "Web",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "extracted_birth_time": "08:15",
+        "rebuilt_report_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00001\\bao-cao.html",
+        "quality_of_handling": "agent_auto_rebuilt_with_corrected_time",
+        "actions_taken": [
+          "parse_corrected_birth_time_from_message",
+          "recompute_chart_and_regenerate_report",
+          "update_order_page_link"
+        ],
+        "reply_text": "Dạ vâng, Luna đã cập nhật giờ sinh mới là 08:15 cho đơn CT00001 và hệ thống đã tính lại báo cáo theo thông tin chính xác này rồi ạ. \nNếu có bất kỳ thay đổi nào khác hoặc cần hỗ trợ thêm, anh/chị đừng ngần ngại cho Luna biết nhé!",
+        "metrics": {
+          "llm_calls": 3,
+          "input_tokens": 670,
+          "output_tokens": 613,
+          "ai_cost_vnd": 12.18
+        }
+      },
+      {
+        "case_type": "followup_report_question",
+        "mode": "B_AGENT",
+        "channel": "Web",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "quality_of_handling": "agent_grounded_in_customer_report_facts",
+        "actions_taken": [
+          "lookup_order_report_facts",
+          "synthesize_personalized_explanation",
+          "append_compliance_disclaimer"
+        ],
+        "reply_text": "Chào bạn, sự kết hợp giữa Mặt Trời Sư Tử và Cung Mọc Xử Nữ tạo nên một cá tính độc đáo: bạn có thể là người tự tin, sáng tạo (Sư Tử) nhưng cũng rất tỉ mỉ, thực tế và có khả năng phân tích tốt (Xử Nữ). Điều này giúp bạn thể hiện bản thân một cách ấn tượng nhưng vẫn giữ được sự khiêm tốn và hiệu quả trong hành động.\n\n**Lưu ý:** Báo cáo này mang tính giải trí và tự khám phá bản thân, không phán vận mệnh, không thay thế tư vấn y tế, tài chính hay pháp lý.",
+        "metrics": {
+          "llm_calls": 1,
+          "input_tokens": 95,
+          "output_tokens": 135,
+          "ai_cost_vnd": 2.48
+        }
+      },
+      {
+        "case_type": "demand_refund",
+        "mode": "B_AGENT",
+        "channel": "Web",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "agent_enforced_rule_6_2_escalated_to_founder",
+        "actions_taken": [
+          "verify_order_payment_status",
+          "block_agent_refund_execution_per_rule_6_2",
+          "create_founder_approval_ticket_tier_3"
+        ],
+        "reply_text": "Chào bạn, Luna Nguyệt Mai đã ghi nhận yêu cầu hoàn tiền cho mã đơn CT00001. Theo quy chuẩn an toàn tài chính, hệ thống tự động không tự ý thực hiện giao dịch hoàn tiền mà đã chuyển phiếu ưu tiên lên người phụ trách (anh Linh) để kiểm tra và phản hồi trực tiếp cho bạn.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      }
+    ]
+  },
+  "finance_and_red_alert_400m": {
+    "shared_account_pool": "VAN_ANH_HKD",
+    "prior_opening_balance_vnd": 399250000,
+    "session_orders_paid_count": 6,
+    "session_revenue_vnd": 1344000,
+    "cumulative_revenue_vnd": 400594000,
+    "red_alert_threshold_vnd": 400000000,
+    "red_alert_400m": true,
+    "red_alert_first_triggered_by": "CT00007",
+    "total_ai_cost_vnd": 60,
+    "ai_cost_to_session_revenue_pct": 0.0045,
+    "max_ad_budget_7d_40pct_vnd": 537600,
+    "cac_gate_evaluation": {
+      "cac_vnd": 75000,
+      "gate": "BAT_SCALE",
+      "action": "Cho phép bật và tăng ngân sách quảng cáo (≤ 40% doanh thu 7 ngày)."
+    },
+    "by_opc": {
+      "opc001_chiemtinh": {
+        "orders_paid": 6,
+        "revenue_vnd": 1344000,
+        "ai_cost_vnd": 60
+      }
+    },
+    "ledger_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\so-doanh-thu.csv",
+    "cost_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\so-chi-phi.csv"
+  },
+  "orders": [
+    {
+      "scenario_id": "ORD-01",
+      "scenario_type": "normal",
+      "order_code": "CT00001",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 11.236,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00001\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00001.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 97.5,
+      "slop_score": 73.1,
+      "ai_cost_vnd": 10.76,
+      "input_tokens": 599,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-02",
+      "scenario_type": "normal",
+      "order_code": "CT00002",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 10.979,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00002\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00002.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 83.6,
+      "slop_score": 82.1,
+      "ai_cost_vnd": 10.77,
+      "input_tokens": 601,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-03",
+      "scenario_type": "normal_high_tier",
+      "order_code": "CT00003",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 8.992,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00003\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00003.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 99.3,
+      "slop_score": 73.6,
+      "ai_cost_vnd": 10.79,
+      "input_tokens": 606,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-04",
+      "scenario_type": "duplicate_webhook",
+      "order_code": "CT00002",
+      "http_status": 200,
+      "expected_outcome": "duplicate_tx_ignored",
+      "actual_outcome": "duplicate_tx_ignored",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.0,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00002\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00002.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 83.6,
+      "slop_score": 82.1,
+      "ai_cost_vnd": 10.77,
+      "input_tokens": 601,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-05",
+      "scenario_type": "wrong_api_key",
+      "order_code": "CT00004",
+      "http_status": 401,
+      "expected_outcome": "unauthorized_api_key",
+      "actual_outcome": "unauthorized_api_key",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.008,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00004.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-06",
+      "scenario_type": "underpaid_amount",
+      "order_code": "CT00005",
+      "http_status": 200,
+      "expected_outcome": "underpaid_amount",
+      "actual_outcome": "underpaid_amount",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.02,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00005.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-07",
+      "scenario_type": "expired_order",
+      "order_code": "CT00006",
+      "http_status": 200,
+      "expected_outcome": "order_expired",
+      "actual_outcome": "order_expired",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.024,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00006.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-08",
+      "scenario_type": "cross_400m_red_alert",
+      "order_code": "CT00007",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 8.815,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00007\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00007.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 94.5,
+      "slop_score": 71.9,
+      "ai_cost_vnd": 10.78,
+      "input_tokens": 604,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-09",
+      "scenario_type": "normal_with_weird_birth_time",
+      "order_code": "CT00008",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 8.533,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00008\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00008.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 95.0,
+      "slop_score": 75.2,
+      "ai_cost_vnd": 10.76,
+      "input_tokens": 598,
+      "output_tokens": 540
+    },
+    {
+      "scenario_id": "ORD-10",
+      "scenario_type": "normal",
+      "order_code": "CT00009",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 9.02,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00009\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\data\\order_pages\\order_CT00009.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 97.3,
+      "slop_score": 75.3,
+      "ai_cost_vnd": 10.77,
+      "input_tokens": 601,
+      "output_tokens": 540
+    }
+  ]
+}

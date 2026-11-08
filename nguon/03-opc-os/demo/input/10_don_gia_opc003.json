@@ -1,0 +1,219 @@
+{
+  "opc_id": "opc003_huong_nghiep_hs",
+  "prior_cumulative_revenue_vnd": 399250000,
+  "description": "10 đơn giả chuẩn kiểm thử OPC003 Hồ sơ hướng nghiệp học sinh lớp 9–12 (Phụ huynh mua, con làm bài RIASEC IPIP công khai, report 13 trang PDF): gồm 6 đơn hợp lệ, 1 đơn trùng, 1 đơn sai khoá 401, 1 đơn thiếu tiền, 1 đơn hết hạn và ca đẩy luỹ kế vượt 400 triệu.",
+  "orders": [
+    {
+      "scenario_id": "HN-ORD-01",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 299000,
+      "tx_id": 930001,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 12,
+      "customer_input": {
+        "ten_phu_huynh": "Chị Nguyễn Thị Thu Hà",
+        "sdt_phu_huynh": "09xx-xxx-222",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Trần Gia Minh",
+        "lop": "Lớp 11",
+        "mon_manh": "Toán, Vật lý, Tin học",
+        "mong_muon_con": "Muốn theo ngành Trí tuệ nhân tạo hoặc Kỹ thuật phần mềm nhưng băn khoăn giữa Bách Khoa và Công nghệ",
+        "riasec_scores": {"I": 92, "R": 80, "C": 70, "E": 58, "A": 50, "S": 46}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-02",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 299000,
+      "tx_id": 930002,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 15,
+      "customer_input": {
+        "ten_phu_huynh": "Anh Lê Văn Hùng",
+        "sdt_phu_huynh": "09xx-xxx-444",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Lê Khánh Ngọc",
+        "lop": "Lớp 10",
+        "mon_manh": "Tiếng Anh, Ngữ văn, Mỹ thuật số",
+        "mong_muon_con": "Yêu thích thiết kế giao diện sản phẩm số UI/UX và truyền thông đa phương tiện",
+        "riasec_scores": {"A": 90, "S": 78, "E": 74, "I": 60, "C": 48, "R": 42}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-03",
+      "scenario_type": "cross_400m_red_alert",
+      "expected_outcome": "paid_and_dispatched",
+      "triggers_red_alert_400m": true,
+      "amount": 299000,
+      "tx_id": 930003,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 14,
+      "customer_input": {
+        "ten_phu_huynh": "Chị Phạm Hồng Nhung",
+        "sdt_phu_huynh": "09xx-xxx-666",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Vũ Hoàng Khôi",
+        "lop": "Lớp 12",
+        "mon_manh": "Toán, Tiếng Anh",
+        "mong_muon_con": "Muốn học Phân tích dữ liệu kinh doanh hoặc Tài chính công nghệ FinTech",
+        "riasec_scores": {"E": 86, "C": 82, "I": 79, "S": 62, "A": 50, "R": 45}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-04",
+      "scenario_type": "duplicate_webhook",
+      "expected_outcome": "duplicate_tx_ignored",
+      "reuse_order_from": "HN-ORD-02",
+      "amount": 299000,
+      "tx_id": 930002,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 25,
+      "customer_input": {
+        "ten_phu_huynh": "Anh Lê Văn Hùng (Webhook lặp)",
+        "sdt_phu_huynh": "09xx-xxx-444",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Lê Khánh Ngọc",
+        "lop": "Lớp 10",
+        "mon_manh": "Tiếng Anh",
+        "mong_muon_con": "UI/UX",
+        "riasec_scores": {"A": 90, "S": 78, "E": 74, "I": 60, "C": 48, "R": 42}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-05",
+      "scenario_type": "wrong_api_key",
+      "expected_outcome": "unauthorized_api_key",
+      "amount": 299000,
+      "tx_id": 930005,
+      "transfer_amount": 299000,
+      "auth_mode": "invalid_key",
+      "delay_seconds": 10,
+      "customer_input": {
+        "ten_phu_huynh": "Anh Đỗ Quốc Tuấn",
+        "sdt_phu_huynh": "09xx-xxx-456",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Đỗ Minh Châu",
+        "lop": "Lớp 9",
+        "mon_manh": "Sinh học, Hoá học",
+        "mong_muon_con": "Tìm hiểu định hướng chọn tổ hợp môn lên lớp 10",
+        "riasec_scores": {"I": 84, "S": 80, "R": 65, "C": 60, "A": 52, "E": 48}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-06",
+      "scenario_type": "underpaid_amount",
+      "expected_outcome": "underpaid_amount",
+      "amount": 299000,
+      "tx_id": 930006,
+      "transfer_amount": 100000,
+      "auth_mode": "valid",
+      "delay_seconds": 18,
+      "customer_input": {
+        "ten_phu_huynh": "Chị Bùi Thanh Mai",
+        "sdt_phu_huynh": "09xx-xxx-111",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Hoàng Tuấn Kiệt",
+        "lop": "Lớp 11",
+        "mon_manh": "Toán, Địa lý",
+        "mong_muon_con": "Quan tâm ngành Logistics và Chuỗi cung ứng",
+        "riasec_scores": {"C": 85, "E": 78, "R": 70, "I": 62, "S": 54, "A": 44}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-07",
+      "scenario_type": "expired_order",
+      "expected_outcome": "order_expired",
+      "amount": 299000,
+      "tx_id": 930007,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 3600,
+      "customer_input": {
+        "ten_phu_huynh": "Anh Ngô Quang Vinh",
+        "sdt_phu_huynh": "09xx-xxx-777",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Ngô Bảo Trân",
+        "lop": "Lớp 12",
+        "mon_manh": "Ngữ văn, Lịch sử, Tiếng Anh",
+        "mong_muon_con": "Quan tâm ngành Tâm lý học và Giáo dục",
+        "riasec_scores": {"S": 91, "A": 76, "I": 68, "E": 58, "C": 50, "R": 40}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-08",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 299000,
+      "tx_id": 930008,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 13,
+      "customer_input": {
+        "ten_phu_huynh": "Chị Đặng Thu Thuỷ",
+        "sdt_phu_huynh": "09xx-xxx-999",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Phan Hải Đăng",
+        "lop": "Lớp 12",
+        "mon_manh": "Toán, Vật lý, Tiếng Anh",
+        "mong_muon_con": "Đam mê kỹ thuật vi mạch bán dẫn và tự động hoá robot",
+        "riasec_scores": {"R": 90, "I": 87, "C": 72, "E": 56, "A": 48, "S": 44}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-09",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 299000,
+      "tx_id": 930009,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 14,
+      "customer_input": {
+        "ten_phu_huynh": "Anh Trịnh Minh Hoàng",
+        "sdt_phu_huynh": "09xx-xxx-888",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Trịnh Phương Thảo",
+        "lop": "Lớp 11",
+        "mon_manh": "Tiếng Anh, Toán, Giáo dục kinh tế & pháp luật",
+        "mong_muon_con": "Yêu thích Marketing số và Thương mại quốc tế",
+        "riasec_scores": {"E": 89, "A": 81, "S": 75, "C": 62, "I": 55, "R": 42}
+      }
+    },
+    {
+      "scenario_id": "HN-ORD-10",
+      "scenario_type": "normal",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 299000,
+      "tx_id": 930010,
+      "transfer_amount": 299000,
+      "auth_mode": "valid",
+      "delay_seconds": 12,
+      "customer_input": {
+        "ten_phu_huynh": "Chị Lý Kim Liên",
+        "sdt_phu_huynh": "09xx-xxx-333",
+        "dong_y_phu_huynh": true,
+        "consent": true,
+        "ten_hoc_sinh": "Nguyễn Đức Anh",
+        "lop": "Lớp 9",
+        "mon_manh": "Sinh học, Hoá học, Toán",
+        "mong_muon_con": "Chọn tổ hợp môn lên lớp 10 hướng tới ngành Công nghệ sinh học và Y dược",
+        "riasec_scores": {"I": 88, "S": 82, "R": 68, "C": 64, "A": 50, "E": 46}
+      }
+    }
+  ]
+}

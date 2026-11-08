@@ -1,0 +1,33 @@
+{
+  "prior_cumulative_revenue_vnd": 399500000,
+  "transactions": [
+    {
+      "opc_id": "opc001_chiemtinh",
+      "order_code": "CT00001",
+      "amount": 199000,
+      "paid_at": "2026-10-25 13:10:00",
+      "reference_code": "FT26298001",
+      "tx_content": "CT00001 chuyen khoan",
+      "ai_cost_vnd": 25
+    },
+    {
+      "opc_id": "opc002_bank_prompt_kit",
+      "order_code": "BK00001",
+      "amount": 199000,
+      "paid_at": "2026-10-25 13:12:00",
+      "reference_code": "FT26298002",
+      "tx_content": "BK00001 chuyen khoan",
+      "ai_cost_vnd": 30
+    },
+    {
+      "opc_id": "opc003_huong_nghiep_hs",
+      "order_code": "HN00001",
+      "amount": 299000,
+      "paid_at": "2026-10-25 13:15:00",
+      "reference_code": "FT26298003",
+      "tx_content": "HN00001 chuyen khoan",
+      "ai_cost_vnd": 35
+    }
+  ],
+  "current_cac_vnd": 72000
+}

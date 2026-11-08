@@ -37,8 +37,8 @@
         "Không file .env, khoá, dữ liệu khách"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_n2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/N2/kiem.json"
     },
     {
       "id": "N3",

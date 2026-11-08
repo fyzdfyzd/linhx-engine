@@ -1,0 +1,222 @@
+{
+  "opc_id": "opc002_bank_prompt_kit",
+  "prior_cumulative_revenue_vnd": 399250000,
+  "description": "10 đơn giả chuẩn kiểm thử OPC002 Bộ Prompt & Template AI Ngân hàng: 3 khách đầu ở 3 vị trí khác hẳn nhau (RM SME, Giao dịch viên Teller, Thẩm định Tín dụng), kèm đơn trùng, sai khoá, thiếu tiền, hết hạn và vượt ngưỡng báo đỏ 400 triệu.",
+  "orders": [
+    {
+      "scenario_id": "BK-ORD-01",
+      "scenario_type": "normal_role_rm_sme",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 920001,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 12,
+      "customer_input": {
+        "ten": "Phạm Quốc Khánh",
+        "vi_tri": "RM Khách hàng Doanh nghiệp SME",
+        "nghiep_vu_chinh": "Tư vấn hạn mức tín dụng vốn lưu động, bảo lãnh dự thầu và bán chéo gói chi lương CASA",
+        "ba_viec_ton_gio": [
+          "Viết báo cáo tiếp xúc khách hàng doanh nghiệp sau buổi gặp",
+          "Soạn đề xuất cấu trúc hạn mức vay và bảo lãnh trình hội đồng",
+          "Soạn email giải trình lãi suất và phí tài trợ thương mại"
+        ],
+        "cong_cu_ai": "Claude Pro",
+        "contact": "khanh.rm@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-02",
+      "scenario_type": "normal_role_teller",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 920002,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 15,
+      "customer_input": {
+        "ten": "Lê Thu Trang",
+        "vi_tri": "Giao dịch viên Quầy (Teller)",
+        "nghiep_vu_chinh": "Xử lý giao dịch nộp rút tiền mặt, tra soát chuyển tiền nhanh Napas 247 và mở tài khoản eKYC",
+        "ba_viec_ton_gio": [
+          "Soạn phiếu tiếp nhận tra soát chuyển tiền nhầm tài khoản liên ngân hàng",
+          "Hướng dẫn khách hàng cập nhật sinh trắc học và giấy tờ tuỳ thân hết hạn",
+          "Tổng hợp biên bản kiểm quỹ và đối chiếu chứng từ cuối ngày"
+        ],
+        "cong_cu_ai": "ChatGPT Plus",
+        "contact": "trang.teller@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-03",
+      "scenario_type": "normal_role_credit_analyst",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 920003,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 14,
+      "customer_input": {
+        "ten": "Hoàng Minh Đức",
+        "vi_tri": "Chuyên viên Thẩm định Tín dụng Cá nhân",
+        "nghiep_vu_chinh": "Thẩm định hồ sơ vay mua bất động sản, phân tích nguồn trả nợ và lập tờ trình tái thẩm định",
+        "ba_viec_ton_gio": [
+          "Phân tích sao kê dòng tiền thu nhập và lịch sử trả nợ của khách vay",
+          "Viết tờ trình thẩm định tín dụng nêu rõ điểm mạnh và rủi ro khoản vay",
+          "Soạn thông báo điều kiện phê duyệt tín dụng gửi đơn vị kinh doanh"
+        ],
+        "cong_cu_ai": "Microsoft Copilot nội bộ",
+        "contact": "duc.credit@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-04",
+      "scenario_type": "duplicate_webhook",
+      "expected_outcome": "duplicate_tx_ignored",
+      "reuse_order_from": "BK-ORD-02",
+      "amount": 199000,
+      "tx_id": 920002,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 25,
+      "customer_input": {
+        "ten": "Lê Thu Trang (Webhook lặp)",
+        "vi_tri": "Giao dịch viên Quầy (Teller)",
+        "nghiep_vu_chinh": "Giao dịch quầy",
+        "ba_viec_ton_gio": ["Tra soát", "eKYC", "Kiểm quỹ"],
+        "cong_cu_ai": "ChatGPT Plus",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-05",
+      "scenario_type": "wrong_api_key",
+      "expected_outcome": "unauthorized_api_key",
+      "amount": 199000,
+      "tx_id": 920005,
+      "transfer_amount": 199000,
+      "auth_mode": "invalid_key",
+      "delay_seconds": 10,
+      "customer_input": {
+        "ten": "Đặng Hải Yến",
+        "vi_tri": "Chuyên viên Vận hành & Đối soát Thanh toán",
+        "nghiep_vu_chinh": "Đối soát giao dịch thẻ và chuẩn hoá quy trình SOP vận hành",
+        "ba_viec_ton_gio": ["Đối soát lệch sao kê", "Viết quy trình SOP", "Báo cáo SLA"],
+        "cong_cu_ai": "Claude",
+        "contact": "yen.ops@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-06",
+      "scenario_type": "underpaid_amount",
+      "expected_outcome": "underpaid_amount",
+      "amount": 199000,
+      "tx_id": 920006,
+      "transfer_amount": 99000,
+      "auth_mode": "valid",
+      "delay_seconds": 16,
+      "customer_input": {
+        "ten": "Võ Thanh Tùng",
+        "vi_tri": "RM Khách hàng Cá nhân Ưu tiên",
+        "nghiep_vu_chinh": "Tư vấn quản lý gia sản và tiết kiệm kỳ hạn dài",
+        "ba_viec_ton_gio": ["Soạn bản tin thị trường", "Kịch bản chăm sóc sinh nhật", "Báo cáo danh mục"],
+        "cong_cu_ai": "ChatGPT",
+        "contact": "tung.vip@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-07",
+      "scenario_type": "expired_order",
+      "expected_outcome": "order_expired",
+      "amount": 199000,
+      "tx_id": 920007,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 3600,
+      "customer_input": {
+        "ten": "Trịnh Bảo Ngọc",
+        "vi_tri": "Chuyên viên Kiểm soát Tuân thủ",
+        "nghiep_vu_chinh": "Rà soát quy trình nội bộ và ma trận rủi ro RCSA",
+        "ba_viec_ton_gio": ["Đối chiếu thông tư mới", "Rà soát RACI", "Lập báo cáo kiểm toán"],
+        "cong_cu_ai": "Claude",
+        "contact": "ngoc.compliance@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-08",
+      "scenario_type": "cross_400m_red_alert",
+      "expected_outcome": "paid_and_dispatched",
+      "triggers_red_alert_400m": true,
+      "amount": 199000,
+      "tx_id": 920008,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 15,
+      "customer_input": {
+        "ten": "Nguyễn Đình Khoa",
+        "vi_tri": "Chuyên viên Vận hành & Đối soát Thanh toán",
+        "nghiep_vu_chinh": "Hạch toán giải ngân, đối soát Core Banking và chuẩn hoá quy trình SOP",
+        "ba_viec_ton_gio": [
+          "Đối soát chênh lệch sao kê ngân hàng và sổ phụ cuối ngày",
+          "Soạn thảo quy trình SOP 10 mục kèm lưu đồ và bảng RACI",
+          "Lập báo cáo tổng hợp SLA vận hành hàng tuần"
+        ],
+        "cong_cu_ai": "Claude Pro",
+        "contact": "khoa.ops@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-09",
+      "scenario_type": "normal_role_rm_retail",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 920009,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 12,
+      "customer_input": {
+        "ten": "Lý Mỹ Linh",
+        "vi_tri": "RM Khách hàng Cá nhân",
+        "nghiep_vu_chinh": "Tư vấn vay mua nhà, mở thẻ tín dụng và chăm sóc khách hàng hiện hữu",
+        "ba_viec_ton_gio": [
+          "Soạn tin nhắn tư vấn phương án trả góp gốc lãi giảm dần",
+          "Chuẩn bị danh mục hồ sơ chứng minh thu nhập cho khách vay",
+          "Tổng hợp phễu khách hàng tiềm năng trong tuần"
+        ],
+        "cong_cu_ai": "ChatGPT Plus",
+        "contact": "linh.rm@example.com",
+        "consent": true
+      }
+    },
+    {
+      "scenario_id": "BK-ORD-10",
+      "scenario_type": "normal_role_credit_sme",
+      "expected_outcome": "paid_and_dispatched",
+      "amount": 199000,
+      "tx_id": 920010,
+      "transfer_amount": 199000,
+      "auth_mode": "valid",
+      "delay_seconds": 14,
+      "customer_input": {
+        "ten": "Phan Thanh Sơn",
+        "vi_tri": "Chuyên viên Thẩm định Tín dụng Doanh nghiệp",
+        "nghiep_vu_chinh": "Thẩm định báo cáo tài chính doanh nghiệp, đánh giá dòng tiền và phương án vay",
+        "ba_viec_ton_gio": [
+          "Rà soát thuyết minh báo cáo tài chính và khoản phải thu",
+          "Lập tờ trình thẩm định hạn mức tín dụng ngắn hạn",
+          "Kiểm tra chứng từ giải ngân và mục đích sử dụng vốn"
+        ],
+        "cong_cu_ai": "Claude Pro",
+        "contact": "son.credit@example.com",
+        "consent": true
+      }
+    }
+  ]
+}

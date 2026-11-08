@@ -1,0 +1,76 @@
+{
+  "opc_id": "opc004_than_so_hoc",
+  "code": "OPC004",
+  "name": "Bản Đồ Thần Số Học & Chu Kỳ Cá Nhân 12 Tháng [GIẢ LẬP]",
+  "short_nav_label": "Thần Số Học",
+  "founder": "Đinh Trần Tuấn Linh",
+  "stage": "SETUP",
+  "order_prefix": "TS",
+  "domain": "numerology_personal_cycle",
+  "domain_label_vi": "Thần số học Chu kỳ Cá nhân",
+  "default_product": "ban-do-than-so-hoc",
+  "delivery_format": "pdf",
+  "form_schema": {
+    "required": [
+      "ten",
+      "ngay_sinh",
+      "muc_tieu",
+      "consent"
+    ],
+    "optional": []
+  },
+  "pricing": {
+    "default_price": 179000,
+    "tiers": [
+      {
+        "id": "num_full_pdf",
+        "name": "Hồ sơ Thần Số Học Pytago & Kế hoạch 12 tháng (PDF A4)",
+        "price": 179000,
+        "product": "ban-do-than-so-hoc"
+      }
+    ]
+  },
+  "character": {
+    "id": "co-van-minh-tri",
+    "name": "Cố vấn Minh Trí [GIẢ LẬP]",
+    "role": "Chuyên gia Phân tích Chu kỳ Phát triển Cá nhân"
+  },
+  "compliance": {
+    "sector": "tự khám phá bản thân",
+    "require_consent_checkbox": true,
+    "disclaimer": "[GIẢ LẬP] Báo cáo mang tính tham khảo định hướng phát triển kỹ năng cá nhân, không phán vận mệnh, không thay thế tư vấn tài chính hay y tế.",
+    "banned_phrases": [
+      "chắc chắn phát tài",
+      "cúng giải hạn",
+      "mất mạng"
+    ]
+  },
+  "report_blueprint": {
+    "subtitle": "Phân tích chỉ số đường đời, chu kỳ năm cá nhân và kế hoạch hành động 4 quý",
+    "sections": [
+      {
+        "title": "Tổng Quan Năng Lượng Chủ Đạo & Mục Tiêu Trọng Tâm",
+        "paragraphs": [
+          "Hồ sơ của {ten} (sinh ngày {ngay_sinh}) cho thấy khả năng tổ chức công việc có hệ thống, tư duy thực tế và sự kiên trì cao khi theo đuổi mục tiêu '{muc_tieu}'.",
+          "Trong giai đoạn 12 tháng tới, nguyên tắc quan trọng nhất là tập trung vào một mục tiêu cốt lõi mỗi quý thay vì phân tán nguồn lực cho quá nhiều dự án nhỏ lẻ."
+        ],
+        "action_items": [
+          "Thiết lập bảng theo dõi 3 chỉ số kết quả đầu ra mỗi tuần tương ứng với mục tiêu: {muc_tieu}.",
+          "Dành 45 phút tối Chủ nhật hằng tuần để rà soát tiến độ và điều chỉnh lịch làm việc tuần kế tiếp."
+        ]
+      },
+      {
+        "title": "Lộ Trình Hành Động Thực Tế Theo 4 Quý Trong Năm",
+        "paragraphs": [
+          "Bản kế hoạch dưới đây chia nhỏ mục tiêu của {ten} thành 4 chặng 90 ngày giúp duy trì nhịp độ ổn định và đo lường kết quả rõ ràng."
+        ],
+        "action_items": [
+          "Quý 1: Chuẩn hoá quy trình làm việc cá nhân và hoàn thiện bộ kỹ năng nền tảng.",
+          "Quý 2: Mở rộng mạng lưới hợp tác chuyên môn và triển khai dự án trọng điểm.",
+          "Quý 3: Đánh giá hiệu suất giữa năm, tối ưu hoá các khâu gây lãng phí thời gian.",
+          "Quý 4: Đóng gói kết quả đạt được và lập kế hoạch phát triển cho chu kỳ tiếp theo."
+        ]
+      }
+    ]
+  }
+}

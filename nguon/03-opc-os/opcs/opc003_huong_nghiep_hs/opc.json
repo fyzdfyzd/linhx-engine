@@ -1,0 +1,118 @@
+{
+  "opc_id": "opc003_huong_nghiep_hs",
+  "code": "OPC003",
+  "name": "Hồ Sơ Hướng Nghiệp Học Sinh Lớp 9–12 (IPIP RIASEC 6 Nhóm) [GIẢ LẬP]",
+  "founder": "Đinh Trần Tuấn Linh",
+  "stage": "SETUP",
+  "order_prefix": "HN",
+  "domain": "riasec_career",
+  "default_product": "ho-so-huong-nghiep-thpt",
+  "delivery_format": "pdf",
+  "form_schema": {
+    "required": [
+      "ten_phu_huynh",
+      "sdt_phu_huynh",
+      "dong_y_phu_huynh",
+      "ten_hoc_sinh",
+      "lop",
+      "mon_manh",
+      "mong_muon_con",
+      "riasec_scores"
+    ],
+    "optional": []
+  },
+  "pricing": {
+    "default_price": 299000,
+    "tiers": [
+      {
+        "id": "free_riasec_mini",
+        "name": "Trắc nghiệm nhanh 12 câu IPIP RIASEC công khai (xem mã 3 chữ cái)",
+        "price": 0,
+        "product": "ho-so-huong-nghiep-thpt"
+      },
+      {
+        "id": "career_profile_full",
+        "name": "Hồ sơ Hướng nghiệp Học sinh Lớp 9–12 đầy đủ (PDF 13 trang + Cẩm nang Phụ huynh)",
+        "price": 299000,
+        "product": "ho-so-huong-nghiep-thpt"
+      },
+      {
+        "id": "career_profile_siblings",
+        "name": "Gói Gia đình 2 anh chị em ruột (Mùa chọn khối & chọn ngành T1–T3/2027)",
+        "price": 499000,
+        "product": "ho-so-huong-nghiep-thpt"
+      }
+    ],
+    "coupons": [
+      {
+        "code": "CHONNGANH2027",
+        "discount_percent": 10,
+        "expires": "2027-03-31",
+        "occasion": "Mùa chọn ngành & chọn khối THPT T1–T3/2027"
+      }
+    ]
+  },
+  "payment_account_env_ref": {
+    "shared_pool_id": "VAN_ANH_HKD",
+    "bank_env": "SEPAY_BANK_CODE",
+    "account_env": "SEPAY_ACCOUNT_NUMBER",
+    "holder_env": "SEPAY_ACCOUNT_NAME",
+    "api_key_env": "SEPAY_API_KEY",
+    "note": "Dùng chung tài khoản nhận tiền Vân Anh với OPC001 và OPC002; cộng gộp vào ngưỡng báo đỏ 400 triệu."
+  },
+  "channels": [
+    "Cộng đồng Phụ huynh THPT Hà Nội & TP.HCM",
+    "Facebook Đinh Trần Tuấn Linh (Góc nhìn Giáo dục & AI cho Teen)",
+    "Zalo OA Đồng Hành Chọn Ngành Cùng Con"
+  ],
+  "character": {
+    "id": "co-lan-huong-nghiep",
+    "name": "Cố vấn Cô Lan Hướng Nghiệp [GIẢ LẬP]",
+    "role": "Chuyên gia Đồng hành Tâm lý & Định hướng Nghề nghiệp Học sinh THPT",
+    "source_seed": "EDU014-TEEN-AI",
+    "author_authority": "Đinh Trần Tuấn Linh & Nhóm Nghiên cứu Giáo dục AI (EDU014)"
+  },
+  "thresholds": {
+    "red_alert_cumulative_revenue_vnd": 400000000,
+    "investment_cap_vnd": 200000000,
+    "ad_spend_max_ratio_7d": 0.4,
+    "cac_gates": {
+      "scale_max_vnd": 80000,
+      "retarget_max_vnd": 150000,
+      "stop_above_vnd": 150000
+    },
+    "ai_cost_max_ratio": 0.1,
+    "manual_review_first_n_reports": 20,
+    "order_expiry_seconds": 1800,
+    "smoke_test_budget_7d_vnd": 1000000
+  },
+  "compliance": {
+    "sector": "giáo dục hướng nghiệp - dữ liệu người dưới 18 tuổi",
+    "require_lawyer_review": true,
+    "require_hkd_mst_before_live": true,
+    "hkd_deadline": "2026-11-15",
+    "require_consent_checkbox": true,
+    "parent_consent_mandatory": true,
+    "raw_quiz_retention_days": 30,
+    "allow_data_erasure": true,
+    "disclaimer": "Đây là gợi ý tham khảo dựa trên bộ câu hỏi sở thích nghề nghiệp công khai IPIP RIASEC, không thay tư vấn trực tiếp. Báo cáo chỉ gợi mở hướng phát triển, không phán xét học sinh không hợp ngành nào; phụ huynh đã đồng ý trước và dữ liệu bài làm thô tự động xoá sau 30 ngày.",
+    "banned_phrases": [
+      "con không hợp ngành",
+      "không có khả năng học",
+      "chắc chắn trượt",
+      "cấm chọn ngành"
+    ]
+  },
+  "enabled_modules": [
+    "01_nghien_cuu_thiet_ke_report",
+    "02_thiet_ke_goi_gia",
+    "03_flow_thanh_toan_sinh_report",
+    "04_quan_ly_user",
+    "05_quan_ly_content",
+    "06_cskh_da_kenh",
+    "07_chi_phi_loi_nhuan",
+    "08_keo_khach",
+    "09_tuan_thu",
+    "10_giam_sat_kpi"
+  ]
+}

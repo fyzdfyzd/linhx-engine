@@ -1,0 +1,46 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "sector": "tâm linh - văn hoá - tự khám phá",
+  "consent_verified": true,
+  "scanned_chars_count": 181,
+  "banned_hits": [],
+  "has_disclaimer_spirit": true,
+  "required_disclaimer": "Báo cáo mang tính giải trí và tự khám phá bản thân, không phán vận mệnh, không thay thế tư vấn y tế, tài chính hay pháp lý.",
+  "content_compliance_passed": true,
+  "legal_pages": [
+    "modules\\09_tuan_thu\\van_ban_phap_ly\\01_dieu_khoan_su_dung.md",
+    "modules\\09_tuan_thu\\van_ban_phap_ly\\02_chinh_sach_quyen_rieng_tu_nd13_2023.md",
+    "modules\\09_tuan_thu\\van_ban_phap_ly\\03_chinh_sach_hoan_tien.md"
+  ],
+  "live_money_readiness": {
+    "allow_real_money_now": false,
+    "reason": "Chưa nhận tiền thật ở Bậc 1 MVP nội bộ; chờ hoàn tất 5 việc người (HKD Vân Anh + MST trước 15/11, luật sư rà 3 trang pháp lý).",
+    "human_checklist": [
+      {
+        "id": "HKD_VAN_ANH_MST",
+        "task": "Vân Anh đăng ký hộ kinh doanh và có MST (hạn 15/11/2026)",
+        "status": "PENDING_HUMAN"
+      },
+      {
+        "id": "ONLINE_GOV_VN",
+        "task": "Thông báo website TMĐT trên online.gov.vn",
+        "status": "PENDING_HUMAN"
+      },
+      {
+        "id": "LAWYER_REVIEW",
+        "task": "Luật sư rà 3 trang pháp lý nháp và nội dung ngành tâm linh / vị thành niên",
+        "status": "DRAFT_READY_FOR_LAWYER"
+      },
+      {
+        "id": "TAX_HOA_CONFIRM",
+        "task": "Kế toán Hoa trả lời ngưỡng thuế (500 triệu hay 1 tỷ) — đang giữ báo đỏ ở 400 triệu",
+        "status": "RED_ALERT_SET_AT_400M"
+      },
+      {
+        "id": "LINH_REVIEW_20",
+        "task": "Anh Linh duyệt tay 20 report đầu tiên trước khi mở tự động gửi khách",
+        "status": "ENFORCED_IN_MODULE_01"
+      }
+    ]
+  }
+}

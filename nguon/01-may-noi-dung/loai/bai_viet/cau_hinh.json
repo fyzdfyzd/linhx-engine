@@ -1,0 +1,26 @@
+{
+  "loai": "bai_viet",
+  "ten_hien_thi": "Bài viết chuyên sâu (Báo chí / Tạp chí kinh tế - công nghệ)",
+  "buoc_6_dung": [
+    "LAB049 (linhx-viet-giong-viet)",
+    "LAB025 (critic-loop-writer)"
+  ],
+  "buoc_7_8_9_dung": [
+    "LAB049 (linhx-bien-tap: 6 lượt tách ngữ cảnh)",
+    "LAB025 (APS/CQS)"
+  ],
+  "media_hoa": [
+    "LAB031 (1-2 ảnh minh hoạ)",
+    "LAB043 (nhận diện tạm Sakedemy)",
+    "LAB049 (build_docx)"
+  ],
+  "giong_tac_gia": "ho-so-bien-tap/linh/LUAT.md",
+  "ho_so_bien_tap": "ho-so-bien-tap/van-anh/LUAT.md",
+  "duyet_outline": "may",
+  "che_do_viet": "chay_thu_khong_mau",
+  "nhan_dien_tam": "sakedemy",
+  "do_dai_muc_tieu_chu": [
+    1100,
+    1600
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "loai": "ban_tin_lanh_dao",
+  "ten_hien_thi": "Bản tin điều hành hàng tuần cho lãnh đạo",
+  "mo_ta": "Bản tin phân tích chuyên sâu giúp ban giám đốc và trưởng bộ phận nắm bắt điểm nghẽn vận hành cùng 3 quyết định hành động trong tuần.",
+  "kieu_xuat_ban": "bai_viet",
+  "do_dai_chu": {
+    "min": 850,
+    "max": 1600,
+    "muc_tieu": 1150
+  },
+  "so_phan_chinh": {
+    "min": 4,
+    "max": 5
+  },
+  "bat_buoc_co": [
+    "Tình huống thực tế tại bàn làm việc của nhà quản lý Việt Nam",
+    "Phân tích đối chiếu số liệu từ khảo sát thực địa và nghiên cứu quản trị",
+    "3 quyết định điều hành áp dụng ngay trong sáng thứ Hai"
+  ],
+  "persona_mac_dinh": [
+    "sep_doanh_nghiep",
+    "quan_ly_van_hanh",
+    "hoc_vien_thuc_chien"
+  ],
+  "media_kem_theo": [
+    "anh_bia_16_9",
+    "so_do_quy_trinh_svg",
+    "trang_doc_html_pdf"
+  ],
+  "nguong_cqs_toi_thieu": 82,
+  "nguong_aps_toi_thieu": 80
+}

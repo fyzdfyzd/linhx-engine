@@ -1,0 +1,42 @@
+{
+  "module_id": "03_flow_thanh_toan_sinh_report",
+  "name": "Flow thanh toán VietQR / SePay -> phát sự kiện sinh Report & hiển thị PDF trên trang",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Giữ Két (CFO)",
+  "deterministic_code_only": true,
+  "submodules": [
+    "3.1_tao_don",
+    "3.2_vietqr_generator",
+    "3.3_webhook_sepay_verify",
+    "3.4_doi_soat_chong_trung",
+    "3.5_phat_su_kien_va_giao_pdf",
+    "3.6_hoan_tien_pending_founder"
+  ],
+  "events_in": ["report.xong"],
+  "events_out": [
+    "don.tao_moi",
+    "don.da_tra",
+    "don.loi_thanh_toan",
+    "don.het_han",
+    "don.yeu_cau_hoan_tien"
+  ],
+  "input_schema": {
+    "type": "object",
+    "required": ["action"],
+    "properties": {
+      "action": {"type": "string", "enum": ["create_order", "webhook_sepay", "request_refund", "render_order_page"]},
+      "opc_id": {"type": "string"},
+      "order_data": {"type": "object"},
+      "webhook_payload": {"type": "object"},
+      "auth_header": {"type": "string"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["http_status", "result"],
+    "properties": {
+      "http_status": {"type": "integer"},
+      "result": {"type": "object"}
+    }
+  }
+}

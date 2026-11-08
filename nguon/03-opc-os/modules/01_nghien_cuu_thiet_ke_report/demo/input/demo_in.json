@@ -1,0 +1,18 @@
+{
+  "order_code": "CT00001",
+  "opc_id": "opc001_chiemtinh",
+  "domain": "astrology",
+  "product": "ban-do-sao-ca-nhan",
+  "order_seq_index": 1,
+  "render_pdf_file": true,
+  "customer_input": {
+    "ten": "Trần Minh Anh",
+    "ten_goi": "Minh Anh",
+    "ngay_sinh": "1994-08-21",
+    "gio_sinh": "07:30",
+    "noi_sinh": "Hà Nội",
+    "lat": 21.03,
+    "lng": 105.85,
+    "tz": 7
+  }
+}

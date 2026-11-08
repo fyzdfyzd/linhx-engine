@@ -1,0 +1,50 @@
+{
+  "upserted_profile": {
+    "user_id": "usr_99fc24e38d",
+    "opc_id": "opc001_chiemtinh",
+    "orders": [
+      "CT00001"
+    ],
+    "created_at": "2026-10-25 13:30:19",
+    "profile_mode": "single_adult_buyer",
+    "consent_nd13_verified": true,
+    "consent_timestamp": "2026-10-25 16:00:25",
+    "retention_policy": "erase_on_request",
+    "pii_data": {
+      "ten": "Trần Minh Anh",
+      "ten_hoc_sinh": null,
+      "ngay_sinh": "1994-08-21",
+      "gio_sinh": "07:30",
+      "noi_sinh": "Hà Nội",
+      "contact": "minhanh@example.com"
+    },
+    "segment": "khach_moi",
+    "erased": false,
+    "erased_at": "2026-10-25 15:57:25",
+    "erase_reason": "Khách yêu cầu xoá dữ liệu theo NĐ 13/2023"
+  },
+  "erased_profile_proof": {
+    "user_id": "usr_99fc24e38d",
+    "opc_id": "opc001_chiemtinh",
+    "orders": [
+      "CT00001"
+    ],
+    "created_at": "2026-10-25 13:30:19",
+    "profile_mode": "single_adult_buyer",
+    "consent_nd13_verified": true,
+    "consent_timestamp": "2026-10-25 16:00:25",
+    "retention_policy": "erase_on_request",
+    "pii_data": {
+      "ten": "[ĐÃ XOÁ THEO YÊU CẦU]",
+      "ten_hoc_sinh": null,
+      "ngay_sinh": null,
+      "gio_sinh": null,
+      "noi_sinh": null,
+      "contact": "[ĐÃ XOÁ]"
+    },
+    "segment": "khach_moi",
+    "erased": true,
+    "erased_at": "2026-10-25 16:00:25",
+    "erase_reason": "Khách yêu cầu xoá dữ liệu theo NĐ 13/2023"
+  }
+}

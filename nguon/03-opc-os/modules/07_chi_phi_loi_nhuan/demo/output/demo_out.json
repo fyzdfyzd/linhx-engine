@@ -1,0 +1,37 @@
+{
+  "shared_account_pool": "VAN_ANH_HKD",
+  "prior_opening_balance_vnd": 399500000,
+  "session_orders_paid_count": 3,
+  "session_revenue_vnd": 697000,
+  "cumulative_revenue_vnd": 400197000,
+  "red_alert_threshold_vnd": 400000000,
+  "red_alert_400m": true,
+  "red_alert_first_triggered_by": "HN00001",
+  "total_ai_cost_vnd": 90,
+  "ai_cost_to_session_revenue_pct": 0.0129,
+  "max_ad_budget_7d_40pct_vnd": 278800,
+  "cac_gate_evaluation": {
+    "cac_vnd": 72000,
+    "gate": "BAT_SCALE",
+    "action": "Cho phép bật và tăng ngân sách quảng cáo (≤ 40% doanh thu 7 ngày)."
+  },
+  "by_opc": {
+    "opc001_chiemtinh": {
+      "orders_paid": 1,
+      "revenue_vnd": 199000,
+      "ai_cost_vnd": 25
+    },
+    "opc002_bank_prompt_kit": {
+      "orders_paid": 1,
+      "revenue_vnd": 199000,
+      "ai_cost_vnd": 30
+    },
+    "opc003_huong_nghiep_hs": {
+      "orders_paid": 1,
+      "revenue_vnd": 299000,
+      "ai_cost_vnd": 35
+    }
+  },
+  "ledger_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\07_chi_phi_loi_nhuan\\demo\\output\\data\\so-doanh-thu.csv",
+  "cost_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\07_chi_phi_loi_nhuan\\demo\\output\\data\\so-chi-phi.csv"
+}

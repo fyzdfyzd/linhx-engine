@@ -1,0 +1,40 @@
+{
+  "status": "completed",
+  "order_code": "CT00001",
+  "opc_id": "opc001_chiemtinh",
+  "report_id": "54de21b110",
+  "domain": "astrology",
+  "product": "ban-do-sao-ca-nhan",
+  "html_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\01_nghien_cuu_thiet_ke_report\\demo\\output\\report_CT00001\\bao-cao.html",
+  "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\01_nghien_cuu_thiet_ke_report\\demo\\output\\report_CT00001\\bao-cao.pdf",
+  "zip_path": null,
+  "delivery_artifacts": [
+    "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\01_nghien_cuu_thiet_ke_report\\demo\\output\\report_CT00001\\bao-cao.pdf"
+  ],
+  "warnings": [],
+  "author_lead": "Chào bạn Trần Minh Anh, Luna Nguyệt Mai rất",
+  "quality_gate": {
+    "score": 97.5,
+    "passed": true,
+    "errors": 0,
+    "words": 7113,
+    "sections": 17
+  },
+  "slop_gate": {
+    "engine": "01_MAY_TAO_NOI_DUNG.kiemChatLuong",
+    "score": 77.2,
+    "passed": false,
+    "errors_count": 11
+  },
+  "manual_review_required": true,
+  "manual_review_status": "pending_linh_review_top20",
+  "metrics": {
+    "mode": "A_CODE",
+    "ai_status": "REAL_GEMINI_OK",
+    "elapsed_seconds": 13.789,
+    "llm_calls": 1,
+    "input_tokens": 340,
+    "output_tokens": 12,
+    "ai_cost_vnd": 1.51
+  }
+}

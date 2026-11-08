@@ -1,0 +1,15 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "tier_id": "synastry_couple",
+  "tier_name": "Báo cáo Tương hợp Cặp đôi (Quà Valentine 14/02/2027)",
+  "base_price": 349000,
+  "coupon_applied": "VALENTINE1402",
+  "occasion": "Lễ Tình Nhân Valentine",
+  "discount_amount": 35000,
+  "final_price": 314000,
+  "estimated_cogs_vnd": 12000,
+  "gross_margin_percent": 96.2,
+  "max_ad_cac_allowed_40pct": 125600,
+  "unit_economics_gate_passed": true,
+  "agent_policy_note": "Agent không được tự đổi giá hoặc tạo mã giảm mới khi chưa có Founder duyệt (QUY-CHUAN 6.2)."
+}

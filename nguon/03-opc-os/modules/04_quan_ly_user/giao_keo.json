@@ -1,0 +1,34 @@
+{
+  "module_id": "04_quan_ly_user",
+  "name": "Quản lý User, Đồng ý NĐ 13/2023, Mô hình 2 hồ sơ Phụ huynh-Con & Quyền xoá dữ liệu",
+  "version": "1.0.0",
+  "owner_c_board": "Anh Vận Hành (COO)",
+  "submodules": [
+    "4.1_form_va_dong_y_du_lieu",
+    "4.2_ho_so_khach_va_2_ho_so_phu_huynh_con",
+    "4.3_lich_su_don",
+    "4.4_phan_nhom_crm",
+    "4.5_quyen_xoa_du_lieu"
+  ],
+  "events_in": ["don.tao_moi", "user.yeu_cau_xoa"],
+  "events_out": ["user.da_luu_ho_so", "user.da_xoa_du_lieu"],
+  "input_schema": {
+    "type": "object",
+    "required": ["action"],
+    "properties": {
+      "action": {"type": "string", "enum": ["upsert_user", "erase_user"]},
+      "opc_id": {"type": "string"},
+      "order_code": {"type": "string"},
+      "customer_input": {"type": "object"},
+      "user_id": {"type": "string"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["status", "user_record"],
+    "properties": {
+      "status": {"type": "string"},
+      "user_record": {"type": "object"}
+    }
+  }
+}

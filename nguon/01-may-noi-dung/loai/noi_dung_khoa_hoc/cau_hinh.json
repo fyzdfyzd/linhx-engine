@@ -1,0 +1,23 @@
+{
+  "loai": "noi_dung_khoa_hoc",
+  "ten_hien_thi": "Nội dung khoá học thực chiến (1 buổi · Kịch bản lời giảng Gagné + Bộ Slide 16:9)",
+  "buoc_6_dung": [
+    "LAB017 (linhx-course: course-architect, lesson-script)"
+  ],
+  "buoc_7_8_9_dung": [
+    "LAB049 (linhx-bien-tap + linhx-viet-giong-viet)",
+    "LAB017 (kiem_do_dai_am_tiet)"
+  ],
+  "media_hoa": [
+    "LAB027 (linhx-deck: 10-deck.json, slide HTML/PDF)",
+    "LAB017 (Slidev slides.md)",
+    "LAB032 (anh-sang-slide)",
+    "LAB043 (nhận diện tạm Sakedemy)"
+  ],
+  "giong_tac_gia": "giong-giang-vien-linh",
+  "ho_so_bien_tap": "ho-so-bien-tap/linh/LUAT.md + van-anh/LUAT.md",
+  "duyet_outline": "may",
+  "che_do_viet": "chay_thu_khong_mau",
+  "nhan_dien_tam": "sakedemy",
+  "thoi_luong_buoi_hoc_phut": 90
+}

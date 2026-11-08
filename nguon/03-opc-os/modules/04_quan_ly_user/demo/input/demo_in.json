@@ -1,0 +1,13 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "order_code": "CT00001",
+  "customer_input": {
+    "ten": "Trần Minh Anh",
+    "ngay_sinh": "1994-08-21",
+    "gio_sinh": "07:30",
+    "noi_sinh": "Hà Nội",
+    "contact": "minhanh@example.com",
+    "consent": true
+  },
+  "test_erase_after_upsert": true
+}
