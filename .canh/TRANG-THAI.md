@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 05:49 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
+Cập nhật 2026-11-09 06:00 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | B4 | 20261109-0539-t1 từ 2026-11-09T05:39:49 | DAT · Feature D1 · commit d4e2d44 · nhánh tu-dong/engine-t1 · 2026-11-09T01:36:08 |
+| 1 | B4 | rảnh | DAT · Feature D1 · commit d4e2d44 · nhánh tu-dong/engine-t1 · 2026-11-09T01:36:08 |
 | 2 | C2 | 20261109-0539-t2 từ 2026-11-09T05:39:47 | DAT · Feature R2 · commit 1fd48d3 · nhánh tu-dong/engine-t2 · 2026-11-09T03:06:29 |
 | 3 | - | rảnh | DAT · Feature B5 · commit ee44cf7 · nhánh tu-dong/engine-t3 · 2026-11-09T02:35:04 |
 | 4 | - | rảnh | CHUA_DAT · Feature D2 · commit 61cd8a8 · nhánh tu-dong/engine-t4 · 2026-11-09T02:55:42 |
@@ -23,7 +23,6 @@ Cập nhật 2026-11-09 05:49 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09T02:55:42 D2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc f16257a9, bản hỏng giữ ở nhánh cục bộ hong/D2-20261109-0255, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\D2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 02:47 t4: agy xong phiếu 20261109-0226-t4 (D2) sau 21 phút
 - 2026-11-09 02:55 t2: agy xong phiếu 20261109-0247-t2 (R2) sau 8 phút
 - 2026-11-09 02:55 t4: D2 CHUA_DAT lần 3 (commit 61cd8a8)
 - 2026-11-09 02:55 t4: D2 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
@@ -35,4 +34,5 @@ Cập nhật 2026-11-09 05:49 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09 05:39 t0: xoá đếm CHUA_DAT của D2 (D2@0911-mot-buoc)
 - 2026-11-09 05:39 t2: giao agy phiếu 20261109-0539-t2: C2
 - 2026-11-09 05:39 t1: giao agy phiếu 20261109-0539-t1: B4
+- 2026-11-09 05:59 t1: agy xong phiếu 20261109-0539-t1 (B4) sau 20 phút
 
