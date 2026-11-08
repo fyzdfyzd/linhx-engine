@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 18:46 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
+Cập nhật 2026-11-08 18:59 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -16,5 +16,16 @@ Cập nhật 2026-11-08 18:46 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N
 - 2026-11-08T17:52:59 A2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc 4b5fb637, bản hỏng giữ ở nhánh cục bộ hong/A2-20261108-1751, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\A2.txt
 
 ## Nhật ký gần nhất
-
+- 2026-11-08 18:14 t4: A2 DAT, đã gộp vào main
+- 2026-11-08 18:15 t4: RAM trống 0.4 GB < 1,5 GB, chưa giao A2
+- 2026-11-08 18:32 t3: dừng agy phiếu 20261108-1741-t3 (N6): quá 40 phút
+- 2026-11-08 18:32 t1: RAM trống 1.4 GB < 1,5 GB, chưa giao A4
+- 2026-11-08 18:32 t3: agy xong phiếu 20261108-1741-t3 (N6) sau 50 phút
+- 2026-11-08 18:33 t2: dừng agy phiếu 20261108-1742-t2 (B2): quá 40 phút
+- 2026-11-08 18:33 t2: commit phần dở của B2
+- 2026-11-08 18:33 t2: agy xong phiếu 20261108-1742-t2 (B2) sau 50 phút
+- 2026-11-08 18:44 t0: xoá đếm CHUA_DAT của A2 (A2@0811-loi-may)
+- 2026-11-08 18:47 t1: RAM trống 0.8 GB < 1,5 GB, chưa giao A4
+- 2026-11-08 18:49 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-08 18:59 t1: RAM trống 1.2 GB < 1,5 GB, chưa giao A4
 
