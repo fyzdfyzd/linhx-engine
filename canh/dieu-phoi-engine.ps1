@@ -71,6 +71,10 @@ if ($Tho -eq 0) {
   $bang += "`n## Chờ`n" + (($dk.cho.PSObject.Properties | ForEach-Object { "- $($_.Name): $($_.Value)" }) -join "`n") + "`n"
   $tac = @(Get-ChildItem "$Canh\tac\*.txt" -ErrorAction SilentlyContinue | Where-Object { (SoTac $_.BaseName) -ge [int]$dk.tran_chua_dat } | ForEach-Object BaseName)
   if ($tac) { $bang += "`n## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)`n" + (($tac | ForEach-Object { "- $_" }) -join "`n") + "`n" }
+  # K8: đối chiếu bằng chứng VM của feature đã đạt (2 lần liền sai thì hạ passes về false, ghi CAN-LINH)
+  $dc = py -3.12 "$TichHop\canh\doi_chieu_vm.py" --goc $TichHop --trang-thai "$Canh\doi-chieu-vm.json" 2>&1 | Out-String
+  if ($dc.Trim()) { $bang += "`n## Đối chiếu VM`n$($dc.Trim())`n" }
+  if ($dc -match "HẠ VỀ") { Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) đối chiếu VM: $(($dc -split "`n" | Where-Object { $_ -match 'HẠ VỀ' }) -join '; ')" }
   if (Test-Path "$Canh\CAN-LINH.md") { $bang += "`n## Cần Linh`n" + (Get-Content "$Canh\CAN-LINH.md" -Raw -Encoding utf8) }
   $bang += "`n## Nhật ký gần nhất`n" + ((Get-Content "$Canh\NHAT-KY.md" -Tail 12 -Encoding utf8 -ErrorAction SilentlyContinue) -join "`n") + "`n"
   New-Item -ItemType Directory -Force "$TichHop\.canh\review" | Out-Null
@@ -78,9 +82,9 @@ if ($Tho -eq 0) {
   if (Test-Path "$Canh\phieu.tsv") { Copy-Item "$Canh\phieu.tsv" "$TichHop\.canh\phieu.tsv" -Force }
   ConvertTo-Json -InputObject @($dangChay) -Depth 3 | Set-Content -Encoding utf8 "$TichHop\.canh\dang-chay.json"
   Get-ChildItem "$Canh\t*\log\review-*.md" -ErrorAction SilentlyContinue | ForEach-Object { Copy-Item $_.FullName "$TichHop\.canh\review\$($_.Directory.Parent.Name)-$($_.Name)" -Force }
-  git -C $TichHop add .canh 2>&1 | Out-Null
-  git -C $TichHop diff --cached --quiet -- .canh; if ($LASTEXITCODE -ne 0) {
-    git -C $TichHop commit -q -m "canh: trạng thái thợ engine $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -- .canh 2>&1 | Out-Null
+  git -C $TichHop add .canh features-dot1.json features-dot1b.json 2>&1 | Out-Null
+  git -C $TichHop diff --cached --quiet -- .canh features-dot1.json features-dot1b.json; if ($LASTEXITCODE -ne 0) {
+    git -C $TichHop commit -q -m "canh: trạng thái thợ engine $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -- .canh features-dot1.json features-dot1b.json 2>&1 | Out-Null
     DayTH
   }
   $mx.ReleaseMutex()
@@ -201,6 +205,15 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
     $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
     $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
     if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
+  }
+  # K7: feature có kiểm tích hợp HTTP thật trên bench (dieu-khien.json tich_hop: {ID: "th_x.py"}) chạy sau khi đạt hộp đen
+  $thTep = if ($dk.tich_hop) { $dk.tich_hop.$fid } else { $null }
+  if ($kl -eq "DAT" -and $thTep) {
+    $thRa = & powershell -NoProfile -ExecutionPolicy Bypass -File "$TichHop\canh\bench.ps1" th -Tho $Tho $thTep 2>&1 | Out-String
+    $thMa = $LASTEXITCODE
+    Ghi "kiểm tích hợp $fid ($thTep) mã $thMa"
+    $review += "`n`n## Tích hợp bench (K7): mã $thMa`n``````n$($thRa.Substring([math]::Max(0, $thRa.Length - 1500)))`n``````"
+    if ($thMa -ne 0) { $kl = "CHUA_DAT"; $loi += "Kiểm tích hợp trên bench trượt (tests/nghiem-thu/tich-hop/$thTep, đọc đầu file để biết hợp đồng): xem mục Tích hợp bench" }
   }
   $sha = (git rev-parse --short HEAD).Trim()
   if ($kl -eq "DAT") {

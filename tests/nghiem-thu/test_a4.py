@@ -6,7 +6,10 @@ Hợp đồng (HOP-DONG.md):
                                                                          doc["don_vi"] trống -> chỉ người được miễn thấy
     dieu_kien(doctype: str, don_vi_cua_user: list[str], mien: bool) -> str
         mien -> "" ; không đơn vị -> "1=0" ; còn lại "`tab<doctype>`.`don_vi` in ('X', 'Y')" (giá trị đã escape dấu ')
-- Đơn vị của user lấy từ User Permission (allow = "LX Don Vi") hoặc trường trên User; ghi trong quyen_don_vi.py.
+- Đơn vị của user lấy từ User Permission (allow = "LX Don Vi"); ghi trong quyen_don_vi.py.
+- Vai trò "LX Nhan Vien" (Role, cài kèm app: fixtures hoặc after_install) có quyền read, write, create trên LX Nguoi và LX Co Hoi;
+  người của đơn vị dùng vai trò này (không phải System Manager, vì System Manager được miễn).
+- Sau khi đạt hộp đen, bộ điều phối chạy thêm kiểm tích hợp HTTP thật trên bench: tests/nghiem-thu/tich-hop/th_a4.py.
 - hooks.py: has_permission và permission_query_conditions cho "LX Nguoi" và "LX Co Hoi" trỏ vào hàm dùng quyen_don_vi
   (giữ chặn module tắt của N3).
 - Bằng chứng bench WSL máy cty: bang-chung/A4/quyen.json
@@ -14,7 +17,7 @@ Hợp đồng (HOP-DONG.md):
     có ít nhất: một lần cùng đơn vị status 200 (GET /api/resource/LX Nguoi/<ten>), một lần khác đơn vị status 403,
     và một lần get_list khác đơn vị không trả bản ghi của đơn vị kia (status 200, "so_ban_ghi_don_vi_khac": 0).
 """
-from _chung import CORE, bang_chung_json, khong_import_frappe_dau_file, nap_module
+from _chung import CORE, bang_chung_json, khong_import_frappe_dau_file, nap_module, tim_doctype
 
 
 def _q():
@@ -44,6 +47,15 @@ def test_hooks_noi_quyen():
     for dt in ["LX Nguoi", "LX Co Hoi"]:
         assert chu.count(f'"{dt}"') + chu.count(f"'{dt}'") >= 2, f"hooks.py phải khai has_permission và permission_query_conditions cho {dt}"
     khong_import_frappe_dau_file(CORE / "linhx_core" / "crm" / "quyen_don_vi.py")
+
+
+def test_vai_tro_nhan_vien():
+    for dt in ["LX Nguoi", "LX Co Hoi"]:
+        _, d = tim_doctype(dt)
+        vt = {p.get("role"): p for p in d.get("permissions", [])}
+        assert vt.get("LX Nhan Vien", {}).get("read") == 1, f"{dt} phải cho vai trò LX Nhan Vien quyền đọc"
+    chu = "\n".join(p.read_text(encoding="utf-8", errors="ignore") for p in (CORE / "linhx_core").rglob("*") if p.suffix in (".py", ".json"))
+    assert '"LX Nhan Vien"' in chu and ("fixtures" in chu or "after_install" in chu), "vai trò LX Nhan Vien phải được tạo khi cài app"
 
 
 def test_bang_chung_bench():

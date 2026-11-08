@@ -13,6 +13,8 @@ Hợp đồng (HOP-DONG.md):
   checkbox name dong_y_lien_he và dong_y_marketing; gửi POST JSON tới
   `${API_GOC}/api/method/linhx_core.crm.api_form.nhan_form` (API_GOC đọc lúc dựng, mặc định "" = cùng gốc);
   thành công hiện phần tử [data-cam-on]; chưa tick dong_y_lien_he thì không gửi.
+- Sau khi đạt hộp đen, bộ điều phối chạy thêm kiểm tích hợp HTTP thật trên bench: tests/nghiem-thu/tich-hop/th_c2.py
+  (khách gửi form -> có LX Nguoi, LX Co Hoi, LX Dong Y; khách không đọc lại được hồ sơ).
 """
 import pytest
 
