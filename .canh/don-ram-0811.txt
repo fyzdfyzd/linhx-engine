@@ -1,0 +1,23 @@
+﻿# Dá»n RAM 08/11/2026 10:11: dá»«ng phiÃªn claude remote-control cÅ© (khá»Ÿi Ä‘á»™ng trÆ°á»›c 08/11, cÃ³ --sdk-url). KhÃ´ng Ä‘á»¥ng tiáº¿n trÃ¬nh ná»n remote-control, Claude desktop, Chrome, Antigravity, agy.
+pid	khoi_dong	ram	phien
+4552`t2026-11-05 06:20`t128MB`tcse_018jZuHpAT9mLQFHsgCC3Ybs
+18372`t2026-11-05 18:06`t142MB`tcse_018jZuHq7nSKdHzYob8yXX4V
+1588`t2026-11-05 20:05`t144MB`tcse_018jZuHruKeCvPSWUStWCkkC
+2088`t2026-11-05 22:07`t146MB`tcse_018jZuHqWwUGCnbMiV8W1cWw
+17744`t2026-11-06 08:05`t148MB`tcse_018jZuHpLojgSntUhWcNEAwy
+19056`t2026-11-06 10:05`t144MB`tcse_018jZuHqxcocRTGtrF2UYhB6
+1392`t2026-11-06 12:05`t138MB`tcse_018jZuHsPHeRYjsQNbjKfbAB
+18864`t2026-11-06 14:07`t140MB`tcse_018jZuHsnjni2cjMNVJJX4cB
+21740`t2026-11-06 16:05`t143MB`tcse_018jZuHqTtfTEjXDmiksCHu1
+19688`t2026-11-06 18:07`t138MB`tcse_018jZuHpoEUsu6bQn3CrX1ZL
+308`t2026-11-06 20:10`t139MB`tcse_018jZuHqFCBKHV9EYhX2XSxD
+26060`t2026-11-06 22:06`t150MB`tcse_018jZuHrp97E8QAPP6HR4QSE
+20264`t2026-11-07 08:05`t137MB`tcse_018jZuHqcxcfxjm8dtksNJnz
+6832`t2026-11-07 10:04`t138MB`tcse_018jZuHr9rVawNFhmQVnsVKW
+20000`t2026-11-07 12:05`t139MB`tcse_018jZuHtSuxQ34LY6vsuzWVT
+12804`t2026-11-07 14:05`t141MB`tcse_018jZuHpS1XqhG6T7bJ3nH1i
+30572`t2026-11-07 16:05`t145MB`tcse_018jZuHqxtBMTJ25FfnMk2We
+35812`t2026-11-07 18:05`t139MB`tcse_018jZuHtmEnjQjJkJ6c3k7m4
+32924`t2026-11-07 20:05`t147MB`tcse_018jZuHtWKbwC3mJENgdquuX
+25052`t2026-11-07 22:05`t143MB`tcse_018jZuHsE6kfwiBL12FaWDKs
+Tá»•ng: 20 tiáº¿n trÃ¬nh
