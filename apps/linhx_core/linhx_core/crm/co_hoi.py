@@ -5,13 +5,23 @@ Tham khảo luồng CRM từ: nguon/03-opc-os/modules/04_quan_ly_user/module.py
 from __future__ import annotations
 
 from datetime import datetime, timedelta
+import logging
 
 DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
 TRANG_THAI_DONG = {"thang", "thua"}
 
+logger = logging.getLogger(__name__)
+
+
+def bay_gio() -> str:
+    """Trả thời điểm hiện tại theo giờ hệ thống dạng 'YYYY-MM-DD HH:MM:SS'."""
+    return datetime.now().replace(microsecond=0).strftime(DINH_DANG_TG)
+
 
 def _parse_tg(gia_tri: object) -> datetime:
     if isinstance(gia_tri, datetime):
+        if gia_tri.tzinfo is not None:
+            gia_tri = gia_tri.astimezone().replace(tzinfo=None)
         return gia_tri.replace(microsecond=0)
     chu = str(gia_tri or "").strip()
     if "." in chu:
@@ -20,6 +30,8 @@ def _parse_tg(gia_tri: object) -> datetime:
         chu = chu.replace("T", " ")
     if "+" in chu:
         chu = chu.split("+", 1)[0].strip()
+    if chu.endswith("Z"):
+        chu = chu[:-1].strip()
     return datetime.strptime(chu, DINH_DANG_TG)
 
 
@@ -51,7 +63,7 @@ def giao(co_hoi: dict, ds_phu_trach: list[str], ds_co_hoi_mo: list[dict]) -> str
 def viec_cho(ds_co_hoi: list[dict], luc: str | datetime) -> list[dict]:
     """Lọc các cơ hội chưa có người phụ trách, xếp han_giao tăng dần, gắn cờ qua_han (bool)."""
     moc = _parse_tg(luc)
-    ket_qua: list[dict] = []
+    ket_qua: list[tuple[tuple[int, str], dict]] = []
     for ch in ds_co_hoi or []:
         if not isinstance(ch, dict):
             continue
@@ -61,11 +73,19 @@ def viec_cho(ds_co_hoi: list[dict], luc: str | datetime) -> list[dict]:
         if pt:
             continue
         ban = dict(ch)
-        hg = ban.get("han_giao")
-        qua_han = False
-        if hg:
-            qua_han = _parse_tg(hg) < moc
-        ban["qua_han"] = qua_han
-        ket_qua.append(ban)
-    ket_qua.sort(key=lambda x: str(x.get("han_giao") or ""))
-    return ket_qua
+        hg = str(ban.get("han_giao") or "").strip()
+        if not hg:
+            ban["qua_han"] = False
+            khoa_xep = (1, "")
+        else:
+            try:
+                dt_hg = _parse_tg(hg)
+                ban["qua_han"] = dt_hg < moc
+                khoa_xep = (0, dt_hg.strftime(DINH_DANG_TG))
+            except ValueError:
+                logger.warning("LX Co Hoi %s có han_giao sai định dạng: %r", ban.get("name"), hg)
+                ban["qua_han"] = True
+                khoa_xep = (0, "")
+        ket_qua.append((khoa_xep, ban))
+    ket_qua.sort(key=lambda item: item[0])
+    return [ban for _, ban in ket_qua]
