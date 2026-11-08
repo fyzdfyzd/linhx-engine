@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>LINHX Engine</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f6f5f1;--mat:#ffffff;--chu:#16181d;--phu:#5d6270;--vien:#e3e1da;--nhan:#1f4fd6;--nhan-nhat:#e8eefc;
@@ -46,6 +44,9 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--nhan);outline-of
 .ba{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:28px 0}
 @media(max-width:640px){.ba{grid-template-columns:1fr}}
 .ba .the b{display:block;margin-bottom:4px}
+.ds-goi{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:8px 0 16px}
+.goi-muc{cursor:pointer;border:1px solid var(--vien);border-radius:12px;padding:14px;background:var(--bg);transition:border-color .15s,background .15s}
+.goi-muc.chon{border-color:var(--nhan);background:var(--nhan-nhat);box-shadow:0 0 0 1px var(--nhan)}
 .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px}
 .buoc{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
 .buoc span{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid var(--vien);color:var(--phu)}
@@ -109,7 +110,7 @@ const TT = {cho_duyet:"Chờ duyệt",cho:"Trong hàng",dang_chay:"Đang chạy"
 
 async function goi(m, data, post) {
   const o = {headers: {Accept: "application/json"}, credentials: "same-origin"};
-  let url = API + m;
+  let url = m.startsWith("/") ? m : (m.includes(".") ? "/api/method/" + m : API + m);
   if (post) {
     o.method = "POST"; o.headers["Content-Type"] = "application/json";
     if (CSRF) o.headers["X-Frappe-CSRF-Token"] = CSRF;
@@ -124,8 +125,11 @@ async function goi(m, data, post) {
   return j.message;
 }
 
+const dinhTien = n => String(Math.trunc(Number(n || 0))).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
 /* ---------- trang dat bao cao ---------- */
 function trangChu() {
+  let goiChon = "";
   $("#app").innerHTML = `
   <h1>AI nói gì về thương hiệu của bạn?</h1>
   <p class="dan">Khách ngày càng hỏi ChatGPT, Gemini, Claude trước khi mua. Chúng tôi hỏi cả ba bằng 8 câu chuẩn, rồi gửi bạn báo cáo: AI có nhắc tên bạn không, nói đúng không, có khuyên chọn không.</p>
@@ -137,27 +141,63 @@ function trangChu() {
   <form class="the" id="f">
     <div class="dong">
       <div><label>Tên thương hiệu *</label><input name="brand" required maxlength="80" placeholder="vd. Trà Xanh Đồi Mây"></div>
-      <div><label>Ngành</label><input name="nganh" maxlength="80" placeholder="vd. trà túi lọc"></div>
-      <div><label>Thị trường</label><input name="thi_truong" maxlength="60" value="Việt Nam"></div>
-      <div><label>Một đối thủ</label><input name="doi_thu" maxlength="120" placeholder="để so sánh"></div>
+      <div><label>Email nhận báo cáo</label><input name="email" type="email" maxlength="120" placeholder="vd. ban@congty.vn"></div>
     </div>
-    <label>Ba sự thật về thương hiệu (để chấm AI nói đúng hay sai)</label>
-    <textarea name="su_that" maxlength="600" placeholder="vd. Thành lập 2016 ở Thái Nguyên · Website traxanhdoimay.vn · Sản phẩm chính: trà xanh túi lọc"></textarea>
-    <div class="dong">
-      <div><label>Email nhận báo cáo</label><input name="email" type="email" maxlength="120"></div>
-      <div><label>Tên bạn</label><input name="ten" maxlength="80"></div>
-    </div>
-    <p class="ghi">Mỗi yêu cầu được người duyệt trước khi chạy. Bạn nhận một đường dẫn riêng để theo dõi và đọc báo cáo.</p>
-    <button class="nut" id="gui">Gửi yêu cầu</button>
+    <label>Chọn gói báo cáo *</label>
+    <div class="ds-goi" id="ds-goi"><span class="ghi">Đang tải gói báo cáo…</span></div>
+    <details style="margin:8px 0 12px"><summary class="ghi">Thêm thông tin ngành, đối thủ, sự thật thương hiệu (tuỳ chọn)</summary>
+      <div class="dong" style="margin-top:8px">
+        <div><label>Ngành</label><input name="nganh" maxlength="80" placeholder="vd. trà túi lọc"></div>
+        <div><label>Thị trường</label><input name="thi_truong" maxlength="60" value="Việt Nam"></div>
+        <div><label>Một đối thủ</label><input name="doi_thu" maxlength="120" placeholder="để so sánh"></div>
+        <div><label>Tên bạn</label><input name="ten" maxlength="80"></div>
+      </div>
+      <label>Ba sự thật về thương hiệu (để chấm AI nói đúng hay sai)</label>
+      <textarea name="su_that" maxlength="600" placeholder="vd. Thành lập 2016 ở Thái Nguyên · Website traxanhdoimay.vn · Sản phẩm chính: trà xanh túi lọc"></textarea>
+    </details>
+    <button type="submit" class="nut" data-tra-qr id="gui">Thanh toán QR nhận báo cáo</button>
     <div class="loi" id="loi"></div>
+    <div id="hop-qr"></div>
   </form>`;
+  const hopGoi = $("#ds-goi");
+  hopGoi.onclick = ev => {
+    const m = ev.target.closest("[data-goi]");
+    if (!m) return;
+    goiChon = m.dataset.goi;
+    hopGoi.querySelectorAll("[data-goi]").forEach(el => el.classList.toggle("chon", el.dataset.goi === goiChon));
+  };
+  goi("linhx_core.pay.api_ban.goi").then(ds => {
+    const muc = Array.isArray(ds) ? ds : [];
+    if (!goiChon && muc.length) goiChon = muc[0].ma;
+    if ($("#ds-goi")) {
+      $("#ds-goi").innerHTML = muc.map(g => `<div class="goi-muc${g.ma === goiChon ? " chon" : ""}" data-goi="${e(g.ma)}">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px">
+          <b>${e(g.ten)}</b>
+          <span class="mono" style="font-weight:600;color:var(--nhan)">${dinhTien(g.gia)} đ</span>
+        </div>
+        <div class="ghi" style="margin-top:4px">${e(g.mo_ta || "")}</div>
+      </div>`).join("") || `<span class="ghi">Chưa có gói đang mở bán.</span>`;
+    }
+  }).catch(() => {});
   $("#f").onsubmit = async ev => {
     ev.preventDefault();
     const b = $("#gui"); b.disabled = true; $("#loi").textContent = "";
     try {
-      const r = await goi("dat_bao_cao", Object.fromEntries(new FormData(ev.target)), true);
-      location.hash = `#/bao-cao/${r.viec}/${r.ma_xem}`;
-    } catch (err) { $("#loi").textContent = err.status === 429 ? "Bạn gửi nhiều quá, thử lại sau một giờ." : err.message; b.disabled = false; }
+      const fd = new FormData(ev.target);
+      const than = {brand: String(fd.get("brand") || "").trim(), goi: goiChon};
+      const email = String(fd.get("email") || "").trim();
+      if (email) than.email = email;
+      const r = await goi("linhx_core.pay.api_ban.tao_don", than, true);
+      $("#hop-qr").innerHTML = `<div class="the" style="margin-top:16px">
+        <b>Quét mã QR để thanh toán</b>
+        <p class="ghi" style="margin:6px 0">Mã đơn: <span class="mono">${e(r.ma_don)}</span> · Số tiền: <b class="mono">${dinhTien(r.so_tien)} đ</b> · Nội dung CK: <span class="mono">${e(r.noi_dung_ck)}</span></p>
+        <img data-qr src="${e(r.qr_url)}" alt="Mã QR thanh toán" style="max-width:220px;width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--vien);margin-top:8px">
+      </div>`;
+    } catch (err) {
+      $("#loi").textContent = err.status === 429 ? "Bạn gửi nhiều quá, thử lại sau một giờ." : err.message;
+    } finally {
+      b.disabled = false;
+    }
   };
 }
 
@@ -225,6 +265,11 @@ async function trangEngine() {
   CSRF = p.csrf;
   $("#app").innerHTML = `<h1 style="margin-top:8px">Engine</h1>
     <div class="dem" id="dem"></div>
+    <div class="ba" style="margin:12px 0 20px">
+      <div class="the"><b>Việc chờ anh</b><div id="viec-cho" style="margin-top:6px"><span class="ghi">Chưa có việc chờ</span></div></div>
+      <div class="the"><b>Lead mới</b><div id="lead-moi" style="margin-top:6px"><span class="ghi">Chưa có lead mới</span></div></div>
+      <div class="the"><b>Đơn mới</b><div id="don-moi" style="margin-top:6px"><span class="ghi">Chưa có đơn mới</span></div></div>
+    </div>
     <h2>Bảng thợ</h2>
     <div class="the" id="bang-tho"><span class="ghi">Đang tải bảng thợ… (<span id="cham-tran">0</span> chạm trần)</span></div>
     <h2>Thợ</h2><div class="luoi" id="tho"></div>
@@ -240,6 +285,23 @@ async function trangEngine() {
   let wfs = [], daVeWf = false;
   const ve = async () => {
     const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    try {
+      const bd = await goi("linhx_core.api_ban_dieu_hanh.ban");
+      if (bd) {
+        if ($("#viec-cho")) {
+          const vc = bd.viec_cho || [];
+          $("#viec-cho").innerHTML = vc.length ? vc.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.workflow ? ` · <span class="ghi">${e(x.workflow)}</span>` : ""}${x.ten_khach ? ` · ${e(x.ten_khach)}` : ""}</div>`).join("") : `<span class="ghi">Chưa có việc chờ</span>`;
+        }
+        if ($("#don-moi")) {
+          const dm = bd.don_moi || [];
+          $("#don-moi").innerHTML = dm.length ? dm.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.ma && x.ma !== x.name ? ` (${e(x.ma)})` : ""}${x.so_tien !== undefined && x.so_tien !== null ? ` · <span class="mono">${dinhSo(x.so_tien)}</span>` : ""}</div>`).join("") : `<span class="ghi">Chưa có đơn mới</span>`;
+        }
+        if ($("#lead-moi")) {
+          const lm = bd.lead_moi || [];
+          $("#lead-moi").innerHTML = lm.length ? lm.map(x => `<div style="padding:4px 0;border-bottom:1px solid var(--vien)"><span class="mono">${e(x.name)}</span>${x.ho_ten ? ` · <b>${e(x.ho_ten)}</b>` : ""}${x.email || x.dien_thoai ? ` <span class="ghi">(${e(x.email || x.dien_thoai)})</span>` : ""}</div>`).join("") : `<span class="ghi">Chưa có lead mới</span>`;
+        }
+      }
+    } catch (err) {}
     try {
       const bt = await goi("bang_tho");
       if (bt && $("#bang-tho")) {
