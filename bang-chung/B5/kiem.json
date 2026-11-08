@@ -1,0 +1,17 @@
+{
+  "feature": "B5",
+  "luc": "2026-11-09T02:21:51+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_b5.py::test_doctype PASSED                         [ 25%]",
+    "tests/nghiem-thu/test_b5.py::test_moi_don_da_tra_mot_dong PASSED         [ 50%]",
+    "tests/nghiem-thu/test_b5.py::test_canh_bao_nguong PASSED                 [ 75%]",
+    "tests/nghiem-thu/test_b5.py::test_api_va_nguon PASSED                    [100%]",
+    "============================== 4 passed in 0.90s =============================="
+  ],
+  "nguon_proto": "nguon/03-opc-os/modules/07_chi_phi_loi_nhuan/module.py",
+  "doctypes": [
+    "LX So S1a",
+    "LX Cau Hinh Pay"
+  ]
+}

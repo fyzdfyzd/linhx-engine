@@ -1,0 +1,41 @@
+{
+ "doctype": "DocType",
+ "name": "LX Cau Hinh Pay",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "nguong_doanh_thu"
+ ],
+ "fields": [
+  {
+   "default": "1000000000",
+   "fieldname": "nguong_doanh_thu",
+   "fieldtype": "Currency",
+   "label": "Ngưỡng doanh thu cảnh báo thuế (VNĐ)"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 02:18:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 02:18:00.000000"
+}
