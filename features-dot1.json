@@ -146,8 +146,8 @@
         "Cơ hội mới có người phụ trách trong 1 giờ (kiểm bằng trường han_giao)"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_a2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/A2/kiem.json"
     },
     {
       "id": "A3",
@@ -307,7 +307,7 @@
         "Dựng tĩnh được, chụp 390 và 1280 không tràn ngang"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c1.py -q",
-      "passes": true,
+      "passes": false,
       "bang_chung": "bang-chung/C1/dung-tinh.json"
     },
     {
