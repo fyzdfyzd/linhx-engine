@@ -1,0 +1,134 @@
+{
+  "total_tickets": 3,
+  "comparisons": [
+    {
+      "ticket_id": "CSKH-01",
+      "a_code": {
+        "case_type": "wrong_birth_time",
+        "mode": "A_CODE",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "quality_of_handling": "basic_rule_fallback",
+        "actions_taken": [
+          "normalize_birth_time_to_ubt_or_reparse"
+        ],
+        "reply_text": "Hệ thống tự động ghi nhận đơn CT00001: Giờ sinh chưa đúng định dạng đã được chuyển về chế độ tính theo ngày sinh.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      },
+      "b_agent": {
+        "case_type": "wrong_birth_time",
+        "mode": "B_AGENT",
+        "channel": "Zalo OA",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "extracted_birth_time": "08:15",
+        "rebuilt_report_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\b_agent\\reports\\CT00001\\bao-cao.html",
+        "quality_of_handling": "agent_auto_rebuilt_with_corrected_time",
+        "actions_taken": [
+          "parse_corrected_birth_time_from_message",
+          "recompute_chart_and_regenerate_report",
+          "update_order_page_link"
+        ],
+        "reply_text": "Chào bạn CT0000",
+        "metrics": {
+          "llm_calls": 3,
+          "input_tokens": 476,
+          "output_tokens": 28,
+          "ai_cost_vnd": 2.29
+        }
+      }
+    },
+    {
+      "ticket_id": "CSKH-02",
+      "a_code": {
+        "case_type": "followup_report_question",
+        "mode": "A_CODE",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "static_template_cannot_answer_deep_report_question",
+        "actions_taken": [
+          "return_static_faq_and_queue_for_human"
+        ],
+        "reply_text": "Cảm ơn bạn đã liên hệ về đơn CT00001. Câu hỏi chi tiết về nội dung báo cáo đã được chuyển tới bộ phận chuyên môn để phản hồi.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      },
+      "b_agent": {
+        "case_type": "followup_report_question",
+        "mode": "B_AGENT",
+        "channel": "Zalo OA",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "quality_of_handling": "agent_grounded_in_customer_report_facts",
+        "actions_taken": [
+          "lookup_order_report_facts",
+          "synthesize_personalized_explanation",
+          "append_compliance_disclaimer"
+        ],
+        "reply_text": "Chào anh/chị CT000",
+        "metrics": {
+          "llm_calls": 1,
+          "input_tokens": 113,
+          "output_tokens": 9,
+          "ai_cost_vnd": 0.58
+        }
+      }
+    },
+    {
+      "ticket_id": "CSKH-03",
+      "a_code": {
+        "case_type": "demand_refund",
+        "mode": "A_CODE",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "safe_escalate_founder_only",
+        "actions_taken": [
+          "create_refund_ticket_pending_founder",
+          "block_auto_payout"
+        ],
+        "reply_text": "Yêu cầu hoàn tiền đơn CT00001 đã được tạo phiếu chờ người phụ trách duyệt (hệ thống tự động không tự chi tiền).",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      },
+      "b_agent": {
+        "case_type": "demand_refund",
+        "mode": "B_AGENT",
+        "channel": "Zalo OA",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "agent_enforced_rule_6_2_escalated_to_founder",
+        "actions_taken": [
+          "verify_order_payment_status",
+          "block_agent_refund_execution_per_rule_6_2",
+          "create_founder_approval_ticket_tier_3"
+        ],
+        "reply_text": "Chào bạn, Luna Nguyệt Mai đã ghi nhận yêu cầu hoàn tiền cho mã đơn CT00001. Theo quy chuẩn an toàn tài chính, hệ thống tự động không tự ý thực hiện giao dịch hoàn tiền mà đã chuyển phiếu ưu tiên lên người phụ trách (anh Linh) để kiểm tra và phản hồi trực tiếp cho bạn.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+ngay,opc_id,ma_don,so_tien,ma_gd_ngan_hang,noi_dung,luy_ke_gop_vnd,trang_thai_bao_do_400tr
+2026-10-24 23:59:59,SO_DU_DAU_KY_TK_VAN_ANH,OPENING_BALANCE,399500000,OPENING_2026,Doanh thu luy ke truoc phien thu nghiem tren TK Van Anh,399500000,AN_TOAN
+2026-10-25 13:10:00,opc001_chiemtinh,CT00001,199000,FT26298001,CT00001 chuyen khoan,399699000,AN_TOAN_DUOI_400TR
+2026-10-25 13:12:00,opc002_bank_prompt_kit,BK00001,199000,FT26298002,BK00001 chuyen khoan,399898000,AN_TOAN_DUOI_400TR
+2026-10-25 13:15:00,opc003_huong_nghiep_hs,HN00001,299000,FT26298003,HN00001 chuyen khoan,400197000,BAO_DO_VUOT_400TR

@@ -1,0 +1,13 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "smoke_test_spend_7d_vnd": 840000,
+  "utm_campaign": "tiktok_sach_chiemtinh_t10",
+  "funnel_data": {
+    "landing_views": 420,
+    "free_preview_views": 168,
+    "form_submits": 45,
+    "qr_shown": 42,
+    "paid_orders": 12,
+    "pdf_delivered": 12
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "opc_id": "opc005_tai_chinh_ca_nhan",
+  "code": "OPC005",
+  "name": "Hồ Sơ Hoạch Định Ngân Sách & Quỹ Dự Phòng Cá Nhân [GIẢ LẬP]",
+  "short_nav_label": "Tài Chính Cá Nhân",
+  "founder": "Đinh Trần Tuấn Linh",
+  "stage": "SETUP",
+  "order_prefix": "TC",
+  "domain": "personal_finance_planner",
+  "domain_label_vi": "Hoạch định Ngân sách Cá nhân",
+  "default_product": "ho-so-ngan-sach-ca-nhan",
+  "delivery_format": "pdf",
+  "form_schema": {
+    "required": [
+      "ten",
+      "thu_nhap_thang",
+      "muc_tieu_tiet_kiem",
+      "consent"
+    ],
+    "optional": []
+  },
+  "pricing": {
+    "default_price": 249000,
+    "tiers": [
+      {
+        "id": "fin_budget_pdf",
+        "name": "Hồ sơ Phân bổ Ngân sách 50/30/20 & Lộ trình Quỹ Dự phòng (PDF A4)",
+        "price": 249000,
+        "product": "ho-so-ngan-sach-ca-nhan"
+      }
+    ]
+  },
+  "character": {
+    "id": "co-van-hoang-yen",
+    "name": "Chuyên gia Hoàng Yến [GIẢ LẬP]",
+    "role": "Chuyên gia Hoạch định Ngân sách Gia đình & Quản trị Dòng tiền"
+  },
+  "compliance": {
+    "sector": "giáo dục kỹ năng quản lý chi tiêu",
+    "require_consent_checkbox": true,
+    "disclaimer": "[GIẢ LẬP] Tài liệu hướng dẫn phương pháp lập ngân sách chi tiêu và tích luỹ kỷ luật cá nhân; tuyệt đối không phím mã chứng khoán hay khuyến nghị đầu tư rủi ro.",
+    "banned_phrases": [
+      "cam kết lãi 100%",
+      "phím mã cổ phiếu",
+      "đánh sóng tiền ảo"
+    ]
+  },
+  "report_blueprint": {
+    "subtitle": "Cấu trúc phân bổ dòng tiền hằng tháng và lộ trình xây dựng quỹ dự phòng an toàn",
+    "sections": [
+      {
+        "title": "Phân Tích Cấu Trúc Dòng Tiền & Nguyên Tắc Phân Bổ Ngân Sách",
+        "paragraphs": [
+          "Dựa trên mức thu nhập '{thu_nhap_thang}' và mục tiêu '{muc_tieu_tiet_kiem}' của {ten}, báo cáo thiết kế mô hình phân bổ ngân sách kỷ luật theo 3 nhóm: Chi phí thiết yếu (50%), Đầu tư phát triển bản thân & linh hoạt (30%), và Tích luỹ quỹ dự phòng tự động (20%).",
+          "Nguyên tắc cốt lõi để đạt mục tiêu '{muc_tieu_tiet_kiem}' là trích lập khoản tiết kiệm ngay trong ngày nhận thu nhập trước khi chi tiêu các khoản phát sinh."
+        ],
+        "action_items": [
+          "Tách riêng tài khoản nhận thu nhập ({thu_nhap_thang}) và tài khoản quỹ dự phòng tự động.",
+          "Rà soát và cắt giảm các khoản chi phí định kỳ không sử dụng hết công suất trong 30 ngày qua."
+        ]
+      },
+      {
+        "title": "Kế Hoạch 90 Ngày Xây Dựng Quỹ Dự Phòng 6 Tháng Sinh Hoạt Phí",
+        "paragraphs": [
+          "Lộ trình 90 ngày giúp {ten} hình thành thói quen kiểm soát dòng tiền chỉ với 15 phút ghi chép mỗi cuối tuần."
+        ],
+        "action_items": [
+          "Tháng thứ 1: Ghi nhận đầy đủ 100% các khoản chi cố định và thiết lập lệnh chuyển tự động 20% thu nhập.",
+          "Tháng thứ 2: Tối ưu hoá nhóm chi phí biến đổi, hoàn thành mốc 2 tháng sinh hoạt phí dự phòng.",
+          "Tháng thứ 3: Đánh giá tỷ lệ hoàn thành mục tiêu '{muc_tieu_tiet_kiem}' và chuẩn hoá ngân sách quý tiếp theo."
+        ]
+      }
+    ]
+  }
+}

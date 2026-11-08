@@ -1,0 +1,293 @@
+{
+  "method": "A_CODE",
+  "opc_id": "opc001_chiemtinh",
+  "total_scenarios": 10,
+  "scenarios_matched_100pct": 10,
+  "failed_orders_out_of_10": 0,
+  "paid_orders_count": 6,
+  "timing_paid_orders_seconds": {
+    "avg_seconds": 8.536,
+    "max_seconds": 16.2,
+    "min_seconds": 5.555
+  },
+  "cost_per_paid_order": {
+    "avg_input_tokens": 283,
+    "avg_output_tokens": 168,
+    "avg_ai_cost_vnd": 3.73,
+    "total_ai_cost_vnd": 22.39
+  },
+  "quality": {
+    "avg_report_core_17rules_score": 94.53,
+    "avg_proto01_slop_score": 76.75,
+    "deterministic_rerun_identical": true
+  },
+  "edge_cases_3": {
+    "auto_resolved_count": 1,
+    "details": [
+      {
+        "case_type": "wrong_birth_time",
+        "mode": "A_CODE",
+        "tier": 2,
+        "resolved_automatically": true,
+        "escalated_to_founder": false,
+        "quality_of_handling": "basic_rule_fallback",
+        "actions_taken": [
+          "normalize_birth_time_to_ubt_or_reparse"
+        ],
+        "reply_text": "Hệ thống tự động ghi nhận đơn CT00001: Giờ sinh chưa đúng định dạng đã được chuyển về chế độ tính theo ngày sinh.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      },
+      {
+        "case_type": "followup_report_question",
+        "mode": "A_CODE",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "static_template_cannot_answer_deep_report_question",
+        "actions_taken": [
+          "return_static_faq_and_queue_for_human"
+        ],
+        "reply_text": "Cảm ơn bạn đã liên hệ về đơn CT00001. Câu hỏi chi tiết về nội dung báo cáo đã được chuyển tới bộ phận chuyên môn để phản hồi.",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      },
+      {
+        "case_type": "demand_refund",
+        "mode": "A_CODE",
+        "tier": 3,
+        "resolved_automatically": false,
+        "escalated_to_founder": true,
+        "quality_of_handling": "safe_escalate_founder_only",
+        "actions_taken": [
+          "create_refund_ticket_pending_founder",
+          "block_auto_payout"
+        ],
+        "reply_text": "Yêu cầu hoàn tiền đơn CT00001 đã được tạo phiếu chờ người phụ trách duyệt (hệ thống tự động không tự chi tiền).",
+        "metrics": {
+          "llm_calls": 0,
+          "input_tokens": 0,
+          "output_tokens": 0,
+          "ai_cost_vnd": 0
+        }
+      }
+    ]
+  },
+  "finance_and_red_alert_400m": {
+    "shared_account_pool": "VAN_ANH_HKD",
+    "prior_opening_balance_vnd": 399250000,
+    "session_orders_paid_count": 6,
+    "session_revenue_vnd": 1344000,
+    "cumulative_revenue_vnd": 400594000,
+    "red_alert_threshold_vnd": 400000000,
+    "red_alert_400m": true,
+    "red_alert_first_triggered_by": "CT00007",
+    "total_ai_cost_vnd": 20,
+    "ai_cost_to_session_revenue_pct": 0.0015,
+    "max_ad_budget_7d_40pct_vnd": 537600,
+    "cac_gate_evaluation": {
+      "cac_vnd": 75000,
+      "gate": "BAT_SCALE",
+      "action": "Cho phép bật và tăng ngân sách quảng cáo (≤ 40% doanh thu 7 ngày)."
+    },
+    "by_opc": {
+      "opc001_chiemtinh": {
+        "orders_paid": 6,
+        "revenue_vnd": 1344000,
+        "ai_cost_vnd": 20
+      }
+    },
+    "ledger_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\so-doanh-thu.csv",
+    "cost_csv_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\so-chi-phi.csv"
+  },
+  "orders": [
+    {
+      "scenario_id": "ORD-01",
+      "scenario_type": "normal",
+      "order_code": "CT00001",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 10.486,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00001\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00001.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 97.5,
+      "slop_score": 73.1,
+      "ai_cost_vnd": 3.78,
+      "input_tokens": 340,
+      "output_tokens": 157
+    },
+    {
+      "scenario_id": "ORD-02",
+      "scenario_type": "normal",
+      "order_code": "CT00002",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 6.631,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00002\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00002.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 83.6,
+      "slop_score": 82.7,
+      "ai_cost_vnd": 5.07,
+      "input_tokens": 340,
+      "output_tokens": 240
+    },
+    {
+      "scenario_id": "ORD-03",
+      "scenario_type": "normal_high_tier",
+      "order_code": "CT00003",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 6.536,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00003\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00003.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 99.3,
+      "slop_score": 77.6,
+      "ai_cost_vnd": 6.03,
+      "input_tokens": 346,
+      "output_tokens": 300
+    },
+    {
+      "scenario_id": "ORD-04",
+      "scenario_type": "duplicate_webhook",
+      "order_code": "CT00002",
+      "http_status": 200,
+      "expected_outcome": "duplicate_tx_ignored",
+      "actual_outcome": "duplicate_tx_ignored",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.0,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00002\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00002.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 83.6,
+      "slop_score": 82.7,
+      "ai_cost_vnd": 5.07,
+      "input_tokens": 340,
+      "output_tokens": 240
+    },
+    {
+      "scenario_id": "ORD-05",
+      "scenario_type": "wrong_api_key",
+      "order_code": "CT00004",
+      "http_status": 401,
+      "expected_outcome": "unauthorized_api_key",
+      "actual_outcome": "unauthorized_api_key",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.016,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00004.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-06",
+      "scenario_type": "underpaid_amount",
+      "order_code": "CT00005",
+      "http_status": 200,
+      "expected_outcome": "underpaid_amount",
+      "actual_outcome": "underpaid_amount",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.017,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00005.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-07",
+      "scenario_type": "expired_order",
+      "order_code": "CT00006",
+      "http_status": 200,
+      "expected_outcome": "order_expired",
+      "actual_outcome": "order_expired",
+      "passed_expectation": true,
+      "elapsed_seconds": 0.031,
+      "pdf_path": null,
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00006.html",
+      "pdf_embedded_on_page": false,
+      "quality_score": null,
+      "slop_score": null,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-08",
+      "scenario_type": "cross_400m_red_alert",
+      "order_code": "CT00007",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 16.2,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00007\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00007.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 94.5,
+      "slop_score": 75.5,
+      "ai_cost_vnd": 0,
+      "input_tokens": 0,
+      "output_tokens": 0
+    },
+    {
+      "scenario_id": "ORD-09",
+      "scenario_type": "normal_with_weird_birth_time",
+      "order_code": "CT00008",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 5.555,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00008\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00008.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 95.0,
+      "slop_score": 82.4,
+      "ai_cost_vnd": 3.92,
+      "input_tokens": 337,
+      "output_tokens": 167
+    },
+    {
+      "scenario_id": "ORD-10",
+      "scenario_type": "normal",
+      "order_code": "CT00009",
+      "http_status": 200,
+      "expected_outcome": "paid_and_dispatched",
+      "actual_outcome": "paid_and_dispatched",
+      "passed_expectation": true,
+      "elapsed_seconds": 5.807,
+      "pdf_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\reports\\CT00009\\bao-cao.pdf",
+      "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\runtime\\a_code\\data\\order_pages\\order_CT00009.html",
+      "pdf_embedded_on_page": true,
+      "quality_score": 97.3,
+      "slop_score": 69.2,
+      "ai_cost_vnd": 3.59,
+      "input_tokens": 340,
+      "output_tokens": 145
+    }
+  ]
+}

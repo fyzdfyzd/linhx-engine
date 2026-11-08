@@ -1,0 +1,19 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "order_code": "CT00001",
+  "channel": "Zalo OA",
+  "cases": [
+    {
+      "case_type": "wrong_birth_time",
+      "message": "Mình vừa xem lại giấy khai sinh, giờ sinh đúng là 08:15 chứ không phải 25:99 lúc nãy gõ nhầm, nhờ shop cập nhật giúp!"
+    },
+    {
+      "case_type": "followup_report_question",
+      "message": "Trong báo cáo trang 5 ghi Mặt Trời Sư Tử và Cung Mọc Xử Nữ, hai yếu tố này bổ trợ nhau thế nào khi mình làm quản lý nhóm?"
+    },
+    {
+      "case_type": "demand_refund",
+      "message": "Mình đặt nhầm gói, muốn yêu cầu hoàn tiền lại vào tài khoản ngân hàng ngay bây giờ."
+    }
+  ]
+}

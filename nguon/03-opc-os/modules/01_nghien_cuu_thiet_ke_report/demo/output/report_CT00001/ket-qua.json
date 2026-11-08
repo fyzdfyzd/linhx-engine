@@ -1,0 +1,24 @@
+{
+  "report_id": "54de21b110",
+  "product": "ban-do-sao-ca-nhan",
+  "domain": "astrology",
+  "out_dir": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\01_nghien_cuu_thiet_ke_report\\demo\\output\\report_CT00001",
+  "html": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\01_nghien_cuu_thiet_ke_report\\demo\\output\\report_CT00001\\bao-cao.html",
+  "pdf": null,
+  "quality": {
+    "score": 97.5,
+    "passed": true,
+    "errors": 0,
+    "stats": {
+      "so_chu": 7113,
+      "so_doan_loi_giai": 95,
+      "so_muc": 17,
+      "muc_du_noi_dung": 16,
+      "so_nguon": 8,
+      "thuc_the_thieu_loi_giai": 0,
+      "chu_trung_binh_moi_cau": 25.9
+    }
+  },
+  "seconds": 4.24,
+  "warnings": []
+}

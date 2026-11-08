@@ -1,0 +1,33 @@
+{
+  "module_id": "09_tuan_thu",
+  "name": "Tuân thủ pháp lý, Cổng chặn Go-Live, 3 Trang pháp lý NĐ 13/2023 & Bảo vệ dữ liệu vị thành niên",
+  "version": "1.0.0",
+  "owner_c_board": "Anh Vận Hành (COO) & Chị Giữ Két (CFO)",
+  "submodules": [
+    "9.1_bo_3_trang_phap_ly",
+    "9.2_kiem_nhan_mien_tru_va_tu_cam",
+    "9.3_kiem_dong_y_nd13_va_tre_vi_thanh_nien",
+    "9.4_cong_chan_truoc_nhan_tien_that"
+  ],
+  "events_in": ["report.xong", "tuan_thu.kiem_tra"],
+  "events_out": ["tuan_thu.ket_qua"],
+  "input_schema": {
+    "type": "object",
+    "required": ["opc_id", "sample_text"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "sample_text": {"type": "string"},
+      "consent_checked": {"type": "boolean"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["opc_id", "content_compliance_passed", "live_money_readiness", "legal_pages"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "content_compliance_passed": {"type": "boolean"},
+      "live_money_readiness": {"type": "object"},
+      "legal_pages": {"type": "array"}
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "feature": "N2",
+  "luc": "2026-11-08T08:06:10.042948+00:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_n2.py::test_co_hai_nguon_voi_readme_va_module_goc PASSED [ 16%]",
+    "tests/nghiem-thu/test_n2.py::test_co_so_ghi_nguon_goc PASSED             [ 33%]",
+    "tests/nghiem-thu/test_n2.py::test_khong_env_khoa PASSED                  [ 50%]",
+    "tests/nghiem-thu/test_n2.py::test_khong_du_lieu_khach PASSED             [ 66%]",
+    "tests/nghiem-thu/test_n2.py::test_nguon_chi_doc_khong_bi_import PASSED   [ 83%]",
+    "tests/nghiem-thu/test_n2.py::test_dung_luong_vua_phai PASSED             [100%]",
+    "",
+    "============================== 6 passed in 0.26s =============================="
+  ],
+  "tong_file": 175,
+  "tong_bytes": 1693855,
+  "nguon": {
+    "03-opc-os": {
+      "goc": "D:\\LINHX\\PROTO\\03_OPC_OS",
+      "so_file": 107,
+      "bytes": 931917,
+      "so_module_py": 10
+    },
+    "01-may-noi-dung": {
+      "goc": "D:\\LINHX\\PROTO\\01_MAY_TAO_NOI_DUNG",
+      "so_file": 67,
+      "bytes": 760896,
+      "so_module_py": 1
+    }
+  }
+}

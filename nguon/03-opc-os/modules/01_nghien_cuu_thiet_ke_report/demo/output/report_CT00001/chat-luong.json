@@ -1,0 +1,46 @@
+{
+  "score": 97.5,
+  "passed": true,
+  "min_score": 85.0,
+  "errors": 0,
+  "warnings": 2,
+  "stats": {
+    "so_chu": 7113,
+    "so_doan_loi_giai": 95,
+    "so_muc": 17,
+    "muc_du_noi_dung": 16,
+    "so_nguon": 8,
+    "thuc_the_thieu_loi_giai": 0,
+    "chu_trung_binh_moi_cau": 25.9
+  },
+  "by_rule": {
+    "Q05": {
+      "level": "canh",
+      "count": 1,
+      "penalty": 2.0
+    },
+    "Q12": {
+      "level": "canh",
+      "count": 1,
+      "penalty": 0.5
+    }
+  },
+  "findings": [
+    {
+      "rule": "Q05",
+      "level": "canh",
+      "where": "sao-moc",
+      "message": "Mục 112 chữ, dưới 120",
+      "excerpt": "",
+      "penalty": 2
+    },
+    {
+      "rule": "Q12",
+      "level": "canh",
+      "where": "goc-chieu#14",
+      "message": "Câu 77 chữ",
+      "excerpt": "Họ kết hợp chủ nghĩa lý tưởng với sự đổi mới, do vậy họ …",
+      "penalty": 0.5
+    }
+  ]
+}

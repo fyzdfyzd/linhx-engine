@@ -1,0 +1,36 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "utm_tracking": {
+    "utm_source": "tiktok",
+    "utm_medium": "short_video_organic_and_spark",
+    "utm_campaign": "tiktok_sach_chiemtinh_t10"
+  },
+  "funnel_counts": {
+    "1_landing_views": 420,
+    "2_form_submits": 45,
+    "3_qr_shown": 42,
+    "4_paid_orders": 12,
+    "5_pdf_delivered": 12
+  },
+  "conversion_rates": {
+    "form_per_view_pct": 10.71,
+    "paid_per_free_preview_pct": 7.14,
+    "paid_per_qr_pct": 28.57,
+    "delivery_success_pct": 100.0
+  },
+  "smoke_test_spend_7d_vnd": 840000,
+  "smoke_test_max_budget_7d_vnd": 1000000,
+  "smoke_test_budget_ok": true,
+  "cac_vnd": 70000,
+  "cac_gate_decision": "BAT_SCALE (CAC <= 80k)",
+  "channel_os_cfo_gate": {},
+  "crawler_os_event": {
+    "event_type": "quet.yeu_cau",
+    "source_os": "03_OPC_OS",
+    "target_os": "08_CRAWLER_OS",
+    "opc_id": "opc001_chiemtinh",
+    "domain": "astrology",
+    "query_focus": "Câu hỏi thường gặp và nhu cầu thực tế của khách hàng mảng Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn)"
+  },
+  "agent_policy_note": "Hệ thống chỉ đọc số liệu và đề xuất; mọi khoản chi quảng cáo đều phải do người phụ trách duyệt (QUY-CHUAN 6.2)."
+}

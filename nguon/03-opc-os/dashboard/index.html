@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bảng Điều Khiển Đa Dịch Vụ · Hệ Điều Hành Doanh Nghiệp Một Người</title>
+<style>
+  :root {
+    --bg: #0f172a; --card: #1e293b; --border: #334155; --text: #f8fafc; --muted: #cbd5e1;
+    --red: #ef4444; --green: #22c55e; --amber: #f59e0b; --blue: #38bdf8;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; font-size: 15px; line-height: 1.55; background: var(--bg); color: var(--text); overflow-x: hidden; }
+  .wrap { max-width: 1360px; margin: 0 auto; padding: 24px; }
+  .alert-banner {
+    background: #7f1d1d;
+    border: 2px solid #f87171; border-radius: 14px; padding: 18px 22px; margin-bottom: 22px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .alert-banner h2 { margin: 0 0 6px 0; font-size: 1.2rem; color: #fecaca; }
+  .alert-banner p { margin: 0; color: #fee2e2; font-size: 0.95rem; }
+  .alert-num { font-size: 1.45rem; font-weight: 800; color: #fff; background: rgba(0,0,0,0.28); padding: 10px 16px; border-radius: 10px; white-space: nowrap; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 16px; gap: 16px; flex-wrap: wrap; }
+  .header h1 { margin: 0; font-size: 1.5rem; color: var(--blue); }
+  .header p { margin: 4px 0 0 0; color: var(--muted); font-size: 0.95rem; }
+  .btn-primary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; min-width: 48px; padding: 12px 20px; background: #2563eb; color: #fff; border-radius: 10px; font-weight: 700; font-size: 0.95rem; text-decoration: none; border: 1px solid #3b82f6; }
+  .btn-primary:hover { background: #1d4ed8; text-decoration: none; }
+  .btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 10px 14px; background: #0f172a; color: #e2e8f0; border-radius: 8px; font-weight: 600; font-size: 0.92rem; text-decoration: none; border: 1px solid #475569; }
+  .btn-secondary:hover { background: #334155; text-decoration: none; }
+  .tbl-link { display: inline-flex; align-items: center; min-height: 44px; min-width: 44px; padding: 6px 10px; margin: 2px; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: var(--blue); font-size: 0.9rem; text-decoration: none; }
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 22px; }
+  .opc-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; min-width: 0; }
+  .opc-badge { display: inline-block; background: #0f172a; color: var(--blue); padding: 5px 12px; border-radius: 999px; font-size: 0.9rem; margin-bottom: 8px; border: 1px solid #0284c7; }
+  .opc-card h3 { margin: 4px 0 6px 0; font-size: 1.15rem; }
+  .opc-meta { margin: 0 0 12px 0; color: var(--muted); font-size: 0.94rem; }
+  .opc-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; background: #0f172a; padding: 12px; border-radius: 8px; margin-bottom: 10px; }
+  .opc-stats span { display: block; font-size: 0.9rem; color: var(--muted); }
+  .opc-stats strong { font-size: 1rem; color: var(--green); }
+  .opc-cum { margin: 6px 0; font-size: 0.92rem; color: #e2e8f0; }
+  .opc-links { margin: 12px 0 0 0; }
+  a { color: var(--blue); text-decoration: none; }
+  details.xem-them { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 18px; margin-bottom: 16px; min-width: 0; }
+  details.xem-them summary { min-height: 44px; display: flex; align-items: center; cursor: pointer; font-size: 1rem; font-weight: 700; color: #93c5fd; }
+  .gate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+  .gate-box { background: #172554; border: 1px solid #334155; border-radius: 12px; padding: 16px; min-width: 0; }
+  .gate-box h3 { margin: 0 0 8px 0; color: #93c5fd; font-size: 1.05rem; }
+  .gate-box ul { margin: 0; padding-left: 18px; color: #dbeafe; font-size: 0.94rem; line-height: 1.6; }
+  .table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; min-width: 680px; }
+  th, td { border-bottom: 1px solid var(--border); padding: 10px 12px; text-align: left; vertical-align: middle; font-size: 0.92rem; }
+  th { color: var(--muted); font-weight: 600; background: rgba(15,23,42,0.5); }
+  .sub-cell { font-size: 0.9rem; color: var(--muted); }
+  .pill { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 0.9rem; font-weight: 600; }
+  .pill.ok { background: rgba(34,197,94,0.18); color: #86efac; border: 1px solid #16a34a; }
+  .pill.warn { background: rgba(245,158,11,0.18); color: #fcd34d; border: 1px solid #d97706; }
+  #loading-overlay { display: none; position: fixed; inset: 0; background: rgba(15,23,42,0.88); z-index: 9999; align-items: center; justify-content: center; padding: 20px; text-align: center; font-size: 1.1rem; font-weight: 700; color: #f8fafc; }
+  .empty-state { display: none; padding: 20px; border: 1px dashed var(--border); border-radius: 10px; text-align: center; color: var(--muted); font-size: 0.95rem; }
+  @media (max-width: 768px) {
+    .wrap { padding: 12px; }
+    .grid-3, .gate-grid { grid-template-columns: 1fr; }
+    .alert-banner { padding: 14px; }
+    .alert-num { font-size: 1.25rem; width: 100%; text-align: center; }
+    .header h1 { font-size: 1.25rem; }
+  }
+</style>
+</head>
+<body>
+<div id="loading-overlay" data-state="loading">⏳ Đang tải dữ liệu hệ thống, vui lòng chờ trong giây lát...</div>
+<main class="wrap" role="main">
+  <div class="alert-banner">
+    <div>
+      <h2>🚨 CẢNH BÁO ĐỎ NGƯỠNG 400 TRIỆU VNĐ/NĂM (TÍNH GỘP CẢ 3 DỊCH VỤ TRÊN TÀI KHOẢN VÂN ANH)</h2>
+      <p>Doanh thu luỹ kế gộp đạt 404,120,000 VNĐ (vượt ngưỡng 400.000.000 VNĐ tại đơn HN00002) · Doanh thu phiên: <b>7,120,000 đ</b> · Lãi ròng: <b>7,119,890 đ (100.0%)</b></p>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <div class="alert-num">404,120,000 VNĐ</div>
+    </div>
+  </div>
+
+  <div class="header">
+    <div>
+      <h1>🎛️ BẢNG ĐIỀU KHIỂN ĐA DỊCH VỤ (HỆ ĐIỀU HÀNH DOANH NGHIỆP MỘT NGƯỜI)</h1>
+      <p>Tự động nhận diện 3 dịch vụ đang cấu hình — Giám sát đơn hàng, báo cáo PDF và sổ kế toán gộp</p>
+    </div>
+    <a class="btn-primary" href="/store/opc001_chiemtinh">🚀 Tạo Đơn Hàng Mới Ngay (Chiêm Tinh Số)</a>
+  </div>
+
+  <div class="empty-state" data-state="empty">Chưa có đơn hàng nào trong danh sách hiện tại. Hãy bấm "Tạo Đơn Hàng Mới Ngay" để bắt đầu.</div>
+
+  <div class="grid-3">
+    
+        <div class="opc-card">
+          <div class="opc-badge">Ký hiệu đơn: <b>CT</b></div>
+          <h3>Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn)</h3>
+          <p class="opc-meta">Lĩnh vực: <b>Chiêm tinh học Bản đồ sao</b> · Giá bán: <b>199,000 đ</b></p>
+          <div class="opc-stats">
+            <div><span>Kịch bản khớp</span><strong>14/14</strong></div>
+            <div><span>Đơn thành công</span><strong>10 đơn</strong></div>
+            <div><span>Doanh thu dịch vụ</span><strong>2,140,000 đ</strong></div>
+          </div>
+          <p class="opc-cum">Luỹ kế tài khoản Vân Anh: <b>398,344,000 đ</b> · Kênh: <b>Đạt chuẩn Mở rộng</b></p>
+          <p class="opc-cum">Đơn gần nhất: <b>Nguyễn Hải Yến (CT00013) · Lê Hoàng Bảo (CT00012) · Nguyễn Hải Yến (CT00011)</b></p>
+        </div>
+        
+        <div class="opc-card">
+          <div class="opc-badge">Ký hiệu đơn: <b>BK</b></div>
+          <h3>Bộ Prompt &amp; Template AI Cá Nhân Hoá Cho Dân Ngân Hàng [GIẢ LẬP]</h3>
+          <p class="opc-meta">Lĩnh vực: <b>Trợ lý AI Nghiệp vụ Ngân hàng</b> · Giá bán: <b>199,000 đ</b></p>
+          <div class="opc-stats">
+            <div><span>Kịch bản khớp</span><strong>14/14</strong></div>
+            <div><span>Đơn thành công</span><strong>10 đơn</strong></div>
+            <div><span>Doanh thu dịch vụ</span><strong>1,990,000 đ</strong></div>
+          </div>
+          <p class="opc-cum">Luỹ kế tài khoản Vân Anh: <b>399,538,000 đ</b> · Kênh: <b>Đạt chuẩn Mở rộng</b></p>
+          <p class="opc-cum">Đơn gần nhất: <b>Vũ Minh Quân (BK00013) · Vũ Minh Quân (BK00012) · Vũ Minh Quân (BK00011)</b></p>
+        </div>
+        
+        <div class="opc-card">
+          <div class="opc-badge">Ký hiệu đơn: <b>HN</b></div>
+          <h3>Hồ Sơ Hướng Nghiệp Học Sinh Lớp 9–12 (IPIP RIASEC 6 Nhóm) [GIẢ LẬP]</h3>
+          <p class="opc-meta">Lĩnh vực: <b>Hướng nghiệp Học sinh THPT</b> · Giá bán: <b>299,000 đ</b></p>
+          <div class="opc-stats">
+            <div><span>Kịch bản khớp</span><strong>14/14</strong></div>
+            <div><span>Đơn thành công</span><strong>10 đơn</strong></div>
+            <div><span>Doanh thu dịch vụ</span><strong>2,990,000 đ</strong></div>
+          </div>
+          <p class="opc-cum">Luỹ kế tài khoản Vân Anh: <b>401,332,000 đ</b> · Kênh: <b>Đạt chuẩn Mở rộng</b></p>
+          <p class="opc-cum">Đơn gần nhất: <b>Trần Gia Minh (HN00013) · Trần Gia Minh (HN00012) · Trần Gia Minh (HN00011)</b></p>
+        </div>
+        
+  </div>
+
+  
+        <details class="xem-them opc-table-sec">
+          <summary>📂 Xem thêm lịch sử đơn hàng &amp; tệp PDF của Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn) (14/14 đơn)</summary>
+          <div style="margin:10px 0;">
+            <a class="btn-secondary" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00013.html">🖥️ Mở Trang Đơn &amp; Báo Cáo PDF Gần Nhất (Chiêm Tinh Số — Bản đồ sao cá nhân (chiemtinh.vn))</a>
+          </div>
+          <div class="table-wrap" style="margin-top:8px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kịch bản</th><th>Mã đơn</th><th>Khách hàng / Ngữ cảnh</th><th>Trạng thái xử lý</th><th>Khớp</th><th>Thời gian</th><th>Thông số chuyên biệt</th><th>Sản phẩm đầu ra</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>CT00013</b></td>
+              <td>Nguyễn Hải Yến<div class="sub-cell">Đà Nẵng</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.413 giây</td>
+              <td>Điểm kiểm định nội dung: 99.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00013/bao-cao.pdf" target="_blank">📄 Bản PDF (35 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00013.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>CT00012</b></td>
+              <td>Lê Hoàng Bảo<div class="sub-cell">Đà Nẵng</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>9.384 giây</td>
+              <td>Điểm kiểm định nội dung: 99.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00012/bao-cao.pdf" target="_blank">📄 Bản PDF (35 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00012.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>CT00011</b></td>
+              <td>Nguyễn Hải Yến<div class="sub-cell">Đà Nẵng</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.414 giây</td>
+              <td>Điểm kiểm định nội dung: 99.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00011/bao-cao.pdf" target="_blank">📄 Bản PDF (35 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00011.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>CT00010</b></td>
+              <td>Lê Hoàng Bảo<div class="sub-cell">Đà Nẵng</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>9.618 giây</td>
+              <td>Điểm kiểm định nội dung: 99.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00010/bao-cao.pdf" target="_blank">📄 Bản PDF (35 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00010.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 01</td>
+              <td><b>CT00001</b></td>
+              <td>Trần Minh Anh<div class="sub-cell">1994-08-21</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>11.049 giây</td>
+              <td>Điểm kiểm định nội dung: 97.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00001/bao-cao.pdf" target="_blank">📄 Bản PDF (34 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00001.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 02</td>
+              <td><b>CT00002</b></td>
+              <td>Nguyễn Thảo Vy<div class="sub-cell">1996-04-12</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>7.242 giây</td>
+              <td>Điểm kiểm định nội dung: 83.6/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00002/bao-cao.pdf" target="_blank">📄 Bản PDF (34 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 03</td>
+              <td><b>CT00003</b></td>
+              <td>Lê Hoàng Nam<div class="sub-cell">1992-11-05</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>6.173 giây</td>
+              <td>Điểm kiểm định nội dung: 99.3/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00003/bao-cao.pdf" target="_blank">📄 Bản PDF (34 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00003.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 04</td>
+              <td><b>CT00002</b></td>
+              <td>Nguyễn Thảo Vy (Webhook gửi lặp)<div class="sub-cell">1996-04-12</div></td>
+              <td><span class="pill warn">Bỏ qua giao dịch trùng</span></td>
+              <td>✅</td>
+              <td>0.001 giây</td>
+              <td>Điểm kiểm định nội dung: 83.6/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00002/bao-cao.pdf" target="_blank">📄 Bản PDF (34 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 05</td>
+              <td><b>CT00004</b></td>
+              <td>Vũ Đức Minh<div class="sub-cell">1991-02-18</div></td>
+              <td><span class="pill warn">Từ chối xác thực chữ ký</span></td>
+              <td>✅</td>
+              <td>0.011 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00004.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 06</td>
+              <td><b>CT00005</b></td>
+              <td>Đỗ Lan Hương<div class="sub-cell">1998-07-30</div></td>
+              <td><span class="pill warn">Thanh toán thiếu (Chờ xử lý)</span></td>
+              <td>✅</td>
+              <td>0.023 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00005.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 07</td>
+              <td><b>CT00006</b></td>
+              <td>Hoàng Gia Bảo<div class="sub-cell">1995-12-10</div></td>
+              <td><span class="pill warn">Quá hạn thanh toán (Chờ hoàn tiền)</span></td>
+              <td>✅</td>
+              <td>0.022 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00006.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 08</td>
+              <td><b>CT00007</b></td>
+              <td>Phạm Thanh Hằng<div class="sub-cell">1993-09-25</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>6.397 giây</td>
+              <td>Điểm kiểm định nội dung: 94.5/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00007/bao-cao.pdf" target="_blank">📄 Bản PDF (33 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00007.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 09</td>
+              <td><b>CT00008</b></td>
+              <td>Ngô Minh Tuấn<div class="sub-cell">1990-03-14</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>6.325 giây</td>
+              <td>Điểm kiểm định nội dung: 95.0/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00008/bao-cao.pdf" target="_blank">📄 Bản PDF (25 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00008.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản 10</td>
+              <td><b>CT00009</b></td>
+              <td>Bùi Ngọc Ánh<div class="sub-cell">1999-10-08</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>6.148 giây</td>
+              <td>Điểm kiểm định nội dung: 97.3/100</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/CT00009/bao-cao.pdf" target="_blank">📄 Bản PDF (34 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_CT00009.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </details>
+        
+        <details class="xem-them opc-table-sec">
+          <summary>📂 Xem thêm lịch sử đơn hàng &amp; tệp PDF của Bộ Prompt &amp; Template AI Cá Nhân Hoá Cho Dân Ngân Hàng [GIẢ LẬP] (14/14 đơn)</summary>
+          <div style="margin:10px 0;">
+            <a class="btn-secondary" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00013.html">🖥️ Mở Trang Đơn &amp; Báo Cáo PDF Gần Nhất (Bộ Prompt &amp; Template AI Cá Nhân Hoá Cho Dân Ngân Hàng [GIẢ LẬP])</a>
+          </div>
+          <div class="table-wrap" style="margin-top:8px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kịch bản</th><th>Mã đơn</th><th>Khách hàng / Ngữ cảnh</th><th>Trạng thái xử lý</th><th>Khớp</th><th>Thời gian</th><th>Thông số chuyên biệt</th><th>Sản phẩm đầu ra</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>BK00013</b></td>
+              <td>Vũ Minh Quân<div class="sub-cell">Chuyên viên Quản lý Quan hệ Khách hàng Doanh nghiệp</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.026 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00013/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00013/bo_cong_cu_BK00013.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00013.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>BK00012</b></td>
+              <td>Vũ Minh Quân<div class="sub-cell">Chuyên viên Quản lý Quan hệ Khách hàng Doanh nghiệp</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.127 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00012/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00012/bo_cong_cu_BK00012.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00012.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>BK00011</b></td>
+              <td>Vũ Minh Quân<div class="sub-cell">Chuyên viên Quản lý Quan hệ Khách hàng Doanh nghiệp</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.349 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00011/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00011/bo_cong_cu_BK00011.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00011.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>BK00010</b></td>
+              <td>Vũ Minh Quân<div class="sub-cell">Chuyên viên Quản lý Quan hệ Khách hàng Doanh nghiệp</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.893 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00010/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00010/bo_cong_cu_BK00010.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00010.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-01</td>
+              <td><b>BK00001</b></td>
+              <td>Phạm Quốc Khánh<div class="sub-cell">RM Khách hàng Doanh nghiệp SME</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.292 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00001/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00001/bo_cong_cu_BK00001.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00001.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-02</td>
+              <td><b>BK00002</b></td>
+              <td>Lê Thu Trang<div class="sub-cell">Giao dịch viên Quầy (Teller)</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.01 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00002/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00002/bo_cong_cu_BK00002.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-03</td>
+              <td><b>BK00003</b></td>
+              <td>Hoàng Minh Đức<div class="sub-cell">Chuyên viên Thẩm định Tín dụng Cá nhân</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.861 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00003/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00003/bo_cong_cu_BK00003.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00003.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-04</td>
+              <td><b>BK00002</b></td>
+              <td>Lê Thu Trang (Webhook lặp)<div class="sub-cell">Giao dịch viên Quầy (Teller)</div></td>
+              <td><span class="pill warn">Bỏ qua giao dịch trùng</span></td>
+              <td>✅</td>
+              <td>0.001 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00002/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00002/bo_cong_cu_BK00002.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-05</td>
+              <td><b>BK00004</b></td>
+              <td>Đặng Hải Yến<div class="sub-cell">Chuyên viên Vận hành &amp; Đối soát Thanh toán</div></td>
+              <td><span class="pill warn">Từ chối xác thực chữ ký</span></td>
+              <td>✅</td>
+              <td>0.038 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00004.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-06</td>
+              <td><b>BK00005</b></td>
+              <td>Võ Thanh Tùng<div class="sub-cell">RM Khách hàng Cá nhân Ưu tiên</div></td>
+              <td><span class="pill warn">Thanh toán thiếu (Chờ xử lý)</span></td>
+              <td>✅</td>
+              <td>0.053 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00005.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-07</td>
+              <td><b>BK00006</b></td>
+              <td>Trịnh Bảo Ngọc<div class="sub-cell">Chuyên viên Kiểm soát Tuân thủ</div></td>
+              <td><span class="pill warn">Quá hạn thanh toán (Chờ hoàn tiền)</span></td>
+              <td>✅</td>
+              <td>0.043 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00006.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-08</td>
+              <td><b>BK00007</b></td>
+              <td>Nguyễn Đình Khoa<div class="sub-cell">Chuyên viên Vận hành &amp; Đối soát Thanh toán</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.049 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00007/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00007/bo_cong_cu_BK00007.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00007.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-09</td>
+              <td><b>BK00008</b></td>
+              <td>Lý Mỹ Linh<div class="sub-cell">RM Khách hàng Cá nhân</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.108 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00008/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00008/bo_cong_cu_BK00008.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00008.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản NH-10</td>
+              <td><b>BK00009</b></td>
+              <td>Phan Thanh Sơn<div class="sub-cell">Chuyên viên Thẩm định Tín dụng Doanh nghiệp</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.847 giây</td>
+              <td>Nhóm vị trí: Ngân hàng | 18 mẫu câu lệnh (100.0% khớp việc)</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00009/bao-cao.pdf" target="_blank">📄 Bản PDF (10 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/BK00009/bo_cong_cu_BK00009.zip" target="_blank">📦 Bộ tài liệu nén</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_BK00009.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </details>
+        
+        <details class="xem-them opc-table-sec">
+          <summary>📂 Xem thêm lịch sử đơn hàng &amp; tệp PDF của Hồ Sơ Hướng Nghiệp Học Sinh Lớp 9–12 (IPIP RIASEC 6 Nhóm) [GIẢ LẬP] (14/14 đơn)</summary>
+          <div style="margin:10px 0;">
+            <a class="btn-secondary" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00013.html">🖥️ Mở Trang Đơn &amp; Báo Cáo PDF Gần Nhất (Hồ Sơ Hướng Nghiệp Học Sinh Lớp 9–12 (IPIP RIASEC 6 Nhóm) [GIẢ LẬP])</a>
+          </div>
+          <div class="table-wrap" style="margin-top:8px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kịch bản</th><th>Mã đơn</th><th>Khách hàng / Ngữ cảnh</th><th>Trạng thái xử lý</th><th>Khớp</th><th>Thời gian</th><th>Thông số chuyên biệt</th><th>Sản phẩm đầu ra</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>HN00013</b></td>
+              <td>Trần Gia Minh<div class="sub-cell">Lớp 11 THPT</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.15 giây</td>
+              <td>Tổ hợp sở thích: IRC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00013/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00013.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>HN00012</b></td>
+              <td>Trần Gia Minh<div class="sub-cell">Lớp 11 THPT</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.299 giây</td>
+              <td>Tổ hợp sở thích: IRC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00012/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00012.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>HN00011</b></td>
+              <td>Trần Gia Minh<div class="sub-cell">Lớp 11 THPT</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.805 giây</td>
+              <td>Tổ hợp sở thích: IRC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00011/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00011.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Đơn trực tiếp</td>
+              <td><b>HN00010</b></td>
+              <td>Trần Gia Minh<div class="sub-cell">Lớp 11 THPT</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.967 giây</td>
+              <td>Tổ hợp sở thích: IRC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00010/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00010.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-01</td>
+              <td><b>HN00001</b></td>
+              <td>Trần Gia Minh<div class="sub-cell">Lớp 11</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.391 giây</td>
+              <td>Tổ hợp sở thích: IRC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00001/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00001.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-02</td>
+              <td><b>HN00002</b></td>
+              <td>Lê Khánh Ngọc<div class="sub-cell">Lớp 10</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.719 giây</td>
+              <td>Tổ hợp sở thích: ASE | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00002/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-03</td>
+              <td><b>HN00003</b></td>
+              <td>Vũ Hoàng Khôi<div class="sub-cell">Lớp 12</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.834 giây</td>
+              <td>Tổ hợp sở thích: ECI | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00003/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00003.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-04</td>
+              <td><b>HN00002</b></td>
+              <td>Lê Khánh Ngọc<div class="sub-cell">Lớp 10</div></td>
+              <td><span class="pill warn">Bỏ qua giao dịch trùng</span></td>
+              <td>✅</td>
+              <td>0.001 giây</td>
+              <td>Tổ hợp sở thích: ASE | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00002/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00002.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-05</td>
+              <td><b>HN00004</b></td>
+              <td>Đỗ Minh Châu<div class="sub-cell">Lớp 9</div></td>
+              <td><span class="pill warn">Từ chối xác thực chữ ký</span></td>
+              <td>✅</td>
+              <td>0.026 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00004.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-06</td>
+              <td><b>HN00005</b></td>
+              <td>Hoàng Tuấn Kiệt<div class="sub-cell">Lớp 11</div></td>
+              <td><span class="pill warn">Thanh toán thiếu (Chờ xử lý)</span></td>
+              <td>✅</td>
+              <td>0.046 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00005.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-07</td>
+              <td><b>HN00006</b></td>
+              <td>Ngô Bảo Trân<div class="sub-cell">Lớp 12</div></td>
+              <td><span class="pill warn">Quá hạn thanh toán (Chờ hoàn tiền)</span></td>
+              <td>✅</td>
+              <td>0.042 giây</td>
+              <td></td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00006.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-08</td>
+              <td><b>HN00007</b></td>
+              <td>Phan Hải Đăng<div class="sub-cell">Lớp 12</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.905 giây</td>
+              <td>Tổ hợp sở thích: RIC | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00007/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00007.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-09</td>
+              <td><b>HN00008</b></td>
+              <td>Trịnh Phương Thảo<div class="sub-cell">Lớp 11</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>4.129 giây</td>
+              <td>Tổ hợp sở thích: EAS | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00008/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00008.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+            <tr>
+              <td>Kịch bản HN-10</td>
+              <td><b>HN00009</b></td>
+              <td>Nguyễn Đức Anh<div class="sub-cell">Lớp 9</div></td>
+              <td><span class="pill ok">Đã thanh toán &amp; Giao báo cáo</span></td>
+              <td>✅</td>
+              <td>3.937 giây</td>
+              <td>Tổ hợp sở thích: ISR | Tự xoá bài làm thô: 30 ngày</td>
+              <td><a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/reports/HN00009/bao-cao.pdf" target="_blank">📄 Bản PDF (13 trang)</a> <a class="tbl-link" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/order_pages/order_HN00009.html">🖥️ Trang đơn</a></td>
+            </tr>
+            
+              </tbody>
+            </table>
+          </div>
+        </details>
+        
+
+  <details class="xem-them">
+    <summary>🔍 Xem thêm sổ doanh thu kế toán S1a-HKD, kiểm định cá nhân hoá Ngân hàng &amp; bảo vệ học sinh THPT</summary>
+    <div style="margin:10px 0;">
+      <a class="btn-secondary" href="file:///D:/LINHX/PROTO/03_OPC_OS/runtime/multi_opc/shared_data/so-doanh-thu.csv">📒 Mở Tệp Sổ Doanh Thu S1a-HKD (.CSV)</a>
+    </div>
+    <div class="gate-grid">
+      <div class="gate-box">
+        <h3>✅ Cổng Kiểm Định Sản Phẩm — Cá Nhân Hoá Bộ Câu Lệnh Ngân Hàng</h3>
+        <ul>
+          <li>3 khách hàng ở 3 vị trí khác nhau: <b>Quản lý Quan hệ Khách hàng (RM), Giao dịch viên Quầy, Chuyên viên Thẩm định Tín dụng</b>.</li>
+          <li>Số bộ tài liệu nén độc lập sinh ra: <b>3/3 bộ khác nhau hoàn toàn</b>.</li>
+          <li>Tỷ lệ mẫu câu lệnh nhắc đúng vị trí &amp; công việc tốn thời gian đã khai: <b>100.0%</b> (Vượt ngưỡng yêu cầu &ge; 70%).</li>
+        </ul>
+      </div>
+      <div class="gate-box">
+        <h3>⚖️ Cổng Pháp Lý &amp; Bảo Vệ Trẻ Vị Thành Niên — Hồ Sơ Hướng Nghiệp Lớp 9–12</h3>
+        <ul>
+          <li>Bộ câu hỏi gốc: <b>Trắc nghiệm sở thích nghề nghiệp RIASEC 6 nhóm bản công khai</b> — không sao chép đề có bản quyền.</li>
+          <li>Số trang PDF thực tế (Đơn <b>HN00001</b>): <b>13 trang A4</b> (Đạt chuẩn 12–15 trang).</li>
+          <li>Bảo vệ học sinh: Phụ huynh xác nhận đồng ý trước khi mua, đường dẫn làm bài riêng không lưu danh tính, <b>tự xoá bài làm thô sau 30 ngày</b>, không phán xét cực đoan.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+</main>
+</body>
+</html>

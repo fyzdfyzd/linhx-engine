@@ -1,0 +1,29 @@
+{
+  "cumulative_revenue_vnd": 401290000,
+  "webhook_errors_count": 2,
+  "stuck_orders_over_5m": 0,
+  "founder_hours_per_day": 0.75,
+  "opcs_metrics": [
+    {
+      "opc_id": "opc001_chiemtinh",
+      "paid_orders": 6,
+      "revenue_vnd": 400995000,
+      "ai_cost_vnd": 310,
+      "avg_delivery_seconds": 3.4
+    },
+    {
+      "opc_id": "opc002_bank_prompt_kit",
+      "paid_orders": 6,
+      "revenue_vnd": 1194000,
+      "ai_cost_vnd": 290,
+      "avg_delivery_seconds": 2.1
+    },
+    {
+      "opc_id": "opc003_huong_nghiep_hs",
+      "paid_orders": 6,
+      "revenue_vnd": 1794000,
+      "ai_cost_vnd": 340,
+      "avg_delivery_seconds": 2.8
+    }
+  ]
+}

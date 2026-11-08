@@ -1,0 +1,37 @@
+{
+  "module_id": "06_cskh_da_kenh",
+  "name": "CSKH Đa kênh, Inbox 3 tầng (AmbassadorOS M8) & Xử lý 3 Ca lạ",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Kể Chuyện (CMO) & Anh Vận Hành (COO)",
+  "submodules": [
+    "6.1_gom_tin_da_kenh",
+    "6.2_tra_loi_mau_faq_tang_1",
+    "6.3_hoi_dap_report_va_sua_gio_sinh_tang_2",
+    "6.4_chuyen_founder_hoan_tien_tang_3"
+  ],
+  "events_in": ["khach.hoi"],
+  "events_out": ["cskh.da_tra_loi", "cskh.chuyen_founder_cap_3"],
+  "input_schema": {
+    "type": "object",
+    "required": ["opc_id", "case_type", "message"],
+    "properties": {
+      "opc_id": {"type": "string"},
+      "order_code": {"type": "string"},
+      "channel": {"type": "string"},
+      "case_type": {"type": "string", "enum": ["wrong_birth_time", "followup_report_question", "demand_refund", "general_faq"]},
+      "message": {"type": "string"},
+      "order_context": {"type": "object"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["tier", "resolved_automatically", "escalated_to_founder", "reply_text", "actions_taken"],
+    "properties": {
+      "tier": {"type": "integer"},
+      "resolved_automatically": {"type": "boolean"},
+      "escalated_to_founder": {"type": "boolean"},
+      "reply_text": {"type": "string"},
+      "actions_taken": {"type": "array"}
+    }
+  }
+}

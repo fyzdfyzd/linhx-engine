@@ -1,0 +1,50 @@
+{
+  "module_id": "01_nghien_cuu_thiet_ke_report",
+  "name": "Nghiên cứu, thiết kế và sinh Report cá nhân hoá",
+  "version": "1.0.0",
+  "owner_c_board": "Chị Đóng Gói (CPO)",
+  "submodules": [
+    "1.1_nghien_cuu_ngach",
+    "1.2_khung_blueprint",
+    "1.3_loi_tinh_tat_dinh",
+    "1.4_viet_report_chong_slop",
+    "1.5_xuat_pdf_kiem_truoc_giao"
+  ],
+  "events_in": ["don.da_tra"],
+  "events_out": ["report.xong", "report.cho_duyet_tay"],
+  "input_schema": {
+    "type": "object",
+    "required": ["order_code", "opc_id", "customer_input"],
+    "properties": {
+      "order_code": {"type": "string"},
+      "opc_id": {"type": "string"},
+      "domain": {"type": "string"},
+      "product": {"type": "string"},
+      "customer_input": {"type": "object"},
+      "order_seq_index": {"type": "integer"},
+      "render_pdf_file": {"type": "boolean"}
+    }
+  },
+  "output_schema": {
+    "type": "object",
+    "required": ["status", "report_id", "html_path", "pdf_path", "quality_gate", "slop_gate", "metrics"],
+    "properties": {
+      "status": {"type": "string"},
+      "report_id": {"type": "string"},
+      "html_path": {"type": "string"},
+      "pdf_path": {"type": ["string", "null"]},
+      "quality_gate": {"type": "object"},
+      "slop_gate": {"type": "object"},
+      "manual_review_status": {"type": "string"},
+      "metrics": {
+        "type": "object",
+        "properties": {
+          "elapsed_seconds": {"type": "number"},
+          "input_tokens": {"type": "integer"},
+          "output_tokens": {"type": "integer"},
+          "ai_cost_vnd": {"type": "number"}
+        }
+      }
+    }
+  }
+}

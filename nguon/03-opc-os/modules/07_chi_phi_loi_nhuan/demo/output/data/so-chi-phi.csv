@@ -1,0 +1,4 @@
+opc_id,ma_don,loai_chi_phi,input_tokens,output_tokens,so_tien_vnd
+opc001_chiemtinh,CT00001,AI_API_TOKEN,650,320,25
+opc002_bank_prompt_kit,BK00001,AI_API_TOKEN,650,320,30
+opc003_huong_nghiep_hs,HN00001,AI_API_TOKEN,650,320,35

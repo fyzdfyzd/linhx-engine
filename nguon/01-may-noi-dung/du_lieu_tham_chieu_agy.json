@@ -1,0 +1,159 @@
+{
+  "ngay_cap_nhat": "2026-10-25T12:50:45+07:00",
+  "cong_cu": "AGY search_web (Google Grounding Search)",
+  "bo_tham_chieu": {
+    "bai_viet": {
+      "query": "Harvard Business Review Workslop AI generated work productivity tax 2025 2026 study",
+      "nguon_noi_dung": [
+        {
+          "ma": "N1",
+          "ten": "Workday Global Study (2026) — The AI Productivity Tax & Rework Penalty",
+          "url": "https://www.hrdive.com/",
+          "tom_tat": "Cứ 10 giờ tiết kiệm nhờ AI tạo bản nháp thì mất gần 4 giờ (37%–40% thời gian tiết kiệm) chỉ để làm lại, biên tập và sửa lỗi đầu ra AI chất lượng thấp; khối Nhân sự và Hành chính mất tới 38% thời gian (tương đương một phẩy năm tuần mỗi năm)."
+        },
+        {
+          "ma": "N2",
+          "ten": "Harvard Business Review / BetterUp Labs & Stanford (2025–2026) — Workslop & Cognitive Labor Shift",
+          "url": "https://hbr.org/",
+          "tom_tat": "Định nghĩa hiện tượng Workslop: văn bản do AI sinh ra có vẻ ngoài bóng bẩy nhưng rỗng ruột, đẩy gánh nặng nhận thức sang đồng nghiệp và người duyệt ở hạ lưu quy trình."
+        },
+        {
+          "ma": "N3",
+          "ten": "UC Berkeley Ethnographic Study on HBR (Aruna Ranganathan & Xingqi Maggie Ye, 2026) — AI Intensifies Work",
+          "url": "https://hbr.org/",
+          "tom_tat": "Nghiên cứu điền dã tám tháng tại doanh nghiệp công nghệ hai trăm nhân sự: nghịch lý Jevons khiến AI không giảm tải mà làm phình phạm vi công việc, tăng mệt mỏi nhận thức (brain fry) và xóa nhòa ranh giới nghỉ ngơi."
+        },
+        {
+          "ma": "N4",
+          "ten": "BCG & HBR Multi-Tool Study (2026) — The Tool-Ceiling Effect",
+          "url": "https://www.forbes.com/",
+          "tom_tat": "Hiệu ứng trần công cụ: dùng từ hai đến ba ứng dụng AI giúp tăng năng suất, nhưng vượt quá ngưỡng này gây quá tải chuyển ngữ cảnh và làm sụt giảm tổng đầu ra thực tế."
+        },
+        {
+          "ma": "N5",
+          "ten": "Cyberhaven Labs & IBM Shadow AI Breach Report (2026) — Data Leakage via Unsanctioned Chatbots",
+          "url": "https://www.verax.ai/",
+          "tom_tat": "Bảy mươi lăm đến bảy mươi tám phần trăm nhân sự tri thức dùng AI cá nhân chưa phê duyệt; mười một phần trăm nội dung dán vào chatbot công cộng chứa dữ liệu độc quyền hoặc mã nguồn, làm chi phí mỗi vụ rò rỉ tăng thêm sáu trăm bảy mươi nghìn đô la."
+        },
+        {
+          "ma": "N6",
+          "ten": "Passau & Arizona State University (Academy of Management Review 2025–2026) — The Use-and-Repair Knowledge Trap",
+          "url": "https://www.uni-passau.de/",
+          "tom_tat": "Bẫy tri thức sử dụng và sửa chữa: khi giao khoán việc viết tài liệu và tổng hợp cho AI, nhân sự trẻ mất cơ hội học kinh nghiệm ngầm, còn khi nhân sự kỳ cựu nghỉ việc thì tổ chức mất khả năng tự hiệu chỉnh quy trình."
+        },
+        {
+          "ma": "N7",
+          "ten": "BI Norwegian Business School & MIT Media Lab (2026) — AI Summarization & Loss of Tacit Nuance",
+          "url": "https://www.bi.no/",
+          "tom_tat": "Công cụ tóm tắt tự động gọt phẳng các biên bản tranh luận gai góc thành gạch đầu dòng vô trùng, xóa mất lý do tại sao một phương án bị bác bỏ và gây chứng mất trí nhớ tổ chức."
+        }
+      ],
+      "nguon_thi_giac_media": [
+        {
+          "ma": "V1",
+          "ten": "Sakedemy Brand Guideline v2 (LAB043) — Khuôn Banner Web 1920x600 & Social Vuông Lá 1080x1080",
+          "quy_tac": "Nền Trắng #FFFFFF (60%), mảng Xanh Lá #6EB264 (25%) bo góc hình lá (border-radius 240px 0 240px 0) ôm ảnh chụp lớp học/văn phòng Việt Nam thật, chữ tiêu đề Xanh Rêu Đậm #02403B (10%), dải nhấn gradient Lá Non #A3D34F -> Ngọc #26CABE (5%). Cấm đặt chữ trắng trên nền #6EB264."
+        },
+        {
+          "ma": "V2",
+          "ten": "LAB028 Exhibit Standard (D16) — Biểu đồ Thanh ngang So sánh Thời gian Thực chất",
+          "quy_tac": "Action Title là câu kết luận hoàn chỉnh 6–30 tiếng có động từ; nhãn số trực tiếp trên thanh (so_vn); không khung viền; lưới mảnh; một màu nhấn #02403B hoặc #6EB264."
+        }
+      ]
+    },
+    "report_mau": {
+      "query": "corporate AI training adoption ROI enterprise L&D benchmark report McKinsey Gartner 2025 2026",
+      "nguon_noi_dung": [
+        {
+          "ma": "N1",
+          "ten": "McKinsey Global AI Survey (2025–2026) — Adoption vs. EBIT Impact Gap",
+          "url": "https://www.mckinsey.com/",
+          "tom_tat": "Tám mươi tám phần trăm tổ chức đã dùng AI ở ít nhất một mảng nghiệp vụ và bốn mươi bốn phần trăm đang mở rộng quy mô, nhưng chỉ ba mươi bảy đến ba mươi chín phần trăm đo được tác động lên lợi nhuận (EBIT) và chỉ sáu phần trăm đạt mức tăng trưởng EBIT từ năm phần trăm trở lên."
+        },
+        {
+          "ma": "N2",
+          "ten": "The Conference Board & Gallup L&D Pulse (2026) — The Employee Training Deficit",
+          "url": "https://www.devlinpeck.com/",
+          "tom_tat": "Hơn năm mươi lăm phần trăm nhân sự dùng AI thường xuyên nhưng chỉ một phần ba (ba mươi ba phần trăm) được doanh nghiệp đào tạo bài bản trong sáu tháng qua; chỉ hai mươi lăm phần trăm hiểu rõ lộ trình tích hợp AI của ban lãnh đạo và bốn mươi chín phần trăm thấy công nghệ chạy nhanh hơn chương trình đào tạo nội bộ."
+        },
+        {
+          "ma": "N3",
+          "ten": "Enterprise Workflow Upskilling ROI Benchmark (2026) — Change Management Multiplier",
+          "url": "https://www.larridin.com/",
+          "tom_tat": "Doanh nghiệp nhúng đào tạo AI trực tiếp vào quy trình nghiệp vụ và quản trị thay đổi có khả năng đạt mục tiêu tài chính cao hơn bốn mươi bảy phần trăm, giúp ba mươi lăm phần trăm đơn vị cắt giảm tối thiểu mười phần trăm chi phí vận hành."
+        },
+        {
+          "ma": "N4",
+          "ten": "Gartner Enterprise Agentic AI Forecast (2026)",
+          "url": "https://www.gartner.com/",
+          "tom_tat": "Bốn mươi phần trăm ứng dụng doanh nghiệp chuyển dịch từ chatbot hỏi đáp rời rạc sang tác nhân AI gắn với quy trình nhiều bước."
+        },
+        {
+          "ma": "N5",
+          "ten": "NBER & Quarterly Journal of Economics Support Agent Study (2025–2026) — Skill-Curve Shift",
+          "url": "https://www.mavenagi.com/",
+          "tom_tat": "Trợ lý AI giúp tăng trung bình mười bốn đến mười lăm phần trăm số ca giải quyết mỗi giờ và đẩy năng suất nhân sự mới tăng ba mươi tư phần trăm, nhưng nhân sự kỳ cựu đi ngang hoặc giảm chất lượng nếu ỷ lại máy."
+        },
+        {
+          "ma": "N6",
+          "ten": "Aissist & Maven AGI Customer Operations Benchmark (2026) — Resolution vs. CSAT Gap",
+          "url": "https://www.aissist.io/",
+          "tom_tat": "Tỷ lệ tự động giải quyết tầng một trung vị đạt bốn mươi mốt phần trăm, nhưng điểm hài lòng khách hàng của kênh thuần AI vẫn thấp hơn người thật từ năm đến mười điểm ở các ca phức tạp."
+        },
+        {
+          "ma": "N7",
+          "ten": "Omdia & Snowflake Enterprise AI Readiness Benchmark (2026)",
+          "url": "https://www.snowflake.com/",
+          "tom_tat": "Bốn mươi phần trăm dự án AI khối kinh doanh và dịch vụ khách hàng thất bại do kho tri thức nội bộ và dữ liệu CRM phân mảnh gây ảo giác thông tin."
+        }
+      ],
+      "nguon_thi_giac_media": [
+        {
+          "ma": "V1",
+          "ten": "McKinsey / BCG Consulting Exhibit Architecture (AGY Web Search + LAB028)",
+          "quy_tac": "Bố cục bất đối xứng 70–80% bằng chứng (biểu đồ/bảng MECE) đi kèm 20–30% hộp luận giải; Action Title 24–28pt Bold nêu kết luận; bắt buộc dòng Nguồn ở chân biểu đồ."
+        },
+        {
+          "ma": "V2",
+          "ten": "Sakedemy Brand Guideline v2 (LAB043) — Hồ sơ đào tạo & Report A4",
+          "quy_tac": "Trang bìa và các trang ruột A4 dùng font Be Vietnam Pro + Source Serif 4, bảng màu #02403B / #6EB264 / #414141, ảnh thực tế trong khung lá bo góc đối xứng."
+        }
+      ]
+    },
+    "noi_dung_khoa_hoc": {
+      "query": "cognitive offloading generative AI critical thinking education workshop design research 2025 2026",
+      "nguon_noi_dung": [
+        {
+          "ma": "N1",
+          "ten": "Cognitive Offloading Spectrum Research (2025–2026) — Substitutive vs. Productive Offloading",
+          "url": "https://www.semanticscholar.org/",
+          "tom_tat": "Phân tách rõ ủy thác thay thế (substitutive offloading gây lười biếng siêu nhận thức và ảo tưởng thành thạo) với ủy thác kiến tạo (productive offloading: giao tác vụ cơ học bậc thấp cho AI để con người tập trung thẩm định và tổng hợp)."
+        },
+        {
+          "ma": "N2",
+          "ten": "Modes of Human-AI Interaction Framework (ResearchGate 2025–2026)",
+          "url": "https://www.researchgate.net/",
+          "tom_tat": "Ba cấp độ tương tác: Tiêu thụ thụ động (Passive Consumption) -> Học tập có hỗ trợ (Assisted Learning) -> Cộng tác phản biện (Reflective Collaboration / Adversarial Prompting coi AI là trợ lý sơ cấp cần kiểm toán chéo)."
+        },
+        {
+          "ma": "N3",
+          "ten": "Epistemic Governance & Metacognitive Checkpoints in Workshop Design (Zenodo 2026)",
+          "url": "https://zenodo.org/",
+          "tom_tat": "Thiết kế bài tập chống phụ thuộc AI không bằng cách cấm công cụ mà bằng cách cài các chốt kiểm soát siêu nhận thức: nhật ký phản biện prompt, bảng kiểm lỗi suy luận và bảo vệ trực tiếp phương án."
+        }
+      ],
+      "nguon_thi_giac_media": [
+        {
+          "ma": "V1",
+          "ten": "Sakedemy Brand Guideline v2 (LAB043) — Khuôn Slide 16:9 (slide-169.html, 1920x1080)",
+          "quy_tac": "Nền Xanh Rêu Đậm #02403B, logo ngang âm bản góc trên trái, tiêu đề trắng, bốn bước đánh số trong ô hình lá #6EB264, ảnh lớp học thật trong khung hình lá (border-radius 260px 0 260px 0) bên phải, hoạ tiết gân lá mờ 14% ở góc dưới phải."
+        },
+        {
+          "ma": "V2",
+          "ten": "LAB066 3-Round Character Anchor (Luna Mai / Giảng viên Sakedemy)",
+          "quy_tac": "Khóa đồng nhất gương mặt qua 3 góc (nhìn thẳng, nghiêng 3/4, nghiêng hẳn profile), chấm bằng 4 Persona + Giám khảo lỗi kỹ thuật."
+        }
+      ]
+    }
+  }
+}

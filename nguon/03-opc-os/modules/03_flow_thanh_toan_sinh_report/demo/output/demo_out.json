@@ -1,0 +1,13 @@
+{
+  "created_order": "CT00001",
+  "http_status": 200,
+  "webhook_result": {
+    "success": true,
+    "action": "paid_and_dispatched",
+    "order_code": "CT00001",
+    "token": "OwiOAsFuc2a32A",
+    "order_page_html": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\03_flow_thanh_toan_sinh_report\\demo\\output\\data\\order_pages\\order_CT00001.html",
+    "pdf_path": null,
+    "zip_path": null
+  }
+}

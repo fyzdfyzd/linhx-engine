@@ -1,0 +1,51 @@
+{
+  "daily_kpi_0600": {
+    "report_time": "06:00",
+    "total_paid_orders_all_opcs": 18,
+    "cumulative_revenue_vnd": 401290000,
+    "total_ai_cost_vnd": 940,
+    "ai_cost_ratio_pct": 0.0002,
+    "ai_cost_under_10pct_gate": true,
+    "founder_hours_per_day": 0.75,
+    "opcs_breakdown": [
+      {
+        "opc_id": "opc001_chiemtinh",
+        "paid_orders": 6,
+        "revenue_vnd": 400995000,
+        "ai_cost_vnd": 310,
+        "avg_delivery_seconds": 3.4
+      },
+      {
+        "opc_id": "opc002_bank_prompt_kit",
+        "paid_orders": 6,
+        "revenue_vnd": 1194000,
+        "ai_cost_vnd": 290,
+        "avg_delivery_seconds": 2.1
+      },
+      {
+        "opc_id": "opc003_huong_nghiep_hs",
+        "paid_orders": 6,
+        "revenue_vnd": 1794000,
+        "ai_cost_vnd": 340,
+        "avg_delivery_seconds": 2.8
+      }
+    ]
+  },
+  "alerts": [
+    {
+      "severity": "RED_CRITICAL",
+      "code": "TAX_THRESHOLD_400M_EXCEEDED",
+      "message": "Doanh thu luỹ kế gộp đạt 401,290,000 VNĐ (>= 400.000.000 VNĐ) trên tài khoản Vân Anh. Báo động đỏ kiểm tra ngưỡng thuế HKD!"
+    },
+    {
+      "severity": "WARNING",
+      "code": "WEBHOOK_REJECTED_EVENTS",
+      "message": "Phát hiện 2 lượt gọi webhook sai khoá/thiếu tiền đã bị hệ thống chặn an toàn."
+    }
+  ],
+  "backup_status": {
+    "daily_backup_ok": true,
+    "snapshot_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\10_giam_sat_kpi\\demo\\output\\backups\\2026-10-25\\kpi_snapshot.json"
+  },
+  "weekly_report_md_path": "D:\\LINHX\\PROTO\\03_OPC_OS\\modules\\10_giam_sat_kpi\\demo\\output\\bao-cao-tuan-01.md"
+}

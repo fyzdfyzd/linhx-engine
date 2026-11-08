@@ -1,0 +1,32 @@
+{
+  "loai": "de_xuat_pilot",
+  "ten_hien_thi": "Đề xuất triển khai thí điểm 90 ngày",
+  "mo_ta": "Hồ sơ đề xuất chương trình thí điểm chuyển đổi quy trình AI cấp phòng ban trong 90 ngày kèm bảng đo hiệu quả đầu ra.",
+  "kieu_xuat_ban": "report_mau",
+  "do_dai_chu": {
+    "min": 900,
+    "max": 1800,
+    "muc_tieu": 1250
+  },
+  "so_phan_chinh": {
+    "min": 4,
+    "max": 6
+  },
+  "bat_buoc_co": [
+    "Chẩn đoán điểm nghẽn thời gian thực tế tại phòng ban trước khi thí điểm",
+    "Bảng đối chiếu chỉ số đầu ra Trước và Sau 90 ngày thí điểm",
+    "Lộ trình 3 giai đoạn (Tuần 1-4, Tuần 5-8, Tuần 9-12) và tiêu chí nghiệm thu"
+  ],
+  "persona_mac_dinh": [
+    "sep_doanh_nghiep",
+    "quan_ly_van_hanh",
+    "hoc_vien_thuc_chien"
+  ],
+  "media_kem_theo": [
+    "anh_bia_16_9",
+    "bieu_do_so_lieu_svg",
+    "ban_in_pdf_a4"
+  ],
+  "nguong_cqs_toi_thieu": 82,
+  "nguong_aps_toi_thieu": 80
+}

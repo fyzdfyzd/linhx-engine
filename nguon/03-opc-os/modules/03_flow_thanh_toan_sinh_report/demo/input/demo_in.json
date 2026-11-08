@@ -1,0 +1,13 @@
+{
+  "opc_id": "opc001_chiemtinh",
+  "customer_input": {
+    "ten": "Nguyễn Thảo Vy",
+    "ten_goi": "Vy",
+    "ngay_sinh": "1996-04-12",
+    "gio_sinh": "09:15",
+    "noi_sinh": "TP. Hồ Chí Minh",
+    "contact": "vy.nguyen@example.com",
+    "consent": true
+  },
+  "amount": 199000
+}

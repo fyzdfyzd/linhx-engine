@@ -1,0 +1,24 @@
+{
+  "loai": "report_mau",
+  "ten_hien_thi": "Báo cáo mẫu chẩn đoán & tư vấn chiến lược (Chuẩn McKinsey/LAB028 + Report-Core LAB046)",
+  "buoc_6_dung": [
+    "LAB028 (linhx-report: viet-bao-cao, 05-ghost)",
+    "LAB046 (report-core: compose.py)"
+  ],
+  "buoc_7_8_9_dung": [
+    "LAB028 (07-kiem-so, 08-phan-bien)",
+    "LAB046 (quality.py 17 luật, textclean.py)",
+    "LAB049 (kiem_van.py)"
+  ],
+  "media_hoa": [
+    "LAB028 (dan-trang Typst/PDF, hinh-du-lieu SVG)",
+    "LAB046 (render HTML/PDF)",
+    "LAB043 (nhận diện tạm Sakedemy)"
+  ],
+  "giong_tac_gia": "giong-bao-cao-chien-luoc",
+  "ho_so_bien_tap": "partner-tu-van-lab028 + van-anh-lab049",
+  "duyet_outline": "may",
+  "che_do_viet": "chay_thu_khong_mau",
+  "nhan_dien_tam": "sakedemy",
+  "so_trang_muc_tieu": 5
+}
