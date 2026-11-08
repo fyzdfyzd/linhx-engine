@@ -1,0 +1,46 @@
+{
+  "feature": "E1",
+  "luc": "2026-11-08T15:30:01.712568+00:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 4 items",
+    "",
+    "tests/nghiem-thu/test_e1.py::test_tong_hop PASSED                        [ 25%]",
+    "tests/nghiem-thu/test_e1.py::test_ban_hien_va_tu_lam_moi PASSED          [ 50%]",
+    "apps/linhx_core/linhx_core/test_ban.py::test_tong_hop_bien_gio_va_dinh_dang PASSED [ 75%]",
+    "apps/linhx_core/linhx_core/test_ban.py::test_api_ban_dieu_hanh_quyen_va_du_lieu PASSED [100%]",
+    "",
+    "============================= 4 passed in 51.19s =============================="
+  ],
+  "mau_tong_hop": {
+    "viec_cho": [
+      {
+        "name": "J3",
+        "trang_thai": "cho_duyet",
+        "creation": "2026-11-09 10:00:00"
+      },
+      {
+        "name": "J1",
+        "trang_thai": "cho_duyet",
+        "creation": "2026-11-09 08:00:00"
+      }
+    ],
+    "lead_moi": [
+      {
+        "name": "N2",
+        "creation": "2026-11-09 11:59:00"
+      }
+    ],
+    "don_moi": [
+      {
+        "name": "D1",
+        "creation": "2026-11-09 11:00:00"
+      }
+    ]
+  }
+}

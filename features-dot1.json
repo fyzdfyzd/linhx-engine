@@ -422,8 +422,8 @@
         "Lead và đơn mới hiện trên bàn trong 1 phút"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_e1.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/E1/kiem.json"
     },
     {
       "id": "E2",
