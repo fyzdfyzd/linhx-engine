@@ -53,12 +53,14 @@ def _loc_ung_vien_crm(frappe_mod, ds_user: list[str], don_vi: str | None) -> lis
 			)
 			or []
 		)
-		if co_vai_tro:
-			ket_qua = [u for u in ket_qua if u in co_vai_tro]
-	except Exception:
-		pass
+	except Exception as exc:
+		_ghi_log_loi("LX Co Hoi: lỗi truy vấn vai trò CRM", str(exc))
+		return []
+	ket_qua = [u for u in ket_qua if u in co_vai_tro]
+	if not ket_qua:
+		return []
 
-	if don_vi and ket_qua:
+	if don_vi:
 		try:
 			co_don_vi = set(
 				frappe_mod.get_all(
@@ -72,10 +74,10 @@ def _loc_ung_vien_crm(frappe_mod, ds_user: list[str], don_vi: str | None) -> lis
 				)
 				or []
 			)
-			if co_don_vi:
-				ket_qua = [u for u in ket_qua if u in co_don_vi]
-		except Exception:
-			pass
+		except Exception as exc:
+			_ghi_log_loi("LX Co Hoi: lỗi truy vấn quyền đơn vị", str(exc))
+			return []
+		ket_qua = [u for u in ket_qua if u in co_don_vi]
 	return ket_qua
 
 

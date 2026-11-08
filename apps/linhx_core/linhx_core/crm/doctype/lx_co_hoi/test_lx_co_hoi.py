@@ -68,7 +68,6 @@ def test_parse_tg_chuoi_iso_co_mui_gio():
 
 def test_controller_before_insert_kep_han_giao_va_tu_giao():
 	LXCoHoi = _nap_lx_co_hoi()
-	assert "frappe" not in sys.modules or hasattr(sys.modules["frappe"], "__file__")
 	doc = LXCoHoi()
 	doc.name = "CH-TEST-1"
 	doc.creation = "2026-11-09 08:00:00"
@@ -83,16 +82,83 @@ def test_controller_before_insert_kep_han_giao_va_tu_giao():
 
 def test_controller_nuot_loi_db_va_loc_vai_tro_crm():
 	LXCoHoi = _nap_lx_co_hoi()
+	for doctype_loi in ("User", "Has Role", "User Permission"):
+		frappe_gia = types.ModuleType("frappe")
+		frappe_gia.db = object()
+		ds_log = []
+		frappe_gia.log_error = lambda message="", title="": ds_log.append((title, message))
+
+		def _get_all(doctype, *_a, _dt_loi=doctype_loi, **_kw):
+			if doctype == _dt_loi:
+				raise RuntimeError(f"DB lỗi tại {doctype}")
+			if doctype == "User":
+				return ["nv1@linhx.vn"]
+			if doctype == "Has Role":
+				return ["nv1@linhx.vn"]
+			return []
+
+		frappe_gia.get_all = _get_all
+		with patch.dict(sys.modules, {"frappe": frappe_gia}):
+			doc = LXCoHoi()
+			doc.name = f"CH-LOI-{doctype_loi}"
+			doc.don_vi = "DV-HN"
+			doc.creation = "2026-11-09 08:00:00"
+			doc.before_insert()
+			assert not getattr(doc, "phu_trach", None)
+			assert ds_log
+
+
+def test_controller_khong_ai_co_vai_tro_crm_khong_giao():
+	LXCoHoi = _nap_lx_co_hoi()
 	frappe_gia = types.ModuleType("frappe")
 	frappe_gia.db = object()
+	ds_log = []
+	frappe_gia.log_error = lambda message="", title="": ds_log.append((title, message))
 
-	def _get_all_loi(*_a, **_kw):
-		raise RuntimeError("DB lỗi giả lập")
+	def _get_all(doctype, *_a, **_kw):
+		if doctype == "User":
+			return ["ke_toan@linhx.vn", "it@linhx.vn"]
+		if doctype == "Has Role":
+			return []
+		return []
 
-	frappe_gia.get_all = _get_all_loi
+	frappe_gia.get_all = _get_all
 	with patch.dict(sys.modules, {"frappe": frappe_gia}):
 		doc = LXCoHoi()
-		doc.name = "CH-LOI-DB"
+		doc.name = "CH-KHONG-VAI-TRO"
 		doc.creation = "2026-11-09 08:00:00"
 		doc.before_insert()
-		assert getattr(doc, "phu_trach", None) is None
+		assert not getattr(doc, "phu_trach", None)
+		assert ds_log
+		vc = co_hoi.viec_cho(
+			[{"name": doc.name, "phu_trach": getattr(doc, "phu_trach", None), "han_giao": doc.han_giao}],
+			"2026-11-09 08:30:00",
+		)
+		assert [x["name"] for x in vc] == ["CH-KHONG-VAI-TRO"]
+
+
+def test_controller_khong_ai_thuoc_don_vi_khong_giao():
+	LXCoHoi = _nap_lx_co_hoi()
+	frappe_gia = types.ModuleType("frappe")
+	frappe_gia.db = object()
+	ds_log = []
+	frappe_gia.log_error = lambda message="", title="": ds_log.append((title, message))
+
+	def _get_all(doctype, *_a, **_kw):
+		if doctype == "User":
+			return ["nv_bac@linhx.vn", "nv_trung@linhx.vn"]
+		if doctype == "Has Role":
+			return ["nv_bac@linhx.vn", "nv_trung@linhx.vn"]
+		if doctype == "User Permission":
+			return []
+		return []
+
+	frappe_gia.get_all = _get_all
+	with patch.dict(sys.modules, {"frappe": frappe_gia}):
+		doc = LXCoHoi()
+		doc.name = "CH-KHONG-DON-VI"
+		doc.don_vi = "DV-NAM"
+		doc.creation = "2026-11-09 08:00:00"
+		doc.before_insert()
+		assert not getattr(doc, "phu_trach", None)
+		assert ds_log
