@@ -57,6 +57,8 @@ services:
 
   backend:
     <<: *frappe
+    # Bang tho (/#/engine) doc .canh/phieu.tsv, dang-chay.json; vong dieu phoi may cty scp len ~/linhx-engine/.canh
+    volumes: [sites:/home/frappe/frappe-bench/sites, logs:/home/frappe/frappe-bench/logs, ../.canh:/home/frappe/frappe-bench/.canh:ro]
     depends_on: { configurator: { condition: service_completed_successfully } }
 
   websocket:

@@ -154,7 +154,11 @@ def bang():
 def bang_tho():
     _la_dieu_hanh()
     from linhx_worker import bang_tho as _bt
-    return _bt.tong_hop(_bt.doc_phieu(), _bt.doc_dang_chay())
+    kq = _bt.tong_hop(_bt.doc_phieu(), _bt.doc_dang_chay())
+    # Lúc file dang-chay.json được đẩy lên VM gần nhất (giây epoch); front tô đỏ nếu quá 30 phút
+    f = _bt._GOC / ".canh" / "dang-chay.json"
+    kq["cap_nhat"] = int(f.stat().st_mtime) if f.exists() else None
+    return kq
 
 
 @frappe.whitelist()
