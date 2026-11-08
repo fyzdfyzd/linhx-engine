@@ -1,0 +1,84 @@
+{
+ "doctype": "DocType",
+ "name": "LX Nhat Ky Truy Cap",
+ "module": "LINHX Core",
+ "custom": 0,
+ "issingle": 0,
+ "in_create": 1,
+ "autoname": "hash",
+ "engine": "InnoDB",
+ "field_order": [
+  "nguoi_dung",
+  "loai_ban_ghi",
+  "ma_ban_ghi",
+  "hanh_dong",
+  "thoi_diem",
+  "ip"
+ ],
+ "fields": [
+  {
+   "fieldname": "nguoi_dung",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Người truy cập",
+   "reqd": 1
+  },
+  {
+   "fieldname": "loai_ban_ghi",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Loại bản ghi khách",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ma_ban_ghi",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mã bản ghi khách",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hanh_dong",
+   "fieldtype": "Data",
+   "default": "xem",
+   "in_list_view": 1,
+   "label": "Hành động"
+  },
+  {
+   "fieldname": "thoi_diem",
+   "fieldtype": "Datetime",
+   "default": "Now",
+   "in_list_view": 1,
+   "label": "Thời điểm truy cập",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ip",
+   "fieldtype": "Data",
+   "label": "Địa chỉ IP"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "share": 0,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "thoi_diem",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-08 16:10:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-08 16:10:00.000000"
+}
