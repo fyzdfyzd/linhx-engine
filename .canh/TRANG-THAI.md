@@ -1,12 +1,12 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-08 18:31 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
+Cập nhật 2026-11-08 18:46 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N5, A1, B1, C1, E2, W1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | A4 | rảnh | CHUA_DAT · Feature A4 · commit 1f5e163 · nhánh tu-dong/engine-t1 · 2026-11-08T17:51:45 |
-| 2 | B2 | 20261108-1742-t2 từ 2026-11-08T17:42:04 | CHUA_DAT · Feature B2 · commit 7d2f5ba · nhánh tu-dong/engine-t2 · 2026-11-08T17:34:11 |
-| 3 | N6 | 20261108-1741-t3 từ 2026-11-08T17:42:00 | CHUA_DAT · Feature N6 · commit 7e4e70c · nhánh tu-dong/engine-t3 · 2026-11-08T17:41:40 |
+| 2 | B2 | rảnh | CHUA_DAT · Feature B2 · commit 7d2f5ba · nhánh tu-dong/engine-t2 · 2026-11-08T17:34:11 |
+| 3 | N6 | rảnh | CHUA_DAT · Feature N6 · commit 7e4e70c · nhánh tu-dong/engine-t3 · 2026-11-08T17:41:40 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -16,16 +16,5 @@ Cập nhật 2026-11-08 18:31 (giờ máy cty). Đạt: 10/31 (N1, N2, N3, N4, N
 - 2026-11-08T17:52:59 A2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc 4b5fb637, bản hỏng giữ ở nhánh cục bộ hong/A2-20261108-1751, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\A2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-08 17:45 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
-- 2026-11-08 17:51 t4: A2 CHUA_DAT lần 3 (commit fad71c1)
-- 2026-11-08 17:51 t1: RAM trống 1.3 GB < 1,5 GB, chưa giao A4
-- 2026-11-08 17:51 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
-- 2026-11-08 17:52 t4: A2 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
-- 2026-11-08 17:55 t4: RAM trống 0.9 GB < 1,5 GB, chưa giao A3
-- 2026-11-08 17:55 t4: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
-- 2026-11-08 18:13 t1: RAM trống 0.6 GB < 1,5 GB, chưa giao A4
-- 2026-11-08 18:14 t4: A2 DAT, đã gộp vào main
-- 2026-11-08 18:15 t4: RAM trống 0.4 GB < 1,5 GB, chưa giao A2
-- 2026-11-08 18:32 t3: dừng agy phiếu 20261108-1741-t3 (N6): quá 40 phút
-- 2026-11-08 18:32 t1: RAM trống 1.4 GB < 1,5 GB, chưa giao A4
+
 
