@@ -1,0 +1,19 @@
+[Unit]
+Description=LINHX ENGINE Frappe bench serve (cong 8000, site test)
+After=network.target mariadb.service redis-server.service
+Wants=mariadb.service redis-server.service
+
+[Service]
+Type=simple
+User=frappe
+Group=frappe
+WorkingDirectory=/home/frappe/frappe-bench
+Environment=PATH=/home/frappe/.local/bin:/home/frappe/frappe-bench/env/bin:/usr/local/bin:/usr/bin:/bin
+ExecStart=/home/frappe/.local/bin/bench serve --port 8000
+Restart=always
+RestartSec=5
+StandardOutput=append:/home/frappe/frappe-bench/logs/bench-serve.log
+StandardError=append:/home/frappe/frappe-bench/logs/bench-serve.log
+
+[Install]
+WantedBy=multi-user.target
