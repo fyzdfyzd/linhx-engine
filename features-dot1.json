@@ -292,8 +292,8 @@
         "Vượt ngưỡng cấu hình thì có cảnh báo ở bàn"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b5.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/B5/kiem.json"
     },
     {
       "id": "C1",

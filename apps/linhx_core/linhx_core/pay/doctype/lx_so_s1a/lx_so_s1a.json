@@ -1,0 +1,64 @@
+{
+ "doctype": "DocType",
+ "name": "LX So S1a",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "ngay",
+  "ma_don",
+  "dien_giai",
+  "so_tien"
+ ],
+ "fields": [
+  {
+   "fieldname": "ngay",
+   "fieldtype": "Date",
+   "label": "Ngày ghi sổ",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "ma_don",
+   "fieldtype": "Data",
+   "label": "Mã đơn",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "dien_giai",
+   "fieldtype": "Data",
+   "label": "Diễn giải"
+  },
+  {
+   "fieldname": "so_tien",
+   "fieldtype": "Currency",
+   "label": "Số tiền",
+   "reqd": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "ngay",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 02:18:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 02:18:00.000000"
+}
