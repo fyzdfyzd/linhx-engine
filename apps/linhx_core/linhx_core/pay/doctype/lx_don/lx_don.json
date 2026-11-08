@@ -47,7 +47,8 @@
    "fieldname": "trang_thai",
    "fieldtype": "Select",
    "label": "Trạng thái",
-   "options": "cho_tra\nda_tra\nhuy"
+   "options": "cho_tra\nda_tra\nhuy",
+   "search_index": 1
   },
   {
    "fieldname": "noi_dung_ck",
@@ -58,7 +59,8 @@
   {
    "fieldname": "tx_id",
    "fieldtype": "Data",
-   "label": "Mã giao dịch"
+   "label": "Mã giao dịch",
+   "unique": 1
   },
   {
    "fieldname": "qr_url",

@@ -1,0 +1,21 @@
+{
+  "feature": "B3",
+  "luc": "2026-11-09T00:28:53+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "tests/nghiem-thu/test_b3.py::test_sai_khoa PASSED                        [ 20%]",
+    "tests/nghiem-thu/test_b3.py::test_dung_tien_chuyen_da_tra_va_chong_trung PASSED [ 40%]",
+    "tests/nghiem-thu/test_b3.py::test_sai_so_tien_khong_chuyen PASSED        [ 60%]",
+    "tests/nghiem-thu/test_b3.py::test_noi_dung_co_dau_cach_va_tien_ra PASSED [ 80%]",
+    "tests/nghiem-thu/test_b3.py::test_api PASSED                             [100%]",
+    "============================== 5 passed in 4.18s =============================="
+  ],
+  "tich_hop_bench_wsl": [
+    "[th] don LXTH1794158292 da_tra, chống trùng ok",
+    "[th] don LXTH1794158932 da_tra, chống trùng ok",
+    "[th] ĐẠT",
+    "=== 2026-11-09T00:28:53 xong, mã thoát 0"
+  ],
+  "doctype_nhat_ky": "LX Nhat Ky Sepay",
+  "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
+}

@@ -1,0 +1,86 @@
+{
+ "doctype": "DocType",
+ "name": "LX Nhat Ky Sepay",
+ "module": "pay",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "tx_id",
+  "loai_gd",
+  "so_tien",
+  "noi_dung",
+  "ket_qua",
+  "ly_do",
+  "ma_don",
+  "du_lieu"
+ ],
+ "fields": [
+  {
+   "fieldname": "tx_id",
+   "fieldtype": "Data",
+   "label": "Mã giao dịch",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "loai_gd",
+   "fieldtype": "Data",
+   "label": "Loại giao dịch"
+  },
+  {
+   "fieldname": "so_tien",
+   "fieldtype": "Currency",
+   "label": "Số tiền"
+  },
+  {
+   "fieldname": "noi_dung",
+   "fieldtype": "Small Text",
+   "label": "Nội dung chuyển khoản"
+  },
+  {
+   "fieldname": "ket_qua",
+   "fieldtype": "Select",
+   "label": "Kết quả",
+   "options": "da_tra\nlech\nbo_qua"
+  },
+  {
+   "fieldname": "ly_do",
+   "fieldtype": "Data",
+   "label": "Lý do"
+  },
+  {
+   "fieldname": "ma_don",
+   "fieldtype": "Data",
+   "label": "Mã đơn"
+  },
+  {
+   "fieldname": "du_lieu",
+   "fieldtype": "Small Text",
+   "label": "Dữ liệu gốc"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 0,
+   "create": 1,
+   "delete": 0,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-08 22:55:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-08 22:55:00.000000"
+}
