@@ -1,0 +1,19 @@
+[
+{"trang":1,"diem":{"diem_nhin":5,"nhip":5,"khoang_trang":4,"phan_cap_chu":4,"ky_thuat":5},"loi":"Khoảng giữa thanh trang trí và tiêu đề hơi lửng; tiêu đề bìa là cụm danh từ, khác tên ở đầu trang."},
+{"trang":2,"diem":{"diem_nhin":4,"nhip":5,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":4},"loi":"Khoảng trống lạc giữa mục lục và khối câu trả lời; mục lục thiếu số chương."},
+{"trang":3,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":3,"phan_cap_chu":5,"ky_thuat":4},"loi":"Ba số lớn ngang nhau tranh điểm nhìn; một phần tư cuối trang trống."},
+{"trang":4,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":3},"loi":"Tiêu đề hai dòng lửng 'động trước'; nhãn chương lặp đầu trang; chú thích số lớn bốn dòng chật."},
+{"trang":5,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":4},"loi":"Hai hình kín trang, không chỗ thở; tiêu đề mục 1.2 rớt 'dùng nông' xuống dòng."},
+{"trang":6,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":2,"phan_cap_chu":3,"ky_thuat":4},"loi":"Hơn một phần ba cuối trang trống; trang mở bằng đoạn nối tiếp, không tiêu đề dẫn."},
+{"trang":7,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":4,"phan_cap_chu":4,"ky_thuat":3},"loi":"Tiêu đề chương hai dòng lửng; nhãn 'Chương 2' lặp ba lần trên cùng trang."},
+{"trang":8,"diem":{"diem_nhin":3,"nhip":3,"khoang_trang":2,"phan_cap_chu":4,"ky_thuat":3},"loi":"Hai bảng và ba số lớn chen kín trang; Hình 6 lặp lại số liệu khối số lớn."},
+{"trang":9,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":2,"phan_cap_chu":4,"ky_thuat":4},"loi":"Gần một phần ba cuối trang trống; bố cục hình+sidebar lặp kiểu trang 6."},
+{"trang":10,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":3},"loi":"Mục 3.1 dồn sát chân trang; tiêu đề chương hai dòng lửng; nhãn chương lặp."},
+{"trang":11,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":3},"loi":"Tiêu đề Hình 9 mồ côi chữ 'khai.'; một phần tư cuối trang trống."},
+{"trang":12,"diem":{"diem_nhin":4,"nhip":3,"khoang_trang":3,"phan_cap_chu":3,"ky_thuat":3},"loi":"Tiêu đề mục 4.1 mồ côi chữ 'vi'; mở chương cùng khuôn trang 10; trang chật."},
+{"trang":13,"diem":{"diem_nhin":3,"nhip":3,"khoang_trang":3,"phan_cap_chu":4,"ky_thuat":4},"loi":"Bảng và hộp Zalo ngang sức, không rõ điểm nhìn; một phần tư cuối trang trống."},
+{"trang":14,"diem":{"diem_nhin":4,"nhip":5,"khoang_trang":4,"phan_cap_chu":5,"ky_thuat":4},"loi":"Hộp 'Việc cần làm tiếp' thụt lệch so với lưới danh sách phía trên."},
+{"trang":15,"diem":{"diem_nhin":4,"nhip":4,"khoang_trang":2,"phan_cap_chu":4,"ky_thuat":4},"loi":"Gần một phần ba cuối trang trống trước chú thích chân trang."},
+{"trang":16,"diem":{"diem_nhin":2,"nhip":4,"khoang_trang":2,"phan_cap_chu":3,"ky_thuat":3},"loi":"Hai cột chữ kín trang, URL ngắt dòng xấu; nguồn 4 và 16 trùng nhau."},
+{"trang":17,"diem":{"diem_nhin":3,"nhip":4,"khoang_trang":4,"phan_cap_chu":3,"ky_thuat":5},"loi":"Bìa sau phẳng, không dấu hiệu nhận diện ngoài chữ LINHX nhỏ."}
+]
