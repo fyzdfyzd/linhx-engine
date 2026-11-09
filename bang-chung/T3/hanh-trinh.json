@@ -1,0 +1,39 @@
+{
+  "luc": "2026-11-09T17:30:33+00:00",
+  "url_ifagent": "http://35.198.251.2/ifagent",
+  "url_linhx": "http://35.198.251.2/linhx",
+  "ket_qua": "passed",
+  "rong": [
+    390,
+    1280
+  ],
+  "so_test": 2,
+  "lead": "815014cq9r",
+  "lich": "817qv6pahp",
+  "pilot": "81c0b14dsq",
+  "case": "81g4jm8lvt",
+  "chi_tiet": [
+    {
+      "rong": 390,
+      "email": "e2e-ifagent+1794245425031-390@vd.vn",
+      "dien_thoai": "0945425031",
+      "lead": "7vocts2rkd",
+      "co_hoi": "7vo9voqts7",
+      "lich": "7vq6f0mco4",
+      "phu_trach": "tuanlinh@urah.vn",
+      "pilot": "7vvduv4a7t",
+      "case": "8025e75hah"
+    },
+    {
+      "rong": 1280,
+      "email": "e2e-ifagent+1794245429447-1280@vd.vn",
+      "dien_thoai": "0945429447",
+      "lead": "815014cq9r",
+      "co_hoi": "815rpb1eg6",
+      "lich": "817qv6pahp",
+      "phu_trach": "tuanlinh@urah.vn",
+      "pilot": "81c0b14dsq",
+      "case": "81g4jm8lvt"
+    }
+  ]
+}
