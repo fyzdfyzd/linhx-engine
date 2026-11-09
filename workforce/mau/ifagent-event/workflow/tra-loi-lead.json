@@ -1,0 +1,40 @@
+{
+ "ten": "tra-loi-lead",
+ "mo_ta": "Đọc brief/tin khách, soạn bản trả lời + 3 ý tưởng có trong Idea Book + câu về giá đúng luật",
+ "vi_du": [
+  "@Nụ Event agency hỏi booth cho lễ khởi công 300 khách tháng 12",
+  "/lead <dán tin khách>"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "nu-lead",
+   "skill": "proposal-brief",
+   "viec": "Tóm brief: loại sự kiện, quy mô, ngày, ngân sách, chỗ còn thiếu",
+   "dau_ra": "brief.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "nu-lead",
+   "skill": "proposal-ideas",
+   "viec": "Chọn 3 ý tưởng có trong Idea Book, mỗi ý một câu vì sao hợp brief",
+   "dau_ra": "tra-loi.md"
+  },
+  {
+   "id": "b3",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Chấm",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mỗi số, giá, tên có id trong 02-wiki/su-that.json mục chot hoặc file nguồn",
+  "Không có nội dung mục noi_bo (bảng giá đối tác, hoa hồng, giá sàn, pipeline)",
+  "Không dùng CEO cũ, ifagent.vn, email @ifagent.vn",
+  "Đúng 3 ý tưởng, cả 3 có trong Idea Book",
+  "Giá: nói hai bảng chưa thống nhất và chuyển người báo giá, không tự đưa con số"
+ ],
+ "nguoi_duyet": "sales",
+ "tran_phut": 10
+}
