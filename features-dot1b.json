@@ -76,8 +76,8 @@
         "Diff không đụng thư mục khuôn"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c4.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/C4/kiem.json"
     },
     {
       "id": "R1",
