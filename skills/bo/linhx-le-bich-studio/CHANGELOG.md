@@ -2,6 +2,12 @@
 
 Theo [Keep a Changelog](https://keepachangelog.com/vi/1.1.0/) và [SemVer](https://semver.org/lang/vi/). Quy ước: `skills/QUY-UOC-PHIEN-BAN.md`.
 
+## [1.0.1] - 2026-11-09
+
+### Sửa
+
+- plugin.json: author đổi thành đối tượng, đường dẫn skills thêm ./; trước đây Claude Code từ chối nạp bộ này.
+
 ## [1.0.0] - 2026-11-09
 
 ### Thêm

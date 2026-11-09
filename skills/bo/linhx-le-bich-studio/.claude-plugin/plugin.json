@@ -1,9 +1,11 @@
 {
   "name": "linhx-le-bich-studio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Plugin Lê Bích Studio: Tra cứu kho asset 4.000+ mảnh PSD/PNG gốc, thay trang phục, gắn xương 2 đoạn + biến dạng lưới bụng, và dựng truyện 4 khung, sticker động GIF/WebP, clip MP4 có tiếng Việt & khẩu hình.",
-  "author": "Linh & Antigravity",
+  "author": {
+    "name": "Linh & Antigravity"
+  },
   "skills": [
-    "skills/le-bich-studio"
+    "./skills/le-bich-studio"
   ]
 }

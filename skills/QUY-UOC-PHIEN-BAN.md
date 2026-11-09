@@ -49,7 +49,7 @@ Khi gộp vào `main`, job `phat-hanh` gắn tag `<ten>@<bản>` cho mọi đơn
 ## 6. Cài và cập nhật
 
 - Máy MSI hoặc máy cty DESKTOP-PVHR2CD: `git pull` rồi `skills\cai.ps1` như cũ (junction, luôn là bản mới nhất của `main`).
-- Claude Code: `/plugin marketplace add fyzdfyzd/linhx-engine` rồi `/plugin install <ten>@linhx` (chưa thử với repo riêng tư; cần đăng nhập GitHub có quyền đọc repo). Claude Code chỉ kéo bản mới khi số bản tăng, nên sửa mà quên tăng bản là người dùng không nhận được (lý do CI chặn).
+- Claude Code: `/plugin install <ten> --marketplace fyzdfyzd/linhx-engine` (hoặc `/plugin marketplace add fyzdfyzd/linhx-engine` rồi `/plugin install <ten>@linhx`). `claude plugin validate .` đạt ngày 9/11; chưa thử cài thật từ repo riêng tư, cần đăng nhập GitHub có quyền đọc. Claude Code chỉ kéo bản mới khi số bản tăng, nên sửa mà quên tăng bản là người dùng không nhận được (lý do CI chặn).
 - Muốn ghim một bản cũ: `git checkout <ten>@x.y.z -- skills/<loai>/<ten>`.
 
 ## 7. Đối chiếu các kho skill quốc tế

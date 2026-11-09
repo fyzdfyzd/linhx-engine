@@ -203,6 +203,12 @@ def kiem(base=None, goc=GOC, cho=CHO):
                 pj = json.loads(doc(tep_ban(u)))
                 if pj.get('name') != u['ten']:
                     loi.append(f'{u["rel"]}: plugin.json name "{pj.get("name")}" khác tên thư mục')
+                if 'author' in pj and not isinstance(pj['author'], dict):
+                    loi.append(f'{u["rel"]}: plugin.json author phải là {{"name": "…"}}, không phải chuỗi')
+                for k in ('skills', 'commands', 'agents'):
+                    for x in pj.get(k) or [] if isinstance(pj.get(k), list) else []:
+                        if isinstance(x, str) and not x.startswith('./'):
+                            loi.append(f'{u["rel"]}: plugin.json {k} "{x}" phải bắt đầu bằng "./"')
             except ValueError as e:
                 loi.append(f'{u["rel"]}: plugin.json hỏng ({e})')
         for r, dd, fs in os.walk(u['thu_muc']):
