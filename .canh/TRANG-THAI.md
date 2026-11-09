@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 00:39 (giờ máy cty). Đạt: 44/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3)
+Cập nhật 2026-11-10 00:49 (giờ máy cty). Đạt: 45/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | T3 | rảnh | DAT · Feature F3 · commit a1f1621 · nhánh tu-dong/engine-t1 · 2026-11-10T00:05:00 |
+| 1 | - | rảnh | DAT · Feature T3 · commit f24dcb9 · nhánh tu-dong/engine-t1 · 2026-11-10T00:40:16 |
 | 2 | - | rảnh | DAT · Feature F2 · commit dca7d30 · nhánh tu-dong/engine-t2 · 2026-11-09T23:58:38 |
 
 ## Chờ
@@ -26,8 +26,6 @@ Cập nhật 2026-11-10 00:39 (giờ máy cty). Đạt: 44/47 (N1, N2, N3, N4, N
 - 2026-11-09T23:29:57 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6464e48d, bản hỏng giữ ở nhánh cục bộ hong/O4-20261109-2329, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 23:40 t2: F2 trượt do lỗi máy (commit 8c42acb), không tính lần
-- 2026-11-09 23:40 t2: giao agy phiếu 20261109-2340-t2: F2 (lượt sửa)
 - 2026-11-09 23:43 t1: agy xong phiếu 20261109-2329-t1 (F3) sau 14 phút
 - 2026-11-09 23:49 t1: F3 CHUA_DAT lần 1 (commit 3de51c2)
 - 2026-11-09 23:49 t1: giao agy phiếu 20261109-2349-t1: F3 (lượt sửa)
@@ -38,4 +36,6 @@ Cập nhật 2026-11-10 00:39 (giờ máy cty). Đạt: 44/47 (N1, N2, N3, N4, N
 - 2026-11-10 00:05 t1: F3 DAT, đã gộp vào main
 - 2026-11-10 00:05 t1: giao agy phiếu 20261110-0005-t1: T3
 - 2026-11-10 00:34 t1: agy xong phiếu 20261110-0005-t1 (T3) sau 30 phút
+- 2026-11-10 00:40 t1: T3 DAT, đã gộp vào main
+- 2026-11-10 00:40 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 
