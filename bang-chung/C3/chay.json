@@ -1,0 +1,14 @@
+{
+  "luc": "2026-11-09T18:21:00+07:00",
+  "may": "linhx-engine-1",
+  "url": "http://35.198.251.2/ifagent/",
+  "status": 200,
+  "tieu_de_thay": "ifAgent — Trang BU Trợ lý AI và Tự động hoá",
+  "form": {
+    "status": 200,
+    "url": "http://35.198.251.2/api/method/linhx_core.crm.api_form.nhan_form",
+    "ban_cai": "ifagent",
+    "nguoi": "fgqqa3rbok",
+    "co_hoi": "fgsv9fabbl"
+  }
+}
