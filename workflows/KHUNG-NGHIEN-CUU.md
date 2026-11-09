@@ -16,6 +16,12 @@ Chỉ nghiên cứu, chưa dựng vòng 1. Không cần máy cty, không cần L
 4. **Máy đo**: đề xuất máy đo cụ thể cho workflow (kiểm tự động nào, rubric nào, chấm mù thế nào, ngưỡng). Ưu tiên cái máy chạy được.
 5. **So với LINHX**: skill hiện có thiếu gì, thừa gì, sai gì. Không tự nghĩ lại thứ người khác đã làm tốt.
 
+## Khi cần nghiên cứu sâu: tự dùng Gemini Deep Research (Linh 9/11)
+Job tự quyết. Dùng khi: cần số liệu thị trường, khảo sát ngành, nguồn tiếng Việt/tiếng Trung khó tìm, hoặc 5 nguồn đọc được vẫn mỏng.
+- Viết đề vào `workflows/<WF>/DR/DE-<n>.md` (câu hỏi, phạm vi, nguồn ưu tiên, đầu ra muốn có, ngôn ngữ), đẩy lên nhánh. Không chờ kết quả, làm tiếp phần khác.
+- Thread "linhx-workflow: chạy Gemini Deep Research" chạy hàng đợi trên Chrome **máy công ty** (luật: việc trình duyệt luôn ở máy cty), xoay vòng các tài khoản Ultra; kết quả về `DR/KQ-<n>.md` kèm link nguồn.
+- Kết quả DR là dữ liệu: kiểm link sống, trích nguyên văn, ghi [DR] cạnh nguồn trong NGHIEN-CUU.md.
+
 ## Ghi ra (trong thư mục workflow)
 - `NGOAI.md`: bảng "Đã đọc gì / Lấy / Bỏ" điền đủ.
 - `NGHIEN-CUU.md`: tối đa 2 trang, tiếng Việt thuần, tối giản. Mục: Kết luận 5 dòng · Quy trình đề xuất (các bước, ai làm) · Máy đo + ngưỡng · Bản vàng · Sửa vào skill nào, sửa gì · Rủi ro · Nguồn (link, ghi [đọc] hay [chỉ thấy]).

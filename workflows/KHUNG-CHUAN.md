@@ -13,6 +13,7 @@
 
 ## Bước 0: ai bên ngoài đã làm (bắt buộc, Linh 9/11)
 Trước vòng 1: tìm trên GitHub, các trang skill (skills.sh, claudemarketplaces, openskillindex…), blog và mạng xã hội xem có ai nói về workflow hay skill này. Đọc code/quy trình của ít nhất 3 cái tốt nhất, ghi `NGOAI.md`: lấy gì, bỏ gì, so với skill LINHX đang có. Không tự nghĩ lại thứ người khác đã làm tốt.
+Cần nghiên cứu sâu thì tự dùng Gemini Deep Research Ultra (hàng đợi `DR/`, chạy Chrome máy cty, xoay tài khoản), xem KHUNG-NGHIEN-CUU.md.
 
 ## Ba vòng làm chuẩn (mỗi vòng một đề thật khác nhau)
 - **Vòng 1**: Claude điều phối, agy làm thợ. Mục đích là tìm lỗi quy trình. Ghi mọi lỗi, sửa skill.
