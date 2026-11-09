@@ -275,8 +275,8 @@
         "Đơn da_tra sinh Job trong 1 phút"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/B4/kiem.json"
     },
     {
       "id": "B5",

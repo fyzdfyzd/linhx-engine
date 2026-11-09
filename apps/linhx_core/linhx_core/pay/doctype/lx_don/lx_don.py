@@ -34,6 +34,28 @@ class LXDon(Document):
 			trung_tx = frappe.db.exists("LX Don", {"tx_id": tx, "name": ["!=", self.name]})
 			if trung_tx:
 				frappe.throw(f"Mã giao dịch {tx} đã tồn tại ở đơn {trung_tx}")
+		gioi_han = (
+			("brand", 80, "Thương hiệu"),
+			("email", 120, "Email khách"),
+			("nganh", 80, "Ngành"),
+			("thi_truong", 60, "Thị trường"),
+			("doi_thu", 120, "Đối thủ"),
+			("su_that", 600, "Sự thật thương hiệu"),
+		)
+		for truong, toi_da, nhan in gioi_han:
+			gt = getattr(self, truong, None)
+			if gt is not None:
+				chuoi = str(gt).replace("\r", " ").replace("\n", " ").strip()
+				if len(chuoi) > toi_da:
+					frappe.throw(f"{nhan} vượt quá {toi_da} ký tự")
+				setattr(self, truong, chuoi or None)
+		if not self.is_new():
+			has_changed = getattr(self, "has_value_changed", None)
+			if callable(has_changed) and any(
+				has_changed(t) for t in ("goi", "so_tien", "trang_thai", "brand", "email", "nganh", "thi_truong", "doi_thu", "su_that")
+			):
+				self.so_lan_thu_job = 0
+				self.lan_thu_job_cuoi = None
 
 	def on_update(self):
 		if getattr(self, "trang_thai", None) == "da_tra":
