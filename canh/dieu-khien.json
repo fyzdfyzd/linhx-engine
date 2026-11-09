@@ -15,7 +15,8 @@
     "B4@0911-loi-may-ram",
     "C2@0911-claude-het-han-muc",
     "B4@0911-claude-het-han-muc",
-    "C2B@0911-pytest-temp-winerror5"
+    "C2B@0911-pytest-temp-winerror5",
+    "O4@1011-pytest-temp-2-lan-loi-may"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",

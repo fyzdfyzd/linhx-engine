@@ -228,12 +228,14 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     git diff --name-only "$mbK..HEAD" 2>$null | Set-Content -Encoding utf8 "$tamTho\doi.txt"
     $env:CONG_KIEM_DOI = "$tamTho\doi.txt"; $env:CONG_KIEM_THEM = $fid
   } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
+  # pytest mỗi thợ một thư mục tạm riêng: chung pytest-of-ADMIN thì agy và cổng kiểm giẫm nhau, WinError 5 (C2B, O4 9/11)
+  $env:PYTEST_ADDOPTS = "--basetemp=$tamTho\pytest-tmp"
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
-  Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM -ErrorAction SilentlyContinue
   $maCk = $LASTEXITCODE
+  Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM, Env:PYTEST_ADDOPTS -ErrorAction SilentlyContinue
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
-  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
+  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command|pytest-of-\w+\\+pytest-current') { $loiMay = $true }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
