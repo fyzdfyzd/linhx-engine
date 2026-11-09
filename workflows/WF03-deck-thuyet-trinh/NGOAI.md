@@ -17,3 +17,12 @@ Bước 0, tìm sơ bộ 9/11 (GitHub, trang skill, blog, mạng). **Mới tìm 
 
 | Nguồn | Đã đọc gì | Lấy | Bỏ |
 |---|---|---|---|
+| zarazhangrui/frontend-slides | [đọc] SKILL.md, đã kiểm lại bản clone | D2 bằng 3 bìa xem trước thật; chế độ mật độ nói/đọc; khung cố định 1920×1080 | hoạt hình, Vercel |
+| anthropics/skills pptx | [đọc] | danh sách dấu hiệu AI; QA ảnh bằng mắt mới | "mọi slide có hình" |
+| hugohe3/ppt-master | [đọc] visual-review.md | cổng sớm; "under-fixing beats oscillation"; lỗi lặp là lỗi cấp deck | SVG→PPTX nặng |
+| icip-cas/PPTAgent | [đọc] | phiếu duyệt gắn bản nguồn | PPTEval cũ |
+| daymade ppt-creator | [đọc] git (đã bị rút) | phiếu 10 câu đầu vào | tự chấm bởi thợ |
+| bytedance/deer-flow | [đọc] | không | AI vẽ slide thành ảnh |
+| MiniMax pptx-plugin | [đọc] | 5 loại trang cố định | còn lại chép Anthropic |
+| SlideAudit, PresentBench, Duarte, Deckary | [đọc]/[chỉ thấy] xem NGHIEN-CUU.md | bảng lỗi, phép thử 3 giây, tiêu đề hành động | |
+| Slidebean, Storydoc, Slideworks | [chỉ thấy] | mốc bản vàng | |
