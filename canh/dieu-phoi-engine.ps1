@@ -201,7 +201,15 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   }
   # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ; một thợ một lúc (next build ăn RAM)
   $mxK = New-Object System.Threading.Mutex($false, "Global\ENGINE-CongKiem"); try { [void]$mxK.WaitOne(1200000) } catch [System.Threading.AbandonedMutexException] {}
+  # Linh 9/11: chỉ chạy lại lệnh kiểm của feature trùng vùng file đã sửa + feature vừa nộp; 12 giờ một lần chạy toàn bộ
+  $dauDD = "$Canh\kiem-day-du.txt"
+  if (-not (Test-Path $dauDD)) { "$(Get-Date -Format s) mốc đầu" | Set-Content $dauDD }
+  if ((Test-Path $dauDD) -and ((Get-Date) - (Get-Item $dauDD).LastWriteTime).TotalHours -lt 12) {
+    git diff --name-only "$goc..HEAD" 2>$null | Set-Content -Encoding utf8 "$tamTho\doi.txt"
+    $env:CONG_KIEM_DOI = "$tamTho\doi.txt"; $env:CONG_KIEM_THEM = $fid
+  } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
+  Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM -ErrorAction SilentlyContinue
   $maCk = $LASTEXITCODE
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }

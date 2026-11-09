@@ -6,8 +6,11 @@ Cổng này chạy NGOÀI tay thợ:
   khoa <features.json>   chụp mốc (băm mọi thứ trừ passes/bang_chung) vào <file>.khoa
   kiem <features.json>   so với mốc, chạy lại lenh_kiem của từng feature thợ báo đạt,
                          hạ passes về false nếu trượt, ghi KIEM-<file>.json, exit 1 nếu có vi phạm
+Biến môi trường CONG_KIEM_DOI=<file danh sách file đã sửa> (Linh 9/11, chấm nhanh): chỉ chạy lại
+lenh_kiem của feature có vung khớp một file đã sửa (cộng CONG_KIEM_THEM="ID,ID"); feature đạt khác
+vẫn kiểm băm + bằng chứng nhưng không chạy lại lệnh. Không đặt biến thì chạy toàn bộ như cũ.
 """
-import hashlib, json, subprocess, sys, pathlib
+import fnmatch, hashlib, json, os, subprocess, sys, pathlib
 
 DUOC_DOI = {"passes", "bang_chung"}
 
@@ -32,6 +35,15 @@ def kiem(path, timeout=600):
     data, moc = doc(path), doc(str(path) + ".khoa")
     goc = path.parent
     vi_pham, ket = [], []
+    doi_tep = os.environ.get("CONG_KIEM_DOI")
+    doi = None
+    if doi_tep and pathlib.Path(doi_tep).exists():
+        doi = [l.strip().replace("\\", "/") for l in pathlib.Path(doi_tep).read_text(encoding="utf-8-sig", errors="ignore").splitlines() if l.strip()]
+    them = {x.strip() for x in os.environ.get("CONG_KIEM_THEM", "").split(",") if x.strip()}
+    def lien_quan(f):
+        if doi is None or f["id"] in them:
+            return True
+        return any(fnmatch.fnmatch(t, v) or t.startswith(v.rstrip("*").rstrip("/") + "/") for v in f.get("vung", []) for t in doi)
     if bam({k: v for k, v in data.items() if k != "features"}) != moc["meta"]:
         vi_pham.append("sửa phần đầu file (mục tiêu/phạm vi)")
     ids = {f["id"] for f in data["features"]}
@@ -54,6 +66,9 @@ def kiem(path, timeout=600):
             f["passes"] = False
             ket.append({"id": fid, "trang_thai": "ha_ve_chua"})
             continue
+        if not lien_quan(f):
+            ket.append({"id": fid, "trang_thai": "dat_khong_chay_lai"})
+            continue
         try:
             r = subprocess.run(f["lenh_kiem"], shell=True, cwd=goc, capture_output=True,
                                text=True, timeout=timeout)
@@ -68,7 +83,7 @@ def kiem(path, timeout=600):
             f["passes"] = False
         ket.append({"id": fid, "trang_thai": "dat" if ok else "ha_ve_chua"})
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
-    dat = sum(1 for k in ket if k["trang_thai"] == "dat")
+    dat = sum(1 for k in ket if k["trang_thai"] in ("dat", "dat_khong_chay_lai"))
     bc = {"dat": dat, "tong": len(data["features"]), "vi_pham": vi_pham, "chi_tiet": ket}
     (goc / f"KIEM-{path.stem}.json").write_text(json.dumps(bc, indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"đạt thật {dat}/{len(data['features'])}, vi phạm {len(vi_pham)}")
