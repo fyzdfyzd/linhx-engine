@@ -178,3 +178,22 @@ def test_xu_ly_sau_tra_tao_job_va_chong_trung_log():
 		assert sau_tra.xu_ly_sau_tra(doc_thieu_tien) is None
 		assert len(da_insert) == 1
 		assert fake_frappe.log_error.call_count == 2
+
+		# Khi job_doc.insert ném lỗi (vd workflow thiếu), xu_ly_sau_tra bắt lỗi, log_error và không làm nổ on_update
+		def fake_get_doc_loi(data):
+			doc_job = MagicMock()
+			doc_job.insert.side_effect = RuntimeError("Workflow không tồn tại")
+			return doc_job
+
+		fake_frappe.get_doc.side_effect = fake_get_doc_loi
+		doc_loi_insert = SimpleNamespace(
+			name="DON-203",
+			ma="DON-203",
+			goi="BC-AI",
+			so_tien=99000,
+			trang_thai="da_tra",
+			brand="Cà Phê Núi",
+			email="kh@vd.vn",
+		)
+		assert sau_tra.xu_ly_sau_tra(doc_loi_insert) is None
+		assert fake_frappe.log_error.call_count == 3

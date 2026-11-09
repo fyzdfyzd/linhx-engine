@@ -2,6 +2,33 @@ import frappe
 from frappe.model.document import Document
 
 
+def chuan_hoa_don_lx_job() -> None:
+	"""Chuyển `don = ''` thành `NULL` và gỡ trùng `don` trên dữ liệu cũ trước khi đồng bộ unique index."""
+	if not frappe.db.table_exists("LX Job") or not frappe.db.has_column("LX Job", "don"):
+		return
+	frappe.db.sql("UPDATE `tabLX Job` SET `don` = NULL WHERE `don` = ''")
+	trung = frappe.db.sql(
+		"""SELECT don, COUNT(*) AS so_luong
+		FROM `tabLX Job`
+		WHERE don IS NOT NULL
+		GROUP BY don
+		HAVING COUNT(*) > 1""",
+		as_dict=True,
+	)
+	for dong in trung or []:
+		ma_don = dong.get("don")
+		ds = frappe.db.sql(
+			"SELECT name FROM `tabLX Job` WHERE don = %s ORDER BY creation ASC, name ASC",
+			(ma_don,),
+			as_dict=True,
+		)
+		for ban_ghi in (ds or [])[1:]:
+			frappe.db.sql(
+				"UPDATE `tabLX Job` SET `don` = NULL WHERE name = %s",
+				(ban_ghi["name"],),
+			)
+
+
 class LXJob(Document):
 	def before_validate(self):
 		don = str(getattr(self, "don", None) or "").strip()
@@ -16,5 +43,4 @@ class LXJob(Document):
 				frappe.throw(f"Đơn {self.don} đã có việc {trung}")
 
 	def on_doctype_update(self):
-		frappe.db.sql("UPDATE `tabLX Job` SET `don` = NULL WHERE `don` = ''")
-		frappe.db.add_unique("LX Job", ["don"])
+		chuan_hoa_don_lx_job()

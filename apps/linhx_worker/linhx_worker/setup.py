@@ -28,6 +28,12 @@ WORKFLOWS = [
 ]
 
 
+def before_migrate():
+    from linhx_worker.linhx_worker.doctype.lx_job.lx_job import chuan_hoa_don_lx_job
+
+    chuan_hoa_don_lx_job()
+
+
 def after_install():
     if frappe.db.get_single_value("System Settings", "time_zone") != "Asia/Ho_Chi_Minh":
         frappe.db.set_single_value("System Settings", "time_zone", "Asia/Ho_Chi_Minh")

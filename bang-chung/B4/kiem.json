@@ -1,7 +1,7 @@
 {
   "feature": "B4",
-  "phieu": "20261109-0628-t1",
-  "luc": "2026-11-09T06:37:51+07:00",
+  "phieu": "20261109-0824-t1",
+  "luc": "2026-11-09T08:38:51+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
@@ -13,8 +13,27 @@
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 75%]",
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 87%]",
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [100%]",
-    "============================== 8 passed in 9.80s =============================="
+    "============================== 8 passed in 0.57s =============================="
   ],
+  "kiem_thuc_te_bench_wsl": {
+    "site": "test",
+    "don": "DON-B4-1794188251",
+    "job": "VIEC-00001",
+    "workflow": "ai-noi-gi-ve-brand",
+    "trang_thai_luc_sinh": "cho",
+    "nguon": "don",
+    "giay_tu_tra_toi_job": 0.2014,
+    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00001/660d33597685",
+    "tho_nhan_viec": "VIEC-00002",
+    "workflow_viec_con": "hoi-mot-ai",
+    "trang_thai_cha_sau_khi_tho_nhan": "dang_chay",
+    "giay_tho_nhan_viec": 0.1168,
+    "bat_loi_insert_job_khong_rollback_don": {
+      "don": "DON-B4-LOI-1794188268",
+      "trang_thai_db": "da_tra",
+      "da_ghi_error_log": true
+    }
+  },
   "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
   "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 }

@@ -50,6 +50,27 @@ def chia(job):
     job.db_set({"trang_thai": "dang_chay", "nhan_luc": now_datetime()}, notify=True)
 
 
+def chia_viec_gop_cho():
+    """Tự tách các việc cha quy trình gộp đang ở trạng thái `cho` (như việc sinh từ đơn `da_tra`) thành các việc con."""
+    wfs_gop = [
+        r.name
+        for r in frappe.get_all("LX Workflow", filters={"bat": 1, "che_do": "gop"}, fields=["name"])
+        if r.name in QUY_TRINH
+    ]
+    if not wfs_gop:
+        return
+    rows = frappe.db.sql(
+        """select name from `tabLX Job`
+        where trang_thai='cho' and workflow in %(wfs)s
+        order by creation asc for update skip locked""",
+        {"wfs": tuple(wfs_gop)},
+    )
+    for (name,) in rows or []:
+        job = frappe.get_doc("LX Job", name)
+        if job.trang_thai == "cho" and not _cac_con(job.name):
+            chia(job)
+
+
 def _cac_con(cha):
     return frappe.get_all("LX Job", filters={"cha": cha}, fields=["name", "workflow", "trang_thai", "nhan_viec", "ket_qua", "nhat_ky"], order_by="creation asc")
 

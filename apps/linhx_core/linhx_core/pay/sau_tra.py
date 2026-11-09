@@ -11,20 +11,24 @@ from linhx_core.pay.quyen_dung import gia_hop_le
 NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 
 
-def _mot_dong(gt: object, toi_da: int, mac_dinh: str = "") -> str:
+def mot_dong(gt: object, toi_da: int, mac_dinh: str = "") -> str:
+	"""Chuẩn hoá giá trị thành một dòng đơn (bỏ CR/LF, khoảng trắng thừa) và cắt theo `toi_da`."""
 	chuoi = str(gt if gt is not None else "").replace("\r", " ").replace("\n", " ").strip()
 	if not chuoi and mac_dinh:
 		chuoi = mac_dinh
 	return chuoi[:toi_da]
 
 
-def _tao_dau_vao(don: dict) -> str:
+_mot_dong = mot_dong
+
+
+def tao_dau_vao(don: dict) -> str:
 	"""Tạo chuỗi `dau_vao` 5 dòng chuẩn cho workflow báo cáo từ các trường đã cắt ngắn và loại xuống dòng."""
-	brand = _mot_dong(don.get("brand") or don.get("thuong_hieu"), 80)
-	nganh = _mot_dong(don.get("nganh"), 80)
-	thi_truong = _mot_dong(don.get("thi_truong"), 60, mac_dinh="Việt Nam")
-	doi_thu = _mot_dong(don.get("doi_thu"), 120)
-	su_that = _mot_dong(don.get("su_that"), 600)
+	brand = mot_dong(don.get("brand") or don.get("thuong_hieu"), 80)
+	nganh = mot_dong(don.get("nganh"), 80)
+	thi_truong = mot_dong(don.get("thi_truong"), 60, mac_dinh="Việt Nam")
+	doi_thu = mot_dong(don.get("doi_thu"), 120)
+	su_that = mot_dong(don.get("su_that"), 600)
 
 	return "\n".join(
 		[
@@ -35,6 +39,9 @@ def _tao_dau_vao(don: dict) -> str:
 			f"su_that: {su_that}",
 		]
 	)
+
+
+_tao_dau_vao = tao_dau_vao
 
 
 def viec_can_tao(don: dict, goi: dict, job_da_co: list[dict] | None) -> dict | None:
@@ -238,19 +245,42 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		return None
 
 	ma_xem = frappe.generate_hash(length=12)
-	job_doc = frappe.get_doc(
-		{
-			"doctype": "LX Job",
-			"workflow": viec["workflow"],
-			"dau_vao": viec["dau_vao"],
-			"trang_thai": "cho",
-			"nguon": "don",
-			"don": viec["don"],
-			"email_khach": viec.get("email_khach"),
-			"ma_xem": ma_xem,
-		}
-	)
-	job_doc.insert(ignore_permissions=True)
+	try:
+		job_doc = frappe.get_doc(
+			{
+				"doctype": "LX Job",
+				"workflow": viec["workflow"],
+				"dau_vao": viec["dau_vao"],
+				"trang_thai": "cho",
+				"nguon": "don",
+				"don": viec["don"],
+				"email_khach": viec.get("email_khach"),
+				"ma_xem": ma_xem,
+			}
+		)
+		job_doc.insert(ignore_permissions=True)
+	except Exception as exc:
+		job_sau_loi = frappe.db.sql(
+			"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
+			(ma_don,),
+			as_dict=True,
+		)
+		if job_sau_loi:
+			j0 = job_sau_loi[0]
+			return {
+				"name": j0.get("name"),
+				"ma_xem": j0.get("ma_xem"),
+				"don": ma_don,
+				"trang_thai": j0.get("trang_thai"),
+			}
+		_ghi_log_loi_don_mot_lan(
+			frappe,
+			doc,
+			title=f"Lỗi tạo LX Job cho đơn {ma_don}",
+			message=f"Đơn {ma_don} đã trả nhưng tạo LX Job thất bại: {exc}",
+		)
+		return None
+
 	return {
 		"name": job_doc.name,
 		"ma_xem": ma_xem,

@@ -5,6 +5,7 @@ import frappe
 
 from linhx_core.pay import vietqr
 from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
+from linhx_core.pay.sau_tra import mot_dong
 
 
 def _ds_goi() -> list[dict]:
@@ -40,11 +41,10 @@ def goi() -> list[dict]:
     return goi_cong_khai(_ds_goi())
 
 
-def _mot_dong(gt: object, toi_da: int) -> str | None:
+def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
     if gt is None:
         return None
-    chuoi = str(gt).replace("\r", " ").replace("\n", " ").strip()
-    return chuoi[:toi_da] or None
+    return mot_dong(gt, toi_da) or None
 
 
 @frappe.whitelist(allow_guest=True)
@@ -87,11 +87,11 @@ def tao_don(
             "noi_dung_ck": don["noi_dung_ck"],
             "qr_url": don["qr_url"],
             "brand": ten_brand,
-            "email": _mot_dong(email, 120),
-            "nganh": _mot_dong(nganh, 80),
-            "thi_truong": _mot_dong(thi_truong, 60),
-            "doi_thu": _mot_dong(doi_thu, 120),
-            "su_that": _mot_dong(su_that, 600),
+            "email": _truong_tuy_chon(email, 120),
+            "nganh": _truong_tuy_chon(nganh, 80),
+            "thi_truong": _truong_tuy_chon(thi_truong, 60),
+            "doi_thu": _truong_tuy_chon(doi_thu, 120),
+            "su_that": _truong_tuy_chon(su_that, 600),
         }
     )
     doc.insert(ignore_permissions=True)

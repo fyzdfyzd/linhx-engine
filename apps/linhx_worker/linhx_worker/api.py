@@ -9,6 +9,7 @@ import json
 import frappe
 from frappe.rate_limiter import rate_limit
 
+from linhx_core.pay.sau_tra import mot_dong, tao_dau_vao
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
 
@@ -80,6 +81,7 @@ def nhan_viec(ma, phien_ban=None, may=None):
     wfs = _workflow_cho_tho(tho)
     if not wfs:
         return None
+    quy_trinh.chia_viec_gop_cho()
     rows = frappe.db.sql(
         """select name from `tabLX Job`
         where trang_thai='cho' and workflow in %(wfs)s
@@ -251,31 +253,24 @@ def _ip():
     return getattr(frappe.local, "request_ip", None) or "?"
 
 
-def _mot_dong(chuoi, toi_da, mac_dinh=""):
-    s = str(chuoi or "").replace("\r", " ").replace("\n", " ").strip()
-    if not s and mac_dinh:
-        s = mac_dinh
-    return s[:toi_da]
-
-
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=5, seconds=3600)
 def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that="", email="", ten=""):
-    brand = _mot_dong(brand, 80)
+    brand = mot_dong(brand, 80)
     if len(brand) < 2:
         frappe.throw("Cần tên thương hiệu")
-    dau_vao = "\n".join([
-        f"brand: {brand}",
-        f"nganh: {_mot_dong(nganh, 80)}",
-        f"thi_truong: {_mot_dong(thi_truong, 60, 'Việt Nam')}",
-        f"doi_thu: {_mot_dong(doi_thu, 120)}",
-        f"su_that: {_mot_dong(su_that, 600)}",
-    ])
+    dau_vao = tao_dau_vao({
+        "brand": brand,
+        "nganh": nganh,
+        "thi_truong": thi_truong,
+        "doi_thu": doi_thu,
+        "su_that": su_that,
+    })
     ma_xem = frappe.generate_hash(length=12)
     job = frappe.get_doc({
         "doctype": "LX Job", "workflow": "ai-noi-gi-ve-brand", "dau_vao": dau_vao,
         "trang_thai": "cho_duyet", "nguon": "khach", "ma_xem": ma_xem,
-        "email_khach": _mot_dong(email, 120) or None, "ten_khach": _mot_dong(ten, 80),
+        "email_khach": mot_dong(email, 120) or None, "ten_khach": mot_dong(ten, 80),
     })
     job.insert(ignore_permissions=True)
     frappe.db.commit()
@@ -303,6 +298,7 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
+    quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)
     frappe.db.sql("update `tabLX Worker` set trang_thai='offline' where trang_thai!='offline' and (lan_cuoi is null or lan_cuoi < %s)", moc)
     for j in frappe.get_all("LX Job", filters={"trang_thai": "dang_chay", "tho": ["is", "set"]}, fields=["name", "workflow", "nhan_luc", "lan_thu", "tho"]):
