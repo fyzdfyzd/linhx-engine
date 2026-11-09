@@ -270,6 +270,8 @@ async function trangEngine() {
       <div class="the"><b>Lead mới</b><div id="lead-moi" style="margin-top:6px"><span class="ghi">Chưa có lead mới</span></div></div>
       <div class="the"><b>Đơn mới</b><div id="don-moi" style="margin-top:6px"><span class="ghi">Chưa có đơn mới</span></div></div>
     </div>
+    <h2>Phiếu chờ duyệt</h2>
+    <div class="the" id="phieu-cho"><span class="ghi">Chưa có phiếu chờ duyệt</span></div>
     <h2>Bảng phễu</h2>
     <div class="the" id="bang-pheu"><div class="dem" style="margin:0">
       <div data-tang="biet"><b>0</b>Biết</div>
@@ -291,9 +293,44 @@ async function trangEngine() {
       <button class="nut">Giao</button> <span class="loi" id="gloi"></span></form>
     <h2>Việc gần đây</h2><div class="the cuon"><table class="viec" id="viec"></table></div>
     <p class="ghi">Quản trị đầy đủ: <a href="/app/lx-job">/app/lx-job</a> · <a href="/app/lx-worker">thợ</a> · <a href="/app/lx-workflow">workflow</a></p>`;
-  let wfs = [], daVeWf = false;
+  let wfs = [], daVeWf = false, dauVanPhieuCho = null;
+  const vePhieuCho = pc => {
+    const hop = $("#phieu-cho");
+    if (!hop) return;
+    const dauVanMoi = JSON.stringify(pc || []);
+    if (dauVanMoi === dauVanPhieuCho) return;
+    const lyDoCu = {};
+    hop.querySelectorAll("[data-ly-do-tra]").forEach(el => {
+      if (el.value) lyDoCu[el.dataset.lyDoTra] = el.value;
+    });
+    dauVanPhieuCho = dauVanMoi;
+    if (!Array.isArray(pc) || !pc.length) {
+      hop.innerHTML = `<span class="ghi">Chưa có phiếu chờ duyệt</span>`;
+      return;
+    }
+    hop.innerHTML = pc.map(x => `<div style="padding:10px 0;border-bottom:1px solid var(--vien)">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap">
+        <span class="mono"><b>${e(x.name)}</b></span>
+        <span class="huy-hieu">${e(x.loai_phieu || "feature")}</span>
+      </div>
+      <div style="margin:6px 0;overflow-wrap:anywhere;word-break:break-word">${e(x.de || "")}</div>
+      ${x.vung ? `<div class="ghi mono" style="margin-bottom:6px;overflow-wrap:anywhere;word-break:break-word">Vùng: ${e(x.vung)}</div>` : ""}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px">
+        <input type="text" data-ly-do-tra="${e(x.name)}" value="${e(lyDoCu[x.name] || "")}" placeholder="Lý do trả lại (bắt buộc khi trả)" style="flex:1 1 180px;min-width:0">
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="nut nho" data-duyet-phieu="${e(x.name)}">Duyệt</button>
+          <button type="button" class="nut phu nho" data-tra-phieu="${e(x.name)}">Trả lại</button>
+        </div>
+      </div>
+      <div class="loi" data-loi-phieu="${e(x.name)}"></div>
+    </div>`).join("");
+  };
   const ve = async () => {
     const dinhSo = n => Number(n || 0).toLocaleString("vi-VN");
+    try {
+      const pc = await goi("linhx_core.ops.api_ban_phieu.phieu_cho");
+      if (Array.isArray(pc)) vePhieuCho(pc);
+    } catch (err) {}
     try {
       const ph = await goi("linhx_core.api_pheu.pheu");
       if (ph && $("#bang-pheu")) {
@@ -364,6 +401,46 @@ async function trangEngine() {
       <td class="mono">${xong && ph !== null ? e(ph) : "–"}</td>
       <td>${j.trang_thai === "cho_duyet" ? `<button class="nut nho" data-duyet="${e(j.name)}">Duyệt</button>` : ""}${["cho_duyet","cho","dang_chay"].includes(j.trang_thai) ? ` <button class="nut phu nho" data-huy="${e(j.name)}">Huỷ</button>` : ""}${["loi","huy"].includes(j.trang_thai) ? `<button class="nut phu nho" data-lai="${e(j.name)}">Chạy lại</button>` : ""}</td></tr>`;
     }).join("");
+  };
+  $("#phieu-cho").onclick = async ev => {
+    const nutDuyet = ev.target.closest("[data-duyet-phieu]");
+    if (nutDuyet) {
+      const ma = nutDuyet.dataset.duyetPhieu;
+      const hopLoi = $(`[data-loi-phieu="${CSS.escape(ma)}"]`, $("#phieu-cho"));
+      if (hopLoi) hopLoi.textContent = "";
+      nutDuyet.disabled = true;
+      try {
+        await goi("linhx_core.ops.api_ban_phieu.duyet", {ma_phieu: ma}, true);
+        await ve();
+      } catch (err) {
+        if (hopLoi) hopLoi.textContent = err.message;
+      } finally {
+        nutDuyet.disabled = false;
+      }
+      return;
+    }
+    const nutTra = ev.target.closest("[data-tra-phieu]");
+    if (nutTra) {
+      const ma = nutTra.dataset.traPhieu;
+      const oLyDo = $(`[data-ly-do-tra="${CSS.escape(ma)}"]`, $("#phieu-cho"));
+      const hopLoi = $(`[data-loi-phieu="${CSS.escape(ma)}"]`, $("#phieu-cho"));
+      const lyDo = String(oLyDo ? oLyDo.value : "").trim();
+      if (!lyDo) {
+        if (hopLoi) hopLoi.textContent = "Vui lòng nhập lý do trả lại phiếu.";
+        if (oLyDo) oLyDo.focus();
+        return;
+      }
+      if (hopLoi) hopLoi.textContent = "";
+      nutTra.disabled = true;
+      try {
+        await goi("linhx_core.ops.api_ban_phieu.tra_lai", {ma_phieu: ma, ly_do: lyDo}, true);
+        await ve();
+      } catch (err) {
+        if (hopLoi) hopLoi.textContent = err.message;
+      } finally {
+        nutTra.disabled = false;
+      }
+    }
   };
   $("#viec").onclick = async ev => {
     const t = ev.target;

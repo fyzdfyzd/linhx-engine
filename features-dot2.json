@@ -97,8 +97,8 @@
         "390 và 1280 không tràn ngang"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o5.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O5/kiem.json"
     },
     {
       "id": "O6",
