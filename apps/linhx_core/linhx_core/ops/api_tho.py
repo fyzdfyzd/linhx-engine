@@ -1,4 +1,4 @@
-"""API Frappe cho thợ kéo phiếu Agy."""
+"""API Frappe cho thợ kéo và nộp phiếu Agy."""
 from __future__ import annotations
 
 import json
@@ -13,6 +13,7 @@ from linhx_core.ops.keo_phieu import (
     keo_phieu,
     xac_thuc_tho,
 )
+from linhx_core.ops.nop_phieu import nop_phieu
 
 _MAU_HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
 
@@ -189,6 +190,127 @@ def keo(ma_tho: str | None = None, khoa: str | None = None, **kwargs):
                     },
                 )
         frappe.db.commit()
+        return ket_qua
+    except Exception:
+        frappe.db.rollback()
+        raise
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+def nop(
+    ma_tho: str | None = None,
+    khoa: str | None = None,
+    ma_phieu: str | None = None,
+    commit: str | None = None,
+    nhanh: str | None = None,
+    nhat_ky: str | None = None,
+    phut: int | float | None = None,
+    token: int | None = None,
+    **kwargs,
+):
+    """API cho thợ nộp phiếu: kiểm khoá thợ, chặn nộp phiếu của thợ khác (403),
+    lưu commit/nhánh/nhật ký/phút/token và chống tạo bản ghi trùng khi nộp lại cùng commit.
+    """
+    payload = _doc_payload(kwargs)
+    du_lieu_con = payload.get("du_lieu")
+    if isinstance(du_lieu_con, dict):
+        for k, v in du_lieu_con.items():
+            if v is not None:
+                payload.setdefault(k, v)
+
+    ma = ma_tho if isinstance(ma_tho, str) and ma_tho else payload.get("ma_tho") or payload.get("tho")
+    ma_chuan = str(ma or "").strip()
+    khoa_tran = _trich_khoa_tran(payload, khoa)
+
+    kho = _nap_kho_tho()
+    if not xac_thuc_tho(kho, ma_chuan, khoa_tran):
+        frappe.local.response["http_status_code"] = 401
+        return {"ok": False, "loi": "unauthorized"}
+
+    ma_phieu_val = (
+        ma_phieu
+        if isinstance(ma_phieu, str) and ma_phieu
+        else payload.get("ma_phieu") or payload.get("phieu") or payload.get("name")
+    )
+    ma_phieu_chuan = str(ma_phieu_val or "").strip()
+    if not ma_phieu_chuan:
+        frappe.local.response["http_status_code"] = 404
+        return {"ok": False, "loi": "khong_tim_thay_phieu"}
+
+    du_lieu = {
+        "ma_phieu": ma_phieu_chuan,
+        "commit": commit if commit is not None else payload.get("commit", ""),
+        "nhanh": nhanh if nhanh is not None else payload.get("nhanh", ""),
+        "nhat_ky": nhat_ky if nhat_ky is not None else payload.get("nhat_ky", ""),
+        "phut": phut if phut is not None else payload.get("phut", 0),
+        "token": token if token is not None else payload.get("token", 0),
+    }
+
+    luc_dt = now_datetime()
+    luc_str = luc_dt.strftime(DINH_DANG_TG) if hasattr(luc_dt, "strftime") else str(luc_dt)
+
+    try:
+        dong_khoa = frappe.db.sql(
+            """
+            SELECT name, loai_phieu, de, vung, trang_thai, tho, giao_luc, so_lan_giao,
+                   commit, nhanh, nhat_ky, phut, token, nop_luc
+            FROM `tabLX Phieu Agy`
+            WHERE name = %s
+            FOR UPDATE
+            """,
+            (ma_phieu_chuan,),
+            as_dict=True,
+        )
+        ds_phieu = []
+        for d in dong_khoa or []:
+            gl = d.get("giao_luc")
+            gl_str = gl.strftime(DINH_DANG_TG) if hasattr(gl, "strftime") else (str(gl) if gl else None)
+            nl = d.get("nop_luc")
+            nl_str = nl.strftime(DINH_DANG_TG) if hasattr(nl, "strftime") else (str(nl) if nl else None)
+            ds_phieu.append(
+                {
+                    "name": d.get("name"),
+                    "loai_phieu": d.get("loai_phieu"),
+                    "de": d.get("de"),
+                    "vung": d.get("vung"),
+                    "trang_thai": d.get("trang_thai"),
+                    "tho": d.get("tho"),
+                    "giao_luc": gl_str,
+                    "so_lan_giao": int(d.get("so_lan_giao") or 0),
+                    "commit": d.get("commit"),
+                    "nhanh": d.get("nhanh"),
+                    "nhat_ky": d.get("nhat_ky"),
+                    "phut": d.get("phut"),
+                    "token": d.get("token"),
+                    "nop_luc": nl_str,
+                }
+            )
+
+        kho["phieu"] = ds_phieu
+        ma_http, ket_qua = nop_phieu(kho, ma_chuan, khoa_tran, du_lieu, luc_str)
+        if ma_http in (401, 403, 404) or ma_http != 200:
+            frappe.db.rollback()
+            frappe.local.response["http_status_code"] = ma_http
+            return ket_qua
+
+        if not ket_qua.get("trung"):
+            p_moi = ket_qua["phieu"]
+            frappe.db.set_value(
+                "LX Phieu Agy",
+                p_moi["name"],
+                {
+                    "trang_thai": p_moi.get("trang_thai"),
+                    "commit": p_moi.get("commit"),
+                    "nhanh": p_moi.get("nhanh"),
+                    "nhat_ky": p_moi.get("nhat_ky"),
+                    "phut": p_moi.get("phut"),
+                    "token": p_moi.get("token"),
+                    "nop_luc": p_moi.get("nop_luc"),
+                },
+            )
+            frappe.db.commit()
+        else:
+            frappe.db.rollback()
         return ket_qua
     except Exception:
         frappe.db.rollback()
