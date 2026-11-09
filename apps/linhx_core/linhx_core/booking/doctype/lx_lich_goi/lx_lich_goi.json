@@ -1,0 +1,132 @@
+{
+ "doctype": "DocType",
+ "name": "LX Lich Goi",
+ "module": "booking",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "nguoi",
+  "co_hoi",
+  "phu_trach",
+  "don_vi",
+  "bat_dau",
+  "ket_thuc",
+  "phut",
+  "trang_thai",
+  "ghi_chu",
+  "nguon"
+ ],
+ "fields": [
+  {
+   "fieldname": "nguoi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Người",
+   "options": "LX Nguoi",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "co_hoi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cơ hội",
+   "options": "LX Co Hoi",
+   "search_index": 1
+  },
+  {
+   "fieldname": "phu_trach",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Người phụ trách",
+   "options": "User",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "don_vi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Đơn vị",
+   "options": "LX Don Vi",
+   "search_index": 1
+  },
+  {
+   "fieldname": "bat_dau",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Bắt đầu",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "ket_thuc",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Kết thúc",
+   "search_index": 1
+  },
+  {
+   "default": "30",
+   "fieldname": "phut",
+   "fieldtype": "Int",
+   "label": "Thời lượng (phút)",
+   "reqd": 1
+  },
+  {
+   "default": "cho_goi",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Trạng thái",
+   "options": "cho_goi\nda_goi\nhuy",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "ghi_chu",
+   "fieldtype": "Small Text",
+   "label": "Ghi chú"
+  },
+  {
+   "fieldname": "nguon",
+   "fieldtype": "Data",
+   "label": "Nguồn"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1,
+   "ignore_user_permissions": 1
+  },
+  {
+   "role": "LX Nhan Vien",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "sort_field": "bat_dau",
+ "sort_order": "ASC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 23:18:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 23:18:00.000000"
+}

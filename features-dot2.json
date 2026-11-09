@@ -233,8 +233,8 @@
         "người phụ trách thấy lịch trong viec_cho"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F2/kiem.json"
     },
     {
       "id": "F3",
