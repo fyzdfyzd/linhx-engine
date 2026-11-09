@@ -1,17 +1,24 @@
 # Người ngoài đã làm: WF10
 
-Bước 0, tìm sơ bộ 9/11 (GitHub, trang skill, blog, mạng). **Mới tìm thấy, chưa đọc code.** Vòng 1 phải đọc code/quy trình ít nhất 3 cái tốt nhất, ghi: lấy gì, bỏ gì, so với skill LINHX đang có.
+Đọc 9/11/2026. Code clone về `D:\LINHX\WF-NC\_refs\WF10\` (dữ liệu, không chạy). [đọc] = đã mở file thật; [chỉ thấy] = mới thấy tên/tóm tắt.
 
-| Nguồn | Link | Đọc để |
-|---|---|---|
-| product-strategist (borghei) | https://playbooks.com/skills/borghei/claude-skills/product-strategist | chiến lược SP |
-| marketing-strategy-pmm (alirezarezvani) | https://tessl.io/skills/github/alirezarezvani/claude-skills/marketing-strategy-pmm | định vị, GTM |
-| pm-claude-skills go-to-market | https://openskillindex.com/skills/mohitagw15856-pm-claude-skills-go-to-market-7203bd | GTM |
-| Claude skill stack cho PMM | https://www.productmarketingalliance.com/the-claude-skill-stack-for-product-marketing-bonus-article/ | người làm nghề dùng gì |
+| Nguồn | Link | Đã đọc gì | Lấy | Bỏ |
+|---|---|---|---|---|
+| product-strategist (borghei) [đọc] | https://github.com/borghei/claude-skills/tree/main/product-team/product-strategist | SKILL.md + `references/strategy_types.md` | Mở bằng mục "Clarify First": hỏi 2–3 đầu vào quan trọng, còn lại dùng mặc định và **ghi rõ mặc định nào đã dùng** | Lõi là máy sinh OKR theo mẫu 5 loại chiến lược, không có chẩn đoán, khách, giá. Quá mỏng cho chuẩn Trân Bảo |
+| marketing-strategy-pmm (alirezarezvani) [đọc] | https://github.com/alirezarezvani/claude-skills/tree/main/marketing-skill/skills/marketing-strategy-pmm | SKILL.md + references (positioning, GTM, launch) | Mỗi bước có dòng **Validation** đo được: "7+ customers describe value unprompted", "3+ paying customers from market in first 90 days". Quy trình định vị 8 bước theo April Dunford | Mẫu B2B SaaS (Series A, DACH). Số ngưỡng không áp thẳng cho hàng tiêu dùng/quà tặng VN |
+| go-to-market (mohitagw15856) [đọc] | https://github.com/mohitagw15856/pm-claude-skills | `exports/cursor/pm-gtm/go-to-market/go-to-market.mdc` | Khung đầu ra cố định: định vị Moore, trụ cột thông điệp, feature→benefit, use case theo vai | **Luật nguy hiểm**: "infer specific, realistic ones … mark … *(assumed — confirm)*" tức là cho phép bịa bằng chứng có gắn nhãn. Trái luật "không bịa" của LINHX |
+| pm-skills, nhóm product-strategy / go-to-market / market-research (phuryn) [đọc] | https://github.com/phuryn/pm-skills | `product-strategy` (Canvas 9 mục), `pricing-strategy`, `beachhead-segment` | Canvas 9 mục có mục **Trade-offs (việc sẽ KHÔNG làm)** và **Can't/Won't (vì sao đối thủ khó chép)**; mục 11–12 "giả thuyết phải đúng + thí nghiệm rẻ". Beachhead chấm 4 tiêu chí (nỗi đau cháy, sẵn sàng trả, thị phần có thể thắng 60–70%, mở rộng sang kề) và "validate with at least 10 customer interviews". Giá: chọn mô hình theo giá trị, 2–4 bậc, mỏ neo, Van Westendorp | Ví dụ SaaS/tiếng Anh. Không có bước chứng thực số liệu |
+| Product-Manager-Skills (deanpeters) [đọc] | https://github.com/deanpeters/Product-Manager-Skills | `product-strategy-session`, `positioning-statement` (Anti-Patterns, Common Pitfalls), `positioning-workshop`, `finance-based-pricing-advisor` | **Anti-pattern định vị**: "Not a tagline", "Not a feature list", "For Everyone" ("Pick the *first* customer segment"). Pricing chấm bằng ARPU, chuyển đổi, rủi ro rời bỏ, hoàn vốn CAC rồi mới go/no-go. Chạy 2–4 tuần nhiều chạm xác nhận | Dạng hỏi đáp từng câu một với PM, không hợp thợ tự chạy |
+| knowledge-work-plugins / product-management (Anthropic) [đọc] | https://github.com/anthropics/knowledge-work-plugins/tree/main/product-management | `skills/competitive-brief/SKILL.md` | Luật thật thà: "Be honest about where competitors are ahead. A comparison that always shows you winning is not credible." | Mỏng, không có phần giá hay khách |
+| Rumelt, Good Strategy Bad Strategy (qua Alex Murrell) [đọc] | https://www.alexmurrell.co.uk/summaries/richard-rumelt-good-strategy-bad-strategy | Bản tóm tắt | Lõi 3 phần: chẩn đoán, chính sách dẫn đường, hành động nhất quán. 4 dấu hiệu chiến lược dở. Xem trích dưới | Không phải skill, chỉ là khung |
+| April Dunford, 10 bước định vị (qua Heinz Marketing) [đọc] | https://www.heinzmarketing.com/blog/10-step-positioning-process-an-obviously-awesome-book-summary-part-3/ | Tóm tắt của Sarah Threet, 27/10/2023 | Thứ tự bước không đảo (đối thủ thật → thuộc tính độc nhất → giá trị → ai quan tâm → khung thị trường) | Cần phỏng vấn khách thật, thợ AI không tự làm được |
+| Pyramid Principle / MECE / giả thuyết trước (McKinsey, Minto) [chỉ thấy] | https://strategyu.co/structure-your-ideas-pyramid-principle-part-1/ | Kết quả tìm, chưa mở bài | Đáp án trước, lập luận sau, nhóm MECE | Chưa kiểm nguyên văn |
+| Van Westendorp PSM [chỉ thấy] | https://conjointly.com/products/van-westendorp/ | Kết quả tìm | 4 câu hỏi giá (quá rẻ, hời, đắt dần, quá đắt) để ra khoảng giá chấp nhận | Cần khảo sát thật, không dùng được khi chưa có mẫu |
+| Brands Vietnam, Advertising Vietnam [chỉ thấy] | https://www.brandsvietnam.com/congdong/topic/tu-dinh-vi-thuong-hieu-den-ke-hoach-ra-mat-san-pham-co-trong-tam ; https://advertisingvietnam.com/article/khach-hang-noi-gia-cao-chua-chac-ho-muon-ban-giam-gia | Cả hai trả HTTP 403 khi tải | Chủ đề: định vị → kế hoạch ra mắt có trọng tâm; "khách nói giá cao chưa chắc muốn giảm giá" | Chưa đọc, **chưa trích**. Để máy công ty (Chrome đã đăng nhập) lấy toàn văn |
 
-## Còn phải tìm ở vòng 1
-- GitHub theo tên skill + 'SKILL.md'; skills.sh, claudemarketplaces, openskillindex.
-- Mạng: X, LinkedIn, Reddit, nhóm Facebook VN; tiếng Trung khi hợp.
-
-| Nguồn | Đã đọc gì | Lấy | Bỏ |
-|---|---|---|---|
+## Trích nguyên văn (đã đọc)
+- Rumelt: "The kernel contains three essential elements: a diagnosis, a guiding policy, and a set of coherent actions." và "Simply being ambitious is not a strategy." (https://www.alexmurrell.co.uk/summaries/richard-rumelt-good-strategy-bad-strategy)
+- Dunford: "For every attribute you will need proof, even for things that seem nebulous." (https://www.heinzmarketing.com/blog/10-step-positioning-process-an-obviously-awesome-book-summary-part-3/)
+- Anthropic competitive-brief: "Be honest about where competitors are ahead. A comparison that always shows you winning is not credible." (`product-management/skills/competitive-brief/SKILL.md`, dòng 181)
+- mohitagw15856 (điểm cần tránh): "infer specific, realistic ones from the product description and the target customer, and mark anything inferred as *(assumed — confirm)*."
+- deanpeters: "Pick the *first* customer segment you'll serve."
