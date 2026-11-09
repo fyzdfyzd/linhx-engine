@@ -484,8 +484,8 @@
         "Hành trình xanh trên VM, không gọi SePay thật"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/T2/e2e.json"
     }
   ]
 }
