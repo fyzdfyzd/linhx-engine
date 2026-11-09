@@ -3,18 +3,20 @@ from frappe.model.document import Document
 from linhx_core.ops import phieu_agy
 
 
-def _lay_vai_tro_hien_tai(doc) -> list[str]:
-    vai_tro_gan = getattr(doc, "_vai_tro", None)
-    if vai_tro_gan is not None:
-        return list(vai_tro_gan)
+def _lay_vai_tro_hien_tai() -> list[str]:
     try:
         import frappe
 
-        get_roles = getattr(frappe, "get_roles", None)
-        if callable(get_roles):
-            return list(get_roles() or [])
-    except (ImportError, AttributeError):
-        pass
+        return list(frappe.get_roles() or [])
+    except Exception:
+        try:
+            import frappe
+
+            log_error = getattr(frappe, "log_error", None)
+            if callable(log_error):
+                log_error(title="LX Phieu Agy: không lấy được vai trò hiện tại")
+        except Exception:
+            pass
     return []
 
 
@@ -69,7 +71,7 @@ class LXPhieuAgy(Document):
             kq = phieu_agy.chuyen_trang_thai(
                 self._to_dict(trang_thai=trang_thai_cu),
                 self.trang_thai,
-                vai_tro=_lay_vai_tro_hien_tai(self),
+                vai_tro=_lay_vai_tro_hien_tai(),
                 ly_do_tra=getattr(self, "ly_do_tra", "") or "",
             )
             self.trang_thai = kq["trang_thai"]
@@ -79,7 +81,7 @@ class LXPhieuAgy(Document):
             kq = phieu_agy.chuyen_trang_thai(
                 self._to_dict(trang_thai="nhap"),
                 self.trang_thai,
-                vai_tro=_lay_vai_tro_hien_tai(self),
+                vai_tro=_lay_vai_tro_hien_tai(),
                 ly_do_tra=getattr(self, "ly_do_tra", "") or "",
             )
             self.trang_thai = kq["trang_thai"]

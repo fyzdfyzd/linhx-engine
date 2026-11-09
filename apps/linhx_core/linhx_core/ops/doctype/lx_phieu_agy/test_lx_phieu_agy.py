@@ -28,8 +28,10 @@ def _nap_controller():
     return LXPhieuAgy
 
 
-def test_controller_validate_va_chuyen_trang_thai():
+def test_controller_validate_va_chuyen_trang_thai(monkeypatch):
     LXPhieuAgy = _nap_controller()
+    import frappe
+
     doc = LXPhieuAgy()
     doc.loai_phieu = "feature"
     doc.de = "Thêm kiểm tra trạng thái phiếu"
@@ -37,17 +39,36 @@ def test_controller_validate_va_chuyen_trang_thai():
     doc.validate()
     assert doc.trang_thai == "nhap"
 
-    # Chuyển từ nhap -> duyet khi thiếu vai điều hành thì lỗi
+    # Chuyển từ nhap -> duyet khi thiếu vai điều hành thì lỗi (kể cả khi gửi kèm _vai_tro giả mạo)
     truoc = LXPhieuAgy()
     truoc.trang_thai = "nhap"
     doc.get_doc_before_save = lambda: truoc
     doc.trang_thai = "duyet"
-    doc._vai_tro = ["Guest"]
+    doc._vai_tro = ["System Manager"]
+    monkeypatch.setattr(frappe, "get_roles", lambda: ["Guest"], raising=False)
     with pytest.raises(PermissionError):
         doc.validate()
 
-    # Có vai điều hành thì duyệt được
-    doc._vai_tro = ["LX Operator"]
+    # Khi get_roles lỗi thì ghi log_error và từ chối
+    da_ghi_log = []
+    monkeypatch.setattr(
+        frappe,
+        "get_roles",
+        lambda: (_ for _ in ()).throw(RuntimeError("Chưa khởi tạo site")),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        frappe,
+        "log_error",
+        lambda *args, **kwargs: da_ghi_log.append((args, kwargs)),
+        raising=False,
+    )
+    with pytest.raises(PermissionError):
+        doc.validate()
+    assert len(da_ghi_log) == 1
+
+    # Có vai điều hành từ frappe.get_roles() thì duyệt được
+    monkeypatch.setattr(frappe, "get_roles", lambda: ["LX Operator"], raising=False)
     doc.validate()
     assert doc.trang_thai == "duyet"
 

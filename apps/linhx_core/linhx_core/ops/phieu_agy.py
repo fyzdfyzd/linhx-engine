@@ -30,7 +30,7 @@ MAU_LENH_SHELL = (
     re.compile(r"\b(?:powershell|pwsh)(?:\.exe)?\b", re.IGNORECASE),
     re.compile(r"\bcmd\.exe\b", re.IGNORECASE),
     re.compile(r"\bcmd\s+/[ck]\b", re.IGNORECASE),
-    re.compile(r"\b(?:ba|z|k|da|c)?sh(?:\.exe)?\s+-c\b", re.IGNORECASE),
+    re.compile(r"\b(?:ba|z|k|da|c)?sh(?:\.exe)?\s+-[a-z]*c\b", re.IGNORECASE),
     re.compile(r"\b(?:curl|wget)\b[^\n]*?\|\s*(?:sudo\s+)?(?:ba|z|k|da)?sh\b", re.IGNORECASE),
     re.compile(r"\|\s*(?:sudo\s+)?(?:ba|z|k|da)?sh\b", re.IGNORECASE),
     re.compile(r"\binvoke-expression\b", re.IGNORECASE),
