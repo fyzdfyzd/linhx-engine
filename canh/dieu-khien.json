@@ -14,7 +14,8 @@
     "D2@0911-mot-buoc",
     "B4@0911-loi-may-ram",
     "C2@0911-claude-het-han-muc",
-    "B4@0911-claude-het-han-muc"
+    "B4@0911-claude-het-han-muc",
+    "C2B@0911-pytest-temp-winerror5"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",
