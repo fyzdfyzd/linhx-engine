@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 15:03 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
+Cập nhật 2026-11-09 15:10 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -24,7 +24,6 @@ Cập nhật 2026-11-09 15:03 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09T13:49:10 C2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc 5564210c, bản hỏng giữ ở nhánh cục bộ hong/C2-20261109-1349, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\C2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 13:50 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-09 13:51 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-09 13:59 t1: giao agy phiếu 20261109-1359-t1: B4 (lượt sửa)
 - 2026-11-09 14:15 t0: xoá đếm CHUA_DAT của C2 (C2@0911-claude-het-han-muc)
@@ -36,4 +35,5 @@ Cập nhật 2026-11-09 15:03 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09 14:39 t1: agy xong phiếu 20261109-1359-t1 (B4) sau 40 phút
 - 2026-11-09 14:52 t2: D2 trượt do lỗi máy (commit 0ffdb7f), không tính lần
 - 2026-11-09 14:52 t2: giao agy phiếu 20261109-1452-t2: D2 (lượt sửa)
+- 2026-11-09 15:06 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 
