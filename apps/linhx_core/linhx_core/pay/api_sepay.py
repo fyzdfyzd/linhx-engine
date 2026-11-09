@@ -254,8 +254,6 @@ def webhook(**kwargs):
 			and not ket_qua.get("trang_thai_khong_hop_le")
 		):
 			doc_don.trang_thai = "da_tra"
-			if getattr(doc_don, "so_tien", None) is None and ds_don[0].get("so_tien") is not None:
-				doc_don.so_tien = ds_don[0].get("so_tien")
 			doc_don.tx_id = ds_don[0].get("tx_id") or tx_id
 			doc_don.save(ignore_permissions=True)
 		frappe.db.commit()

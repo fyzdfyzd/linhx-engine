@@ -29,6 +29,26 @@ def chuan_hoa_don_lx_job() -> None:
 			)
 
 
+def dam_bao_unique_don_lx_job() -> None:
+	"""Đảm bảo bảng `tabLX Job` có đúng một unique index trên cột `don`."""
+	if not frappe.db.table_exists("LX Job") or not frappe.db.has_column("LX Job", "don"):
+		return
+	chuan_hoa_don_lx_job()
+	idxs = frappe.db.sql(
+		"SHOW INDEX FROM `tabLX Job` WHERE Column_name = 'don'",
+		as_dict=True,
+	)
+	unique_keys = {r.get("Key_name") for r in (idxs or []) if r.get("Key_name") and int(r.get("Non_unique", 1)) == 0}
+	all_keys = {r.get("Key_name") for r in (idxs or []) if r.get("Key_name")}
+	if not unique_keys:
+		frappe.db.add_unique("LX Job", ["don"])
+		unique_keys.add("unique_don")
+	giu_unique = "don" if "don" in unique_keys else sorted(unique_keys)[0]
+	for k in all_keys:
+		if k != giu_unique and k in ("unique_don", "don_index"):
+			frappe.db.sql_ddl(f"ALTER TABLE `tabLX Job` DROP INDEX `{k}`")
+
+
 class LXJob(Document):
 	def before_validate(self):
 		don = str(getattr(self, "don", None) or "").strip()
@@ -43,4 +63,4 @@ class LXJob(Document):
 				frappe.throw(f"Đơn {self.don} đã có việc {trung}")
 
 	def on_doctype_update(self):
-		chuan_hoa_don_lx_job()
+		dam_bao_unique_don_lx_job()

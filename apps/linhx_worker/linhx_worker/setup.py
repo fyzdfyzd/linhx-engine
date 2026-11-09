@@ -35,6 +35,9 @@ def before_migrate():
 
 
 def after_install():
+    from linhx_worker.linhx_worker.doctype.lx_job.lx_job import dam_bao_unique_don_lx_job
+
+    dam_bao_unique_don_lx_job()
     if frappe.db.get_single_value("System Settings", "time_zone") != "Asia/Ho_Chi_Minh":
         frappe.db.set_single_value("System Settings", "time_zone", "Asia/Ho_Chi_Minh")
     for role in ("LX Operator", "LX Worker"):

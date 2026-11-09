@@ -179,7 +179,7 @@ def test_xu_ly_sau_tra_tao_job_va_chong_trung_log():
 		assert len(da_insert) == 1
 		assert fake_frappe.log_error.call_count == 2
 
-		# Khi job_doc.insert ném lỗi (vd workflow thiếu), xu_ly_sau_tra bắt lỗi, log_error và không làm nổ on_update
+		# Khi job_doc.insert ném lỗi không phải trùng khoá (vd workflow thiếu), xu_ly_sau_tra log_error rõ và không trả nhầm job
 		def fake_get_doc_loi(data):
 			doc_job = MagicMock()
 			doc_job.insert.side_effect = RuntimeError("Workflow không tồn tại")
@@ -197,3 +197,114 @@ def test_xu_ly_sau_tra_tao_job_va_chong_trung_log():
 		)
 		assert sau_tra.xu_ly_sau_tra(doc_loi_insert) is None
 		assert fake_frappe.log_error.call_count == 3
+
+		# Khi hai request đồng thời đụng DuplicateEntryError, xu_ly_sau_tra trả về bản ghi LX Job vừa được tạo bởi luồng kia
+		class FakeDuplicateEntryError(Exception):
+			pass
+
+		fake_frappe.DuplicateEntryError = FakeDuplicateEntryError
+		lan_sql_job = {"dem": 0}
+
+		def fake_sql_dua_trung(query, params=None, as_dict=False):
+			if "tabLX Job" in query:
+				lan_sql_job["dem"] += 1
+				if lan_sql_job["dem"] == 1:
+					return []
+				return [{"name": "VIEC-00099", "don": "DON-204", "ma_xem": "ma99", "trang_thai": "cho"}]
+			return [{"name": params[0]}] if params else []
+
+		def fake_get_doc_trung(data):
+			doc_job = MagicMock()
+			doc_job.insert.side_effect = FakeDuplicateEntryError("Duplicate entry 'DON-204' for key 'don'")
+			return doc_job
+
+		fake_frappe.db.sql.side_effect = fake_sql_dua_trung
+		fake_frappe.get_doc.side_effect = fake_get_doc_trung
+		doc_trung = SimpleNamespace(
+			name="DON-204",
+			ma="DON-204",
+			goi="BC-AI",
+			so_tien=99000,
+			trang_thai="da_tra",
+			brand="Cà Phê Núi",
+			email="kh@vd.vn",
+		)
+		kq_trung = sau_tra.xu_ly_sau_tra(doc_trung)
+		assert kq_trung == {
+			"name": "VIEC-00099",
+			"ma_xem": "ma99",
+			"don": "DON-204",
+			"trang_thai": "cho",
+		}
+		assert fake_frappe.log_error.call_count == 3
+
+
+def test_chia_viec_gop_cho_tu_tach_viec_con():
+	fake_frappe = MagicMock()
+	fake_utils = MagicMock()
+	fake_utils.now_datetime.return_value = "2026-11-09 10:00:00"
+
+	viec_con_da_tao = []
+	trang_thai_cha = {"tt": "cho"}
+
+	def fake_get_all(doctype, filters=None, **kwargs):
+		if doctype == "LX Workflow":
+			return [SimpleNamespace(name="ai-noi-gi-ve-brand")]
+		if doctype == "LX Job" and isinstance(filters, dict) and filters.get("cha") == "VIEC-00001":
+			return list(viec_con_da_tao)
+		return []
+
+	fake_frappe.get_all.side_effect = fake_get_all
+	fake_frappe.db.sql.return_value = [("VIEC-00001",)]
+
+	doc_cha = MagicMock()
+	doc_cha.name = "VIEC-00001"
+	doc_cha.workflow = "ai-noi-gi-ve-brand"
+	doc_cha.dau_vao = "brand: Trà Đồi Mây\nnganh: Trà\nthi_truong: Việt Nam\ndoi_thu: \nsu_that: "
+
+	def _doc_trang_thai():
+		return trang_thai_cha["tt"]
+
+	type(doc_cha).trang_thai = property(lambda self: _doc_trang_thai())
+
+	def fake_db_set(vals, notify=False):
+		if isinstance(vals, dict) and "trang_thai" in vals:
+			trang_thai_cha["tt"] = vals["trang_thai"]
+
+	doc_cha.db_set.side_effect = fake_db_set
+
+	def fake_get_doc(arg1, arg2=None):
+		if arg1 == "LX Job" and arg2 == "VIEC-00001":
+			return doc_cha
+		if isinstance(arg1, dict) and arg1.get("doctype") == "LX Job":
+			doc_con = MagicMock()
+
+			def _insert_con(ignore_permissions=False):
+				viec_con_da_tao.append(
+					SimpleNamespace(
+						name=f"VIEC-{len(viec_con_da_tao) + 2:05d}",
+						workflow=arg1["workflow"],
+						trang_thai=arg1["trang_thai"],
+						nhan_viec=arg1["nhan_viec"],
+						cha=arg1["cha"],
+					)
+				)
+
+			doc_con.insert.side_effect = _insert_con
+			return doc_con
+		return MagicMock()
+
+	fake_frappe.get_doc.side_effect = fake_get_doc
+
+	with patch.dict(sys.modules, {"frappe": fake_frappe, "frappe.utils": fake_utils}):
+		sys.modules.pop("linhx_worker.quy_trinh", None)
+		from linhx_worker import quy_trinh
+
+		quy_trinh.chia_viec_gop_cho()
+		assert trang_thai_cha["tt"] == "dang_chay"
+		assert len(viec_con_da_tao) == 9
+		assert all(c.workflow == "hoi-mot-ai" and c.trang_thai == "cho" for c in viec_con_da_tao)
+
+		# Gọi lại lần 2 không tách trùng việc con
+		quy_trinh.chia_viec_gop_cho()
+		assert len(viec_con_da_tao) == 9

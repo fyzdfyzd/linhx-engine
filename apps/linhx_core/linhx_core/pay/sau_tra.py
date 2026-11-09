@@ -137,7 +137,11 @@ def _tim_goi_db(frappe_mod, ma_hoac_ten: str) -> dict | None:
 
 
 def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
-	"""Chỉ ghi `Error Log` tối đa một lần cho mỗi đơn và mỗi loại lỗi khi `on_update` lặp lại."""
+	"""Chỉ ghi `Error Log` tối đa một lần cho mỗi đơn và mỗi loại lỗi khi `on_update` lặp lại.
+
+	Trong Frappe v15 (`frappe.core.doctype.error_log.error_log.log_error`), `frappe.log_error(title=..., message=...)`
+	lưu `title` vào cột `method` và `message` vào cột `error` của bảng `tabError Log`.
+	"""
 	da_log = getattr(doc, "_da_log_loi_sau_tra", None)
 	if isinstance(da_log, set) and title in da_log:
 		return
@@ -161,6 +165,16 @@ def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
 		da_log.add(title)
 	except Exception:
 		pass
+
+
+def _loai_loi_trung_khoa(frappe_mod) -> tuple[type[BaseException], ...]:
+	"""Trả tuple các lớp ngoại lệ trùng khoá/validate của Frappe để tách riêng với lỗi DB khác."""
+	ket_qua: list[type[BaseException]] = []
+	for ten in ("DuplicateEntryError", "UniqueValidationError"):
+		cls = getattr(frappe_mod, ten, None)
+		if isinstance(cls, type) and issubclass(cls, BaseException):
+			ket_qua.append(cls)
+	return tuple(ket_qua)
 
 
 def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
@@ -245,6 +259,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		return None
 
 	ma_xem = frappe.generate_hash(length=12)
+	loi_trung = _loai_loi_trung_khoa(frappe)
 	try:
 		job_doc = frappe.get_doc(
 			{
@@ -260,24 +275,36 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		)
 		job_doc.insert(ignore_permissions=True)
 	except Exception as exc:
-		job_sau_loi = frappe.db.sql(
-			"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
-			(ma_don,),
-			as_dict=True,
+		la_loi_trung = bool(loi_trung and isinstance(exc, loi_trung)) or (
+			"Duplicate entry" in str(exc) or f"Đơn {ma_don} đã có việc" in str(exc)
 		)
-		if job_sau_loi:
-			j0 = job_sau_loi[0]
-			return {
-				"name": j0.get("name"),
-				"ma_xem": j0.get("ma_xem"),
-				"don": ma_don,
-				"trang_thai": j0.get("trang_thai"),
-			}
+		if la_loi_trung:
+			job_sau_loi = frappe.db.sql(
+				"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
+				(ma_don,),
+				as_dict=True,
+			)
+			if job_sau_loi:
+				j0 = job_sau_loi[0]
+				return {
+					"name": j0.get("name"),
+					"ma_xem": j0.get("ma_xem"),
+					"don": ma_don,
+					"trang_thai": j0.get("trang_thai"),
+				}
+		tb = ""
+		lay_tb = getattr(frappe, "get_traceback", None)
+		if callable(lay_tb):
+			try:
+				tb = str(lay_tb() or "").strip()
+			except Exception:
+				tb = ""
+		chi_tiet = f"{exc}\n{tb}".strip() if tb else str(exc)
 		_ghi_log_loi_don_mot_lan(
 			frappe,
 			doc,
 			title=f"Lỗi tạo LX Job cho đơn {ma_don}",
-			message=f"Đơn {ma_don} đã trả nhưng tạo LX Job thất bại: {exc}",
+			message=f"Đơn {ma_don} đã trả nhưng tạo LX Job thất bại ({type(exc).__name__}): {chi_tiet}",
 		)
 		return None
 
