@@ -68,16 +68,24 @@ def heartbeat(ma, phien_ban=None, may=None):
 
 
 @frappe.whitelist(methods=["POST"])
-def nhan_viec(ma, phien_ban=None, may=None, sandbox=None):
+def nhan_viec(ma, phien_ban=None, may=None, chu_ky_sandbox=None):
     """Tra ve 1 viec hoac None. Khoa hang bang SKIP LOCKED de nhieu tho khong tranh nhau.
 
-    Cổng bảo mật nguồn khách/đơn:
-    - `runner/linhx_runner.py` (v0.1.1, ngoài vùng sửa của B4) chưa đọc `viec["sandbox"]` và gọi `nhan_viec`
-      không truyền tham số `sandbox`.
-    - Khi `tho_ap_dung_sandbox(tho, sandbox)` là `False`, server giữ cổng duyệt tay (`duyet_viec`) và
-      từ chối giao tự động mọi việc có `nguon in ('khach', 'don')` (hoặc việc con của nó).
-    - Chỉ khi thợ có nhãn `sandbox` và tiến trình runner gửi xác nhận `sandbox` hợp lệ (chạy qua
-      `quy_trinh.chay_agy_sandbox`), server mới tự tách và giao ngay việc `nguon='don'` không qua duyệt tay.
+    Luồng B4 và cổng xác thực sandbox cho việc nguồn khách/đơn:
+    - Đơn `da_tra` sinh `LX Job` (`nguon='don'`, `trang_thai='cho'`); `quy_trinh.chia_viec_gop_cho()`
+      tự động tách ngay thành các việc con `trang_thai='cho'`, `nguon='don'` mà không qua `duyet_viec`
+      (`duyet_viec` chỉ dành cho `trang_thai='cho_duyet'` của luồng `dat_bao_cao` chưa trả tiền).
+    - Server KHÔNG nhận hay tin cờ `sandbox: true`/dict do thợ tự khai. Thay vào đó, `quy_trinh.xac_thuc_sandbox_tho`
+      kiểm tra đồng thời: (1) `LX Worker` trên server có nhãn `sandbox` và không có nhãn `repo` (chỉ `LX Operator` /
+      `System Manager` mới có quyền ghi `LX Worker`), (2) `phien_ban` thuộc runner đã nâng cấp (`>= 0.2.0-sandbox`),
+      và (3) chữ ký HMAC-SHA256 `chu_ky_sandbox` khớp hằng thời gian (`hmac.compare_digest`) với `sandbox_khoa`
+      trong `site_config.json` của server.
+    - Tiến trình runner đã nâng cấp (`linhx_worker.quy_trinh.vong_tho_sandbox` gọi `chay_agy_sandbox`) gửi kèm
+      `chu_ky_sandbox` hợp lệ nên tự nhận và chạy hết luồng việc `nguon='don'` hoàn toàn không cần duyệt tay.
+    - Lưu ý rõ cho Linh: file `runner/linhx_runner.py` v0.1.1 nằm ngoài `vung` được sửa của B4 (cổng K1 `canh/rao.py`),
+      chưa đọc `viec["sandbox"]` và chưa ký `chu_ky_sandbox`; vì vậy nếu chỉ chạy `runner/linhx_runner.py` v0.1.1 cũ
+      thì `nhan_viec` giữ lại các việc `nguon in ('khach', 'don')` ở trạng thái `cho` cho tới khi thợ chạy qua
+      `linhx_worker.quy_trinh.vong_tho_sandbox` hoặc Linh duyệt phiếu nâng cấp `runner/linhx_runner.py`.
     """
     tho = _lay_tho(ma)
     heartbeat(ma, phien_ban, may)
@@ -90,19 +98,20 @@ def nhan_viec(ma, phien_ban=None, may=None, sandbox=None):
     wfs = _workflow_cho_tho(tho)
     if not wfs:
         return None
-    cho_phep_sandbox = quy_trinh.tho_ap_dung_sandbox(tho, sandbox=sandbox)
-    quy_trinh.chia_viec_gop_cho(da_xac_nhan_sandbox=cho_phep_sandbox)
+    quy_trinh.chia_viec_gop_cho()
+    cho_phep_sandbox = quy_trinh.xac_thuc_sandbox_tho(
+        tho,
+        phien_ban=phien_ban,
+        chu_ky_sandbox=chu_ky_sandbox,
+    )
     dk_nguon = ""
     if not cho_phep_sandbox:
         dk_nguon = """
-          and (
-            ifnull(nguon, 'noi_bo') not in ('khach', 'don')
-            or ifnull(nhan_viec, '') = 'da_duyet_tay'
-            or (ifnull(cha, '') != '' and exists (
-              select 1 from `tabLX Job` p
-              where p.name = `tabLX Job`.cha and ifnull(p.nhan_viec, '') = 'da_duyet_tay'
-            ))
-          )
+          and ifnull(nguon, 'noi_bo') not in ('khach', 'don')
+          and (ifnull(cha, '') = '' or not exists (
+            select 1 from `tabLX Job` p
+            where p.name = `tabLX Job`.cha and ifnull(p.nguon, 'noi_bo') in ('khach', 'don')
+          ))
         """
     rows = frappe.db.sql(
         f"""select name from `tabLX Job`
@@ -118,9 +127,7 @@ def nhan_viec(ma, phien_ban=None, may=None, sandbox=None):
     job = frappe.get_doc("LX Job", rows[0][0])
     nguon_job = getattr(job, "nguon", None)
     nguon_cha = frappe.db.get_value("LX Job", job.cha, "nguon") if getattr(job, "cha", None) else None
-    nhan_cha = frappe.db.get_value("LX Job", job.cha, "nhan_viec") if getattr(job, "cha", None) else None
-    da_duyet_tay = (getattr(job, "nhan_viec", None) == "da_duyet_tay") or (nhan_cha == "da_duyet_tay")
-    if (nguon_job in ("khach", "don") or nguon_cha in ("khach", "don")) and not cho_phep_sandbox and not da_duyet_tay:
+    if (nguon_job in ("khach", "don") or nguon_cha in ("khach", "don")) and not cho_phep_sandbox:
         frappe.db.rollback()
         return None
     wf = frappe.get_doc("LX Workflow", job.workflow)
@@ -230,13 +237,11 @@ def giao_viec(workflow, dau_vao, muon_tho=None):
 def duyet_viec(viec):
     _la_dieu_hanh()
     job = frappe.get_doc("LX Job", viec)
-    if job.trang_thai == "cho_duyet" or (job.trang_thai == "cho" and getattr(job, "nguon", None) in ("khach", "don")):
-        job.db_set("nhan_viec", "da_duyet_tay", update_modified=False)
-        job.nhan_viec = "da_duyet_tay"
+    if job.trang_thai == "cho_duyet":
         if quy_trinh.la_gop(job.workflow):
             quy_trinh.chia(job)
         else:
-            job.db_set({"trang_thai": "cho", "nhan_viec": "da_duyet_tay"}, notify=True)
+            job.db_set("trang_thai", "cho", notify=True)
     return {"ok": True}
 
 

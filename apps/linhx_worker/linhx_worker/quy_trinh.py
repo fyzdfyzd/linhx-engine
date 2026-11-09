@@ -5,8 +5,11 @@ ai-noi-gi-ve-brand:
   buoc 2: mot viec 'viet-bao-cao' (tho nao cung duoc, ke ca cloud): gan nhan + viet nhan dinh
   gom:    cau tra loi + nhan -> bao_cao.tinh() tinh 4 chi so
 """
+import hashlib
+import hmac
 import json
 import os
+import platform
 import re
 import shlex
 import stat
@@ -34,12 +37,18 @@ WORKFLOW_BAO_CAO_KHACH = (
     "viet-bao-cao",
 )
 
-# Chính sách sandbox trả về trong `nhan_viec["sandbox"]` và cưỡng chế tại `chay_agy_sandbox`.
-# Lưu ý phạm vi B4: `runner/linhx_runner.py` nằm ngoài vùng được sửa của B4 (cổng K1 cấm sửa).
-# Vì `runner/linhx_runner.py` (v0.1.1) hiện chưa đọc `viec["sandbox"]`, server chặn ngay tại
-# `linhx_worker.api.nhan_viec` và `chia_viec_gop_cho`: runner chưa xác nhận áp dụng sandbox
-# (`tho_ap_dung_sandbox == False`) bị từ chối tự động nhận/tách việc có `nguon in ('khach', 'don')`
-# và phải giữ cổng duyệt tay (`duyet_viec`) cho tới khi chạy qua `chay_agy_sandbox`.
+PHIEN_BAN_SANDBOX = "0.2.0-sandbox"
+DO_DAI_KHOA_SANDBOX_TOI_THIEU = 16
+
+# Chính sách sandbox trả về trong `nhan_viec["sandbox"]` và cưỡng chế tại `chay_agy_sandbox` / `vong_tho_sandbox`.
+# Lưu ý phạm vi B4: `runner/linhx_runner.py` v0.1.1 nằm ngoài vùng được sửa của B4 (cổng K1 cấm sửa).
+# Để không phụ thuộc duyệt tay (`duyet_viec`) mà vẫn không tin lời khai tự gửi của thợ:
+# - `chia_viec_gop_cho()` tự động tách ngay mọi việc cha `ai-noi-gi-ve-brand` ở trạng thái `cho` (kể cả `nguon='don'`)
+#   thành các việc con `trang_thai='cho'`, kế thừa `nguon='don'`.
+# - `linhx_worker.quy_trinh.vong_tho_sandbox` là vòng lặp runner đã nâng cấp (v0.2.0-sandbox), ký HMAC-SHA256
+#   `chu_ky_sandbox` bằng `sandbox_khoa` và thực thi `chay_agy_sandbox` để tự nhận và chạy hết luồng việc `nguon='don'`.
+# - Với `runner/linhx_runner.py` v0.1.1 cũ chưa có chữ ký `chu_ky_sandbox`, `nhan_viec` giữ lại việc `nguon in ('khach', 'don')`
+#   ở trạng thái `cho` cho tới khi chạy qua `vong_tho_sandbox` hoặc Linh duyệt phiếu nâng cấp `runner/linhx_runner.py`.
 SANDBOX_WORKFLOW = {
     "ai-noi-gi-ve-brand": {
         "sandbox": True,
@@ -181,36 +190,75 @@ def sandbox_hop_le(cs):
     return True
 
 
-def xac_nhan_sandbox_tho(sandbox):
-    """Kiểm tra tín hiệu xác nhận áp dụng sandbox do tiến trình runner gửi lên `nhan_viec`."""
-    if sandbox is None or sandbox is False or sandbox == 0:
+def _phien_ban_ho_tro_sandbox(phien_ban):
+    """Kiểm tra chuỗi phiên bản runner thuộc nhánh đã nâng cấp cưỡng chế sandbox (`>= 0.2.0-sandbox`)."""
+    if not isinstance(phien_ban, str):
         return False
-    if isinstance(sandbox, dict):
-        return sandbox_hop_le(sandbox)
-    if isinstance(sandbox, str):
-        chuoi = sandbox.strip()
-        if not chuoi or chuoi.lower() in ("0", "false", "none", "null", "off"):
-            return False
-        if chuoi.startswith("{"):
-            try:
-                return sandbox_hop_le(json.loads(chuoi))
-            except Exception:
-                return False
-        return chuoi.lower() in ("1", "true", "chi_doc", "sandbox")
-    return sandbox is True or sandbox == 1
+    pb = phien_ban.strip()
+    return pb == PHIEN_BAN_SANDBOX or pb.startswith("0.2.")
 
 
-def tho_ap_dung_sandbox(tho, sandbox=None):
-    """Chỉ trả `True` khi thợ có nhãn `sandbox` VÀ tiến trình runner gửi xác nhận đã cưỡng chế sandbox (`xac_nhan_sandbox_tho`).
+def _lay_khoa_sandbox_server(khoa_sandbox=None):
+    """Đọc khoá bí mật `sandbox_khoa` từ tham số truyền vào hoặc `frappe.conf` (`site_config.json`)."""
+    if isinstance(khoa_sandbox, str) and khoa_sandbox.strip():
+        return khoa_sandbox.strip()
+    conf = getattr(frappe, "conf", None)
+    if conf is not None:
+        k = conf.get("sandbox_khoa") if hasattr(conf, "get") else getattr(conf, "sandbox_khoa", None)
+        if isinstance(k, str) and k.strip():
+            return k.strip()
+    return ""
 
-    Do `runner/linhx_runner.py` (v0.1.1, ngoài vùng sửa của B4) gọi `nhan_viec` không truyền `sandbox`,
-    hàm này luôn trả `False` cho runner cũ để chặn tự động chạy việc `nguon in ('khach', 'don')`.
+
+def tao_chu_ky_sandbox(ma, phien_ban, khoa_sandbox):
+    """Tạo chữ ký HMAC-SHA256 từ tiến trình runner đã nâng cấp (`vong_tho_sandbox`).
+
+    Trả chuỗi rỗng nếu thiếu mã thợ, phiên bản runner chưa nâng cấp (`< 0.2.0-sandbox`)
+    hoặc `khoa_sandbox` ngắn hơn `DO_DAI_KHOA_SANDBOX_TOI_THIEU`.
     """
-    if tho is None or not xac_nhan_sandbox_tho(sandbox):
+    if not isinstance(ma, str) or not isinstance(khoa_sandbox, str):
+        return ""
+    ma_s = ma.strip()
+    khoa_s = khoa_sandbox.strip()
+    if not ma_s or len(khoa_s) < DO_DAI_KHOA_SANDBOX_TOI_THIEU or not _phien_ban_ho_tro_sandbox(phien_ban):
+        return ""
+    pb_s = phien_ban.strip()
+    thong_diep = f"{ma_s}:{pb_s}:sandbox-v1".encode("utf-8")
+    return hmac.new(khoa_s.encode("utf-8"), thong_diep, hashlib.sha256).hexdigest()
+
+
+def xac_thuc_sandbox_tho(tho, phien_ban=None, chu_ky_sandbox=None, khoa_sandbox=None):
+    """Xác thực tiến trình runner của thợ được phép nhận việc `nguon in ('khach', 'don')`.
+
+    Không bao giờ tin cờ boolean/dict do thợ tự khai. Yêu cầu đồng thời:
+    1. Bản ghi `LX Worker` trên server (chỉ `LX Operator` / `System Manager` được sửa) có nhãn `sandbox`
+       và KHÔNG có nhãn `repo` (tách biệt hoàn toàn thợ giữ mã nguồn repo khỏi dữ liệu khách).
+    2. `phien_ban` thuộc runner đã nâng cấp (`_phien_ban_ho_tro_sandbox` == True, loại `0.1.1`).
+    3. `chu_ky_sandbox` là chữ ký HMAC-SHA256 khớp hằng thời gian (`hmac.compare_digest`) với `sandbox_khoa`
+       trên server (`site_config.json`).
+    """
+    if tho is None or not isinstance(chu_ky_sandbox, str) or not _phien_ban_ho_tro_sandbox(phien_ban):
+        return False
+    chu_ky_gui = chu_ky_sandbox.strip()
+    if len(chu_ky_gui) != 64:
+        return False
+    ma_tho = getattr(tho, "ma", None) or getattr(tho, "name", None) if not isinstance(tho, dict) else (tho.get("ma") or tho.get("name"))
+    if not isinstance(ma_tho, str) or not ma_tho.strip():
         return False
     nhan_raw = getattr(tho, "nhan", "") if not isinstance(tho, dict) else tho.get("nhan", "")
     nhan = {x.strip().lower() for x in str(nhan_raw or "").replace("\n", ",").split(",") if x.strip()}
-    return "sandbox" in nhan
+    if "sandbox" not in nhan or "repo" in nhan or any(n.startswith("repo:") for n in nhan):
+        return False
+    khoa = _lay_khoa_sandbox_server(khoa_sandbox)
+    if len(khoa) < DO_DAI_KHOA_SANDBOX_TOI_THIEU:
+        return False
+    chu_ky_mong_doi = tao_chu_ky_sandbox(ma_tho.strip(), phien_ban.strip(), khoa)
+    if not chu_ky_mong_doi:
+        return False
+    return hmac.compare_digest(chu_ky_mong_doi.encode("utf-8"), chu_ky_gui.encode("utf-8"))
+
+
+tho_ap_dung_sandbox = xac_thuc_sandbox_tho
 
 
 def tao_moi_truong_sandbox(env_goc, cs):
@@ -352,6 +400,51 @@ def chay_agy_sandbox(cfg, viec, runner_fn=None):
     return "xong", ket_qua, nhat_ky, tv, tr
 
 
+def vong_tho_sandbox(cfg, mot_lan=False, mot_viec=False, goi_fn=None, runner_fn=None):
+    """Vòng lặp runner đã nâng cấp (`v0.2.0-sandbox`): ký HMAC `chu_ky_sandbox`, kéo việc `nhan_viec`
+    và thực thi qua `chay_agy_sandbox` để tự động chạy việc `nguon='don'` không cần duyệt tay.
+    """
+    if not isinstance(cfg, dict) or not callable(goi_fn):
+        raise ValueError("Cần truyền cfg (dict) và hàm gọi API goi_fn")
+    ma_tho = str(cfg.get("tho") or "").strip()
+    khoa_sb = str(cfg.get("sandbox_khoa") or os.environ.get("LINHX_SANDBOX_KHOA") or "").strip()
+    chu_ky = tao_chu_ky_sandbox(ma_tho, PHIEN_BAN_SANDBOX, khoa_sb)
+    if not chu_ky:
+        raise ValueError("Thiếu mã thợ hoặc khoá LINHX_SANDBOX_KHOA hợp lệ (>= 16 ký tự) cho runner sandbox")
+    may = str(cfg.get("may") or platform.node())
+    nghi = float(cfg.get("nghi") or 15)
+    da_xu_ly = []
+    while True:
+        viec = goi_fn(
+            cfg,
+            "nhan_viec",
+            ma=ma_tho,
+            phien_ban=PHIEN_BAN_SANDBOX,
+            may=may,
+            chu_ky_sandbox=chu_ky,
+        )
+        if viec:
+            tt, kq, nk, tv, tr = chay_agy_sandbox(cfg, viec, runner_fn=runner_fn)
+            goi_fn(
+                cfg,
+                "bao_ket_qua",
+                ma=ma_tho,
+                viec=viec["viec"],
+                trang_thai=tt,
+                ket_qua=kq,
+                nhat_ky=nk,
+                token_vao=tv,
+                token_ra=tr,
+            )
+            da_xu_ly.append((viec["viec"], tt))
+            if mot_viec:
+                return da_xu_ly
+            continue
+        if mot_lan:
+            return da_xu_ly
+        time.sleep(nghi)
+
+
 def tao_de_an_toan(workflow, de_mau, dau_vao, nguon=None, co_cha=False):
     """Ghép `de` từ `de_mau` và `dau_vao`; luôn bọc `<du_lieu_khach>` cho mọi việc có `nguon in ('khach', 'don')`, `co_cha` hoặc thuộc `WORKFLOW_BAO_CAO_KHACH` (kể cả workflow `agy` có `de_mau` riêng).
 
@@ -421,13 +514,9 @@ def chia(job):
     job.db_set({"trang_thai": "dang_chay", "nhan_luc": now_datetime()}, notify=True)
 
 
-def chia_viec_gop_cho(da_xac_nhan_sandbox=False):
-    """Tách các việc cha quy trình gộp đang ở trạng thái `cho` thành việc con.
-
-    Với việc có `nguon in ('khach', 'don')`, chỉ tự động tách khi tiến trình runner gọi `nhan_viec`
-    đã xác nhận cưỡng chế sandbox (`da_xac_nhan_sandbox=True`) hoặc khi người điều hành đã duyệt tay
-    qua `duyet_viec` (`nhan_viec == 'da_duyet_tay'`). Cho đến khi `runner/linhx_runner.py` (ngoài vùng B4)
-    được nâng cấp dùng `chay_agy_sandbox`, việc `nguon='don'` giữ cổng duyệt tay đối với runner chưa có sandbox.
+def chia_viec_gop_cho():
+    """Tự động tách các việc cha quy trình gộp đang ở trạng thái `cho` (gồm cả `nguon='don'`)
+    thành các việc con `trang_thai='cho'` kế thừa `nguon` của việc cha mà không cần duyệt tay.
     """
     wfs_gop = [
         r.name
@@ -444,13 +533,8 @@ def chia_viec_gop_cho(da_xac_nhan_sandbox=False):
     )
     for (name,) in rows or []:
         job = frappe.get_doc("LX Job", name)
-        if job.trang_thai != "cho" or _cac_con(job.name):
-            continue
-        nguon_job = _nguon_str(getattr(job, "nguon", None))
-        nhan_job = _nguon_str(getattr(job, "nhan_viec", None))
-        if nguon_job in ("khach", "don") and not da_xac_nhan_sandbox and nhan_job != "da_duyet_tay":
-            continue
-        chia(job)
+        if job.trang_thai == "cho" and not _cac_con(job.name):
+            chia(job)
 
 
 def _cac_con(cha):

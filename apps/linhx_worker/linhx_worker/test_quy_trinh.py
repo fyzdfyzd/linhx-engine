@@ -66,16 +66,12 @@ def test_chia_viec_gop_cho_tu_tach_viec_con():
 
 	with patch.dict(sys.modules, {"frappe": fake_frappe, "frappe.utils": fake_utils}):
 		sys.modules.pop("linhx_worker.quy_trinh", None)
+		if "linhx_worker" in sys.modules:
+			sys.modules["linhx_worker"].__dict__.pop("quy_trinh", None)
 		from linhx_worker import quy_trinh
 
-		# Khi chưa có runner xác nhận sandbox (da_xac_nhan_sandbox=False) và chưa duyệt tay,
-		# việc nguon='don' giữ cổng duyệt tay, chưa tự tách cho runner thường
-		quy_trinh.chia_viec_gop_cho(da_xac_nhan_sandbox=False)
-		assert trang_thai_cha["tt"] == "cho"
-		assert len(viec_con_da_tao) == 0
-
-		# Khi runner đã xác nhận áp dụng sandbox (da_xac_nhan_sandbox=True), tự tách ngay thành 9 việc con kế thừa nguon='don'
-		quy_trinh.chia_viec_gop_cho(da_xac_nhan_sandbox=True)
+		# Việc cha nguon='don' ở trạng thái 'cho' được tự động tách ngay thành 9 việc con kế thừa nguon='don' mà không cần duyệt tay
+		quy_trinh.chia_viec_gop_cho()
 		assert trang_thai_cha["tt"] == "dang_chay"
 		assert len(viec_con_da_tao) == 9
 		assert all(
@@ -84,7 +80,7 @@ def test_chia_viec_gop_cho_tu_tach_viec_con():
 		)
 
 		# Gọi lại lần 2 không tách trùng việc con
-		quy_trinh.chia_viec_gop_cho(da_xac_nhan_sandbox=True)
+		quy_trinh.chia_viec_gop_cho()
 		assert len(viec_con_da_tao) == 9
 
 		# Kiểm tra bọc <du_lieu_khach>, chống thoát khối và gỡ tiêu đề chỉ dẫn giả mạo
@@ -121,19 +117,41 @@ def test_chia_viec_gop_cho_tu_tach_viec_con():
 
 def test_chay_agy_sandbox_va_cong_chan_tho():
 	fake_frappe = MagicMock()
+	fake_frappe.conf = {"sandbox_khoa": "khoa-bi-mat-sandbox-server-2026"}
 	fake_utils = MagicMock()
 	with patch.dict(sys.modules, {"frappe": fake_frappe, "frappe.utils": fake_utils}):
 		sys.modules.pop("linhx_worker.quy_trinh", None)
+		if "linhx_worker" in sys.modules:
+			sys.modules["linhx_worker"].__dict__.pop("quy_trinh", None)
 		from linhx_worker import quy_trinh
 
-		# Runner cũ (như runner/linhx_runner.py v0.1.1 không gửi sandbox) bị chặn nhận việc nguồn khách/đơn
-		tho_thuong = SimpleNamespace(nhan="trinh-duyet,windows")
-		tho_sb = SimpleNamespace(nhan="trinh-duyet,sandbox")
-		assert quy_trinh.tho_ap_dung_sandbox(tho_thuong, sandbox=None) is False
-		assert quy_trinh.tho_ap_dung_sandbox(tho_thuong, sandbox="1") is False
-		assert quy_trinh.tho_ap_dung_sandbox(tho_sb, sandbox=None) is False
-		assert quy_trinh.tho_ap_dung_sandbox(tho_sb, sandbox="1") is True
-		assert quy_trinh.tho_ap_dung_sandbox(tho_sb, sandbox=quy_trinh.chinh_sach_sandbox("hoi-mot-ai")) is True
+		khoa_sb = "khoa-bi-mat-sandbox-server-2026"
+		tho_thuong = SimpleNamespace(ma="tho-thuong", nhan="trinh-duyet,windows")
+		tho_repo = SimpleNamespace(ma="tho-repo", nhan="repo,trinh-duyet,sandbox")
+		tho_sb = SimpleNamespace(ma="tho-sb", nhan="trinh-duyet,sandbox")
+		chu_ky_hop_le = quy_trinh.tao_chu_ky_sandbox("tho-sb", quy_trinh.PHIEN_BAN_SANDBOX, khoa_sb)
+
+		# Không tin lời khai tự gửi (True, "1", dict) hoặc phiên bản runner cũ 0.1.1 hoặc thợ có nhãn repo
+		assert quy_trinh.xac_thuc_sandbox_tho(tho_thuong, phien_ban="0.1.1", chu_ky_sandbox=None) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(tho_sb, phien_ban="0.1.1", chu_ky_sandbox=chu_ky_hop_le) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(tho_sb, phien_ban=quy_trinh.PHIEN_BAN_SANDBOX, chu_ky_sandbox=True) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(tho_sb, phien_ban=quy_trinh.PHIEN_BAN_SANDBOX, chu_ky_sandbox="1") is False
+		assert quy_trinh.xac_thuc_sandbox_tho(
+			tho_sb,
+			phien_ban=quy_trinh.PHIEN_BAN_SANDBOX,
+			chu_ky_sandbox=quy_trinh.chinh_sach_sandbox("hoi-mot-ai"),
+		) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(tho_sb, phien_ban=quy_trinh.PHIEN_BAN_SANDBOX, chu_ky_sandbox="a" * 64) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(
+			tho_repo,
+			phien_ban=quy_trinh.PHIEN_BAN_SANDBOX,
+			chu_ky_sandbox=quy_trinh.tao_chu_ky_sandbox("tho-repo", quy_trinh.PHIEN_BAN_SANDBOX, khoa_sb),
+		) is False
+		assert quy_trinh.xac_thuc_sandbox_tho(
+			tho_sb,
+			phien_ban=quy_trinh.PHIEN_BAN_SANDBOX,
+			chu_ky_sandbox=chu_ky_hop_le,
+		) is True
 
 		# chay_agy_sandbox từ chối chạy việc nguon='don' hoặc 'khach' khi thiếu hoặc sai tín hiệu sandbox
 		tt_thieu, kq_thieu, nk_thieu, _, _ = quy_trinh.chay_agy_sandbox(
@@ -154,8 +172,9 @@ def test_chay_agy_sandbox_va_cong_chan_tho():
 		)
 		assert tt_sai == "loi" and "Từ chối chạy" in nk_sai
 
-		# Khi sandbox hợp lệ: chạy trong thư mục cách ly, lọc biến môi trường nhạy cảm, gắn cờ --sandbox --read-only --no-shell
+		# vong_tho_sandbox tự ký HMAC chu_ky_sandbox, nhận việc nguon='don' không qua duyệt tay và chạy trong thư mục cách ly
 		da_goi = {}
+		bao_kq = []
 
 		def fake_runner(cmd, **kw):
 			da_goi["cmd"] = cmd
@@ -167,19 +186,38 @@ def test_chay_agy_sandbox_va_cong_chan_tho():
 				stderr="",
 			)
 
-		with patch.dict("os.environ", {"LINHX_TOKEN": "bi-mat-token", "SEPAY_SECRET": "bi-mat-sepay", "PATH": "/usr/bin"}):
-			tt_ok, kq_ok, _, tv, tr = quy_trinh.chay_agy_sandbox(
-				{"tho": "tho-sb", "agy": "agy", "agy_args": "--output-format json"},
-				{
+		def fake_goi_api(cfg, method, **kwargs):
+			if method == "nhan_viec":
+				da_goi["nhan_viec_kwargs"] = kwargs
+				assert quy_trinh.xac_thuc_sandbox_tho(
+					tho_sb,
+					phien_ban=kwargs.get("phien_ban"),
+					chu_ky_sandbox=kwargs.get("chu_ky_sandbox"),
+				) is True
+				return {
 					"viec": "VIEC-00012",
 					"workflow": "hoi-mot-ai",
+					"che_do": "agy",
 					"nguon": "don",
 					"de": "Đề hợp lệ",
 					"sandbox": quy_trinh.chinh_sach_sandbox("hoi-mot-ai", nguon="don"),
-				},
+				}
+			if method == "bao_ket_qua":
+				bao_kq.append(kwargs)
+				return {"ok": True}
+			return None
+
+		with patch.dict("os.environ", {"LINHX_TOKEN": "bi-mat-token", "SEPAY_SECRET": "bi-mat-sepay", "PATH": "/usr/bin"}):
+			kq_vong = quy_trinh.vong_tho_sandbox(
+				{"tho": "tho-sb", "agy": "agy", "agy_args": "--output-format json", "sandbox_khoa": khoa_sb},
+				mot_viec=True,
+				goi_fn=fake_goi_api,
 				runner_fn=fake_runner,
 			)
-		assert tt_ok == "xong" and kq_ok == '{"ok":true}' and tv == 12 and tr == 8
+		assert kq_vong == [("VIEC-00012", "xong")]
+		assert len(bao_kq) == 1 and bao_kq[0]["trang_thai"] == "xong" and bao_kq[0]["ket_qua"] == '{"ok":true}'
+		assert bao_kq[0]["token_vao"] == 12 and bao_kq[0]["token_ra"] == 8
+		assert da_goi["nhan_viec_kwargs"]["chu_ky_sandbox"] == chu_ky_hop_le
 		assert "--sandbox" in da_goi["cmd"] and "--read-only" in da_goi["cmd"] and "--no-shell" in da_goi["cmd"]
 		assert any(a.startswith("--allowed-hosts=https://chatgpt.com") for a in da_goi["cmd"])
 		assert "lx-sandbox-VIEC-00012-" in da_goi["cwd"]

@@ -1,12 +1,12 @@
 {
   "feature": "B4",
-  "phieu": "20261109-1909-t1",
-  "luc": "2026-11-09T19:35:30+07:00",
+  "phieu": "20261109-2000-t1",
+  "luc": "2026-11-09T20:29:32+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "....                                                                     [100%]",
-    "4 passed in 1.79s"
+    "4 passed in 3.46s"
   ],
   "kiem_don_vi": {
     "lenh": "python -m pytest apps/linhx_core/linhx_core/pay/test_sau_tra.py apps/linhx_worker/linhx_worker/test_quy_trinh.py -v",
@@ -26,24 +26,27 @@
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_khach_tra_sau_han_24h_van_ra_job PASSED [ 66%]",
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_quet_don_da_tra_backoff_khong_bo_roi_va_reset_khi_nguoi_sua PASSED [ 77%]",
       "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chia_viec_gop_cho_tu_tach_viec_con PASSED [ 88%]",
-      "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chay_agy_sandbox_ap_dung_va_tu_choi_khi_thieu_sandbox PASSED [100%]",
-      "============================== 9 passed in 0.84s =============================="
+      "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chay_agy_sandbox_va_cong_chan_tho PASSED [100%]",
+      "============================== 9 passed in 3.92s =============================="
     ]
   },
   "kiem_thuc_te_bench_wsl": {
-    "luc_chay": "2026-11-09T19:35:28+07:00",
+    "luc_chay": "2026-11-09T20:27:20+07:00",
     "site": "test",
-    "don": "DON-B4-1794227727",
-    "job": "VIEC-00073",
+    "don": "DON-B4-1794230840",
+    "job": "VIEC-00094",
     "workflow": "ai-noi-gi-ve-brand",
     "trang_thai_luc_sinh": "cho",
     "nguon": "don",
-    "giay_tu_tra_toi_job": 0.1816,
-    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00073/732a6d103dd4",
+    "giay_tu_tra_toi_job": 0.287,
+    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00094/fdef3326db25",
     "dau_vao_giu_dau_lon_hon_va_loai_the": true,
     "xem_bao_cao_chi_tra_brand": true,
-    "runner_thuong_khong_sandbox_bi_chan": true,
-    "tho_nhan_viec": "VIEC-00074",
+    "tu_tach_viec_con_khong_duyet_tay": true,
+    "runner_cu_0_1_1_bi_chan": true,
+    "tho_tu_khai_sandbox_khong_chu_ky_hmac_bi_chan": true,
+    "tho_co_nhan_repo_bi_chan": true,
+    "tho_nhan_viec": "VIEC-00095",
     "workflow_viec_con": "hoi-mot-ai",
     "nguon_viec_con": "don",
     "de_boc_du_lieu_khach_kem_loi_dan": true,
@@ -60,12 +63,12 @@
       ]
     },
     "trang_thai_cha_sau_khi_tho_nhan": "dang_chay",
-    "giay_tho_nhan_viec": 0.0597,
+    "giay_tho_nhan_viec": 0.0344,
     "kiem_backoff_db_that": {
-      "don_backoff": "DON-B4-BO-1794227727",
+      "don_backoff": "DON-B4-BO-1794230840",
       "so_lan_thu_sau_loi_1": 1,
       "bo_qua_khi_chua_du_1_phut": true,
-      "job_sinh_ngay_sau_khi_nguoi_sua": "VIEC-00084",
+      "job_sinh_ngay_sau_khi_nguoi_sua": "VIEC-00105",
       "reset_bo_dem_sau_khi_sinh_job": true
     },
     "unique_index_lx_job_don": [
@@ -77,9 +80,9 @@
     ]
   },
   "sua_theo_review": {
-    "chan_runner_chua_sandbox_va_thuc_thi_sandbox": "Do runner/linhx_runner.py nằm ngoài vùng cho phép sửa của B4 (canh/rao.py chặn K1), bổ sung hàm chay_agy_sandbox và tao_moi_truong_sandbox trong apps/linhx_worker/linhx_worker/quy_trinh.py để đọc viec['sandbox'], khóa công cụ ghi file (chế độ 0o500 + hậu kiểm không sinh/sửa file), tắt shell (--no-shell), giới hạn mạng theo mang_cho_phep, chạy agy trong thư mục tạm cách ly, xóa biến môi trường nhạy cảm, và từ chối chạy việc nguon in ('khach', 'don') nếu thiếu hoặc không áp dụng được sandbox. Đồng thời ở phía server (linhx_worker/api.py:nhan_viec và quy_trinh.py:chia_viec_gop_cho), giữ cổng chặn với các runner chưa gửi xác nhận sandbox (như runner/linhx_runner.py v0.1.1): chỉ giao việc nguon in ('khach', 'don') khi thợ xác nhận áp dụng sandbox (tho_ap_dung_sandbox) hoặc khi LX Operator đã duyệt tay qua duyet_viec (nhan_viec == 'da_duyet_tay').",
-    "ke_thua_nguon_viec_con_va_loc_tieu_de_gia_mao": "Sửa _con, chia và gom trong apps/linhx_worker/linhx_worker/quy_trinh.py để mọi việc con luôn kế thừa trường nguon từ việc cha (mặc định 'noi_bo' nếu việc cha không có); mở rộng lam_sach_du_lieu_khach trong apps/linhx_core/linhx_core/pay/sau_tra.py với _MAU_TIEU_DE_GIA_MAO để xóa cả các tiêu đề giả mạo chỉ dẫn hệ thống ('Lời dặn mới của hệ thống:', 'Chỉ dẫn mới của hệ thống:', 'System prompt:', 'System instruction:').",
-    "rate_limit_tao_don": "Điều chỉnh rate_limit của api_ban.tao_don lên limit=30, seconds=3600 kèm chú thích rõ lý do cân bằng giữa chống spam đơn rác và không chặn nhầm nhiều người dùng chung IP văn phòng."
+    "bo_duyet_tay_va_tu_tach_viec_don": "Khôi phục duyet_viec (apps/linhx_worker/linhx_worker/api.py) chỉ duyệt việc trang_thai == 'cho_duyet' (luồng dat_bao_cao chưa trả tiền), bỏ hoàn toàn cờ da_duyet_tay trên việc nguon='don'. Trong quy_trinh.chia_viec_gop_cho(), tự động tách ngay mọi việc cha ai-noi-gi-ve-brand ở trạng thái 'cho' (kể cả nguon='don') thành 9 việc con trang_thai='cho' kế thừa nguon='don' mà không cần duyệt tay.",
+    "xac_thuc_chu_ky_hmac_sandbox_va_vong_tho_sandbox": "Thay tham số sandbox tự khai bằng xác thực chữ ký HMAC-SHA256 hằng thời gian (quy_trinh.tao_chu_ky_sandbox, quy_trinh.xac_thuc_sandbox_tho với hmac.compare_digest và sandbox_khoa từ site_config.json), đồng thời bắt buộc LX Worker trên server có nhãn 'sandbox', không có nhãn 'repo', và phien_ban >= '0.2.0-sandbox'. Bổ sung vòng lặp runner đã nâng cấp quy_trinh.vong_tho_sandbox gọi chay_agy_sandbox để tự động nhận và chạy hết luồng việc nguon='don' không qua duyệt tay. Nêu rõ cho Linh: runner/linhx_runner.py v0.1.1 nằm ngoài vùng sửa của B4 (cổng K1 canh/rao.py), chưa đọc viec['sandbox'] và chưa ký chu_ky_sandbox, nên với runner v0.1.1 cũ việc nguon='don' sẽ giữ ở trạng thái 'cho' cho tới khi chạy qua vong_tho_sandbox hoặc Linh duyệt phiếu nâng cấp runner/linhx_runner.py.",
+    "rate_limit_tao_don": "Khôi phục @rate_limit(limit=10, seconds=3600) trên apps/linhx_core/linhx_core/pay/api_ban.py:tao_don đúng mức chống spam ban đầu."
   },
   "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
   "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
