@@ -24,7 +24,8 @@
   "tran_chua_dat": 3,
   "cac_file_features": [
     "features-dot1.json",
-    "features-dot1b.json"
+    "features-dot1b.json",
+    "features-dot2.json"
   ],
   "giao": [
     "N1",
@@ -58,7 +59,22 @@
     "R1",
     "R2",
     "Q1",
-    "C4"
+    "C4",
+    "C2B",
+    "O1",
+    "I1",
+    "O2",
+    "O5",
+    "I3",
+    "I2",
+    "O3",
+    "O6",
+    "O4",
+    "O7",
+    "F1",
+    "F2",
+    "F3",
+    "T3"
   ],
   "cho": {
     "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG"
@@ -95,7 +111,22 @@
     "E2": "front",
     "T1": "e2e",
     "T2": "e2e",
-    "A4B": "core"
+    "A4B": "core",
+    "O1": "ops",
+    "O2": "ops",
+    "O3": "ops",
+    "O5": "ops",
+    "O6": "ops",
+    "O4": "tho",
+    "O7": "e2e",
+    "T3": "e2e",
+    "I1": "id",
+    "I2": "id",
+    "I3": "id",
+    "F1": "agent",
+    "F2": "trang-bu",
+    "F3": "sites",
+    "C2B": "trang-bu"
   },
   "bao_mat": [
     "B2",
@@ -108,7 +139,15 @@
     "A4",
     "C2",
     "D2",
-    "A4B"
+    "A4B",
+    "O2",
+    "O3",
+    "O4",
+    "O6",
+    "I1",
+    "I2",
+    "I3",
+    "C2B"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {

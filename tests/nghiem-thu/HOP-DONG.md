@@ -69,3 +69,24 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 
 - K7 tích hợp bench: sau khi đạt hộp đen, B3, A4, A4B, C2 chạy thêm `tests/nghiem-thu/tich-hop/th_<id>.py` (HTTP thật trên site test của bench WSL, qua `canh/bench.ps1 th`). Trượt là CHUA_DAT. Hợp đồng thêm: B3 đọc khoá `sepay_khoa` trong site_config; A4 có vai trò `LX Nhan Vien` và đơn vị lấy từ User Permission.
 - K8 đối chiếu VM: mỗi vòng tổng hợp, `canh/doi_chieu_vm.py` gọi lại URL trong bằng chứng N5, C3, T1, T2. Sai 2 lượt liền thì passes về false, thợ làm lại.
+
+## Đợt 2 (`features-dot2.json`)
+
+| ID | Thợ phải tạo | Bằng chứng |
+|---|---|---|
+| C2B | `crm/xac_minh_marketing.py` thuần Python: `tao_yeu_cau`, `xac_nhan_marketing` (dùng lại OTP của I3; GET không kích hoạt đồng ý, chỉ POST mới ghi đồng ý `marketing` có hiệu lực); `crm/form.py` và `crm/t1.py` giữ `lien_he` hiệu lực ngay, `marketing` ở trạng thái `cho_xac_minh` tới khi xác nhận OTP; `crm/api_form.py` thêm `xac_nhan_marketing` (POST) | – |
+| O1 | DocType `LX Phieu Agy` (`loai_phieu`, `de`, `vung`, `trang_thai`, `phut`, `token`, `ly_do_tra`); `ops/phieu_agy.py` thuần Python: `LOAI_PHIEU`, `TRANG_THAI`, `VAI_DIEU_HANH`, `kiem_de`, `kiem_phieu`, `chuyen_trang_thai`; `lx_phieu_agy.py` gọi `phieu_agy` | – |
+| O2 | `ops/keo_phieu.py` thuần Python: `PHUT_QUA_HAN = 150`, `bam_khoa`, `dang_ky_tho`, `xac_thuc_tho`, `thu_hoi_qua_han`, `keo_phieu` (khoá luồng chống nhận trùng, khoá băm SHA-256, quá 150 phút về `duyet` và tăng `so_lan_giao`); `ops/api_tho.py` `keo` | – |
+| O3 | `ops/nop_phieu.py` thuần Python: `nop_phieu` (sai thợ trả 403, lưu đúng `phut`/`token`/`commit`/`nhanh`/`nhat_ky`, nộp trùng `commit` không tạo bản ghi trùng); `ops/api_tho.py` thêm `nop` | – |
+| O4 | `tho/linhx_tho` (`python -m linhx_tho ... --chay-thu` in JSON `{"buoc", "lenh_agy", "da_goi_agy": false}`, không gọi `agy`); `kiem_de_an_toan`, `ke_hoach_chay`; gọi `agy` ẩn qua `CREATE_NO_WINDOW` hoặc `tho/chay-an.vbs`, không `shell=True` | `bang-chung/O4/phieu-that.json` `{luc, may, ma_phieu, tho, trang_thai_cuoi, commit, phut, token, cua_so_an:true}` |
+| O5 | `ops/ban_phieu.py` thuần Python: `ds_phieu_cho`, `duyet_phieu`, `tra_phieu` (bắt buộc lý do); `ops/api_ban_phieu.py` (`phieu_cho`, `duyet`, `tra_lai`); `front/index.html` `#/engine` vẽ `#phieu-cho`, `[data-duyet-phieu]`, `[data-ly-do-tra]`, `[data-tra-phieu]`, không tràn ngang 390/1280 | – |
+| O6 | `ops/cham_phieu.py` thuần Python: `cham_phieu(phieu, chay_rao, chay_cong_kiem, goi_claude)` (cổng/rào trượt không gọi `goi_claude` và phiếu về `tra`; cổng xanh gọi đúng 1 lần; Claude hết hạn mức đánh dấu `loi_may=True`, không tăng `so_lan_chua_dat`) | – |
+| O7 | `tests/e2e/test_hanh_trinh_phieu.py` (URL, mật khẩu từ biến môi trường, chạy 390 + 1280) | `bang-chung/O7/hanh-trinh.json` + `e2e.log` từ VM |
+| I1 | `id/google_oauth.py` thuần Python: `dang_nhap_google` (kiểm `state` hằng thời gian, gộp vào `LX Nguoi` qua `gop_trung` không phân biệt hoa thường email, ghi `nhat_ky_gop`); `id/api_auth.py` `google_callback` | – |
+| I2 | `id/zalo_oauth.py` thuần Python: `dang_nhap_zalo` (gộp theo SĐT `0…`/`84…` hoặc `zalo_id` qua `gop_trung`, ghi `nhat_ky_gop`); `id/api_auth.py` thêm `zalo_callback` | – |
+| I3 | `id/otp.py` thuần Python: `HAN_PHUT = 10`, `SAI_TOI_DA = 5`, `KHOA_PHUT = 15`, `bam_ma`, `phat_ma`, `xac_minh` (chỉ lưu băm mã, hết hạn sau 10 phút, sai 5 lần khoá 15 phút, dùng 1 lần) | – |
+| F1 | DocType `LX Pilot`; `agent/pilot.py` thuần Python: `SO_BUOC = 7`, `SO_NGAY_HAN = 14`, `tao_pilot`, `hoan_thanh_buoc` (chặn nhảy bước), `viec_cho` (quá 14 ngày chưa xong); `lx_pilot.py` gọi `pilot` | – |
+| F2 | `booking/dat_lich.py` thuần Python: `dat_lich` (chặn trùng giờ cùng `phu_trach`, chặn ngoài 8–18h giờ VN), `viec_cho`; `booking/api_booking.py` `dat_lich_goi`; `trang-bu` có `form[data-dat-lich]` | – |
+| F3 | DocType `LX Case`; `cred/kho_case.py` thuần Python: `case_cong_khai` (ẩn case chưa duyệt), `noi_dung_trang_bu`; `cred/api_cred.py`; `sites/ifagent/site.json`; commit `F3:` không đụng `trang-bu/**` | – |
+| T3 | `tests/e2e/test_hanh_trinh_ifagent.py` (URL, mật khẩu từ biến môi trường, chạy 390 + 1280: lead → đặt lịch → pilot → case) | `bang-chung/T3/hanh-trinh.json` + `e2e.log` từ VM |
+
