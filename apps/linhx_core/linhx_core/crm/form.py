@@ -194,7 +194,10 @@ def xu_ly(
         )
 
     if _la_dong_y_true(du_lieu.get("dong_y_marketing")):
-        if _can_ghi_dong_y(so_dong_y_moi, cac_dinh_danh, "marketing", da_co_nguoi):
+        if (
+            _can_ghi_dong_y(so_dong_y_moi, cac_dinh_danh, "marketing", da_co_nguoi)
+            and not dong_y.hieu_luc(so_dong_y_moi, ma_nguoi, "marketing")
+        ):
             so_dong_y_moi = dong_y.ghi(
                 so_dong_y_moi,
                 nguoi_ket_qua,

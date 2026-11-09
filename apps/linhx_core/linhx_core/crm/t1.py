@@ -400,7 +400,10 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
         so_moi = dong_y.ghi(so_moi, ma_nguoi, "lien_he", True, luc_str, NGUON_T1)
 
     if du_lieu.get("dong_y_marketing") is True:
-        if not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "marketing")):
+        if (
+            not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "marketing"))
+            and not dong_y.hieu_luc(so_moi, ma_nguoi, "marketing")
+        ):
             so_moi = dong_y.ghi(
                 so_moi,
                 ma_nguoi,
