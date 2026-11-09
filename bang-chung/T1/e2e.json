@@ -1,0 +1,31 @@
+{
+  "luc": "2026-11-09T12:41:59+00:00",
+  "url_ifagent": "http://35.198.251.2/ifagent",
+  "url_linhx": "http://35.198.251.2/linhx",
+  "ket_qua": "passed",
+  "rong": [
+    390,
+    1280
+  ],
+  "so_test": 2,
+  "lead": "uuvro16ndk",
+  "phu_trach": "tuanlinh@urah.vn",
+  "chi_tiet": [
+    {
+      "rong": 390,
+      "email": "e2e+1794228113032-390@vd.vn",
+      "nguoi_ifagent": "utsp336nbv",
+      "lead": "uu0rqp9gur",
+      "co_hoi": "uu2748hlqo",
+      "phu_trach": "tuanlinh@urah.vn"
+    },
+    {
+      "rong": 1280,
+      "email": "e2e+1794228116326-1280@vd.vn",
+      "nguoi_ifagent": "uusv5qamui",
+      "lead": "uuvro16ndk",
+      "co_hoi": "uv2snap3p9",
+      "phu_trach": "tuanlinh@urah.vn"
+    }
+  ]
+}
