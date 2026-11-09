@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 13:29 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
+Cập nhật 2026-11-09 13:39 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | B4 | 20261109-1302-t1 từ 2026-11-09T13:02:53 | CHUA_DAT · Feature B4 · commit 4e17df5 · nhánh tu-dong/engine-t1 · 2026-11-09T11:59:48 |
-| 2 | C2 | 20261109-1302-t2 từ 2026-11-09T13:02:53 | CHUA_DAT · Feature C2 · commit ced93da · nhánh tu-dong/engine-t2 · 2026-11-09T11:31:29 |
+| 1 | B4 | rảnh | CHUA_DAT · Feature B4 · commit 4e17df5 · nhánh tu-dong/engine-t1 · 2026-11-09T11:59:48 |
+| 2 | C2 | rảnh | CHUA_DAT · Feature C2 · commit ced93da · nhánh tu-dong/engine-t2 · 2026-11-09T11:31:29 |
 | 3 | - | rảnh | DAT · Feature B5 · commit ee44cf7 · nhánh tu-dong/engine-t3 · 2026-11-09T02:35:04 |
 | 4 | - | rảnh | CHUA_DAT · Feature D2 · commit 61cd8a8 · nhánh tu-dong/engine-t4 · 2026-11-09T02:55:42 |
 
@@ -23,8 +23,6 @@ Cập nhật 2026-11-09 13:29 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09T02:55:42 D2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc f16257a9, bản hỏng giữ ở nhánh cục bộ hong/D2-20261109-0255, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\D2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 12:00 t2: RAM trống 0.6 GB < 1,5 GB, chưa giao C2
-- 2026-11-09 12:00 t1: RAM trống 0.7 GB < 1,5 GB, chưa giao B4
 - 2026-11-09 12:14 t1: RAM trống 0.4 GB < 1,5 GB, chưa giao B4
 - 2026-11-09 12:14 t2: RAM trống 1.1 GB < 1,5 GB, chưa giao C2
 - 2026-11-09 13:01 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
@@ -35,4 +33,6 @@ Cập nhật 2026-11-09 13:29 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
 + ... 3; $i++) { $ra = git -C $Ti
 - 2026-11-09 13:19 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-09 13:37 t2: agy xong phiếu 20261109-1302-t2 (C2) sau 35 phút
+- 2026-11-09 13:39 t1: agy xong phiếu 20261109-1302-t1 (B4) sau 37 phút
 
