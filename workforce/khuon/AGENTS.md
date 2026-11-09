@@ -9,7 +9,7 @@ Giao sản phẩm thật, đúng, dùng được ngay. Người nhận không qu
 DESIGN → RUN → LEARN → DESIGN. Ba khu của cùng một workforce, cùng thư mục, cùng `af.py`; ranh giới ghi ở `phan_khu` (workforce.json, mặc định trong af.py), `af.py kiem` chặn khi vượt.
 - **DESIGN** (thợ Claude): `00-D0-NHU-CAU.md` → `01-nguon/` → `02-wiki/` → `to-chuc.json` → `.agents/skills/` → `workflow/*.json` → `thu/`, `vang/` → `af.py kiem .` ra DAT. Thăng cấp/lùi (`af.py thang-cap`, `af.py lui`) cũng ở khu này, chỉ khi bộ thử đạt và người có quyền duyệt.
 - **RUN** (thợ agy): mỗi việc là một thư mục `viec/<ma>/`, chỉ ghi trong thư mục việc của mình, `bang-viec.jsonl` và `hop-thu/`. Nhận lệnh kênh qua `af.py lenh`, trả ra `hop-thu/ra.jsonl`. Không sửa skill, workflow, wiki; thấy cần sửa thì ghi phản hồi.
-- **LEARN**: mọi phản hồi (góp ý, trả lại, khen, bản sửa của người giỏi, chuẩn cao nhất bên ngoài) vào `HOC.jsonl`. Cuối ngày `af.py hoc .` gom thành `de-xuat/`, DESIGN duyệt. DESIGN và LEARN không gửi tin ra kênh.
+- **LEARN**: bốn nguồn vào `HOC.jsonl`: tự cải thiện (cổng chặn, ca thử trượt, và mục `## Phản tư` cuối `nhat-ky.md` mỗi việc: vấp gì, đường đúng là gì), feedback của chủ (góp ý, trả lại, khen), người giỏi nhất (bản sửa, chuẩn cao bên ngoài), học chéo đơn vị. Cuối ngày `af.py hoc .` gom thành `de-xuat/`, DESIGN duyệt. DESIGN và LEARN không gửi tin ra kênh.
 
 ## Bản đồ
 | File | Là gì | Ai sửa |

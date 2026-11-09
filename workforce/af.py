@@ -336,7 +336,10 @@ def lenh_chuyen(a, w=None):
         raise Loi(f'{a.ma}: không chuyển được {tu} → {den}')
     if den == 'cho_duyet':
         loi = kiem_dau_ra(w, a.ma)
-        if loi:
+        if loi:  # tự cải thiện: cổng chặn thì thành bài học về công nhân
+            for x in loi:
+                ghi_phan_hoi(w, f'cong-nhan:{v["cong_nhan"]}', 'xau', 'Cổng chống slop chặn: ' + re.sub(r'"[^"]*"', '"…"', x),
+                             a.ma, 'cong', 'tu-cai-thien')
             raise Loi(f'{a.ma} chưa trình duyệt được:\n  ' + '\n  '.join(loi))
     if den in ('xong', 'tra_lai'):
         if a.ai != v['nguoi_duyet'] and not (w.nguoi(a.ai) or {}).get('vai') == 'chu':
@@ -362,6 +365,11 @@ def lenh_chuyen(a, w=None):
         wfk['phut'].append(round((time.mktime(time.strptime(v['xong_luc'], '%Y-%m-%dT%H:%M:%S'))
                                   - time.mktime(time.strptime(v['tao_luc'], '%Y-%m-%dT%H:%M:%S'))) / 60, 1))
         w.thong_bao(v['nguoi_giao'], f'{a.ma} xong, file trong viec/{a.ma}/dau-ra', a.ma)
+    if den in ('cho_duyet', 'xong'):  # tự cải thiện: phản tư của thợ
+        da = {b['noi_dung'] for h in doc_dong(w.p('HOC.jsonl')) for b in h['bang_chung'] if b['viec'] == a.ma}
+        for x in phan_tu(w, a.ma):
+            if x not in da:
+                ghi_phan_hoi(w, f'workflow:{v["workflow"]}', 'xau', x, a.ma, 'tho', 'tu-cai-thien')
     if den == 'cho_duyet':
         w.thong_bao(v['nguoi_duyet'], f'{a.ma} chờ anh/chị duyệt: {v["viec"]}', a.ma)
     ghi_json(w.p('thong-ke.json'), tk)
@@ -383,7 +391,8 @@ def lenh_bang(a, w=None):
     if ds:
         dong += ['', f'Xong {len(xong)}/{len(ds)} · đạt lần đầu {sum(v["vong"] == 1 for v in xong)}/{len(xong) or 1}'
                      f' · bài học mở {sum(h["trang_thai"] == "mo" for h in doc_dong(w.p("HOC.jsonl")))}'
-                     f' · đề xuất chờ duyệt {len(ds_de_xuat(w, "cho_duyet"))}']
+                     f' · đề xuất chờ duyệt {len(ds_de_xuat(w, "cho_duyet"))}',
+                 'Nguồn học: ' + ' · '.join(f'{k} {n}' for k, n in dem_nguon(w).items())]
     van_ban = '\n'.join(dong)
     if getattr(a, 'html', None):
         ghi(a.html, '<!doctype html><meta charset="utf-8"><title>Bảng việc</title><pre style="font:15px/1.5 system-ui;max-width:860px;margin:24px auto;white-space:pre-wrap">'
@@ -395,6 +404,32 @@ def lenh_bang(a, w=None):
 # ---------- LEARN ----------
 def chuan_hoa(t):
     return re.sub(r'\s+', ' ', t.lower()).strip()
+
+
+NGUON_HOC = ('tu-cai-thien', 'chu', 'nguoi-gioi', 'cheo')  # bốn nguồn học của khu learn (Linh 9/11)
+
+
+def nguon_hoc(nhan):
+    if nhan in ('chuan-ngoai', 'ban-sua', 'vang', 'nguoi-gioi'):
+        return 'nguoi-gioi'
+    if nhan in ('tu-cai-thien', 'cheo'):
+        return nhan
+    return 'chu'  # phản hồi của chủ và người trong đơn vị (/gopy, /tra, /duyet, phan-hoi)
+
+
+def dem_nguon(w):
+    dem = dict.fromkeys(NGUON_HOC, 0)
+    for h in doc_dong(w.p('HOC.jsonl')):
+        for b in h['bang_chung']:
+            dem[b.get('nguon') or nguon_hoc(b.get('nhan'))] += 1
+    return dem
+
+
+def phan_tu(w, ma):
+    """Dòng '- ...' dưới mục '## Phản tư' cuối nhat-ky.md: thợ ghi vấp gì, đường đúng là gì."""
+    t = doc(w.p('viec', ma, 'nhat-ky.md'))
+    m = re.search(r'^##\s*Phản tư\s*$(.*?)(?=^## |\Z)', t, re.M | re.S)
+    return [x.strip() for x in re.findall(r'^- (.+)$', m.group(1), re.M)] if m else []
 
 
 def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
@@ -413,7 +448,8 @@ def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
                'bang_chung': [], 'trang_thai': 'mo', 'tao_luc': bay_gio()}
         ds.append(gan)
     gan['ung_ho' if (tot == (gan['loai'] == 'tot')) else 'phan_doi'] += 1
-    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan})
+    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan,
+                              'nguon': nguon_hoc(nhan)})
     ghi_lai_hoc(w, ds)
     w.su_kien('phan_hoi', dich=dich, loai=loai, viec=viec, ai=ai, bai_hoc=gan['id'], nhan=nhan)
     return gan['id']
@@ -507,9 +543,23 @@ def ds_de_xuat(w, trang_thai=None):
     return [x for x in ds if x and (trang_thai is None or x['trang_thai'] == trang_thai)]
 
 
+def nap_ket_qua_thu(w):
+    """Tự cải thiện: mỗi ca trượt trong thu/ket-qua/*.json ({"ca": [{"id", "dat", "dich", "ly_do"}]}) thành một bài học."""
+    d = w.p('thu', 'ket-qua')
+    da = {b['viec'] for h in doc_dong(w.p('HOC.jsonl')) for b in h['bang_chung']}
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if not f.endswith('.json'):
+            continue
+        for c in (doc_json(os.path.join(d, f)) or {}).get('ca', []):
+            ma = f'THU:{f}:{c.get("id")}'
+            if not c.get('dat') and c.get('dich') and ma not in da:
+                ghi_phan_hoi(w, c['dich'], 'xau', c.get('ly_do') or f'ca {c.get("id")} trượt', ma, 'cham', 'tu-cai-thien')
+
+
 def lenh_hoc(a, w=None):
     """LEARN: bài học đủ bằng chứng thành đề xuất sửa; bài học bị phản đối nhiều thì tỉa."""
     w = w or WF(a.thu_muc)
+    nap_ket_qua_thu(w)
     nguong = w.cau_hinh.get('nguong_de_xuat', 2)
     ds = doc_dong(w.p('HOC.jsonl'))
     moi, tia = [], []
@@ -849,6 +899,9 @@ def lenh_muc(a):
         print(ten)
         for dieu, dat, ct in r[nhom]:
             print(f'  {"✓" if dat else "✗"} {dieu} ({ct})')
+    dem = dem_nguon(w)
+    print('Nguồn học (bằng chứng): ' + ' · '.join(f'{k} {n}' for k, n in dem.items())
+          + ('' if all(dem[k] for k in ('tu-cai-thien', 'chu', 'nguoi-gioi')) else ' · CHƯA học đủ ba nguồn chính'))
     return 0 if r['muc'] >= 1 else 1
 
 

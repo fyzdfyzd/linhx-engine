@@ -391,3 +391,24 @@ def test_phan_khu_design_run_learn(w):
     loi = af.kiem(af.WF(w.goc))
     assert any('khu run dùng thợ agy' in x for x in loi)
     assert any('không được ghi workflow/viec-chung.json' in x for x in loi)
+
+
+def test_learn_tu_cai_thien_va_dem_nguon(w):
+    ma = giao(w)
+    chuyen(w, ma, 'dang_lam')
+    with pytest.raises(af.Loi):
+        chuyen(w, ma, 'cho_duyet')  # dau-ra trống: cổng chặn → bài học về công nhân
+    hoc = af.doc_dong(w.p('HOC.jsonl'))
+    assert any(h['dich'].startswith('cong-nhan:') and h['bang_chung'][0]['nguon'] == 'tu-cai-thien' for h in hoc)
+    lam_xong_buoc(w, ma)
+    with open(w.p('viec', ma, 'nhat-ky.md'), 'a', encoding='utf-8') as f:
+        f.write('\n## Phản tư\n- Quên đối chiếu tên đối tác, lần sau mở su-that trước\n')
+    chuyen(w, ma, 'cho_duyet')
+    af.ghi_json(w.p('thu', 'ket-qua', '2026-11-09.json'), {'tong': 1, 'dat': 0, 'nguoi_cham': 'cham',
+                'ca': [{'id': 'C1', 'dat': False, 'dich': 'workflow:viec-chung', 'ly_do': 'thiếu nguồn'}]})
+    af.lenh_hoc(N(thu_muc=w.goc), w)
+    af.lenh_hoc(N(thu_muc=w.goc), w)  # chạy lại không nhân đôi
+    dem = af.dem_nguon(w)
+    assert dem['tu-cai-thien'] >= 3 and dem['chu'] == 0
+    chuyen(w, ma, 'tra_lai', ai='hang', ly_do='thiếu lời cảm ơn cụ thể')
+    assert af.dem_nguon(w)['chu'] == 1

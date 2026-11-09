@@ -46,12 +46,14 @@ Run chỉ đọc design, ghi phản hồi vào HOC.jsonl; mọi thay đổi desi
 | 3 | thành bộ mẫu | ≥ 2 đơn vị dựng từ cùng bộ mẫu đạt mức 2 (`af.py muc --mau`) |
 Số ngưỡng nằm ở `workforce.json` mục `tieu_chuan`, bộ mẫu ghi đè được.
 
-## Ba nguồn học, cùng quy về phiên bản
-| Nguồn | Lệnh | Ví dụ |
+## Bốn nguồn học của khu learn (Linh 9/11)
+| Nguồn (`nguon` trong HOC.jsonl) | Cách vào | Ví dụ |
 |---|---|---|
-| Dưới lên: phản hồi, trả lại | `phan-hoi`, `/gopy`, `/tra` | chị Hằng trả proposal vì thiếu timeline |
-| Ngang: bản sửa của người giỏi | `ban-sua --luat` | bản chị sửa thành bản vàng, bản thợ thành phản ví dụ, mỗi luật thành bài học |
-| Trên xuống: chuẩn cao nhất bên ngoài | `vang`, `hoc-ngoai` | bản vàng mỗi workflow; hai nguồn độc lập cùng ý thì thành đề xuất |
+| `tu-cai-thien`: tự cải thiện | cổng chống slop chặn → bài học về công nhân; mục `## Phản tư` cuối nhat-ky.md; ca trượt trong `thu/ket-qua/*.json` (`ca: [{id, dat, dich, ly_do}]`) khi chạy `hoc` | thợ trình duyệt khi dau-ra trống |
+| `chu`: feedback của chủ và người trong đơn vị | `phan-hoi`, `/gopy`, `/tra`, `/duyet` có lời khen | chị Hằng trả proposal vì thiếu timeline |
+| `nguoi-gioi`: học từ người giỏi nhất | `ban-sua --luat`, `hoc-ngoai`, `vang`, workflow `hoc-chuan-cao` | bản chị sửa thành bản vàng, bản thợ thành phản ví dụ |
+| `cheo`: học chéo đơn vị | `hoc-cheo` | bài học lặp ở ≥ 3 đơn vị sửa bộ mẫu |
+`bang` và `muc` in số bằng chứng theo từng nguồn; `muc` báo "CHƯA học đủ ba nguồn chính" khi một trong ba nguồn đầu bằng 0.
 Tất cả vào `HOC.jsonl` → `hoc` → đề xuất → bộ thử + duyệt → `thang-cap`. Xuyên đơn vị: `hoc-cheo <mau> <các con>`, bài học ở ≥ 3 đơn vị thì sửa bộ mẫu bằng PR (Linh duyệt PR).
 
 ## Workforce designer (`mau/workforce-designer`)
