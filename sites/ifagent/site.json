@@ -16,6 +16,25 @@
       {
         "ten": "Thanh toán và Bàn giao tức thì",
         "mo_ta": "Tích hợp VietQR tự động đối soát và khởi chạy tiến trình tạo báo cáo ngay khi hoàn tất thanh toán."
+      },
+      {
+        "ten": "Case thực tế: Hệ thống Phòng khám Đa khoa — Giảm 65% thời gian phản hồi Lead",
+        "mo_ta": "Triển khai Agent Force chuẩn hoá tiếp nhận đa kênh và giao cơ hội tự động sau 14 ngày pilot."
+      }
+    ]
+  },
+  "case": {
+    "bat": true,
+    "api_danh_sach": "/api/method/linhx_core.cred.api_cred.danh_sach_case",
+    "api_noi_dung": "/api/method/linhx_core.cred.api_cred.noi_dung_ifagent",
+    "ds_case": [
+      {
+        "name": "CS-IF-01",
+        "tieu_de": "Case thực tế: Hệ thống Phòng khám Đa khoa",
+        "khach_hang": "Hệ thống Phòng khám Đa khoa",
+        "chi_so": "Giảm 65% thời gian phản hồi Lead",
+        "mo_ta": "Triển khai Agent Force chuẩn hoá tiếp nhận đa kênh và giao cơ hội tự động sau 14 ngày pilot.",
+        "da_duyet": true
       }
     ]
   }

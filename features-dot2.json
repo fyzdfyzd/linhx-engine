@@ -253,8 +253,8 @@
         "commit F3 không đụng trang-bu/**"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f3.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F3/kiem.json"
     },
     {
       "id": "T3",
