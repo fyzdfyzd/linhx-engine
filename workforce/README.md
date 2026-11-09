@@ -3,11 +3,11 @@
 Một workforce là **một thư mục** của một đơn vị. Trong đó có: dữ liệu nền thành wiki, công nhân số có người chịu trách nhiệm, skill và workflow có phiên bản, bảng việc với mỗi việc một thư mục, danh sách điều cần nhớ và điều cần học. Công cụ duy nhất là `af.py`, chỉ dùng Python stdlib. Zip thư mục này lại thì Claude, agy hay ChatGPT đều chạy được: agent đọc `AGENTS.md` (Claude đọc qua `CLAUDE.md`, Gemini qua `GEMINI.md`).
 
 ```
-          SETUP (một lần, bổ sung khi cần)
+          DESIGN (Claude, một lần, bổ sung khi cần)
   D0 7 câu → 01-nguon → 02-wiki (su-that.json) → to-chuc.json → skill từ kho LINHX → workflow → kiem DAT
                                    │
                                    ▼
-  ┌──────────── RUNNING ────────────┐      Zalo / Telegram / email
+  ┌────────── RUN (agy) ──────────┐      Zalo / Telegram / email
   │ /giao → viec/LX-0001/ (TASK.md,  │◀──── af.py lenh (quyền kiểm trong code)
   │ dau-vao, dau-ra, nhat-ky)        │────▶ hop-thu/ra.jsonl → bộ chuyển gửi
   │ cho → dang_lam → cho_duyet ──┐   │      server mỏng: af.py may-chu (token)
@@ -15,14 +15,23 @@ Một workforce là **một thư mục** của một đơn vị. Trong đó có:
   └──────────────┬──────────────────┘
                  │ mọi phản hồi (trả lại, /gopy, duyệt có lời khen)
                  ▼
-  LEARNING: HOC.jsonl, mỗi bài học một dòng gắn đích (skill / workflow / công nhân / hệ thống),
+  LEARN:    HOC.jsonl, mỗi bài học một dòng gắn đích (skill / workflow / công nhân / hệ thống),
             đếm ủng hộ và phản đối; ý trùng thì cộng dồn; việc mới tự chép bài học đang áp vào TASK.md
                  │ af.py hoc (cuối ngày): ≥ 2 bằng chứng từ ≥ 2 việc → đề xuất; bị phản đối nhiều → tỉa
                  ▼
-  UPDATE:   de-xuat/DX-001/moi/ (bản sửa nhỏ nhất) + ket-qua-thu.json (bản mới so với bản cũ, người chấm khác thợ)
+  DESIGN:   de-xuat/DX-001/moi/ (bản sửa nhỏ nhất) + ket-qua-thu.json (bản mới so với bản cũ, người chấm khác thợ)
             → af.py thang-cap --duyet <chủ|quản lý> → v1.0.0 → v1.1.0, bản cũ lưu ở phat-hanh/ban/
-            → af.py lui nếu bản mới kém → quay lại RUNNING
+            → af.py lui nếu bản mới kém → quay lại RUN
 ```
+
+## Ba khu design-run-learn (Linh 9/11)
+Mọi workforce có ba khu trong cùng một thư mục, không tách hệ. Ranh giới ở `phan_khu` (mặc định `PHAN_KHU` trong af.py, workforce.json ghi đè); mỗi công nhân trong `to-chuc.json` có `phan_khu`; `af.py kiem` chặn khi thợ sai khu hoặc bước workflow `ghi` vào khu khác.
+| Khu | Thợ | Ghi được | Lệnh |
+|---|---|---|---|
+| design | Claude | D0, 01-nguon, 02-wiki, to-chuc, cong-nhan, workflow, .agents/skills, thu, vang, phat-hanh, AGENTS/CLAUDE/GEMINI | moi, nap-skill, kiem, muc, thang-cap, lui, dong-goi |
+| run | agy | viec/, bang-viec.jsonl, hop-thu/, thong-ke.json | giao, chuyen, bang, lenh, may-chu |
+| learn | Claude (người chấm khác thợ) | HOC.jsonl, HOC.md, NHO.md, de-xuat/ | phan-hoi, nho, vang, ban-sua, hoc-ngoai, hoc, hoc-cheo |
+Run chỉ đọc design, ghi phản hồi vào HOC.jsonl; mọi thay đổi design đi qua de-xuat → bộ thử → duyệt. Design và learn không gửi tin ra kênh. Bộ chuyển kênh (LAB119) chỉ nối vào `hop-thu/` và `af.py lenh`.
 
 ## Ba tầng mẫu
 1. `khuon/`: mọi con đều có (hiến chương, cổng chống slop, vòng học, phiên bản, tiêu chuẩn 3 mức).

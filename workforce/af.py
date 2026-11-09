@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """af.py: lõi LINHX Agent Force. Một workforce = một thư mục. Chỉ Python stdlib.
 
-Vòng: SETUP (moi) -> RUNNING (giao, chuyen, bang) -> LEARNING (phan-hoi, hoc) -> UPDATE (thang-cap, lui) -> RUNNING.
+Ba khu design-run-learn (Linh 9/11), ranh giới ở PHAN_KHU / workforce.json "phan_khu":
+  DESIGN (Claude): moi, nap-skill, kiem, muc, thang-cap, lui, dong-goi
+  RUN (agy):       giao, chuyen, bang, lenh, may-chu
+  LEARN:           phan-hoi, nho, vang, ban-sua, hoc-ngoai, hoc, hoc-cheo -> de-xuat/ -> DESIGN duyệt
 
   python af.py moi <W> --ten "Nụ Event" --don-vi "ifAgent Event" [--kho ../skills --skills a,b]
   python af.py giao <W> --workflow tra-loi-lead --viec "..." [--nguoi-giao linh]
@@ -175,7 +178,7 @@ class WF:
         return doc_json(self.p('thong-ke.json'), {'cong_nhan': {}, 'skill': {}, 'workflow': {}})
 
 
-# ---------- SETUP ----------
+# ---------- DESIGN: dựng ----------
 def lenh_moi(a):
     if os.path.exists(a.thu_muc) and os.listdir(a.thu_muc):
         raise Loi(f'{a.thu_muc} đã có nội dung, không ghi đè')
@@ -246,7 +249,7 @@ def tim_skill(kho, ten):
     raise Loi(f'không thấy skill "{ten}" trong {kho}')
 
 
-# ---------- RUNNING ----------
+# ---------- RUN ----------
 def lenh_giao(a, w=None):
     w = w or WF(a.thu_muc)
     wf = w.workflow(a.workflow)
@@ -389,7 +392,7 @@ def lenh_bang(a, w=None):
     return van_ban
 
 
-# ---------- LEARNING ----------
+# ---------- LEARN ----------
 def chuan_hoa(t):
     return re.sub(r'\s+', ' ', t.lower()).strip()
 
@@ -505,7 +508,7 @@ def ds_de_xuat(w, trang_thai=None):
 
 
 def lenh_hoc(a, w=None):
-    """LEARNING: bài học đủ bằng chứng thành đề xuất sửa; bài học bị phản đối nhiều thì tỉa."""
+    """LEARN: bài học đủ bằng chứng thành đề xuất sửa; bài học bị phản đối nhiều thì tỉa."""
     w = w or WF(a.thu_muc)
     nguong = w.cau_hinh.get('nguong_de_xuat', 2)
     ds = doc_dong(w.p('HOC.jsonl'))
@@ -552,7 +555,7 @@ Bằng chứng: {', '.join(str(b['viec']) for b in h['bang_chung'])}
     return moi
 
 
-# ---------- UPDATE ----------
+# ---------- DESIGN: thăng cấp, lùi ----------
 def lenh_thang_cap(a, w=None):
     w = w or WF(a.thu_muc)
     d = w.p('de-xuat', a.ma)
@@ -680,6 +683,28 @@ def lenh_lenh(a, w=None):
 
 
 # ---------- KIỂM ----------
+PHAN_KHU = {  # design-run-learn: ba khu của mọi workforce (Linh 9/11); workforce.json "phan_khu" ghi đè được
+    'design': {'tho': 'claude', 'ghi': ['00-D0-NHU-CAU.md', '01-nguon/', '02-wiki/', 'to-chuc.json', 'workforce.json',
+                                        'cong-nhan/', 'workflow/', '.agents/skills/', 'thu/', 'vang/', 'phat-hanh/',
+                                        'AGENTS.md', 'CLAUDE.md', 'GEMINI.md']},
+    'run': {'tho': 'agy', 'ghi': ['viec/', 'bang-viec.jsonl', 'hop-thu/', 'thong-ke.json']},
+    'learn': {'tho': 'claude', 'ghi': ['HOC.jsonl', 'HOC.md', 'NHO.md', 'de-xuat/']},
+}
+
+
+def phan_khu(w):
+    return w.cau_hinh.get('phan_khu') or PHAN_KHU
+
+
+def khu_cua(w, duong):
+    """Đường (tương đối gốc workforce) thuộc khu nào; None nếu chưa xếp."""
+    duong = duong.replace('\\', '/')
+    for k, v in phan_khu(w).items():
+        if any(duong == g or (g.endswith('/') and duong.startswith(g)) for g in v['ghi']):
+            return k
+    return None
+
+
 def kiem(w):
     loi = []
     for f in ('AGENTS.md', 'CLAUDE.md', 'NHO.md', 'to-chuc.json', '02-wiki/INDEX.md', '02-wiki/su-that.json', '00-D0-NHU-CAU.md'):
@@ -699,6 +724,11 @@ def kiem(w):
         for f in ('ROLE.md', 'POLICIES.md', 'HEARTBEAT.md'):
             if not os.path.exists(w.p('cong-nhan', c['ma'], f)):
                 loi.append(f'thiếu cong-nhan/{c["ma"]}/{f}')
+        khu = phan_khu(w)
+        if c.get('phan_khu') not in khu:
+            loi.append(f'công nhân {c["ma"]}: phan_khu phải là một trong {"/".join(khu)}')
+        elif c['phan_khu'] != 'learn' and khu[c['phan_khu']].get('tho') not in str(c.get('tho', '')):
+            loi.append(f'công nhân {c["ma"]}: khu {c["phan_khu"]} dùng thợ {khu[c["phan_khu"]]["tho"]}, đang ghi "{c.get("tho")}"')
     for c in cn:  # vòng báo cáo
         thay, x = set(), c
         while x in cn:
@@ -721,6 +751,11 @@ def kiem(w):
         for b in wf.get('buoc', []):
             if b.get('cong_nhan') not in cn:
                 loi.append(f'workflow {ten} bước {b.get("id")}: công nhân "{b.get("cong_nhan")}" không có')
+            ghi = b.get('ghi')
+            if ghi and b.get('cong_nhan') in cn:
+                k = khu_cua(w, ghi)
+                if k != cn[b['cong_nhan']].get('phan_khu') and not (k == 'learn' and ghi == 'HOC.jsonl'):
+                    loi.append(f'workflow {ten} bước {b.get("id")}: {b["cong_nhan"]} (khu {cn[b["cong_nhan"]].get("phan_khu")}) không được ghi {ghi} (khu {k}); đi qua de-xuat')
             if b.get('skill') and b['skill'] not in skills:
                 loi.append(f'workflow {ten} bước {b.get("id")}: skill "{b["skill"]}" chưa có trong .agents/skills')
     try:

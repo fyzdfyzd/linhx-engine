@@ -375,3 +375,19 @@ def test_designer_dat_kiem(tmp_path):
     assert af.kiem(w) == []
     assert {'onboard-don-vi', 'dung-workforce', 'chay-bong', 'cham-muc', 'hoc-chuan-cao', 'nang-mau'} <= set(w.ds_workflow())
     assert af.d0_tra_loi(w)[0] == 7
+
+
+def test_phan_khu_design_run_learn(w):
+    assert af.kiem(w) == [] or all('skill' in x for x in af.kiem(w))
+    assert af.khu_cua(w, 'viec/LX-0001/dau-ra/a.md') == 'run'
+    assert af.khu_cua(w, 'workflow/viec-chung.json') == 'design'
+    assert af.khu_cua(w, 'HOC.jsonl') == 'learn'
+    tc = af.doc_json(w.p('to-chuc.json'))
+    tc['cong_nhan'][0]['tho'] = 'claude'  # truong ở khu run phải dùng agy
+    af.ghi_json(w.p('to-chuc.json'), tc)
+    wf = af.doc_json(w.p('workflow', 'viec-chung.json'))
+    wf['buoc'][0]['ghi'] = 'workflow/viec-chung.json'  # run không được sửa workflow
+    af.ghi_json(w.p('workflow', 'viec-chung.json'), wf)
+    loi = af.kiem(af.WF(w.goc))
+    assert any('khu run dùng thợ agy' in x for x in loi)
+    assert any('không được ghi workflow/viec-chung.json' in x for x in loi)

@@ -23,7 +23,8 @@
     "onboard-don-vi",
     "dung-workforce",
     "nang-mau"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "nghien-cuu",
@@ -37,7 +38,8 @@
    ],
    "workflows": [
     "hoc-chuan-cao"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "tho-dung",
@@ -52,7 +54,8 @@
    "workflows": [
     "dung-workforce",
     "chay-bong"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "cham",
@@ -66,7 +69,8 @@
    ],
    "workflows": [
     "cham-muc"
-   ]
+   ],
+   "phan_khu": "learn"
   }
  ]
 }

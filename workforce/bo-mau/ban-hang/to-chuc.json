@@ -36,7 +36,8 @@
    "workflows": [
     "tra-ho-so",
     "viec-chung"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "lead",
@@ -51,7 +52,8 @@
    ],
    "workflows": [
     "tra-loi-lead"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "proposal",
@@ -65,7 +67,8 @@
    ],
    "workflows": [
     "soan-proposal"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "bao-cao",
@@ -79,7 +82,8 @@
    ],
    "workflows": [
     "bao-cao-sau-su-kien"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "cham",
@@ -91,7 +95,8 @@
    "skills": [
     "linhx-chuan"
    ],
-   "workflows": []
+   "workflows": [],
+   "phan_khu": "learn"
   }
  ]
 }

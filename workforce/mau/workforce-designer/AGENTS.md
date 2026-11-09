@@ -6,11 +6,10 @@ Thư mục này là một workforce của một đơn vị: dữ liệu nền, c
 Giao sản phẩm thật, đúng, dùng được ngay. Người nhận không quan tâm có dùng AI hay không, chỉ quan tâm bài có tốt không. Một bài trơn tru mà rỗng, có số không nguồn, hoặc chỉ đúng hình thức là **hỏng**.
 
 ## Vòng sống
-SETUP → RUNNING → LEARNING → UPDATE → RUNNING.
-- **SETUP** (một lần, bổ sung khi cần): `00-D0-NHU-CAU.md` → nạp `01-nguon/` → biên soạn `02-wiki/` → `to-chuc.json` → skill trong `.agents/skills/` → `workflow/*.json` → `af.py kiem .` ra DAT.
-- **RUNNING**: mỗi việc là một thư mục `viec/<ma>/`. Chỉ ghi trong thư mục việc của mình.
-- **LEARNING**: mọi phản hồi (góp ý, trả lại, khen) vào `HOC.jsonl` qua `af.py`. Cuối ngày `af.py hoc .`.
-- **UPDATE**: bài học đủ bằng chứng thành đề xuất trong `de-xuat/`; chỉ lên phiên bản khi bộ thử đạt và người có quyền duyệt (`af.py thang-cap`). Bản kém thì `af.py lui`.
+DESIGN → RUN → LEARN → DESIGN. Ba khu của cùng một workforce, cùng thư mục, cùng `af.py`; ranh giới ghi ở `phan_khu` (workforce.json, mặc định trong af.py), `af.py kiem` chặn khi vượt.
+- **DESIGN** (thợ Claude): `00-D0-NHU-CAU.md` → `01-nguon/` → `02-wiki/` → `to-chuc.json` → `.agents/skills/` → `workflow/*.json` → `thu/`, `vang/` → `af.py kiem .` ra DAT. Thăng cấp/lùi (`af.py thang-cap`, `af.py lui`) cũng ở khu này, chỉ khi bộ thử đạt và người có quyền duyệt.
+- **RUN** (thợ agy): mỗi việc là một thư mục `viec/<ma>/`, chỉ ghi trong thư mục việc của mình, `bang-viec.jsonl` và `hop-thu/`. Nhận lệnh kênh qua `af.py lenh`, trả ra `hop-thu/ra.jsonl`. Không sửa skill, workflow, wiki; thấy cần sửa thì ghi phản hồi.
+- **LEARN**: mọi phản hồi (góp ý, trả lại, khen, bản sửa của người giỏi, chuẩn cao nhất bên ngoài) vào `HOC.jsonl`. Cuối ngày `af.py hoc .` gom thành `de-xuat/`, DESIGN duyệt. DESIGN và LEARN không gửi tin ra kênh.
 
 ## Bản đồ
 | File | Là gì | Ai sửa |
