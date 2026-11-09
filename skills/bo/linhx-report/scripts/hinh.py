@@ -32,7 +32,8 @@ def nap_font():
 def so_vn(v, don_vi=""):
     if isinstance(v, float) and not v.is_integer():
         # giữ tới 2 chữ số thập phân có nghĩa (0,79 không thành 0,8; 4,37 không thành 4,4)
-        so_le = 3 if abs(v) < 1 else (2 if abs(v) < 10 else 1)  # giữ khoảng 3 chữ số có nghĩa
+        import math
+        so_le = max(3, 2 - math.floor(math.log10(abs(v)))) if abs(v) < 1 else (2 if abs(v) < 10 else 1)  # giữ 3 chữ số có nghĩa (0,00146 không thành 0,001)
         s = f"{v:,.{so_le}f}".rstrip("0").rstrip(".")
     else:
         s = f"{int(round(v)):,}"
@@ -80,7 +81,7 @@ def ve(h, th, ra):
         for k, i in enumerate(thu_tu):
             m = max(c["gia_tri"][i] for c in chuoi)
             ax.text(m + mx * 0.015, k, so_vn(gt[i], dv), va="center", fontsize=8, fontweight="bold", color=mau["chu"])
-        ax.set_xlim(0, mx * (1.12 if h.get("rong", "full") == "full" else 1.5))  # hình hẹp cần chỗ cho nhãn số
+        ax.set_xlim(0, mx * (1.22 if h.get("rong", "full") == "full" else 1.5))  # 1,12 cắt nhãn dài như "0,00431" (vòng thử 9/11)  # hình hẹp cần chỗ cho nhãn số
         if len(chuoi) > 1:
             ax.legend(frameon=False, fontsize=7.5, loc="lower right",
                       handles=[matplotlib.patches.Patch(color=pal[0], label=chuoi[0]["ten"]),

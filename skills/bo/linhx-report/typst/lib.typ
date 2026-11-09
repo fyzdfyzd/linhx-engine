@@ -95,7 +95,7 @@
 #let khoi-khuyennghi(b, th) = {
   // Trang hành động (T20): mỗi việc một hàng, số lớn, việc in đậm cột trái, giải thích cột phải.
   for (i, it) in b.items.enumerate() {
-    block(width: 100%, breakable: false, above: 0pt, below: 0pt, inset: (y: 4.5mm),
+    block(width: 100%, breakable: false, above: if i == 0 { 6mm } else { 0pt }, below: 0pt, inset: (y: 4.5mm),
       stroke: (top: if i == 0 { 1.4pt + rgb(th.mau.chinh) } else { 0.5pt + rgb(th.mau.ke) }),
       grid(columns: (14mm, 58mm, 1fr), column-gutter: 5mm,
         text(font: th.font.tieu_de, size: 28pt, weight: 700, fill: rgb(th.mau.nhan), top-edge: "cap-height", bottom-edge: "baseline", str(i + 1)),
