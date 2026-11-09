@@ -228,6 +228,8 @@ def kiem_pilot(pilot: dict) -> dict:
     tat_ca_xong = all(b["trang_thai"] == "xong" for b in cac_buoc)
     if trang_thai == "xong" and not tat_ca_xong:
         raise ValueError("Chưa hoàn thành đủ 7 bước nên không thể đặt trạng thái xong")
+    if trang_thai == "huy" and tat_ca_xong:
+        raise ValueError("Đã hoàn thành đủ 7 bước nên không thể đặt trạng thái huỷ")
     if trang_thai == "dang_chay" and tat_ca_xong:
         trang_thai = "xong"
 

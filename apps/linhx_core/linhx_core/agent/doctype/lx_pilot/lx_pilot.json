@@ -19,6 +19,7 @@
    "fieldname": "co_hoi",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Cơ hội",
    "options": "LX Co Hoi",
    "reqd": 1,
@@ -35,8 +36,11 @@
   {
    "fieldname": "don_vi",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Đơn vị",
    "options": "LX Don Vi",
+   "reqd": 1,
    "search_index": 1
   },
   {
