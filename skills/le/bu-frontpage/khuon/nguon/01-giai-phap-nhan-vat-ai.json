@@ -1,0 +1,34 @@
+{
+ "path": "/giai-phap/nhan-vat-ai/",
+ "kenh": "trang-nhan-vat-ai",
+ "loai": "service",
+ "title": "Nhân vật AI biết nói cho sự kiện · IF Agent Event",
+ "desc": "Đại sứ thương hiệu bằng AI nói chuyện tiếng Việt với khách tại gian hàng, kiosk, màn LED. Trả lời trong nội dung bạn duyệt, mời khách để lại thông tin.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/#giai-phap"
+  ],
+  [
+   "Nhân vật AI biết nói",
+   "/giai-phap/nhan-vat-ai/"
+  ]
+ ],
+ "h1": "Nhân vật AI biết nói tiếng Việt cho gian hàng và sân khấu",
+ "mo": "Một đại sứ thương hiệu đứng ở kiosk hoặc màn LED, nghe khách hỏi bằng giọng nói, trả lời đúng nội dung bạn đã duyệt, rồi mời khách quét mã để nhận quà và để lại thông tin.",
+ "than": "## Khách gặp gì ở gian hàng\n1. Nhân vật chào khi có người tới gần, giới thiệu ngắn sản phẩm.\n2. Khách hỏi bằng giọng nói, nhân vật trả lời bằng giọng tiếng Việt và cử chỉ.\n3. Cuối cuộc trò chuyện, nhân vật mời khách quét mã QR để nhận quà, mẫu thử hoặc mã giảm giá.\n4. Khách tự đồng ý để lại thông tin; quà gửi vào Zalo hoặc email của khách.\n\n## Những gì chúng tôi làm riêng cho thương hiệu\n| Phần | Bạn quyết | Chúng tôi làm |\n|---|---|---|\n| Ngoại hình | Phong cách, trang phục, màu brand | Dựng nhân vật và chuyển động |\n| Giọng | Nam hay nữ, vùng miền, tốc độ | Chọn và tinh chỉnh giọng tiếng Việt |\n| Kịch bản | Thông điệp, câu được nói, câu không được nói | Viết kịch bản, giới hạn câu trả lời trong nội dung đã duyệt |\n| Quà và dữ liệu | Quà tặng, trường thông tin cần thu | Luồng quét QR, ô đồng ý, xuất danh sách |\n\n## Chạy ở đâu\n- Kiosk đứng có micro và loa, đặt tại gian hàng.\n- Màn LED sân khấu hoặc sảnh, khách nói qua micro cầm tay.\n- Điện thoại của khách, mở bằng mã QR, không cần cài ứng dụng.\n\n## Câu trả lời có lệch không\nNhân vật chỉ trả lời trong phạm vi tài liệu sản phẩm và kịch bản bạn duyệt. Câu hỏi ngoài phạm vi được chuyển về câu mời khách gặp nhân viên tại gian hàng. Trước sự kiện, chúng tôi chạy thử với danh sách câu hỏi khó do bạn đưa.\n\n## Sau sự kiện bạn nhận\n- Báo cáo số đo trong 24 giờ: số cuộc trò chuyện, câu hỏi khách hỏi nhiều nhất, lượt để lại liên hệ, giờ đông khách.\n- Danh sách khách đã đồng ý nhận tin, xuất Excel.",
+ "hoi_dap": [
+  [
+   "Dựng một nhân vật AI mất bao lâu?",
+   "Tuỳ độ riêng của ngoại hình, giọng và kịch bản. Khi nhận brief, chúng tôi báo thời gian cụ thể cùng demo."
+  ],
+  [
+   "Hội trường ồn thì nhân vật có nghe được không?",
+   "Chúng tôi dùng micro định hướng hoặc micro cầm tay và khảo sát âm thanh tại địa điểm trước ngày sự kiện."
+  ],
+  [
+   "Có dùng được tên và hình người thật không?",
+   "Chỉ khi có văn bản đồng ý của người đó. Mặc định chúng tôi dựng nhân vật mới theo brand."
+  ]
+ ]
+}

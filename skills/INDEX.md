@@ -1,6 +1,6 @@
 # Danh mục skill LINHX
 
-Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **234** skill.
+Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **235** skill.
 
 | Nhóm | Số |
 |---|---|
@@ -12,7 +12,7 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | Marketing, cộng đồng, kênh | 26 |
 | Nghiên cứu, radar, dữ liệu | 15 |
 | Giáo dục, khoá học | 8 |
-| Khác | 0 |
+| Khác | 1 |
 
 ## Thiết kế: ảnh, slide, deck, brand, web, KV
 
@@ -287,3 +287,9 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | `lesson-compose` | Dùng khi cần ghép ảnh các khung slide, các đoạn âm thanh lời giảng và video giảng viên AI thành video bài giảng hoàn chỉnh chuẩn 1920x1080 kèm phụ đề WebVTT và … | `bo/linhx-course/skills/lesson-compose` |
 | `lesson-script` | Dùng khi cần viết kịch bản lời giảng chi tiết và bố cục slide Slidev cho từng bài học theo cấu trúc Gagné rút gọn, bảo đảm độ dài mỗi đoạn và tổng số âm tiết kh… | `bo/linhx-course/skills/lesson-script` |
 | `screen-capture` | Dùng khi bài học có phần thực hành hoặc minh hoạ trực quan cần chụp ảnh hoặc quay lại màn hình trình duyệt, giao diện dòng lệnh và chèn vào slide hoặc ghép vào … | `bo/linhx-course/skills/screen-capture` |
+
+## Khác
+
+| Skill | Làm gì | Ở đâu |
+|---|---|---|
+| `bu-frontpage` | Dựng trọn mặt tiền web của một BU B2B (trang chủ lấy lead, 15–20 trang con, form brief + gọi lại, GEO, own media 3 pha) từ khuôn đã chạy thật ở event.ifagent.ne… | `le/bu-frontpage` |

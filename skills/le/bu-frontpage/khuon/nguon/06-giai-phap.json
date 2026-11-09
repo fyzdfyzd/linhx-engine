@@ -1,0 +1,15 @@
+{
+ "path": "/giai-phap/",
+ "kenh": "trang-giai-phap",
+ "title": "Giải pháp AI tương tác cho sự kiện · IF Agent Event",
+ "desc": "Ba giải pháp IF Agent dựng cho sự kiện: nhân vật AI biết nói tiếng Việt, AI Photobooth, minigame quét QR. So sánh để chọn đúng cái bạn cần.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/giai-phap/"
+  ]
+ ],
+ "h1": "Ba giải pháp, chọn theo việc bạn cần khách làm",
+ "mo": "Mỗi giải pháp giải một việc khác nhau ở sự kiện. Bảng dưới giúp bạn chọn nhanh; nhiều sự kiện ghép hai thứ với nhau.",
+ "than": "## Chọn theo việc\n| Bạn cần khách | Nên chọn | Vì sao |\n|---|---|---|\n| Hiểu sản phẩm, hỏi gì cũng có người trả lời | [Nhân vật AI biết nói](/giai-phap/nhan-vat-ai/) | Trả lời bằng giọng nói, trong nội dung bạn duyệt, không mệt |\n| Dừng lại, chụp, chia sẻ lên mạng | [AI Photobooth](/giai-phap/photobooth/) | Ảnh mang khung cảnh thương hiệu đi xa sau sự kiện |\n| Cả hội trường cùng tham gia, để lại thông tin | [Minigame quét QR](/giai-phap/minigame/) | Chơi trên điện thoại, đua bảng xếp hạng, đổi thông tin lấy quà |\n\n## Theo loại sự kiện\n- [Hội chợ, triển lãm](/su-kien/hoi-cho-trien-lam/)\n- [Ra mắt sản phẩm, sampling](/su-kien/ra-mat-san-pham/)\n- [Hội nghị, summit](/su-kien/hoi-nghi/)\n\n## Điểm chung của cả ba\n- Chạy trên kiosk, màn LED hoặc điện thoại của khách, không cần cài ứng dụng.\n- Khách chỉ để lại thông tin khi tự tick ô đồng ý.\n- Báo cáo số đo trong 24 giờ sau sự kiện và danh sách khách đã đồng ý, xuất Excel.\n- Chạy thử trên thiết bị thật trước ngày sự kiện.\n\n## Chưa chắc chọn gì\nXem [các gói dựng sẵn](/goi/) đã ghép sẵn theo loại sự kiện, hoặc gửi brief để chúng tôi đề xuất."
+}

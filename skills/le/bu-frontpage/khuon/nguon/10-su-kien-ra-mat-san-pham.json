@@ -1,0 +1,20 @@
+{
+ "path": "/su-kien/ra-mat-san-pham/",
+ "kenh": "trang-ra-mat-san-pham",
+ "loai": "service",
+ "title": "Ra mắt sản phẩm, sampling · IF Agent Event",
+ "desc": "Nhân vật AI làm đại sứ giới thiệu sản phẩm mới, photobooth đưa khách vào khung cảnh chiến dịch, quà và mã giảm giá gửi thẳng vào Zalo khách.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/giai-phap/"
+  ],
+  [
+   "Ra mắt sản phẩm, sampling",
+   "/su-kien/ra-mat-san-pham/"
+  ]
+ ],
+ "h1": "Công nghệ tương tác cho ra mắt sản phẩm và sampling",
+ "mo": "Nhân vật AI làm đại sứ giới thiệu sản phẩm mới, photobooth đưa khách vào khung cảnh chiến dịch, quà và mã giảm giá gửi thẳng vào Zalo khách.",
+ "than": "## Việc khó của buổi ra mắt\n- Thông điệp sản phẩm dài, khách chỉ đứng vài phút.\n- Muốn khách nhớ sản phẩm và chia sẻ lên mạng.\n- Cần biết ai muốn mua thử để chăm sóc ngay sau đó.\n\n## Ghép đề xuất\n| Mục tiêu | Ghép |\n|---|---|\n| Khách hiểu sản phẩm | Nhân vật AI nói theo kịch bản đã duyệt |\n| Lan toả trên mạng | AI Photobooth khung cảnh chiến dịch |\n| Chốt mua thử | Mã giảm giá gửi Zalo khi khách tự đồng ý |\n\nGói phù hợp: [Activation](/goi/).\n\n## Chuẩn bị\n- Tài liệu sản phẩm và các câu không được nói (về giá, so sánh đối thủ, công dụng).\n- Chính sách quà và mã giảm giá.\n- Hình chiến dịch để dựng khung cảnh photobooth."
+}

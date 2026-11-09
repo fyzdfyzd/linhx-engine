@@ -1,0 +1,17 @@
+{
+ "path": "/lien-he/",
+ "kenh": "trang-lien-he",
+ "cta": false,
+ "form": true,
+ "title": "Liên hệ và gửi brief · IF Agent Event",
+ "desc": "Gửi brief sự kiện cho IF Agent, nhận ý tưởng, demo và báo giá trong 1 ngày làm việc. Hoặc nhắn Zalo 0904 106 143.",
+ "vet": [
+  [
+   "Liên hệ",
+   "/lien-he/"
+  ]
+ ],
+ "h1": "Gửi brief hoặc nói chuyện ngay",
+ "mo": "Điền form bên dưới, chỗ nào chưa rõ cứ để trống. Cần gấp thì nhắn Zalo [0904 106 143](https://zalo.me/0904106143) hoặc email [hangnt@ifagent.vn](mailto:hangnt@ifagent.vn).",
+ "than": ""
+}

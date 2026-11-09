@@ -1,0 +1,20 @@
+{
+ "path": "/su-kien/hoi-cho-trien-lam/",
+ "kenh": "trang-hoi-cho-trien-lam",
+ "loai": "service",
+ "title": "Hội chợ, triển lãm · IF Agent Event",
+ "desc": "Giữa hàng trăm gian hàng, AI Photobooth và minigame kéo khách dừng lại, nhân vật AI giới thiệu sản phẩm, mỗi lượt chơi thành một liên hệ đã đồng ý.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/giai-phap/"
+  ],
+  [
+   "Hội chợ, triển lãm",
+   "/su-kien/hoi-cho-trien-lam/"
+  ]
+ ],
+ "h1": "Công nghệ tương tác cho gian hàng hội chợ, triển lãm",
+ "mo": "Giữa hàng trăm gian hàng, AI Photobooth và minigame kéo khách dừng lại, nhân vật AI giới thiệu sản phẩm, mỗi lượt chơi thành một liên hệ đã đồng ý.",
+ "than": "## Việc khó của gian hàng\n- Khách đi qua nhanh, nhân viên không kịp giới thiệu từng người.\n- Phát tờ rơi không biết ai quan tâm thật.\n- Sau hội chợ không còn gì để chăm sóc tiếp.\n\n## Ghép đề xuất\n| Mục tiêu | Ghép |\n|---|---|\n| Đông người dừng lại | AI Photobooth với khung cảnh sản phẩm |\n| Thu thông tin | Vòng quay quà sau khi khách để lại liên hệ |\n| Giới thiệu sản phẩm kỹ thuật | Nhân vật AI trả lời câu hỏi thay nhân viên |\n\nGói phù hợp: [Gian hàng](/goi/). Thêm nhân vật AI thì lên [Activation](/goi/).\n\n## Chuẩn bị\n- Ổ điện và vị trí đặt kiosk trong mặt bằng gian hàng.\n- Logo, màu, quà tặng, câu hỏi thường gặp về sản phẩm.\n- Ngày dựng gian hàng để chạy thử trên mạng thật."
+}

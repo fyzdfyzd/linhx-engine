@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IF Agent Event · Công nghệ AI tương tác cho sự kiện</title>
+<meta name="description" content="Nhân vật AI biết nói, AI Photobooth, Minigame QR cho sự kiện và activation. Gửi brief, IF Agent dựng demo làm riêng cho thương hiệu của bạn.">
+<meta property="og:title" content="IF Agent Event · AI That Activates">
+<meta property="og:description" content="Gửi brief, nhận demo làm riêng: nhân vật AI, AI Photobooth, Minigame QR cho sự kiện của bạn.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://event.ifagent.net/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0D1117">
+<link rel="icon" href="/img/icon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://event.ifagent.net/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Organization","@id":"https://event.ifagent.net/#org","name":"IF Agent","url":"https://event.ifagent.net/","logo":"https://event.ifagent.net/img/logo.svg","sameAs":["https://ifagent.net","https://demo.ifagent.net"],"contactPoint":{"@type":"ContactPoint","contactType":"sales","telephone":"+84904106143","email":"hangnt@ifagent.vn","areaServed":"VN","availableLanguage":"vi"}},
+{"@type":"Service","name":"Công nghệ AI tương tác cho sự kiện","serviceType":"Event technology","provider":{"@id":"https://event.ifagent.net/#org"},"areaServed":"VN","hasOfferCatalog":{"@type":"OfferCatalog","name":"Gói dựng sẵn","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gói Gian hàng: AI Photobooth hoặc Minigame QR"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gói Activation: nhân vật AI biết nói tiếng Việt"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Gói Hội nghị: nhân vật AI dẫn dắt, minigame toàn hội trường"}}]}},
+{"@type":"FAQPage","mainEntity":[
+{"@type":"Question","name":"Sau sự kiện tôi nhận được gì?","acceptedAnswer":{"@type":"Answer","text":"Trong 24 giờ: báo cáo số đo (lượt tương tác, lượt để lại liên hệ, giờ đông khách, ảnh được chia sẻ) và danh sách khách đã đồng ý nhận tin, xuất Excel."}},
+{"@type":"Question","name":"Dữ liệu khách tham dự thuộc về ai?","acceptedAnswer":{"@type":"Answer","text":"Thuộc về thương hiệu tổ chức. Khách chỉ để lại thông tin khi tự đồng ý, ô đồng ý không bao giờ được tick sẵn."}},
+{"@type":"Question","name":"Agency có thể dùng dưới tên mình không?","acceptedAnswer":{"@type":"Answer","text":"Có. Agency giữ quan hệ với khách hàng, IF Agent đứng sau làm công nghệ và hỗ trợ pitch."}}]}
+]}
+</script>
+<link rel="stylesheet" href="/site.css?v=3">
+</head>
+<body>
+<a class="skip" href="#brief">Bỏ qua, tới form gửi brief</a>
+<header class="top">
+  <div class="wrap nav">
+    <a href="/" class="logo" aria-label="IF Agent Event, trang chủ"><img src="/img/logo.svg" alt="IF Agent" width="132" height="43"></a>
+    <nav aria-label="Mục chính">
+      <a href="#giai-phap">Giải pháp</a>
+      <a href="/goi/">Gói</a>
+      <a href="#cach-lam">Cách làm</a>
+      <a href="/cong-nghe-su-kien/">Cẩm nang</a>
+      <a href="#hoi-dap">Hỏi đáp</a>
+    </nav>
+    <a class="btn btn-ghost nav-cta" href="#brief">Gửi brief</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Khách dừng lại ở gian hàng của bạn, nói chuyện với nhân vật AI và để lại thông tin</h1>
+      <p class="sub">IF Agent dựng nhân vật AI biết nói tiếng Việt, AI Photobooth và minigame quét QR cho sự kiện, activation, hội nghị. Bạn gửi brief, chúng tôi làm demo riêng cho thương hiệu của bạn.</p>
+      <div class="cta-row">
+        <a class="btn btn-main" href="#brief">Gửi brief, nhận demo riêng</a>
+        <a class="btn btn-ghost" href="https://demo.ifagent.net/?kenh=event-site" target="_blank" rel="noopener">Thử demo trên điện thoại</a>
+      </div>
+      <dl class="facts">
+        <div><dt>Giá</dt><dd data-cfg="gia_hero" data-can-xac-nhan>báo trong 1 ngày làm việc</dd></div>
+        <div><dt>Thời gian dựng</dt><dd data-cfg="dung_hero" data-can-xac-nhan>từ 5 ngày làm việc</dd></div>
+        <div><dt>Sắp chạy</dt><dd data-cfg="case_hero" data-can-xac-nhan>CSMO Summit, 19–20/11</dd></div>
+      </dl>
+    </div>
+
+    <div class="kiosk" aria-label="Minh hoạ màn hình kiosk nhân vật AI tại gian hàng">
+      <div class="kiosk-screen">
+        <div class="k-head"><span class="dot"></span>Đại sứ AI · Gian hàng</div>
+        <div class="k-char" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0088FF"/><stop offset="1" stop-color="#00D4AA"/></linearGradient></defs><circle cx="60" cy="60" r="56" fill="none" stroke="url(#g)" stroke-width="2" opacity=".5"/><circle cx="60" cy="48" r="20" fill="#1C2533"/><path d="M24 104c6-20 20-30 36-30s30 10 36 30" fill="#1C2533"/><rect x="48" y="44" width="6" height="3" rx="1.5" fill="#00D4AA"/><rect x="66" y="44" width="6" height="3" rx="1.5" fill="#00D4AA"/></svg>
+          <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="bubble you">Sản phẩm mới này hợp với da dầu không em?</div>
+        <div class="bubble ai">Hợp ạ. Chị quét mã bên dưới, em gửi mẫu thử và phiếu giảm giá vào Zalo của chị nhé.</div>
+        <div class="k-qr"><span class="qr" aria-hidden="true"></span><span>Quét để nhận quà<br><b>còn 128 phần</b></span></div>
+      </div>
+      <div class="kiosk-stand" aria-hidden="true"></div>
+      <p class="kiosk-note">Minh hoạ giao diện, nội dung kịch bản đổi theo từng thương hiệu</p>
+    </div>
+  </div>
+</section>
+
+<section id="giai-phap" class="sec">
+  <div class="wrap">
+    <h2>Ba thứ chúng tôi dựng cho sự kiện</h2>
+    <p class="sec-sub">Mỗi giải pháp chạy trên điện thoại của khách hoặc trên kiosk, màn LED của gian hàng. Mọi lượt chơi đều thành dữ liệu cho bạn.</p>
+    <div class="sol">
+      <article class="sol-item sol-big">
+        <h3>Nhân vật AI biết nói</h3>
+        <p>Đại sứ thương hiệu trò chuyện bằng giọng nói tiếng Việt với khách, trả lời về sản phẩm theo kịch bản bạn duyệt, mời khách để lại thông tin để nhận quà.</p>
+        <ul><li>Giọng, ngoại hình, tính cách theo brand</li><li>Chạy trên kiosk, màn LED hoặc điện thoại</li><li>Câu trả lời giới hạn trong nội dung bạn duyệt</li></ul>
+        <a class="link" href="/giai-phap/nhan-vat-ai/">Xem cách nhân vật AI chạy tại gian hàng</a>
+        <a class="link" href="https://demo.ifagent.net/?kenh=event-site#nhan-vat" target="_blank" rel="noopener">Nói thử với 4 nhân vật mẫu</a>
+      </article>
+      <article class="sol-item">
+        <h3>AI Photobooth</h3>
+        <p>Khách chụp một tấm, nhận ảnh đã đưa vào khung cảnh của thương hiệu trong vài giây, chia sẻ ngay lên mạng xã hội.</p>
+        <a class="link" href="/giai-phap/photobooth/">Tìm hiểu AI Photobooth</a>
+      </article>
+      <article class="sol-item">
+        <h3>Minigame quét QR</h3>
+        <p>Khách quét mã, chơi trên điện thoại, đua bảng xếp hạng chiếu trên màn lớn. Không cần cài ứng dụng.</p>
+        <a class="link" href="/giai-phap/minigame/">Tìm hiểu minigame QR</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<section id="goi" class="sec sec-alt">
+  <div class="wrap">
+    <h2>Gói dựng sẵn, chạy được ngay</h2>
+    <p class="sec-sub">Ba gói đã có sẵn kịch bản, khung ảnh và luật chơi, chỉ thay logo, màu, quà của bạn. Cần khác hẳn thì chúng tôi may đo theo brief.</p>
+    <div class="goi">
+      <article class="goi-item" data-goi="gian-hang">
+        <h3>Gian hàng</h3>
+        <p class="goi-cho">Hội chợ, triển lãm, gian hàng TTTM</p>
+        <p class="gia" data-cfg="gia_gian_hang">Báo giá trong 1 ngày</p>
+        <ul><li>AI Photobooth hoặc Minigame QR</li><li>1 kiosk hoặc màn LED có sẵn</li><li>1 người đứng máy</li></ul>
+        <p class="dung">Dựng: <span data-cfg="dung_gian_hang">khoảng 5 ngày làm việc</span></p>
+      </article>
+      <article class="goi-item goi-noi" data-goi="activation">
+        <h3>Activation</h3>
+        <p class="goi-cho">Ra mắt sản phẩm, sampling, roadshow</p>
+        <p class="gia" data-cfg="gia_activation">Báo giá trong 1 ngày</p>
+        <ul><li>Nhân vật AI biết nói theo brand</li><li>Thêm Photobooth hoặc Minigame</li><li>Quà và mã giảm giá gửi vào Zalo khách</li></ul>
+        <p class="dung">Dựng: <span data-cfg="dung_activation">khoảng 10 ngày làm việc</span></p>
+      </article>
+      <article class="goi-item" data-goi="hoi-nghi">
+        <h3>Hội nghị</h3>
+        <p class="goi-cho">Hội nghị, summit, lễ trao giải</p>
+        <p class="gia" data-cfg="gia_hoi_nghi">Báo giá trong 1 ngày</p>
+        <ul><li>Nhân vật AI dẫn dắt trên sân khấu hoặc sảnh</li><li>Minigame toàn hội trường, bảng xếp hạng màn lớn</li><li>Check-in và khảo sát qua QR</li></ul>
+        <p class="dung">Dựng: <span data-cfg="dung_hoi_nghi">khoảng 15 ngày làm việc</span></p>
+      </article>
+    </div>
+    <div class="moi-goi">
+      <h3>Gói nào cũng có</h3>
+      <ul><li><b>Báo cáo số đo trong 24 giờ</b> sau sự kiện: lượt tương tác, lượt để lại liên hệ, giờ đông khách, ảnh được chia sẻ. <a href="/mau-bao-cao/">Xem báo cáo gồm gì</a></li><li><b>Danh sách khách đã đồng ý</b> nhận tin, xuất Excel, đúng luật bảo vệ dữ liệu cá nhân</li><li><b>Chạy thử trên thiết bị thật</b> trước ngày sự kiện</li></ul>
+    </div>
+
+    <form class="tinh" id="tinh-goi" aria-labelledby="tinh-tieu-de">
+      <h3 id="tinh-tieu-de">Chưa biết chọn gói nào? Trả lời ba câu</h3>
+      <div class="tinh-hang">
+        <label>Loại sự kiện
+          <select name="loai"><option value="gian-hang">Gian hàng, hội chợ</option><option value="activation">Ra mắt, sampling, roadshow</option><option value="hoi-nghi">Hội nghị, summit</option></select>
+        </label>
+        <label>Số khách
+          <select name="khach"><option>Dưới 300</option><option selected>300 đến 1.000</option><option>1.000 đến 5.000</option><option>Trên 5.000</option></select>
+        </label>
+        <label>Bạn cần nhất
+          <select name="muc_tieu"><option value="lead">Thu thông tin khách</option><option value="chu-y">Khách dừng lại, chụp, chia sẻ</option><option value="san-pham">Khách hiểu sản phẩm</option></select>
+        </label>
+      </div>
+      <p class="tinh-kq" role="status" aria-live="polite"></p>
+      <button class="btn btn-main" type="submit">Gửi brief với gói này</button>
+    </form>
+  </div>
+</section>
+
+<section id="cach-lam" class="sec">
+  <div class="wrap">
+    <h2>Từ brief tới ngày sự kiện</h2>
+    <ol class="steps">
+      <li><b>Bạn gửi brief</b><span>Mục tiêu, ngày, số khách, tài sản thương hiệu sẵn có. Năm phút với form bên dưới.</span></li>
+      <li><b>Demo làm riêng</b><span>Chúng tôi gửi lại ý tưởng, demo chạy được với logo và màu của bạn, dải ngân sách.</span></li>
+      <li><b>Dựng và chạy thử</b><span>Chốt kịch bản, giọng, khung ảnh, luật chơi. Chạy thử trên thiết bị thật trước sự kiện.</span></li>
+      <li><b>Vận hành và báo số</b><span>Đội IF Agent đứng máy tại sự kiện. Trong 24 giờ sau đó bạn nhận báo cáo số đo và danh sách khách đã đồng ý.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="brief" class="sec">
+  <div class="wrap brief-grid">
+    <div class="brief-copy">
+      <h2>Gửi brief, nhận demo làm riêng</h2>
+      <p class="sec-sub">Điền những gì bạn đang có, chỗ nào chưa rõ cứ để trống. Sau khi gửi, bạn nhận lại:</p>
+      <ul class="get">
+        <li>Một đến ba ý tưởng tương tác hợp với mục tiêu sự kiện</li>
+        <li>Demo chạy được với logo và màu của thương hiệu</li>
+        <li>Dải ngân sách và thời gian dựng</li>
+      </ul>
+      <form id="form-goi-lai" class="goi-lai" novalidate>
+        <p class="gl-tieu">Chưa có brief? Để lại số, chúng tôi gọi lại trong giờ làm việc.</p>
+        <div class="gl-hang">
+          <label><span>Họ tên <em>*</em></span><input name="ho_ten" autocomplete="name" required maxlength="80"></label>
+          <label><span>Điện thoại / Zalo <em>*</em></span><input name="dien_thoai" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20"></label>
+        </div>
+        <label class="consent"><input type="checkbox" name="dong_y" value="1" required><span>Tôi đồng ý để IF Agent gọi lại cho tôi, theo <a href="/chinh-sach-du-lieu/" target="_blank">chính sách dữ liệu</a>. <em>*</em></span></label>
+        <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+        <button class="btn btn-ghost" type="submit">Gọi lại cho tôi</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p class="lh-nhanh">Hoặc nhắn <b>Hằng Nguyễn</b>, Phát triển kinh doanh: Zalo <a href="https://zalo.me/0904106143">0904 106 143</a> · <a href="mailto:hangnt@ifagent.vn">hangnt@ifagent.vn</a></p>
+    </div>
+
+    <form id="form-brief" class="form" novalidate>
+      <p class="gl-tieu">Brief đầy đủ, nhận demo và báo giá</p>
+      <div class="row2">
+        <label><span>Họ tên <em>*</em></span><input name="ho_ten" autocomplete="name" required maxlength="80"></label>
+        <label><span>Công ty / agency <em>*</em></span><input name="cong_ty" autocomplete="organization" required maxlength="120"></label>
+      </div>
+      <div class="row2">
+        <label>Điện thoại / Zalo<input name="dien_thoai" type="tel" inputmode="tel" autocomplete="tel" maxlength="20"></label>
+        <label>Email công việc<input name="email" type="email" autocomplete="email" maxlength="120"></label>
+      </div>
+      <p class="hint" id="hint-lienhe">Cần ít nhất một trong hai: điện thoại hoặc email.</p>
+      <div class="row2">
+        <label>Ngày sự kiện<input name="ngay_su_kien" type="date"></label>
+        <label>Số khách dự kiến
+          <select name="so_khach"><option value="">Chưa rõ</option><option>Dưới 300</option><option>300 đến 1.000</option><option>1.000 đến 5.000</option><option>Trên 5.000</option></select>
+        </label>
+      </div>
+      <fieldset>
+        <legend>Bạn quan tâm</legend>
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="giai_phap" value="nhan-vat-ai"><span>Nhân vật AI</span></label>
+          <label class="chip"><input type="checkbox" name="giai_phap" value="photobooth"><span>AI Photobooth</span></label>
+          <label class="chip"><input type="checkbox" name="giai_phap" value="minigame"><span>Minigame QR</span></label>
+          <label class="chip"><input type="checkbox" name="giai_phap" value="chua-ro"><span>Chưa rõ, cần tư vấn</span></label>
+        </div>
+      </fieldset>
+      <label>Ngân sách dự kiến
+        <select name="ngan_sach"><option value="">Chưa rõ</option><option>Dưới 50 triệu</option><option>50 đến 150 triệu</option><option>150 đến 300 triệu</option><option>Trên 300 triệu</option></select>
+      </label>
+      <label>Brief ngắn hoặc link tài liệu
+        <textarea name="brief" rows="4" maxlength="3000" placeholder="Ví dụ: ra mắt sản phẩm mới tại TTTM, muốn khách dừng lại thử và để lại số điện thoại"></textarea>
+      </label>
+      <label class="consent"><input type="checkbox" name="dong_y" value="1" required><span>Tôi đồng ý để IF Agent dùng thông tin này để liên hệ về brief, theo <a href="/chinh-sach-du-lieu/" target="_blank">chính sách dữ liệu</a>. <em>*</em></span></label>
+      <input type="hidden" name="goi" value="">
+      <div class="hp" aria-hidden="true"><label>Website<input name="website" tabindex="-1" autocomplete="off"></label></div>
+      <button class="btn btn-main btn-full" type="submit">Gửi brief</button>
+      <p class="form-msg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+<section id="hoi-dap" class="sec sec-alt">
+  <div class="wrap faq">
+    <h2>Câu hỏi hay gặp</h2>
+    <details><summary>Dựng một nhân vật AI mất bao lâu?</summary><p>Tuỳ độ riêng của kịch bản, giọng và ngoại hình. Khi nhận brief, chúng tôi báo thời gian cụ thể cùng demo. Nên gửi brief sớm nhất có thể trước ngày sự kiện.</p></details>
+    <details><summary>Sự kiện ở hội trường sóng yếu thì sao?</summary><p>Chúng tôi khảo sát mạng tại địa điểm và mang thiết bị mạng dự phòng. Minigame QR chạy trên mạng di động của khách.</p></details>
+    <details><summary>Dữ liệu khách tham dự thuộc về ai?</summary><p>Thuộc về thương hiệu tổ chức. Khách chỉ để lại thông tin khi tự đồng ý, ô đồng ý không bao giờ được tick sẵn. Ảnh và dữ liệu được xoá theo thời hạn hai bên thống nhất.</p></details>
+    <details><summary>Giá một gói khoảng bao nhiêu?</summary><p data-cfg="faq_gia">Tuỳ gói, số ngày chạy và số thiết bị. Gửi brief, bạn nhận báo giá kèm demo trong 1 ngày làm việc.</p></details>
+    <details><summary>Sau sự kiện tôi nhận được gì?</summary><p>Trong 24 giờ: báo cáo số đo (lượt tương tác, lượt để lại liên hệ, giờ đông khách, ảnh được chia sẻ) và danh sách khách đã đồng ý nhận tin, xuất Excel.</p></details>
+    <details><summary>Agency có thể dùng dưới tên mình không?</summary><p>Có. Agency giữ quan hệ với khách hàng, IF Agent đứng sau làm công nghệ và hỗ trợ pitch.</p></details>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-cot">
+      <div><img src="/img/logo.svg" alt="IF Agent" width="110" height="36"><p>Công nghệ AI tương tác cho sự kiện.</p><p>Zalo <a href="https://zalo.me/0904106143">0904 106 143</a><br><a href="mailto:hangnt@ifagent.vn">hangnt@ifagent.vn</a></p></div>
+      <nav aria-label="Giải pháp"><b>Giải pháp</b><a href="/giai-phap/nhan-vat-ai/">Nhân vật AI</a><a href="/giai-phap/photobooth/">AI Photobooth</a><a href="/giai-phap/minigame/">Minigame QR</a><a href="/goi/">Gói và giá</a><a href="/mau-bao-cao/">Mẫu báo cáo 24 giờ</a></nav>
+      <nav aria-label="Theo sự kiện"><b>Theo sự kiện</b><a href="/su-kien/hoi-cho-trien-lam/">Hội chợ, triển lãm</a><a href="/su-kien/ra-mat-san-pham/">Ra mắt sản phẩm</a><a href="/su-kien/hoi-nghi/">Hội nghị, summit</a><a href="/agency/">Cho agency</a></nav>
+      <nav aria-label="Công ty"><b>IF Agent</b><a href="/gioi-thieu/">Giới thiệu</a><a href="/du-an/">Dự án</a><a href="/cam-nang/">Cẩm nang</a><a href="/hoi-dap/">Hỏi đáp</a><a href="/lien-he/">Liên hệ</a></nav>
+    </div>
+    <div class="foot-in"><p data-cfg="phap_nhan">© 2026 IF Agent</p><p><a href="/chinh-sach-du-lieu/">Chính sách dữ liệu</a> · <a href="https://demo.ifagent.net">demo.ifagent.net</a></p></div>
+  </div>
+</footer>
+<script src="/app.js?v=3" defer></script>
+</body>
+</html>

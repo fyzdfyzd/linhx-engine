@@ -1,0 +1,16 @@
+{
+ "path": "/goi/",
+ "kenh": "trang-goi",
+ "title": "Gói dựng sẵn và cách tính giá · IF Agent Event",
+ "desc": "Ba gói Gian hàng, Activation, Hội nghị: có gì, dựng mất bao lâu, giá phụ thuộc vào đâu. Gói may đo theo brief khi cần khác hẳn.",
+ "vet": [
+  [
+   "Gói và giá",
+   "/goi/"
+  ]
+ ],
+ "h1": "Gói dựng sẵn và cách tính giá",
+ "mo": "Gói dựng sẵn đã có kịch bản, khung ảnh, luật chơi; chúng tôi thay logo, màu, quà của bạn nên dựng nhanh và giá rõ. Cần khác hẳn thì may đo theo brief.",
+ "ghi_chu": "Giá và thời gian dựng của từng gói đang chờ IF Agent chốt. Trước khi có, mọi báo giá gửi trong 1 ngày làm việc sau khi nhận brief.",
+ "than": "## So sánh ba gói\n| | Gian hàng | Activation | Hội nghị |\n|---|---|---|---|\n| Hợp với | Hội chợ, triển lãm, gian hàng TTTM | Ra mắt sản phẩm, sampling, roadshow | Hội nghị, summit, lễ trao giải |\n| Giải pháp | AI Photobooth hoặc Minigame QR | Nhân vật AI và Photobooth hoặc Minigame | Nhân vật AI dẫn dắt, Minigame toàn hội trường, check-in QR |\n| Thiết bị | 1 kiosk hoặc màn LED có sẵn | Kiosk nhân vật và điểm chụp | Màn LED sân khấu, kiosk sảnh |\n| Người đứng máy | 1 | 1 đến 2 | 2 trở lên |\n| Thời gian dựng | khoảng 5 ngày làm việc | khoảng 10 ngày làm việc | khoảng 15 ngày làm việc |\n| Giá | báo trong 1 ngày | báo trong 1 ngày | báo trong 1 ngày |\n\n## Gói nào cũng có\n- Báo cáo số đo trong 24 giờ sau sự kiện.\n- Danh sách khách đã đồng ý nhận tin, xuất Excel.\n- Chạy thử trên thiết bị thật trước ngày sự kiện.\n- Kịch bản, khung ảnh, luật chơi đổi theo thương hiệu.\n\n## Giá phụ thuộc vào đâu\n1. Số ngày chạy và số điểm đặt máy.\n2. Độ riêng: dùng nhân vật, khung cảnh có sẵn hay dựng mới.\n3. Thiết bị: dùng màn và kiosk của bạn hay của IF Agent.\n4. Số người đứng máy và địa điểm (nội thành Hà Nội, TP.HCM hay tỉnh khác).\n5. Quà và tích hợp gửi tin (Zalo, email, SMS).\n\n## May đo\nKhi bạn cần nhân vật mới hoàn toàn, trò chơi riêng, hoặc nối dữ liệu về hệ thống của bạn, chúng tôi làm đề xuất riêng kèm demo. Gửi brief càng sớm càng có nhiều lựa chọn."
+}
