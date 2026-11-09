@@ -1,0 +1,8 @@
+muc_tieu: [{id: O1, cau: "Giao một việc nhiều bước cho agent", danh_gia: [E1]}]
+phan:
+  - {loai: ket_noi, phut: 10, nhan: xuong_song}
+  - {loai: khai_niem, phut: 15, nhan: xuong_song}
+  - {loai: xu_ly, phut: 2, nhan: xuong_song}
+  - {loai: thuc_hanh, phut: 30, muc_tieu: [O1], nhan: tu_chon}
+  - {loai: chot, phut: 5, nhan: xuong_song}
+ban_giang_vien: {theo_phut: true, cau_chot: true, cau_hoi_hay_gap: true, chuyen_y: true, du_phong: true, checklist_d1: true}
