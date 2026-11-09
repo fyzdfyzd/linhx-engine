@@ -189,7 +189,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $fid, $ten, $loai, $dung, $bd, $phut = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
   $goc = (Get-Content "$S\goc.txt").Trim()
   $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
-  $loi = @(); $luuY = @(); $loiMay = $false; $claudeHong = $false
+  $loi = @(); $luuY = @(); $loiMay = $false; $claudeHong = $false; $bmTruot = $false
   if ((git rev-parse HEAD).Trim() -eq $goc) { $loi += "agy không commit gì" }
   # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
   $camNgoai = (@($TichHop, $Canh) + @(Get-ChildItem "D:\LINHX\ENGINE-t*" -Directory -ErrorAction SilentlyContinue | Where-Object FullName -ne $Wt | ForEach-Object FullName)) -join ";"
@@ -268,7 +268,7 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
 "@
     $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
     $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
-    if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
+    if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $bmTruot = $true; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
   }
   # K7: feature có kiểm tích hợp HTTP thật trên bench (dieu-khien.json tich_hop: {ID: "th_x.py"}) chạy sau khi đạt hộp đen
   $thTep = if ($dk.tich_hop) { $dk.tich_hop.$fid } else { $null }
@@ -290,7 +290,7 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
     else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
-  if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT") -or $claudeHong)) {
+  if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT" -and -not $bmTruot) -or $claudeHong)) {
     # lỗi máy (npm/next build/RAM), không phải lỗi thợ: không tính vào trần K2
     Ghi "$fid trượt do lỗi máy (commit $sha), không tính lần"
     $luuY += "Lượt này trượt do lỗi máy của canh (npm, next build, RAM), không tính vào trần. Không cần sửa gì vì lý do này."
