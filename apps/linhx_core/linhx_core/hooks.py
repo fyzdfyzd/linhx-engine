@@ -79,6 +79,13 @@ doc_events = {
                 if dt in DOCTYPE_KHACH
                 else {}
             ),
+            **(
+                {
+                    "on_update": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
+                }
+                if dt == "LX Don"
+                else {}
+            ),
         }
         for dt in DOCTYPE_MODULE
     },

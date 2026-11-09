@@ -15,7 +15,14 @@
   "tx_id",
   "qr_url",
   "brand",
-  "email"
+  "email",
+  "nganh",
+  "thi_truong",
+  "doi_thu",
+  "su_that",
+  "can_xu_ly",
+  "so_lan_thu_job",
+  "lan_thu_job_cuoi"
  ],
  "fields": [
   {
@@ -70,12 +77,58 @@
   {
    "fieldname": "brand",
    "fieldtype": "Data",
-   "label": "Thương hiệu"
+   "label": "Thương hiệu",
+   "length": 80
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email khách"
+   "label": "Email khách",
+   "length": 120
+  },
+  {
+   "fieldname": "nganh",
+   "fieldtype": "Data",
+   "label": "Ngành",
+   "length": 80
+  },
+  {
+   "fieldname": "thi_truong",
+   "fieldtype": "Data",
+   "label": "Thị trường",
+   "length": 60
+  },
+  {
+   "fieldname": "doi_thu",
+   "fieldtype": "Data",
+   "label": "Đối thủ",
+   "length": 120
+  },
+  {
+   "fieldname": "su_that",
+   "fieldtype": "Small Text",
+   "label": "Sự thật thương hiệu",
+   "length": 600
+  },
+  {
+   "default": "0",
+   "fieldname": "can_xu_ly",
+   "fieldtype": "Check",
+   "label": "Cần xử lý tạo việc",
+   "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "so_lan_thu_job",
+   "fieldtype": "Int",
+   "label": "Số lần thử tạo việc",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lan_thu_job_cuoi",
+   "fieldtype": "Datetime",
+   "label": "Lần thử tạo việc cuối",
+   "read_only": 1
   }
  ],
  "permissions": [

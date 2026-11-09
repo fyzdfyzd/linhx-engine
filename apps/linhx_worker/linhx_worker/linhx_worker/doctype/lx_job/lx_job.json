@@ -24,6 +24,7 @@
   "cha",
   "nhan_viec",
   "nguon",
+  "don",
   "ten_khach",
   "email_khach",
   "ma_xem"
@@ -142,9 +143,16 @@
    "fieldname": "nguon",
    "fieldtype": "Select",
    "label": "Nguồn",
-   "options": "noi_bo\nkhach",
+   "options": "noi_bo\nkhach\ndon",
    "default": "noi_bo",
    "in_standard_filter": 1
+  },
+  {
+   "fieldname": "don",
+   "fieldtype": "Data",
+   "label": "Mã đơn",
+   "in_standard_filter": 1,
+   "unique": 1
   },
   {
    "fieldname": "ten_khach",
