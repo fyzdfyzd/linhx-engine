@@ -22,3 +22,6 @@ Làm ngay sau khi lọc mẫu (chỉ mẫu ≥ 4/5), trước khi điền thẻ 
 ## Đưa vào prompt tạo ảnh/template
 
 Thêm đoạn "Học từ tham chiếu:" liệt kê phần Tổng hợp, đính kèm đúng các mẫu đã giải mã, nói rõ học gì từ mẫu nào (bố cục từ mẫu A, màu từ mẫu B), và giữ các luật cấm ở mục 8.
+
+## Soi thêm theo Before & After (McWade)
+Khi tổng hợp nguyên tắc và khi chấm, soi 4 luật của `thiet-ke/references/before-after.md`: A3 một điểm nhìn mỗi slide, A4 các cấp chữ khác hẳn nhau, A5 bảng số liệu bỏ kẻ ô thay bằng dải nền nhạt, A10 nhóm rõ nhờ khoảng cách. Mỗi vòng sửa xuất cặp trước–sau cùng khổ.

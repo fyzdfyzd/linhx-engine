@@ -22,6 +22,7 @@ Hai nhánh dùng chung 4 pha, khác ở bước dựng và bước kiểm:
 7. **Có "bản vàng" làm thước** (học stageshow): mỗi loại việc giữ vài tác phẩm vàng trong `tham-chieu/vang/`. Bắt đầu bằng cách chép cấu trúc bản vàng gần nhất (khổ, cắt, cỡ chữ, nhịp), không dựng từ một cái liếc. Đặt bản của mình cạnh bản vàng ở cùng khổ; bản mình trống hơn, phẳng hơn, nhỏ hơn thì đó là lỗi sửa đầu tiên.
 8. **Kế hoạch trước khi vẽ**: ghi đặt ở đâu, cỡ xem thật, vật trung tâm, việc xảy ra, kết quả, cái gì bỏ được; đếm ngân sách chữ thật (3–7 cụm).
 9. **Sửa lỗi lớn nhất trước**: khung và cắt → thứ bậc → chuyển động → chi tiết. Nhìn như người designer khó tính nhất sẽ chụp đúng một chỗ sai gửi lại: tưởng tượng được ảnh chụp đó là thấy lỗi kế tiếp.
+10. **Trước–sau kiểu Before & After** (John McWade): 12 luật sửa bản thiết kế và 10 câu tự hỏi ở `references/before-after.md`. Mỗi vòng sửa nộp `kiem/truoc-sau.png` (vòng trước | vòng này, cùng khổ, một dòng "đổi gì, theo luật mấy"); bản sau không hơn rõ thì hoàn tác.
 
 ## Thư mục việc
 ```
@@ -47,6 +48,7 @@ DUYET-E2E.md  BAI-HOC.md  THAY-SAU.md (chỗ AI vẽ tạm, cần thay)
 - **Một điểm nhìn**: mắt dừng ở 1 chỗ trước, rồi đi theo thứ tự đã định.
 - **Riêng**: đổi tên thương hiệu khác vào thì không còn đúng nữa (không chung chung).
 - **Người làm**: không có dấu hiệu nào trong `chong-mui-ai.md` mục A.
+- **Trước–sau rõ**: đặt cạnh bản vòng trước, nói được bản này hơn ở đâu trong một câu (theo `references/before-after.md`).
 - **Đúng văn hoá**: chi tiết Việt đúng (chữ có dấu, biển hiệu, trang phục, kiến trúc).
 
 ## Kiểm máy
