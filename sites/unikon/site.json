@@ -1,0 +1,22 @@
+{
+  "ten": "unikon",
+  "ban_cai": "unikon",
+  "noi_dung": {
+    "tieu_de": "Unikon — Trang BU Chiến dịch Generative AI cho Agency và Nhãn hàng",
+    "mo_ta": "Đơn vị triển khai chiến dịch sáng tạo ứng dụng AI theo quy trình Analyse, Generate, Deliver trên nền LINHX ENGINE.",
+    "muc": [
+      {
+        "ten": "Analyse — Phân tích đề bài và dữ liệu chiến dịch",
+        "mo_ta": "Làm rõ mục tiêu truyền thông, chân dung nhóm công chúng và tiêu chuẩn thương hiệu trước khi đi vào sản xuất."
+      },
+      {
+        "ten": "Generate — Sản xuất nội dung và hình ảnh AI theo yêu cầu",
+        "mo_ta": "Thiết kế nhân vật ảo, hình ảnh chủ đạo và biến thể nội dung đa kênh đồng nhất với quy chuẩn nhận diện của nhãn hàng."
+      },
+      {
+        "ten": "Deliver — Kiểm duyệt chất lượng và bàn giao đúng hạn",
+        "mo_ta": "Rà soát kỹ thuật, bản quyền và bàn giao bộ tư liệu truyền thông hoàn chỉnh phục vụ triển khai chiến dịch quy mô lớn."
+      }
+    ]
+  }
+}
