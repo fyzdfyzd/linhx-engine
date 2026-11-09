@@ -30,7 +30,10 @@ function TimF($dk, $goc, $id) {
 function TatCaF($dk, $goc) { foreach ($ff in (CacFile $dk)) { if (Test-Path "$goc\$ff") { (DocJson "$goc\$ff").features } } }
 function SoTac($id) { [int]("0" + (Get-Content "$Canh\tac\$id.txt" -ErrorAction SilentlyContinue)) }
 function KeoTH { git -C $TichHop pull -q --no-rebase --no-edit origin $NhanhTH 2>&1 | Out-Null }
-function DayTH { git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null; if ($LASTEXITCODE -ne 0) { KeoTH; git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-Null } }
+# Đẩy main, 3 lần (kéo lại giữa các lần); hỏng thì ghi nhật ký (9/11: push hỏng bị Out-Null nuốt, trạng thái kẹt trên máy)
+function DayTH { $ra = ""
+  for ($i = 1; $i -le 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { return }; KeoTH; Start-Sleep -Seconds (5 * $i) }
+  Ghi "đẩy $NhanhTH hỏng 3 lần: $($ra.Trim().Substring(0, [math]::Min(200, $ra.Trim().Length)))" }
 # Gọi claude chấm; trả @{kl = DAT|CHUA_DAT; review = chữ}
 function ChamClaude($de, $tep, $nhan) {
   $de | Set-Content -Encoding utf8 $tep
@@ -118,7 +121,7 @@ if ($Tho -eq 0) {
   git -C $TichHop diff --cached --quiet -- .canh features-dot1.json features-dot1b.json; if ($LASTEXITCODE -ne 0) {
     git -C $TichHop commit -q -m "canh: trạng thái thợ engine $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -- .canh features-dot1.json features-dot1b.json 2>&1 | Out-Null
     DayTH
-  }
+  } elseif ([int](git -C $TichHop rev-list --count "origin/$NhanhTH..$NhanhTH" 2>$null | Out-String).Trim() -gt 0) { DayTH }  # còn commit kẹt từ lượt trước
   $mx.ReleaseMutex()
   # Đẩy dữ liệu bảng thợ lên VM (container backend bind mount ~/linhx-engine/.canh). Ẩn, quá 90 giây hay lỗi mạng thì bỏ qua.
   # Chép vào .canh/moi/ trước rồi mv sang .canh/: scp đứt giữa chừng không để lại file cụt (bảng hiện 0 phiếu).
@@ -214,12 +217,15 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     }
   }
   # cổng kiểm bản của main, chạy lenh_kiem trong worktree thợ; một thợ một lúc (next build ăn RAM)
-  $mxK = New-Object System.Threading.Mutex($false, "Global\ENGINE-CongKiem"); try { [void]$mxK.WaitOne(1200000) } catch [System.Threading.AbandonedMutexException] {}
+  $mxK = New-Object System.Threading.Mutex($false, "Global\ENGINE-CongKiem"); $coK = $false; try { $coK = $mxK.WaitOne(3600000) } catch [System.Threading.AbandonedMutexException] { $coK = $true }
+  # không chạy cổng kiểm khi chưa giữ khoá (9/11: hết 20 phút rồi chạy chồng làm cạn RAM); can-cham.txt còn nên lượt sau chấm lại
+  if (-not $coK) { Ghi "chờ khoá cổng kiểm quá 60 phút, để lượt sau chấm $fid"; exit 0 }
   # Linh 9/11: chỉ chạy lại lệnh kiểm của feature trùng vùng file đã sửa + feature vừa nộp; 12 giờ một lần chạy toàn bộ
   $dauDD = "$Canh\kiem-day-du.txt"
   if (-not (Test-Path $dauDD)) { "$(Get-Date -Format s) mốc đầu" | Set-Content $dauDD }
   if ((Test-Path $dauDD) -and ((Get-Date) - (Get-Item $dauDD).LastWriteTime).TotalHours -lt 12) {
-    git diff --name-only "$goc..HEAD" 2>$null | Set-Content -Encoding utf8 "$tamTho\doi.txt"
+    $mbK = (git merge-base HEAD $NhanhTH 2>$null | Out-String).Trim(); if (-not $mbK) { $mbK = $goc }
+    git diff --name-only "$mbK..HEAD" 2>$null | Set-Content -Encoding utf8 "$tamTho\doi.txt"
     $env:CONG_KIEM_DOI = "$tamTho\doi.txt"; $env:CONG_KIEM_THEM = $fid
   } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
