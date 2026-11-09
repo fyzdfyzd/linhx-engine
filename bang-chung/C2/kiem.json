@@ -1,0 +1,66 @@
+{
+  "feature": "C2",
+  "luc": "2026-11-09T16:00:30+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c2.py -q",
+  "ket_qua_pytest_hop_den": "4 passed in 147.57s (0:02:27)",
+  "ket_qua_pytest_hop_trang": "10 passed in 1.13s (apps/linhx_core/linhx_core/crm/test_api_form.py)",
+  "ma_thoat": 0,
+  "tich_hop_bench_wsl": {
+    "lenh": "powershell -ExecutionPolicy Bypass -File canh/bench.ps1 th -Tho 2 th_c2.py",
+    "ket_qua": "[th] C2 ok sn3ata9uhv / [th] ĐẠT",
+    "ma_thoat": 0,
+    "nguoi_moi": "sn3ata9uhv",
+    "kiem_gop_trung_2_lan": {
+      "ma_http_lan_1": 200,
+      "ma_http_lan_2": 200,
+      "ma_http_lan_3_sau_rut_dong_y": 200,
+      "phan_hoi_lan_1": {
+        "ok": true,
+        "nguoi": "t6gotiui6k",
+        "co_hoi": "t6g1luqhae",
+        "ban_cai": "test"
+      },
+      "phan_hoi_lan_2": {
+        "ok": true,
+        "nguoi": "t6gotiui6k",
+        "co_hoi": "t6havg5m0j",
+        "ban_cai": "test"
+      },
+      "nguoi_sau_gop": {
+        "name": "t6gotiui6k",
+        "ho_ten": "Lan Gốc",
+        "dien_thoai": "0992148301",
+        "email": "gop214830@vd.vn"
+      },
+      "so_nguoi": 1,
+      "so_co_hoi": 2,
+      "so_dong_y": 3,
+      "co_hoi": [
+        {
+          "name": "t6g1luqhae",
+          "nhu_cau": "Lần 1",
+          "nguon": "trang-test",
+          "ghi_chu": null
+        },
+        {
+          "name": "t6havg5m0j",
+          "nhu_cau": "Lần 2",
+          "nguon": "trang-test",
+          "ghi_chu": "Thông tin gửi kèm form: ho_ten(khác)=Lan Mới; email(khác)=khac214830@vd.vn"
+        }
+      ],
+      "dong_y_sau_lan_2": [
+        ["lien_he", 1, "trang-test"],
+        ["marketing", 1, "trang-test"],
+        ["lien_he", 1, "trang-test"]
+      ],
+      "dong_y_sau_rut_va_lan_3": [
+        ["lien_he", 1, "trang-test"],
+        ["marketing", 1, "trang-test"],
+        ["lien_he", 1, "trang-test"],
+        ["marketing", 0, "khach-rut"],
+        ["lien_he", 1, "trang-test"]
+      ]
+    }
+  }
+}

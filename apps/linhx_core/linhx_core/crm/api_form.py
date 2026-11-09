@@ -1,4 +1,4 @@
-"""API nhận kết quả T1 Khám từ Trang BU (allow_guest=True, giới hạn tần suất qua rate_limit)."""
+"""API nhận form liên hệ (C2) và kết quả T1 Khám (D2) từ Trang BU (allow_guest=True, giới hạn tần suất qua rate_limit)."""
 from __future__ import annotations
 
 from contextlib import ExitStack, contextmanager
@@ -13,7 +13,7 @@ import frappe
 from frappe.rate_limiter import rate_limit
 
 from linhx_core import co_module
-from linhx_core.crm import dong_y, gop_trung, t1
+from linhx_core.crm import dong_y, form, gop_trung, t1
 
 logger = logging.getLogger(__name__)
 
@@ -23,6 +23,7 @@ CUA_SO_GIAY = 60
 GIOI_HAN_BODY_BYTES = 16 * 1024
 GIOI_HAN_TRUY_VAN_NGUOI = 20
 TOI_DA_KHOA_BO_NHO = 1000
+TRUONG_LIEN_HE_FORM = ("ho_ten", "dien_thoai", "email")
 TRUONG_NGUOI_T1 = (
     "ho_ten",
     "dien_thoai",
@@ -43,13 +44,7 @@ _CACHE_KHAM_JSON: dict | None = None
 
 
 def _la_dong_y_true(gia_tri: object) -> bool:
-    if isinstance(gia_tri, bool):
-        return gia_tri
-    if isinstance(gia_tri, int):
-        return gia_tri == 1
-    if isinstance(gia_tri, str):
-        return gia_tri.strip().lower() in ("1", "true", "yes", "on")
-    return False
+    return form._la_dong_y_true(gia_tri)
 
 
 def _tra_loi_http(thong_diep: str, ma_http: int, loai_loi=None) -> None:
@@ -168,7 +163,7 @@ def _kiem_module_crm_bat() -> None:
         _tra_loi_http("Module CRM đang tắt", 403, getattr(frappe, "PermissionError", PermissionError))
 
 
-def _dem_trong_bo_nho(khoa: str, bay_gio_ts: float, gioi_han: int) -> bool:
+def _dem_trong_bo_nho(khoa: str, bay_gio_ts: float, gioi_han: int = GIOI_HAN_THEO_KHOA_MOI_PHUT) -> bool:
     """Bộ đếm dự phòng trong bộ nhớ có dọn TTL và giới hạn kích thước khi Redis cache lỗi."""
     with _KHOA_BO_NHO_GUARD:
         khoa_het_han = [
@@ -196,16 +191,22 @@ def _dem_trong_bo_nho(khoa: str, bay_gio_ts: float, gioi_han: int) -> bool:
         return False
 
 
-def _kiem_gioi_han_theo_khoa(em_chuan: str, zl_chuan: str, dt_chuan: str = "") -> None:
+def _kiem_gioi_han_theo_khoa(
+    em_chuan: str = "",
+    zl_chuan: str = "",
+    dt_chuan: str = "",
+    *,
+    tien_to: str = "linhx_form_rl",
+) -> None:
     """Giới hạn tần suất theo IP khách và từng khoá liên hệ (email/Zalo/SĐT) chuẩn hoá."""
     ip_khach = _lay_ip_khach()
-    cac_khoa: list[tuple[str, int]] = [(f"linhx_t1_rl:ip:{ip_khach}", GIOI_HAN_MOI_PHUT)]
-    if em_chuan:
-        cac_khoa.append((f"linhx_t1_rl:email:{em_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
-    if zl_chuan:
-        cac_khoa.append((f"linhx_t1_rl:zalo:{zl_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
+    cac_khoa: list[tuple[str, int]] = [(f"{tien_to}:ip:{ip_khach}", GIOI_HAN_MOI_PHUT)]
     if dt_chuan:
-        cac_khoa.append((f"linhx_t1_rl:dt:{dt_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
+        cac_khoa.append((f"{tien_to}:dt:{dt_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
+    if em_chuan:
+        cac_khoa.append((f"{tien_to}:email:{em_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
+    if zl_chuan:
+        cac_khoa.append((f"{tien_to}:zalo:{zl_chuan}", GIOI_HAN_THEO_KHOA_MOI_PHUT))
 
     cache = _lay_cache()
     bay_gio_ts = time.time()
@@ -252,13 +253,13 @@ def _lay_lock_bo_nho(khoa_lock: str) -> threading.Lock:
 
 
 @contextmanager
-def _khoa_theo_lien_he(em_chuan: str, zl_chuan: str, dt_chuan: str = ""):
+def _khoa_theo_lien_he(em_chuan: str = "", zl_chuan: str = "", dt_chuan: str = ""):
     """Khoá phân tán qua `frappe.cache().lock` kèm khoá luồng nội bộ `threading.Lock`."""
     cac_khoa_lock = sorted(
         {
-            *([f"linhx_t1_lock:email:{em_chuan}"] if em_chuan else []),
-            *([f"linhx_t1_lock:zalo:{zl_chuan}"] if zl_chuan else []),
-            *([f"linhx_t1_lock:dt:{dt_chuan}"] if dt_chuan else []),
+            *([f"linhx_form_lock:email:{em_chuan}"] if em_chuan else []),
+            *([f"linhx_form_lock:zalo:{zl_chuan}"] if zl_chuan else []),
+            *([f"linhx_form_lock:dt:{dt_chuan}"] if dt_chuan else []),
         }
     )
     cache = _lay_cache()
@@ -295,6 +296,7 @@ def _doc_cau_hinh_kham() -> dict:
 
 
 def _cac_dang_dien_thoai(dien_thoai_raw: str, dt_chuan: str) -> list[str]:
+    """Sinh các dạng biểu diễn SĐT (chuẩn hoá, nội địa 0..., quốc tế +84..., và các dạng có ngoặc/dấu cách/gạch/chấm)."""
     if not dt_chuan:
         return []
     cac_dang = {dt_chuan, f"+{dt_chuan}"}
@@ -307,11 +309,38 @@ def _cac_dang_dien_thoai(dien_thoai_raw: str, dt_chuan: str) -> list[str]:
         cac_dang.add("0084" + so_noi_dia)
         if len(so_noi_dia) == 9:
             cac_dang.add(so_noi_dia)
+            for sep in (" ", "-", "."):
+                cac_dang.add(f"{so_0[:4]}{sep}{so_0[4:7]}{sep}{so_0[7:]}")
+                cac_dang.add(f"{so_0[:3]}{sep}{so_0[3:6]}{sep}{so_0[6:]}")
+                cac_dang.add(f"({so_0[:4]}){sep}{so_0[4:7]}{sep}{so_0[7:]}")
+                cac_dang.add(f"({so_0[:3]}){sep}{so_0[3:6]}{sep}{so_0[6:]}")
+                cac_dang.add(f"+84{sep}{so_noi_dia[:3]}{sep}{so_noi_dia[3:6]}{sep}{so_noi_dia[6:]}")
+                cac_dang.add(f"(+84){sep}{so_noi_dia[:3]}{sep}{so_noi_dia[3:6]}{sep}{so_noi_dia[6:]}")
+                cac_dang.add(f"84{sep}{so_noi_dia[:3]}{sep}{so_noi_dia[3:6]}{sep}{so_noi_dia[6:]}")
     return sorted(cac_dang)
 
 
+def _chuan_ban_ghi_nguoi(u: dict) -> dict:
+    ban_sao = dict(u)
+    raw_ls = ban_sao.get("lich_su_t1")
+    if isinstance(raw_ls, str) and raw_ls.strip():
+        try:
+            da_parse = json.loads(raw_ls)
+            ban_sao["lich_su_t1"] = da_parse if isinstance(da_parse, list) else []
+        except ValueError:
+            ban_sao["lich_su_t1"] = []
+    elif not isinstance(raw_ls, list):
+        ban_sao["lich_su_t1"] = []
+    return ban_sao
+
+
 def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
-    """Truy vấn các bản ghi LX Nguoi khớp khoá email, Zalo hoặc điện thoại đã chuẩn hoá."""
+    """Truy vấn các bản ghi LX Nguoi khớp khoá email, Zalo hoặc điện thoại đã chuẩn hoá.
+
+    Giới hạn `limit=GIOI_HAN_TRUY_VAN_NGUOI` (20) và `order_by="creation asc"` để giữ truy vấn nhẹ
+    và luôn ưu tiên gộp vào hồ sơ gốc tạo sớm nhất. Nếu chưa khớp ứng viên theo SĐT chuẩn (do DB cũ
+    lưu định dạng lạ), thực hiện thêm truy vấn giới hạn theo 3 chữ số cuối rồi lọc qua `gop_trung.khoa_gop`.
+    """
     if not isinstance(du_lieu, dict):
         return []
     dt_raw = str(du_lieu.get("dien_thoai") or "").strip()
@@ -350,24 +379,128 @@ def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
         khoa_tim.add(f"zalo:{zl_chuan}")
 
     ket_qua: list[dict] = []
+    da_co_ten: set[str] = set()
+    co_khop_dt = False
     for u in ds_ung_vien or []:
-        if isinstance(u, dict) and (gop_trung.khoa_gop(u) & khoa_tim):
-            ban_sao = dict(u)
-            raw_ls = ban_sao.get("lich_su_t1")
-            if isinstance(raw_ls, str) and raw_ls.strip():
-                try:
-                    da_parse = json.loads(raw_ls)
-                    ban_sao["lich_su_t1"] = da_parse if isinstance(da_parse, list) else []
-                except ValueError:
-                    ban_sao["lich_su_t1"] = []
-            elif not isinstance(raw_ls, list):
-                ban_sao["lich_su_t1"] = []
-            ket_qua.append(ban_sao)
+        if isinstance(u, dict):
+            khop = gop_trung.khoa_gop(u) & khoa_tim
+            if khop:
+                ket_qua.append(_chuan_ban_ghi_nguoi(u))
+                ten_u = str(u.get("name") or "").strip()
+                if ten_u:
+                    da_co_ten.add(ten_u)
+                if f"dt:{dt_chuan}" in khop:
+                    co_khop_dt = True
+
+    if dt_chuan and len(dt_chuan) >= 3 and not co_khop_dt:
+        duoi_3 = dt_chuan[-3:]
+        ds_phu = frappe.get_all(
+            "LX Nguoi",
+            fields=["name", "creation", *TRUONG_NGUOI_T1],
+            or_filters=[["LX Nguoi", "dien_thoai", "like", f"%{duoi_3}%"]],
+            order_by="creation asc",
+            limit=GIOI_HAN_TRUY_VAN_NGUOI,
+        )
+        co_them_phu = False
+        for u in ds_phu or []:
+            if isinstance(u, dict):
+                ten_u = str(u.get("name") or "").strip()
+                if ten_u and ten_u in da_co_ten:
+                    continue
+                if gop_trung.khoa_gop(u) & khoa_tim:
+                    ket_qua.append(_chuan_ban_ghi_nguoi(u))
+                    co_them_phu = True
+                    if ten_u:
+                        da_co_ten.add(ten_u)
+        if co_them_phu:
+            ket_qua.sort(key=lambda d: str(d.get("creation") or ""))
     return ket_qua
 
 
+def _tim_nguoi_da_co(nguoi_dict: dict, ds_nguoi_cu: list[dict]) -> dict | None:
+    khoa_nguoi = gop_trung.khoa_gop(nguoi_dict)
+    ten_nguoi = str(nguoi_dict.get("name") or "").strip()
+    for cu in ds_nguoi_cu:
+        if not isinstance(cu, dict):
+            continue
+        ten_cu = str(cu.get("name") or "").strip()
+        if not ten_cu:
+            continue
+        if ten_cu == ten_nguoi or (khoa_nguoi and (gop_trung.khoa_gop(cu) & khoa_nguoi)):
+            return cu
+    return None
+
+
+def _ghi_chu_lien_he_khac(du_lieu: dict, nguoi_da_co: dict | None) -> str:
+    """Ghi nhận thông tin liên hệ mới/khác gửi kèm form vào ghi_chu của LX Co Hoi
+    để không ghi đè dữ liệu cũ trên LX Nguoi mà vẫn giữ đầy đủ thông tin khách gửi.
+    """
+    if nguoi_da_co is None:
+        return ""
+    khac_biet: list[str] = []
+    for truong in TRUONG_LIEN_HE_FORM:
+        moi_val = str(du_lieu.get(truong) or "").strip()
+        if not moi_val:
+            continue
+        cu_val = str(nguoi_da_co.get(truong) or "").strip()
+        if not cu_val:
+            khac_biet.append(f"{truong}(mới)={moi_val}")
+        elif truong == "dien_thoai":
+            if gop_trung.chuan_hoa_dien_thoai(cu_val) != gop_trung.chuan_hoa_dien_thoai(moi_val):
+                khac_biet.append(f"dien_thoai(khác)={moi_val}")
+        elif truong == "email":
+            if gop_trung.chuan_hoa_email(cu_val) != gop_trung.chuan_hoa_email(moi_val):
+                khac_biet.append(f"email(khác)={moi_val}")
+        elif cu_val != moi_val:
+            khac_biet.append(f"{truong}(khác)={moi_val}")
+    if not khac_biet:
+        return ""
+    return "Thông tin gửi kèm form: " + "; ".join(khac_biet)
+
+
+def _luu_hoac_lay_nguoi(
+    nguoi_dict: dict,
+    ds_nguoi_cu: list[dict],
+    *,
+    du_lieu_goc: dict | None = None,
+) -> str:
+    """Nếu Người đã có trong DB thì dùng lại mã `name` và KHÔNG ghi đè dữ liệu cũ bằng dữ liệu form;
+    chỉ insert LX Nguoi mới khi chưa có.
+    """
+    nguoi_da_co = _tim_nguoi_da_co(nguoi_dict, ds_nguoi_cu)
+    if nguoi_da_co is not None:
+        return str(nguoi_da_co["name"]).strip()
+
+    em_luu = gop_trung.chuan_hoa_email(nguoi_dict.get("email")) or nguoi_dict.get("email")
+    doc_nguoi = frappe.get_doc(
+        {
+            "doctype": "LX Nguoi",
+            "ho_ten": nguoi_dict.get("ho_ten"),
+            "dien_thoai": nguoi_dict.get("dien_thoai"),
+            "email": em_luu,
+        }
+    )
+    dup_err = getattr(frappe, "DuplicateEntryError", None)
+    loai_loi_trung = (dup_err,) if isinstance(dup_err, type) and issubclass(dup_err, Exception) else ()
+    doc_nguoi.flags.ignore_permissions = True
+    try:
+        doc_nguoi.insert(ignore_permissions=True)
+        return str(doc_nguoi.name)
+    except loai_loi_trung:
+        if du_lieu_goc:
+            ds_lai = _tim_nguoi_trung(du_lieu_goc)
+            if ds_lai and ds_lai[0].get("name"):
+                return str(ds_lai[0]["name"]).strip()
+        raise
+
+
 def _lay_so_dong_y_hien_co(ds_nguoi_cu: list[dict] | str) -> list[dict]:
-    """Đọc toàn bộ sổ đồng ý của các bản ghi LX Nguoi khớp khoá liên hệ."""
+    """Đọc toàn bộ sổ đồng ý của các bản ghi LX Nguoi khớp khoá liên hệ.
+
+    Nếu SĐT và email khớp hai bản ghi LX Nguoi khác nhau trong DB, gộp sổ của tất cả
+    các bản ghi đó (quy về mã `name` của bản ghi chính đầu tiên theo thứ tự thời gian `luc`)
+    để dòng rút đồng ý (`dong_y=0`) trên bất kỳ bản ghi khớp nào cũng được tôn trọng.
+    """
     if isinstance(ds_nguoi_cu, str):
         cac_ma = [ds_nguoi_cu.strip()] if ds_nguoi_cu.strip() else []
     else:
@@ -467,6 +600,110 @@ def _luu_hoac_lay_nguoi_t1(
 
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=GIOI_HAN_MOI_PHUT, seconds=CUA_SO_GIAY)
+def nhan_form(
+    ho_ten: str | None = None,
+    dien_thoai: str | None = None,
+    email: str | None = None,
+    nhu_cau: str | None = None,
+    dong_y_lien_he: bool | int | str | None = None,
+    dong_y_marketing: bool | int | str | None = None,
+    **kwargs,
+) -> dict:
+    """Nhận form liên hệ từ Trang BU, kiểm tra hợp lệ và ghi LX Nguoi + LX Co Hoi + LX Dong Y."""
+    _kiem_module_crm_bat()
+
+    tham_so = dict(kwargs)
+    for k, v in (
+        ("ho_ten", ho_ten),
+        ("dien_thoai", dien_thoai),
+        ("email", email),
+        ("nhu_cau", nhu_cau),
+        ("dong_y_lien_he", dong_y_lien_he),
+        ("dong_y_marketing", dong_y_marketing),
+    ):
+        if v is not None:
+            tham_so[k] = v
+
+    try:
+        du_lieu = _trich_du_lieu_request(tham_so)
+        form._kiem_tra_dau_vao(du_lieu)
+    except ValueError as exc:
+        _tra_loi_http(str(exc), 400)
+
+    if not form._la_dong_y_true(du_lieu.get("dong_y_lien_he")):
+        _tra_loi_http("Khách hàng phải đồng ý liên hệ trước khi gửi form", 400)
+
+    dt_chuan = gop_trung.chuan_hoa_dien_thoai(du_lieu.get("dien_thoai"))
+    em_chuan = gop_trung.chuan_hoa_email(du_lieu.get("email"))
+    if not dt_chuan and not em_chuan:
+        _tra_loi_http("Phải cung cấp ít nhất số điện thoại hoặc email", 400)
+
+    _kiem_gioi_han_theo_khoa(em_chuan, "", dt_chuan, tien_to="linhx_form_rl")
+
+    ten_site = str(getattr(getattr(frappe, "local", None), "site", "") or "").strip()
+    nguon_ghi = f"trang-{ten_site}" if ten_site else "trang-bu"
+    luc_ghi = dong_y.bay_gio()
+
+    with _khoa_theo_lien_he(em_chuan, "", dt_chuan):
+        ds_nguoi_cu = _tim_nguoi_trung(du_lieu)
+        nguoi_da_co = ds_nguoi_cu[0] if ds_nguoi_cu else None
+        so_dong_y_cu = _lay_so_dong_y_hien_co(ds_nguoi_cu) if ds_nguoi_cu else []
+        so_luong_dy_cu = len(so_dong_y_cu)
+
+        try:
+            ket_qua = form.xu_ly(du_lieu, ds_nguoi_cu, so_dong_y_cu, luc_ghi, nguon_ghi)
+        except ValueError as exc:
+            _tra_loi_http(str(exc), 400)
+
+        ma_nguoi = _luu_hoac_lay_nguoi(
+            ket_qua["nguoi"],
+            ds_nguoi_cu,
+            du_lieu_goc=du_lieu,
+        )
+
+        ch_dict = ket_qua["co_hoi"]
+        ghi_chu_ch = _ghi_chu_lien_he_khac(du_lieu, nguoi_da_co)
+        du_lieu_co_hoi = {
+            "doctype": "LX Co Hoi",
+            "nguoi": ma_nguoi,
+            "nhu_cau": ch_dict.get("nhu_cau"),
+            "nguon": nguon_ghi,
+            "trang_thai": ch_dict.get("trang_thai") or "moi",
+        }
+        if ghi_chu_ch:
+            du_lieu_co_hoi["ghi_chu"] = ghi_chu_ch
+        doc_co_hoi = frappe.get_doc(du_lieu_co_hoi)
+        doc_co_hoi.flags.ignore_permissions = True
+        doc_co_hoi.insert(ignore_permissions=True)
+
+        cac_dong_dy_moi = ket_qua["so_dong_y"][so_luong_dy_cu:]
+        for dy in cac_dong_dy_moi:
+            muc_dich = dy["muc_dich"]
+            if nguoi_da_co is not None and form.da_rut_dong_y(so_dong_y_cu, ma_nguoi, muc_dich):
+                continue
+            doc_dy = frappe.get_doc(
+                {
+                    "doctype": "LX Dong Y",
+                    "nguoi": ma_nguoi,
+                    "muc_dich": muc_dich,
+                    "dong_y": 1 if dy.get("dong_y") else 0,
+                    "luc": dy.get("luc") or luc_ghi,
+                    "nguon": nguon_ghi,
+                }
+            )
+            doc_dy.flags.ignore_permissions = True
+            doc_dy.insert(ignore_permissions=True)
+
+    return {
+        "ok": True,
+        "nguoi": ma_nguoi,
+        "co_hoi": str(doc_co_hoi.name),
+        "ban_cai": ten_site,
+    }
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=GIOI_HAN_MOI_PHUT, seconds=CUA_SO_GIAY)
 def nhan_ket_qua_t1(
     email: str | None = None,
     zalo: str | None = None,
@@ -508,7 +745,7 @@ def nhan_ket_qua_t1(
     if not em_chuan and not zl_chuan:
         _tra_loi_http("Phải cung cấp ít nhất email hoặc Zalo", 400)
 
-    _kiem_gioi_han_theo_khoa(em_chuan, zl_chuan, dt_chuan)
+    _kiem_gioi_han_theo_khoa(em_chuan, zl_chuan, dt_chuan, tien_to="linhx_t1_rl")
 
     cau_hinh_kham = _doc_cau_hinh_kham()
     du_lieu_chuan = dict(du_lieu)
