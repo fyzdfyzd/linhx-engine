@@ -48,8 +48,9 @@ def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
     return mot_dong(gt, toi_da) or None
 
 
+# Giới hạn 30 đơn/giờ/IP: chặn script spam làm đầy bảng LX Don nhưng vẫn đủ cho nhiều người dùng chung IP văn phòng.
 @frappe.whitelist(allow_guest=True)
-@rate_limit(limit=10, seconds=3600)
+@rate_limit(limit=30, seconds=3600)
 def tao_don(
     brand,
     goi,

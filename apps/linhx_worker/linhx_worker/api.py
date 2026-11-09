@@ -68,8 +68,17 @@ def heartbeat(ma, phien_ban=None, may=None):
 
 
 @frappe.whitelist(methods=["POST"])
-def nhan_viec(ma, phien_ban=None, may=None):
-    """Tra ve 1 viec hoac None. Khoa hang bang SKIP LOCKED de nhieu tho khong tranh nhau."""
+def nhan_viec(ma, phien_ban=None, may=None, sandbox=None):
+    """Tra ve 1 viec hoac None. Khoa hang bang SKIP LOCKED de nhieu tho khong tranh nhau.
+
+    Cổng bảo mật nguồn khách/đơn:
+    - `runner/linhx_runner.py` (v0.1.1, ngoài vùng sửa của B4) chưa đọc `viec["sandbox"]` và gọi `nhan_viec`
+      không truyền tham số `sandbox`.
+    - Khi `tho_ap_dung_sandbox(tho, sandbox)` là `False`, server giữ cổng duyệt tay (`duyet_viec`) và
+      từ chối giao tự động mọi việc có `nguon in ('khach', 'don')` (hoặc việc con của nó).
+    - Chỉ khi thợ có nhãn `sandbox` và tiến trình runner gửi xác nhận `sandbox` hợp lệ (chạy qua
+      `quy_trinh.chay_agy_sandbox`), server mới tự tách và giao ngay việc `nguon='don'` không qua duyệt tay.
+    """
     tho = _lay_tho(ma)
     heartbeat(ma, phien_ban, may)
     if tho.tam_dung:
@@ -81,11 +90,25 @@ def nhan_viec(ma, phien_ban=None, may=None):
     wfs = _workflow_cho_tho(tho)
     if not wfs:
         return None
-    quy_trinh.chia_viec_gop_cho()
+    cho_phep_sandbox = quy_trinh.tho_ap_dung_sandbox(tho, sandbox=sandbox)
+    quy_trinh.chia_viec_gop_cho(da_xac_nhan_sandbox=cho_phep_sandbox)
+    dk_nguon = ""
+    if not cho_phep_sandbox:
+        dk_nguon = """
+          and (
+            ifnull(nguon, 'noi_bo') not in ('khach', 'don')
+            or ifnull(nhan_viec, '') = 'da_duyet_tay'
+            or (ifnull(cha, '') != '' and exists (
+              select 1 from `tabLX Job` p
+              where p.name = `tabLX Job`.cha and ifnull(p.nhan_viec, '') = 'da_duyet_tay'
+            ))
+          )
+        """
     rows = frappe.db.sql(
-        """select name from `tabLX Job`
+        f"""select name from `tabLX Job`
         where trang_thai='cho' and workflow in %(wfs)s
           and (ifnull(muon_tho,'')='' or muon_tho=%(ma)s)
+          {dk_nguon}
         order by creation asc limit 1 for update skip locked""",
         {"wfs": tuple(wfs), "ma": ma},
     )
@@ -93,12 +116,20 @@ def nhan_viec(ma, phien_ban=None, may=None):
         frappe.db.rollback()
         return None
     job = frappe.get_doc("LX Job", rows[0][0])
+    nguon_job = getattr(job, "nguon", None)
+    nguon_cha = frappe.db.get_value("LX Job", job.cha, "nguon") if getattr(job, "cha", None) else None
+    nhan_cha = frappe.db.get_value("LX Job", job.cha, "nhan_viec") if getattr(job, "cha", None) else None
+    da_duyet_tay = (getattr(job, "nhan_viec", None) == "da_duyet_tay") or (nhan_cha == "da_duyet_tay")
+    if (nguon_job in ("khach", "don") or nguon_cha in ("khach", "don")) and not cho_phep_sandbox and not da_duyet_tay:
+        frappe.db.rollback()
+        return None
     wf = frappe.get_doc("LX Workflow", job.workflow)
+    nguon_hieu_luc = nguon_job if nguon_job in ("khach", "don") else (nguon_cha or nguon_job or "noi_bo")
     de = quy_trinh.tao_de_an_toan(
         wf.name,
         wf.de_mau,
         job.dau_vao,
-        nguon=getattr(job, "nguon", None),
+        nguon=nguon_hieu_luc,
         co_cha=bool(getattr(job, "cha", None)),
     )
     job.db_set({
@@ -109,10 +140,11 @@ def nhan_viec(ma, phien_ban=None, may=None):
     frappe.db.commit()
     return {
         "viec": job.name, "workflow": wf.name, "che_do": wf.che_do or "agy",
+        "nguon": nguon_hieu_luc,
         "de": de, "dau_vao": job.dau_vao, "tran_phut": wf.tran_phut or 40,
         "sandbox": quy_trinh.chinh_sach_sandbox(
             wf.name,
-            nguon=getattr(job, "nguon", None),
+            nguon=nguon_hieu_luc,
             co_cha=bool(getattr(job, "cha", None)),
         ),
     }
@@ -198,11 +230,13 @@ def giao_viec(workflow, dau_vao, muon_tho=None):
 def duyet_viec(viec):
     _la_dieu_hanh()
     job = frappe.get_doc("LX Job", viec)
-    if job.trang_thai == "cho_duyet":
+    if job.trang_thai == "cho_duyet" or (job.trang_thai == "cho" and getattr(job, "nguon", None) in ("khach", "don")):
+        job.db_set("nhan_viec", "da_duyet_tay", update_modified=False)
+        job.nhan_viec = "da_duyet_tay"
         if quy_trinh.la_gop(job.workflow):
             quy_trinh.chia(job)
         else:
-            job.db_set("trang_thai", "cho", notify=True)
+            job.db_set({"trang_thai": "cho", "nhan_viec": "da_duyet_tay"}, notify=True)
     return {"ok": True}
 
 
