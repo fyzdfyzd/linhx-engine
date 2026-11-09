@@ -1,6 +1,6 @@
 ---
 name: hap-thu-su-kien
-description: Hấp thu nội dung một sự kiện đã đi hoặc chỉ xem lại: từ ghi chú, ảnh slide, video YouTube, bài tường thuật, ra talk, pain point, solution, số liệu, chấm diễn giả, bài học áp dụng cho LINHX. Dùng khi Linh nói "vừa đi event X", "tóm tắt event", "hấp thu hội thảo", gửi ảnh slide hoặc link video.
+description: "Hấp thu nội dung một sự kiện đã đi hoặc chỉ xem lại: từ ghi chú, ảnh slide, video YouTube, bài tường thuật, ra talk, pain point, solution, số liệu, chấm diễn giả, bài học áp dụng cho LINHX. Dùng khi Linh nói \"vừa đi event X\", \"tóm tắt event\", \"hấp thu hội thảo\", gửi ảnh slide hoặc link video."
 ---
 
 # Hấp thu sự kiện

@@ -1,6 +1,8 @@
 ---
 name: BM1_06_trien_khai_draft1
 description: "Bước 6 của Big Module 1: Triển khai từng phần theo Outline đã chốt ở Bước 5, thiếu thì nghiên cứu thêm, lưu Draft 1. Tự động điều phối theo loại nội dung: Bài viết (LAB049 + LAB025), Report mẫu (LAB028 + LAB046), Nội dung khoá học (LAB017 linhx-course)."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 6: Triển khai từng phần & Lưu Draft 1 (`BM1_06_trien_khai_draft1`)

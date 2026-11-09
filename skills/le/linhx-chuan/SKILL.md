@@ -1,6 +1,8 @@
 ---
 name: linhx-chuan
 description: Lõi chất lượng LINHX. Đọc trước mọi việc tạo sản phẩm cho Linh hoặc khách (chiến lược, giáo trình, slide, báo cáo, thiết kế, ảnh, nghiên cứu). Có 14 luật, thang chấm 16 tiêu chí, khuôn sổ và kiem.py.
+metadata:
+  version: "0.1.0"
 ---
 
 # linhx-chuan

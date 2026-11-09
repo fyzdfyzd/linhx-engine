@@ -1,6 +1,8 @@
 ---
 name: "dong-thread"
 description: "Đóng một thread Claude Code đang dở: viết file bàn giao gọn để Antigravity (hoặc phiên mới) làm tiếp. Dùng khi Linh nói 'đóng thread', 'bàn giao', 'chuyển sang Antigravity'."
+metadata:
+  version: "0.1.0"
 ---
 
 # Đóng thread và bàn giao

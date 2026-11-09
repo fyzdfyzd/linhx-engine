@@ -5,6 +5,7 @@
   "duong_dan": "bo/linhx-artradar/skills/ip-scout",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -13,6 +14,7 @@
   "duong_dan": "bo/linhx-artradar/skills/nguon-radar",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -21,6 +23,7 @@
   "duong_dan": "bo/linhx-artradar/skills/quet-link",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -29,6 +32,7 @@
   "duong_dan": "bo/linhx-artradar/skills/the-nghe-si",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -37,6 +41,7 @@
   "duong_dan": "bo/linhx-artradar/skills/the-nhan-vat",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -45,6 +50,7 @@
   "duong_dan": "bo/linhx-artradar/skills/world-lore",
   "bo": "linhx-artradar",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB020-ART-STYLE-RADAR/src/plugin/linhx-artradar"
  },
  {
@@ -53,6 +59,7 @@
   "duong_dan": "bo/linhx-audit/skills/audit",
   "bo": "linhx-audit",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
  },
  {
@@ -61,6 +68,7 @@
   "duong_dan": "bo/linhx-audit/skills/audit-brand",
   "bo": "linhx-audit",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
  },
  {
@@ -69,6 +77,7 @@
   "duong_dan": "bo/linhx-audit/skills/audit-social",
   "bo": "linhx-audit",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB082-BRAND-SOCIAL-AUDIT/src/linhx-audit"
  },
  {
@@ -77,6 +86,7 @@
   "duong_dan": "bo/linhx-bank-ops/skills/quy-trinh-nghiep-vu",
   "bo": "linhx-bank-ops",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB072-BANK-OPS-KIT/src/linhx-bank-ops"
  },
  {
@@ -85,6 +95,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/bien-tap-bai",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -93,6 +104,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/cham-tung-cau",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -101,6 +113,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/doc-gia-ao",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -109,6 +122,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/hieu-chuan",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -117,6 +131,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/hoc-tu-ban-sua",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -125,6 +140,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/luong-hoa",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -133,6 +149,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/soat-cau-truc",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -141,6 +158,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/soat-ngon-ngu",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -149,6 +167,7 @@
   "duong_dan": "bo/linhx-bien-tap/skills/soat-su-that",
   "bo": "linhx-bien-tap",
   "nhom": "tu-sua",
+  "phien_ban": "0.2.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-bien-tap"
  },
  {
@@ -157,6 +176,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/bang-su-that",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -165,6 +185,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/bao-cao-va-sua",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -173,6 +194,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/brand-check",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -181,6 +203,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/cham",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -189,6 +212,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/hoi-ai",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -197,6 +221,7 @@
   "duong_dan": "bo/linhx-brand-check/skills/kiem-tin-hieu",
   "bo": "linhx-brand-check",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB036-BRAND-CHECK-AGENT/src/linhx-brand-check"
  },
  {
@@ -205,6 +230,7 @@
   "duong_dan": "bo/linhx-casting/skills/casting-mat",
   "bo": "linhx-casting",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "thư mục chung/LAB066-CASTING-GUONG-MAT/src/linhx-casting"
  },
  {
@@ -213,6 +239,7 @@
   "duong_dan": "bo/linhx-casting/skills/phat-trien-nhan-vat",
   "bo": "linhx-casting",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "thư mục chung/LAB066-CASTING-GUONG-MAT/src/linhx-casting"
  },
  {
@@ -221,6 +248,7 @@
   "duong_dan": "bo/linhx-core/skills/chuan-code",
   "bo": "linhx-core",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.2",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
@@ -229,6 +257,7 @@
   "duong_dan": "bo/linhx-core/skills/de-xuat-phuong-an",
   "bo": "linhx-core",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.2",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
@@ -237,6 +266,7 @@
   "duong_dan": "bo/linhx-core/skills/ke-hoach-lab",
   "bo": "linhx-core",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.2",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
@@ -245,6 +275,7 @@
   "duong_dan": "bo/linhx-core/skills/linhx",
   "bo": "linhx-core",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.2",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
@@ -253,6 +284,7 @@
   "duong_dan": "bo/linhx-core/skills/xac-minh-truoc-khi-bao-xong",
   "bo": "linhx-core",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.2",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-core"
  },
  {
@@ -261,6 +293,7 @@
   "duong_dan": "bo/linhx-course/skills/course",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -269,6 +302,7 @@
   "duong_dan": "bo/linhx-course/skills/course-architect",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -277,6 +311,7 @@
   "duong_dan": "bo/linhx-course/skills/course-package",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -285,6 +320,7 @@
   "duong_dan": "bo/linhx-course/skills/instructor-avatar",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -293,6 +329,7 @@
   "duong_dan": "bo/linhx-course/skills/instructor-voice",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -301,6 +338,7 @@
   "duong_dan": "bo/linhx-course/skills/lesson-compose",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -309,6 +347,7 @@
   "duong_dan": "bo/linhx-course/skills/lesson-script",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -317,6 +356,7 @@
   "duong_dan": "bo/linhx-course/skills/lesson-slides",
   "bo": "linhx-course",
   "nhom": "thiet-ke",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -325,6 +365,7 @@
   "duong_dan": "bo/linhx-course/skills/screen-capture",
   "bo": "linhx-course",
   "nhom": "giao-duc",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB017-ELEARNING-AI/src/plugin/linhx-course"
  },
  {
@@ -333,6 +374,7 @@
   "duong_dan": "bo/linhx-cuoc-thi/skills/radar-cuoc-thi",
   "bo": "linhx-cuoc-thi",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
@@ -341,6 +383,7 @@
   "duong_dan": "bo/linhx-cuoc-thi/skills/tham-dinh-cuoc-thi",
   "bo": "linhx-cuoc-thi",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
@@ -349,6 +392,7 @@
   "duong_dan": "bo/linhx-cuoc-thi/skills/theo-doi-ket-qua",
   "bo": "linhx-cuoc-thi",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
@@ -357,6 +401,7 @@
   "duong_dan": "bo/linhx-cuoc-thi/skills/viet-bai-du-thi",
   "bo": "linhx-cuoc-thi",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-cuoc-thi"
  },
  {
@@ -365,6 +410,7 @@
   "duong_dan": "bo/linhx-deck/skills/deck-proposal",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -373,6 +419,7 @@
   "duong_dan": "bo/linhx-deck/skills/demo-ban-giao",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -381,6 +428,7 @@
   "duong_dan": "bo/linhx-deck/skills/dung-deck",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -389,6 +437,7 @@
   "duong_dan": "bo/linhx-deck/skills/hieu-khach",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -397,6 +446,7 @@
   "duong_dan": "bo/linhx-deck/skills/hinh-anh",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -405,6 +455,7 @@
   "duong_dan": "bo/linhx-deck/skills/loi-the-offer",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -413,6 +464,7 @@
   "duong_dan": "bo/linhx-deck/skills/phan-bien",
   "bo": "linhx-deck",
   "nhom": "thiet-ke",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB027/linhx-deck"
  },
  {
@@ -421,6 +473,7 @@
   "duong_dan": "bo/linhx-du-lieu/skills/cham-nhanh",
   "bo": "linhx-du-lieu",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
  },
  {
@@ -429,6 +482,7 @@
   "duong_dan": "bo/linhx-du-lieu/skills/don-bang",
   "bo": "linhx-du-lieu",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
  },
  {
@@ -437,6 +491,7 @@
   "duong_dan": "bo/linhx-du-lieu/skills/kiem-dinh",
   "bo": "linhx-du-lieu",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
  },
  {
@@ -445,6 +500,7 @@
   "duong_dan": "bo/linhx-du-lieu/skills/viet-chuan",
   "bo": "linhx-du-lieu",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB033-AI-READY-DATA/src/linhx-du-lieu"
  },
  {
@@ -453,6 +509,7 @@
   "duong_dan": "bo/linhx-gemini-task/gemini-skills/linhx-nhiem-vu",
   "bo": "linhx-gemini-task",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
@@ -461,6 +518,7 @@
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-gui",
   "bo": "linhx-gemini-task",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
@@ -469,6 +527,7 @@
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-lay-cham",
   "bo": "linhx-gemini-task",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
@@ -477,6 +536,7 @@
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-skill",
   "bo": "linhx-gemini-task",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
@@ -485,6 +545,7 @@
   "duong_dan": "bo/linhx-gemini-task/skills/gemini-task",
   "bo": "linhx-gemini-task",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB047-GEMINI-TASK/src/linhx-gemini-task"
  },
  {
@@ -493,6 +554,7 @@
   "duong_dan": "bo/linhx-giai-ma-hai/skills/giai-ma-hai",
   "bo": "linhx-giai-ma-hai",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB088-GIAI-MA-HAI-VIRAL/src/linhx-giai-ma-hai"
  },
  {
@@ -501,6 +563,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/ban-dang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -509,6 +572,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/duyet-dang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -517,6 +581,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/hoc-ngay",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -525,6 +590,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/hoc-tuan",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -533,6 +599,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/hop-thu",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -541,6 +608,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/kenh-ao",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -549,6 +617,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/ket-than",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -557,6 +626,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/lang-thang",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -565,6 +635,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/tao-bai",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -573,6 +644,7 @@
   "duong_dan": "bo/linhx-kenh-ao/skills/xuong-persona",
   "bo": "linhx-kenh-ao",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-kenh-ao"
  },
  {
@@ -581,6 +653,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/loc",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -589,6 +662,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/minh-hoa-y",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -597,6 +671,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/phan-loai",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -605,6 +680,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/so-nguon",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -613,6 +689,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/tai-tao",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -621,6 +698,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/the-phong-cach",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -629,6 +707,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/thu-link",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -637,6 +716,7 @@
   "duong_dan": "bo/linhx-kho-minh-hoa/skills/xem-kho",
   "bo": "linhx-kho-minh-hoa",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB031-KHO-MINH-HOA/src/plugin/linhx-kho-minh-hoa"
  },
  {
@@ -645,6 +725,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/cham-khoang-trong",
   "bo": "linhx-khoang-trong",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -653,6 +734,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/co-hoi-kenh",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -661,6 +743,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/hien-tuong",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -669,6 +752,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/nguoi-thang",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -677,6 +761,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/nhu-cau-doc-gia",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -685,6 +770,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/quy-mo-thi-truong",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -693,6 +779,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/radar-khoang-trong",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -701,6 +788,7 @@
   "duong_dan": "bo/linhx-khoang-trong/skills/soi-viet-nam",
   "bo": "linhx-khoang-trong",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB029-KHOANG-TRONG-DOC-GIA/src/linhx-khoang-trong"
  },
  {
@@ -709,6 +797,7 @@
   "duong_dan": "bo/linhx-le-bich-studio/skills/le-bich-studio",
   "bo": "linhx-le-bich-studio",
   "nhom": "video",
+  "phien_ban": "1.0.1",
   "ban_goc": "D:/LINHX/PRJ/LEBICH-STUDIO/plugin-claude"
  },
  {
@@ -717,6 +806,7 @@
   "duong_dan": "bo/linhx-linh-vuc/skills/ho-so-tai-tro",
   "bo": "linhx-linh-vuc",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-linh-vuc"
  },
  {
@@ -725,6 +815,7 @@
   "duong_dan": "bo/linhx-linh-vuc/skills/nghien-cuu-thi-truong",
   "bo": "linhx-linh-vuc",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-linh-vuc"
  },
  {
@@ -733,6 +824,7 @@
   "duong_dan": "bo/linhx-linh-vuc/skills/tong-quan-tai-lieu",
   "bo": "linhx-linh-vuc",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-linh-vuc"
  },
  {
@@ -741,6 +833,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/cau-hoi-thanh-noi-dung",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -749,6 +842,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/chan-doan-giai-doan",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -757,6 +851,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/chao-don-gan-tag",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -765,6 +860,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/de-xuat-tuan",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -773,6 +869,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/ke-hoach-90-ngay",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -781,6 +878,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/nhap-du-lieu",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -789,6 +887,7 @@
   "duong_dan": "bo/linhx-nuoi-cong-dong/skills/nuoi-cong-dong",
   "bo": "linhx-nuoi-cong-dong",
   "nhom": "marketing",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/LAB/LAB041-CONG-DONG-BAN-HANG/src/linhx-nuoi-cong-dong"
  },
  {
@@ -797,6 +896,7 @@
   "duong_dan": "bo/linhx-office/skills/office",
   "bo": "linhx-office",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB021-VAN-PHONG-AO-AGENT/src/linhx-office"
  },
  {
@@ -805,6 +905,7 @@
   "duong_dan": "bo/linhx-onbrand/skills/onbrand-cham",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
@@ -813,6 +914,7 @@
   "duong_dan": "bo/linhx-onbrand/skills/onbrand-nap",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
@@ -821,6 +923,7 @@
   "duong_dan": "bo/linhx-onbrand/skills/onbrand-thi",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
@@ -829,6 +932,7 @@
   "duong_dan": "bo/linhx-onbrand/skills/onbrand-thiet-ke",
   "bo": "linhx-onbrand",
   "nhom": "thiet-ke",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB043/linhx-onbrand"
  },
  {
@@ -837,6 +941,7 @@
   "duong_dan": "bo/linhx-pheu-omni/skills/pheu-omni",
   "bo": "linhx-pheu-omni",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB073-AGENTIC-MARKETING-DA-PHEU/src/linhx-pheu-omni"
  },
  {
@@ -845,6 +950,7 @@
   "duong_dan": "bo/linhx-phim-code/skills/phim-code",
   "bo": "linhx-phim-code",
   "nhom": "video",
+  "phien_ban": "0.3.1",
   "ban_goc": "thư mục chung/LAB059-DUNG-PHIM-CODE/src/linhx-phim-code"
  },
  {
@@ -853,6 +959,7 @@
   "duong_dan": "bo/linhx-pipeline/skills/pipeline",
   "bo": "linhx-pipeline",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-pipeline"
  },
  {
@@ -861,6 +968,7 @@
   "duong_dan": "bo/linhx-radar/skills/ban-do-chu-de",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -869,6 +977,7 @@
   "duong_dan": "bo/linhx-radar/skills/hap-thu-su-kien",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -877,6 +986,7 @@
   "duong_dan": "bo/linhx-radar/skills/ho-so-doi-tuong",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -885,6 +995,7 @@
   "duong_dan": "bo/linhx-radar/skills/offer-cong-dong",
   "bo": "linhx-radar",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -893,6 +1004,7 @@
   "duong_dan": "bo/linhx-radar/skills/radar",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -901,6 +1013,7 @@
   "duong_dan": "bo/linhx-radar/skills/radar-cong-dong",
   "bo": "linhx-radar",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -909,6 +1022,7 @@
   "duong_dan": "bo/linhx-radar/skills/radar-giai-thuong",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -917,6 +1031,7 @@
   "duong_dan": "bo/linhx-radar/skills/radar-su-kien",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -925,6 +1040,7 @@
   "duong_dan": "bo/linhx-radar/skills/tham-dinh-su-kien",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -933,6 +1049,7 @@
   "duong_dan": "bo/linhx-radar/skills/them-cong-dong",
   "bo": "linhx-radar",
   "nhom": "marketing",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -941,6 +1058,7 @@
   "duong_dan": "bo/linhx-radar/skills/them-nguon-su-kien",
   "bo": "linhx-radar",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
@@ -949,6 +1067,7 @@
   "duong_dan": "bo/linhx-report/skills/bao-cao",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -957,6 +1076,7 @@
   "duong_dan": "bo/linhx-report/skills/dan-trang",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -965,6 +1085,7 @@
   "duong_dan": "bo/linhx-report/skills/hinh-du-lieu",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -973,6 +1094,7 @@
   "duong_dan": "bo/linhx-report/skills/khung-nghien-cuu",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -981,6 +1103,7 @@
   "duong_dan": "bo/linhx-report/skills/tim-mau-clone",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -989,6 +1112,7 @@
   "duong_dan": "bo/linhx-report/skills/viet-bao-cao",
   "bo": "linhx-report",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.1",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB028/linhx-report"
  },
  {
@@ -997,6 +1121,7 @@
   "duong_dan": "bo/linhx-tai-tao-flow/skills/tai-tao-flow",
   "bo": "linhx-tai-tao-flow",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB077-TAI-TAO-FLOW-QUANG-CAO/src/linhx-tai-tao-flow"
  },
  {
@@ -1005,6 +1130,7 @@
   "duong_dan": "bo/linhx-thoi-quen-ai/skills/thoi-quen-ai",
   "bo": "linhx-thoi-quen-ai",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB080-THOI-QUEN-VIET-AI/src/linhx-thoi-quen-ai"
  },
  {
@@ -1013,6 +1139,7 @@
   "duong_dan": "bo/linhx-thu-ky/skills/thu-ky",
   "bo": "linhx-thu-ky",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB026-NHAN-VAT-DIEU-PHOI/src/linhx-thu-ky"
  },
  {
@@ -1021,6 +1148,7 @@
   "duong_dan": "bo/linhx-tu-duy/skills/mm-chon",
   "bo": "linhx-tu-duy",
   "nhom": "van-hanh",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-tu-duy"
  },
  {
@@ -1029,6 +1157,7 @@
   "duong_dan": "bo/linhx-tu-duy/skills/mm-ngay",
   "bo": "linhx-tu-duy",
   "nhom": "van-hanh",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-tu-duy"
  },
  {
@@ -1037,6 +1166,7 @@
   "duong_dan": "bo/linhx-tu-duy/skills/mm-quyet",
   "bo": "linhx-tu-duy",
   "nhom": "van-hanh",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-tu-duy"
  },
  {
@@ -1045,6 +1175,7 @@
   "duong_dan": "bo/linhx-tu-duy/skills/mm-tuan",
   "bo": "linhx-tu-duy",
   "nhom": "van-hanh",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-tu-duy"
  },
  {
@@ -1053,6 +1184,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/chuyen-kenh",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1061,6 +1193,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/content-synthesizer",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1069,6 +1202,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/critic-loop-writer",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1077,6 +1211,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/deep-researcher",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1085,6 +1220,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/gemini-reviewer",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1093,6 +1229,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/giong-linh",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1101,6 +1238,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/hoc-tu-ban-sua",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1109,14 +1247,16 @@
   "duong_dan": "bo/linhx-viet-bai/skills/idea-seeder",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
   "ten": "new-article",
-  "mo_ta": "Viết bài mới theo quy trình LinhX Write 9 bước của Linh (FLOW v FM): gieo ý → 11 câu hỏi Deep Inquiry → nghiên cứu → 30 tứ → 3 phương án A/B/C → viết → phản biện 2 tầng (AI Detector + Editorial QA) → chọn bản tốt nhất. Dùng khi Linh nói /new-article, \\\"viết bài về…\\\", hoặc đưa một ý tưởng thô cần thành bài.",
+  "mo_ta": "Viết bài mới theo quy trình LinhX Write 9 bước của Linh (FLOW v FM): gieo ý → 11 câu hỏi Deep Inquiry → nghiên cứu → 30 tứ → 3 phương án A/B/C → viết → phản biện 2 tầng (AI Detector + Editorial QA) → chọn bản tốt nhất. Dùng khi Linh nói /new-article, \"viết bài về…\", hoặc đưa một ý tưởng thô cần thành bài.",
   "duong_dan": "bo/linhx-viet-bai/skills/new-article",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1125,6 +1265,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/resume-article",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1133,6 +1274,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/review-article",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1141,6 +1283,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/soat-giong",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1149,6 +1292,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/time-tracker",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1157,6 +1301,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/viet-bai",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1165,6 +1310,7 @@
   "duong_dan": "bo/linhx-viet-bai/skills/y-tuong-bai",
   "bo": "linhx-viet-bai",
   "nhom": "viet",
+  "phien_ban": "0.2.1",
   "ban_goc": "D:/LINHX/LAB/LAB025-QUY-TRINH-VIET-BAI/src/linhx-viet-bai"
  },
  {
@@ -1173,6 +1319,7 @@
   "duong_dan": "bo/linhx-viet-giong-viet/skills/bien-tap",
   "bo": "linhx-viet-giong-viet",
   "nhom": "tu-sua",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-viet-giong-viet"
  },
  {
@@ -1181,6 +1328,7 @@
   "duong_dan": "bo/linhx-viet-giong-viet/skills/viet-bai-giong-viet",
   "bo": "linhx-viet-giong-viet",
   "nhom": "viet",
+  "phien_ban": "0.3.0",
   "ban_goc": "D:/LINHX/LAB/LAB049-VIET-NHU-NGUOI/src/linhx-viet-giong-viet"
  },
  {
@@ -1189,6 +1337,7 @@
   "duong_dan": "bo/linhx-vong-ads/skills/vong-ads",
   "bo": "linhx-vong-ads",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB084-AGENT-CHAY-ADS/src/linhx-vong-ads"
  },
  {
@@ -1197,6 +1346,7 @@
   "duong_dan": "bo/proposal-studio/skills/proposal-brief",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"
  },
  {
@@ -1205,6 +1355,7 @@
   "duong_dan": "bo/proposal-studio/skills/proposal-ideas",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"
  },
  {
@@ -1213,6 +1364,7 @@
   "duong_dan": "bo/proposal-studio/skills/proposal-images",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"
  },
  {
@@ -1221,6 +1373,7 @@
   "duong_dan": "bo/proposal-studio/skills/proposal-studio",
   "bo": "proposal-studio",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PRJ/IFAGENT-CSMO-STAGE-DEMO/plugins/proposal-studio"
  },
  {
@@ -1229,6 +1382,7 @@
   "duong_dan": "le/agent-truong",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/agent-truong"
  },
  {
@@ -1237,6 +1391,7 @@
   "duong_dan": "le/agy-tu-chay",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB106-BO-SKILL-CHAT-LUONG/src/agy-tu-chay"
  },
  {
@@ -1245,6 +1400,7 @@
   "duong_dan": "le/ai-photobooth-golden-standard",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/ai-photobooth-golden-standard"
  },
  {
@@ -1253,6 +1409,7 @@
   "duong_dan": "le/anh-sang-slide",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/06_COURSE_OS/vendor/LAB032/anh-sang-slide"
  },
  {
@@ -1261,6 +1418,7 @@
   "duong_dan": "le/architecture-patterns-and-design-rules",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/architecture-patterns-and-design-rules"
  },
  {
@@ -1269,6 +1427,7 @@
   "duong_dan": "le/backend-security-audit",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/backend-security-audit"
  },
  {
@@ -1277,6 +1436,7 @@
   "duong_dan": "le/bespoke-image-generator",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/le/bespoke-image-gen"
  },
  {
@@ -1285,6 +1445,7 @@
   "duong_dan": "le/bespoke-video-generator",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/le/bespoke-video-gen"
  },
  {
@@ -1293,6 +1454,7 @@
   "duong_dan": "le/bm1_01_phan_tich_de_bai",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_01_phan_tich_de_bai"
  },
  {
@@ -1301,6 +1463,7 @@
   "duong_dan": "le/bm1_02_persona_neo",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_02_persona_neo"
  },
  {
@@ -1309,6 +1472,7 @@
   "duong_dan": "le/bm1_03_tim_tham_chieu",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_03_tim_tham_chieu"
  },
  {
@@ -1317,6 +1481,7 @@
   "duong_dan": "le/bm1_04_outline_thu_persona",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_04_outline_thu_persona"
  },
  {
@@ -1325,6 +1490,7 @@
   "duong_dan": "le/bm1_05_cham_chon_huong",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_05_cham_chon_huong"
  },
  {
@@ -1333,6 +1499,7 @@
   "duong_dan": "le/bm1_06_trien_khai_draft1",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_06_trien_khai_draft1"
  },
  {
@@ -1341,6 +1508,7 @@
   "duong_dan": "le/bm1_07_danh_gia_draft1",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_07_danh_gia_draft1"
  },
  {
@@ -1349,6 +1517,7 @@
   "duong_dan": "le/bm1_08_viet_lai_giong_tac_gia",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_08_viet_lai_giong_tac_gia"
  },
  {
@@ -1357,6 +1526,7 @@
   "duong_dan": "le/bm1_09_bien_tap_3_vong",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM1_09_bien_tap_3_vong"
  },
  {
@@ -1365,6 +1535,7 @@
   "duong_dan": "le/bm2_m1_chu_trinh_template",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM2_M1_chu_trinh_template"
  },
  {
@@ -1373,6 +1544,7 @@
   "duong_dan": "le/bm2_m2_media_hoa",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/01_MAY_TAO_NOI_DUNG/skills/BM2_M2_media_hoa"
  },
  {
@@ -1381,6 +1553,7 @@
   "duong_dan": "le/brand-btmh",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/btmh/skill/brand-btmh"
  },
  {
@@ -1389,6 +1562,7 @@
   "duong_dan": "le/brand-chiemtinh",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/chiemtinh/skill/brand-chiemtinh"
  },
  {
@@ -1397,6 +1571,7 @@
   "duong_dan": "le/brand-guideline-chuan",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/claude-ai/brand-guideline-chuan"
  },
  {
@@ -1405,6 +1580,7 @@
   "duong_dan": "le/brand-ifagent",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/ifagent/skill/brand-ifagent"
  },
  {
@@ -1413,6 +1589,7 @@
   "duong_dan": "le/brand-mau",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/src/lbs-template/skill/brand-SLUG"
  },
  {
@@ -1421,6 +1598,7 @@
   "duong_dan": "le/brand-sakedemy",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/sakedemy/skill/brand-sakedemy"
  },
  {
@@ -1429,6 +1607,7 @@
   "duong_dan": "le/brand-tuva",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/tuva/skill/brand-tuva"
  },
  {
@@ -1437,6 +1616,7 @@
   "duong_dan": "le/brand-unikon",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/unikon/skill/brand-unikon"
  },
  {
@@ -1445,14 +1625,16 @@
   "duong_dan": "le/brand-urah",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB012-BRAND-STANDARD/brands/urah/skill/brand-urah"
  },
  {
   "ten": "btmh-monthly-retail-intelligence",
-  "mo_ta": "-",
+  "mo_ta": "Quy trình tự động hóa toàn diện lập Báo cáo Phân tích Kinh doanh Bán lẻ hàng tháng chuẩn McKinsey cho chuỗi 76-78 cửa hàng Bảo Tín Mạnh Hải (BTMH). Bao gồm: Kiểm toán tự động chất lượng dữ liệu 5 chiều, Rà soát xung đột vĩ mô & đối thủ cạnh tranh, Mô hình Bể lợi nhuận & Điểm uốn chiến lược (M-PPIE), Đào sâu tối thiểu 5 Actionable Insights định lượng, Soạn thảo khuyến nghị SCQA & Phân quyền RACI 5 khối, và Tự động xuất bản bộ ba ấn phẩm: Word DOCX chuyên sâu, Slide PPTX chuẩn nhận diện BTMH, và Website mô phỏng kịch bản kinh doanh tương tác thời gian thực (What-If Simulation Dashboard).",
   "duong_dan": "le/btmh-monthly-retail-intelligence",
   "bo": "",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PRJ/BTMH TRAINING/.agents/skills/btmh-monthly-retail-intelligence"
  },
  {
@@ -1461,6 +1643,7 @@
   "duong_dan": "le/cafebiz-radar",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/08_CRAWLER_OS/vendor/.agents/skills/cafebiz-radar"
  },
  {
@@ -1469,6 +1652,7 @@
   "duong_dan": "le/chien-luoc",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB106-BO-SKILL-CHAT-LUONG/src/chien-luoc"
  },
  {
@@ -1477,6 +1661,7 @@
   "duong_dan": "le/chuyen-skill",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB092-SKILL-DA-NEN/src/chuyen-skill"
  },
  {
@@ -1485,22 +1670,25 @@
   "duong_dan": "le/dong-thread",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/claude-ai/dong-thread"
  },
  {
   "ten": "e2e-3-rounds-harsh-reviewer",
-  "mo_ta": "-",
+  "mo_ta": "Quy trình chuẩn chạy kiểm thử tích hợp End-to-End (E2E) tối thiểu 3 vòng (Round 1 -> Round 2 -> Round 3) trên trình duyệt thật bằng Playwright, chụp ảnh màn hình toàn bộ ứng dụng, đóng vai Reviewer Khó Tính soi trực tiếp ảnh chụp sản phẩm cuối và DOM/WCAG, ghi lại kinh nghiệm + lỗi + điểm cải thiện vào checkpoint trên ổ cứng (.handoff/e2e-checkpoint.json) để phiên/vòng sau chạy tiếp từ điểm đó cho đến khi đạt >= 9.2/10.",
   "duong_dan": "le/e2e-3-rounds-harsh-reviewer",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/e2e-3-rounds-harsh-reviewer"
  },
  {
   "ten": "enterprise-imc-campaign-creator",
-  "mo_ta": "-",
+  "mo_ta": "Quy trình tự động hóa toàn diện xây dựng Kế hoạch Truyền thông Tích hợp (IMC Plan) cấp doanh nghiệp: từ Deep Research 5 chiều (Sản phẩm, Chân dung khách hàng, Đối thủ, Bối cảnh quảng cáo, Brand voice), Mô hình hóa tài chính định lượng, Đề xuất 3 Big Ideas, Thẩm định khắt khe bằng Rubric Scorecard, Kế hoạch kênh O2O, Ma trận ngân sách & lịch phát sóng, đến Sản xuất nội dung tự động đa góc nhìn (3 Angles), Vòng lặp tự tinh chỉnh (Self-Refinement Loop tối đa 10 lần) đạt điểm > 9.0/10, kèm Plan chạy Ads và tạo ảnh minh họa đồ họa.",
   "duong_dan": "le/enterprise-imc-campaign-creator",
   "bo": "",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/enterprise-imc-campaign-creator"
  },
  {
@@ -1509,6 +1697,7 @@
   "duong_dan": "le/flow-canh-tron-khung",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/flow-canh-tron-khung"
  },
  {
@@ -1517,6 +1706,7 @@
   "duong_dan": "le/frontend-security-audit",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "MSI ~/.gemini/config/skills/frontend-security-audit"
  },
  {
@@ -1525,6 +1715,7 @@
   "duong_dan": "le/hybrid-canh-nhan-vat",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/hybrid-canh-nhan-vat"
  },
  {
@@ -1533,6 +1724,7 @@
   "duong_dan": "le/kiem-chu-anh",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/kiem-chu-anh"
  },
  {
@@ -1541,6 +1733,7 @@
   "duong_dan": "le/lab-moi",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/lab-moi"
  },
  {
@@ -1549,6 +1742,7 @@
   "duong_dan": "le/le-bich-hoat-hinh",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB045-LE-BICH-HOAT-HINH/skill-gemini/le-bich-hoat-hinh"
  },
  {
@@ -1557,6 +1751,7 @@
   "duong_dan": "le/linhx-4d",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB105-QUY-CHUAN-GIAO-VIEC-4D/src/linhx-4d"
  },
  {
@@ -1565,6 +1760,7 @@
   "duong_dan": "le/linhx-be-phong",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB081-BE-PHONG-OPC/src/linhx-be-phong"
  },
  {
@@ -1573,6 +1769,7 @@
   "duong_dan": "le/linhx-chuan",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB106-BO-SKILL-CHAT-LUONG/src/linhx-chuan"
  },
  {
@@ -1581,6 +1778,7 @@
   "duong_dan": "le/linhx-crawler",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/08_CRAWLER_OS/vendor/server/skill"
  },
  {
@@ -1589,6 +1787,7 @@
   "duong_dan": "le/linhx-toan-van",
   "bo": "",
   "nhom": "viet",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/PROTO/08_CRAWLER_OS/vendor/.agents/skills/linhx-toan-van"
  },
  {
@@ -1597,6 +1796,7 @@
   "duong_dan": "le/linhx-tu-chay",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB098-AGENT-TU-LAM-SAN-PHAM/src/linhx-tu-chay"
  },
  {
@@ -1605,6 +1805,7 @@
   "duong_dan": "le/lps-bao-mat",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-bao-mat"
  },
  {
@@ -1613,6 +1814,7 @@
   "duong_dan": "le/lps-khoi-tao",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-khoi-tao"
  },
  {
@@ -1621,6 +1823,7 @@
   "duong_dan": "le/lps-llm",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-llm"
  },
  {
@@ -1629,6 +1832,7 @@
   "duong_dan": "le/lps-release",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-release"
  },
  {
@@ -1637,6 +1841,7 @@
   "duong_dan": "le/lps-review",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-review"
  },
  {
@@ -1645,6 +1850,7 @@
   "duong_dan": "le/lps-spec",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-spec"
  },
  {
@@ -1653,6 +1859,7 @@
   "duong_dan": "le/lps-tdd",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-tdd"
  },
  {
@@ -1661,6 +1868,7 @@
   "duong_dan": "le/lps-tu-sua",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-tu-sua"
  },
  {
@@ -1669,6 +1877,7 @@
   "duong_dan": "le/lps-ui",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-ui"
  },
  {
@@ -1677,6 +1886,7 @@
   "duong_dan": "le/lps-user-test",
   "bo": "",
   "nhom": "tu-sua",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB009-DEV-STANDARD/src/anh-cong-so/.agents/skills/lps-user-test"
  },
  {
@@ -1685,6 +1895,7 @@
   "duong_dan": "le/lvn-listening",
   "bo": "",
   "nhom": "marketing",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB053-SOCIAL-LISTENING-VN/src/lvn-listening"
  },
  {
@@ -1693,7 +1904,17 @@
   "duong_dan": "le/morning",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/claude-ai/morning"
+ },
+ {
+  "ten": "phien-ban-skill",
+  "mo_ta": "Quy trình sửa, tăng bản và phát hành skill trong kho LINHX (linhx-engine/skills): chọn mức patch/minor/major, ghi CHANGELOG, chạy bộ kiểm, để CI gắn tag. Dùng mỗi khi tạo, sửa, đổi tên hay bỏ một skill hoặc bộ skill, hoặc khi được hỏi skill đang ở bản nào.",
+  "duong_dan": "le/phien-ban-skill",
+  "bo": "",
+  "nhom": "khac",
+  "phien_ban": "0.1.0",
+  "ban_goc": ""
  },
  {
   "ten": "proto-moi",
@@ -1701,6 +1922,7 @@
   "duong_dan": "le/proto-moi",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/proto-moi"
  },
  {
@@ -1709,6 +1931,7 @@
   "duong_dan": "le/quan-tri-agy",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB106-BO-SKILL-CHAT-LUONG/src/quan-tri-agy"
  },
  {
@@ -1717,6 +1940,7 @@
   "duong_dan": "le/ra-soat-kho",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/ra-soat-kho"
  },
  {
@@ -1725,6 +1949,7 @@
   "duong_dan": "le/research-loop",
   "bo": "",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB085-RESEARCH-LOOP/skill/research-loop"
  },
  {
@@ -1733,6 +1958,7 @@
   "duong_dan": "le/research-write",
   "bo": "",
   "nhom": "nghien-cuu",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB085-RESEARCH-LOOP/skill/research-write"
  },
  {
@@ -1741,6 +1967,7 @@
   "duong_dan": "le/sd-bo-tham-chieu",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-phim-ngan/skills/sd-bo-tham-chieu"
  },
  {
@@ -1749,6 +1976,7 @@
   "duong_dan": "le/sd-de-xuat",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-phim-ngan/skills/sd-de-xuat"
  },
  {
@@ -1757,6 +1985,7 @@
   "duong_dan": "le/sd-dung",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-dung"
  },
  {
@@ -1765,6 +1994,7 @@
   "duong_dan": "le/sd-flow-pack",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-flow-pack"
  },
  {
@@ -1773,6 +2003,7 @@
   "duong_dan": "le/sd-kich-ban",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-kich-ban"
  },
  {
@@ -1781,6 +2012,7 @@
   "duong_dan": "le/sd-nghien-cuu",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-phim-ngan/skills/sd-nghien-cuu"
  },
  {
@@ -1789,6 +2021,7 @@
   "duong_dan": "le/sd-nhan-take",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-nhan-take"
  },
  {
@@ -1797,6 +2030,7 @@
   "duong_dan": "le/sd-phan-tich-mau",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/SKILLS/plugins/linhx-phim-ngan/skills/sd-phan-tich-mau"
  },
  {
@@ -1805,6 +2039,7 @@
   "duong_dan": "le/sd-series",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-series"
  },
  {
@@ -1813,6 +2048,7 @@
   "duong_dan": "le/sd-storyboard",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-storyboard"
  },
  {
@@ -1821,6 +2057,7 @@
   "duong_dan": "le/sd-tai-san",
   "bo": "",
   "nhom": "video",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/LAB016-PHIM-NGAN-AI/src/skills/sd-tai-san"
  },
  {
@@ -1829,6 +2066,7 @@
   "duong_dan": "le/tach-kv",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB078-PHAN-RA-KV/src/tach-kv"
  },
  {
@@ -1837,6 +2075,7 @@
   "duong_dan": "le/thiet-ke",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB106-BO-SKILL-CHAT-LUONG/src/thiet-ke"
  },
  {
@@ -1845,6 +2084,7 @@
   "duong_dan": "le/tra-cuu-luat",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/tra-cuu-luat"
  },
  {
@@ -1853,6 +2093,7 @@
   "duong_dan": "le/viet-overview",
   "bo": "",
   "nhom": "van-hanh",
+  "phien_ban": "0.1.0",
   "ban_goc": "D:/LINHX/LAB/.agents/skills/viet-overview"
  },
  {
@@ -1861,6 +2102,7 @@
   "duong_dan": "le/vong-lap-slide",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB099-VONG-LAP-TU-CAI-THIEN/src/vong-lap-slide"
  },
  {
@@ -1869,6 +2111,7 @@
   "duong_dan": "le/web-thiet-ke",
   "bo": "",
   "nhom": "thiet-ke",
+  "phien_ban": "0.1.0",
   "ban_goc": "thư mục chung/LAB058-WEB-DESIGN-FLOW/src/linhx-web/skills/web-thiet-ke"
  }
 ]

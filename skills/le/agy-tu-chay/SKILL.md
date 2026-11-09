@@ -1,6 +1,8 @@
 ---
 name: agy-tu-chay
 description: Cho Antigravity (agy) tự lập kế hoạch và tự chạy trọn một việc theo phiếu, tự kiểm, tự chấm chéo bằng phiên mới, ghi báo cáo một trang cho Claude và Linh. Dùng khi Linh hoặc Claude giao một việc lớn (chiến lược, báo cáo, slide...) để chạy trên máy công ty mà không tốn token Claude.
+metadata:
+  version: "0.1.0"
 ---
 
 # agy-tu-chay

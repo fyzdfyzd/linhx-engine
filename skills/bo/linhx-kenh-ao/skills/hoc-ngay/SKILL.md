@@ -1,6 +1,6 @@
 ---
 name: hoc-ngay
-description: Vòng tự học cuối mỗi ngày của kênh: tính lại hậu nghiệm từ số liệu, bàn đăng, quan hệ và cổng; tự áp thay đổi nhỏ có trần; rút luật viết từ lần Linh sửa để Linh bấm nhận. Dùng mỗi tối sau khi kéo số liệu, hoặc khi Linh hỏi "hôm nay học được gì".
+description: "Vòng tự học cuối mỗi ngày của kênh: tính lại hậu nghiệm từ số liệu, bàn đăng, quan hệ và cổng; tự áp thay đổi nhỏ có trần; rút luật viết từ lần Linh sửa để Linh bấm nhận. Dùng mỗi tối sau khi kéo số liệu, hoặc khi Linh hỏi \"hôm nay học được gì\"."
 ---
 
 # Tự học mỗi ngày

@@ -1,6 +1,8 @@
 ---
 name: brand-<slug>
-description: Áp dụng thương hiệu <Tên> (<domain>) cho mọi thứ tạo ra: trang web, giao diện app, slide, bài đăng mạng xã hội, ảnh, email, bao bì, nội dung chữ. Dùng khi người dùng nhắc <Tên>, <domain>, hoặc làm việc trong dự án của <Tên>.
+description: "Áp dụng thương hiệu <Tên> (<domain>) cho mọi thứ tạo ra: trang web, giao diện app, slide, bài đăng mạng xã hội, ảnh, email, bao bì, nội dung chữ. Dùng khi người dùng nhắc <Tên>, <domain>, hoặc làm việc trong dự án của <Tên>."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu <Tên>

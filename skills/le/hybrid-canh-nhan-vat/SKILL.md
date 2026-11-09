@@ -1,6 +1,8 @@
 ---
 name: hybrid-canh-nhan-vat
-description: Dựng cảnh hoạt hình kiểu hybrid: Flow/Veo chỉ làm chuyển động riêng của nhân vật nét vẽ trên nền trắng, code lo object, chữ, máy, âm thanh và canh nhịp theo thoại. Dùng khi Linh nói "hybrid", "làm chuyển động riêng", hoặc khi cảnh có nhân vật cạnh poster, logo, chữ mà Veo làm hỏng.
+description: "Dựng cảnh hoạt hình kiểu hybrid: Flow/Veo chỉ làm chuyển động riêng của nhân vật nét vẽ trên nền trắng, code lo object, chữ, máy, âm thanh và canh nhịp theo thoại. Dùng khi Linh nói \"hybrid\", \"làm chuyển động riêng\", hoặc khi cảnh có nhân vật cạnh poster, logo, chữ mà Veo làm hỏng."
+metadata:
+  version: "0.1.0"
 ---
 
 # Cảnh hybrid: nhân vật từ Flow, mọi thứ khác từ code

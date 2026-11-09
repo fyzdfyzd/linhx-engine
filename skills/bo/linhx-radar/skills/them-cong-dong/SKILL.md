@@ -1,6 +1,6 @@
 ---
 name: them-cong-dong
-description: Thêm một hiệp hội, cộng đồng hoặc sự kiện mới vào radar: tìm đủ kênh, nhà tài trợ các mùa, KOL, chủ đề, pain point, họ đã có gì, rồi tạo nguồn quét. Dùng khi Linh nói "thêm cộng đồng X", "theo dõi hội Y", "tìm các tổ chức giống CSMO".
+description: "Thêm một hiệp hội, cộng đồng hoặc sự kiện mới vào radar: tìm đủ kênh, nhà tài trợ các mùa, KOL, chủ đề, pain point, họ đã có gì, rồi tạo nguồn quét. Dùng khi Linh nói \"thêm cộng đồng X\", \"theo dõi hội Y\", \"tìm các tổ chức giống CSMO\"."
 ---
 
 # Thêm cộng đồng

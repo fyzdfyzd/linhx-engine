@@ -1,6 +1,8 @@
 ---
 name: linhx-4d
 description: Giao việc theo quy chuẩn 4D (Double Diamond x 100 Tasks x phòng Tam Quốc) cho mọi dự án - giáo trình, phần mềm OPC, ứng dụng, slide, kế hoạch. Dùng khi Linh nói "giao việc 4D", "mở chiến dịch", "theo quy chuẩn 4D".
+metadata:
+  version: "0.1.0"
 ---
 
 # linhx-4d (LAB105, bản 0.1)

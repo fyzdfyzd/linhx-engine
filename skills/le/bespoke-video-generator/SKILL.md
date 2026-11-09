@@ -1,6 +1,8 @@
 ---
 name: "Bespoke Video Generator"
 description: "Skill sinh video chuyên nghiệp bằng Veo API (Google). Tích hợp Forensic Analyzer để phân tích starting frame/ref, đánh giá chất lượng. Hỗ trợ text-to-video, image-to-video, browser agent tìm reference, API key rotation."
+metadata:
+  version: "0.1.0"
 ---
 
 # Bespoke Video Generator

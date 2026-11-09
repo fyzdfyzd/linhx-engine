@@ -1,6 +1,8 @@
 ---
 name: sd-dung
 description: Bước 7 Flow Pack. Ghép các bản giữ của một tập thành bản dựng nháp, chuẩn bị phụ đề và ghi chú hậu kỳ; tính credit trên mỗi giây và tỉ lệ giữ. Dùng khi mọi đoạn đã có bản giữ.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-dung: bản dựng nháp

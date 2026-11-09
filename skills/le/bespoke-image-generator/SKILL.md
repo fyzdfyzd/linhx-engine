@@ -1,6 +1,8 @@
 ---
 name: "Bespoke Image Generator"
 description: "Skill sinh ảnh chuyên nghiệp bằng Gemini API. Sử dụng khi cần tạo ảnh, poster, banner, đồ họa. Tích hợp Forensic Analyzer để phân tích ref, đánh giá output, và tự refine prompt. Hỗ trợ browser agent tìm reference, brand guideline, API key rotation."
+metadata:
+  version: "0.1.0"
 ---
 
 # Bespoke Image Generator

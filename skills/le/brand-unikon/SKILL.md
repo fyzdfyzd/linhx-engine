@@ -1,6 +1,8 @@
 ---
 name: brand-unikon
-description: Áp dụng thương hiệu Unikon (unikon.vn, sub-agency chiến dịch Generative AI) cho mọi thứ tạo ra: web, slide, credential, proposal, bài đăng, ảnh, nhân vật AI, email, nội dung chữ. Dùng khi người dùng nhắc Unikon, UNIKON, unikon.vn, AI Persona Factory, BESPOKE AI, aicontent.vn, hoặc làm việc trong thư mục BU\UNIKON hoặc PROJECT\Unikon.
+description: "Áp dụng thương hiệu Unikon (unikon.vn, sub-agency chiến dịch Generative AI) cho mọi thứ tạo ra: web, slide, credential, proposal, bài đăng, ảnh, nhân vật AI, email, nội dung chữ. Dùng khi người dùng nhắc Unikon, UNIKON, unikon.vn, AI Persona Factory, BESPOKE AI, aicontent.vn, hoặc làm việc trong thư mục BU\\UNIKON hoặc PROJECT\\Unikon."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu Unikon

@@ -1,6 +1,8 @@
 ---
 name: lps-tu-sua
 description: Vòng tự kiểm và tự sửa sau mỗi thay đổi code. Dùng sau khi sửa file, trước khi báo "xong", khi CI đỏ, hoặc khi Linh nói "kiểm lại", "chạy cho xanh", "fix CI".
+metadata:
+  version: "0.1.0"
 ---
 
 # Tự kiểm, tự sửa

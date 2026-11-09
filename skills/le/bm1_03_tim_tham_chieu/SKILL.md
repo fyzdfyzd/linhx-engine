@@ -1,6 +1,8 @@
 ---
 name: BM1_03_tim_tham_chieu
 description: "Bước 3 của Big Module 1: Tìm tham chiếu, học cách người khác làm và lập sổ nguồn bằng chứng (tối thiểu 15 nguồn cho bài viết/report). Gắn từ LAB025 deep-researcher và LAB028 tim-mau-clone."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 3: Tìm tham chiếu, học cách người khác làm (`BM1_03_tim_tham_chieu`)

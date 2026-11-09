@@ -1,6 +1,8 @@
-﻿---
+---
 name: backend-security-audit
 description: Quy trình tự động rà soát an toàn mã nguồn Backend NestJS/Express theo chuẩn OWASP API Security Top 10 (2023), OWASP LLM Applications (2025) và ASVS v4.0.3 Level 2. Cung cấp ma trận kiểm thử, bộ lệnh SAST Grep tự động, Mẫu Code Chuẩn Mực, Pre-flight Checklist và Toàn bộ Bài học Cạm bẫy Kỹ thuật Thực chiến.
+metadata:
+  version: "0.1.0"
 ---
 
 # QUY CHUẨN RÀ SOÁT AN TOÀN MÃ NGUỒN BACKEND (SAST & API AUDIT)

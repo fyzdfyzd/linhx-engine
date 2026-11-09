@@ -1,6 +1,8 @@
 ---
 name: lab-moi
-description: Mở một thí nghiệm LAB mới hoặc gắn cuộc trò chuyện vào LAB hiện có. Tự động kích hoạt ở đầu mỗi cuộc trò chuyện trong D:\LINHX\LAB (Session Gate) hoặc khi Linh nói "LAB mới: <ý tưởng>", muốn ghi lại một ý tưởng, hay muốn thử nhanh một ý tưởng trên Claude/Antigravity.
+description: "Mở một thí nghiệm LAB mới hoặc gắn cuộc trò chuyện vào LAB hiện có. Tự động kích hoạt ở đầu mỗi cuộc trò chuyện trong D:\\LINHX\\LAB (Session Gate) hoặc khi Linh nói \"LAB mới: <ý tưởng>\", muốn ghi lại một ý tưởng, hay muốn thử nhanh một ý tưởng trên Claude/Antigravity."
+metadata:
+  version: "0.1.0"
 ---
 # LAB mới & Cổng đầu cuộc trò chuyện (Session Gate)
 

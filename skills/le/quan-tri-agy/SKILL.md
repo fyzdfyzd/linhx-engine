@@ -1,6 +1,8 @@
 ---
 name: quan-tri-agy
 description: Claude làm quản trị dự án tổng cho agy với ít token nhất - nhận lệnh của Linh, viết LENH.md, khởi tạo kế hoạch, giao agy chạy trên máy công ty, rồi chỉ đọc BAO-CAO-QUAN-TRI.md theo lịch. Dùng khi Linh giao việc lớn cho agy, hoặc khi Claude sắp hết quota.
+metadata:
+  version: "0.1.0"
 ---
 
 # quan-tri-agy

@@ -1,6 +1,8 @@
 ---
 name: anh-sang-slide
 description: Chế độ "ảnh trọn slide" của linhx-deck - viết prompt từng slide theo ảnh tham chiếu, tạo ảnh slide hoàn chỉnh (có chữ, sơ đồ) trên ChatGPT Plus, rồi chuyển bộ ảnh thành PPTX và Claude slide chỉnh được, có bước duyệt chữ tiếng Việt trước khi xuất. Dùng khi Linh muốn slide nhìn như ảnh GPT, đổi ảnh slide sang PPTX, convert ảnh thành slide sửa được.
+metadata:
+  version: "0.1.0"
 ---
 
 # Ảnh slide → PPTX / Claude slide chỉnh được (bản nháp, KHÔNG dùng)

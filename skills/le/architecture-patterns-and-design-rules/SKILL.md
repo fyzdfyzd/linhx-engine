@@ -1,6 +1,8 @@
-﻿---
+---
 name: architecture-patterns-and-design-rules
 description: Quy chuẩn kiến trúc & nguyên tắc thiết kế mã nguồn chuẩn cho React, Next.js, Node.js, NestJS theo Antigravity Global Architecture Patterns & Design Rules. Bao gồm phân tách Dumb vs Smart component, giới hạn kích thước code, phân cấp State Management, kiểm soát Native Type Casting PostgreSQL/Prisma, Transactions và Evidence-Based Debugging.
+metadata:
+  version: "0.1.0"
 ---
 # QUY CHUẨN KIẾN TRÚC & NGUYÊN TẮC THIẾT KẾ MÃ NGUỒN (ARCHITECTURE PATTERNS & DESIGN RULES)
 **Áp dụng:** Toàn bộ Dự án React / Next.js / Node.js / NestJS thuộc URAH & UNIKON  

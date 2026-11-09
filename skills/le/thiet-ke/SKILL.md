@@ -1,6 +1,8 @@
 ---
 name: thiet-ke
 description: Workflow thiết kế đầu cuối cho một ấn phẩm (logo, poster, pano, social, KV) hoặc một landing page - đề bài, tham chiếu thật, moodboard, nhiều phương án, chấm mù chống mùi AI bởi người không phải thợ, sửa nhiều vòng, kiểm đầu cuối trên khổ thật. Chạy được trên agy qua agy-tu-chay. Dùng khi Linh bảo làm, làm lại hoặc sửa logo, poster, landing.
+metadata:
+  version: "0.1.0"
 ---
 
 # thiet-ke

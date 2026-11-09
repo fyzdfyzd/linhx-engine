@@ -1,6 +1,8 @@
 ---
 name: lps-bao-mat
 description: Mô hình hoá mối đe doạ, quét bảo mật tự động và tự pentest một ứng dụng web theo LPS (OWASP ASVS, Top 10, WSTG, LLM Top 10). Dùng khi tính năng chạm đăng nhập, phân quyền, dữ liệu cá nhân, tiền, upload file, LLM; trước phát hành; hoặc khi Linh nói "kiểm bảo mật", "pentest".
+metadata:
+  version: "0.1.0"
 ---
 
 # Bảo mật và tự pentest

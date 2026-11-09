@@ -1,6 +1,8 @@
 ---
 name: brand-sakedemy
-description: Áp dụng thương hiệu Sakedemy / Sakédemy (sakedemy.com, đào tạo AI thực chiến cho doanh nghiệp) cho mọi thứ tạo ra: web, e-learning, hồ sơ năng lực, proposal, slide, bài đăng, email outreach, ảnh. Dùng khi người dùng nhắc Sakedemy, Sakédemy, SAKE, CLB AI Edge, khoá AI cho doanh nghiệp, hoặc làm việc trong D:\@WF\DATA\BU\SAKEDEMY hay D:\@WF\PROJECT\Sakedemy.
+description: "Áp dụng thương hiệu Sakedemy / Sakédemy (sakedemy.com, đào tạo AI thực chiến cho doanh nghiệp) cho mọi thứ tạo ra: web, e-learning, hồ sơ năng lực, proposal, slide, bài đăng, email outreach, ảnh. Dùng khi người dùng nhắc Sakedemy, Sakédemy, SAKE, CLB AI Edge, khoá AI cho doanh nghiệp, hoặc làm việc trong D:\\@WF\\DATA\\BU\\SAKEDEMY hay D:\\@WF\\PROJECT\\Sakedemy."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu Sakedemy

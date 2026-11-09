@@ -1,6 +1,8 @@
 ---
 name: ra-soat-kho
-description: Rà soát kho second brain khi Linh nói "rà soát kho": lọc INBOX, liệt kê LAB/PROTOTYPE/PRJ/EDU cần chú ý, làm đầu vào cho Weekly Planning của LINHX plan daily. Không viết kế hoạch.
+description: "Rà soát kho second brain khi Linh nói \"rà soát kho\": lọc INBOX, liệt kê LAB/PROTOTYPE/PRJ/EDU cần chú ý, làm đầu vào cho Weekly Planning của LINHX plan daily. Không viết kế hoạch."
+metadata:
+  version: "0.1.0"
 ---
 # Rà soát kho
 

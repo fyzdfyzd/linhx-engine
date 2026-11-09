@@ -1,6 +1,8 @@
 ---
 name: BM2_M2_media_hoa
 description: "Big Module 2 - Điều phối Media hoá theo từng loại nội dung: Ảnh minh hoạ + DOCX (Bài viết), Biểu đồ SVG + Báo cáo HTML/PDF (Report mẫu), Slidev slides.md + Deck 10-deck.json + Slide HTML/PDF (Khoá học 1 buổi), Khung Nhân vật (LAB066) và Khung Video (LAB042). Áp dụng nhận diện tạm Sakedemy (LAB043)."
+metadata:
+  version: "0.1.0"
 ---
 
 # Big Module 2 · Điều phối Media hoá (`BM2_M2_media_hoa`)

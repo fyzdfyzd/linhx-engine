@@ -1,6 +1,6 @@
 ---
 name: tham-dinh-su-kien
-description: Thẩm định một sự kiện trước khi đi: agenda, diễn giả đáng nghe, ai nên gặp, câu hỏi mang theo, có đáng tiền và thời gian không. Dùng khi Linh hỏi "event X có nên đi không", "chuẩn bị đi event", "ai nói ở event này".
+description: "Thẩm định một sự kiện trước khi đi: agenda, diễn giả đáng nghe, ai nên gặp, câu hỏi mang theo, có đáng tiền và thời gian không. Dùng khi Linh hỏi \"event X có nên đi không\", \"chuẩn bị đi event\", \"ai nói ở event này\"."
 ---
 
 # Thẩm định sự kiện

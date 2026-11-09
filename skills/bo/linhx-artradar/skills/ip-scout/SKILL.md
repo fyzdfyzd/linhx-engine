@@ -1,6 +1,6 @@
 ---
 name: ip-scout
-description: Dùng khi chấm và xếp hạng IP (truyện, game, phim) để học cấu trúc làm world: lấy metadata từ Wikidata/Bangumi/AniList/Fandom, chấm 6 tiêu chí 1-5, viết bài học cấu trúc, xuất bảng xếp hạng.
+description: "Dùng khi chấm và xếp hạng IP (truyện, game, phim) để học cấu trúc làm world: lấy metadata từ Wikidata/Bangumi/AniList/Fandom, chấm 6 tiêu chí 1-5, viết bài học cấu trúc, xuất bảng xếp hạng."
 ---
 # Thám IP (M6)
 

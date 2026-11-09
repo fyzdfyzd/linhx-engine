@@ -1,6 +1,8 @@
 ---
 name: brand-urah
-description: Áp dụng thương hiệu URAH (URAH Network, urah.vn, xưởng sản xuất nội dung AI) cho mọi thứ tạo ra: web, proposal, credential deck, slide, bài LinkedIn/Facebook, ảnh, video, email. Dùng khi người dùng nhắc URAH, Urah Network, URAH AI Production Service, urah.vn, hoặc làm việc trong D:\@WF\DATA\BU\URAH.
+description: "Áp dụng thương hiệu URAH (URAH Network, urah.vn, xưởng sản xuất nội dung AI) cho mọi thứ tạo ra: web, proposal, credential deck, slide, bài LinkedIn/Facebook, ảnh, video, email. Dùng khi người dùng nhắc URAH, Urah Network, URAH AI Production Service, urah.vn, hoặc làm việc trong D:\\@WF\\DATA\\BU\\URAH."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu URAH

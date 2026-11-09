@@ -1,6 +1,8 @@
 ---
 name: BM1_07_danh_gia_draft1
 description: "Bước 7 của Big Module 1: Đánh giá Draft 1 bằng bộ công cụ định lượng và phản biện tách ngữ cảnh. Gắn từ LAB049 lượt 0 (cham_cau.py, kiem_van_dich.py, kiem_van.py) + soat-cau-truc, LAB025 bước 8 (APS/CQS), và LAB046 (cổng 17 luật quality.py cho report)."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 7: Đánh giá Draft 1 (`BM1_07_danh_gia_draft1`)

@@ -1,6 +1,6 @@
 ---
 name: ban-do-chu-de
-description: Tổng hợp định kỳ (tháng, quý) từ các sự kiện đã index và hấp thu: mọi người đang nói gì, ai nói hay, pain point lặp lại, solution mới, khoảng trống chưa ai nói, và nên đi event nào tiếp theo. Dùng khi Linh hỏi "thị trường đang nói gì", "insight từ các event", "báo cáo tháng sự kiện".
+description: "Tổng hợp định kỳ (tháng, quý) từ các sự kiện đã index và hấp thu: mọi người đang nói gì, ai nói hay, pain point lặp lại, solution mới, khoảng trống chưa ai nói, và nên đi event nào tiếp theo. Dùng khi Linh hỏi \"thị trường đang nói gì\", \"insight từ các event\", \"báo cáo tháng sự kiện\"."
 ---
 
 # Bản đồ chủ đề sự kiện

@@ -1,6 +1,6 @@
 ---
 name: cau-hoi-thanh-noi-dung
-description: Vòng nhỏ của khung: gom câu hỏi lặp lại trong cộng đồng 14 ngày qua thành 3 đề bài nội dung trụ cho tuần sau (bài LinkedIn/Facebook, bản tin, buổi Zoom). Dùng khi Linh hỏi "tuần sau viết gì", "học viên đang hỏi gì".
+description: "Vòng nhỏ của khung: gom câu hỏi lặp lại trong cộng đồng 14 ngày qua thành 3 đề bài nội dung trụ cho tuần sau (bài LinkedIn/Facebook, bản tin, buổi Zoom). Dùng khi Linh hỏi \"tuần sau viết gì\", \"học viên đang hỏi gì\"."
 ---
 
 # Câu hỏi → nội dung

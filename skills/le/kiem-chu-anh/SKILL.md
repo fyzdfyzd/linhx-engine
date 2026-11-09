@@ -1,6 +1,8 @@
 ---
 name: kiem-chu-anh
 description: Kiểm chính tả chữ trong ảnh AI (ChatGPT, Nano Banana, Flow…) ngay sau khi tải về, nhất là tiếng Việt có dấu; sai thì sửa/gen lại. Dùng sau MỌI lượt tạo ảnh có chữ (mockup, key visual, bìa, standee, slide) trước khi lưu bản chính hay gửi Linh.
+metadata:
+  version: "0.1.0"
 ---
 # Kiểm chữ trong ảnh AI
 

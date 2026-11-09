@@ -1,6 +1,8 @@
 ---
 name: BM1_05_cham_chon_huong
 description: "Bước 5 của Big Module 1 (LÀM MỚI HOÀN TOÀN): Tự chấm 3 phương án Outline A/B/C theo phản ứng của 3 Persona Neo + tiêu chí 'đạt khi' + độ dày bằng chứng + chống AI slop. Có cờ duyet_outline: nguoi/may; dừng chờ khi là người, tự chốt kèm ràng buộc khi là máy."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 5: Tự chấm & Chốt hướng Outline (`BM1_05_cham_chon_huong`)

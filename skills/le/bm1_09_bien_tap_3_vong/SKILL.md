@@ -1,6 +1,8 @@
 ---
 name: BM1_09_bien_tap_3_vong
 description: "Bước 9 của Big Module 1: Duyệt, biên tập qua 6 lượt tách ngữ cảnh (máy, sự thật, cấu trúc, ngôn ngữ, chấm từng câu, độc giả ảo), sửa tối đa 3 vòng và lưu kinh nghiệm. Gắn từ LAB049 bien-tap-bai, hoc-tu-ban-sua và LAB025 bước 9."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 9: Duyệt, biên tập 6 lượt (tối đa 3 vòng) & Lưu kinh nghiệm (`BM1_09_bien_tap_3_vong`)

@@ -1,6 +1,6 @@
 ---
 name: chuyen-kenh
-description: Đưa bài của Linh về đúng khuôn từng kênh (Dân trí Tâm điểm, Bloomberg Businessweek VN, VnExpress Góc nhìn, CafeBiz AI4BIZ, Facebook, Substack, LinkedIn): tên ký, độ dài, tít, sapo, cách viết số. Dùng ở trạm 7 của viet-bai, hoặc khi Linh nhờ "chuyển bài này sang Facebook", "làm bản cho Bloomberg", "đặt tít".
+description: "Đưa bài của Linh về đúng khuôn từng kênh (Dân trí Tâm điểm, Bloomberg Businessweek VN, VnExpress Góc nhìn, CafeBiz AI4BIZ, Facebook, Substack, LinkedIn): tên ký, độ dài, tít, sapo, cách viết số. Dùng ở trạm 7 của viet-bai, hoặc khi Linh nhờ \"chuyển bài này sang Facebook\", \"làm bản cho Bloomberg\", \"đặt tít\"."
 ---
 
 # Chuyển kênh

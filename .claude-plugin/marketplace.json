@@ -1,0 +1,1151 @@
+{
+  "name": "linhx",
+  "owner": {
+    "name": "LINHX"
+  },
+  "metadata": {
+    "description": "Kho skill LINHX: bộ (bo) và skill lẻ (le), mỗi đơn vị một phiên bản SemVer"
+  },
+  "plugins": [
+    {
+      "name": "linhx-artradar",
+      "description": "Radar art style, thư viện nhân vật và IP làm world: quét metadata + link (không lưu ảnh), thẻ nghệ sĩ, nhân vật, thế giới, IP.",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-artradar"
+    },
+    {
+      "name": "linhx-audit",
+      "description": "Brand audit và social content audit theo kiến trúc claude-seo: một skill điều phối, agent chuyên từng nhóm chạy song song, script đo 0 token, điểm có trọng số, kế hoạch theo mức, so mốc theo thời gian.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-audit"
+    },
+    {
+      "name": "linhx-bank-ops",
+      "description": "Skill cho vận hành ngân hàng: soạn quy trình nghiệp vụ theo khung chuẩn và tự kiểm",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-bank-ops"
+    },
+    {
+      "name": "linhx-bien-tap",
+      "description": "Biên tập bài tiếng Việt như biên tập viên người: sáu lượt soát tách ngữ cảnh (máy, sự thật, cấu trúc, ngôn ngữ CQS/APS, chấm từng câu, độc giả ảo), học luật từ bản sửa thật của Vân Anh và Linh.",
+      "version": "0.2.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-bien-tap"
+    },
+    {
+      "name": "linhx-brand-check",
+      "description": "Brand check thời đại agent theo chuẩn ABC v1.0: hỏi nhiều AI bộ câu hỏi tiếng Việt như khách thật, chấm 7 nhãn theo bảng sự thật, kiểm 5 lớp truth signal trên web và kênh, tính 16 chỉ số và AVI = √(Reputation × Verifiable Data), chỉ ra thương hiệu rơi ở bước nào của agent, ra báo cáo và kế hoạch 30 ngày. Nền ai-visibility-skill (MIT).",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-brand-check"
+    },
+    {
+      "name": "linhx-casting",
+      "description": "Casting gương mặt nhân vật: khán giả → persona → ảnh tham chiếu → 5 nhân vật → persona chấm lại → Linh duyệt → character sheet",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-casting"
+    },
+    {
+      "name": "linhx-core",
+      "description": "Luật làm việc của LINHX LAB: bơm luật khi mở phiên, PLAN.md cho từng lab, đề xuất 3-4 phương án có sổ quyết định, báo xong phải có bằng chứng.",
+      "version": "0.1.2",
+      "category": "bo",
+      "source": "./skills/bo/linhx-core"
+    },
+    {
+      "name": "linhx-course",
+      "description": "Biến một chủ đề thành khoá học e-learning hoàn chỉnh: thiết kế mục tiêu theo Bloom, viết kịch bản và slide Slidev, giọng clone tiếng Việt VieNeu-TTS, giảng viên AI tự chạy trên máy (MuseTalk, FlashHead, JoyVASA), kiểm lời ASR và đóng gói SCORM 1.2.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-course"
+    },
+    {
+      "name": "linhx-cuoc-thi",
+      "description": "Radar cuộc thi sáng tạo, viết lách, giải thưởng tại Việt Nam: quét, thẩm định điều kiện, viết bài dự thi, lịch hạn, theo dõi kết quả và sổ giải thưởng cho branding cá nhân.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-cuoc-thi"
+    },
+    {
+      "name": "linhx-deck",
+      "description": "Quy trình 15 bước làm deck proposal kiểu tư vấn chiến lược cho các BU của Linh: hiểu khách, pain-gain, lợi thế từ hồ sơ năng lực LINHX, offer, 3 giải pháp, moodboard, ghost deck, ảnh ChatGPT Plus có tham chiếu, rà ảnh, xuất Claude Slides theo Design System BU, demo, bàn giao. Cổng từng bước do script kiểm.",
+      "version": "0.3.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-deck"
+    },
+    {
+      "name": "linhx-du-lieu",
+      "description": "Dọn dữ liệu AI-ready cho doanh nghiệp Việt: chấm nhanh 6 chiều, dọn bảng bằng recipe thao tác đóng (SĐT, CCCD, MST, ngày, tên, địa chỉ sau sáp nhập, bảng mã), kiểm định hậu điều kiện, nhật ký tái lập.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-du-lieu"
+    },
+    {
+      "name": "linhx-gemini-task",
+      "description": "Giao việc cho Gemini Task (tài khoản Ultra, model Argon) mỗi khi có thể: chọn việc nên giao, viết đề theo khuôn, gửi qua Chrome, ghi sổ, lấy kết quả, chấm máy, đóng gói Skill cho Gemini.",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-gemini-task"
+    },
+    {
+      "name": "linhx-giai-ma-hai",
+      "description": "Giải mã vì sao một content hài viral (GTVH + STEPPS), gom thành khuôn, xuất thủ pháp ngôn ngữ cho LAB087 vét cạn, tái tạo biến thể.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-giai-ma-hai"
+    },
+    {
+      "name": "linhx-kenh-ao",
+      "description": "LAB040 vòng nuôi kênh người ảo: khung hành vi (đọc, trend, kết thân trước; luật 10:1; điểm tin; mục đích bắt buộc), xưởng persona có flaw, tạo, duyệt, đăng qua API chính thức, hộp thư, điểm fan, vòng học. Cổng chặn bằng code.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-kenh-ao"
+    },
+    {
+      "name": "linhx-kho-minh-hoa",
+      "description": "Kho phong cách minh hoạ ý tưởng: thu link từ bộ sưu tập Instagram/Pinterest của Linh, lọc trùng, phân loại hai trục họ phong cách × cơ chế ý tưởng, gom thẻ phong cách có công thức sinh lại, ảnh mẫu tự sinh, trang xem kho và skill minh hoạ một ý.",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-kho-minh-hoa"
+    },
+    {
+      "name": "linhx-khoang-trong",
+      "description": "Radar khoảng trống độc giả: từ top bài, top tác giả, top kênh trên Medium, Substack và kênh quan điểm (LinkedIn, X, Threads, Facebook) suy ra nhu cầu độc giả, ai đang thắng, quy mô, rồi soi về Việt Nam để tìm chủ đề nên chiếm trước.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-khoang-trong"
+    },
+    {
+      "name": "linhx-le-bich-studio",
+      "description": "Plugin Lê Bích Studio: Tra cứu kho asset 4.000+ mảnh PSD/PNG gốc, thay trang phục, gắn xương 2 đoạn + biến dạng lưới bụng, và dựng truyện 4 khung, sticker động GIF/WebP, clip MP4 có tiếng Việt & khẩu hình.",
+      "version": "1.0.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-le-bich-studio"
+    },
+    {
+      "name": "linhx-linh-vuc",
+      "description": "Skill lĩnh vực cho LINHX LAB, mượn từ K-Dense Scientific Agent Skills (MIT): hồ sơ tài trợ, nghiên cứu thị trường, tổng quan tài liệu.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-linh-vuc"
+    },
+    {
+      "name": "linhx-nuoi-cong-dong",
+      "description": "LAB041: nuôi cộng đồng theo chuỗi content → cộng đồng → bán. Agent soạn, chấm, đề xuất; người duyệt và đăng. Hồ sơ đầu tiên: cộng đồng học viên LINHX.",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-nuoi-cong-dong"
+    },
+    {
+      "name": "linhx-office",
+      "description": "Văn phòng ảo LINHX: xem Claude Code và worker Antigravity làm việc trong văn phòng 2D pixel hoặc 3D, chạy cục bộ.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-office"
+    },
+    {
+      "name": "linhx-onbrand",
+      "description": "Design onbrand: nạp brand guideline thành cây thư mục + brand.json, tự thiết kế ấn phẩm đúng ngôn ngữ brand từ khuôn HTML, chấm thiết kế (ảnh, PDF, PPTX, HTML) theo 5 mục màu, chữ, logo, hình/bố cục, nội dung trên thang 100, và ra đề thi để đo năng lực bám chuẩn của designer hoặc AI.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-onbrand"
+    },
+    {
+      "name": "linhx-pheu-omni",
+      "description": "Kế hoạch marketing đa phễu may đo + giả lập ROI: 1 đồng marketing thu về bao nhiêu (LAB073)",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-pheu-omni"
+    },
+    {
+      "name": "linhx-phim-code",
+      "description": "Dựng phim ngắn bằng code với Claude: chọn style (51 style Lemo-Opuscar + khuôn LINHX), chọn máy dựng (Lemo canvas, HyperFrames, Remotion), giọng Việt edge-tts, phụ đề, tự kiểm, dựng video YouTube từ file record (cắt ậm ờ, PiP, phụ đề sống), đề agy chạy đêm. v0.3: lối theo 6 loại video (bán hàng, giải thích, hoạt hình/MV, clip dọc, bắt chước mẫu, cảnh quay), bộ kiểm tự động, agent duyệt độc lập.",
+      "version": "0.3.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-phim-code"
+    },
+    {
+      "name": "linhx-pipeline",
+      "description": "Lõi pipeline dùng chung cho các plugin LinhX, rút từ cách Koharu tổ chức: bảng mục × tầng, chốt từng ô, tự đánh dấu ô cũ khi đầu vào đổi, khoá chỗ Linh sửa tay, lỗi hết tài nguyên chỉ thử lại một lần, SANG-NAY.md cho buổi sáng.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-pipeline"
+    },
+    {
+      "name": "linhx-radar",
+      "description": "Radar LINHX hợp nhất: cộng đồng + nhà tài trợ + KOL (LAB035), sự kiện + giải thưởng (LAB037), gọi kèm cuộc thi (LAB022) và quỹ tài trợ (LAB013). Một CSDL, một bảng xlsx, một bản tin, một lịch chạy.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-radar"
+    },
+    {
+      "name": "linhx-report",
+      "description": "Quy trình 13 bước ra báo cáo PDF cao cấp kiểu McKinsey, Kantar, Nielsen: tìm mẫu và clone phong cách, nghiên cứu có sổ bằng chứng, viết theo lập luận tư vấn, dàn trang tạp chí bằng Typst, cổng kiểm bằng script.",
+      "version": "0.1.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-report"
+    },
+    {
+      "name": "linhx-tai-tao-flow",
+      "description": "Đọc một bài quảng cáo sản phẩm AI, tái tạo flow kỹ thuật phía sau, chấm khả thi, chấm khả năng kinh doanh, rồi đóng thành pack (khung plugin) nếu đáng làm.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-tai-tao-flow"
+    },
+    {
+      "name": "linhx-thoi-quen-ai",
+      "description": "Biến một nhận xét về văn AI thành giả thuyết đo được, chạy cùng bộ đề trên nhiều model, ra bảng thống kê ĐÚNG/NGƯỢC/CHƯA RÕ theo từng model.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-thoi-quen-ai"
+    },
+    {
+      "name": "linhx-thu-ky",
+      "description": "Thư ký ảo LINHX: nhân vật video (bộ clip Live Character / If Agent) nói chuyện bằng giọng hoặc chữ, kể tình hình mọi dự án và giao việc cho Claude Code chạy trong từng thư mục. Chạy cục bộ.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-thu-ky"
+    },
+    {
+      "name": "linhx-tu-duy",
+      "description": "Bộ 52 thẻ mental model (Naval + Munger/Farnam Street) bằng tiếng Việt, kèm vòng duy trì: chọn thẻ cho tình huống, nhật ký quyết định chỉ thêm không sửa, thẻ của ngày, chấm tuần và hiệu chỉnh độ chắc.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-tu-duy"
+    },
+    {
+      "name": "linhx-viet-bai",
+      "description": "Quy trình LinhX Write 9 bước gốc của Linh (FLOW v FM, D:\\@WF\\TOOL\\00_WRITING) chuyển sang plugin: 11 câu hỏi Deep Inquiry, 30 tứ, 3 phương án, phản biện 2 tầng AI Detector + Editorial QA qua Gemini, chọn bản tốt nhất.",
+      "version": "0.2.1",
+      "category": "bo",
+      "source": "./skills/bo/linhx-viet-bai"
+    },
+    {
+      "name": "linhx-viet-giong-viet",
+      "description": "Viết bài như người viết + người biên tập, giọng Việt của Đinh Trần Tuấn Linh / Lê Bích, chống văn AI và văn dịch.",
+      "version": "0.3.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-viet-giong-viet"
+    },
+    {
+      "name": "linhx-vong-ads",
+      "description": "Vòng lặp chạy quảng cáo kiểu Fastlane: đọc kết quả, chấm thắng/thua, đề xuất dời ngân sách và brief biến thể. Người duyệt mọi lệnh ghi.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/linhx-vong-ads"
+    },
+    {
+      "name": "proposal-studio",
+      "description": "Brief → phân tích, nghiên cứu công nghệ event, ý tưởng (có IFAGENT), mockup màn hình, minh hoạ kỹ thuật, prompt ảnh ChatGPT/Flow và deck PPTX thay thế được.",
+      "version": "0.1.0",
+      "category": "bo",
+      "source": "./skills/bo/proposal-studio"
+    },
+    {
+      "name": "agent-truong",
+      "description": "Agent trưởng điều phối đội subagent nhỏ: chia việc lớn thành đầu việc hẹp, giao cho thợ (tho-tim-nguon, tho-doc-nguon, tho-kiem-chung, tho-viet) chạy song song, kiểm kết quả rồi tổng hợp. Dùng khi Linh nói \"agent trưởng\", \"chia việc cho subagent\", \"giao cho đội làm\", hoặc việc cần đọc nhiều nguồn, nhiều file cùng lúc (vd tra luật đầy đủ, rà nhiều tài liệu).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/agent-truong"
+      ]
+    },
+    {
+      "name": "agy-tu-chay",
+      "description": "Cho Antigravity (agy) tự lập kế hoạch và tự chạy trọn một việc theo phiếu, tự kiểm, tự chấm chéo bằng phiên mới, ghi báo cáo một trang cho Claude và Linh. Dùng khi Linh hoặc Claude giao một việc lớn (chiến lược, báo cáo, slide...) để chạy trên máy công ty mà không tốn token Claude.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/agy-tu-chay"
+      ]
+    },
+    {
+      "name": "ai-photobooth-golden-standard",
+      "description": "Quy chuẩn vàng Prompt Engineering, kiến trúc đa góc chụp (Full-body, Waist-up, Close-up), khóa nhận diện khuôn mặt 1:1, tỉ lệ cơ thể siêu mẫu 1:8 chống đầu to, biểu cảm cười mỉm khép môi chống đơ/chống già, và 10 bài học thực chiến (Lessons Learnt) cho AI Photobooth sự kiện (Gemini Image). Kích hoạt khi thiết kế, viết prompt, tạo concept hoặc tối ưu chất lượng hình ảnh AI Photobooth.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/ai-photobooth-golden-standard"
+      ]
+    },
+    {
+      "name": "anh-sang-slide",
+      "description": "Chế độ \"ảnh trọn slide\" của linhx-deck - viết prompt từng slide theo ảnh tham chiếu, tạo ảnh slide hoàn chỉnh (có chữ, sơ đồ) trên ChatGPT Plus, rồi chuyển bộ ảnh thành PPTX và Claude slide chỉnh được, có bước duyệt chữ tiếng Việt trước khi xuất. Dùng khi Linh muốn slide nhìn như ảnh GPT, đổi ảnh slide sang PPTX, convert ảnh thành slide sửa được.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/anh-sang-slide"
+      ]
+    },
+    {
+      "name": "architecture-patterns-and-design-rules",
+      "description": "Quy chuẩn kiến trúc & nguyên tắc thiết kế mã nguồn chuẩn cho React, Next.js, Node.js, NestJS theo Antigravity Global Architecture Patterns & Design Rules. Bao gồm phân tách Dumb vs Smart component, giới hạn kích thước code, phân cấp State Management, kiểm soát Native Type Casting PostgreSQL/Prisma, Transactions và Evidence-Based Debugging.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/architecture-patterns-and-design-rules"
+      ]
+    },
+    {
+      "name": "backend-security-audit",
+      "description": "Quy trình tự động rà soát an toàn mã nguồn Backend NestJS/Express theo chuẩn OWASP API Security Top 10 (2023), OWASP LLM Applications (2025) và ASVS v4.0.3 Level 2. Cung cấp ma trận kiểm thử, bộ lệnh SAST Grep tự động, Mẫu Code Chuẩn Mực, Pre-flight Checklist và Toàn bộ Bài học Cạm bẫy Kỹ thuật Thực chiến.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/backend-security-audit"
+      ]
+    },
+    {
+      "name": "bespoke-image-generator",
+      "description": "Skill sinh ảnh chuyên nghiệp bằng Gemini API. Sử dụng khi cần tạo ảnh, poster, banner, đồ họa. Tích hợp Forensic Analyzer để phân tích ref, đánh giá output, và tự refine prompt. Hỗ trợ browser agent tìm reference, brand guideline, API key rotation.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bespoke-image-generator"
+      ]
+    },
+    {
+      "name": "bespoke-video-generator",
+      "description": "Skill sinh video chuyên nghiệp bằng Veo API (Google). Tích hợp Forensic Analyzer để phân tích starting frame/ref, đánh giá chất lượng. Hỗ trợ text-to-video, image-to-video, browser agent tìm reference, API key rotation.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bespoke-video-generator"
+      ]
+    },
+    {
+      "name": "bm1-01-phan-tich-de-bai",
+      "description": "Bước 1 của Big Module 1: Đọc kỹ, phân tích đề bài, xác định hạt giống ý tưởng (Seed Input) và mở rộng bối cảnh bằng 11 câu hỏi sâu (3 câu ưu tiên). Gắn từ LAB025 idea-seeder, LAB028 bước 1 (report) và LAB017 course-architect (khoá học).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_01_phan_tich_de_bai"
+      ]
+    },
+    {
+      "name": "bm1-02-persona-neo",
+      "description": "Bước 2 của Big Module 1 (GỘP MỚI): Nghiên cứu người nhận, xác định khoảng trống độc giả (LAB029), lọc nhân khẩu học phân tầng Việt Nam (LAB048) và đắp khung tâm lý/nỗi sợ ẩn/câu hay cãi (LAB049 doc-gia-ao) để dựng 3 Persona Neo.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_02_persona_neo"
+      ]
+    },
+    {
+      "name": "bm1-03-tim-tham-chieu",
+      "description": "Bước 3 của Big Module 1: Tìm tham chiếu, học cách người khác làm và lập sổ nguồn bằng chứng (tối thiểu 15 nguồn cho bài viết/report). Gắn từ LAB025 deep-researcher và LAB028 tim-mau-clone.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_03_tim_tham_chieu"
+      ]
+    },
+    {
+      "name": "bm1-04-outline-thu-persona",
+      "description": "Bước 4 của Big Module 1 (LÀM MỚI PHẦN THỬ PERSONA): Rút 30 insights và dựng 3 phương án Outline A/B/C khác biệt (gắn LAB025 content-synthesizer), sau đó đưa cả 3 Outline cho 3 Persona Neo (từ Bước 2) đọc thử và chấm phản ứng theo 5 tiêu chí.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_04_outline_thu_persona"
+      ]
+    },
+    {
+      "name": "bm1-05-cham-chon-huong",
+      "description": "Bước 5 của Big Module 1 (LÀM MỚI HOÀN TOÀN): Tự chấm 3 phương án Outline A/B/C theo phản ứng của 3 Persona Neo + tiêu chí 'đạt khi' + độ dày bằng chứng + chống AI slop. Có cờ duyet_outline: nguoi/may; dừng chờ khi là người, tự chốt kèm ràng buộc khi là máy.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_05_cham_chon_huong"
+      ]
+    },
+    {
+      "name": "bm1-06-trien-khai-draft1",
+      "description": "Bước 6 của Big Module 1: Triển khai từng phần theo Outline đã chốt ở Bước 5, thiếu thì nghiên cứu thêm, lưu Draft 1. Tự động điều phối theo loại nội dung: Bài viết (LAB049 + LAB025), Report mẫu (LAB028 + LAB046), Nội dung khoá học (LAB017 linhx-course).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_06_trien_khai_draft1"
+      ]
+    },
+    {
+      "name": "bm1-07-danh-gia-draft1",
+      "description": "Bước 7 của Big Module 1: Đánh giá Draft 1 bằng bộ công cụ định lượng và phản biện tách ngữ cảnh. Gắn từ LAB049 lượt 0 (cham_cau.py, kiem_van_dich.py, kiem_van.py) + soat-cau-truc, LAB025 bước 8 (APS/CQS), và LAB046 (cổng 17 luật quality.py cho report).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_07_danh_gia_draft1"
+      ]
+    },
+    {
+      "name": "bm1-08-viet-lai-giong-tac-gia",
+      "description": "Bước 8 của Big Module 1: Viết lại theo giọng tác giả, cân bằng giữa nhu cầu độc giả (Persona Neo) và hồ sơ giọng (Linh / Vân Anh / Giảng viên / Báo cáo). Gắn từ LAB049 linhx-viet-giong-viet, luong-hoa, và ho-so-bien-tap.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_08_viet_lai_giong_tac_gia"
+      ]
+    },
+    {
+      "name": "bm1-09-bien-tap-3-vong",
+      "description": "Bước 9 của Big Module 1: Duyệt, biên tập qua 6 lượt tách ngữ cảnh (máy, sự thật, cấu trúc, ngôn ngữ, chấm từng câu, độc giả ảo), sửa tối đa 3 vòng và lưu kinh nghiệm. Gắn từ LAB049 bien-tap-bai, hoc-tu-ban-sua và LAB025 bước 9.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm1_09_bien_tap_3_vong"
+      ]
+    },
+    {
+      "name": "bm2-m1-chu-trinh-template",
+      "description": "Big Module 2 - Chu trình Template dạng chung (LÀM MỚI theo mẫu LAB043 v2): Phân tích yêu cầu -> Tham chiếu & nạp luật Onbrand -> Dựng 2-3 phương án thiết kế -> Chấm độc lập theo rubric -> Biên tập tối đa 3 vòng và đánh phiên bản.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm2_m1_chu_trinh_template"
+      ]
+    },
+    {
+      "name": "bm2-m2-media-hoa",
+      "description": "Big Module 2 - Điều phối Media hoá theo từng loại nội dung: Ảnh minh hoạ + DOCX (Bài viết), Biểu đồ SVG + Báo cáo HTML/PDF (Report mẫu), Slidev slides.md + Deck 10-deck.json + Slide HTML/PDF (Khoá học 1 buổi), Khung Nhân vật (LAB066) và Khung Video (LAB042). Áp dụng nhận diện tạm Sakedemy (LAB043).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/bm2_m2_media_hoa"
+      ]
+    },
+    {
+      "name": "brand-btmh",
+      "description": "Áp dụng thương hiệu Bảo Tín Mạnh Hải (BTMH, vàng và trang sức 24K) cho mọi thứ tạo ra: web, giao diện, slide, bài đăng, ảnh, bao bì, văn bản Word/Excel, nội dung chữ. Dùng khi người dùng nhắc BTMH, Bảo Tín Mạnh Hải, Kim Gia Bảo, MHJ, Trân Bảo, hoặc làm việc trong D:\\@WF\\PROJECT\\BTMH.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-btmh"
+      ]
+    },
+    {
+      "name": "brand-chiemtinh",
+      "description": "Áp dụng thương hiệu Chiêm Tinh Số (chiemtinh.vn, báo cáo bản đồ sao tiếng Việt, OPC001) cho mọi thứ tạo ra: landing, báo cáo PDF, bài TikTok/Facebook, blog, email, CSKH, ảnh. Dùng khi người dùng nhắc chiemtinh.vn, Chiêm Tinh Số, CTS, bản đồ sao, OPC001, hoặc làm việc trong D:\\LINHX\\LINHX-OPC\\OPC001-CHIEMTINH-VN.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-chiemtinh"
+      ]
+    },
+    {
+      "name": "brand-guideline-chuan",
+      "description": "Dựng hoặc làm lại brand guideline công ty theo chuẩn BTMH 2026 (LAB043): khung, bộ dựng, ảnh ChatGPT mockup, phương án chọn. Dùng khi Linh bảo làm/rà soát/chạy lại guideline.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-guideline-chuan"
+      ]
+    },
+    {
+      "name": "brand-ifagent",
+      "description": "Áp dụng thương hiệu IF Agent (ifagent.net, AI Event Technology) cho mọi thứ tạo ra: web, giao diện, slide, credential, proposal, bài đăng, ảnh, booth sự kiện, email, nội dung chữ. Dùng khi người dùng nhắc IF Agent, IFAGENT, IFA, ifagent.net, AI activation cho sự kiện, hoặc làm việc trong thư mục IFAGENT/IFAgent/IFA PROPOSAL.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-ifagent"
+      ]
+    },
+    {
+      "name": "brand-mau",
+      "description": "Áp dụng thương hiệu <Tên> (<domain>) cho mọi thứ tạo ra: trang web, giao diện app, slide, bài đăng mạng xã hội, ảnh, email, bao bì, nội dung chữ. Dùng khi người dùng nhắc <Tên>, <domain>, hoặc làm việc trong dự án của <Tên>.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-mau"
+      ]
+    },
+    {
+      "name": "brand-sakedemy",
+      "description": "Áp dụng thương hiệu Sakedemy / Sakédemy (sakedemy.com, đào tạo AI thực chiến cho doanh nghiệp) cho mọi thứ tạo ra: web, e-learning, hồ sơ năng lực, proposal, slide, bài đăng, email outreach, ảnh. Dùng khi người dùng nhắc Sakedemy, Sakédemy, SAKE, CLB AI Edge, khoá AI cho doanh nghiệp, hoặc làm việc trong D:\\@WF\\DATA\\BU\\SAKEDEMY hay D:\\@WF\\PROJECT\\Sakedemy.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-sakedemy"
+      ]
+    },
+    {
+      "name": "brand-tuva",
+      "description": "Áp dụng thương hiệu TUVA (TUVA Communication, Tù Và, tuva.work, truyền thông phát triển cho NGO/donor/CSR) cho mọi thứ tạo ra: web, báo cáo, proposal, slide, bài LinkedIn/Facebook, ảnh, sự kiện, tập huấn. Dùng khi người dùng nhắc TUVA, Tù Và, tuva.work, LISTENING VIETNAM, TUVA Decent AI, hoặc làm việc trong D:\\@WF\\DATA\\BU\\TUVA hay D:\\@WF\\PROJECT\\TUVA2026.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-tuva"
+      ]
+    },
+    {
+      "name": "brand-unikon",
+      "description": "Áp dụng thương hiệu Unikon (unikon.vn, sub-agency chiến dịch Generative AI) cho mọi thứ tạo ra: web, slide, credential, proposal, bài đăng, ảnh, nhân vật AI, email, nội dung chữ. Dùng khi người dùng nhắc Unikon, UNIKON, unikon.vn, AI Persona Factory, BESPOKE AI, aicontent.vn, hoặc làm việc trong thư mục BU\\UNIKON hoặc PROJECT\\Unikon.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-unikon"
+      ]
+    },
+    {
+      "name": "brand-urah",
+      "description": "Áp dụng thương hiệu URAH (URAH Network, urah.vn, xưởng sản xuất nội dung AI) cho mọi thứ tạo ra: web, proposal, credential deck, slide, bài LinkedIn/Facebook, ảnh, video, email. Dùng khi người dùng nhắc URAH, Urah Network, URAH AI Production Service, urah.vn, hoặc làm việc trong D:\\@WF\\DATA\\BU\\URAH.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/brand-urah"
+      ]
+    },
+    {
+      "name": "btmh-monthly-retail-intelligence",
+      "description": "Quy trình tự động hóa toàn diện lập Báo cáo Phân tích Kinh doanh Bán lẻ hàng tháng chuẩn McKinsey cho chuỗi 76-78 cửa hàng Bảo Tín Mạnh Hải (BTMH). Bao gồm: Kiểm toán tự động chất lượng dữ liệu 5 chiều, Rà soát xung đột vĩ mô & đối thủ cạnh tranh, Mô hình Bể lợi nhuận & Điểm uốn chiến lược (M-PPIE), Đào sâu tối thiểu 5 Actionable Insights định lượng, Soạn thảo khuyến nghị SCQA & Phân quyền RACI 5 khối, và Tự động xuất bản bộ ba ấn phẩm: Word DOCX chuyên sâu, Slide PPTX chuẩn nhận diện BTMH, và Website mô phỏng kịch bản kinh doanh tương tác thời gian thực (What-If Simulation Dashboard).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/btmh-monthly-retail-intelligence"
+      ]
+    },
+    {
+      "name": "cafebiz-radar",
+      "description": "Phân tích tin công nghệ cho mảng công nghệ CafeBiz theo quy chuẩn News Listening (mã trend T01–T13, nước và hướng lan, khoảng trống VN, độ hút, 6 chỉ số H M V G R C, góc viết). Dùng khi được giao gom cụm hoặc chấm thẻ từ data/CAFEBIZ_TECH_RADAR/RUNS/<ngày>/. Trả JSON đúng schema được đưa, không tự tính điểm tổng.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/cafebiz-radar"
+      ]
+    },
+    {
+      "name": "chien-luoc",
+      "description": "Xây chiến lược theo chuẩn cao kiểu Trân Bảo / Kim Gia Bảo Gift / BTMH IPO - nghiên cứu tới đâu lưu tới đó, đào sâu khách hàng mục tiêu và định vị đối thủ, tìm khoảng trống thị trường, quyết định sản phẩm hoặc thông điệp. Dùng khi Linh hoặc khách cần chiến lược, PMF, GTM, định vị, kế hoạch thương hiệu.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/chien-luoc"
+      ]
+    },
+    {
+      "name": "chuyen-skill",
+      "description": "Chuyển một skill hoặc plugin Claude Code (SKILL.md, commands, agents) sang GitHub Copilot, Gemini CLI và Antigravity, kèm bảng cảnh báo chỗ chỉ Claude hiểu. Dùng khi Linh nói \"chuyển skill sang Copilot/Gemini/agy\", \"cho skill chạy đa nền\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/chuyen-skill"
+      ]
+    },
+    {
+      "name": "dong-thread",
+      "description": "Đóng một thread Claude Code đang dở: viết file bàn giao gọn để Antigravity (hoặc phiên mới) làm tiếp. Dùng khi Linh nói 'đóng thread', 'bàn giao', 'chuyển sang Antigravity'.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/dong-thread"
+      ]
+    },
+    {
+      "name": "e2e-3-rounds-harsh-reviewer",
+      "description": "Quy trình chuẩn chạy kiểm thử tích hợp End-to-End (E2E) tối thiểu 3 vòng (Round 1 -> Round 2 -> Round 3) trên trình duyệt thật bằng Playwright, chụp ảnh màn hình toàn bộ ứng dụng, đóng vai Reviewer Khó Tính soi trực tiếp ảnh chụp sản phẩm cuối và DOM/WCAG, ghi lại kinh nghiệm + lỗi + điểm cải thiện vào checkpoint trên ổ cứng (.handoff/e2e-checkpoint.json) để phiên/vòng sau chạy tiếp từ điểm đó cho đến khi đạt >= 9.2/10.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/e2e-3-rounds-harsh-reviewer"
+      ]
+    },
+    {
+      "name": "enterprise-imc-campaign-creator",
+      "description": "Quy trình tự động hóa toàn diện xây dựng Kế hoạch Truyền thông Tích hợp (IMC Plan) cấp doanh nghiệp: từ Deep Research 5 chiều (Sản phẩm, Chân dung khách hàng, Đối thủ, Bối cảnh quảng cáo, Brand voice), Mô hình hóa tài chính định lượng, Đề xuất 3 Big Ideas, Thẩm định khắt khe bằng Rubric Scorecard, Kế hoạch kênh O2O, Ma trận ngân sách & lịch phát sóng, đến Sản xuất nội dung tự động đa góc nhìn (3 Angles), Vòng lặp tự tinh chỉnh (Self-Refinement Loop tối đa 10 lần) đạt điểm > 9.0/10, kèm Plan chạy Ads và tạo ảnh minh họa đồ họa.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/enterprise-imc-campaign-creator"
+      ]
+    },
+    {
+      "name": "flow-canh-tron-khung",
+      "description": "Dựng cảnh hoạt hình nét vẽ bằng Flow/Veo trọn khung (nhân vật cùng object, chữ trong một ảnh), code chỉ chọn khung, đẩy máy, phụ đề, nhạc. Dùng khi Linh nói \"phương án Flow\", hoặc cảnh có object nhỏ, ít chuyển động. Cần object bật ra theo nhịp thì dùng skill hybrid-canh-nhan-vat.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/flow-canh-tron-khung"
+      ]
+    },
+    {
+      "name": "frontend-security-audit",
+      "description": "Quy trình tự động rà soát an toàn mã nguồn Frontend Next.js/React theo tiêu chuẩn hiện đại (CWE-522, CWE-79, CWE-284, CWE-200). Cung cấp ma trận kiểm thử, bộ lệnh SAST Grep tự động, Mẫu Code Chuẩn Mực, Pre-flight Checklist và Toàn bộ Bài học Cạm bẫy Kỹ thuật Thực chiến.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/frontend-security-audit"
+      ]
+    },
+    {
+      "name": "hybrid-canh-nhan-vat",
+      "description": "Dựng cảnh hoạt hình kiểu hybrid: Flow/Veo chỉ làm chuyển động riêng của nhân vật nét vẽ trên nền trắng, code lo object, chữ, máy, âm thanh và canh nhịp theo thoại. Dùng khi Linh nói \"hybrid\", \"làm chuyển động riêng\", hoặc khi cảnh có nhân vật cạnh poster, logo, chữ mà Veo làm hỏng.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/hybrid-canh-nhan-vat"
+      ]
+    },
+    {
+      "name": "kiem-chu-anh",
+      "description": "Kiểm chính tả chữ trong ảnh AI (ChatGPT, Nano Banana, Flow…) ngay sau khi tải về, nhất là tiếng Việt có dấu; sai thì sửa/gen lại. Dùng sau MỌI lượt tạo ảnh có chữ (mockup, key visual, bìa, standee, slide) trước khi lưu bản chính hay gửi Linh.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/kiem-chu-anh"
+      ]
+    },
+    {
+      "name": "lab-moi",
+      "description": "Mở một thí nghiệm LAB mới hoặc gắn cuộc trò chuyện vào LAB hiện có. Tự động kích hoạt ở đầu mỗi cuộc trò chuyện trong D:\\LINHX\\LAB (Session Gate) hoặc khi Linh nói \"LAB mới: <ý tưởng>\", muốn ghi lại một ý tưởng, hay muốn thử nhanh một ý tưởng trên Claude/Antigravity.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lab-moi"
+      ]
+    },
+    {
+      "name": "le-bich-hoat-hinh",
+      "description": "Vẽ nhân vật Lê Bích bụng phệ bằng code từ bộ rời gốc (PSD của tác giả) để làm trang truyện, sticker động, clip hoạt hình. Dùng khi được nhờ vẽ, làm truyện, sticker hay animation Lê Bích.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/le-bich-hoat-hinh"
+      ]
+    },
+    {
+      "name": "linhx-4d",
+      "description": "Giao việc theo quy chuẩn 4D (Double Diamond x 100 Tasks x phòng Tam Quốc) cho mọi dự án - giáo trình, phần mềm OPC, ứng dụng, slide, kế hoạch. Dùng khi Linh nói \"giao việc 4D\", \"mở chiến dịch\", \"theo quy chuẩn 4D\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-4d"
+      ]
+    },
+    {
+      "name": "linhx-be-phong",
+      "description": "Lập kế hoạch launch một OPC mới trên bệ phóng chung của LINHX (15 khâu, module dùng lại từ các lab) và so KPI giữa các OPC. Dùng khi Linh nói \"launch OPC mới\", \"bệ phóng\", \"so các OPC\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-be-phong"
+      ]
+    },
+    {
+      "name": "linhx-chuan",
+      "description": "Lõi chất lượng LINHX. Đọc trước mọi việc tạo sản phẩm cho Linh hoặc khách (chiến lược, giáo trình, slide, báo cáo, thiết kế, ảnh, nghiên cứu). Có 14 luật, thang chấm 16 tiêu chí, khuôn sổ và kiem.py.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-chuan"
+      ]
+    },
+    {
+      "name": "linhx-crawler",
+      "description": "Crawl web content via LinhX Lab's self-hosted multi-tier FastAPI server. Supports waterfall fallback (httpx → Crawl4AI → Firecrawl → Playwright) for maximum reliability. Use for fetching article content, discovering sitemaps, batch crawling, and extracting media assets.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-crawler"
+      ]
+    },
+    {
+      "name": "linhx-toan-van",
+      "description": "Lấy toàn văn bài (Medium, Substack, web) theo danh sách URL bằng extension LINHX_CRAWLER trong Chrome đã đăng nhập của Linh, 0 token; tự bật server, lưu mỗi bài một file md.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-toan-van"
+      ]
+    },
+    {
+      "name": "linhx-tu-chay",
+      "description": "Cho Claude và Antigravity tự đi từ ý định 4 câu tới sản phẩm chạy được - khám phá, PRD, features.json khoá, thợ làm từng feature, cổng kiểm độc lập ngoài tay thợ, Linh chỉ duyệt ở cổng người. Dùng khi Linh nói \"tự chạy\", \"tự viết PRD\", \"giao agy làm tới cuối\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/linhx-tu-chay"
+      ]
+    },
+    {
+      "name": "lps-bao-mat",
+      "description": "Mô hình hoá mối đe doạ, quét bảo mật tự động và tự pentest một ứng dụng web theo LPS (OWASP ASVS, Top 10, WSTG, LLM Top 10). Dùng khi tính năng chạm đăng nhập, phân quyền, dữ liệu cá nhân, tiền, upload file, LLM; trước phát hành; hoặc khi Linh nói \"kiểm bảo mật\", \"pentest\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-bao-mat"
+      ]
+    },
+    {
+      "name": "lps-khoi-tao",
+      "description": "Khởi tạo một dự án webapp/nền tảng mới (hoặc đưa dự án có sẵn) vào chuẩn LINHX Platform Standard (LPS). Dùng khi Linh nói \"dự án mới\", \"khởi tạo theo LPS\", \"áp chuẩn LPS vào repo này\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-khoi-tao"
+      ]
+    },
+    {
+      "name": "lps-llm",
+      "description": "Thiết kế, viết, kiểm thử và red team một tính năng gọi LLM (chatbot, tóm tắt, trích xuất, phân loại, RAG, agent có tool) theo chuẩn LPS-AI. Dùng khi thêm hoặc sửa prompt, đổi model, thêm tool cho AI, hoặc khi Linh nói \"tính năng AI\", \"gọi Claude/GPT\", \"prompt\", \"eval\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-llm"
+      ]
+    },
+    {
+      "name": "lps-release",
+      "description": "Kiểm cổng phát hành (release gate) trước khi đưa bản mới lên production theo LPS. Dùng khi Linh nói \"phát hành\", \"release\", \"deploy production\", \"lên bản mới\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-release"
+      ]
+    },
+    {
+      "name": "lps-review",
+      "description": "Review/phản biện độc lập một thay đổi (diff, PR, SPEC) với ngữ cảnh sạch, ưu tiên mô hình hoặc công cụ khác với bên viết code. Dùng trước khi merge, khi Linh nói \"review\", \"phản biện\", \"critique\", \"soi lỗi\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-review"
+      ]
+    },
+    {
+      "name": "lps-spec",
+      "description": "Viết SPEC có tiêu chí chấp nhận kiểm được trước khi code một tính năng. Dùng khi bắt đầu tính năng mới, khi yêu cầu còn mơ hồ, hoặc khi Linh nói \"lên spec\", \"thiết kế tính năng\", \"plan\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-spec"
+      ]
+    },
+    {
+      "name": "lps-tdd",
+      "description": "Thực hiện một bước trong SPEC theo vòng test trước (đỏ → xanh → dọn). Dùng khi code logic nghiệp vụ, API, hoặc sửa bug (\"sửa lỗi\", \"implement\", \"làm bước N của SPEC\").",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-tdd"
+      ]
+    },
+    {
+      "name": "lps-tu-sua",
+      "description": "Vòng tự kiểm và tự sửa sau mỗi thay đổi code. Dùng sau khi sửa file, trước khi báo \"xong\", khi CI đỏ, hoặc khi Linh nói \"kiểm lại\", \"chạy cho xanh\", \"fix CI\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-tu-sua"
+      ]
+    },
+    {
+      "name": "lps-ui",
+      "description": "Thiết kế và tự kiểm giao diện web theo LPS (design token, trạng thái, mobile-first, WCAG 2.2 AA, Core Web Vitals, heuristic Nielsen). Dùng khi làm hoặc sửa màn hình, component, landing page, Zalo Mini App.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-ui"
+      ]
+    },
+    {
+      "name": "lps-user-test",
+      "description": "Chuẩn bị, chạy và tổng hợp một vòng thử nghiệm người dùng (usability test) 5 người. Dùng khi tính năng lớn sắp phát hành, khi Linh nói \"thử với người dùng\", \"test người dùng\", \"UAT\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lps-user-test"
+      ]
+    },
+    {
+      "name": "lvn-listening",
+      "description": "Ra bản tin lắng nghe mạng xã hội tiếng Việt theo hồ sơ md (thương hiệu, ngành, chủ đề) từ dữ liệu LINHX_CRAWLER; 0 token cho phần số, ra BAO-CAO.md + feed.json cho agent.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/lvn-listening"
+      ]
+    },
+    {
+      "name": "morning",
+      "description": "Render the user's morning brief as a styled HTML artifact, or set it up as a recurring weekday task. Use only when the user explicitly asks to run, see, or set up their morning brief, or if they invoke /morning by name. A question about their day, schedule, or calendar is not by itself a request for the brief; answer it directly instead.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/morning"
+      ]
+    },
+    {
+      "name": "phien-ban-skill",
+      "description": "Quy trình sửa, tăng bản và phát hành skill trong kho LINHX (linhx-engine/skills): chọn mức patch/minor/major, ghi CHANGELOG, chạy bộ kiểm, để CI gắn tag. Dùng mỗi khi tạo, sửa, đổi tên hay bỏ một skill hoặc bộ skill, hoặc khi được hỏi skill đang ở bản nào.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/phien-ban-skill"
+      ]
+    },
+    {
+      "name": "proto-moi",
+      "description": "Đưa một EXP đã chạy được ở LAB lên PROTOTYPE khi Linh nói \"lên prototype: LAB…\" hoặc đồng ý sau khi chấm cổng.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/proto-moi"
+      ]
+    },
+    {
+      "name": "quan-tri-agy",
+      "description": "Claude làm quản trị dự án tổng cho agy với ít token nhất - nhận lệnh của Linh, viết LENH.md, khởi tạo kế hoạch, giao agy chạy trên máy công ty, rồi chỉ đọc BAO-CAO-QUAN-TRI.md theo lịch. Dùng khi Linh giao việc lớn cho agy, hoặc khi Claude sắp hết quota.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/quan-tri-agy"
+      ]
+    },
+    {
+      "name": "ra-soat-kho",
+      "description": "Rà soát kho second brain khi Linh nói \"rà soát kho\": lọc INBOX, liệt kê LAB/PROTOTYPE/PRJ/EDU cần chú ý, làm đầu vào cho Weekly Planning của LINHX plan daily. Không viết kế hoạch.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/ra-soat-kho"
+      ]
+    },
+    {
+      "name": "research-loop",
+      "description": "Chạy vòng lặp nghiên cứu tự động qua đêm (hiểu đề → tài liệu → ý tưởng → thí nghiệm → phân tích) với phép đo khoá, nhật ký TSV và DIGEST buổi sáng. Dùng khi người nói \"chạy research loop\", \"cho agent thử ý tưởng cả đêm\", \"autoresearch\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/research-loop"
+      ]
+    },
+    {
+      "name": "research-write",
+      "description": "Viết bài báo từ kết quả research-loop theo thứ tự chứng cứ trước, lời sau - chuẩn bị đầu vào, cổng người duyệt, viết, phản biện độc lập. Dùng khi người nói \"viết bài từ kết quả\", \"viết manuscript\", \"chuẩn bị bản thảo Q1\".",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/research-write"
+      ]
+    },
+    {
+      "name": "sd-bo-tham-chieu",
+      "description": "Quy trình làm ảnh bằng ChatGPT Plus cho một series: đoán khán giả (TA), chuẩn bị brand và logo, tìm 2–3 art style trên Pinterest, chọn style, tạo bộ ảnh tham chiếu đầy đủ (nhân vật, bối cảnh, đạo cụ) và lưu vào thư viện. Dùng sau sd-de-xuat, trước sd-kich-ban, và mỗi khi thêm nhân vật hay bối cảnh mới.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-bo-tham-chieu"
+      ]
+    },
+    {
+      "name": "sd-de-xuat",
+      "description": "Bước 0b Flow Pack. Từ bản nghiên cứu, đưa 3 hướng phim khác hẳn nhau kèm ước tính credit và một đoạn mẫu 8 giây cho mỗi hướng, để Linh chọn hoặc trộn. Dùng sau sd-nghien-cuu, trước sd-series.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-de-xuat"
+      ]
+    },
+    {
+      "name": "sd-dung",
+      "description": "Bước 7 Flow Pack. Ghép các bản giữ của một tập thành bản dựng nháp, chuẩn bị phụ đề và ghi chú hậu kỳ; tính credit trên mỗi giây và tỉ lệ giữ. Dùng khi mọi đoạn đã có bản giữ.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-dung"
+      ]
+    },
+    {
+      "name": "sd-flow-pack",
+      "description": "Bước 5 Flow Pack. Xuất phiếu render cho Google Flow từ JSON tập đã ĐẠT kiem_nhip, kèm bảng duyệt credit; Linh dán tay vào Flow. Dùng khi tập sẵn sàng render.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-flow-pack"
+      ]
+    },
+    {
+      "name": "sd-kich-ban",
+      "description": "Bước 2 Flow Pack. Viết kịch bản một tập short drama 60–90 giây theo nhịp hook, điểm sướng mỗi 15 giây, cliffhanger, với thoại vừa clip Veo 8 giây. Dùng sau khi series bible đã duyệt.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-kich-ban"
+      ]
+    },
+    {
+      "name": "sd-nghien-cuu",
+      "description": "Bước 0 Flow Pack. Nghiên cứu có nguồn trước khi viết series hoặc kịch bản (thể loại, khán giả, phim mẫu, nhịp, phong cách hình). Dùng khi bắt đầu một series hoặc một chủ đề mới.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-nghien-cuu"
+      ]
+    },
+    {
+      "name": "sd-nhan-take",
+      "description": "Bước 6 Flow Pack. Nhận clip Linh tải từ Flow về, khớp với phiếu, ghi sổ credit, xem contact sheet, chọn bản giữ, cảnh báo ngân sách. Dùng mỗi khi Linh báo đã render xong một lô.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-nhan-take"
+      ]
+    },
+    {
+      "name": "sd-phan-tich-mau",
+      "description": "Phân tích một video mẫu (short drama, quảng cáo, trailer) theo 5 khía cạnh để lấy nhịp, khung hình, chuyển động máy cho tập của mình mà không sao chép. Dùng khi Linh đưa link hoặc file video tham khảo.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-phan-tich-mau"
+      ]
+    },
+    {
+      "name": "sd-series",
+      "description": "Bước 1 Flow Pack. Từ một ý tưởng, viết series bible cho short drama dọc (logline, nhân vật, thế giới, arc nhiều tập, kiểu hook cuối tập). Dùng khi Linh mở một series phim ngắn mới.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-series"
+      ]
+    },
+    {
+      "name": "sd-storyboard",
+      "description": "Bước 4 Flow Pack. Chuyển kịch bản thành các đoạn Veo 4/6/8 giây có nhiều shot theo mốc thời gian, chọn chế độ Flow và model cho từng đoạn, rồi chạy kiem_nhip.py. Dùng sau sd-tai-san.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-storyboard"
+      ]
+    },
+    {
+      "name": "sd-tai-san",
+      "description": "Bước 3 Flow Pack. Lập thư viện tài sản cho một tập: đoạn khoá nhân vật và style bằng tiếng Anh, prompt ảnh neo nhân vật, ảnh bối cảnh không người, prompt keyframe. Dùng sau khi kịch bản tập đã duyệt.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/sd-tai-san"
+      ]
+    },
+    {
+      "name": "tach-kv",
+      "description": "Phân rã một key visual (KV) phẳng JPG/PNG thành các element độc lập (chữ, logo, ảnh, QR, nền) dạng PNG trong suốt + kv.json vị trí + PSD + SVG, để dùng lại cho ấn phẩm truyền thông. Dùng khi Linh nói tách KV, phân rã KV, bóc layer, lấy logo/chữ từ ảnh.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/tach-kv"
+      ]
+    },
+    {
+      "name": "thiet-ke",
+      "description": "Workflow thiết kế đầu cuối cho một ấn phẩm (logo, poster, pano, social, KV) hoặc một landing page - đề bài, tham chiếu thật, moodboard, nhiều phương án, chấm mù chống mùi AI bởi người không phải thợ, sửa nhiều vòng, kiểm đầu cuối trên khổ thật. Chạy được trên agy qua agy-tu-chay. Dùng khi Linh bảo làm, làm lại hoặc sửa logo, poster, landing.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/thiet-ke"
+      ]
+    },
+    {
+      "name": "tra-cuu-luat",
+      "description": "Tra cứu văn bản pháp luật Việt Nam mới nhất về một chủ đề (mặc định luật đất đai, bất động sản) bằng Chrome của Linh, rồi ghi chú tiếng Việt có link nguồn, ngày ban hành, ngày hiệu lực, điểm mới và ý nghĩa với doanh nghiệp. Dùng khi Linh nói \"tra luật\", \"cập nhật luật đất đai\", \"tìm quy định mới nhất về …\", hoặc cần nền pháp lý cho demo, bài giảng (vd Vinhomes).",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/tra-cuu-luat"
+      ]
+    },
+    {
+      "name": "viet-overview",
+      "description": "Đóng một thí nghiệm LAB khi Linh nói \"viết overview\": hoàn thiện OVERVIEW.md, cập nhật INDEX, và chấm cổng PROTOTYPE nếu EXP chạy được.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/viet-overview"
+      ]
+    },
+    {
+      "name": "vong-lap-slide",
+      "description": "Vòng lặp tự cải thiện cho slide (HTML Claude Slides/linhx-deck hoặc .pptx): đo trên bản render, người chấm tách thợ, xác minh lỗi, sửa cục bộ, hoàn tác khi tệ hơn, cổng cuối. Dùng sau khi dựng xong deck, trước khi giao.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/vong-lap-slide"
+      ]
+    },
+    {
+      "name": "web-thiet-ke",
+      "description": "Quy trình 7 bước thiết kế landing page hoặc màn hình app đẹp, đúng brand bằng Claude: đề bài, moodboard ảnh tham chiếu, hướng thị giác, ảnh ChatGPT làm đích nhìn và thành phần, dựng HTML từ token brand, tự kiểm, đóng khuôn. Dùng khi Linh bảo làm landing, web, giao diện app.",
+      "version": "0.1.0",
+      "category": "le",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/le/web-thiet-ke"
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 ---
 name: linhx-toan-van
 description: Lấy toàn văn bài (Medium, Substack, web) theo danh sách URL bằng extension LINHX_CRAWLER trong Chrome đã đăng nhập của Linh, 0 token; tự bật server, lưu mỗi bài một file md.
+metadata:
+  version: "0.1.0"
 ---
 
 # Lấy toàn văn bài qua LINHX_CRAWLER

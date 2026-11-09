@@ -1,6 +1,6 @@
 ---
 name: casting-mat
-description: Casting gương mặt nhân vật ảo: persona khán giả chấm, vẽ ChatGPT+Gemini có ảnh tham chiếu, 3 round chấm khắt khe 3 góc, Linh duyệt, character sheet. Khi Linh nói casting mặt.
+description: "Casting gương mặt nhân vật ảo: persona khán giả chấm, vẽ ChatGPT+Gemini có ảnh tham chiếu, 3 round chấm khắt khe 3 góc, Linh duyệt, character sheet. Khi Linh nói casting mặt."
 ---
 # Casting gương mặt nhân vật (v2, tối ưu 25/10/2026)
 

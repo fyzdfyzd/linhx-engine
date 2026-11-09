@@ -1,6 +1,8 @@
 ---
 name: ai-photobooth-golden-standard
 description: Quy chuẩn vàng Prompt Engineering, kiến trúc đa góc chụp (Full-body, Waist-up, Close-up), khóa nhận diện khuôn mặt 1:1, tỉ lệ cơ thể siêu mẫu 1:8 chống đầu to, biểu cảm cười mỉm khép môi chống đơ/chống già, và 10 bài học thực chiến (Lessons Learnt) cho AI Photobooth sự kiện (Gemini Image). Kích hoạt khi thiết kế, viết prompt, tạo concept hoặc tối ưu chất lượng hình ảnh AI Photobooth.
+metadata:
+  version: "0.1.0"
 ---
 
 # Quy Chuẩn Vàng AI Photobooth & 10 Bài Học Thực Chiến (VEEW 2026 Standard)

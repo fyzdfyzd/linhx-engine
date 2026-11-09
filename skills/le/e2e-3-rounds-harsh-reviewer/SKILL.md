@@ -7,6 +7,8 @@ description: >-
   chụp sản phẩm cuối và DOM/WCAG, ghi lại kinh nghiệm + lỗi + điểm cải thiện vào
   checkpoint trên ổ cứng (.handoff/e2e-checkpoint.json) để phiên/vòng sau chạy
   tiếp từ điểm đó cho đến khi đạt >= 9.2/10.
+metadata:
+  version: "0.1.0"
 ---
 
 # E2E 3-Rounds Harsh Reviewer & Visual Screenshot Audit

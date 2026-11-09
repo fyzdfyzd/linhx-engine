@@ -1,6 +1,8 @@
 ---
 name: lps-spec
 description: Viết SPEC có tiêu chí chấp nhận kiểm được trước khi code một tính năng. Dùng khi bắt đầu tính năng mới, khi yêu cầu còn mơ hồ, hoặc khi Linh nói "lên spec", "thiết kế tính năng", "plan".
+metadata:
+  version: "0.1.0"
 ---
 
 # Viết SPEC trước khi code

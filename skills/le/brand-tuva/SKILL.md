@@ -1,6 +1,8 @@
 ---
 name: brand-tuva
-description: Áp dụng thương hiệu TUVA (TUVA Communication, Tù Và, tuva.work, truyền thông phát triển cho NGO/donor/CSR) cho mọi thứ tạo ra: web, báo cáo, proposal, slide, bài LinkedIn/Facebook, ảnh, sự kiện, tập huấn. Dùng khi người dùng nhắc TUVA, Tù Và, tuva.work, LISTENING VIETNAM, TUVA Decent AI, hoặc làm việc trong D:\@WF\DATA\BU\TUVA hay D:\@WF\PROJECT\TUVA2026.
+description: "Áp dụng thương hiệu TUVA (TUVA Communication, Tù Và, tuva.work, truyền thông phát triển cho NGO/donor/CSR) cho mọi thứ tạo ra: web, báo cáo, proposal, slide, bài LinkedIn/Facebook, ảnh, sự kiện, tập huấn. Dùng khi người dùng nhắc TUVA, Tù Và, tuva.work, LISTENING VIETNAM, TUVA Decent AI, hoặc làm việc trong D:\\@WF\\DATA\\BU\\TUVA hay D:\\@WF\\PROJECT\\TUVA2026."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu TUVA

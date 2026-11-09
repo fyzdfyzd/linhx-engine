@@ -1,6 +1,8 @@
 ---
 name: tra-cuu-luat
 description: Tra cứu văn bản pháp luật Việt Nam mới nhất về một chủ đề (mặc định luật đất đai, bất động sản) bằng Chrome của Linh, rồi ghi chú tiếng Việt có link nguồn, ngày ban hành, ngày hiệu lực, điểm mới và ý nghĩa với doanh nghiệp. Dùng khi Linh nói "tra luật", "cập nhật luật đất đai", "tìm quy định mới nhất về …", hoặc cần nền pháp lý cho demo, bài giảng (vd Vinhomes).
+metadata:
+  version: "0.1.0"
 ---
 # Tra cứu luật mới nhất và ghi chú
 

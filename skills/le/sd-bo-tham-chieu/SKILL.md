@@ -1,6 +1,8 @@
 ---
 name: sd-bo-tham-chieu
-description: Quy trình làm ảnh bằng ChatGPT Plus cho một series: đoán khán giả (TA), chuẩn bị brand và logo, tìm 2–3 art style trên Pinterest, chọn style, tạo bộ ảnh tham chiếu đầy đủ (nhân vật, bối cảnh, đạo cụ) và lưu vào thư viện. Dùng sau sd-de-xuat, trước sd-kich-ban, và mỗi khi thêm nhân vật hay bối cảnh mới.
+description: "Quy trình làm ảnh bằng ChatGPT Plus cho một series: đoán khán giả (TA), chuẩn bị brand và logo, tìm 2–3 art style trên Pinterest, chọn style, tạo bộ ảnh tham chiếu đầy đủ (nhân vật, bối cảnh, đạo cụ) và lưu vào thư viện. Dùng sau sd-de-xuat, trước sd-kich-ban, và mỗi khi thêm nhân vật hay bối cảnh mới."
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-bo-tham-chieu: bộ ảnh tham chiếu bằng ChatGPT Plus

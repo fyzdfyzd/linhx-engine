@@ -1,6 +1,8 @@
 ---
 name: web-thiet-ke
-description: Quy trình 7 bước thiết kế landing page hoặc màn hình app đẹp, đúng brand bằng Claude: đề bài, moodboard ảnh tham chiếu, hướng thị giác, ảnh ChatGPT làm đích nhìn và thành phần, dựng HTML từ token brand, tự kiểm, đóng khuôn. Dùng khi Linh bảo làm landing, web, giao diện app.
+description: "Quy trình 7 bước thiết kế landing page hoặc màn hình app đẹp, đúng brand bằng Claude: đề bài, moodboard ảnh tham chiếu, hướng thị giác, ảnh ChatGPT làm đích nhìn và thành phần, dựng HTML từ token brand, tự kiểm, đóng khuôn. Dùng khi Linh bảo làm landing, web, giao diện app."
+metadata:
+  version: "0.1.0"
 ---
 
 # web-thiet-ke

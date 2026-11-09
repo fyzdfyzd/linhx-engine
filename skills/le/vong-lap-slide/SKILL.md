@@ -1,6 +1,8 @@
 ---
 name: vong-lap-slide
-description: Vòng lặp tự cải thiện cho slide (HTML Claude Slides/linhx-deck hoặc .pptx): đo trên bản render, người chấm tách thợ, xác minh lỗi, sửa cục bộ, hoàn tác khi tệ hơn, cổng cuối. Dùng sau khi dựng xong deck, trước khi giao.
+description: "Vòng lặp tự cải thiện cho slide (HTML Claude Slides/linhx-deck hoặc .pptx): đo trên bản render, người chấm tách thợ, xác minh lỗi, sửa cục bộ, hoàn tác khi tệ hơn, cổng cuối. Dùng sau khi dựng xong deck, trước khi giao."
+metadata:
+  version: "0.1.0"
 ---
 
 # Vòng lặp slide

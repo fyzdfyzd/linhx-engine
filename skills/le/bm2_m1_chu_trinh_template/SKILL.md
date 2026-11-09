@@ -1,6 +1,8 @@
 ---
 name: BM2_M1_chu_trinh_template
 description: "Big Module 2 - Chu trình Template dạng chung (LÀM MỚI theo mẫu LAB043 v2): Phân tích yêu cầu -> Tham chiếu & nạp luật Onbrand -> Dựng 2-3 phương án thiết kế -> Chấm độc lập theo rubric -> Biên tập tối đa 3 vòng và đánh phiên bản."
+metadata:
+  version: "0.1.0"
 ---
 
 # Big Module 2 · Chu trình Template dạng chung (`BM2_M1_chu_trinh_template`)

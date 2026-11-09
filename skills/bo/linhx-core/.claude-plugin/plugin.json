@@ -1,6 +1,6 @@
 {
   "name": "linhx-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Luật làm việc của LINHX LAB: bơm luật khi mở phiên, PLAN.md cho từng lab, đề xuất 3-4 phương án có sổ quyết định, báo xong phải có bằng chứng.",
   "author": { "name": "LINHX LAB" },
   "license": "MIT"

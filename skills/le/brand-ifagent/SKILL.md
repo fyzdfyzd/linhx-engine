@@ -1,6 +1,8 @@
 ---
 name: brand-ifagent
-description: Áp dụng thương hiệu IF Agent (ifagent.net, AI Event Technology) cho mọi thứ tạo ra: web, giao diện, slide, credential, proposal, bài đăng, ảnh, booth sự kiện, email, nội dung chữ. Dùng khi người dùng nhắc IF Agent, IFAGENT, IFA, ifagent.net, AI activation cho sự kiện, hoặc làm việc trong thư mục IFAGENT/IFAgent/IFA PROPOSAL.
+description: "Áp dụng thương hiệu IF Agent (ifagent.net, AI Event Technology) cho mọi thứ tạo ra: web, giao diện, slide, credential, proposal, bài đăng, ảnh, booth sự kiện, email, nội dung chữ. Dùng khi người dùng nhắc IF Agent, IFAGENT, IFA, ifagent.net, AI activation cho sự kiện, hoặc làm việc trong thư mục IFAGENT/IFAgent/IFA PROPOSAL."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu IF Agent

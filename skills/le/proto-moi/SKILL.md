@@ -1,6 +1,8 @@
 ---
 name: proto-moi
-description: Đưa một EXP đã chạy được ở LAB lên PROTOTYPE khi Linh nói "lên prototype: LAB…" hoặc đồng ý sau khi chấm cổng.
+description: "Đưa một EXP đã chạy được ở LAB lên PROTOTYPE khi Linh nói \"lên prototype: LAB…\" hoặc đồng ý sau khi chấm cổng."
+metadata:
+  version: "0.1.0"
 ---
 # Lên prototype
 

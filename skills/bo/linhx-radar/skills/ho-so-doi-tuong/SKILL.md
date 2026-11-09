@@ -1,6 +1,6 @@
 ---
 name: ho-so-doi-tuong
-description: Làm hồ sơ một doanh nghiệp hoặc KOL trong radar: họ đang nói gì, đã có gì, đau ở đâu, LINHX chia sẻ và bán được gì, cách tiếp cận, nháp lời mở. Dùng khi Linh hỏi "tìm hiểu brand X", "KOL Y là ai", "nên tiếp cận ai trước".
+description: "Làm hồ sơ một doanh nghiệp hoặc KOL trong radar: họ đang nói gì, đã có gì, đau ở đâu, LINHX chia sẻ và bán được gì, cách tiếp cận, nháp lời mở. Dùng khi Linh hỏi \"tìm hiểu brand X\", \"KOL Y là ai\", \"nên tiếp cận ai trước\"."
 ---
 
 # Hồ sơ đối tượng

@@ -1,6 +1,8 @@
 ---
 name: sd-nghien-cuu
 description: Bước 0 Flow Pack. Nghiên cứu có nguồn trước khi viết series hoặc kịch bản (thể loại, khán giả, phim mẫu, nhịp, phong cách hình). Dùng khi bắt đầu một series hoặc một chủ đề mới.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-nghien-cuu: nghiên cứu trước kịch bản

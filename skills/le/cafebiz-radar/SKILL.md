@@ -1,6 +1,8 @@
 ---
 name: cafebiz-radar
 description: Phân tích tin công nghệ cho mảng công nghệ CafeBiz theo quy chuẩn News Listening (mã trend T01–T13, nước và hướng lan, khoảng trống VN, độ hút, 6 chỉ số H M V G R C, góc viết). Dùng khi được giao gom cụm hoặc chấm thẻ từ data/CAFEBIZ_TECH_RADAR/RUNS/<ngày>/. Trả JSON đúng schema được đưa, không tự tính điểm tổng.
+metadata:
+  version: "0.1.0"
 ---
 
 # Skill: phân tích radar tin công nghệ CafeBiz

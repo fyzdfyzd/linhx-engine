@@ -1,6 +1,8 @@
 ---
 name: flow-canh-tron-khung
 description: Dựng cảnh hoạt hình nét vẽ bằng Flow/Veo trọn khung (nhân vật cùng object, chữ trong một ảnh), code chỉ chọn khung, đẩy máy, phụ đề, nhạc. Dùng khi Linh nói "phương án Flow", hoặc cảnh có object nhỏ, ít chuyển động. Cần object bật ra theo nhịp thì dùng skill hybrid-canh-nhan-vat.
+metadata:
+  version: "0.1.0"
 ---
 
 # Cảnh Flow trọn khung
