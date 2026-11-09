@@ -14,6 +14,7 @@ def test_case_cong_khai_loc_chinh_xac_va_khong_sua_dau_vao():
             "name": "CS-01",
             "tieu_de": "Tự động hoá chốt đơn Dược",
             "khach_hang": "Dược Tâm An",
+            "cho_phep_hien_ten": True,
             "chi_so": "+42% tỷ lệ chuyển đổi",
             "mo_ta": "Sau 14 ngày pilot",
             "da_duyet": True,
@@ -42,7 +43,9 @@ def test_case_cong_khai_loc_chinh_xac_va_khong_sua_dau_vao():
         },
         {
             "name": "CS-05",
-            "tieu_de": "Case duyệt bằng 1",
+            "tieu_de": "Case duyệt bằng 1 nhưng chưa cho phép hiện tên khách",
+            "khach_hang": "Khách Hàng Ẩn Danh",
+            "cho_phep_hien_ten": 0,
             "chi_so": "Giảm 60% thời gian xử lý",
             "mo_ta": "Hoàn thành",
             "da_duyet": 1,
@@ -50,6 +53,8 @@ def test_case_cong_khai_loc_chinh_xac_va_khong_sua_dau_vao():
     ]
     kq = kho_case.case_cong_khai(ds_goc)
     assert [c["name"] for c in kq] == ["CS-01", "CS-05"]
+    assert kq[0].get("khach_hang") == "Dược Tâm An"
+    assert "khach_hang" not in kq[1]
     assert "ghi_chu_noi_bo" not in kq[0]
     assert ds_goc[0]["ghi_chu_noi_bo"] == "Mật nội bộ không được lộ"
 
@@ -134,7 +139,46 @@ def test_api_cred_danh_sach_case_va_noi_dung_ifagent(monkeypatch):
     assert "Bệnh viện Quốc tế" in chu_muc
     assert "Tăng 3.2x lịch hẹn thành công" in chu_muc
     assert "Case Nháp DB" not in chu_muc
-    assert fake_frappe.response.get("noi_dung") == nd
+    assert fake_frappe.response == {}
+
+
+def test_noi_dung_ifagent_khi_db_trong_khong_lay_case_tu_site_json(monkeypatch):
+    fake_frappe = types.ModuleType("frappe")
+    fake_frappe.whitelist = lambda allow_guest=False: (lambda fn: fn)
+    fake_frappe.get_all = lambda *a, **kw: []
+
+    monkeypatch.setitem(sys.modules, "frappe", fake_frappe)
+    sys.modules.pop("linhx_core.cred.api_cred", None)
+    import importlib
+
+    api_cred = importlib.import_module("linhx_core.cred.api_cred")
+    site_goc = api_cred._doc_site_ifagent()
+    muc_goc = [m["ten"] for m in site_goc["noi_dung"]["muc"]]
+
+    monkeypatch.setattr(
+        api_cred,
+        "_doc_site_ifagent",
+        lambda: {
+            **site_goc,
+            "case": {
+                **site_goc.get("case", {}),
+                "ds_case": [
+                    {
+                        "name": "CS-FAKE",
+                        "tieu_de": "Case Bịa Trong Site JSON",
+                        "chi_so": "Giảm 99% ảo",
+                        "mo_ta": "Không được phép lọt ra trang công khai",
+                        "da_duyet": True,
+                    }
+                ],
+            },
+        },
+    )
+
+    nd = api_cred.noi_dung_ifagent()
+    ten_muc = [m["ten"] for m in nd["muc"]]
+    assert ten_muc == muc_goc
+    assert all("Case Bịa" not in t and "Phòng khám Đa khoa" not in t for t in ten_muc)
 
 
 def test_kiem_case_bat_buoc_tieu_de_va_chi_so_khi_duyet():

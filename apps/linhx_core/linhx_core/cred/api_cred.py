@@ -12,7 +12,15 @@ from linhx_core.cred.kho_case import case_cong_khai, noi_dung_trang_bu
 
 logger = logging.getLogger(__name__)
 
-TRUONG_CASE_CONG_KHAI = ["name", "tieu_de", "khach_hang", "chi_so", "mo_ta", "da_duyet"]
+TRUONG_CASE_CONG_KHAI = [
+    "name",
+    "tieu_de",
+    "khach_hang",
+    "cho_phep_hien_ten",
+    "chi_so",
+    "mo_ta",
+    "da_duyet",
+]
 GIOI_HAN_CASE = 100
 
 
@@ -57,12 +65,6 @@ def _doc_ds_case_tu_db() -> list[dict]:
             order_by="modified desc",
             limit_page_length=GIOI_HAN_CASE,
         )
-    except TypeError:
-        try:
-            rows = get_all_fn("LX Case", fields=list(TRUONG_CASE_CONG_KHAI))
-        except Exception as exc:
-            logger.warning("Lỗi đọc danh sách LX Case: %s", exc)
-            return []
     except Exception as exc:
         logger.warning("Lỗi truy vấn LX Case: %s", exc)
         return []
@@ -81,20 +83,7 @@ def danh_sach_case() -> list[dict]:
 
 @frappe.whitelist(allow_guest=True)
 def noi_dung_ifagent() -> dict:
-    """Trả nội dung Trang BU ifagent đã ghép các case công khai đã duyệt."""
+    """Trả nội dung Trang BU ifagent chỉ ghép các case công khai đã duyệt từ DB."""
     site_cfg = _doc_site_ifagent()
     ds_db = _doc_ds_case_tu_db()
-
-    cfg_case = site_cfg.get("case") if isinstance(site_cfg.get("case"), dict) else {}
-    ds_mau = cfg_case.get("ds_case") if isinstance(cfg_case.get("ds_case"), (list, tuple)) else []
-    ds_tong_hop = [*ds_db, *(x for x in ds_mau if isinstance(x, dict))]
-
-    kq = kho_case.noi_dung_trang_bu(site_cfg, case_cong_khai(ds_tong_hop))
-
-    resp = getattr(frappe, "response", None)
-    if isinstance(resp, dict):
-        resp["noi_dung"] = kq
-        resp["tieu_de"] = kq.get("tieu_de", "")
-        resp["mo_ta"] = kq.get("mo_ta", "")
-        resp["muc"] = kq.get("muc", [])
-    return kq
+    return kho_case.noi_dung_trang_bu(site_cfg, case_cong_khai(ds_db))

@@ -8,6 +8,7 @@
  "field_order": [
   "tieu_de",
   "khach_hang",
+  "cho_phep_hien_ten",
   "chi_so",
   "mo_ta",
   "da_duyet",
@@ -28,6 +29,13 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Khách hàng"
+  },
+  {
+   "default": "0",
+   "fieldname": "cho_phep_hien_ten",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Cho phép hiện tên khách hàng"
   },
   {
    "fieldname": "chi_so",

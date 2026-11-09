@@ -40,6 +40,7 @@ def kiem_case(case_dict: dict) -> dict:
     ket_qua = dict(case_dict)
     ket_qua["tieu_de"] = tieu_de
     ket_qua["khach_hang"] = _chuoi_sach(case_dict.get("khach_hang"))
+    ket_qua["cho_phep_hien_ten"] = bool(la_da_duyet(case_dict.get("cho_phep_hien_ten", False)))
     ket_qua["chi_so"] = chi_so
     ket_qua["mo_ta"] = _chuoi_sach(case_dict.get("mo_ta"))
     ket_qua["da_duyet"] = bool(da_duyet)
@@ -50,6 +51,7 @@ def case_cong_khai(ds_case: list[dict] | None) -> list[dict]:
     """Chỉ trả các case đã duyệt (da_duyet == True/1) và có chi_so không rỗng.
 
     Case chưa duyệt (da_duyet False/0/None) hoặc thiếu tieu_de/chi_so tuyệt đối không ra danh sách công khai.
+    Tên khách hàng (khach_hang) chỉ xuất ra khi có cờ cho_phep_hien_ten == True/1.
     Chỉ giữ các trường công khai an toàn để không rò rỉ dữ liệu nội bộ.
     """
     if not ds_case or not isinstance(ds_case, (list, tuple)):
@@ -70,8 +72,10 @@ def case_cong_khai(ds_case: list[dict] | None) -> list[dict]:
         if "name" in item and _chuoi_sach(item.get("name")):
             ban["name"] = _chuoi_sach(item.get("name"))
         ban["tieu_de"] = tieu_de
-        if "khach_hang" in item:
-            ban["khach_hang"] = _chuoi_sach(item.get("khach_hang"))
+        if la_da_duyet(item.get("cho_phep_hien_ten", False)):
+            ten_kh = _chuoi_sach(item.get("khach_hang"))
+            if ten_kh:
+                ban["khach_hang"] = ten_kh
         ban["chi_so"] = chi_so
         ban["mo_ta"] = _chuoi_sach(item.get("mo_ta"))
         ban["da_duyet"] = True
@@ -132,11 +136,7 @@ def noi_dung_trang_bu(site_cfg: dict | None, ds_case: list[dict] | None = None) 
     mau_ten = _chuoi_sach(cfg_case.get("mau_ten"))
 
     nguon_case: list[dict] = []
-    if ds_case is None:
-        ds_mau = cfg_case.get("ds_case")
-        if isinstance(ds_mau, (list, tuple)):
-            nguon_case.extend(x for x in ds_mau if isinstance(x, dict))
-    elif isinstance(ds_case, (list, tuple)):
+    if isinstance(ds_case, (list, tuple)):
         nguon_case.extend(x for x in ds_case if isinstance(x, dict))
 
     if bat_case:

@@ -66,6 +66,7 @@ class LXCase(Document):
             "name": getattr(self, "name", None),
             "tieu_de": getattr(self, "tieu_de", None),
             "khach_hang": getattr(self, "khach_hang", None),
+            "cho_phep_hien_ten": getattr(self, "cho_phep_hien_ten", 0),
             "chi_so": getattr(self, "chi_so", None),
             "mo_ta": getattr(self, "mo_ta", None),
             "da_duyet": getattr(self, "da_duyet", 0),
@@ -81,6 +82,7 @@ class LXCase(Document):
 
         self.tieu_de = chuan["tieu_de"]
         self.khach_hang = chuan["khach_hang"]
+        self.cho_phep_hien_ten = 1 if chuan["cho_phep_hien_ten"] else 0
         self.chi_so = chuan["chi_so"]
         self.mo_ta = chuan["mo_ta"]
         self.da_duyet = 1 if chuan["da_duyet"] else 0
