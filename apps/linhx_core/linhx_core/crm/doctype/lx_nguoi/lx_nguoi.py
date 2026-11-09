@@ -11,7 +11,20 @@ from linhx_core.crm.quyen_don_vi import (
 )
 from linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap import ghi_nhat_ky_truy_cap
 
-TRUONG_CO_BAN = ("ho_ten", "dien_thoai", "email", "zalo", "don_vi", "to_chuc", "ghi_cong")
+TRUONG_CO_BAN = (
+	"ho_ten",
+	"dien_thoai",
+	"email",
+	"zalo",
+	"don_vi",
+	"to_chuc",
+	"nguon",
+	"tang_pheu",
+	"t1_tong",
+	"t1_muc",
+	"lich_su_t1",
+	"ghi_cong",
+)
 TRUONG_HE_THONG = {
 	"name",
 	"creation",
