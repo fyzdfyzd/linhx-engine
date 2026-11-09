@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 18:49 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, C2, C3, D1, D2, D3, E1, E2, A4B, W1, Q1, R1, R2, O1, I1)
+Cập nhật 2026-11-09 18:59 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, C2, C3, D1, D2, D3, E1, E2, A4B, W1, Q1, R1, R2, O1, I1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | B4 | rảnh | CHUA_DAT · Feature B4 · commit 5cce885 · nhánh tu-dong/engine-t1 · 2026-11-09T17:18:20 |
+| 1 | B4 | rảnh | CHUA_DAT · Feature B4 · commit 3ddca07 · nhánh tu-dong/engine-t1 · 2026-11-09T18:56:00 |
 | 2 | - | rảnh | DAT · Feature C3 · commit 9d53e28 · nhánh tu-dong/engine-t2 · 2026-11-09T18:37:41 |
 | 3 | I3 | rảnh | CHUA_DAT · Feature I3 · commit 9442e40 · nhánh tu-dong/engine-t3 · 2026-11-09T18:18:58 |
 | 4 | - | rảnh | DAT · Feature O1 · commit 7dbb50b · nhánh tu-dong/engine-t4 · 2026-11-09T18:14:53 |
@@ -24,16 +24,16 @@ Cập nhật 2026-11-09 18:49 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N
 - 2026-11-09T13:49:10 C2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc 5564210c, bản hỏng giữ ở nhánh cục bộ hong/C2-20261109-1349, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\C2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 18:29 t4: RAM trống 0.8 GB < 1,5 GB, chưa giao O2
-- 2026-11-09 18:29 t2: agy xong phiếu 20261109-1809-t2 (C3) sau 20 phút
-- 2026-11-09 18:31 t1: agy xong phiếu 20261109-1809-t1 (B4) sau 21 phút
-- 2026-11-09 18:37 t2: C3 DAT, đã gộp vào main
-- 2026-11-09 18:37 t2: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
-- 2026-11-09 18:37 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-09 18:40 t2: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
 - 2026-11-09 18:40 t3: RAM trống 0.5 GB < 1,5 GB, chưa giao I3
 - 2026-11-09 18:40 t4: RAM trống 0.6 GB < 1,5 GB, chưa giao T1
 - 2026-11-09 18:42 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-09 18:49 t2: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
 - 2026-11-09 18:49 t3: RAM trống 0.5 GB < 1,5 GB, chưa giao I3
+- 2026-11-09 18:49 t4: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
+- 2026-11-09 18:55 t1: B4 trượt do lỗi máy (commit 3ddca07), không tính lần
+- 2026-11-09 18:56 t1: RAM trống 0.8 GB < 1,5 GB, chưa giao B4
+- 2026-11-09 18:56 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-09 18:59 t1: RAM trống 0.9 GB < 1,5 GB, chưa giao B4
+- 2026-11-09 18:59 t2: RAM trống 0.9 GB < 1,5 GB, chưa giao T1
 
