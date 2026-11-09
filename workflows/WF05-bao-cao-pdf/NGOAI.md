@@ -17,5 +17,13 @@ Cập nhật 9/11 (nghiên cứu nền). Mã đã chép về `D:\LINHX\WF-NC\_re
 | iamwrm/typst_skill https://github.com/iamwrm/typst_skill | Link trả 404 (9/11) | — | Bỏ khỏi danh sách |
 | Perplexity cookbook agent skills | [chỉ thấy] | — | Chưa đọc, không ưu tiên |
 | tessl elegant-reports/review | [chỉ thấy] | — | Chưa đọc |
+| adobe/skills whitepaper, repo gốc https://github.com/adobe/skills (vòng 2, clone `_refs/WF05/adobe_skills`) [đọc SKILL.md] | Xác nhận pandoc→Typst, A4, Source Sans 3 (đo: đủ 146 ký tự Việt) | Cờ `TYPST_FONT_PATHS`, font đi kèm skill | Xoá nguồn sau khi dựng, chạy không hỏi, tự cài bằng curl rồi tar |
+| ETS R&D Connections 2005 https://www.ets.org/Media/Research/pdf/RD_Connections2.pdf (vòng 2) [đọc] | Hai người chấm lệch >1 điểm thì người thứ ba | Ngưỡng chấm mù lệch ≤1, quá thì agent thứ ba | — |
+| [DR] Pew number check (kiểm lại vòng 2) [đọc] | "Can this chart stand alone?"; n hiệu dụng khoảng 100 | Câu hỏi đứng riêng; ngưỡng n nhóm con | — |
+| [DR] Reuters DNR 2025 phương pháp (kiểm trong PDF, vòng 2) [đọc] | "do not regard differences of +/- 2pp as meaningful" | Luật văn ±2 điểm % | — |
+| [DR] SlideUpLift https://slideuplift.com/blog/mckinsey-style-presentation/ (vòng 2) [đọc] | Câu "Start with the insight…" có thật | — | Blog bán mẫu, không phải McKinsey |
+| [DR] 36Kr https://36kr.com/p/2853458940627588 (vòng 2) | Bị màn kiểm tra an ninh chặn | — | Chưa đọc được |
+| [DR] Pew AI and Human Enhancement 2022 (vòng 2) [đọc text PDF] | 164 trang Letter dọc, có Methodology, Topline | Bản vàng V4 | — |
+| [DR] Cimigo Xu hướng tiêu dùng VN 2026 (vòng 2) [đọc trang] | Tải qua form email | Ứng viên bản vàng tiếng Việt → `DR/DE-2.md` | — |
 
 Còn chưa làm: Reddit/X/LinkedIn, nguồn tiếng Trung, tiếng Việt → đề DR `DR/DE-1.md`.

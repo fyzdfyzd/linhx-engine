@@ -63,3 +63,45 @@ Xem `vang/README.md`: V1 Reuters DNR 2025 (biểu đồ, khuôn chung), V2 e-Con
 - [chỉ thấy] McKinsey Superagency; iamwrm/typst_skill (404)
 
 Trích nguyên văn chính: Pew "number check", người kiểm "didn’t contribute to the writing or graphics at all"; Pew "Is the underlying number that was plotted in the chart correct?"; Urban "The axis in bar charts (whether vertical or horizontal) should always start at zero."; Umbrex "if you cover up the data and only read the title, do you still get the point?"; Slideworks "Write the titles first."
+
+## Bổ sung vòng 2
+
+9/11. Lấp các chỗ vòng 1 tự khai mỏng (`_refs/WF05/chay.log`), đọc kết quả Deep Research `DR/KQ-1.md` [DR], thử máy đo trên một báo cáo có sẵn.
+
+### 1. Lấp chỗ mỏng
+- **Adobe whitepaper, đã đọc repo gốc.** Clone `adobe/skills` vào `_refs/WF05/adobe_skills` (không chạy). Tệp `plugins/aem/project-management/skills/whitepaper/SKILL.md` xác nhận đúng như vòng 1 đọc qua tóm tắt: pandoc → Typst, A4, 10pt, font Source Sans 3. Nguyên văn: "Delete ALL source files immediately after PDF is created" và "THIS SKILL RUNS COMPLETELY UNATTENDED". Vẫn bỏ hai luật này. Mới thấy thêm: skill tự cài pandoc/typst bằng curl rồi tar ở Linux (không hợp luật LINHX). https://github.com/adobe/skills/tree/main/plugins/aem/project-management/skills/whitepaper
+- **Ngưỡng "chấm mù hai lần lệch ≤1 điểm" nay có nguồn ngoài.** Cách chấm bài luận GRE của ETS: "If the two assigned scores differ by more than 1 point on the scale, the discrepancy is adjudicated by a third GRE reader." (ETS R&D Connections, 4/2005, Monaghan và Bridgeman, https://www.ets.org/Media/Research/pdf/RD_Connections2.pdf, đã đọc PDF). Lấy luật đi kèm: lệch >1 thì **người chấm thứ ba**, không lấy trung bình. Đề xuất sửa máy đo: chấm mù 2 lần, lệch >1 thì gọi agent thứ ba, lấy điểm thấp trong hai điểm gần nhau.
+- **Ngưỡng "phép thử tiêu đề ≥90%" vẫn chưa có nguồn ngoài.** Giữ là đề xuất, đo ở vòng 1.
+- **Kiểm các trích dẫn trong DR [DR]:**
+  - Pew, đúng nguyên văn, link sống: "Can this chart stand alone?" và "Our usual rule of thumb is to require an effective sample size of about 100 or more." (https://www.pewresearch.org/decoded/2019/10/14/how-we-check-numbers-and-facts-at-pew-research-center/). Lấy: mỗi hình qua câu "đứng riêng được không" (đăng lên mạng tách khỏi bài vẫn hiểu); nhóm con có n dưới khoảng 100 thì không vẽ riêng.
+  - Reuters DNR 2025, đúng nguyên văn (tìm trong PDF đã tải, `pdftotext`): "We typically do not regard differences of +/- 2pp as meaningful, and as a general rule we do not refer to them in the text." Lấy: luật văn "không gọi là tăng/giảm khi chênh ≤2 điểm %" cho số khảo sát. Thêm được vào `kiem-so`.
+  - "Start with the insight, then choose the chart." có thật, nhưng là blog bán mẫu SlideUpLift, **không phải McKinsey** (https://slideuplift.com/blog/mckinsey-style-presentation/). DR gắn nhầm là "hướng dẫn chuẩn McKinsey".
+  - Bảng lề McKinsey "21/15/14/17 mm" và cỡ chữ 20/17/12–14 pt trong DR: **chưa kiểm được** (tải PDF MGI quá thời gian chờ). Không dùng.
+  - 36Kr (https://36kr.com/p/2853458940627588): trang chặn bằng màn kiểm tra an ninh, không đọc được. Khung 4 bước của 36Kr và "三审" trong DR **chưa kiểm**, không dùng.
+  - Bốn lỗi phông tiếng Việt trong DR (thiếu glyph, rơi font dự phòng, bảng mã VNI/TCVN3, không nhúng font) chỉ có nguồn blog thợ (ví dụ https://onepidesign.com/cach-sua-loi-font-tieng-viet-trong-thiet-ke/, chưa mở). Hai lỗi đầu và lỗi nhúng font đo được bằng máy, xem mục 2.
+- **Bản vàng V1 đo lại:** Reuters DNR 2025 là **A4 dọc** (595 × 842 pt, 171 trang, đo bằng PyMuPDF). Vậy V1 dùng được làm khuôn A4 dọc, chỉ thiếu tiếng Việt.
+- **Bản vàng V4 đã chọn:** Pew "AI and Human Enhancement" (3/2022), https://www.pewresearch.org/wp-content/uploads/sites/20/2022/03/PS_2022.03.17_AI-HE_REPORT.pdf, link sống, 164 trang khổ Letter dọc (612 × 792 pt), có mục "How we did this", chữ "Methodology" xuất hiện 12 lần, "Topline" 2 lần (đếm trong text PDF). Chưa xem trang bằng mắt.
+- **Ứng viên tiếng Việt:** Cimigo "Xu hướng tiêu dùng Việt Nam 2026" (12/2/2026) có thật, tiếng Việt, nhưng tải qua form gửi email (https://www.cimigo.com/vi/trends/xu-huong-tieu-dung-viet-nam-2026/). EuroCham Whitebook 2024 vượt 10 MB, WebFetch không đọc được. Hai mẫu này đưa vào `DR/DE-2.md` cho máy công ty.
+
+### 2. Thử máy đo trên mẫu có sẵn
+Mẫu: `D:\LINHX\LAB\LAB028-REPORT-FLOW\output\bao-cao-dao-tao-ai-vn` (17 trang). Chép sang scratchpad trước vì `cong` ghi vào `trang-thai.json`.
+
+| Lệnh | Kết quả thật |
+|---|---|
+| `python skills\bo\linhx-report\scripts\report.py kiem-so <bản chép>` | ĐẠT, `{'dat': 116, 'can-duyet': 0, 'mo-coi': 0}` |
+| `report.py kiem-ban-in <bản chép>` (lần 1) | Hỏng: `FileNotFoundError` vì `trang-thai.json` ghi đường dẫn style tuyệt đối của máy khác (`\mnt\attach\project-files\...\style.json`). **Lỗi khả chuyển của skill**: nên lưu đường dẫn tương đối |
+| `report.py cong <bản chép> 11` (sau khi sửa đường dẫn trong bản chép) | CHƯA ĐẠT: "LỖI [11] PDF mới hơn bảng chấm" (bản gốc cũng vậy: PDF 18:17:21, bảng chấm 18:17:17 ngày 13/10). Cảnh báo D07 phủ chữ 0,38 (mục tiêu 0,18–0,32). Cỡ chữ phổ biến 9,8 pt, 2 họ font |
+| Máy đo mới (nháp, `may-do-nhap/do_thu_wf05.py`, chỉ đọc; chạy `python -I -X utf8 may-do-nhap/do_thu_wf05.py <thư mục báo cáo>`) trên bản gốc | 0 lỗi, 6 cảnh báo. 12 hình đều ≤7 hạng mục, 1 chuỗi, tiêu đề 13–25 tiếng. 7 font đều nhúng (ttf). Mọi giá trị vẽ trên hình đều có mặt thành chữ trong PDF. Cảnh báo: số giá trị khác số mã BC (H01: 5 giá trị, 4 mã BC; H02: 3/2…). `kiem-so` vẫn đạt nên chưa chắc là lỗi; cần người xem |
+| Máy đo glyph tiếng Việt (nháp, `may-do-nhap/do_glyph_viet.py <tệp font>…`, 146 ký tự) | Be Vietnam Pro, Source Serif 4, Source Sans 3, Arial: 146/146. Đối chứng âm: Impact 54/146, Algerian 44/146 (thiếu ơ, ư, ạ…). Máy phân biệt được |
+
+Kết luận đo thử: skill hiện **đã có** kiểm rơi font (D11, "có font ngoài khai báo"), **chưa có** kiểm nhúng font và kiểm phủ glyph tiếng Việt của tệp font trước khi dựng; hai kiểm này rẻ, nên thêm vào bước 10. Phép kiểm "số vẽ trên hình có thành chữ" còn yếu: chỉ tìm chuỗi số trong toàn văn, chưa so độ dài thanh với giá trị.
+
+### 3. Sửa thêm vào skill (đề xuất, chưa sửa)
+- `dan-trang` bước 10: kiểm nhúng font (PyMuPDF `get_fonts`) và phủ 146 ký tự Việt cho mọi font khai báo.
+- `dan-trang` bước 11: chấm mù 2 lần, lệch >1 điểm thì agent thứ ba (theo ETS).
+- `hinh-du-lieu`: câu hỏi Pew "Can this chart stand alone?"; nhóm con n dưới khoảng 100 không vẽ riêng.
+- `kiem-so`: chênh ≤2 điểm % giữa hai số khảo sát thì văn không được viết "tăng/giảm" (theo Reuters).
+- `report.py`: lưu `style` tương đối; cổng 11 lỗi khi PDF mới hơn bảng chấm là đúng, giữ.
+
+### Còn thiếu sau vòng 2
+Reddit/X/LinkedIn, tessl, Perplexity cookbook chưa đọc. Nguồn tiếng Trung chưa đọc được (36Kr chặn). Chưa có bản vàng tiếng Việt A4 dọc đã xem tận mắt. Ngưỡng phép thử tiêu đề 90% chưa có nguồn. Số liệu dàn trang McKinsey trong DR chưa kiểm.
