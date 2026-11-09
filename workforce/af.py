@@ -26,6 +26,7 @@ Ba khu design-run-learn (Linh 9/11), ranh giới ở PHAN_KHU / workforce.json "
   python af.py muc --mau ban-hang <W1> <W2>  # mức 3: bộ mẫu đã chạy ổn ở ≥ 2 đơn vị
   python af.py hoc-cheo ban-hang <W1> <W2> <W3>   # bài học lặp ở ≥ 3 đơn vị → sửa bộ mẫu
   python af.py dong-goi <W> <ra.zip> [--mot-file GOI.md]
+  python af.py xuat <W> <ra> [--nen chung|claude|copilot|gemini|task|tat-ca]   # một nguồn, mọi nền
   python af.py may-chu <W> [--cong 8120]    # server mỏng, token ở biến AF_TOKEN
 """
 import argparse, difflib, fnmatch, html, json, os, re, shutil, sys, time, zipfile
@@ -1015,6 +1016,116 @@ def ghi_mot_file(w, ra):
     print(f'Đã ghi {ra} ({os.path.getsize(ra)} byte)')
 
 
+# ---------- DESIGN: xuất đa nền ----------
+NEN = ('chung', 'claude', 'copilot', 'gemini', 'task')
+
+
+def ten_skill(w):
+    import unicodedata
+    t = unicodedata.normalize('NFD', w.cau_hinh.get('ten') or os.path.basename(w.goc)).replace('đ', 'd').replace('Đ', 'D')
+    t = re.sub(r'[^a-z0-9]+', '-', ''.join(c for c in t if unicodedata.category(c) != 'Mn').lower()).strip('-')
+    return (t if t.startswith('workforce') else 'workforce-' + t)[:64].rstrip('-')
+
+
+def mo_ta_skill(w):
+    vd = [v for t in w.ds_workflow() for v in w.workflow(t).get('vi_du', [])[:2]]
+    m = (f'{w.cau_hinh.get("ten")} của {w.cau_hinh.get("don_vi")}: ' + ', '.join(w.ds_workflow())
+         + '. Dùng khi người dùng nói: ' + '; '.join(f'"{v}"' for v in vd))
+    return m.replace('\n', ' ')[:1024]
+
+
+def ghi_skill(w, d):
+    """Một thư mục skill chuẩn agentskills.io: SKILL.md + references/ + scripts/af.py. Nền nào đọc SKILL.md cũng chạy."""
+    ten = ten_skill(w)
+    os.makedirs(d, exist_ok=True)
+    ref = os.path.join(d, 'references')
+    for f in ('AGENTS.md', 'NHO.md', 'HOC.md', 'to-chuc.json', 'workforce.json', '00-D0-NHU-CAU.md'):
+        if os.path.exists(w.p(f)):
+            os.makedirs(ref, exist_ok=True)
+            shutil.copy2(w.p(f), os.path.join(ref, f))
+    for x in ('cong-nhan', 'workflow', 'vang', '02-wiki', 'thu'):
+        if os.path.isdir(w.p(x)):
+            shutil.copytree(w.p(x), os.path.join(ref, x), dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns('ket-qua', '*.tam', '.gitkeep'))
+    os.makedirs(os.path.join(d, 'scripts'), exist_ok=True)
+    shutil.copy2(os.path.abspath(__file__), os.path.join(d, 'scripts', 'af.py'))
+    bang = '\n'.join(f'| `{t}` | {w.workflow(t).get("mo_ta", "")} | `references/workflow/{t}.json` |' for t in w.ds_workflow())
+    ghi(os.path.join(d, 'SKILL.md'), f"""---
+name: {ten}
+description: {json.dumps(mo_ta_skill(w), ensure_ascii=False)}
+metadata:
+  version: {w.cau_hinh.get('phien_ban_khuon', '0.1.0')}
+  nguon: linhx-engine/workforce (af.py xuat)
+---
+
+# {w.cau_hinh.get('ten')} · {w.cau_hinh.get('don_vi')}
+
+Luật chung ở `references/AGENTS.md`: đọc trước mọi việc. Ba khu design-run-learn; chỉ ghi trong khu của vai mình.
+
+## Chọn workflow
+| Workflow | Làm gì | Đọc |
+|---|---|---|
+{bang}
+
+## Cách làm một việc
+1. Chọn workflow theo câu người dùng (trường `vi_du`). Không khớp thì dùng `viec-chung` nếu có, hoặc hỏi lại một câu.
+2. Đọc workflow, vai công nhân trong `references/cong-nhan/<ma>/ROLE.md` và `POLICIES.md`, bản vàng trong `references/vang/`.
+3. Làm theo `buoc`; xong thì tự kiểm từng dòng `tieu_chi`, ghi bằng chứng. Thiếu dữ liệu thì nói thiếu, không bịa.
+4. Có chạy được Python: dùng `scripts/af.py` (`giao`, `chuyen`, `kiem`, `muc`) với thư mục workforce. Không chạy được: làm tay theo các bước trên.
+5. Cuối việc ghi mục "Phản tư": vấp gì, đường đúng là gì.
+""")
+    return ten
+
+
+def lenh_xuat(a):
+    w = WF(a.thu_muc)
+    loi = [x for x in kiem(w) if 'chưa có trong .agents/skills' not in x]
+    if loi:
+        raise Loi('kiem chưa đạt, không xuất:\n  ' + '\n  '.join(loi))
+    nen = NEN if a.nen == 'tat-ca' else (a.nen,)
+    ten = ten_skill(w)
+    for n in nen:
+        g = os.path.join(a.ra, n)
+        if n == 'chung':
+            ghi_skill(w, os.path.join(g, '.agents', 'skills', ten))
+            shutil.copy2(w.p('AGENTS.md'), os.path.join(g, 'AGENTS.md'))
+        elif n == 'claude':
+            ghi_skill(w, os.path.join(g, '.claude', 'skills', ten))
+            ghi(os.path.join(g, 'CLAUDE.md'), f'Dùng skill `{ten}` cho mọi việc của {w.cau_hinh.get("don_vi")}.\n')
+        elif n == 'copilot':
+            ghi_skill(w, os.path.join(g, '.github', 'skills', ten))
+            ghi(os.path.join(g, '.github', 'copilot-instructions.md'),
+                f'Dùng skill `{ten}` (thư mục .github/skills/{ten}) cho mọi việc của {w.cau_hinh.get("don_vi")}. Đọc SKILL.md trước.\n')
+            for t in w.ds_workflow():
+                ghi(os.path.join(g, '.github', 'prompts', f'{t}.prompt.md'),
+                    f'---\ndescription: {json.dumps(w.workflow(t).get("mo_ta", t), ensure_ascii=False)}\n---\n'
+                    f'Dùng skill `{ten}`, workflow `{t}` (references/workflow/{t}.json). Việc: ${{input:viec}}\n')
+        elif n == 'gemini':
+            e = os.path.join(g, ten)
+            ghi_skill(w, os.path.join(e, 'skills', ten))
+            ghi_json(os.path.join(e, 'gemini-extension.json'),
+                     {'name': ten, 'version': w.cau_hinh.get('phien_ban_khuon', '0.1.0'), 'contextFileName': 'GEMINI.md'})
+            ghi(os.path.join(e, 'GEMINI.md'), f'Dùng skill `{ten}` cho mọi việc của {w.cau_hinh.get("don_vi")}. Đọc skills/{ten}/SKILL.md trước.\n')
+            for t in w.ds_workflow():
+                mt = w.workflow(t).get('mo_ta', t).replace('"', "'")
+                ghi(os.path.join(e, 'commands', f'{t}.toml'),
+                    f'description = "{mt}"\nprompt = """Dùng skill {ten}, workflow {t} (skills/{ten}/references/workflow/{t}.json). Việc: {{{{args}}}}"""\n')
+        elif n == 'task':
+            os.makedirs(g, exist_ok=True)
+            ghi_mot_file(w, os.path.join(g, 'GOI.md'))
+            ghi(os.path.join(g, 'TASK.md'), f"""# Giao việc cho {w.cau_hinh.get('ten')}
+
+Nơi chạy: Gemini Task, ChatGPT project, Jules hay bất kỳ agent nào nhận file. Không cần mạng, không cần cài gì.
+1. Đọc `GOI.md` từ trên xuống (luật, tổ chức, workflow, skill, điều cần nhớ).
+2. Việc cần làm: <ghi việc ở đây>
+3. Chọn đúng một workflow trong GOI.md, làm theo bước, tự kiểm từng tiêu chí, ghi bằng chứng và mục "Phản tư".
+4. Có Python thì chạy `af.py kiem .` trên thư mục giải nén từ `workforce.zip`.
+""")
+            lenh_dong_goi(argparse.Namespace(thu_muc=w.goc, ra=os.path.join(g, 'workforce.zip'), kem_viec=False, mot_file=None))
+        print(f'Đã xuất {n}: {g}')
+    return ten
+
+
 # ---------- SERVER MỎNG ----------
 def lenh_may_chu(a):
     from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -1094,6 +1205,7 @@ def tao_parser():
     x.add_argument('--bo-mau')
     x = s.add_parser('dong-goi'); x.add_argument('thu_muc'); x.add_argument('ra'); x.add_argument('--kem-viec', action='store_true')
     x.add_argument('--mot-file')
+    x = s.add_parser('xuat'); x.add_argument('thu_muc'); x.add_argument('ra'); x.add_argument('--nen', choices=NEN + ('tat-ca',), default='tat-ca')
     x = s.add_parser('may-chu'); x.add_argument('thu_muc'); x.add_argument('--cong', type=int, default=8120); x.add_argument('--host', default='127.0.0.1')
     return p
 
@@ -1114,7 +1226,7 @@ def main(argv=None):
                 print(kq)
             return 0
         {'moi': lenh_moi, 'giao': lenh_giao, 'chuyen': lenh_chuyen, 'bang': lenh_bang, 'phan-hoi': lenh_phan_hoi, 'nho': lenh_nho, 'vang': lenh_vang, 'hoc-ngoai': lenh_hoc_ngoai, 'ban-sua': lenh_ban_sua,
-         'hoc': lenh_hoc, 'thang-cap': lenh_thang_cap, 'lui': lenh_lui, 'nap-skill': lenh_nap_skill, 'dong-goi': lenh_dong_goi, 'may-chu': lenh_may_chu}[a.lenh](a)
+         'hoc': lenh_hoc, 'thang-cap': lenh_thang_cap, 'lui': lenh_lui, 'nap-skill': lenh_nap_skill, 'dong-goi': lenh_dong_goi, 'xuat': lenh_xuat, 'may-chu': lenh_may_chu}[a.lenh](a)
         return 0
     except Loi as e:
         print(f'LOI: {e}', file=sys.stderr)

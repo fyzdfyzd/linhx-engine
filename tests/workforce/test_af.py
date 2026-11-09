@@ -427,3 +427,18 @@ def test_bai_hoc_cham_theo_ket_qua_viec(w):
     assert h['ap_truot'] == 3 and af.chat_luong(h) == 0.3
     af.lenh_hoc(N(thu_muc=w.goc), w)
     assert next(x for x in af.doc_dong(w.p('HOC.jsonl')) if x['id'] == hid)['trang_thai'] == 'tia'
+
+
+def test_xuat_da_nen(w, tmp_path):
+    ra = str(tmp_path / 'ra')
+    ten = af.lenh_xuat(N(thu_muc=w.goc, ra=ra, nen='tat-ca'))
+    assert ten == 'workforce-thu' and len(ten) <= 64
+    for duong in (f'chung/.agents/skills/{ten}/SKILL.md', f'claude/.claude/skills/{ten}/SKILL.md',
+                  f'copilot/.github/skills/{ten}/SKILL.md', 'copilot/.github/prompts/viec-chung.prompt.md',
+                  f'gemini/{ten}/gemini-extension.json', f'gemini/{ten}/commands/viec-chung.toml',
+                  f'gemini/{ten}/skills/{ten}/scripts/af.py', 'task/GOI.md', 'task/TASK.md', 'task/workforce.zip'):
+        assert os.path.exists(os.path.join(ra, duong)), duong
+    sk = af.doc(os.path.join(ra, 'chung', '.agents', 'skills', ten, 'SKILL.md'))
+    assert sk.startswith('---\nname: ' + ten + '\ndescription: ')
+    mo_ta = json.loads(sk.split('description: ', 1)[1].split('\n', 1)[0])
+    assert 0 < len(mo_ta) <= 1024 and len(sk.splitlines()) < 500

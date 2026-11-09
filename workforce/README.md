@@ -74,6 +74,17 @@ Một workforce dựng workforce khác, Linh chịu trách nhiệm. 6 workflow: 
 | Router theo câu ví dụ, onboard 7 câu, untrusted-content, absent-is-not-zero, tenant-scope | anthropics/knowledge-work-plugins |
 | Một nick một listen, hub nhóm → thư mục | LAB116 hub trên máy cty (đang chạy) |
 
+## Xuất đa nền (`af.py xuat`)
+Một nguồn là thư mục workforce. `python workforce/af.py xuat <W> <ra> --nen tat-ca` sinh:
+| Nền | Ra | Ghi chú |
+|---|---|---|
+| chung | `.agents/skills/<ten>/` + AGENTS.md | Gemini CLI, Antigravity, Copilot đều đọc (LAB092) |
+| claude | `.claude/skills/<ten>/` + CLAUDE.md | |
+| copilot | `.github/skills/<ten>/`, `copilot-instructions.md`, `prompts/<workflow>.prompt.md` | |
+| gemini | extension: `gemini-extension.json`, GEMINI.md, `skills/`, `commands/<workflow>.toml` | |
+| task | `GOI.md` một file + `TASK.md` + `workforce.zip` | Gemini Task, ChatGPT, Jules: không mạng, 3 file |
+Skill theo chuẩn agentskills.io: `SKILL.md` (name ≤ 64, description ≤ 1024, < 500 dòng) + `references/` + `scripts/af.py`. Sửa nội dung ở thư mục workforce rồi xuất lại, không sửa bản xuất.
+
 ## Lệnh
 ```
 python workforce/af.py moi <W> --ten "Nụ Event" --don-vi "ifAgent Event" --kho skills --skills brand-ifagent,linhx-chuan
