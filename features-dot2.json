@@ -19,8 +19,8 @@
         "đề chứa lệnh shell (powershell, cmd, bash -c, curl|sh) bị từ chối"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o1.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O1/kiem.json"
     },
     {
       "id": "O2",
