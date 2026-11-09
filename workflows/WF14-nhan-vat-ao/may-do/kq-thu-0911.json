@@ -1,0 +1,71 @@
+{
+ "nguong": 0.45,
+ "model": "buffalo_l",
+ "kq": [
+  {
+   "anh": "thu/emily_2.png",
+   "diem": 0.878,
+   "trang_thai": "dat",
+   "ghi": "det=0.86"
+  },
+  {
+   "anh": "thu/emily_lat.png",
+   "diem": 0.963,
+   "trang_thai": "dat",
+   "ghi": "det=0.87"
+  },
+  {
+   "anh": "thu/emily_nho.png",
+   "diem": 0.85,
+   "trang_thai": "dat",
+   "ghi": "det=0.88"
+  },
+  {
+   "anh": "thu/khac_0.png",
+   "diem": 0.039,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.90"
+  },
+  {
+   "anh": "thu/khac_1.png",
+   "diem": 0.002,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.89"
+  },
+  {
+   "anh": "thu/khac_2.png",
+   "diem": 0.07,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.87"
+  },
+  {
+   "anh": "thu/khac_3.png",
+   "diem": -0.041,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.89"
+  },
+  {
+   "anh": "thu/khac_4.png",
+   "diem": -0.037,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.88"
+  },
+  {
+   "anh": "thu/khac_5.png",
+   "diem": -0.063,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.84"
+  },
+  {
+   "anh": "thu/toon_chu_du.webp",
+   "diem": -0.095,
+   "trang_thai": "co_xem",
+   "ghi": "det=0.60"
+  },
+  {
+   "anh": "thu/ve_le_bich.png",
+   "diem": null,
+   "trang_thai": "khong_thay"
+  }
+ ]
+}
