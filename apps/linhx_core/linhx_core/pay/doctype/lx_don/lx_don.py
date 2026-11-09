@@ -41,12 +41,11 @@ class LXDon(Document):
 			("thi_truong", 60, "Thị trường"),
 			("doi_thu", 120, "Đối thủ"),
 			("su_that", 600, "Sự thật thương hiệu"),
-			("dau_vao", 4000, "Đầu vào báo cáo"),
 		)
 		for truong, toi_da, nhan in gioi_han:
 			gt = getattr(self, truong, None)
 			if gt is not None:
-				chuoi = str(gt).strip()
+				chuoi = str(gt).replace("\r", " ").replace("\n", " ").strip()
 				if len(chuoi) > toi_da:
 					frappe.throw(f"{nhan} vượt quá {toi_da} ký tự")
 				setattr(self, truong, chuoi or None)

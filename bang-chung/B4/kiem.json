@@ -1,7 +1,7 @@
 {
   "feature": "B4",
-  "phieu": "20261109-0539-t1",
-  "luc": "2026-11-09T05:51:06+07:00",
+  "phieu": "20261109-0628-t1",
+  "luc": "2026-11-09T06:37:51+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
@@ -13,7 +13,7 @@
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 75%]",
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 87%]",
     "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [100%]",
-    "============================== 8 passed in 0.43s =============================="
+    "============================== 8 passed in 9.80s =============================="
   ],
   "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
   "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"

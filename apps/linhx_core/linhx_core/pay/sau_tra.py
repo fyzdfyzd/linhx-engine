@@ -11,31 +11,30 @@ from linhx_core.pay.quyen_dung import gia_hop_le
 NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 
 
+def _mot_dong(gt: object, toi_da: int, mac_dinh: str = "") -> str:
+	chuoi = str(gt if gt is not None else "").replace("\r", " ").replace("\n", " ").strip()
+	if not chuoi and mac_dinh:
+		chuoi = mac_dinh
+	return chuoi[:toi_da]
+
+
 def _tao_dau_vao(don: dict) -> str:
-	"""Tạo chuỗi `dau_vao` chuẩn cho workflow báo cáo từ thông tin thương hiệu của đơn."""
-	dau_vao_san = str(don.get("dau_vao") or "").strip()
-	if dau_vao_san:
-		return dau_vao_san
+	"""Tạo chuỗi `dau_vao` 5 dòng chuẩn cho workflow báo cáo từ các trường đã cắt ngắn và loại xuống dòng."""
+	brand = _mot_dong(don.get("brand") or don.get("thuong_hieu"), 80)
+	nganh = _mot_dong(don.get("nganh"), 80)
+	thi_truong = _mot_dong(don.get("thi_truong"), 60, mac_dinh="Việt Nam")
+	doi_thu = _mot_dong(don.get("doi_thu"), 120)
+	su_that = _mot_dong(don.get("su_that"), 600)
 
-	brand = str(don.get("brand") or don.get("thuong_hieu") or "").strip()[:80]
-	nganh = str(don.get("nganh") or "").strip()[:80]
-	thi_truong = str(don.get("thi_truong") or "Việt Nam").strip()[:60]
-	doi_thu = str(don.get("doi_thu") or "").strip()[:120]
-	su_that = str(don.get("su_that") or "").strip()[:600]
-
-	dong = [f"brand: {brand}"]
-	if nganh or doi_thu or su_that or don.get("thi_truong"):
-		dong.extend(
-			[
-				f"nganh: {nganh}",
-				f"thi_truong: {thi_truong}",
-				f"doi_thu: {doi_thu}",
-				f"su_that: {su_that}",
-			]
-		)
-	else:
-		dong.append(f"thi_truong: {thi_truong}")
-	return "\n".join(dong)
+	return "\n".join(
+		[
+			f"brand: {brand}",
+			f"nganh: {nganh}",
+			f"thi_truong: {thi_truong}",
+			f"doi_thu: {doi_thu}",
+			f"su_that: {su_that}",
+		]
+	)
 
 
 def viec_can_tao(don: dict, goi: dict, job_da_co: list[dict] | None) -> dict | None:
@@ -45,7 +44,7 @@ def viec_can_tao(don: dict, goi: dict, job_da_co: list[dict] | None) -> dict | N
 	- `don["trang_thai"] == "da_tra"`
 	- `goi` có `"workflow"` hợp lệ
 	- Chưa có job nào trong `job_da_co` có `job["don"] == don["ma"]`
-	- Nếu đơn có `so_tien` và gói có `gia_san`, số tiền phải đạt giá sàn.
+	- `don["so_tien"]` có mặt và đạt giá sàn của `goi`.
 
 	Trả dict với `trang_thai = "cho"` (vào hàng ngay, bỏ duyệt tay) và `nguon = "don"`.
 	"""
@@ -70,7 +69,7 @@ def viec_can_tao(don: dict, goi: dict, job_da_co: list[dict] | None) -> dict | N
 	}:
 		return None
 
-	if don.get("so_tien") is not None and not gia_hop_le(don.get("so_tien"), goi):
+	if not gia_hop_le(don.get("so_tien"), goi):
 		return None
 
 	for j in job_da_co or []:
@@ -79,7 +78,7 @@ def viec_can_tao(don: dict, goi: dict, job_da_co: list[dict] | None) -> dict | N
 
 	email = don.get("email")
 	if isinstance(email, str):
-		email = email.strip()[:120] or None
+		email = email.replace("\r", " ").replace("\n", " ").strip()[:120] or None
 
 	return {
 		"workflow": workflow,
@@ -130,18 +129,12 @@ def _tim_goi_db(frappe_mod, ma_hoac_ten: str) -> dict | None:
 	return d
 
 
-_DA_LOG_LOI_DON: set[tuple[int, str]] = set()
-
-
 def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
 	"""Chỉ ghi `Error Log` tối đa một lần cho mỗi đơn và mỗi loại lỗi khi `on_update` lặp lại."""
 	da_log = getattr(doc, "_da_log_loi_sau_tra", None)
 	if isinstance(da_log, set) and title in da_log:
 		return
 	db = getattr(frappe_mod, "db", None)
-	khoa_bo_nho = (id(db if db is not None else frappe_mod), title)
-	if khoa_bo_nho in _DA_LOG_LOI_DON:
-		return
 	try:
 		if (
 			db is not None
@@ -150,14 +143,10 @@ def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
 			and getattr(db, "exists", None)
 			and db.exists("Error Log", {"method": title})
 		):
-			_DA_LOG_LOI_DON.add(khoa_bo_nho)
 			return
 	except Exception:
 		pass
 	frappe_mod.log_error(title=title, message=message)
-	if len(_DA_LOG_LOI_DON) >= 2048:
-		_DA_LOG_LOI_DON.clear()
-	_DA_LOG_LOI_DON.add(khoa_bo_nho)
 	try:
 		if not isinstance(da_log, set):
 			da_log = set()
@@ -200,7 +189,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		return None
 
 	job_da_co = frappe.db.sql(
-		"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s FOR UPDATE",
+		"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
 		(ma_don,),
 		as_dict=True,
 	)
@@ -217,7 +206,6 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		"thi_truong": getattr(doc, "thi_truong", None),
 		"doi_thu": getattr(doc, "doi_thu", None),
 		"su_that": getattr(doc, "su_that", None),
-		"dau_vao": getattr(doc, "dau_vao", None),
 	}
 	viec = viec_can_tao(don_dict, goi, list(job_da_co or []))
 	if not viec:
@@ -229,7 +217,14 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 				"don": ma_don,
 				"trang_thai": j0.get("trang_thai"),
 			}
-		if don_dict.get("so_tien") is not None and not gia_hop_le(don_dict.get("so_tien"), goi):
+		if don_dict.get("so_tien") is None:
+			_ghi_log_loi_don_mot_lan(
+				frappe,
+				doc,
+				title=f"Đơn {ma_don} đã trả nhưng thiếu số tiền",
+				message=f"Đơn {ma_don} (gói {goi_id}) ở trạng thái da_tra nhưng thiếu so_tien; không tự sinh LX Job.",
+			)
+		elif not gia_hop_le(don_dict.get("so_tien"), goi):
 			_ghi_log_loi_don_mot_lan(
 				frappe,
 				doc,

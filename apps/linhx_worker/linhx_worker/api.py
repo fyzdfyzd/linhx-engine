@@ -251,24 +251,31 @@ def _ip():
     return getattr(frappe.local, "request_ip", None) or "?"
 
 
+def _mot_dong(chuoi, toi_da, mac_dinh=""):
+    s = str(chuoi or "").replace("\r", " ").replace("\n", " ").strip()
+    if not s and mac_dinh:
+        s = mac_dinh
+    return s[:toi_da]
+
+
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=5, seconds=3600)
 def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that="", email="", ten=""):
-    brand = (brand or "").strip()[:80]
+    brand = _mot_dong(brand, 80)
     if len(brand) < 2:
         frappe.throw("Cần tên thương hiệu")
     dau_vao = "\n".join([
         f"brand: {brand}",
-        f"nganh: {(nganh or '').strip()[:80]}",
-        f"thi_truong: {(thi_truong or 'Việt Nam').strip()[:60]}",
-        f"doi_thu: {(doi_thu or '').strip()[:120]}",
-        f"su_that: {(su_that or '').strip()[:600]}",
+        f"nganh: {_mot_dong(nganh, 80)}",
+        f"thi_truong: {_mot_dong(thi_truong, 60, 'Việt Nam')}",
+        f"doi_thu: {_mot_dong(doi_thu, 120)}",
+        f"su_that: {_mot_dong(su_that, 600)}",
     ])
     ma_xem = frappe.generate_hash(length=12)
     job = frappe.get_doc({
         "doctype": "LX Job", "workflow": "ai-noi-gi-ve-brand", "dau_vao": dau_vao,
         "trang_thai": "cho_duyet", "nguon": "khach", "ma_xem": ma_xem,
-        "email_khach": (email or "").strip()[:120] or None, "ten_khach": (ten or "").strip()[:80],
+        "email_khach": _mot_dong(email, 120) or None, "ten_khach": _mot_dong(ten, 80),
     })
     job.insert(ignore_permissions=True)
     frappe.db.commit()

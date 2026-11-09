@@ -152,7 +152,8 @@
    "fieldtype": "Data",
    "label": "Mã đơn",
    "in_standard_filter": 1,
-   "search_index": 1
+   "search_index": 1,
+   "unique": 1
   },
   {
    "fieldname": "ten_khach",

@@ -40,6 +40,13 @@ def goi() -> list[dict]:
     return goi_cong_khai(_ds_goi())
 
 
+def _mot_dong(gt: object, toi_da: int) -> str | None:
+    if gt is None:
+        return None
+    chuoi = str(gt).replace("\r", " ").replace("\n", " ").strip()
+    return chuoi[:toi_da] or None
+
+
 @frappe.whitelist(allow_guest=True)
 def tao_don(
     brand,
@@ -49,11 +56,10 @@ def tao_don(
     thi_truong=None,
     doi_thu=None,
     su_that=None,
-    dau_vao=None,
 ) -> dict:
     """Tạo đơn báo cáo theo gói trong catalog (không nhận giá từ client) và trả thông tin VietQR."""
-    ten_brand = str(brand or "").strip()
-    ma_goi = str(goi or "").strip()
+    ten_brand = str(brand or "").replace("\r", " ").replace("\n", " ").strip()
+    ma_goi = str(goi or "").replace("\r", " ").replace("\n", " ").strip()
     if not ten_brand:
         frappe.throw("Vui lòng nhập tên thương hiệu")
     if len(ten_brand) > 80:
@@ -81,12 +87,11 @@ def tao_don(
             "noi_dung_ck": don["noi_dung_ck"],
             "qr_url": don["qr_url"],
             "brand": ten_brand,
-            "email": str(email or "").strip()[:120] or None,
-            "nganh": str(nganh or "").strip()[:80] or None,
-            "thi_truong": str(thi_truong or "").strip()[:60] or None,
-            "doi_thu": str(doi_thu or "").strip()[:120] or None,
-            "su_that": str(su_that or "").strip()[:600] or None,
-            "dau_vao": str(dau_vao or "").strip()[:4000] or None,
+            "email": _mot_dong(email, 120),
+            "nganh": _mot_dong(nganh, 80),
+            "thi_truong": _mot_dong(thi_truong, 60),
+            "doi_thu": _mot_dong(doi_thu, 120),
+            "su_that": _mot_dong(su_that, 600),
         }
     )
     doc.insert(ignore_permissions=True)

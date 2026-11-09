@@ -19,8 +19,7 @@
   "nganh",
   "thi_truong",
   "doi_thu",
-  "su_that",
-  "dau_vao"
+  "su_that"
  ],
  "fields": [
   {
@@ -107,11 +106,6 @@
    "fieldtype": "Small Text",
    "label": "Sự thật thương hiệu",
    "length": 600
-  },
-  {
-   "fieldname": "dau_vao",
-   "fieldtype": "Long Text",
-   "label": "Đầu vào báo cáo"
   }
  ],
  "permissions": [
