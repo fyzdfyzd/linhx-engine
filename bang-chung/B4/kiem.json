@@ -1,26 +1,27 @@
 {
   "feature": "B4",
-  "phieu": "20261109-1000-t1",
-  "luc": "2026-11-09T10:11:49+07:00",
+  "phieu": "20261109-1302-t1",
+  "luc": "2026-11-09T13:36:27+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "....                                                                     [100%]",
-    "4 passed in 1.62s"
+    "4 passed in 2.72s"
   ],
   "kiem_don_vi": {
-    "lenh": "python -m pytest apps/linhx_core/linhx_core/pay/test_sau_tra.py -v",
+    "lenh": "python -m pytest apps/linhx_core/linhx_core/pay/test_sau_tra.py apps/linhx_worker/linhx_worker/test_quy_trinh.py -v",
     "returncode": 0,
     "stdout": [
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_hook_lx_don_on_update PASSED [ 20%]",
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 40%]",
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 60%]",
       "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [ 80%]",
-      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_chia_viec_gop_cho_tu_tach_viec_con PASSED [100%]",
-      "============================== 5 passed in 0.41s =============================="
+      "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chia_viec_gop_cho_tu_tach_viec_con PASSED [100%]",
+      "============================= 5 passed in 18.42s =============================="
     ]
   },
   "kiem_thuc_te_bench_wsl": {
+    "luc_chay": "2026-11-09T10:11:49+07:00",
     "site": "test",
     "don": "DON-B4-1794193856",
     "job": "VIEC-00021",
@@ -46,6 +47,12 @@
       "trang_thai_db": "da_tra",
       "da_ghi_error_log": true
     }
+  },
+  "ghi_chu_review": {
+    "api_sepay_so_tien": "Trong api_sepay.py:227, ds_don[0]['so_tien'] được đọc trực tiếp từ doc_don.so_tien nên gán ngược lại ở dòng 257 là dư thừa; giữ nguyên api_sepay.py như nhánh main (B3). Nếu đơn thiếu so_tien thì sau_tra.py:241 ghi Error Log và không sinh LX Job.",
+    "sau_tra_nhan_dien_loi_trung": "LXJob.validate ném frappe.DuplicateEntryError và sau_tra._la_loi_trung_khoa kiểm tra theo lớp ngoại lệ (DuplicateEntryError / UniqueValidationError) hoặc mã lỗi MariaDB/MySQL 1062 (ER_DUP_ENTRY) trước, chỉ dùng so chuỗi làm dự phòng cuối.",
+    "lx_job_show_index_va_migrate": "Frappe bench v15 dùng MariaDB/MySQL; _doc_index_cot_don bọc SHOW INDEX an toàn và chuan_hoa_don_lx_job(bo_qua_go_trung_neu_da_unique=True) bỏ qua quét GROUP BY gỡ trùng ở các lần migrate tiếp theo khi unique index trên cột don đã tồn tại.",
+    "tach_test_worker": "Đã chuyển test_chia_viec_gop_cho_tu_tach_viec_con sang apps/linhx_worker/linhx_worker/test_quy_trinh.py."
   },
   "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
   "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"

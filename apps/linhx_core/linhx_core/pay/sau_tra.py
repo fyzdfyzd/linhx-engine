@@ -177,6 +177,24 @@ def _loai_loi_trung_khoa(frappe_mod) -> tuple[type[BaseException], ...]:
 	return tuple(ket_qua)
 
 
+def _la_loi_trung_khoa(frappe_mod, exc: BaseException, ma_don: str) -> bool:
+	"""Nhận diện lỗi trùng khoá ưu tiên theo lớp ngoại lệ (`DuplicateEntryError` / `UniqueValidationError`)
+	hoặc mã lỗi CSDL MariaDB/MySQL `1062` (`ER_DUP_ENTRY`); chỉ so chuỗi làm dự phòng cuối.
+	"""
+	loi_trung = _loai_loi_trung_khoa(frappe_mod)
+	ung_vien = (exc, getattr(exc, "__cause__", None), getattr(exc, "__context__", None))
+	for e in ung_vien:
+		if e is None:
+			continue
+		if loi_trung and isinstance(e, loi_trung):
+			return True
+		args = getattr(e, "args", None)
+		if isinstance(args, tuple) and args and args[0] == 1062:
+			return True
+	thong_diep = str(exc)
+	return "Duplicate entry" in thong_diep or f"Đơn {ma_don} đã có việc" in thong_diep
+
+
 def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 	"""Hook `doc_events` (`LX Don.on_update` / `on_change`): tự tạo `LX Job` ngay khi đơn `da_tra`."""
 	import frappe
@@ -259,7 +277,6 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		return None
 
 	ma_xem = frappe.generate_hash(length=12)
-	loi_trung = _loai_loi_trung_khoa(frappe)
 	try:
 		job_doc = frappe.get_doc(
 			{
@@ -275,10 +292,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		)
 		job_doc.insert(ignore_permissions=True)
 	except Exception as exc:
-		la_loi_trung = bool(loi_trung and isinstance(exc, loi_trung)) or (
-			"Duplicate entry" in str(exc) or f"Đơn {ma_don} đã có việc" in str(exc)
-		)
-		if la_loi_trung:
+		if _la_loi_trung_khoa(frappe, exc, ma_don):
 			job_sau_loi = frappe.db.sql(
 				"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
 				(ma_don,),

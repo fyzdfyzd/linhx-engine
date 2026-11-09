@@ -2,11 +2,33 @@ import frappe
 from frappe.model.document import Document
 
 
-def chuan_hoa_don_lx_job() -> None:
-	"""Chuyển `don = ''` thành `NULL` và gỡ trùng `don` trên dữ liệu cũ trước khi đồng bộ unique index."""
+def _doc_index_cot_don() -> list[dict]:
+	"""Đọc danh sách index của cột `don` trên bảng `tabLX Job` (MariaDB/MySQL chuẩn của Frappe v15)."""
+	try:
+		rows = frappe.db.sql(
+			"SHOW INDEX FROM `tabLX Job` WHERE Column_name = 'don'",
+			as_dict=True,
+		)
+		return list(rows or [])
+	except Exception:
+		return []
+
+
+def chuan_hoa_don_lx_job(bo_qua_go_trung_neu_da_unique: bool = False) -> None:
+	"""Chuyển `don = ''` thành `NULL` và gỡ trùng `don` trên dữ liệu cũ trước khi đồng bộ unique index.
+
+	Khi `bo_qua_go_trung_neu_da_unique=True` (gọi từ `on_doctype_update` ở các lần migrate về sau)
+	và bảng đã có sẵn unique index trên cột `don`, bỏ qua bước quét `GROUP BY don HAVING COUNT(*) > 1`
+	vì ràng buộc unique của CSDL đã ngăn phát sinh bản ghi trùng mới.
+	"""
 	if not frappe.db.table_exists("LX Job") or not frappe.db.has_column("LX Job", "don"):
 		return
 	frappe.db.sql("UPDATE `tabLX Job` SET `don` = NULL WHERE `don` = ''")
+	if bo_qua_go_trung_neu_da_unique:
+		idxs = _doc_index_cot_don()
+		da_co_unique = any(r.get("Key_name") and int(r.get("Non_unique", 1)) == 0 for r in idxs)
+		if da_co_unique:
+			return
 	trung = frappe.db.sql(
 		"""SELECT don, COUNT(*) AS so_luong
 		FROM `tabLX Job`
@@ -30,16 +52,13 @@ def chuan_hoa_don_lx_job() -> None:
 
 
 def dam_bao_unique_don_lx_job() -> None:
-	"""Đảm bảo bảng `tabLX Job` có đúng một unique index trên cột `don`."""
+	"""Đảm bảo bảng `tabLX Job` (MariaDB/MySQL) có đúng một unique index trên cột `don`."""
 	if not frappe.db.table_exists("LX Job") or not frappe.db.has_column("LX Job", "don"):
 		return
-	chuan_hoa_don_lx_job()
-	idxs = frappe.db.sql(
-		"SHOW INDEX FROM `tabLX Job` WHERE Column_name = 'don'",
-		as_dict=True,
-	)
-	unique_keys = {r.get("Key_name") for r in (idxs or []) if r.get("Key_name") and int(r.get("Non_unique", 1)) == 0}
-	all_keys = {r.get("Key_name") for r in (idxs or []) if r.get("Key_name")}
+	chuan_hoa_don_lx_job(bo_qua_go_trung_neu_da_unique=True)
+	idxs = _doc_index_cot_don()
+	unique_keys = {r.get("Key_name") for r in idxs if r.get("Key_name") and int(r.get("Non_unique", 1)) == 0}
+	all_keys = {r.get("Key_name") for r in idxs if r.get("Key_name")}
 	if not unique_keys:
 		frappe.db.add_unique("LX Job", ["don"])
 		unique_keys.add("unique_don")
@@ -60,7 +79,10 @@ class LXJob(Document):
 		if self.don:
 			trung = frappe.db.exists("LX Job", {"don": self.don, "name": ["!=", self.name]})
 			if trung:
-				frappe.throw(f"Đơn {self.don} đã có việc {trung}")
+				frappe.throw(
+					f"Đơn {self.don} đã có việc {trung}",
+					getattr(frappe, "DuplicateEntryError", None),
+				)
 
 	def on_doctype_update(self):
 		dam_bao_unique_don_lx_job()
