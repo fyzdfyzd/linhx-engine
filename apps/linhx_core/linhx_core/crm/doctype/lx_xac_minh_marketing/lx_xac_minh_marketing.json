@@ -1,0 +1,131 @@
+{
+ "doctype": "DocType",
+ "name": "LX Xac Minh Marketing",
+ "module": "crm",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "autoname": "field:khoa_kenh",
+ "field_order": [
+  "khoa_kenh",
+  "email",
+  "nguoi",
+  "muc_dich",
+  "ma_bam",
+  "tao_luc",
+  "het_han_luc",
+  "so_lan_sai",
+  "da_dung",
+  "khoa_den",
+  "nguon"
+ ],
+ "fields": [
+  {
+   "fieldname": "khoa_kenh",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Khoá kênh xác minh",
+   "reqd": 1,
+   "unique": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Kênh (Email/SĐT)",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "nguoi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Người",
+   "options": "LX Nguoi",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "default": "marketing",
+   "fieldname": "muc_dich",
+   "fieldtype": "Data",
+   "label": "Mục đích",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ma_bam",
+   "fieldtype": "Data",
+   "label": "Băm mã OTP (SHA-256)",
+   "permlevel": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "tao_luc",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Tạo lúc",
+   "reqd": 1
+  },
+  {
+   "fieldname": "het_han_luc",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Hết hạn lúc",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "so_lan_sai",
+   "fieldtype": "Int",
+   "label": "Số lần nhập sai"
+  },
+  {
+   "default": "0",
+   "fieldname": "da_dung",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Đã dùng"
+  },
+  {
+   "fieldname": "khoa_den",
+   "fieldtype": "Datetime",
+   "label": "Khoá đến"
+  },
+  {
+   "fieldname": "nguon",
+   "fieldtype": "Data",
+   "label": "Nguồn"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "permlevel": 0,
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "System Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 20:10:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 20:10:00.000000"
+}

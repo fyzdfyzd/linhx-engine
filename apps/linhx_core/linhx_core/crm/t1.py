@@ -159,6 +159,8 @@ def da_rut_dong_y(
             continue
         ma_d = dong_y._ma_nguoi(d.get("nguoi"))
         if ma_d in tap_ma:
+            if str(d.get("trang_thai") or "").strip() == "cho_xac_minh":
+                continue
             if d.get("muc_dich") == muc_dich:
                 co_dong = True
             ban_sao = dict(d)
@@ -398,8 +400,19 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
         so_moi = dong_y.ghi(so_moi, ma_nguoi, "lien_he", True, luc_str, NGUON_T1)
 
     if du_lieu.get("dong_y_marketing") is True:
-        if not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "marketing")):
-            so_moi = dong_y.ghi(so_moi, ma_nguoi, "marketing", True, luc_str, NGUON_T1)
+        if (
+            not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "marketing"))
+            and not dong_y.hieu_luc(so_moi, ma_nguoi, "marketing")
+        ):
+            so_moi = dong_y.ghi(
+                so_moi,
+                ma_nguoi,
+                "marketing",
+                True,
+                luc_str,
+                NGUON_T1,
+                trang_thai="cho_xac_minh",
+            )
 
     return {
         "ds_nguoi": ds_moi,
