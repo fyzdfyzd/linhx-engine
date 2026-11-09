@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 23:49 (giờ máy cty). Đạt: 42/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1)
+Cập nhật 2026-11-09 23:59 (giờ máy cty). Đạt: 43/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | F3 | rảnh | CHUA_DAT · Feature O4 · commit c350cc5 · nhánh tu-dong/engine-t1 · 2026-11-09T23:29:57 |
-| 2 | F2 | 20261109-2340-t2 từ 2026-11-09T23:40:39 | CHUA_DAT · Feature F2 · commit 8c42acb · nhánh tu-dong/engine-t2 · 2026-11-09T23:40:38 |
+| 1 | F3 | rảnh | CHUA_DAT · Feature F3 · commit 3de51c2 · nhánh tu-dong/engine-t1 · 2026-11-09T23:49:48 |
+| 2 | - | rảnh | DAT · Feature F2 · commit dca7d30 · nhánh tu-dong/engine-t2 · 2026-11-09T23:58:38 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -26,16 +26,16 @@ Cập nhật 2026-11-09 23:49 (giờ máy cty). Đạt: 42/47 (N1, N2, N3, N4, N
 - 2026-11-09T23:29:57 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6464e48d, bản hỏng giữ ở nhánh cục bộ hong/O4-20261109-2329, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 23:09 t1: O4 CHUA_DAT lần 2 (commit 5933b70)
-- 2026-11-09 23:09 t1: giao agy phiếu 20261109-2309-t1: O4 (lượt sửa)
-- 2026-11-09 23:10 t2: F1 DAT, đã gộp vào main
-- 2026-11-09 23:10 t2: giao agy phiếu 20261109-2310-t2: F2
-- 2026-11-09 23:18 t1: agy xong phiếu 20261109-2309-t1 (O4) sau 8 phút
-- 2026-11-09 23:29 t1: O4 CHUA_DAT lần 3 (commit c350cc5)
 - 2026-11-09 23:29 t1: O4 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
 - 2026-11-09 23:29 t1: giao agy phiếu 20261109-2329-t1: F3
 - 2026-11-09 23:34 t2: agy xong phiếu 20261109-2310-t2 (F2) sau 24 phút
 - 2026-11-09 23:40 t2: F2 trượt do lỗi máy (commit 8c42acb), không tính lần
 - 2026-11-09 23:40 t2: giao agy phiếu 20261109-2340-t2: F2 (lượt sửa)
 - 2026-11-09 23:43 t1: agy xong phiếu 20261109-2329-t1 (F3) sau 14 phút
+- 2026-11-09 23:49 t1: F3 CHUA_DAT lần 1 (commit 3de51c2)
+- 2026-11-09 23:49 t1: giao agy phiếu 20261109-2349-t1: F3 (lượt sửa)
+- 2026-11-09 23:52 t2: agy xong phiếu 20261109-2340-t2 (F2) sau 12 phút
+- 2026-11-09 23:58 t2: F2 DAT, đã gộp vào main
+- 2026-11-09 23:58 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-09 23:59 t1: agy xong phiếu 20261109-2349-t1 (F3) sau 9 phút
 
