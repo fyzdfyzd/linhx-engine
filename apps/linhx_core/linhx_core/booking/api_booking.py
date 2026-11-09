@@ -301,10 +301,54 @@ def _tim_co_hoi_mo_cua_nguoi(ma_nguoi: str) -> dict | None:
             order_by="creation desc",
             limit=5,
         )
-        if ds and isinstance(ds[0], dict):
-            return ds[0]
+        for item in ds or []:
+            if isinstance(item, dict) and str(item.get("nguoi") or "").strip() == ng:
+                return item
     except Exception as exc:
         logger.warning("Không truy vấn được LX Co Hoi của %s: %s", _che_kenh(ng), type(exc).__name__)
+    return None
+
+
+def _xac_minh_co_hoi_cua_nguoi(ma_co_hoi: str, ma_nguoi: str) -> dict | None:
+    """Xác nhận `LX Co Hoi` tồn tại và có `nguoi == ma_nguoi`; nếu không khớp thì bỏ qua."""
+    ch = str(ma_co_hoi or "").strip()
+    ng = str(ma_nguoi or "").strip()
+    if not ch or not ng:
+        return None
+
+    db = getattr(frappe, "db", None)
+    if db is not None and callable(getattr(db, "get_value", None)):
+        try:
+            tt_ch = db.get_value(
+                "LX Co Hoi",
+                ch,
+                ["name", "nguoi", "phu_trach", "don_vi", "trang_thai"],
+                as_dict=True,
+            )
+            if isinstance(tt_ch, dict) and tt_ch:
+                if str(tt_ch.get("nguoi") or "").strip() == ng:
+                    return tt_ch
+                return None
+        except Exception as exc:
+            logger.warning("Không đọc được LX Co Hoi %s từ DB: %s", _che_kenh(ch), type(exc).__name__)
+
+    if callable(getattr(frappe, "get_all", None)):
+        try:
+            ds = frappe.get_all(
+                "LX Co Hoi",
+                filters={"name": ch, "nguoi": ng},
+                fields=["name", "nguoi", "phu_trach", "don_vi", "trang_thai", "creation"],
+                limit=5,
+            )
+            for item in ds or []:
+                if (
+                    isinstance(item, dict)
+                    and str(item.get("name") or "").strip() == ch
+                    and str(item.get("nguoi") or "").strip() == ng
+                ):
+                    return item
+        except Exception as exc:
+            logger.warning("Không truy vấn được LX Co Hoi %s: %s", _che_kenh(ch), type(exc).__name__)
     return None
 
 
@@ -327,14 +371,9 @@ def _chon_phu_trach_tu_dong(don_vi: str | None = None) -> str:
         return ""
 
     ung_vien = _loc_ung_vien_crm(frappe, list(ds_user or []), don_vi)
-    if not ung_vien and don_vi:
-        ung_vien = _loc_ung_vien_crm(frappe, list(ds_user or []), None)
-    if not ung_vien:
-        ung_vien = [str(u).strip() for u in (ds_user or []) if str(u or "").strip()]
     if not ung_vien:
         return ""
 
-    ds_mo: list[dict] = []
     try:
         ds_mo = list(
             frappe.get_all(
@@ -344,43 +383,53 @@ def _chon_phu_trach_tu_dong(don_vi: str | None = None) -> str:
             )
             or []
         )
-    except Exception:
-        ds_mo = []
+    except Exception as exc:
+        logger.warning("Không truy vấn được danh sách LX Co Hoi đang mở: %s", type(exc).__name__)
+        return ""
     return mod_co_hoi.giao({}, ung_vien, ds_mo)
 
 
-def _xac_minh_phu_trach_hop_le(phu_trach: str, don_vi: str | None = None) -> str:
+def _xac_minh_phu_trach_hop_le(phu_trach: str, don_vi: str | None = None) -> tuple[str, str]:
     pt = str(phu_trach or "").strip()
+    dv_chon = str(don_vi or "").strip()
     if not pt:
-        return ""
-    if pt == "Guest":
+        return "", dv_chon
+    if pt in USER_LOAI_TRU:
         _tra_loi_http("Người phụ trách không hợp lệ", 400)
+
     db = getattr(frappe, "db", None)
     if db is not None and callable(getattr(db, "get_value", None)):
         try:
             tt_user = db.get_value("User", pt, ["name", "enabled", "user_type"], as_dict=True)
-            if isinstance(tt_user, dict) and tt_user:
-                if int(tt_user.get("enabled", 1) or 0) != 1:
-                    _tra_loi_http("Người phụ trách đang ngừng hoạt động", 400)
-                if tt_user.get("user_type") and tt_user.get("user_type") != "System User":
-                    _tra_loi_http("Người phụ trách phải là nhân sự hệ thống", 400)
-                if don_vi and callable(getattr(frappe, "get_all", None)) and not la_user_mien(pt):
-                    ds_up = frappe.get_all(
-                        "User Permission",
-                        filters={"allow": "LX Don Vi"},
-                        fields=["user", "for_value"],
-                        limit=50,
-                    )
-                    if ds_up:
-                        dv_user = lay_don_vi_cua_user(pt)
-                        if dv_user and don_vi not in dv_user:
-                            _tra_loi_http("Người phụ trách không thuộc đơn vị của khách hàng", 403)
         except Exception as exc:
-            if type(exc).__name__ in ("ValidationError", "PermissionError") or isinstance(
-                exc, (ValueError, PermissionError)
-            ):
-                raise
-    return pt
+            logger.warning("Không đọc được thông tin User %s: %s", _che_kenh(pt), type(exc).__name__)
+            tt_user = None
+        if not isinstance(tt_user, dict) or not tt_user:
+            _tra_loi_http("Người phụ trách không tồn tại", 400)
+        if int(tt_user.get("enabled", 1) or 0) != 1:
+            _tra_loi_http("Người phụ trách đang ngừng hoạt động", 400)
+        if tt_user.get("user_type") and tt_user.get("user_type") != "System User":
+            _tra_loi_http("Người phụ trách phải là nhân sự hệ thống", 400)
+
+    if not la_user_mien(pt):
+        dv_user = lay_don_vi_cua_user(pt)
+        if not dv_user:
+            _tra_loi_http(
+                "Người phụ trách chưa được phân quyền đơn vị",
+                403,
+                getattr(frappe, "PermissionError", PermissionError),
+            )
+        if dv_chon:
+            if dv_chon not in dv_user:
+                _tra_loi_http(
+                    "Người phụ trách không thuộc đơn vị của khách hàng",
+                    403,
+                    getattr(frappe, "PermissionError", PermissionError),
+                )
+        else:
+            dv_chon = dv_user[0]
+
+    return pt, dv_chon
 
 
 def _giai_quyet_nguoi_va_co_hoi(
@@ -395,97 +444,89 @@ def _giai_quyet_nguoi_va_co_hoi(
     ma_co_hoi_gui = str(du_lieu.get("co_hoi") or "").strip()
     co_kenh_lien_he = bool(dt_chuan or em_chuan)
 
-    if co_kenh_lien_he:
-        ho_ten_raw = str(du_lieu.get("ho_ten") or "").strip() or "Khách đặt lịch"
-        du_lieu_form = {
-            "ho_ten": ho_ten_raw,
-            "dien_thoai": du_lieu.get("dien_thoai"),
-            "email": du_lieu.get("email"),
-            "nhu_cau": str(du_lieu.get("ghi_chu") or "Đặt lịch gọi tư vấn").strip(),
-            "dong_y_lien_he": True,
-            "dong_y_marketing": False,
-        }
-        try:
-            form._kiem_tra_dau_vao(du_lieu_form)
-        except ValueError as exc:
-            _tra_loi_http(str(exc), 400)
-
-        ds_nguoi_cu = _tim_nguoi_trung(du_lieu_form)
-        nguoi_da_co = ds_nguoi_cu[0] if ds_nguoi_cu else None
-
-        if ma_nguoi_gui:
-            nguoi_theo_ma = _doc_nguoi_db(ma_nguoi_gui)
-            if nguoi_theo_ma is not None:
-                kenh_hop_le = _chon_kenh_otp_cho_nguoi(
-                    nguoi_theo_ma,
-                    em_chuan=em_chuan,
-                    dt_chuan=dt_chuan,
-                )
-                if not kenh_hop_le:
-                    _tra_loi_http("Thông tin liên hệ không khớp với hồ sơ khách hàng", 400)
-                if nguoi_da_co is None:
-                    nguoi_da_co = nguoi_theo_ma
-                    ds_nguoi_cu = [nguoi_theo_ma]
-                elif str(nguoi_da_co.get("name") or "").strip() != ma_nguoi_gui:
-                    _tra_loi_http("Thông tin liên hệ không khớp với hồ sơ khách hàng", 400)
-
-        so_dong_y_cu = _lay_so_dong_y_hien_co(ds_nguoi_cu) if ds_nguoi_cu else []
-        ma_ung_vien = str(nguoi_da_co.get("name") or "").strip() if nguoi_da_co else ""
-
-        if ma_ung_vien and form.da_rut_dong_y(so_dong_y_cu, ma_ung_vien, "lien_he"):
-            _tra_loi_http("Khách hàng đã rút đồng ý liên hệ, không thể đặt lịch gọi", 400)
-
-        da_co_dong_y_lh = bool(ma_ung_vien and dong_y.hieu_luc(so_dong_y_cu, ma_ung_vien, "lien_he"))
-        dong_y_gui = form._la_dong_y_true(du_lieu.get("dong_y_lien_he"))
-        if not dong_y_gui and not da_co_dong_y_lh:
-            _tra_loi_http("Khách hàng phải đồng ý liên hệ trước khi đặt lịch gọi", 400)
-
-        luc_ghi = dong_y.bay_gio()
-        so_luong_dy_cu = len(so_dong_y_cu)
-        ket_qua_form = form.xu_ly(du_lieu_form, ds_nguoi_cu, so_dong_y_cu, luc_ghi, nguon_ghi)
-        ma_nguoi = _luu_hoac_lay_nguoi(
-            ket_qua_form["nguoi"],
-            ds_nguoi_cu,
-            du_lieu_goc=du_lieu_form,
+    if not co_kenh_lien_he:
+        _tra_loi_http(
+            "Phải cung cấp số điện thoại hoặc email hợp lệ khớp hồ sơ để đặt lịch gọi",
+            400,
         )
 
-        if dong_y_gui and not da_co_dong_y_lh:
-            for dy in ket_qua_form["so_dong_y"][so_luong_dy_cu:]:
-                if dy.get("muc_dich") == "lien_he":
-                    doc_dy = frappe.get_doc(
-                        {
-                            "doctype": "LX Dong Y",
-                            "nguoi": ma_nguoi,
-                            "muc_dich": "lien_he",
-                            "dong_y": 1,
-                            "luc": dy.get("luc") or luc_ghi,
-                            "nguon": nguon_ghi,
-                        }
-                    )
-                    doc_dy.flags.ignore_permissions = True
-                    doc_dy.insert(ignore_permissions=True)
-    else:
-        if not ma_nguoi_gui:
-            _tra_loi_http("Phải cung cấp mã khách hàng (nguoi) hoặc số điện thoại / email", 400)
-        nguoi_db = _doc_nguoi_db(ma_nguoi_gui)
-        if nguoi_db is None:
-            db = getattr(frappe, "db", None)
-            if db is not None and callable(getattr(db, "exists", None)):
-                try:
-                    ton_tai = db.exists("LX Nguoi", ma_nguoi_gui)
-                except Exception:
-                    ton_tai = True
-                if ton_tai is False:
-                    _tra_loi_http("Không tìm thấy hồ sơ khách hàng để đặt lịch", 404)
-        so_dy = _lay_so_dong_y_hien_co(ma_nguoi_gui)
-        if so_dy and form.da_rut_dong_y(so_dy, ma_nguoi_gui, "lien_he"):
-            _tra_loi_http("Khách hàng đã rút đồng ý liên hệ, không thể đặt lịch gọi", 400)
-        ma_nguoi = ma_nguoi_gui
+    ho_ten_raw = str(du_lieu.get("ho_ten") or "").strip() or "Khách đặt lịch"
+    du_lieu_form = {
+        "ho_ten": ho_ten_raw,
+        "dien_thoai": du_lieu.get("dien_thoai"),
+        "email": du_lieu.get("email"),
+        "nhu_cau": str(du_lieu.get("ghi_chu") or "Đặt lịch gọi tư vấn").strip(),
+        "dong_y_lien_he": True,
+        "dong_y_marketing": False,
+    }
+    try:
+        form._kiem_tra_dau_vao(du_lieu_form)
+    except ValueError as exc:
+        _tra_loi_http(str(exc), 400)
 
-    ch_hien_co = _tim_co_hoi_mo_cua_nguoi(ma_nguoi)
-    ma_co_hoi = ma_co_hoi_gui or (str(ch_hien_co.get("name") or "").strip() if ch_hien_co else "")
-    pt_co_hoi = str(ch_hien_co.get("phu_trach") or "").strip() if ch_hien_co else ""
-    don_vi = str(ch_hien_co.get("don_vi") or "").strip() if ch_hien_co else ""
+    ds_nguoi_cu = _tim_nguoi_trung(du_lieu_form)
+    nguoi_da_co = ds_nguoi_cu[0] if ds_nguoi_cu else None
+
+    if ma_nguoi_gui:
+        nguoi_theo_ma = _doc_nguoi_db(ma_nguoi_gui)
+        if nguoi_theo_ma is None:
+            _tra_loi_http("Thông tin liên hệ không khớp với hồ sơ khách hàng", 400)
+        kenh_hop_le = _chon_kenh_otp_cho_nguoi(
+            nguoi_theo_ma,
+            em_chuan=em_chuan,
+            dt_chuan=dt_chuan,
+        )
+        if not kenh_hop_le:
+            _tra_loi_http("Thông tin liên hệ không khớp với hồ sơ khách hàng", 400)
+        if nguoi_da_co is None:
+            nguoi_da_co = nguoi_theo_ma
+            ds_nguoi_cu = [nguoi_theo_ma]
+        elif str(nguoi_da_co.get("name") or "").strip() != ma_nguoi_gui:
+            _tra_loi_http("Thông tin liên hệ không khớp với hồ sơ khách hàng", 400)
+
+    so_dong_y_cu = _lay_so_dong_y_hien_co(ds_nguoi_cu) if ds_nguoi_cu else []
+    ma_ung_vien = str(nguoi_da_co.get("name") or "").strip() if nguoi_da_co else ""
+
+    if ma_ung_vien and form.da_rut_dong_y(so_dong_y_cu, ma_ung_vien, "lien_he"):
+        _tra_loi_http("Khách hàng đã rút đồng ý liên hệ, không thể đặt lịch gọi", 400)
+
+    da_co_dong_y_lh = bool(ma_ung_vien and dong_y.hieu_luc(so_dong_y_cu, ma_ung_vien, "lien_he"))
+    dong_y_gui = form._la_dong_y_true(du_lieu.get("dong_y_lien_he"))
+    if not dong_y_gui and not da_co_dong_y_lh:
+        _tra_loi_http("Khách hàng phải đồng ý liên hệ trước khi đặt lịch gọi", 400)
+
+    luc_ghi = dong_y.bay_gio()
+    so_luong_dy_cu = len(so_dong_y_cu)
+    ket_qua_form = form.xu_ly(du_lieu_form, ds_nguoi_cu, so_dong_y_cu, luc_ghi, nguon_ghi)
+    ma_nguoi = _luu_hoac_lay_nguoi(
+        ket_qua_form["nguoi"],
+        ds_nguoi_cu,
+        du_lieu_goc=du_lieu_form,
+    )
+
+    if dong_y_gui and not da_co_dong_y_lh:
+        for dy in ket_qua_form["so_dong_y"][so_luong_dy_cu:]:
+            if dy.get("muc_dich") == "lien_he":
+                doc_dy = frappe.get_doc(
+                    {
+                        "doctype": "LX Dong Y",
+                        "nguoi": ma_nguoi,
+                        "muc_dich": "lien_he",
+                        "dong_y": 1,
+                        "luc": dy.get("luc") or luc_ghi,
+                        "nguon": nguon_ghi,
+                    }
+                )
+                doc_dy.flags.ignore_permissions = True
+                doc_dy.insert(ignore_permissions=True)
+
+    ch_chon = _xac_minh_co_hoi_cua_nguoi(ma_co_hoi_gui, ma_nguoi) if ma_co_hoi_gui else None
+    if ch_chon is None:
+        ch_chon = _tim_co_hoi_mo_cua_nguoi(ma_nguoi)
+
+    ma_co_hoi = str(ch_chon.get("name") or "").strip() if ch_chon else ""
+    pt_co_hoi = str(ch_chon.get("phu_trach") or "").strip() if ch_chon else ""
+    don_vi = str(ch_chon.get("don_vi") or "").strip() if ch_chon else ""
 
     if not don_vi:
         db = getattr(frappe, "db", None)
@@ -494,10 +535,10 @@ def _giai_quyet_nguoi_va_co_hoi(
                 dv_ng = db.get_value("LX Nguoi", ma_nguoi, "don_vi")
                 if dv_ng:
                     don_vi = str(dv_ng).strip()
-            except Exception:
-                pass
+            except Exception as exc:
+                logger.warning("Không đọc được don_vi của LX Nguoi %s: %s", _che_kenh(ma_nguoi), type(exc).__name__)
 
-    if not ma_co_hoi and co_kenh_lien_he and callable(getattr(frappe, "get_doc", None)):
+    if not ma_co_hoi and callable(getattr(frappe, "get_doc", None)):
         try:
             doc_ch = frappe.get_doc(
                 {
@@ -517,6 +558,7 @@ def _giai_quyet_nguoi_va_co_hoi(
                 don_vi = str(doc_ch.don_vi).strip()
         except Exception as exc:
             logger.warning("Không tự tạo được LX Co Hoi khi đặt lịch: %s", type(exc).__name__)
+            _tra_loi_http("Không tạo được cơ hội tư vấn cho lịch gọi", 500)
 
     return ma_nguoi, ma_co_hoi, pt_co_hoi, don_vi
 
@@ -602,10 +644,11 @@ def dat_lich_goi(
         )
 
     pt_yeu_cau = str(du_lieu.get("phu_trach") or "").strip()
-    pt_chon = pt_yeu_cau or pt_co_hoi or _chon_phu_trach_tu_dong(don_vi)
+    pt_hop_le_tu_khach = pt_yeu_cau if (pt_yeu_cau and pt_co_hoi and pt_yeu_cau == pt_co_hoi) else ""
+    pt_chon = pt_hop_le_tu_khach or pt_co_hoi or _chon_phu_trach_tu_dong(don_vi)
     if not pt_chon:
         _tra_loi_http("Chưa có người phụ trách khả dụng để nhận lịch gọi", 400)
-    pt_chon = _xac_minh_phu_trach_hop_le(pt_chon, don_vi)
+    pt_chon, don_vi = _xac_minh_phu_trach_hop_le(pt_chon, don_vi)
 
     with _khoa_dat_lich(f"pt:{pt_chon}"):
         ds_lich_hien_co = _lay_ds_lich_phu_trach_db(pt_chon, khoa_dong=True)
@@ -685,8 +728,9 @@ def viec_cho_lich_goi(phu_trach: str | None = None) -> list[dict]:
         bo_loc["phu_trach"] = pt_loc
     if not mien:
         ds_don_vi = lay_don_vi_cua_user(nguoi_dung)
-        if ds_don_vi:
-            bo_loc["don_vi"] = ["in", ds_don_vi]
+        if not ds_don_vi:
+            return []
+        bo_loc["don_vi"] = ["in", ds_don_vi]
 
     ds_raw = frappe.get_all(
         "LX Lich Goi",

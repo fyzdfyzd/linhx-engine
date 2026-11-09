@@ -98,20 +98,22 @@ def _doc_don_vi_nguoi_hoac_co_hoi_tu_db(
     if not callable(get_value_fn):
         return None
 
+    ng = str(ma_nguoi or "").strip()
     ch = str(ma_co_hoi or "").strip()
     if ch:
         try:
             tt_ch = get_value_fn("LX Co Hoi", ch, ["don_vi", "nguoi"], as_dict=True)
             if isinstance(tt_ch, dict):
-                dv_ch = str(tt_ch.get("don_vi") or "").strip()
-                if dv_ch:
-                    return dv_ch
-                if not ma_nguoi and tt_ch.get("nguoi"):
-                    ma_nguoi = str(tt_ch["nguoi"]).strip()
+                ng_ch = str(tt_ch.get("nguoi") or "").strip()
+                if not ng and ng_ch:
+                    ng = ng_ch
+                if not ng or not ng_ch or ng_ch == ng:
+                    dv_ch = str(tt_ch.get("don_vi") or "").strip()
+                    if dv_ch:
+                        return dv_ch
         except Exception as exc:
             _ghi_log_loi("LX Lich Goi: lỗi đọc đơn vị từ LX Co Hoi", str(exc))
 
-    ng = str(ma_nguoi or "").strip()
     if ng:
         try:
             dv_ng = get_value_fn("LX Nguoi", ng, "don_vi")
@@ -362,6 +364,19 @@ class LXLichGoi(Document):
             _nem_loi_hop_le("Lịch gọi thiếu mã khách hàng / người đặt (nguoi)")
         self.nguoi = ng
         if ch:
+            try:
+                import frappe
+
+                db = getattr(frappe, "db", None)
+                get_val = getattr(db, "get_value", None) if db is not None else None
+                if callable(get_val):
+                    tt_ch = get_val("LX Co Hoi", ch, ["nguoi", "don_vi"], as_dict=True)
+                    if isinstance(tt_ch, dict) and tt_ch:
+                        ng_ch = str(tt_ch.get("nguoi") or "").strip()
+                        if ng_ch and ng_ch != ng:
+                            _nem_loi_hop_le("Cơ hội không thuộc về khách hàng đặt lịch")
+            except ImportError:
+                pass
             self.co_hoi = ch
 
         dv_db = _doc_don_vi_nguoi_hoac_co_hoi_tu_db(ng, ch)

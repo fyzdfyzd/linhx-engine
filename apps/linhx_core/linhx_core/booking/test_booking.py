@@ -105,7 +105,14 @@ def test_api_booking_va_controller_voi_mock_frappe():
             "dien_thoai": "0912345678",
             "email": "khach1@vd.vn",
             "don_vi": "DV-A",
-        }
+        },
+        "NG-02": {
+            "name": "NG-02",
+            "ho_ten": "Khách Hai",
+            "dien_thoai": "0988777666",
+            "email": "khach2@vd.vn",
+            "don_vi": "DV-B",
+        },
     }
     kho_co_hoi: list[dict] = [
         {
@@ -115,7 +122,15 @@ def test_api_booking_va_controller_voi_mock_frappe():
             "don_vi": "DV-A",
             "trang_thai": "moi",
             "creation": "2026-11-10 08:00:00",
-        }
+        },
+        {
+            "name": "CH-02",
+            "nguoi": "NG-02",
+            "phu_trach": "sale2@vd.vn",
+            "don_vi": "DV-B",
+            "trang_thai": "moi",
+            "creation": "2026-11-10 08:05:00",
+        },
     ]
     kho_dong_y: list[dict] = [
         {
@@ -134,6 +149,9 @@ def test_api_booking_va_controller_voi_mock_frappe():
             for k, v in d.items():
                 setattr(self, k, v)
 
+        def save(self, ignore_permissions: bool = False):
+            return self
+
         def insert(self, ignore_permissions: bool = False):
             if getattr(self, "doctype", "") == "LX Lich Goi":
                 self.name = f"LG-{len(kho_lich) + 1:03d}"
@@ -151,6 +169,8 @@ def test_api_booking_va_controller_voi_mock_frappe():
                         "ghi_chu": getattr(self, "ghi_chu", ""),
                     }
                 )
+            elif getattr(self, "doctype", "") == "LX Co Hoi":
+                self.name = f"CH-{len(kho_co_hoi) + 1:02d}"
             return self
 
     def fake_throw(msg, exc=FakeValidationError):
@@ -165,9 +185,17 @@ def test_api_booking_va_controller_voi_mock_frappe():
             return kq
         if doctype == "LX Co Hoi":
             ng = (filters or {}).get("nguoi")
-            return [dict(x) for x in kho_co_hoi if not ng or x.get("nguoi") == ng]
+            ten_ch = (filters or {}).get("name")
+            return [
+                dict(x)
+                for x in kho_co_hoi
+                if (not ng or x.get("nguoi") == ng) and (not ten_ch or x.get("name") == ten_ch)
+            ]
         if doctype == "LX Dong Y":
             ng = (filters or {}).get("nguoi")
+            if isinstance(ng, (list, tuple)) and len(ng) == 2 and ng[0] == "in":
+                ds_ng = set(ng[1])
+                return [dict(x) for x in kho_dong_y if x.get("nguoi") in ds_ng]
             return [dict(x) for x in kho_dong_y if not ng or x.get("nguoi") == ng]
         if doctype == "LX Nguoi":
             return [dict(v) for v in kho_nguoi.values()]
@@ -175,6 +203,8 @@ def test_api_booking_va_controller_voi_mock_frappe():
             user_f = (filters or {}).get("user")
             if user_f == "sale1@vd.vn":
                 return ["DV-A"] if pluck else [{"user": "sale1@vd.vn", "for_value": "DV-A"}]
+            if user_f == "sale2@vd.vn":
+                return ["DV-B"] if pluck else [{"user": "sale2@vd.vn", "for_value": "DV-B"}]
             return []
         return []
 
@@ -184,6 +214,13 @@ def test_api_booking_va_controller_voi_mock_frappe():
             if as_dict:
                 return dict(ng)
             return ng.get(fieldname)
+        if doctype == "LX Co Hoi":
+            for ch in kho_co_hoi:
+                if ch["name"] == name:
+                    if as_dict:
+                        return dict(ch)
+                    return ch.get(fieldname)
+            return None
         if doctype == "User":
             if as_dict:
                 return {"name": name, "enabled": 1, "user_type": "System User"}
@@ -253,15 +290,18 @@ def test_api_booking_va_controller_voi_mock_frappe():
                 sys.modules.pop(mod_name, None)
             api_booking = importlib.import_module("linhx_core.booking.api_booking")
 
-            # 1. Đặt lịch hợp lệ -> tự lấy phu_trach từ CH-01 (sale1@vd.vn)
+            # 1. Đặt lịch hợp lệ có kênh liên hệ khớp hồ sơ -> tự lấy phu_trach từ CH-01 (sale1@vd.vn)
             kq1 = api_booking.dat_lich_goi(
                 nguoi="NG-01",
+                dien_thoai="0912345678",
                 bat_dau="2026-11-10 09:00:00",
                 phut=30,
                 ghi_chu="Tư vấn Agent Force",
+                dong_y_lien_he=True,
             )
             assert kq1["ok"] is True
             assert kq1["phu_trach"] == "sale1@vd.vn"
+            assert kq1["co_hoi"] == "CH-01"
             assert kq1["bat_dau"] == "2026-11-10 09:00:00"
             assert kq1["ket_thuc"] == "2026-11-10 09:30:00"
 
@@ -269,9 +309,11 @@ def test_api_booking_va_controller_voi_mock_frappe():
             with pytest.raises(FakeValidationError):
                 api_booking.dat_lich_goi(
                     nguoi="NG-01",
+                    dien_thoai="0912345678",
                     phu_trach="sale1@vd.vn",
                     bat_dau="2026-11-10 09:15:00",
                     phut=30,
+                    dong_y_lien_he=True,
                 )
             assert fake_frappe.local.response.get("http_status_code") == 409
 
@@ -279,9 +321,11 @@ def test_api_booking_va_controller_voi_mock_frappe():
             with pytest.raises(FakeValidationError):
                 api_booking.dat_lich_goi(
                     nguoi="NG-01",
+                    dien_thoai="0912345678",
                     phu_trach="sale1@vd.vn",
                     bat_dau="2026-11-10 18:00:00",
                     phut=30,
+                    dong_y_lien_he=True,
                 )
             assert fake_frappe.local.response.get("http_status_code") == 400
 
@@ -297,8 +341,16 @@ def test_api_booking_va_controller_voi_mock_frappe():
             with pytest.raises(FakePermissionError):
                 api_booking.viec_cho_lich_goi(phu_trach="sale1@vd.vn")
 
-            # 6. Khách gửi mã nguoi kèm email lạ không khớp hồ sơ -> bị chặn
+            # 6. Mã nguoi trơn (không SĐT/email) hoặc mã nguoi kèm email không khớp hồ sơ -> bị chặn 400
             fake_frappe.session.user = "Guest"
+            with pytest.raises(FakeValidationError):
+                api_booking.dat_lich_goi(
+                    nguoi="NG-01",
+                    bat_dau="2026-11-10 15:00:00",
+                    phut=30,
+                )
+            assert fake_frappe.local.response.get("http_status_code") == 400
+
             with pytest.raises(FakeValidationError):
                 api_booking.dat_lich_goi(
                     nguoi="NG-01",
@@ -307,8 +359,33 @@ def test_api_booking_va_controller_voi_mock_frappe():
                     phut=30,
                     dong_y_lien_he=True,
                 )
+            assert fake_frappe.local.response.get("http_status_code") == 400
 
-            # 7. Controller LXLichGoi kiểm tra quyền đơn vị và chặn trùng giờ
+            with pytest.raises(FakeValidationError):
+                api_booking.dat_lich_goi(
+                    nguoi="NG-KHONG-TON-TAI",
+                    dien_thoai="0912345678",
+                    bat_dau="2026-11-10 15:00:00",
+                    phut=30,
+                    dong_y_lien_he=True,
+                )
+            assert fake_frappe.local.response.get("http_status_code") == 400
+
+            # 7. Khách gửi co_hoi của người khác (CH-02) và phu_trach của đơn vị khác (sale2@vd.vn) -> bị bỏ qua, giữ CH-01 & sale1@vd.vn
+            kq2 = api_booking.dat_lich_goi(
+                nguoi="NG-01",
+                dien_thoai="0912345678",
+                co_hoi="CH-02",
+                phu_trach="sale2@vd.vn",
+                bat_dau="2026-11-10 10:00:00",
+                phut=30,
+                dong_y_lien_he=True,
+            )
+            assert kq2["co_hoi"] == "CH-01"
+            assert kq2["phu_trach"] == "sale1@vd.vn"
+            assert kho_lich[-1]["don_vi"] == "DV-A"
+
+            # 8. Controller LXLichGoi kiểm tra quyền đơn vị, chặn trùng giờ và chặn co_hoi khác người
             mod_lg = importlib.import_module("linhx_core.booking.doctype.lx_lich_goi.lx_lich_goi")
             fake_frappe.session.user = "sale1@vd.vn"
             doc_hop_le = mod_lg.LXLichGoi(
@@ -325,6 +402,19 @@ def test_api_booking_va_controller_voi_mock_frappe():
             assert doc_hop_le.ket_thuc == "2026-11-10 14:30:00"
             assert doc_hop_le.has_permission("read", user="sale1@vd.vn") is True
             assert doc_hop_le.has_permission("read", user="sale2@vd.vn") is False
+
+            doc_sai_co_hoi = mod_lg.LXLichGoi(
+                {
+                    "nguoi": "NG-01",
+                    "co_hoi": "CH-02",
+                    "phu_trach": "sale1@vd.vn",
+                    "bat_dau": "2026-11-10 15:00:00",
+                    "phut": 30,
+                    "trang_thai": "cho_goi",
+                }
+            )
+            with pytest.raises(FakeValidationError):
+                doc_sai_co_hoi.before_insert()
         finally:
             for mod_name in (
                 "linhx_core.booking.api_booking",

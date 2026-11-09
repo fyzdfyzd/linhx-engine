@@ -1,16 +1,19 @@
 {
   "feature": "F2",
-  "luc": "2026-11-09T23:32:32+07:00",
+  "luc": "2026-11-09T23:51:23+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f2.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 1.10s"
+  ],
+  "unit_va_nghiem_thu_stdout": [
     "============================= test session starts =============================",
     "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
     "rootdir: D:\\LINHX\\ENGINE-t2",
     "configfile: pytest.ini",
     "plugins: anyio-4.15.1, platformdirs-4.14.0",
     "collecting ... collected 8 items",
-    "",
     "tests/nghiem-thu/test_f2.py::test_dat_trung_gio_bi_chan PASSED           [ 12%]",
     "tests/nghiem-thu/test_f2.py::test_ngoai_gio_lam_8_18h_gio_vn_bi_chan PASSED [ 25%]",
     "tests/nghiem-thu/test_f2.py::test_nguoi_phu_trach_thay_lich_trong_viec_cho PASSED [ 37%]",
@@ -19,7 +22,10 @@
     "apps/linhx_core/linhx_core/booking/test_booking.py::test_api_booking_va_controller_voi_mock_frappe PASSED [ 75%]",
     "apps/linhx_core/linhx_core/booking/test_booking.py::test_trang_bu_form_dat_lich_cau_truc PASSED [ 87%]",
     "apps/linhx_core/linhx_core/booking/test_booking.py::test_playwright_form_dat_lich_trang_bu PASSED [100%]",
-    "",
-    "============================== 8 passed in 4.12s =============================="
+    "============================== 8 passed in 4.18s =============================="
+  ],
+  "cong_kiem_returncode": 0,
+  "cong_kiem_stdout": [
+    "đạt thật 10/14, vi phạm 0"
   ]
 }
