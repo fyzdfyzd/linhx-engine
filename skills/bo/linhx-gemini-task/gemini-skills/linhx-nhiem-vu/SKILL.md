@@ -1,6 +1,6 @@
 ---
 name: linhx-nhiem-vu
-description: Chuẩn làm nhiệm vụ dài cho LINHX trong Gemini Task: luật nguồn, cấu trúc thư mục, checkpoint zip, tự kiểm bằng script, nối lượt. Dùng khi đề gọi @linhx-nhiem-vu hoặc khi làm nhiệm vụ thu thập dữ liệu, nghiên cứu, dựng file cho LINHX.
+description: "Chuẩn làm nhiệm vụ dài cho LINHX trong Gemini Task: luật nguồn, cấu trúc thư mục, checkpoint zip, tự kiểm bằng script, nối lượt. Dùng khi đề gọi @linhx-nhiem-vu hoặc khi làm nhiệm vụ thu thập dữ liệu, nghiên cứu, dựng file cho LINHX."
 ---
 
 # Chuẩn nhiệm vụ LINHX

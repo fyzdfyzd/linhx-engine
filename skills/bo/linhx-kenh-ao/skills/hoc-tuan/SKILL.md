@@ -1,6 +1,6 @@
 ---
 name: hoc-tuan
-description: Vòng học hằng tuần: kéo số liệu, chạy retro, viết giả thuyết có kiểm cỡ mẫu, đề luật viết và điều chỉnh. Dùng Chủ nhật hoặc khi Linh hỏi "tuần này học được gì".
+description: "Vòng học hằng tuần: kéo số liệu, chạy retro, viết giả thuyết có kiểm cỡ mẫu, đề luật viết và điều chỉnh. Dùng Chủ nhật hoặc khi Linh hỏi \"tuần này học được gì\"."
 ---
 
 # Học hằng tuần

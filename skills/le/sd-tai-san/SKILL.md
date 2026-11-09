@@ -1,6 +1,8 @@
 ---
 name: sd-tai-san
-description: Bước 3 Flow Pack. Lập thư viện tài sản cho một tập: đoạn khoá nhân vật và style bằng tiếng Anh, prompt ảnh neo nhân vật, ảnh bối cảnh không người, prompt keyframe. Dùng sau khi kịch bản tập đã duyệt.
+description: "Bước 3 Flow Pack. Lập thư viện tài sản cho một tập: đoạn khoá nhân vật và style bằng tiếng Anh, prompt ảnh neo nhân vật, ảnh bối cảnh không người, prompt keyframe. Dùng sau khi kịch bản tập đã duyệt."
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-tai-san: nhân vật, bối cảnh, ảnh cần tạo

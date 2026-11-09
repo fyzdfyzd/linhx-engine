@@ -1,6 +1,6 @@
 ---
 name: onbrand-thi
-description: Đo năng lực bám chuẩn design của nhiều người hoặc nhiều AI trên cùng một brand: ra 5 đề chuẩn, thu bài, chấm onbrand từng bài, xếp hạng và chỉ ra điểm yếu theo mục. Dùng khi tuyển hoặc đánh giá designer, hoặc so công cụ AI tạo ảnh.
+description: "Đo năng lực bám chuẩn design của nhiều người hoặc nhiều AI trên cùng một brand: ra 5 đề chuẩn, thu bài, chấm onbrand từng bài, xếp hạng và chỉ ra điểm yếu theo mục. Dùng khi tuyển hoặc đánh giá designer, hoặc so công cụ AI tạo ảnh."
 ---
 
 # Thi bám chuẩn design

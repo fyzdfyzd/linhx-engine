@@ -1,6 +1,8 @@
 ---
 name: lps-khoi-tao
 description: Khởi tạo một dự án webapp/nền tảng mới (hoặc đưa dự án có sẵn) vào chuẩn LINHX Platform Standard (LPS). Dùng khi Linh nói "dự án mới", "khởi tạo theo LPS", "áp chuẩn LPS vào repo này".
+metadata:
+  version: "0.1.0"
 ---
 
 # Khởi tạo dự án theo LPS

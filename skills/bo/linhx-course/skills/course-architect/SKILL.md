@@ -1,6 +1,6 @@
 ---
 name: course-architect
-description: Dùng khi cần thiết kế khung chương trình khoá học theo phương pháp Backward Design: xác định chân dung người học, viết mục tiêu theo thang Bloom, thiết kế bộ câu hỏi quiz và bài tập thực hành có rubric trước khi lập đề cương chi tiết.
+description: "Dùng khi cần thiết kế khung chương trình khoá học theo phương pháp Backward Design: xác định chân dung người học, viết mục tiêu theo thang Bloom, thiết kế bộ câu hỏi quiz và bài tập thực hành có rubric trước khi lập đề cương chi tiết."
 ---
 # Thiết kế kiến trúc khoá học (`course-architect`)
 

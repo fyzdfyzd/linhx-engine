@@ -1,6 +1,6 @@
 ---
 name: phim-code
-description: Dựng phim ngắn bằng code (canvas/WebGL, HTML/GSAP, React) với một quy trình chung và nhiều style để chọn, máy dựng là Lemo-Opuscar, HyperFrames hoặc Remotion, giọng Việt qua edge-tts. Dùng khi Linh muốn làm phim, clip bán hàng/ra mắt sản phẩm, video giải thích, e-learning, hoạt hình, MV theo bài hát, reel dọc, motion graphic, intro, phim dữ liệu, làm giống một video mẫu, hoặc hỏi có những style phim nào. Cũng dùng khi Linh đưa file record (mặt người nói + màn hình) để dựng video YouTube: cắt hư, ậm ờ, phụ đề sống, PiP, nhạc, SFX. Không dùng để tạo người giả hay nhân vật diễn xuất (việc của Veo/Flow, LAB016).
+description: "Dựng phim ngắn bằng code (canvas/WebGL, HTML/GSAP, React) với một quy trình chung và nhiều style để chọn, máy dựng là Lemo-Opuscar, HyperFrames hoặc Remotion, giọng Việt qua edge-tts. Dùng khi Linh muốn làm phim, clip bán hàng/ra mắt sản phẩm, video giải thích, e-learning, hoạt hình, MV theo bài hát, reel dọc, motion graphic, intro, phim dữ liệu, làm giống một video mẫu, hoặc hỏi có những style phim nào. Cũng dùng khi Linh đưa file record (mặt người nói + màn hình) để dựng video YouTube: cắt hư, ậm ờ, phụ đề sống, PiP, nhạc, SFX. Không dùng để tạo người giả hay nhân vật diễn xuất (việc của Veo/Flow, LAB016)."
 ---
 
 # phim-code: một quy trình, ba máy dựng, nhiều style

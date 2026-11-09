@@ -1,6 +1,8 @@
 ---
 name: lps-release
 description: Kiểm cổng phát hành (release gate) trước khi đưa bản mới lên production theo LPS. Dùng khi Linh nói "phát hành", "release", "deploy production", "lên bản mới".
+metadata:
+  version: "0.1.0"
 ---
 
 # Cổng phát hành

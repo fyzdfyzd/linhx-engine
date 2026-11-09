@@ -1,6 +1,8 @@
 ---
 name: sd-de-xuat
 description: Bước 0b Flow Pack. Từ bản nghiên cứu, đưa 3 hướng phim khác hẳn nhau kèm ước tính credit và một đoạn mẫu 8 giây cho mỗi hướng, để Linh chọn hoặc trộn. Dùng sau sd-nghien-cuu, trước sd-series.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-de-xuat: 3 hướng để chọn

@@ -1,7 +1,7 @@
 {
   "name": "linhx-phim-code",
   "description": "Dựng phim ngắn bằng code với Claude: chọn style (51 style Lemo-Opuscar + khuôn LINHX), chọn máy dựng (Lemo canvas, HyperFrames, Remotion), giọng Việt edge-tts, phụ đề, tự kiểm, dựng video YouTube từ file record (cắt ậm ờ, PiP, phụ đề sống), đề agy chạy đêm. v0.3: lối theo 6 loại video (bán hàng, giải thích, hoạt hình/MV, clip dọc, bắt chước mẫu, cảnh quay), bộ kiểm tự động, agent duyệt độc lập.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": { "name": "Linh (LINHX LAB)" },
   "license": "MIT"
 }

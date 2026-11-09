@@ -1,6 +1,8 @@
 ---
 name: chien-luoc
 description: Xây chiến lược theo chuẩn cao kiểu Trân Bảo / Kim Gia Bảo Gift / BTMH IPO - nghiên cứu tới đâu lưu tới đó, đào sâu khách hàng mục tiêu và định vị đối thủ, tìm khoảng trống thị trường, quyết định sản phẩm hoặc thông điệp. Dùng khi Linh hoặc khách cần chiến lược, PMF, GTM, định vị, kế hoạch thương hiệu.
+metadata:
+  version: "0.1.0"
 ---
 
 # chien-luoc

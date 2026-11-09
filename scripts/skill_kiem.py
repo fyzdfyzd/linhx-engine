@@ -6,6 +6,8 @@ Luat: moi SKILL.md co name + description; name khong trung; khong file > 5 MB;
 khong file bi mat (.env, cookie, khoa); khong chuoi giong khoa API.
 """
 import os, re, sys, json, fnmatch
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import skill_ban  # noqa: E402
 
 GOC = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'skills')
 TRAN = 5 * 2**20
@@ -25,7 +27,16 @@ NHOM = [
 
 
 def fm(p):
-    t = open(p, encoding='utf-8', errors='ignore').read(4000)
+    t = open(p, encoding='utf-8', errors='ignore').read()
+    try:  # doc dung YAML neu co PyYAML (giai nhay, dong gap)
+        import yaml
+        m = re.match(r'^\ufeff?---\r?\n(.*?)\r?\n---', t, re.S)
+        y = yaml.safe_load(m.group(1)) if m else None
+        if isinstance(y, dict) and y.get('name') and y.get('description'):
+            return str(y['name']).strip(), re.sub(r'\s+', ' ', str(y['description'])).strip()
+    except Exception:
+        pass
+    t = t[:4000]
     n = re.search(r'^name:\s*["\']?([^"\'\n]+)', t, re.M)
     d = re.search(r'^description:\s*(.+)$', t, re.M)
     return (n.group(1).strip() if n else ''), (d.group(1).strip().strip('"\'>|') if d else '')
@@ -39,6 +50,7 @@ def nhom(khoa):
 
 def main():
     loi = []; ds = []; ten_gap = {}
+    ban_dv = {u['rel']: skill_ban.ban(u) for u in skill_ban.don_vi(GOC)}
     nguon = json.load(open(os.path.join(GOC, '_nguon.json'), encoding='utf-8')) if os.path.exists(os.path.join(GOC, '_nguon.json')) else {}
     for loai in ('bo', 'le'):
         d0 = os.path.join(GOC, loai)
@@ -58,22 +70,26 @@ def main():
                     if n in ten_gap: loi.append(f'trùng tên "{n}": {ten_gap[n]} và {relp}')
                     ten_gap[n] = relp
                     ds.append({'ten': n, 'mo_ta': de, 'duong_dan': relp, 'bo': don_vi if loai == 'bo' else '',
-                               'nhom': nhom(f'{don_vi} {n}'), 'ban_goc': nguon.get(f'{loai}/{don_vi}', '')})
+                               'nhom': nhom(f'{don_vi} {n}'), 'phien_ban': ban_dv.get(f'{loai}/{don_vi}', ''), 'ban_goc': nguon.get(f'{loai}/{don_vi}', '')})
     for x in loi: print('LOI', x)
     print(f'{len(ds)} skill, {len(loi)} loi')
     if '--index' in sys.argv:
+        try:
+            import yaml  # noqa: F401  INDEX phai sinh cung mot cach o moi may
+        except ImportError:
+            print('LOI --index cần PyYAML: python -m pip install pyyaml'); sys.exit(1)
         json.dump(ds, open(os.path.join(GOC, 'danh-muc.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
-        L = ['# Danh mục skill LINHX', '', f'Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **{len(ds)}** skill.', '',
+        L = ['# Danh mục skill LINHX', '', f'Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **{len(ds)}** skill. Cột Bản là phiên bản của đơn vị (bộ hoặc skill lẻ), dưới 1.0.0 là đang thử nghiệm; quy ước ở `QUY-UOC-PHIEN-BAN.md`.', '',
              '| Nhóm | Số |', '|---|---|']
         nh = [(k, t) for k, t, _ in NHOM] + [('khac', 'Khác')]
         for k, t in nh: L.append(f'| {t} | {sum(1 for x in ds if x["nhom"] == k)} |')
         for k, t in nh:
             xs = [x for x in ds if x['nhom'] == k]
             if not xs: continue
-            L += ['', f'## {t}', '', '| Skill | Làm gì | Ở đâu |', '|---|---|---|']
+            L += ['', f'## {t}', '', '| Skill | Bản | Làm gì | Ở đâu |', '|---|---|---|---|']
             for x in sorted(xs, key=lambda x: x['ten'].lower()):
                 mo = re.sub(r'\s+', ' ', x['mo_ta']).replace('|', '/')
-                L.append(f"| `{x['ten']}` | {mo[:160] + ('…' if len(mo) > 160 else '')} | `{x['duong_dan']}` |")
+                L.append(f"| `{x['ten']}` | {x['phien_ban'] or '-'} | {mo[:160] + ('…' if len(mo) > 160 else '')} | `{x['duong_dan']}` |")
         open(os.path.join(GOC, 'INDEX.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n')
     sys.exit(1 if loi else 0)
 

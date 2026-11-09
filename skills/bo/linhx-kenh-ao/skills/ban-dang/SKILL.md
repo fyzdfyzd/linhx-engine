@@ -1,6 +1,6 @@
 ---
 name: ban-dang
-description: Mở bàn đăng cho Linh: mọi bài, câu bình luận, câu trả lời và bài học của một hoặc nhiều persona đã soạn sẵn, Linh chỉ bấm Đăng, sửa hoặc Bỏ. Dùng khi Linh muốn duyệt và đăng nhanh, hoặc hỏi "hôm nay có gì cần đăng".
+description: "Mở bàn đăng cho Linh: mọi bài, câu bình luận, câu trả lời và bài học của một hoặc nhiều persona đã soạn sẵn, Linh chỉ bấm Đăng, sửa hoặc Bỏ. Dùng khi Linh muốn duyệt và đăng nhanh, hoặc hỏi \"hôm nay có gì cần đăng\"."
 ---
 
 # Bàn đăng

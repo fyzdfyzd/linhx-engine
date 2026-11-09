@@ -1,6 +1,8 @@
 ---
 name: brand-chiemtinh
-description: Áp dụng thương hiệu Chiêm Tinh Số (chiemtinh.vn, báo cáo bản đồ sao tiếng Việt, OPC001) cho mọi thứ tạo ra: landing, báo cáo PDF, bài TikTok/Facebook, blog, email, CSKH, ảnh. Dùng khi người dùng nhắc chiemtinh.vn, Chiêm Tinh Số, CTS, bản đồ sao, OPC001, hoặc làm việc trong D:\LINHX\LINHX-OPC\OPC001-CHIEMTINH-VN.
+description: "Áp dụng thương hiệu Chiêm Tinh Số (chiemtinh.vn, báo cáo bản đồ sao tiếng Việt, OPC001) cho mọi thứ tạo ra: landing, báo cáo PDF, bài TikTok/Facebook, blog, email, CSKH, ảnh. Dùng khi người dùng nhắc chiemtinh.vn, Chiêm Tinh Số, CTS, bản đồ sao, OPC001, hoặc làm việc trong D:\\LINHX\\LINHX-OPC\\OPC001-CHIEMTINH-VN."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu Chiêm Tinh Số (chiemtinh.vn)

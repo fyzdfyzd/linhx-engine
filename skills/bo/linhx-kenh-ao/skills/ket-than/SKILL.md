@@ -1,6 +1,6 @@
 ---
 name: ket-than
-description: Xây quan hệ dựa trên niềm tin với người trong vòng: chọn ai để chạm, chạm thế nào, có mục đích gì, ghi nhận khi họ đáp lại. Dùng cho bước vong, cham.
+description: "Xây quan hệ dựa trên niềm tin với người trong vòng: chọn ai để chạm, chạm thế nào, có mục đích gì, ghi nhận khi họ đáp lại. Dùng cho bước vong, cham."
 ---
 
 # Kết thân có mục đích

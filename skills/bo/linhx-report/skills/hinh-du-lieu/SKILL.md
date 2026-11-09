@@ -1,6 +1,6 @@
 ---
 name: hinh-du-lieu
-description: Bước 4 của linhx-report. Biến bằng chứng thành hình (exhibit) chuẩn báo cáo tư vấn: tiêu đề là câu kết luận, dòng đối tượng và đơn vị, nhãn số trực tiếp, một màu nhấn, nguồn có n, mỗi chuỗi số trỏ mã bằng chứng; vẽ bằng hinh.py ra SVG theo style. Dùng trong quy trình bao-cao hoặc khi cần vẽ hình báo cáo.
+description: "Bước 4 của linhx-report. Biến bằng chứng thành hình (exhibit) chuẩn báo cáo tư vấn: tiêu đề là câu kết luận, dòng đối tượng và đơn vị, nhãn số trực tiếp, một màu nhấn, nguồn có n, mỗi chuỗi số trỏ mã bằng chứng; vẽ bằng hinh.py ra SVG theo style. Dùng trong quy trình bao-cao hoặc khi cần vẽ hình báo cáo."
 ---
 
 # Bước 4: dữ liệu và hình

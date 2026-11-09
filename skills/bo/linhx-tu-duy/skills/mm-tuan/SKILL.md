@@ -1,6 +1,6 @@
 ---
 name: mm-tuan
-description: Buổi chấm tuần cho bộ mental model của Linh: liệt kê quyết định tới hạn để chấm trước, thẻ đã dùng, độ phủ 30 ngày, thẻ bị bỏ quên, và hiệu chỉnh độ chắc so với kết quả. Cuối tháng thì đề xuất heuristic riêng từ nhật ký. Dùng khi Linh gõ /mm-tuan, "chấm tuần", "review mental model", hoặc khi lịch Chủ nhật chạy.
+description: "Buổi chấm tuần cho bộ mental model của Linh: liệt kê quyết định tới hạn để chấm trước, thẻ đã dùng, độ phủ 30 ngày, thẻ bị bỏ quên, và hiệu chỉnh độ chắc so với kết quả. Cuối tháng thì đề xuất heuristic riêng từ nhật ký. Dùng khi Linh gõ /mm-tuan, \"chấm tuần\", \"review mental model\", hoặc khi lịch Chủ nhật chạy."
 ---
 
 # Chấm tuần

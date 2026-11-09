@@ -1,6 +1,8 @@
 ---
 name: lps-llm
 description: Thiết kế, viết, kiểm thử và red team một tính năng gọi LLM (chatbot, tóm tắt, trích xuất, phân loại, RAG, agent có tool) theo chuẩn LPS-AI. Dùng khi thêm hoặc sửa prompt, đổi model, thêm tool cho AI, hoặc khi Linh nói "tính năng AI", "gọi Claude/GPT", "prompt", "eval".
+metadata:
+  version: "0.1.0"
 ---
 
 # Tính năng LLM theo LPS-AI

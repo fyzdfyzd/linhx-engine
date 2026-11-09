@@ -1,6 +1,8 @@
 ---
 name: agent-truong
-description: Agent trưởng điều phối đội subagent nhỏ: chia việc lớn thành đầu việc hẹp, giao cho thợ (tho-tim-nguon, tho-doc-nguon, tho-kiem-chung, tho-viet) chạy song song, kiểm kết quả rồi tổng hợp. Dùng khi Linh nói "agent trưởng", "chia việc cho subagent", "giao cho đội làm", hoặc việc cần đọc nhiều nguồn, nhiều file cùng lúc (vd tra luật đầy đủ, rà nhiều tài liệu).
+description: "Agent trưởng điều phối đội subagent nhỏ: chia việc lớn thành đầu việc hẹp, giao cho thợ (tho-tim-nguon, tho-doc-nguon, tho-kiem-chung, tho-viet) chạy song song, kiểm kết quả rồi tổng hợp. Dùng khi Linh nói \"agent trưởng\", \"chia việc cho subagent\", \"giao cho đội làm\", hoặc việc cần đọc nhiều nguồn, nhiều file cùng lúc (vd tra luật đầy đủ, rà nhiều tài liệu)."
+metadata:
+  version: "0.1.0"
 ---
 # Agent trưởng
 

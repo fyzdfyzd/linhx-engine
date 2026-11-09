@@ -1,6 +1,8 @@
 ---
 name: viet-overview
-description: Đóng một thí nghiệm LAB khi Linh nói "viết overview": hoàn thiện OVERVIEW.md, cập nhật INDEX, và chấm cổng PROTOTYPE nếu EXP chạy được.
+description: "Đóng một thí nghiệm LAB khi Linh nói \"viết overview\": hoàn thiện OVERVIEW.md, cập nhật INDEX, và chấm cổng PROTOTYPE nếu EXP chạy được."
+metadata:
+  version: "0.1.0"
 ---
 # Viết overview
 

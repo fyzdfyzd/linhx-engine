@@ -1,6 +1,8 @@
 ---
 name: research-loop
 description: Chạy vòng lặp nghiên cứu tự động qua đêm (hiểu đề → tài liệu → ý tưởng → thí nghiệm → phân tích) với phép đo khoá, nhật ký TSV và DIGEST buổi sáng. Dùng khi người nói "chạy research loop", "cho agent thử ý tưởng cả đêm", "autoresearch".
+metadata:
+  version: "0.1.0"
 ---
 
 # Research loop

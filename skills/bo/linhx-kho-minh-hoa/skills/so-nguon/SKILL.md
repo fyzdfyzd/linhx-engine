@@ -1,6 +1,6 @@
 ---
 name: so-nguon
-description: Dùng trước mọi lần thu link cho kho minh hoạ ý tưởng: kiểm nguồn có trong sổ, thêm nguồn hoặc hoạ sĩ hạt giống mới, kiểm link hoạ sĩ.
+description: "Dùng trước mọi lần thu link cho kho minh hoạ ý tưởng: kiểm nguồn có trong sổ, thêm nguồn hoặc hoạ sĩ hạt giống mới, kiểm link hoạ sĩ."
 ---
 # Sổ nguồn kho minh hoạ ý tưởng
 

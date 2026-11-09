@@ -1,6 +1,8 @@
 ---
 name: sd-kich-ban
 description: Bước 2 Flow Pack. Viết kịch bản một tập short drama 60–90 giây theo nhịp hook, điểm sướng mỗi 15 giây, cliffhanger, với thoại vừa clip Veo 8 giây. Dùng sau khi series bible đã duyệt.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-kich-ban: kịch bản một tập

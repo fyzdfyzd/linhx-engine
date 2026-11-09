@@ -7,6 +7,8 @@ description: >-
   Thẩm định khắt khe bằng Rubric Scorecard, Kế hoạch kênh O2O, Ma trận ngân sách & lịch phát sóng,
   đến Sản xuất nội dung tự động đa góc nhìn (3 Angles), Vòng lặp tự tinh chỉnh (Self-Refinement Loop
   tối đa 10 lần) đạt điểm > 9.0/10, kèm Plan chạy Ads và tạo ảnh minh họa đồ họa.
+metadata:
+  version: "0.1.0"
 ---
 
 # ENTERPRISE IMC CAMPAIGN CREATOR & CONTENT PRODUCTION FRAMEWORK

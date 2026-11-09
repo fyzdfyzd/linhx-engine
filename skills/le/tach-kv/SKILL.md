@@ -1,6 +1,8 @@
 ---
 name: tach-kv
 description: Phân rã một key visual (KV) phẳng JPG/PNG thành các element độc lập (chữ, logo, ảnh, QR, nền) dạng PNG trong suốt + kv.json vị trí + PSD + SVG, để dùng lại cho ấn phẩm truyền thông. Dùng khi Linh nói tách KV, phân rã KV, bóc layer, lấy logo/chữ từ ảnh.
+metadata:
+  version: "0.1.0"
 ---
 
 # Tách KV thành element (LAB078)

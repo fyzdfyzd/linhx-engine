@@ -1,6 +1,8 @@
 ---
 name: sd-series
 description: Bước 1 Flow Pack. Từ một ý tưởng, viết series bible cho short drama dọc (logline, nhân vật, thế giới, arc nhiều tập, kiểu hook cuối tập). Dùng khi Linh mở một series phim ngắn mới.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-series: viết series bible

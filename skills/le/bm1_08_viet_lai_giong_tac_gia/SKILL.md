@@ -1,6 +1,8 @@
 ---
 name: BM1_08_viet_lai_giong_tac_gia
 description: "Bước 8 của Big Module 1: Viết lại theo giọng tác giả, cân bằng giữa nhu cầu độc giả (Persona Neo) và hồ sơ giọng (Linh / Vân Anh / Giảng viên / Báo cáo). Gắn từ LAB049 linhx-viet-giong-viet, luong-hoa, và ho-so-bien-tap."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 8: Viết lại theo giọng tác giả & Cân bằng với Độc giả (`BM1_08_viet_lai_giong_tac_gia`)

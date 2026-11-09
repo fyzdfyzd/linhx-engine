@@ -1,6 +1,6 @@
 ---
 name: soat-giong
-description: Soát bài nháp tiếng Việt theo giọng Linh: chạy script kiem_van.py (dấu hiệu AP-01..AP-20, so mốc giọng, điểm 0-100) rồi đọc 3 lượt độc lập và sửa tối đa 2 vòng. Dùng khi Linh nhờ "soát bài", "bỏ giọng AI", "biên tập lại", "xem bài này có giống tôi không", hoặc ở trạm 6 của viet-bai.
+description: "Soát bài nháp tiếng Việt theo giọng Linh: chạy script kiem_van.py (dấu hiệu AP-01..AP-20, so mốc giọng, điểm 0-100) rồi đọc 3 lượt độc lập và sửa tối đa 2 vòng. Dùng khi Linh nhờ \"soát bài\", \"bỏ giọng AI\", \"biên tập lại\", \"xem bài này có giống tôi không\", hoặc ở trạm 6 của viet-bai."
 ---
 
 # Soát giọng

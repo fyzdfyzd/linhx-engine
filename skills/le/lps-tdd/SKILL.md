@@ -1,6 +1,8 @@
 ---
 name: lps-tdd
 description: Thực hiện một bước trong SPEC theo vòng test trước (đỏ → xanh → dọn). Dùng khi code logic nghiệp vụ, API, hoặc sửa bug ("sửa lỗi", "implement", "làm bước N của SPEC").
+metadata:
+  version: "0.1.0"
 ---
 
 # Vòng TDD

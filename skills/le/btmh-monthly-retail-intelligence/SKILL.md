@@ -7,6 +7,8 @@ description: >-
   Đào sâu tối thiểu 5 Actionable Insights định lượng, Soạn thảo khuyến nghị SCQA & Phân quyền RACI 5 khối,
   và Tự động xuất bản bộ ba ấn phẩm: Word DOCX chuyên sâu, Slide PPTX chuẩn nhận diện BTMH, và Website
   mô phỏng kịch bản kinh doanh tương tác thời gian thực (What-If Simulation Dashboard).
+metadata:
+  version: "0.1.0"
 ---
 
 # BTMH MONTHLY RETAIL INTELLIGENCE & MCKINSEY STRATEGY SOP

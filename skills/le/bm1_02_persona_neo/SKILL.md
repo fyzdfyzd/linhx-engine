@@ -1,6 +1,8 @@
 ---
 name: BM1_02_persona_neo
 description: "Bước 2 của Big Module 1 (GỘP MỚI): Nghiên cứu người nhận, xác định khoảng trống độc giả (LAB029), lọc nhân khẩu học phân tầng Việt Nam (LAB048) và đắp khung tâm lý/nỗi sợ ẩn/câu hay cãi (LAB049 doc-gia-ao) để dựng 3 Persona Neo."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 2: Nghiên cứu người nhận, dựng Persona làm neo (`BM1_02_persona_neo`)

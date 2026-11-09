@@ -1,6 +1,8 @@
 ---
 name: sd-flow-pack
 description: Bước 5 Flow Pack. Xuất phiếu render cho Google Flow từ JSON tập đã ĐẠT kiem_nhip, kèm bảng duyệt credit; Linh dán tay vào Flow. Dùng khi tập sẵn sàng render.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-flow-pack: xuất phiếu render

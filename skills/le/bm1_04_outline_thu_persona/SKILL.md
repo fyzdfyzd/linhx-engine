@@ -1,6 +1,8 @@
 ---
 name: BM1_04_outline_thu_persona
 description: "Bước 4 của Big Module 1 (LÀM MỚI PHẦN THỬ PERSONA): Rút 30 insights và dựng 3 phương án Outline A/B/C khác biệt (gắn LAB025 content-synthesizer), sau đó đưa cả 3 Outline cho 3 Persona Neo (từ Bước 2) đọc thử và chấm phản ứng theo 5 tiêu chí."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 4: Dựng 2–3 hướng Outline & Thử trên Persona (`BM1_04_outline_thu_persona`)

@@ -1,6 +1,8 @@
 ---
 name: linhx-tu-chay
 description: Cho Claude và Antigravity tự đi từ ý định 4 câu tới sản phẩm chạy được - khám phá, PRD, features.json khoá, thợ làm từng feature, cổng kiểm độc lập ngoài tay thợ, Linh chỉ duyệt ở cổng người. Dùng khi Linh nói "tự chạy", "tự viết PRD", "giao agy làm tới cuối".
+metadata:
+  version: "0.1.0"
 ---
 
 # linhx-tu-chay (LAB098, nấc 1)

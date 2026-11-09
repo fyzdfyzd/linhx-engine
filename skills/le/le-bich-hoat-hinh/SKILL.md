@@ -1,6 +1,8 @@
 ---
 name: le-bich-hoat-hinh
 description: Vẽ nhân vật Lê Bích bụng phệ bằng code từ bộ rời gốc (PSD của tác giả) để làm trang truyện, sticker động, clip hoạt hình. Dùng khi được nhờ vẽ, làm truyện, sticker hay animation Lê Bích.
+metadata:
+  version: "0.1.0"
 ---
 
 # Lê Bích bụng phệ: vẽ bằng code từ bộ rời gốc

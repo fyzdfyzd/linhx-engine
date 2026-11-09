@@ -1,6 +1,8 @@
 ---
 name: sd-storyboard
 description: Bước 4 Flow Pack. Chuyển kịch bản thành các đoạn Veo 4/6/8 giây có nhiều shot theo mốc thời gian, chọn chế độ Flow và model cho từng đoạn, rồi chạy kiem_nhip.py. Dùng sau sd-tai-san.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-storyboard: đoạn Veo và shot

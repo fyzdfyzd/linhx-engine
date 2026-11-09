@@ -1,6 +1,8 @@
 ---
 name: chuyen-skill
 description: Chuyển một skill hoặc plugin Claude Code (SKILL.md, commands, agents) sang GitHub Copilot, Gemini CLI và Antigravity, kèm bảng cảnh báo chỗ chỉ Claude hiểu. Dùng khi Linh nói "chuyển skill sang Copilot/Gemini/agy", "cho skill chạy đa nền".
+metadata:
+  version: "0.1.0"
 ---
 
 # Chuyển skill sang nền khác

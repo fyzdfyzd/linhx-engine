@@ -1,6 +1,8 @@
 ---
 name: lps-review
 description: Review/phản biện độc lập một thay đổi (diff, PR, SPEC) với ngữ cảnh sạch, ưu tiên mô hình hoặc công cụ khác với bên viết code. Dùng trước khi merge, khi Linh nói "review", "phản biện", "critique", "soi lỗi".
+metadata:
+  version: "0.1.0"
 ---
 
 # Review độc lập

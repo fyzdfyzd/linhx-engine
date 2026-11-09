@@ -1,6 +1,8 @@
 ---
 name: research-write
 description: Viết bài báo từ kết quả research-loop theo thứ tự chứng cứ trước, lời sau - chuẩn bị đầu vào, cổng người duyệt, viết, phản biện độc lập. Dùng khi người nói "viết bài từ kết quả", "viết manuscript", "chuẩn bị bản thảo Q1".
+metadata:
+  version: "0.1.0"
 ---
 
 # Research write (bước 6, sau research-loop)

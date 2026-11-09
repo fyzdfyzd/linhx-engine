@@ -1,6 +1,8 @@
 ---
 name: BM1_01_phan_tich_de_bai
 description: "Bước 1 của Big Module 1: Đọc kỹ, phân tích đề bài, xác định hạt giống ý tưởng (Seed Input) và mở rộng bối cảnh bằng 11 câu hỏi sâu (3 câu ưu tiên). Gắn từ LAB025 idea-seeder, LAB028 bước 1 (report) và LAB017 course-architect (khoá học)."
+metadata:
+  version: "0.1.0"
 ---
 
 # Module 1: Đọc kỹ, phân tích đề bài (`BM1_01_phan_tich_de_bai`)

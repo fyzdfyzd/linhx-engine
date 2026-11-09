@@ -1,6 +1,8 @@
 ---
 name: lvn-listening
 description: Ra bản tin lắng nghe mạng xã hội tiếng Việt theo hồ sơ md (thương hiệu, ngành, chủ đề) từ dữ liệu LINHX_CRAWLER; 0 token cho phần số, ra BAO-CAO.md + feed.json cho agent.
+metadata:
+  version: "0.1.0"
 ---
 
 # LVN listening (LAB053, bản nhỏ nhất)

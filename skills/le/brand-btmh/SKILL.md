@@ -1,6 +1,8 @@
 ---
 name: brand-btmh
-description: Áp dụng thương hiệu Bảo Tín Mạnh Hải (BTMH, vàng và trang sức 24K) cho mọi thứ tạo ra: web, giao diện, slide, bài đăng, ảnh, bao bì, văn bản Word/Excel, nội dung chữ. Dùng khi người dùng nhắc BTMH, Bảo Tín Mạnh Hải, Kim Gia Bảo, MHJ, Trân Bảo, hoặc làm việc trong D:\@WF\PROJECT\BTMH.
+description: "Áp dụng thương hiệu Bảo Tín Mạnh Hải (BTMH, vàng và trang sức 24K) cho mọi thứ tạo ra: web, giao diện, slide, bài đăng, ảnh, bao bì, văn bản Word/Excel, nội dung chữ. Dùng khi người dùng nhắc BTMH, Bảo Tín Mạnh Hải, Kim Gia Bảo, MHJ, Trân Bảo, hoặc làm việc trong D:\\@WF\\PROJECT\\BTMH."
+metadata:
+  version: "0.1.0"
 ---
 
 # Thương hiệu Bảo Tín Mạnh Hải

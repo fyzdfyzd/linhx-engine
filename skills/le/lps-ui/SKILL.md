@@ -1,6 +1,8 @@
 ---
 name: lps-ui
 description: Thiết kế và tự kiểm giao diện web theo LPS (design token, trạng thái, mobile-first, WCAG 2.2 AA, Core Web Vitals, heuristic Nielsen). Dùng khi làm hoặc sửa màn hình, component, landing page, Zalo Mini App.
+metadata:
+  version: "0.1.0"
 ---
 
 # Giao diện theo LPS

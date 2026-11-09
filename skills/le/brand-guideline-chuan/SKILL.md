@@ -1,6 +1,8 @@
 ---
 name: "brand-guideline-chuan"
 description: "Dựng hoặc làm lại brand guideline công ty theo chuẩn BTMH 2026 (LAB043): khung, bộ dựng, ảnh ChatGPT mockup, phương án chọn. Dùng khi Linh bảo làm/rà soát/chạy lại guideline."
+metadata:
+  version: "0.1.0"
 ---
 
 # Brand guideline chuẩn BTMH 2026

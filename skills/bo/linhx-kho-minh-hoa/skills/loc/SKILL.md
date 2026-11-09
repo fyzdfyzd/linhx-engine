@@ -1,6 +1,6 @@
 ---
 name: loc
-description: Lọc bản ghi mới của kho minh hoạ ý tưởng: bỏ mục NoAI, tải ảnh tạm, đánh dấu bài đăng lại bằng dHash, đưa vào hàng chờ phân loại; dọn ảnh tạm sau khi xong.
+description: "Lọc bản ghi mới của kho minh hoạ ý tưởng: bỏ mục NoAI, tải ảnh tạm, đánh dấu bài đăng lại bằng dHash, đưa vào hàng chờ phân loại; dọn ảnh tạm sau khi xong."
 ---
 # Lọc trước khi phân loại
 

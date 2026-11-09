@@ -1,6 +1,6 @@
 ---
 name: chuan-code
-description: Chuẩn viết code của LINHX theo 4 nguyên tắc Karpathy: nghĩ trước khi code, tối giản, sửa đúng chỗ, làm theo mục tiêu kiểm được. Dùng khi viết, sửa, review hoặc refactor code, script, hook, plugin hay skill có script trong mọi lab.
+description: "Chuẩn viết code của LINHX theo 4 nguyên tắc Karpathy: nghĩ trước khi code, tối giản, sửa đúng chỗ, làm theo mục tiêu kiểm được. Dùng khi viết, sửa, review hoặc refactor code, script, hook, plugin hay skill có script trong mọi lab."
 ---
 
 # Chuẩn code LINHX

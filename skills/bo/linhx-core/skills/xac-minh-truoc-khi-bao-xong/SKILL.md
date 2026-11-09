@@ -1,6 +1,6 @@
 ---
 name: xac-minh-truoc-khi-bao-xong
-description: Cổng kiểm trước khi nói "xong", "chạy được", "đã sửa", "đã gửi file": phải có bằng chứng mới từ lượt này. Dùng khi sắp báo kết quả cho Linh, đánh dấu pha [x] trong PLAN.md, đổi trạng thái lab sang WORKS, hoặc giao file.
+description: "Cổng kiểm trước khi nói \"xong\", \"chạy được\", \"đã sửa\", \"đã gửi file\": phải có bằng chứng mới từ lượt này. Dùng khi sắp báo kết quả cho Linh, đánh dấu pha [x] trong PLAN.md, đổi trạng thái lab sang WORKS, hoặc giao file."
 ---
 
 # Xác minh trước khi báo xong

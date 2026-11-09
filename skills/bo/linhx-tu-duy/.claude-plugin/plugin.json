@@ -1,6 +1,6 @@
 {
   "name": "linhx-tu-duy",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Bộ 52 thẻ mental model (Naval + Munger/Farnam Street) bằng tiếng Việt, kèm vòng duy trì: chọn thẻ cho tình huống, nhật ký quyết định chỉ thêm không sửa, thẻ của ngày, chấm tuần và hiệu chỉnh độ chắc.",
   "author": { "name": "LINHX LAB" },
   "license": "MIT"

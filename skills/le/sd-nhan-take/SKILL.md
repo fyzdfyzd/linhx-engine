@@ -1,6 +1,8 @@
 ---
 name: sd-nhan-take
 description: Bước 6 Flow Pack. Nhận clip Linh tải từ Flow về, khớp với phiếu, ghi sổ credit, xem contact sheet, chọn bản giữ, cảnh báo ngân sách. Dùng mỗi khi Linh báo đã render xong một lô.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-nhan-take: nhận clip và ghi sổ

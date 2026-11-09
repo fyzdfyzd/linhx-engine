@@ -1,6 +1,6 @@
 ---
 name: phat-trien-nhan-vat
-description: Phát triển nhân vật ảo sau khi duyệt casting: tủ đồ thời trang, trang điểm, chi tiết cơ thể, danh sách biểu cảm, tối đa chi tiết và có tham chiếu cụ thể, ra Character Bible và character sheet cuối cùng. Dùng khi Linh nói "phát triển nhân vật", "tủ đồ nhân vật", "bảng biểu cảm".
+description: "Phát triển nhân vật ảo sau khi duyệt casting: tủ đồ thời trang, trang điểm, chi tiết cơ thể, danh sách biểu cảm, tối đa chi tiết và có tham chiếu cụ thể, ra Character Bible và character sheet cuối cùng. Dùng khi Linh nói \"phát triển nhân vật\", \"tủ đồ nhân vật\", \"bảng biểu cảm\"."
 ---
 # Phát triển nhân vật (sau casting) (v2, tối ưu 25/10/2026)
 

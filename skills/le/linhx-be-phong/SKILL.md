@@ -1,6 +1,8 @@
 ---
 name: linhx-be-phong
 description: Lập kế hoạch launch một OPC mới trên bệ phóng chung của LINHX (15 khâu, module dùng lại từ các lab) và so KPI giữa các OPC. Dùng khi Linh nói "launch OPC mới", "bệ phóng", "so các OPC".
+metadata:
+  version: "0.1.0"
 ---
 
 # Bệ phóng nhiều OPC (v0.1)

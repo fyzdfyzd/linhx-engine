@@ -1,6 +1,8 @@
 ---
 name: linhx-crawler
 description: Crawl web content via LinhX Lab's self-hosted multi-tier FastAPI server. Supports waterfall fallback (httpx → Crawl4AI → Firecrawl → Playwright) for maximum reliability. Use for fetching article content, discovering sitemaps, batch crawling, and extracting media assets.
+metadata:
+  version: "0.1.0"
 ---
 
 # LinhX Crawler

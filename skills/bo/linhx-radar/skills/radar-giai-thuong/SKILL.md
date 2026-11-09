@@ -1,6 +1,6 @@
 ---
 name: radar-giai-thuong
-description: Radar giải thưởng ở Việt Nam cho doanh nghiệp và cá nhân: giải nào LINHX, TUVA hoặc Linh nộp được, giải nào uy tín hay trả phí là có, ai vừa đoạt giải (danh sách khách hàng, đối tác tiềm năng), lễ trao giải nào nên dự. Dùng khi Linh hỏi "có giải thưởng nào", "giải cho doanh nghiệp", "ai vừa đoạt giải X", "nên nộp giải nào".
+description: "Radar giải thưởng ở Việt Nam cho doanh nghiệp và cá nhân: giải nào LINHX, TUVA hoặc Linh nộp được, giải nào uy tín hay trả phí là có, ai vừa đoạt giải (danh sách khách hàng, đối tác tiềm năng), lễ trao giải nào nên dự. Dùng khi Linh hỏi \"có giải thưởng nào\", \"giải cho doanh nghiệp\", \"ai vừa đoạt giải X\", \"nên nộp giải nào\"."
 ---
 
 # Radar giải thưởng

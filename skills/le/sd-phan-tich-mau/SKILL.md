@@ -1,6 +1,8 @@
 ---
 name: sd-phan-tich-mau
 description: Phân tích một video mẫu (short drama, quảng cáo, trailer) theo 5 khía cạnh để lấy nhịp, khung hình, chuyển động máy cho tập của mình mà không sao chép. Dùng khi Linh đưa link hoặc file video tham khảo.
+metadata:
+  version: "0.1.0"
 ---
 
 # sd-phan-tich-mau: học từ video mẫu

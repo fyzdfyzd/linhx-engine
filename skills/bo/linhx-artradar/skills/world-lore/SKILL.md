@@ -1,6 +1,6 @@
 ---
 name: world-lore
-description: Dùng khi dựng lorebook (world info) cho một IP để học cấu trúc hoặc cho world gốc của Linh: tách địa danh, phe, hệ sức mạnh, luật thế giới, sinh vật, vật phẩm, sự kiện thành mục có từ khoá, kiểm mâu thuẫn, xuất SillyTavern world info và ghi chú Obsidian.
+description: "Dùng khi dựng lorebook (world info) cho một IP để học cấu trúc hoặc cho world gốc của Linh: tách địa danh, phe, hệ sức mạnh, luật thế giới, sinh vật, vật phẩm, sự kiện thành mục có từ khoá, kiểm mâu thuẫn, xuất SillyTavern world info và ghi chú Obsidian."
 ---
 # Lorebook (M5)
 

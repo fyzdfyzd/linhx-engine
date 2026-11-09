@@ -1,6 +1,8 @@
 ---
 name: lps-user-test
 description: Chuẩn bị, chạy và tổng hợp một vòng thử nghiệm người dùng (usability test) 5 người. Dùng khi tính năng lớn sắp phát hành, khi Linh nói "thử với người dùng", "test người dùng", "UAT".
+metadata:
+  version: "0.1.0"
 ---
 
 # Thử nghiệm người dùng

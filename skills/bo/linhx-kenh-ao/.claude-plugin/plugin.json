@@ -1,6 +1,6 @@
 {
   "name": "linhx-kenh-ao",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "LAB040 vòng nuôi kênh người ảo: khung hành vi (đọc, trend, kết thân trước; luật 10:1; điểm tin; mục đích bắt buộc), xưởng persona có flaw, tạo, duyệt, đăng qua API chính thức, hộp thư, điểm fan, vòng học. Cổng chặn bằng code.",
   "author": {"name": "LINHX LAB"}
 }
