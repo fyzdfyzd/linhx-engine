@@ -116,8 +116,8 @@
         "Claude hết hạn mức là lỗi máy, không tính lần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o6.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O6/kiem.json"
     },
     {
       "id": "O7",
