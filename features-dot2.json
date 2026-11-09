@@ -173,8 +173,8 @@
         "có nhật ký gộp"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/I2/kiem.json"
     },
     {
       "id": "I3",
