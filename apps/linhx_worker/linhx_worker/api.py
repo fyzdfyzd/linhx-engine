@@ -9,7 +9,6 @@ import json
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_core.pay.api_ban import don_dep_don_cho_tra_qua_han
 from linhx_core.pay.sau_tra import mot_dong, quet_don_da_tra_chua_co_job, tao_dau_vao
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
@@ -111,7 +110,6 @@ def nhan_viec(ma, phien_ban=None, may=None):
     return {
         "viec": job.name, "workflow": wf.name, "che_do": wf.che_do or "agy",
         "de": de, "dau_vao": job.dau_vao, "tran_phut": wf.tran_phut or 40,
-        "sandbox": quy_trinh.chinh_sach_sandbox(wf.name),
     }
 
 
@@ -307,7 +305,6 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
-    don_dep_don_cho_tra_qua_han()
     quet_don_da_tra_chua_co_job()
     quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)
