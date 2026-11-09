@@ -87,7 +87,7 @@ services:
     restart: unless-stopped
     ports: ["80:80", "443:443"]
     environment: { SITE_ADDR: "${SITE_ADDR}" }
-    volumes: [./Caddyfile:/etc/caddy/Caddyfile:ro, ../front:/srv/front:ro, caddy:/data]
+    volumes: [./Caddyfile:/etc/caddy/Caddyfile:ro, ../front:/srv/front:ro, ../trang-bu/out:/srv/ifagent:ro, caddy:/data]
     depends_on: [frontend]
 
   # Tho agy tren cloud (tuy chon). Bat bang: docker compose --profile tho-cloud up -d
