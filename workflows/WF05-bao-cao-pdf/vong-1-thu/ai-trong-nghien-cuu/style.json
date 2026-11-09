@@ -1,0 +1,67 @@
+{
+  "ten": "P1 Chiến lược",
+  "goc": "Kỷ luật exhibit và khoảng trắng của báo cáo tư vấn chiến lược (đo từ McKinsey State of AI 2026, Superagency 2025). Không dùng tên, màu, font của hãng.",
+  "kho": "a4",
+  "le": {
+    "tren": 24,
+    "duoi": 24,
+    "ngoai": 20
+  },
+  "le_treo": 0.2,
+  "cot": 1,
+  "ranh_cot": 6,
+  "font": {
+    "tieu_de": "Source Serif 4",
+    "than": "Be Vietnam Pro",
+    "phu": "Be Vietnam Pro"
+  },
+  "co": {
+    "than": 9.8,
+    "chu_thich": 7,
+    "h1": 26,
+    "h2": 12.5,
+    "sapo": 12.5,
+    "hinh_tieu_de": 11,
+    "so_lon": 30,
+    "bia": 40
+  },
+  "gian_dong": 1.45,
+  "can_deu": false,
+  "mau": {
+    "chinh": "#0B1F3A",
+    "nhan": "#1F5AE0",
+    "nhan_toi": "#8FB0FF",
+    "chu": "#1F2933",
+    "chu_phu": "#5C677D",
+    "nen_phu": "#EEF2F8",
+    "ke": "#C9D1DC",
+    "bieu_do": [
+      "#0B1F3A",
+      "#1F5AE0",
+      "#7EA2EE",
+      "#C3D3F5",
+      "#9AA5B1"
+    ]
+  },
+  "hinh": {
+    "nhan": "Hình",
+    "vach_tren": true
+  },
+  "mo_chuong": "chu-lon",
+  "dropcap": false,
+  "nguong": {
+    "phu_chu": [
+      0.18,
+      0.32
+    ],
+    "ky_tu_trang_trung_vi": [
+      1200,
+      3000
+    ],
+    "ty_le_trang_co_hinh": [
+      0.45,
+      0.8
+    ]
+  },
+  "brand": "linhx"
+}

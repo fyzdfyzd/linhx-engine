@@ -1,0 +1,917 @@
+{
+  "meta": {
+    "tieu_de": "Từ trong vòng lên trên vòng",
+    "tieu_de_ngan": "AI trong nghiên cứu",
+    "phu_de": "AI agent trong nghiên cứu: giao gì cho máy, giữ người ở đâu",
+    "nhan_loat": "Báo cáo chuyên đề",
+    "tac_gia": "LINHX",
+    "ngay": "Tháng 11/2026",
+    "don_vi": "LINHX",
+    "chan_trang": "AI trong nghiên cứu",
+    "ban_quyen": "© LINHX. Tài liệu lưu hành nội bộ.",
+    "luan_de": null,
+    "luan_de_phu": null,
+    "luan_de_nhan": "Câu trả lời ngắn"
+  },
+  "theme": {
+    "ten": "P1 Chiến lược",
+    "goc": "Kỷ luật exhibit và khoảng trắng của báo cáo tư vấn chiến lược (đo từ McKinsey State of AI 2026, Superagency 2025). Không dùng tên, màu, font của hãng.",
+    "kho": "a4",
+    "le": {
+      "tren": 24,
+      "duoi": 24,
+      "ngoai": 20
+    },
+    "le_treo": 0.2,
+    "cot": 1,
+    "ranh_cot": 6,
+    "font": {
+      "tieu_de": "Source Serif 4",
+      "than": "Be Vietnam Pro",
+      "phu": "Be Vietnam Pro"
+    },
+    "co": {
+      "than": 9.8,
+      "chu_thich": 7,
+      "h1": 26,
+      "h2": 12.5,
+      "sapo": 12.5,
+      "hinh_tieu_de": 11,
+      "so_lon": 30,
+      "bia": 40
+    },
+    "gian_dong": 1.45,
+    "can_deu": false,
+    "mau": {
+      "chinh": "#0B1F3A",
+      "nhan": "#1F5AE0",
+      "nhan_toi": "#8FB0FF",
+      "chu": "#1F2933",
+      "chu_phu": "#5C677D",
+      "nen_phu": "#EEF2F8",
+      "ke": "#C9D1DC",
+      "bieu_do": [
+        "#0B1F3A",
+        "#1F5AE0",
+        "#7EA2EE",
+        "#C3D3F5",
+        "#9AA5B1"
+      ]
+    },
+    "hinh": {
+      "nhan": "Hình",
+      "vach_tren": true
+    },
+    "mo_chuong": "chu-lon",
+    "dropcap": false,
+    "nguong": {
+      "phu_chu": [
+        0.18,
+        0.32
+      ],
+      "ky_tu_trang_trung_vi": [
+        1200,
+        3000
+      ],
+      "ty_le_trang_co_hinh": [
+        0.45,
+        0.8
+      ]
+    },
+    "brand": "linhx"
+  },
+  "bia": {
+    "anh": null
+  },
+  "tom_tat": {
+    "tieu_de": "Những điểm chính",
+    "mo": "AI agent đã chạy được vòng thí nghiệm mà không cần người nối từng bước, với điều kiện người đặt luật trước và giữ phép đo khỏi tay agent.",
+    "kpi": [
+      {
+        "so": "12",
+        "giai_thich": "thí nghiệm mỗi giờ nếu mỗi lần chạy mất 5 phút, theo ước tính của tác giả autoresearch, LINHX chưa kiểm"
+      },
+      {
+        "so": "3",
+        "giai_thich": "lần cải thiện thật trong 14 dòng nhật ký agent tự ghi ở lượt thử của LINHX"
+      }
+    ],
+    "diem": [
+      {
+        "y": [
+          {
+            "t": "Người nghiên cứu là nút thắt chứ không phải AI."
+          }
+        ],
+        "chi_tiet": [
+          {
+            "t": "Với ngân sách 5 phút mỗi lần chạy, một agent làm được khoảng 12 thí nghiệm mỗi giờ"
+          },
+          {
+            "bc": 1
+          },
+          {
+            "t": "; người nối từng bước không theo kịp nhịp đó."
+          }
+        ]
+      },
+      {
+        "y": [
+          {
+            "t": "Mọi hệ thống mở được đọc đều đặt trần vòng."
+          }
+        ],
+        "chi_tiet": [
+          {
+            "t": "autoresearch còn cấm agent sửa tệp chứa phép đánh giá"
+          },
+          {
+            "bc": 1
+          },
+          {
+            "t": "; AI Scientist v2 cho mỗi ý tối đa 3 tầng sửa lỗi"
+          },
+          {
+            "bc": 2
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "y": [
+          {
+            "t": "Lượt thử nhỏ cho thấy vòng lặp chạy hết mà không cần người."
+          }
+        ],
+        "chi_tiet": [
+          {
+            "t": "Sai số giảm từ 0,52843 xuống 0,00146 sau 14 dòng nhật ký, phần lớn nhờ ý đa thức do người nạp"
+          },
+          {
+            "bc": 3
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "y": [
+          {
+            "t": "Một lượt thử chưa đủ để tin."
+          }
+        ],
+        "chi_tiet": [
+          {
+            "t": "Ý agent đề xuất sau khi đọc thêm chỉ ngang ý tốt nhất, và lượt thử chạy một seed"
+          },
+          {
+            "bc": 3
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "y": [
+          {
+            "t": "Chạy thật làm lộ lỗi quy trình."
+          }
+        ],
+        "chi_tiet": [
+          {
+            "t": "Lượt thử tìm ra 4 lỗi, có lỗi xoá mất bản tốt nhất"
+          },
+          {
+            "bc": 3
+          },
+          {
+            "t": "."
+          }
+        ]
+      }
+    ],
+    "kpi_nguon": "autoresearch (Karpathy), program.md; LINHX LAB, thí nghiệm 28/10/2026"
+  },
+  "chuong": [
+    {
+      "so": 1,
+      "tieu_de": "Người nghiên cứu đang là nút thắt của vòng có AI",
+      "ten_ngan": "Nút thắt",
+      "sapo": "AI đã viết code, tóm tài liệu và gợi ý. Thứ còn chậm là khoảng chờ giữa các bước, khi mọi việc phải qua tay người.",
+      "anh": null,
+      "khoi": [
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Vòng nghiên cứu quen thuộc có năm bước: hiểu vấn đề, đọc tài liệu, đề xuất ý tưởng, triển khai thí nghiệm và phân tích kết quả. Cách làm hybrid hiện nay để AI hỗ trợ ở từng bước, còn người giữ vai nối các bước với nhau. Người đặt câu hỏi, giao việc, đọc kết quả rồi quyết định bước tiếp."
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Cách này nhanh hơn làm một mình, nhưng tốc độ của cả vòng vẫn bằng tốc độ của người. Khi người ngủ, đi họp hay bận việc khác, vòng dừng lại. Bài viết \"Vài dòng về AI trong nghiên cứu\" của Linh và anh Dũng gọi đúng chỗ này: nút thắt là chính người nghiên cứu."
+            }
+          ]
+        },
+        {
+          "k": "h2",
+          "t": "Agent không phải chờ thì một đêm đủ cho khoảng 100 thí nghiệm"
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Dự án autoresearch của Andrej Karpathy cho thấy quy mô của khoảng chờ đó. Mỗi thí nghiệm được chạy trong ngân sách cố định 5 phút"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": ". Với nhịp ấy, tác giả ước tính agent chạy khoảng 12 thí nghiệm mỗi giờ, tức khoảng 100 thí nghiệm trong một đêm ngủ"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "so-lon",
+          "items": [
+            {
+              "so": "12",
+              "giai_thich": "thí nghiệm mỗi giờ khi mỗi lần chạy mất 5 phút"
+            },
+            {
+              "so": "100",
+              "giai_thich": "thí nghiệm trong một đêm ngủ trung bình của người"
+            }
+          ],
+          "nguon": "autoresearch (Karpathy), program.md, đọc 9/11/2026"
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Điều kiện để đạt nhịp này là agent không dừng lại hỏi. Theo hướng dẫn của autoresearch, một khi vòng lặp đã bắt đầu, agent không được dừng để hỏi người có nên tiếp tục hay không"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": ". Việc của người chuyển sang hai đầu: viết luật trước khi vòng chạy và đọc kết quả sau khi vòng dừng."
+            }
+          ]
+        },
+        {
+          "k": "trich",
+          "r": [
+            {
+              "t": "NEVER STOP: Once the experiment loop has begun (after the initial setup), do NOT pause to ask the human if you should continue."
+            },
+            {
+              "bc": 1
+            }
+          ],
+          "ai": null
+        }
+      ]
+    },
+    {
+      "so": 2,
+      "tieu_de": "Năm hệ thống mã mở đều đặt trần cho vòng lặp",
+      "ten_ngan": "Khuôn chung",
+      "sapo": "Đọc trực tiếp mã nguồn cho thấy mọi hệ thống đều giới hạn số vòng; hệ thống chặt nhất còn khoá luôn cách chấm điểm.",
+      "anh": null,
+      "khoi": [
+        {
+          "k": "h2",
+          "t": "Phép đo khoá là điều kiện đầu tiên để giao vòng cho agent"
+        },
+        {
+          "k": "hinh",
+          "so": 1,
+          "tieu_de": "Năm hệ thống mở đều đặt trần vòng, autoresearch còn khoá cả phép đo.",
+          "doi_tuong": "Cơ chế đọc trực tiếp trong mã nguồn, 9/11/2026",
+          "nguon": "Mã nguồn GitHub của từng dự án, đọc ngày 9/11/2026.",
+          "ghi_chu": null,
+          "rong": "full",
+          "bang": {
+            "cot": [
+              "Hệ thống",
+              "Vòng lặp trong mã",
+              "Trần, tham số",
+              "Nên học theo"
+            ],
+            "dong": [
+              [
+                "autoresearch",
+                "sửa, commit, chạy, đo, rồi giữ hoặc reset",
+                "5 phút mỗi lần chạy",
+                "khoá phép đo, nhật ký TSV"
+              ],
+              [
+                "AI Scientist v2",
+                "cây tìm kiếm qua 4 giai đoạn",
+                "3 bản nháp, debug sâu tối đa 3",
+                "giai đoạn có mục tiêu riêng"
+              ],
+              [
+                "OpenEvolve",
+                "quần thể chia đảo, di cư định kỳ",
+                "5 đảo, di cư mỗi 50 thế hệ",
+                "tỷ lệ khám phá cố định"
+              ],
+              [
+                "Agent Laboratory",
+                "7 pha từ đọc tài liệu đến viết báo cáo",
+                "cờ cổng người cho từng pha",
+                "bật, tắt người theo pha"
+              ],
+              [
+                "Open Deep Research",
+                "trưởng nhóm giao việc cho nhóm đọc song song",
+                "5 nhóm song song, 6 lượt",
+                "nén kết quả trước khi trả"
+              ]
+            ]
+          }
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "autoresearch để tệp chứa phép đánh giá ở chế độ chỉ đọc và cấm agent sửa nó"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": ". Nếu agent được sửa cách chấm điểm, nó sẽ tối ưu cách chấm chứ không tối ưu bài toán. Mọi lần chạy cũng dùng chung ngân sách 5 phút để so sánh được với nhau"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "AI Scientist v2 cho mỗi ý tối đa 3 tầng sửa lỗi và bắt đầu từ 3 bản nháp"
+            },
+            {
+              "bc": 2
+            },
+            {
+              "t": ". Open Deep Research mặc định 5 nhóm đọc chạy song song và tối đa 6 lượt"
+            },
+            {
+              "bc": 4
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "h2",
+          "t": "Khác biệt nằm ở cách giữ nhiều hướng còn sống"
+        },
+        {
+          "k": "sidebar",
+          "t": "Bốn cách giữ nhiều hướng và giữ người",
+          "nhan": "Đọc thêm",
+          "khoi": [
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "AI Scientist v2 chia việc thành 4 giai đoạn: chạy được, tinh chỉnh baseline, sáng tạo, ablation"
+                },
+                {
+                  "bc": 2
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "OpenEvolve chia quần thể thành 5 đảo và cho di cư mỗi 50 thế hệ"
+                },
+                {
+                  "bc": 5
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "OpenEvolve còn cố định tỷ lệ chọn: 70% khai thác, 20% khám phá, 10% tinh hoa"
+                },
+                {
+                  "bc": 5
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Agent Laboratory có cờ bật, tắt cổng duyệt của người cho từng pha"
+                },
+                {
+                  "bc": 6
+                },
+                {
+                  "t": "."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "so": 3,
+      "tieu_de": "Lượt thử nhỏ cho thấy vòng lặp chạy hết mà không cần người",
+      "ten_ngan": "Thử thật",
+      "sapo": "LINHX LAB cho một agent tự lo các bước ý tưởng, chạy thử và phân tích trên một bài toán nhỏ, với phép đo khoá và kho ý tưởng do người nạp.",
+      "anh": null,
+      "khoi": [
+        {
+          "k": "h2",
+          "t": "Sai số giảm từ 0,52843 xuống 0,00146 sau 14 dòng nhật ký"
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Bài toán là khớp một hàm một chiều từ dữ liệu có nhiễu, đo bằng sai số bình phương trung bình trên tập giữ riêng. Agent bắt đầu từ baseline 0,52843 và kết thúc ở 0,00146 sau 14 dòng nhật ký"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": ". Trong đó 6 dòng được giữ, 7 dòng bị bỏ và 1 dòng lỗi"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "hinh",
+          "so": 2,
+          "tieu_de": "Ý agent đề xuất sau lượt đọc thêm ngang với đa thức bậc 5, chênh lệch nằm trong nhiễu.",
+          "doi_tuong": "Sai số bình phương trung bình trên tập giữ riêng, thấp là tốt; baseline 0,52843 không vẽ",
+          "nguon": "LINHX LAB, thí nghiệm research loop trên bài toán khớp hàm có nhiễu, 28/10/2026, một seed.",
+          "ghi_chu": "Chênh 0,00146 so với 0,00153 có thể chỉ là nhiễu: chưa chạy nhiều seed.",
+          "rong": "full",
+          "svg": "../04-hinh/H01.svg"
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Phép đo đã loại các ý không tốt hơn, kể cả khi trông hợp lý: đa thức bậc 7 cho 0,00181, kém bậc 5 ở mức 0,00153, nên bị bỏ"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": ". Trong 6 dòng được giữ, chỉ 3 dòng là cải thiện thật; 2 dòng là dọn dẹp cùng code"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "h2",
+          "t": "Lượt đọc thêm theo luật cho một ý mới ngang với ý tốt nhất"
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Đa thức bậc 5 kẹt 5 vòng liền không cải thiện"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": ". Theo luật người đặt sẵn, agent dừng thử, quay lại đọc tài liệu một lượt và thêm 3 ý vào kho"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": ". Ý cho điểm thấp nhất là ý agent đề xuất: cơ sở Fourier, chọn số tần bằng kiểm định chéo"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Kết quả này cần đọc thận trọng. Mức hơn bậc 5 có thể chỉ là nhiễu, vì thí nghiệm chưa chạy nhiều seed"
+            },
+            {
+              "bc": 3
+            },
+            {
+              "t": ". Bài toán cũng nhỏ hơn rất nhiều so với một bài toán nghiên cứu thật."
+            }
+          ]
+        },
+        {
+          "k": "hinh",
+          "so": 3,
+          "tieu_de": "Phép đo đã loại 7 trong 14 dòng nhật ký, chỉ 3 dòng là cải thiện thật.",
+          "doi_tuong": "Số dòng nhật ký theo trạng thái, tổng 14",
+          "nguon": "LINHX LAB, thí nghiệm research loop, 28/10/2026.",
+          "ghi_chu": "Hai trong sáu dòng giữ là dọn dẹp, cùng code bậc 5.",
+          "rong": "col",
+          "svg": "../04-hinh/H02.svg"
+        },
+        {
+          "k": "sidebar",
+          "t": "Bốn lỗi chỉ lộ ra khi chạy thật",
+          "nhan": "Bài học quy trình",
+          "khoi": [
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Lượt thử tìm ra 4 lỗi trong chính quy trình và đã sửa"
+                },
+                {
+                  "bc": 3
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Quay lui về bản trước đã xoá mất bản tốt nhất khi một lần sửa không ăn."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Nhật ký ghi kết quả cũ dưới tên ý mới."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Sau khi nạp ý mới, agent vẫn báo kẹt mãi."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Bộ hướng dẫn nằm trong thư mục thí nghiệm nên bị quay lui theo."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Cùng nhóm cũng thử bước viết bài sau vòng lặp. Một bản thảo được cài bốn bẫy, gồm số bịa và trích dẫn bịa, và máy kiểm bắt đủ cả bốn"
+            },
+            {
+              "bc": 7
+            },
+            {
+              "t": ". Máy kiểm là một đoạn chương trình so số và trích dẫn với nguồn, không gọi AI nên không tốn phí."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "so": 4,
+      "tieu_de": "Người nên viết luật buổi tối và duyệt bản tóm buổi sáng",
+      "ten_ngan": "Vai người",
+      "sapo": "Người đặt luật, giữ phép đo và quyết định ở hai cổng; agent lo phần lặp ở giữa.",
+      "anh": null,
+      "khoi": [
+        {
+          "k": "h2",
+          "t": "Người nên giao phần lặp cho agent và giữ phần đặt đề bài"
+        },
+        {
+          "k": "hinh",
+          "so": 4,
+          "tieu_de": "Người lên trên vòng khi giao các bước ý tưởng, chạy thử, phân tích cho agent.",
+          "doi_tuong": "Vai người ở từng bước của vòng nghiên cứu",
+          "nguon": "LINHX LAB tổng hợp từ năm hệ thống mở và thí nghiệm 28/10/2026.",
+          "ghi_chu": null,
+          "rong": "full",
+          "bang": {
+            "cot": [
+              "Bước",
+              "Hybrid hiện nay",
+              "Vòng lặp có agent"
+            ],
+            "dong": [
+              [
+                "1. Hiểu vấn đề",
+                "người và AI thảo luận",
+                "người viết đề, phép đo khoá, ngân sách"
+              ],
+              [
+                "2. Đọc tài liệu",
+                "người đọc, AI tóm",
+                "người đọc lần đầu; agent tự quay lại đọc khi kẹt"
+              ],
+              [
+                "3. Ý tưởng",
+                "hai bên đề xuất",
+                "agent rút từ kho ý tưởng và sinh ý mới"
+              ],
+              [
+                "4. Triển khai",
+                "AI viết code, người giao việc",
+                "agent tự chạy, commit, debug có trần"
+              ],
+              [
+                "5. Phân tích",
+                "người đọc kết quả",
+                "agent giữ hoặc bỏ theo phép đo, viết bản tóm"
+              ]
+            ]
+          }
+        },
+        {
+          "k": "p",
+          "r": [
+            {
+              "t": "Bước đáng tiền nhất của người là bước đầu tiên. Ở đó người viết đề bài, phép đo khoá, phạm vi được sửa và ngân sách. Một đề bài viết tốt cho phép agent chạy cả đêm mà không cần hỏi"
+            },
+            {
+              "bc": 1
+            },
+            {
+              "t": "."
+            }
+          ]
+        },
+        {
+          "k": "sidebar",
+          "t": "Trước khi để agent chạy qua đêm",
+          "nhan": "Rủi ro và chi phí",
+          "khoi": [
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Chi phí: một lượt vòng tự tối ưu trước đó của LINHX tốn khoảng 0,9 đến 1,1 triệu token, nên cần trần token cứng"
+                },
+                {
+                  "bc": 8
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Mất dữ liệu: chính lượt thử đã có lần quay lui xoá bản tốt nhất; chạy trong thư mục riêng có sao lưu"
+                },
+                {
+                  "bc": 3
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Quyền: không đưa khoá API thật, không cho agent quyền mạng hay quyền ghi ngoài thư mục thí nghiệm."
+                }
+              ]
+            },
+            {
+              "k": "p",
+              "r": [
+                {
+                  "t": "Dừng khẩn: có một lệnh dừng mà người khác trong nhóm cũng biết."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "k": "h2",
+          "t": "Năm việc nên làm trước khi để agent chạy qua đêm"
+        },
+        {
+          "k": "khuyen-nghi",
+          "items": [
+            {
+              "t": "Viết đề bài một trang trước khi chạy",
+              "r": [
+                {
+                  "t": "Ghi mục tiêu, phép đo, tệp được sửa, ngân sách thời gian và token."
+                }
+              ]
+            },
+            {
+              "t": "Khoá phép đo khỏi tay agent",
+              "r": [
+                {
+                  "t": "Để tệp đánh giá chỉ đọc, như autoresearch"
+                },
+                {
+                  "bc": 1
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "t": "Đặt trần cho mọi vòng",
+              "r": [
+                {
+                  "t": "Trần sửa lỗi, trần lượt đọc, trần thí nghiệm mỗi đêm."
+                }
+              ]
+            },
+            {
+              "t": "Chạy nhiều seed trước khi tin",
+              "r": [
+                {
+                  "t": "Một lần tốt hơn vài phần trăm chưa phải phát hiện"
+                },
+                {
+                  "bc": 3
+                },
+                {
+                  "t": "."
+                }
+              ]
+            },
+            {
+              "t": "Chọn hai cổng người",
+              "r": [
+                {
+                  "t": "Một cổng duyệt đề bài buổi tối, một cổng đọc bản tóm buổi sáng"
+                },
+                {
+                  "bc": 6
+                },
+                {
+                  "t": "."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "phuong_phap": [
+    {
+      "k": "p",
+      "r": [
+        {
+          "t": "Mã nguồn: năm dự án trên GitHub (autoresearch, AI Scientist v2, OpenEvolve, Agent Laboratory, Open Deep Research), đọc lần đầu ngày 28/10/2026 và đọc lại ngày 9/11/2026 để lấy trích nguyên văn"
+        },
+        {
+          "bc": 1
+        },
+        {
+          "t": ". Các tham số trong báo cáo là giá trị mặc định trong mã, không phải giá trị các nhóm dùng trong bài báo của họ."
+        }
+      ]
+    },
+    {
+      "k": "p",
+      "r": [
+        {
+          "t": "Thí nghiệm: một agent chạy các bước ý tưởng, triển khai và phân tích trên bài toán khớp hàm một chiều có nhiễu, ngày 28/10/2026"
+        },
+        {
+          "bc": 3
+        },
+        {
+          "t": ". Phép đo là sai số bình phương trung bình trên tập giữ riêng, agent không được sửa. Mỗi lần chạy có ngân sách 60 giây, chạy một seed"
+        },
+        {
+          "bc": 3
+        },
+        {
+          "t": "."
+        }
+      ]
+    },
+    {
+      "k": "p",
+      "r": [
+        {
+          "t": "Giới hạn: bài toán nhỏ và có lời giải trơn, nên không đại diện cho bài toán nghiên cứu thật. Mức chênh giữa hai kết quả tốt nhất có thể nằm trong nhiễu. Báo cáo không đo chi phí token của lượt thử."
+        }
+      ]
+    },
+    {
+      "k": "p",
+      "r": [
+        {
+          "t": "Báo cáo nối tiếp bài viết \"Vài dòng về AI trong nghiên cứu\" của Linh và anh Dũng, phần nói về việc dùng agent khi người là nút thắt."
+        }
+      ]
+    }
+  ],
+  "nguon": [
+    {
+      "ma": "S01",
+      "mo_ta": "Andrej Karpathy, autoresearch (program.md), 2026. https://github.com/karpathy/autoresearch (truy cập 2026-11-09)"
+    },
+    {
+      "ma": "S02",
+      "mo_ta": "Sakana AI, The AI Scientist v2 (bfts_config.yaml; agent_manager.py), 2025. https://github.com/SakanaAI/AI-Scientist-v2 (truy cập 2026-11-09)"
+    },
+    {
+      "ma": "S06",
+      "mo_ta": "LINHX LAB, Thí nghiệm research loop trên bài toán khớp hàm có nhiễu, 2026-10-28"
+    },
+    {
+      "ma": "S05",
+      "mo_ta": "LangChain, Open Deep Research (configuration.py), 2025. https://github.com/langchain-ai/open_deep_research (truy cập 2026-11-09)"
+    },
+    {
+      "ma": "S03",
+      "mo_ta": "Algorithmic Superintelligence, OpenEvolve (config.py), 2025. https://github.com/algorithmicsuperintelligence/openevolve (truy cập 2026-11-09)"
+    },
+    {
+      "ma": "S04",
+      "mo_ta": "Samuel Schmidgall và cộng sự, Agent Laboratory (ai_lab_repo.py), 2025. https://github.com/SamuelSchmidgall/AgentLaboratory (truy cập 2026-11-09)"
+    },
+    {
+      "ma": "S07",
+      "mo_ta": "LINHX LAB, Thử máy kiểm bản thảo có cài bẫy, 2026-11-04"
+    },
+    {
+      "ma": "S08",
+      "mo_ta": "LINHX LAB, Nghiên cứu nền research loop, 2026-10-28"
+    }
+  ]
+}

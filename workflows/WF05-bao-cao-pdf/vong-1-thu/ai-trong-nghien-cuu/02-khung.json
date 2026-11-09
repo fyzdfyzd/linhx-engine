@@ -1,0 +1,72 @@
+{
+ "cau_hoi_chinh": "Khi người nghiên cứu là nút thắt, nên giao cho AI agent phần nào của vòng nghiên cứu và giữ người ở cổng nào?",
+ "khung_phan_tich": [
+  "vòng 5 bước",
+  "in-the-loop / on-the-loop"
+ ],
+ "nhanh": [
+  {
+   "id": "N1",
+   "ten": "Cơ chế trong mã mở",
+   "gia_thuyet": [
+    "Các hệ thống tốt đều khoá phép đo và ghi nhật ký"
+   ],
+   "du_lieu": [
+    {
+     "chi_so": "cấu hình vòng lặp",
+     "uu_tien": "P0",
+     "nguon_goi_y": "GitHub",
+     "tu_khoa": [
+      "autoresearch"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "N2",
+   "ten": "Thử thật",
+   "gia_thuyet": [
+    "Agent tự chạy được vòng 3–5 trên bài nhỏ"
+   ],
+   "du_lieu": [
+    {
+     "chi_so": "MSE",
+     "uu_tien": "P0",
+     "nguon_goi_y": "thí nghiệm LINHX",
+     "tu_khoa": []
+    }
+   ]
+  }
+ ],
+ "chuong": [
+  {
+   "so": 1,
+   "ten": "Nút thắt",
+   "nhanh": [
+    "N1"
+   ]
+  },
+  {
+   "so": 2,
+   "ten": "Khuôn chung",
+   "nhanh": [
+    "N1"
+   ]
+  },
+  {
+   "so": 3,
+   "ten": "Thử thật",
+   "nhanh": [
+    "N2"
+   ]
+  },
+  {
+   "so": 4,
+   "ten": "Vai người",
+   "nhanh": [
+    "N1",
+    "N2"
+   ]
+  }
+ ]
+}

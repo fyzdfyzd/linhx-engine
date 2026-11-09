@@ -1,0 +1,182 @@
+[
+ {
+  "trang": 1,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 5,
+   "nhip": 5,
+   "khoang_trang": 4,
+   "phan_cap_chu": 4,
+   "ky_thuat": 3
+  },
+  "tb": 4.2,
+  "sua": "Mù A: Tiêu đề bìa rớt một chữ 'vòng' xuống dòng hai, mồ côi | Mù B: Tên báo cáo ngắt dòng để 'vòng' mồ côi một mình ở dòng 2; khối sọc trang trí và khối chữ cách nhau một vùng trống lớn ở giữa trang, không gắn kết.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 2,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 4,
+   "khoang_trang": 3,
+   "phan_cap_chu": 3,
+   "ky_thuat": 4
+  },
+  "tb": 3.4,
+  "sua": "Mù A: Mục lục chiếm 35% trang, phần dưới trống; mục không có số chương 01–04 | Mù B: Mục lục chỉ một cấp: không số chương 01–04, không nhãn phần (mở đầu/chương/phụ lục), các mục ngang hàng nhau; 60% dưới trang trống không chủ đích.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 3,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 4,
+   "nhip": 4,
+   "khoang_trang": 3,
+   "phan_cap_chu": 4,
+   "ky_thuat": 4
+  },
+  "tb": 3.8,
+  "sua": "Mù A: Một phần ba dưới trang trống; số 12 lặp lại ở trang 4 | Mù B: Một phần ba dưới trang trống; chú thích số '12' dài và có câu rào 'LINHX chưa kiểm' làm yếu khối số lớn; khối số 12 lặp lại nguyên ở trang 4.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 4,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 3,
+   "khoang_trang": 3,
+   "phan_cap_chu": 4,
+   "ky_thuat": 3
+  },
+  "tb": 3.2,
+  "sua": "Mù A: Số chương, tiêu đề, số lớn, trích dẫn tranh nhau; tiêu đề mục rớt chữ 'chờ' | Mù B: Tiêu đề mục 1.1 ngắt để 'chờ' mồ côi, dính sát thân bài không có khoảng cách; nhãn 'CHƯƠNG 1 · NÚT THẮT' lặp y running head; bốn điểm nhấn (tiêu đề, hai số lớn, trích dẫn) tranh nhau; trích dẫn tiếng Anh không có bản dịch.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 5,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 2,
+   "khoang_trang": 3,
+   "phan_cap_chu": 4,
+   "ky_thuat": 3
+  },
+  "tb": 3,
+  "sua": "Mù A: Mở chương y hệt trang 4; mục 2.1 vào thẳng bảng không có đoạn dẫn | Mù B: Mở chương cùng khuôn y hệt trang 4 (số 0N, tiêu đề 2 dòng, sapô, Mục); bảng có ô ngắt một chữ ('đoạn', 'định kỳ', 'đa 3'); Mục 2.2 không có thân bài, chỉ có sidebar; trang dày đặc.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 6,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 4,
+   "nhip": 1,
+   "khoang_trang": 3,
+   "phan_cap_chu": 4,
+   "ky_thuat": 2
+  },
+  "tb": 2.8,
+  "sua": "Mù A: Mở chương thứ ba liên tiếp cùng khuôn; chú thích 'code33' lặp, '0,0018' lệch số lẻ | Mù B: Trang mở chương thứ ba liên tiếp cùng một khuôn (4,5,6); chỉ số chú thích lỗi 'code³³'; nhãn biểu đồ '0,0018' lệch định dạng với các giá trị 5 chữ số; tiêu đề Mục 3.1 và 3.2 dính sát thân bài.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 7,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 4,
+   "nhip": 4,
+   "khoang_trang": 2,
+   "phan_cap_chu": 3,
+   "ky_thuat": 3
+  },
+  "tb": 3.2,
+  "sua": "Mù A: Gần nửa dưới trang trống vô cớ; hình nhấn 'Bỏ' nhưng tiêu đề nói 3 cải thiện | Mù B: Gần nửa dưới trang trống vô cớ; biểu đồ tiêu đề nói '3 dòng là cải thiện thật' nhưng cột Giữ không tách 3 thật/3 dọn dẹp; trang không có tiêu đề mục, đoạn đầu là phần đuôi trang trước.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 8,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 2,
+   "khoang_trang": 3,
+   "phan_cap_chu": 4,
+   "ky_thuat": 3
+  },
+  "tb": 3,
+  "sua": "Mù A: Bảng Hình 4 hẹp hơn lưới, lệch lề phải; mục 4.1 vào thẳng hình | Mù B: Mở chương lần thứ tư cùng khuôn với trang 4–6; bảng Hình 4 và sidebar tranh điểm nhìn; ~1/5 dưới trống; thân bài chỉ một đoạn ngắn.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 9,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 4,
+   "nhip": 3,
+   "khoang_trang": 2,
+   "phan_cap_chu": 4,
+   "ky_thuat": 4
+  },
+  "tb": 3.4,
+  "sua": "Mù A: Nửa dưới trang trống; danh sách đánh số lặp khuôn trang 3 | Mù B: Nửa dưới trang trống; danh sách đánh số lớn lặp kiểu trang 3; ô tiêu đề việc 1 ngắt 2 dòng lệch hàng với cột mô tả.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 10,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 4,
+   "khoang_trang": 3,
+   "phan_cap_chu": 2,
+   "ky_thuat": 3
+  },
+  "tb": 3,
+  "sua": "Mù A: Khổ chữ hẹp hơn lưới; nhãn 'Mã nguồn', 'Thí nghiệm' không đậm, thiếu cấp phụ | Mù B: Nhãn mở đoạn 'Mã nguồn:', 'Thí nghiệm:', 'Giới hạn:' không in đậm nên chỉ còn 2 cấp chữ; nền xanh nhạt chỉ riêng trang này, lệch hệ với trang 11; chỉ số chú thích rất nhỏ khó thấy.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 11,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 4,
+   "khoang_trang": 3,
+   "phan_cap_chu": 3,
+   "ky_thuat": 2
+  },
+  "tb": 3,
+  "sua": "Mù A: URL vỡ giữa từ 'SamuelSchmidgal/l', 'https:// github'; chữ quá nhỏ, chỉ nửa trang | Mù B: URL vỡ giữa chữ ('SamuelSchmidgal / l/AgentLaboratory', 'https:// / github'); danh sách dồn vào nửa trái, cột hẹp gây nhiều ngắt dòng trong khi nửa phải trống.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ },
+ {
+  "trang": 12,
+  "kieu": "",
+  "diem": {
+   "diem_nhin": 3,
+   "nhip": 4,
+   "khoang_trang": 4,
+   "phan_cap_chu": 3,
+   "ky_thuat": 5
+  },
+  "tb": 3.8,
+  "sua": "Mù A: Bìa sau phẳng, không lặp mô-típ thanh ngang của bìa trước | Mù B: Bìa sau chỉ có logo và dòng bản quyền; không có thông tin liên hệ, ngày phát hành hay motif nối với bìa trước.",
+  "vong": 2,
+  "nguoi_cham": "cham-mu-2-lan-lay-thap"
+ }
+]

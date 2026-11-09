@@ -1,0 +1,34 @@
+{
+  "mau": [
+    {"ten": "mck-state-ai-2026", "nguon": "Thư viện báo cáo của Linh: 2026_08_McKinsey_Company_QuantumBlack_The_state_of_AI_in_2026_On_the_road_to_ROI.pdf", "duong_dan": "00-mau/mck-state-ai-2026/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": true, "vi_sao": "Đúng tinh thần báo cáo chiến lược: trang luận đề nền màu, tóm tắt dạng danh sách lề treo, exhibit có tiêu đề câu kết luận và nguồn, trang bình luận nền nhạt, khoảng trắng rộng. Hợp người đọc lãnh đạo."},
+    {"ten": "mck-superagency-2025", "nguon": "Thư viện báo cáo của Linh: 2025_01_McKinsey_Company_Superagency_in_the_workplace...pdf", "duong_dan": "00-mau/mck-superagency-2025/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": false, "vi_sao": "Mục lục một cột và trang mở chương số cực lớn với trích dẫn; học cách mở chương khi không có ảnh."},
+    {"ten": "bcg-ai-at-work-2026", "nguon": "Thư viện báo cáo của Linh: 2026_06_Boston_Consulting_Group_AI_at_Work_2026...pdf", "duong_dan": "00-mau/bcg-ai-at-work-2026/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": false, "vi_sao": "Tóm tắt dạng thẻ đánh số đậm dần và trang khuyến nghị dạng bảng 2 cột; khổ ngang 16:9 nên chỉ học nhịp, không học lưới."},
+    {"ten": "economy-sea-vn-2025", "nguon": "Thư viện báo cáo của Linh: 2025_11_Google_Temasek_Bain_Company_e_Conomy_SEA_2025_10th_edition_Vietnam.pdf", "duong_dan": "00-mau/economy-sea-vn-2025/tong-quan.jpg", "loai_giay_phep": "hoc", "chon": false, "vi_sao": "Bảng điều khiển số liệu Việt Nam nhiều ô; hợp báo cáo thị trường nhưng dày chữ nhỏ, khổ 16:9, không hợp bản A4 cho lãnh đạo."}
+  ],
+  "trang": [
+    {"so": 1, "kieu": "T01", "ghi_chu": "Bìa nền tối tràn lề, nhãn đơn vị góc trên trái, tiêu đề serif rất lớn 2 dòng ở 1/3 trên, phụ đề sans nhỏ, tháng năm. Ảnh trừu tượng chiếm 2/3 dưới (bản mình thay bằng khối màu)."},
+    {"so": 2, "kieu": "T03", "ghi_chu": "Trang luận đề: nền màu nhấn tràn trang, một câu luận đề sans rất lớn (khoảng 26 pt) chiếm 60% rộng, câu đầu in đậm, dòng tác giả nhỏ phía dưới."},
+    {"so": 3, "kieu": "T06", "ghi_chu": "Tóm tắt 'Key takeaways': tiêu đề ở cột phải, lề treo trái khoảng 30%, 7 mục gạch ngang, mỗi mục câu kết luận đậm rồi 1 đến 2 câu số liệu, cỡ chữ nhỏ, rất nhiều khoảng trắng."},
+    {"so": 4, "kieu": "M01", "ghi_chu": "Trang mở đầu: dải ảnh dọc bên trái 25% rộng, chữ hoa lớn (drop cap) mở đoạn, đoạn đầu cỡ lớn (13 pt), các đoạn sau cỡ thân. Kiểu mới: 'mở đầu có drop cap'."},
+    {"so": 5, "kieu": "T13", "ghi_chu": "Tiêu đề mục là câu kết luận 3 dòng, sans nhẹ 17 pt, lề treo trái 30%; 2 đoạn dẫn ở 1/3 trên; exhibit 2/3 dưới trải ngang: 'Exhibit 1' nhỏ, tiêu đề hình đậm là câu, dòng đối tượng, biểu đồ, ghi chú và nguồn chữ 6 pt."},
+    {"so": 6, "kieu": "T13", "ghi_chu": "Hai đoạn dẫn trên cùng, exhibit cột chồng 2 nhóm ở giữa, nửa dưới trang để trắng có chủ đích."},
+    {"so": 8, "kieu": "T12", "ghi_chu": "Exhibit trọn trang dạng ma trận nhiệt, đoạn chữ hẹp phía trên lệch phải, nhãn hình và nguồn đầy đủ."},
+    {"so": 10, "kieu": "T15", "ghi_chu": "Bình luận chuyên gia: khối nền xanh nhạt 2/5 trên có ảnh tròn bên trái, chữ bên phải; 3/5 dưới là một câu phóng to màu nhấn chiếm nửa trái (pull quote) cùng đồ họa."},
+    {"so": 13, "kieu": "T15", "ghi_chu": "Bình luận chuyên gia biến thể: câu phóng to 'About four in ten…' là số lớn bằng chữ, đặt trên khối nền."},
+    {"so": 12, "kieu": "T12", "ghi_chu": "Exhibit thanh ngang nhiều nhóm trọn trang, đoạn dẫn ngắn phía trên, không có tiêu đề mục."},
+    {"so": 25, "kieu": "T13", "ghi_chu": "Tiêu đề mục câu kết luận 4 dòng, đoạn dẫn, exhibit thanh chồng 3 khối ở nửa dưới, chú thích mũ ở chân trang."},
+    {"so": 30, "kieu": "T21", "ghi_chu": "About the research: nền xanh xám nhạt tràn, tiêu đề lớn, đoạn phương pháp có n, thời gian thực địa, phạm vi, cách gia quyền; tác giả ngay dưới."},
+    {"so": 31, "kieu": "T23", "ghi_chu": "Bìa sau nền tối, bản quyền và thông tin xuất bản nhỏ ở góc dưới."}
+  ],
+  "nhip": "Bìa → luận đề nền màu → tóm tắt → mở đầu drop cap → chuỗi T13/T12 (chữ trên, hình dưới) xen trang bình luận T15 sau mỗi 3 đến 5 trang hình → phương pháp nền nhạt → bìa sau. Không quá 2 trang chữ liền; trang số lớn hoặc câu phóng to đặt sau một cụm exhibit để người đọc nghỉ mắt.",
+  "bai_hoc": [
+    "Tiêu đề hình là câu kết luận đậm có dấu chấm, nhãn 'Hình N' nhỏ phía trên, dòng đối tượng và đơn vị ngay dưới, nguồn chữ 6 đến 7 pt dưới hình.",
+    "Tiêu đề mục là câu đầy đủ 2 đến 4 dòng, đặt ở cột phải; lề treo trái khoảng 20 đến 30% để trống hoặc cho nhãn.",
+    "Trang luận đề nền màu ngay sau bìa nói thẳng câu trả lời của cả báo cáo trong một câu dài 40 đến 50 từ.",
+    "Tóm tắt là danh sách 6 đến 7 mục: câu kết luận đậm rồi số liệu có mốc năm trước.",
+    "Cứ 3 đến 5 trang exhibit thì có một trang nghỉ: bình luận chuyên gia hoặc một câu phóng to màu nhấn.",
+    "Nửa trang trắng sau exhibit được chấp nhận; không nhồi chữ để lấp.",
+    "Chỉ một màu nhấn cho biểu đồ, các sắc độ cùng họ màu cho chuỗi phụ, xám cho nhóm không quan trọng.",
+    "Trang phương pháp có nền nhạt riêng để tách khỏi phần lập luận."
+  ]
+}

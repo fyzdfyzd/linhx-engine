@@ -1,0 +1,443 @@
+{
+  "luc": "2026-11-09T05:33:07",
+  "dem": {
+    "dat": 48,
+    "can-duyet": 0,
+    "mo-coi": 0
+  },
+  "chi_tiet": [
+    {
+      "tep": "00-tom-tat.md",
+      "so": 5.0,
+      "ma": [
+        "BC02"
+      ],
+      "muc": "dat",
+      "cau": "**Người nghiên cứu là nút thắt chứ không phải AI.** Với ngân sách 5 phút mỗi lần chạy, một agent làm được khoảng 12 thí nghiệm mỗi giờ [BC02]; người nối từng bước không theo kịp nhịp đó."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 12.0,
+      "ma": [
+        "BC02"
+      ],
+      "muc": "dat",
+      "cau": "**Người nghiên cứu là nút thắt chứ không phải AI.** Với ngân sách 5 phút mỗi lần chạy, một agent làm được khoảng 12 thí nghiệm mỗi giờ [BC02]; người nối từng bước không theo kịp nhịp đó."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 3.0,
+      "ma": [
+        "BC04",
+        "BC06"
+      ],
+      "muc": "dat",
+      "cau": "**Mọi hệ thống mở được đọc đều đặt trần vòng.** autoresearch còn cấm agent sửa tệp chứa phép đánh giá [BC04]; AI Scientist v2 cho mỗi ý tối đa 3 tầng sửa lỗi [BC06]."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 0.52843,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "**Lượt thử nhỏ cho thấy vòng lặp chạy hết mà không cần người.** Sai số giảm từ 0,52843 xuống 0,00146 sau 14 dòng nhật ký, phần lớn nhờ ý đa thức do người nạp [BC12]."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 0.00146,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "**Lượt thử nhỏ cho thấy vòng lặp chạy hết mà không cần người.** Sai số giảm từ 0,52843 xuống 0,00146 sau 14 dòng nhật ký, phần lớn nhờ ý đa thức do người nạp [BC12]."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 14.0,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "**Lượt thử nhỏ cho thấy vòng lặp chạy hết mà không cần người.** Sai số giảm từ 0,52843 xuống 0,00146 sau 14 dòng nhật ký, phần lớn nhờ ý đa thức do người nạp [BC12]."
+    },
+    {
+      "tep": "00-tom-tat.md",
+      "so": 4.0,
+      "ma": [
+        "BC15"
+      ],
+      "muc": "dat",
+      "cau": "**Chạy thật làm lộ lỗi quy trình.** Lượt thử tìm ra 4 lỗi, có lỗi xoá mất bản tốt nhất [BC15]."
+    },
+    {
+      "tep": "01-nut-that.md",
+      "so": 5.0,
+      "ma": [
+        "BC01"
+      ],
+      "muc": "dat",
+      "cau": "Mỗi thí nghiệm được chạy trong ngân sách cố định 5 phút [BC01]."
+    },
+    {
+      "tep": "01-nut-that.md",
+      "so": 12.0,
+      "ma": [
+        "BC02"
+      ],
+      "muc": "dat",
+      "cau": "Với nhịp ấy, tác giả ước tính agent chạy khoảng 12 thí nghiệm mỗi giờ, tức khoảng 100 thí nghiệm trong một đêm ngủ [BC02]."
+    },
+    {
+      "tep": "01-nut-that.md",
+      "so": 100.0,
+      "ma": [
+        "BC02"
+      ],
+      "muc": "dat",
+      "cau": "Với nhịp ấy, tác giả ước tính agent chạy khoảng 12 thí nghiệm mỗi giờ, tức khoảng 100 thí nghiệm trong một đêm ngủ [BC02]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 5.0,
+      "ma": [
+        "BC01"
+      ],
+      "muc": "dat",
+      "cau": "Mọi lần chạy cũng dùng chung ngân sách 5 phút để so sánh được với nhau [BC01]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 3.0,
+      "ma": [
+        "BC06"
+      ],
+      "muc": "dat",
+      "cau": "AI Scientist v2 cho mỗi ý tối đa 3 tầng sửa lỗi và bắt đầu từ 3 bản nháp [BC06]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 3.0,
+      "ma": [
+        "BC06"
+      ],
+      "muc": "dat",
+      "cau": "AI Scientist v2 cho mỗi ý tối đa 3 tầng sửa lỗi và bắt đầu từ 3 bản nháp [BC06]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 5.0,
+      "ma": [
+        "BC11"
+      ],
+      "muc": "dat",
+      "cau": "Open Deep Research mặc định 5 nhóm đọc chạy song song và tối đa 6 lượt [BC11]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 6.0,
+      "ma": [
+        "BC11"
+      ],
+      "muc": "dat",
+      "cau": "Open Deep Research mặc định 5 nhóm đọc chạy song song và tối đa 6 lượt [BC11]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 4.0,
+      "ma": [
+        "BC07"
+      ],
+      "muc": "dat",
+      "cau": "AI Scientist v2 chia việc thành 4 giai đoạn: chạy được, tinh chỉnh baseline, sáng tạo, ablation [BC07]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 5.0,
+      "ma": [
+        "BC08"
+      ],
+      "muc": "dat",
+      "cau": "OpenEvolve chia quần thể thành 5 đảo và cho di cư mỗi 50 thế hệ [BC08]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 50.0,
+      "ma": [
+        "BC08"
+      ],
+      "muc": "dat",
+      "cau": "OpenEvolve chia quần thể thành 5 đảo và cho di cư mỗi 50 thế hệ [BC08]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 70.0,
+      "ma": [
+        "BC09"
+      ],
+      "muc": "dat",
+      "cau": "OpenEvolve còn cố định tỷ lệ chọn: 70% khai thác, 20% khám phá, 10% tinh hoa [BC09]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 20.0,
+      "ma": [
+        "BC09"
+      ],
+      "muc": "dat",
+      "cau": "OpenEvolve còn cố định tỷ lệ chọn: 70% khai thác, 20% khám phá, 10% tinh hoa [BC09]."
+    },
+    {
+      "tep": "02-khuon-chung.md",
+      "so": 10.0,
+      "ma": [
+        "BC09"
+      ],
+      "muc": "dat",
+      "cau": "OpenEvolve còn cố định tỷ lệ chọn: 70% khai thác, 20% khám phá, 10% tinh hoa [BC09]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 0.52843,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Agent bắt đầu từ baseline 0,52843 và kết thúc ở 0,00146 sau 14 dòng nhật ký [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 0.00146,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Agent bắt đầu từ baseline 0,52843 và kết thúc ở 0,00146 sau 14 dòng nhật ký [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 14.0,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Agent bắt đầu từ baseline 0,52843 và kết thúc ở 0,00146 sau 14 dòng nhật ký [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 6.0,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Trong đó 6 dòng được giữ, 7 dòng bị bỏ và 1 dòng lỗi [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 7.0,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Trong đó 6 dòng được giữ, 7 dòng bị bỏ và 1 dòng lỗi [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 1.0,
+      "ma": [
+        "BC12"
+      ],
+      "muc": "dat",
+      "cau": "Trong đó 6 dòng được giữ, 7 dòng bị bỏ và 1 dòng lỗi [BC12]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 7.0,
+      "ma": [
+        "BC13"
+      ],
+      "muc": "dat",
+      "cau": "Phép đo đã loại các ý không tốt hơn, kể cả khi trông hợp lý: đa thức bậc 7 cho 0,00181, kém bậc 5 ở mức 0,00153, nên bị bỏ [BC13]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 0.00181,
+      "ma": [
+        "BC13"
+      ],
+      "muc": "dat",
+      "cau": "Phép đo đã loại các ý không tốt hơn, kể cả khi trông hợp lý: đa thức bậc 7 cho 0,00181, kém bậc 5 ở mức 0,00153, nên bị bỏ [BC13]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 5.0,
+      "ma": [
+        "BC13"
+      ],
+      "muc": "dat",
+      "cau": "Phép đo đã loại các ý không tốt hơn, kể cả khi trông hợp lý: đa thức bậc 7 cho 0,00181, kém bậc 5 ở mức 0,00153, nên bị bỏ [BC13]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 0.00153,
+      "ma": [
+        "BC13"
+      ],
+      "muc": "dat",
+      "cau": "Phép đo đã loại các ý không tốt hơn, kể cả khi trông hợp lý: đa thức bậc 7 cho 0,00181, kém bậc 5 ở mức 0,00153, nên bị bỏ [BC13]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 6.0,
+      "ma": [
+        "BC20"
+      ],
+      "muc": "dat",
+      "cau": "Trong 6 dòng được giữ, chỉ 3 dòng là cải thiện thật; 2 dòng là dọn dẹp cùng code [BC20]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 3.0,
+      "ma": [
+        "BC20"
+      ],
+      "muc": "dat",
+      "cau": "Trong 6 dòng được giữ, chỉ 3 dòng là cải thiện thật; 2 dòng là dọn dẹp cùng code [BC20]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 2.0,
+      "ma": [
+        "BC20"
+      ],
+      "muc": "dat",
+      "cau": "Trong 6 dòng được giữ, chỉ 3 dòng là cải thiện thật; 2 dòng là dọn dẹp cùng code [BC20]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 5.0,
+      "ma": [
+        "BC14"
+      ],
+      "muc": "dat",
+      "cau": "Đa thức bậc 5 kẹt 5 vòng liền không cải thiện [BC14]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 5.0,
+      "ma": [
+        "BC14"
+      ],
+      "muc": "dat",
+      "cau": "Đa thức bậc 5 kẹt 5 vòng liền không cải thiện [BC14]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 3.0,
+      "ma": [
+        "BC14"
+      ],
+      "muc": "dat",
+      "cau": "Theo luật người đặt sẵn, agent dừng thử, quay lại đọc tài liệu một lượt và thêm 3 ý vào kho [BC14]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 5.0,
+      "ma": [
+        "BC14"
+      ],
+      "muc": "dat",
+      "cau": "Mức hơn bậc 5 có thể chỉ là nhiễu, vì thí nghiệm chưa chạy nhiều seed [BC14]."
+    },
+    {
+      "tep": "03-thu-that.md",
+      "so": 4.0,
+      "ma": [
+        "BC15"
+      ],
+      "muc": "dat",
+      "cau": "Lượt thử tìm ra 4 lỗi trong chính quy trình và đã sửa [BC15]."
+    },
+    {
+      "tep": "04-vai-nguoi.md",
+      "so": 0.9,
+      "ma": [
+        "BC19"
+      ],
+      "muc": "dat",
+      "cau": "Chi phí: một lượt vòng tự tối ưu trước đó của LINHX tốn khoảng 0,9 đến 1,1 triệu token, nên cần trần token cứng [BC19]."
+    },
+    {
+      "tep": "04-vai-nguoi.md",
+      "so": 1.1,
+      "ma": [
+        "BC19"
+      ],
+      "muc": "dat",
+      "cau": "Chi phí: một lượt vòng tự tối ưu trước đó của LINHX tốn khoảng 0,9 đến 1,1 triệu token, nên cần trần token cứng [BC19]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 28.0,
+      "ma": [
+        "BC18"
+      ],
+      "muc": "dat",
+      "cau": "Mã nguồn: năm dự án trên GitHub (autoresearch, AI Scientist v2, OpenEvolve, Agent Laboratory, Open Deep Research), đọc lần đầu ngày 28/10/2026 và đọc lại ngày 9/11/2026 để lấy trích nguyên văn [BC18]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 10.0,
+      "ma": [
+        "BC18"
+      ],
+      "muc": "dat",
+      "cau": "Mã nguồn: năm dự án trên GitHub (autoresearch, AI Scientist v2, OpenEvolve, Agent Laboratory, Open Deep Research), đọc lần đầu ngày 28/10/2026 và đọc lại ngày 9/11/2026 để lấy trích nguyên văn [BC18]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 9.0,
+      "ma": [
+        "BC18"
+      ],
+      "muc": "dat",
+      "cau": "Mã nguồn: năm dự án trên GitHub (autoresearch, AI Scientist v2, OpenEvolve, Agent Laboratory, Open Deep Research), đọc lần đầu ngày 28/10/2026 và đọc lại ngày 9/11/2026 để lấy trích nguyên văn [BC18]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 11.0,
+      "ma": [
+        "BC18"
+      ],
+      "muc": "dat",
+      "cau": "Mã nguồn: năm dự án trên GitHub (autoresearch, AI Scientist v2, OpenEvolve, Agent Laboratory, Open Deep Research), đọc lần đầu ngày 28/10/2026 và đọc lại ngày 9/11/2026 để lấy trích nguyên văn [BC18]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 28.0,
+      "ma": [
+        "BC17"
+      ],
+      "muc": "dat",
+      "cau": "Thí nghiệm: một agent chạy các bước ý tưởng, triển khai và phân tích trên bài toán khớp hàm một chiều có nhiễu, ngày 28/10/2026 [BC17]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 10.0,
+      "ma": [
+        "BC17"
+      ],
+      "muc": "dat",
+      "cau": "Thí nghiệm: một agent chạy các bước ý tưởng, triển khai và phân tích trên bài toán khớp hàm một chiều có nhiễu, ngày 28/10/2026 [BC17]."
+    },
+    {
+      "tep": "05-phuong-phap.md",
+      "so": 60.0,
+      "ma": [
+        "BC17"
+      ],
+      "muc": "dat",
+      "cau": "Mỗi lần chạy có ngân sách 60 giây, chạy một seed [BC17]."
+    }
+  ]
+}

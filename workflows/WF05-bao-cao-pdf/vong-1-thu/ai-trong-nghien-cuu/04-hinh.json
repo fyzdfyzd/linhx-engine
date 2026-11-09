@@ -1,0 +1,171 @@
+{
+ "hinh": [
+  {
+   "id": "H01",
+   "loai": "thanh-ngang",
+   "tieu_de": "Ý agent đề xuất sau lượt đọc thêm ngang với đa thức bậc 5, chênh lệch nằm trong nhiễu.",
+   "doi_tuong": "Sai số bình phương trung bình trên tập giữ riêng, thấp là tốt; baseline 0,52843 không vẽ",
+   "don_vi": "MSE",
+   "nhan": [
+    "Cơ sở Fourier, chọn số tần bằng CV (agent)",
+    "Đa thức bậc 5",
+    "Gaussian process RBF (agent)",
+    "Đa thức bậc 6",
+    "Đa thức bậc 7",
+    "Đa thức bậc 3",
+    "Đa thức bậc 4"
+   ],
+   "chuoi": [
+    {
+     "ten": "MSE",
+     "gia_tri": [
+      0.00146,
+      0.00153,
+      0.00157,
+      0.0018,
+      0.00181,
+      0.00419,
+      0.00431
+     ],
+     "bc": [
+      "BC13"
+     ]
+    }
+   ],
+   "nhan_manh": "Cơ sở Fourier, chọn số tần bằng CV (agent)",
+   "nguon": "LINHX LAB, thí nghiệm research loop trên bài toán khớp hàm có nhiễu, 28/10/2026, một seed.",
+   "ghi_chu": "Chênh 0,00146 so với 0,00153 có thể chỉ là nhiễu: chưa chạy nhiều seed.",
+   "rong": "full"
+  },
+  {
+   "id": "H02",
+   "loai": "cot",
+   "tieu_de": "Phép đo đã loại 7 trong 14 dòng nhật ký, chỉ 3 dòng là cải thiện thật.",
+   "doi_tuong": "Số dòng nhật ký theo trạng thái, tổng 14",
+   "don_vi": "dòng",
+   "nhan": [
+    "Giữ",
+    "Bỏ",
+    "Lỗi"
+   ],
+   "chuoi": [
+    {
+     "ten": "Số dòng",
+     "gia_tri": [
+      6,
+      7,
+      1
+     ],
+     "bc": [
+      "BC12",
+      "BC20"
+     ]
+    }
+   ],
+   "nhan_manh": "Bỏ",
+   "nguon": "LINHX LAB, thí nghiệm research loop, 28/10/2026.",
+   "ghi_chu": "Hai trong sáu dòng giữ là dọn dẹp, cùng code bậc 5.",
+   "rong": "col"
+  },
+  {
+   "id": "H03",
+   "loai": "bang",
+   "tieu_de": "Năm hệ thống mở đều đặt trần vòng, autoresearch còn khoá cả phép đo.",
+   "doi_tuong": "Cơ chế đọc trực tiếp trong mã nguồn, 9/11/2026",
+   "bang": {
+    "cot": [
+     "Hệ thống",
+     "Vòng lặp trong mã",
+     "Trần, tham số",
+     "Nên học theo"
+    ],
+    "dong": [
+     [
+      "autoresearch",
+      "sửa, commit, chạy, đo, rồi giữ hoặc reset",
+      "5 phút mỗi lần chạy",
+      "khoá phép đo, nhật ký TSV"
+     ],
+     [
+      "AI Scientist v2",
+      "cây tìm kiếm qua 4 giai đoạn",
+      "3 bản nháp, debug sâu tối đa 3",
+      "giai đoạn có mục tiêu riêng"
+     ],
+     [
+      "OpenEvolve",
+      "quần thể chia đảo, di cư định kỳ",
+      "5 đảo, di cư mỗi 50 thế hệ",
+      "tỷ lệ khám phá cố định"
+     ],
+     [
+      "Agent Laboratory",
+      "7 pha từ đọc tài liệu đến viết báo cáo",
+      "cờ cổng người cho từng pha",
+      "bật, tắt người theo pha"
+     ],
+     [
+      "Open Deep Research",
+      "trưởng nhóm giao việc cho nhóm đọc song song",
+      "5 nhóm song song, 6 lượt",
+      "nén kết quả trước khi trả"
+     ]
+    ]
+   },
+   "bc": [
+    "BC01",
+    "BC06",
+    "BC07",
+    "BC08",
+    "BC10",
+    "BC11"
+   ],
+   "nguon": "Mã nguồn GitHub của từng dự án, đọc ngày 9/11/2026."
+  },
+  {
+   "id": "H04",
+   "loai": "bang",
+   "tieu_de": "Người lên trên vòng khi giao các bước ý tưởng, chạy thử, phân tích cho agent.",
+   "doi_tuong": "Vai người ở từng bước của vòng nghiên cứu",
+   "bang": {
+    "cot": [
+     "Bước",
+     "Hybrid hiện nay",
+     "Vòng lặp có agent"
+    ],
+    "dong": [
+     [
+      "1. Hiểu vấn đề",
+      "người và AI thảo luận",
+      "người viết đề, phép đo khoá, ngân sách"
+     ],
+     [
+      "2. Đọc tài liệu",
+      "người đọc, AI tóm",
+      "người đọc lần đầu; agent tự quay lại đọc khi kẹt"
+     ],
+     [
+      "3. Ý tưởng",
+      "hai bên đề xuất",
+      "agent rút từ kho ý tưởng và sinh ý mới"
+     ],
+     [
+      "4. Triển khai",
+      "AI viết code, người giao việc",
+      "agent tự chạy, commit, debug có trần"
+     ],
+     [
+      "5. Phân tích",
+      "người đọc kết quả",
+      "agent giữ hoặc bỏ theo phép đo, viết bản tóm"
+     ]
+    ]
+   },
+   "bc": [
+    "BC03",
+    "BC10"
+   ],
+   "nguon": "LINHX LAB tổng hợp từ năm hệ thống mở và thí nghiệm 28/10/2026."
+  }
+ ]
+}

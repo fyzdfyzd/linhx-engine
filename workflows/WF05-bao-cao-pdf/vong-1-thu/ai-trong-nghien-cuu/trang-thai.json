@@ -1,0 +1,53 @@
+{
+  "ten": "Từ trong vòng lên trên vòng",
+  "ten_ngan": "AI trong nghiên cứu",
+  "phong_cach": "p1-chien-luoc",
+  "brand": "linhx",
+  "style": "/mnt/attach/project-files/WF-CHUAN/WF05-bao-cao-pdf/vong-1-thu/ai-trong-nghien-cuu/style.json",
+  "tao_luc": "2026-11-09T05:24:34",
+  "buoc": {
+    "4": {
+      "dat": true,
+      "luc": "2026-11-09T05:30:34",
+      "loi": 0,
+      "canh_bao": 0,
+      "duyet": null
+    },
+    "5": {
+      "dat": true,
+      "luc": "2026-11-09T05:26:58",
+      "loi": 0,
+      "canh_bao": 0,
+      "duyet": null
+    },
+    "6": {
+      "dat": true,
+      "luc": "2026-11-09T05:33:07",
+      "loi": 0,
+      "canh_bao": 0,
+      "duyet": null
+    },
+    "7": {
+      "dat": true,
+      "luc": "2026-11-09T05:33:07",
+      "loi": 0,
+      "canh_bao": 0,
+      "duyet": null
+    },
+    "8": {
+      "dat": false,
+      "luc": "2026-11-09T05:26:58",
+      "loi": 1,
+      "canh_bao": 0,
+      "duyet": null
+    },
+    "11": {
+      "dat": false,
+      "luc": "2026-11-09T05:33:20",
+      "loi": 9,
+      "canh_bao": 0,
+      "duyet": null
+    }
+  },
+  "phu_de": "AI agent trong nghiên cứu: giao gì cho máy, giữ người ở đâu"
+}

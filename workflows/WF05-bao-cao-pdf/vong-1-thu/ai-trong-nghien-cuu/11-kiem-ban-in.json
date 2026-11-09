@@ -1,0 +1,97 @@
+{
+  "luc": "2026-11-09T05:33:20",
+  "loi": [
+    "[tap-chi] trang 2: điểm 3.4 (min 3), cần dựng lại: Mù A: Mục lục chiếm 35% trang, phần dưới trống; mục không có số chương 01–04 | Mù B: Mục lục chỉ một cấp: không số chương 01–04, không nhãn phần (mở đầu/chương/phụ lục), các mục ngang hàng nhau; 60% dưới trang trống không chủ đích.",
+    "[tap-chi] trang 4: điểm 3.2 (min 3), cần dựng lại: Mù A: Số chương, tiêu đề, số lớn, trích dẫn tranh nhau; tiêu đề mục rớt chữ 'chờ' | Mù B: Tiêu đề mục 1.1 ngắt để 'chờ' mồ côi, dính sát thân bài không có khoảng cách; nhãn 'CHƯƠNG 1 · NÚT THẮT' lặp y running head; bốn điểm nhấn (tiêu đề, hai số lớn, trích dẫn) tranh nhau; trích dẫn tiếng Anh không có bản dịch.",
+    "[tap-chi] trang 5: điểm 3.0 (min 2), cần dựng lại: Mù A: Mở chương y hệt trang 4; mục 2.1 vào thẳng bảng không có đoạn dẫn | Mù B: Mở chương cùng khuôn y hệt trang 4 (số 0N, tiêu đề 2 dòng, sapô, Mục); bảng có ô ngắt một chữ ('đoạn', 'định kỳ', 'đa 3'); Mục 2.2 không có thân bài, chỉ có sidebar; trang dày đặc.",
+    "[tap-chi] trang 6: điểm 2.8 (min 1), cần dựng lại: Mù A: Mở chương thứ ba liên tiếp cùng khuôn; chú thích 'code33' lặp, '0,0018' lệch số lẻ | Mù B: Trang mở chương thứ ba liên tiếp cùng một khuôn (4,5,6); chỉ số chú thích lỗi 'code³³'; nhãn biểu đồ '0,0018' lệch định dạng với các giá trị 5 chữ số; tiêu đề Mục 3.1 và 3.2 dính sát thân bài.",
+    "[tap-chi] trang 7: điểm 3.2 (min 2), cần dựng lại: Mù A: Gần nửa dưới trang trống vô cớ; hình nhấn 'Bỏ' nhưng tiêu đề nói 3 cải thiện | Mù B: Gần nửa dưới trang trống vô cớ; biểu đồ tiêu đề nói '3 dòng là cải thiện thật' nhưng cột Giữ không tách 3 thật/3 dọn dẹp; trang không có tiêu đề mục, đoạn đầu là phần đuôi trang trước.",
+    "[tap-chi] trang 8: điểm 3.0 (min 2), cần dựng lại: Mù A: Bảng Hình 4 hẹp hơn lưới, lệch lề phải; mục 4.1 vào thẳng hình | Mù B: Mở chương lần thứ tư cùng khuôn với trang 4–6; bảng Hình 4 và sidebar tranh điểm nhìn; ~1/5 dưới trống; thân bài chỉ một đoạn ngắn.",
+    "[tap-chi] trang 9: điểm 3.4 (min 2), cần dựng lại: Mù A: Nửa dưới trang trống; danh sách đánh số lặp khuôn trang 3 | Mù B: Nửa dưới trang trống; danh sách đánh số lớn lặp kiểu trang 3; ô tiêu đề việc 1 ngắt 2 dòng lệch hàng với cột mô tả.",
+    "[tap-chi] trang 10: điểm 3.0 (min 2), cần dựng lại: Mù A: Khổ chữ hẹp hơn lưới; nhãn 'Mã nguồn', 'Thí nghiệm' không đậm, thiếu cấp phụ | Mù B: Nhãn mở đoạn 'Mã nguồn:', 'Thí nghiệm:', 'Giới hạn:' không in đậm nên chỉ còn 2 cấp chữ; nền xanh nhạt chỉ riêng trang này, lệch hệ với trang 11; chỉ số chú thích rất nhỏ khó thấy.",
+    "[tap-chi] trang 11: điểm 3.0 (min 2), cần dựng lại: Mù A: URL vỡ giữa từ 'SamuelSchmidgal/l', 'https:// github'; chữ quá nhỏ, chỉ nửa trang | Mù B: URL vỡ giữa chữ ('SamuelSchmidgal / l/AgentLaboratory', 'https:// / github'); danh sách dồn vào nửa trái, cột hẹp gây nhiều ngắt dòng trong khi nửa phải trống."
+  ],
+  "canh_bao": [],
+  "do": [
+    "12 trang",
+    "4 hình đánh số",
+    "cỡ chữ phổ biến 9.8 pt",
+    "ký tự/trang trung vị 1165, lớn nhất 1871",
+    "phủ chữ trung vị 0.27 (mục tiêu 0.18–0.32)",
+    "font: ['Be Vietnam Pro', 'Source Serif 4']"
+  ],
+  "trang": [
+    {
+      "trang": 1,
+      "ky_tu": 134,
+      "phu_chu": 0.094,
+      "co_hinh": false
+    },
+    {
+      "trang": 2,
+      "ky_tu": 348,
+      "phu_chu": 0.14,
+      "co_hinh": false
+    },
+    {
+      "trang": 3,
+      "ky_tu": 1165,
+      "phu_chu": 0.301,
+      "co_hinh": false
+    },
+    {
+      "trang": 4,
+      "ky_tu": 1686,
+      "phu_chu": 0.461,
+      "co_hinh": false
+    },
+    {
+      "trang": 5,
+      "ky_tu": 1871,
+      "phu_chu": 0.42,
+      "co_hinh": true
+    },
+    {
+      "trang": 6,
+      "ky_tu": 1661,
+      "phu_chu": 0.39,
+      "co_hinh": true
+    },
+    {
+      "trang": 7,
+      "ky_tu": 1042,
+      "phu_chu": 0.151,
+      "co_hinh": true
+    },
+    {
+      "trang": 8,
+      "ky_tu": 1520,
+      "phu_chu": 0.346,
+      "co_hinh": true
+    },
+    {
+      "trang": 9,
+      "ky_tu": 553,
+      "phu_chu": 0.241,
+      "co_hinh": false
+    },
+    {
+      "trang": 10,
+      "ky_tu": 974,
+      "phu_chu": 0.176,
+      "co_hinh": false
+    },
+    {
+      "trang": 11,
+      "ky_tu": 942,
+      "phu_chu": 0.105,
+      "co_hinh": false
+    },
+    {
+      "trang": 12,
+      "ky_tu": 41,
+      "phu_chu": 0.004,
+      "co_hinh": false
+    }
+  ]
+}
