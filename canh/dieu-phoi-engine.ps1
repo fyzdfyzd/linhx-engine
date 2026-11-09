@@ -51,6 +51,20 @@ if ($Tho -eq 0) {
     Get-ChildItem "$Canh\t*\phieu.txt" -ErrorAction SilentlyContinue | ForEach-Object { $id = ((Get-Content $_.FullName) -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue }
     Ghi "dung_han: đã dừng agy"
   } else {
+    # Dọn mồ côi (Linh 9/11): lượt thợ treo quá 150 phút (gồm agy ≤40 + chấm), tiến trình chấm/kiểm của engine mất cha quá 60 phút,
+    # claude chấm (.canh-tho) quá 60 phút. Chỉ đụng tiến trình có dòng lệnh trỏ vào engine; không đụng agy, phiên Claude khác.
+    try {
+      $bay = Get-CimInstance Win32_Process -ErrorAction Stop
+      $song = @{}; foreach ($p in $bay) { $song[[int]$p.ProcessId] = $true }
+      foreach ($p in $bay) {
+        if ([int]$p.ProcessId -eq $PID -or -not $p.CommandLine -or -not $p.CreationDate) { continue }
+        $tuoi = ((Get-Date) - $p.CreationDate).TotalMinutes; $cl = $p.CommandLine; $ly = $null
+        if ($cl -match 'dieu-phoi-engine\.ps1' -and $cl -match '-Tho\s+[1-9]' -and $tuoi -gt 150) { $ly = "lượt thợ treo" }
+        elseif ($cl -match 'Doc file \.canh-tho' -and $tuoi -gt 60) { $ly = "claude chấm treo" }
+        elseif ($cl -match 'LINHX[\\-]ENGINE|ENGINE-t\d' -and $cl -match 'cong_kiem|pytest|next build|npm|node' -and -not $song[[int]$p.ParentProcessId] -and $tuoi -gt 60) { $ly = "kiểm mồ côi" }
+        if ($ly) { & taskkill.exe /PID $p.ProcessId /T /F 2>&1 | Out-Null; Ghi "dọn mồ côi ($ly): PID $($p.ProcessId) $([int]$tuoi) phút: $($cl.Substring(0, [math]::Min(120, $cl.Length)))" }
+      }
+    } catch { Ghi "dọn mồ côi lỗi: $_" }
     # xoa_tac: ["ID@nhan"] xoá đếm CHUA_DAT một lần (Khổng Minh giao lại sau lỗi máy)
     foreach ($xt in @($dk.xoa_tac)) { if (-not $xt) { continue }; $id = ($xt -split "@")[0]; $dau = "$Canh\tac\da-xoa-$($xt -replace '[^A-Za-z0-9]', '_').txt"
       if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
@@ -213,7 +227,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $maCk = $LASTEXITCODE
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
-  if ($ck -match 'Timeout \d+ms exceeded|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
+  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
