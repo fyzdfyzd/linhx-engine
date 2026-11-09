@@ -10,6 +10,7 @@ import copy
 from datetime import datetime
 
 MUC_DICH = ("lien_he", "chuyen_cheo", "marketing")
+TRANG_THAI_DONG_Y = ("cho_xac_minh", "da_xac_minh")
 DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
 
 
@@ -79,6 +80,7 @@ def ghi(
     dong_y: bool,
     luc: str | datetime,
     nguon: str,
+    trang_thai: str | None = None,
 ) -> list[dict]:
     """Trả sổ mới = sổ cũ + 1 dòng nhật ký đồng ý; không sửa sổ cũ; muc_dich lạ -> ValueError."""
     if not isinstance(muc_dich, str) or muc_dich not in MUC_DICH:
@@ -93,21 +95,28 @@ def ghi(
     if not luc_str:
         raise ValueError("Thiếu thời điểm ghi đồng ý")
 
+    tt_str = str(trang_thai or "").strip()
+    if tt_str and tt_str not in TRANG_THAI_DONG_Y:
+        raise ValueError(f"Trạng thái đồng ý không hợp lệ: {trang_thai!r}")
+
     so_moi = [copy.deepcopy(d) if isinstance(d, dict) else d for d in (so or [])]
-    so_moi.append(
-        {
-            "nguoi": ma,
-            "muc_dich": muc_dich,
-            "dong_y": _chuan_dong_y(dong_y),
-            "luc": luc_str,
-            "nguon": str(nguon or "").strip(),
-        }
-    )
+    dong_moi: dict = {
+        "nguoi": ma,
+        "muc_dich": muc_dich,
+        "dong_y": _chuan_dong_y(dong_y),
+        "luc": luc_str,
+        "nguon": str(nguon or "").strip(),
+    }
+    if tt_str:
+        dong_moi["trang_thai"] = tt_str
+    so_moi.append(dong_moi)
     return so_moi
 
 
 def hieu_luc(so: list[dict], nguoi: str | dict, muc_dich: str) -> bool:
-    """Trả trạng thái đồng ý theo dòng có luc mới nhất của người + mục đích; không có -> False."""
+    """Trả trạng thái đồng ý theo dòng có luc mới nhất của người + mục đích; không có -> False.
+    Nếu dòng mới nhất đang ở trạng thái 'cho_xac_minh' (chưa xác nhận OTP) thì chưa có hiệu lực (False).
+    """
     if not isinstance(muc_dich, str) or muc_dich not in MUC_DICH:
         return False
     ma = _ma_nguoi(nguoi)
@@ -128,6 +137,8 @@ def hieu_luc(so: list[dict], nguoi: str | dict, muc_dich: str) -> bool:
         return False
 
     _, _, dong_moi_nhat = max(ung_vien, key=lambda item: (item[0], item[1]))
+    if str(dong_moi_nhat.get("trang_thai") or "").strip() == "cho_xac_minh":
+        return False
     return _chuan_dong_y(dong_moi_nhat.get("dong_y"))
 
 

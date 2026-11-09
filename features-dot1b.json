@@ -133,8 +133,8 @@
         "Mã xác nhận lưu DB có hạn dùng, dùng một lần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c2b.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/C2B/kiem.json"
     }
   ]
 }

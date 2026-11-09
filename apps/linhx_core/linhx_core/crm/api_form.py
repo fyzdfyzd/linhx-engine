@@ -13,7 +13,7 @@ import frappe
 from frappe.rate_limiter import rate_limit
 
 from linhx_core import co_module
-from linhx_core.crm import dong_y, form, gop_trung, t1
+from linhx_core.crm import dong_y, form, gop_trung, t1, xac_minh_marketing
 
 logger = logging.getLogger(__name__)
 
@@ -519,7 +519,7 @@ def _lay_so_dong_y_hien_co(ds_nguoi_cu: list[dict] | str) -> list[dict]:
             ds = frappe.get_all(
                 "LX Dong Y",
                 filters={"nguoi": ma},
-                fields=["name", "nguoi", "muc_dich", "dong_y", "luc", "nguon"],
+                fields=["name", "nguoi", "muc_dich", "dong_y", "trang_thai", "luc", "nguon"],
                 order_by="luc asc, creation asc",
             )
             for x in ds or []:
@@ -681,18 +681,32 @@ def nhan_form(
             muc_dich = dy["muc_dich"]
             if nguoi_da_co is not None and form.da_rut_dong_y(so_dong_y_cu, ma_nguoi, muc_dich):
                 continue
-            doc_dy = frappe.get_doc(
-                {
-                    "doctype": "LX Dong Y",
-                    "nguoi": ma_nguoi,
-                    "muc_dich": muc_dich,
-                    "dong_y": 1 if dy.get("dong_y") else 0,
-                    "luc": dy.get("luc") or luc_ghi,
-                    "nguon": nguon_ghi,
-                }
-            )
+            trang_thai_dy = str(dy.get("trang_thai") or "").strip()
+            dong_y_db = 0 if trang_thai_dy == "cho_xac_minh" else (1 if dy.get("dong_y") else 0)
+            du_lieu_dy = {
+                "doctype": "LX Dong Y",
+                "nguoi": ma_nguoi,
+                "muc_dich": muc_dich,
+                "dong_y": dong_y_db,
+                "luc": dy.get("luc") or luc_ghi,
+                "nguon": nguon_ghi,
+            }
+            if trang_thai_dy:
+                du_lieu_dy["trang_thai"] = trang_thai_dy
+            doc_dy = frappe.get_doc(du_lieu_dy)
             doc_dy.flags.ignore_permissions = True
             doc_dy.insert(ignore_permissions=True)
+
+            if muc_dich == "marketing" and trang_thai_dy == "cho_xac_minh":
+                kenh_xm = em_chuan or dt_chuan
+                if kenh_xm:
+                    _luu_yeu_cau_otp_marketing_db(
+                        kenh_xm,
+                        ma_nguoi,
+                        ket_qua["so_dong_y"],
+                        luc_ghi,
+                        nguon_ghi,
+                    )
 
     return {
         "ok": True,
@@ -779,18 +793,32 @@ def nhan_ket_qua_t1(
             muc_dich = dy["muc_dich"]
             if nguoi_da_co is not None and t1.da_rut_dong_y(so_dong_y_cu, ma_nguoi, muc_dich):
                 continue
-            doc_dy = frappe.get_doc(
-                {
-                    "doctype": "LX Dong Y",
-                    "nguoi": ma_nguoi,
-                    "muc_dich": muc_dich,
-                    "dong_y": 1 if dy.get("dong_y") else 0,
-                    "luc": dy.get("luc") or luc_ghi,
-                    "nguon": t1.NGUON_T1,
-                }
-            )
+            trang_thai_dy = str(dy.get("trang_thai") or "").strip()
+            dong_y_db = 0 if trang_thai_dy == "cho_xac_minh" else (1 if dy.get("dong_y") else 0)
+            du_lieu_dy = {
+                "doctype": "LX Dong Y",
+                "nguoi": ma_nguoi,
+                "muc_dich": muc_dich,
+                "dong_y": dong_y_db,
+                "luc": dy.get("luc") or luc_ghi,
+                "nguon": t1.NGUON_T1,
+            }
+            if trang_thai_dy:
+                du_lieu_dy["trang_thai"] = trang_thai_dy
+            doc_dy = frappe.get_doc(du_lieu_dy)
             doc_dy.flags.ignore_permissions = True
             doc_dy.insert(ignore_permissions=True)
+
+            if muc_dich == "marketing" and trang_thai_dy == "cho_xac_minh":
+                kenh_xm = em_chuan or dt_chuan or zl_chuan
+                if kenh_xm:
+                    _luu_yeu_cau_otp_marketing_db(
+                        kenh_xm,
+                        ma_nguoi,
+                        ket_qua["so_dong_y"],
+                        luc_ghi,
+                        t1.NGUON_T1,
+                    )
 
     t1_tong_gui = int(du_lieu_chuan["tong"])
     t1_muc_gui = str(du_lieu_chuan["muc"]).strip()
@@ -808,3 +836,282 @@ def nhan_ket_qua_t1(
         "ban_cai": ten_site,
         "ket_qua_day_du": ket_qua_day_du,
     }
+
+
+def _gui_mail_xac_minh_marketing(email_nhan: str, ma_otp: str, muc_dich: str) -> None:
+    """Gửi thông báo mã OTP xác nhận đồng ý marketing (yêu cầu người nhận thao tác POST)."""
+    if "@" not in str(email_nhan or ""):
+        return
+    sendmail_fn = getattr(frappe, "sendmail", None)
+    if not callable(sendmail_fn):
+        return
+    try:
+        sendmail_fn(
+            recipients=[email_nhan],
+            subject="Xác nhận đăng ký nhận bản tin & tài liệu (Double Opt-in)",
+            message=(
+                f"<p>Mã xác nhận đồng ý nhận thông tin ({muc_dich}) của bạn là: "
+                f"<strong>{ma_otp}</strong> (hiệu lực 10 phút, dùng 1 lần).</p>"
+                "<p>Vui lòng nhập mã và bấm nút Xác nhận (POST) trên trang để kích hoạt đồng ý.</p>"
+            ),
+            now=False,
+        )
+    except Exception as exc:
+        logger.warning("Không gửi được email OTP xác minh marketing cho %s: %s", email_nhan, exc)
+
+
+def _doc_otp_db_for_update(khoa_kenh: str) -> tuple[object | None, dict]:
+    """Đọc bản ghi LX Xac Minh Marketing từ DB (kèm khoá dòng FOR UPDATE khi có SQL) và chuyển sang kho_otp."""
+    db_obj = getattr(frappe, "db", None)
+    ten_doc = ""
+    if db_obj is not None and hasattr(db_obj, "sql"):
+        try:
+            rows = db_obj.sql(
+                "SELECT `name` FROM `tabLX Xac Minh Marketing` WHERE `khoa_kenh` = %s FOR UPDATE",
+                (khoa_kenh,),
+            )
+            if rows and rows[0] and rows[0][0]:
+                ten_doc = str(rows[0][0]).strip()
+        except Exception as exc:
+            logger.warning("Không khoá dòng FOR UPDATE cho LX Xac Minh Marketing (%s): %s", khoa_kenh, exc)
+
+    if not ten_doc:
+        try:
+            ds = frappe.get_all(
+                "LX Xac Minh Marketing",
+                filters={"khoa_kenh": khoa_kenh},
+                fields=[
+                    "name",
+                    "khoa_kenh",
+                    "email",
+                    "nguoi",
+                    "muc_dich",
+                    "ma_bam",
+                    "tao_luc",
+                    "het_han_luc",
+                    "so_lan_sai",
+                    "da_dung",
+                    "khoa_den",
+                ],
+                limit=1,
+            )
+            if ds and isinstance(ds[0], dict) and ds[0].get("name"):
+                ten_doc = str(ds[0]["name"]).strip()
+        except Exception as exc:
+            logger.warning("Không truy vấn được LX Xac Minh Marketing (%s): %s", khoa_kenh, exc)
+
+    if not ten_doc:
+        return None, {}
+
+    try:
+        doc = frappe.get_doc("LX Xac Minh Marketing", ten_doc)
+    except Exception as exc:
+        logger.warning("Không đọc được doc LX Xac Minh Marketing %s: %s", ten_doc, exc)
+        return None, {}
+
+    kho_otp = {
+        khoa_kenh: {
+            "email": str(getattr(doc, "email", "") or ""),
+            "nguoi": str(getattr(doc, "nguoi", "") or ""),
+            "muc_dich": str(getattr(doc, "muc_dich", "marketing") or "marketing"),
+            "ma_bam": str(getattr(doc, "ma_bam", "") or ""),
+            "tao_luc": str(getattr(doc, "tao_luc", "") or ""),
+            "het_han_luc": str(getattr(doc, "het_han_luc", "") or ""),
+            "so_lan_sai": int(getattr(doc, "so_lan_sai", 0) or 0),
+            "da_dung": bool(int(getattr(doc, "da_dung", 0) or 0)),
+            "khoa_den": getattr(doc, "khoa_den", None) or None,
+        }
+    }
+    return doc, kho_otp
+
+
+def _luu_yeu_cau_otp_marketing_db(
+    kenh_raw: str,
+    ma_nguoi: str,
+    so_dong_y: list[dict],
+    luc_ghi: str,
+    nguon_ghi: str,
+    *,
+    ma_otp: str | None = None,
+) -> dict | None:
+    """Phát mã OTP xác minh marketing và lưu bản băm vào DocType LX Xac Minh Marketing trong DB."""
+    kenh_chuan = xac_minh_marketing._chuan_kenh(kenh_raw)
+    if not kenh_chuan or not ma_nguoi:
+        return None
+    khoa_kenh = xac_minh_marketing._khoa_otp(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING)
+    doc_cu, kho_otp = _doc_otp_db_for_update(khoa_kenh)
+
+    try:
+        kq_yc = xac_minh_marketing.tao_yeu_cau(
+            kho_otp,
+            kenh_chuan,
+            ma_nguoi,
+            so_dong_y,
+            luc_ghi,
+            ma_otp=ma_otp,
+            gui_mail=_gui_mail_xac_minh_marketing,
+        )
+    except ValueError as exc:
+        logger.warning("Không phát được mã OTP xác minh marketing cho %s: %s", kenh_chuan, exc)
+        return None
+
+    ban_ghi = xac_minh_marketing._tim_ban_ghi_otp(kho_otp, kenh_chuan)
+    if not isinstance(ban_ghi, dict):
+        return kq_yc
+
+    du_lieu_otp = {
+        "khoa_kenh": khoa_kenh,
+        "email": kenh_chuan,
+        "nguoi": ma_nguoi,
+        "muc_dich": xac_minh_marketing.MUC_DICH_MARKETING,
+        "ma_bam": str(ban_ghi.get("ma_bam") or ""),
+        "tao_luc": str(ban_ghi.get("tao_luc") or luc_ghi),
+        "het_han_luc": str(ban_ghi.get("het_han_luc") or ""),
+        "so_lan_sai": int(ban_ghi.get("so_lan_sai", 0) or 0),
+        "da_dung": 1 if ban_ghi.get("da_dung") else 0,
+        "khoa_den": ban_ghi.get("khoa_den") or None,
+        "nguon": nguon_ghi,
+    }
+    if doc_cu is not None:
+        for k, v in du_lieu_otp.items():
+            setattr(doc_cu, k, v)
+        doc_cu.flags.ignore_permissions = True
+        doc_cu.save(ignore_permissions=True)
+    else:
+        doc_moi = frappe.get_doc({"doctype": "LX Xac Minh Marketing", **du_lieu_otp})
+        doc_moi.flags.ignore_permissions = True
+        doc_moi.insert(ignore_permissions=True)
+    return kq_yc
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+@rate_limit(limit=GIOI_HAN_MOI_PHUT, seconds=CUA_SO_GIAY)
+def xac_nhan_marketing(
+    email: str | None = None,
+    nguoi: str | None = None,
+    ma_nhap: str | None = None,
+    ma_otp: str | None = None,
+    dien_thoai: str | None = None,
+    phuong_thuc: str | None = None,
+    **kwargs,
+) -> dict:
+    """Endpoint xác nhận OTP đồng ý marketing (chỉ nhận POST, lưu trạng thái OTP và LX Dong Y trong DB)."""
+    _kiem_module_crm_bat()
+
+    local_obj = getattr(frappe, "local", None)
+    req = getattr(local_obj, "request", None)
+    pt = str(phuong_thuc or getattr(req, "method", None) or "POST").strip().upper()
+    if pt != "POST":
+        if hasattr(frappe, "local") and isinstance(getattr(frappe.local, "response", None), dict):
+            frappe.local.response["http_status_code"] = 405
+        return {
+            "ok": False,
+            "can_post": True,
+            "ly_do": "phuong_thuc_khong_hop_le",
+        }
+
+    tham_so = dict(kwargs)
+    for k, v in (
+        ("email", email),
+        ("nguoi", nguoi),
+        ("ma_nhap", ma_nhap),
+        ("ma_otp", ma_otp),
+        ("dien_thoai", dien_thoai),
+    ):
+        if v is not None:
+            tham_so[k] = v
+
+    try:
+        du_lieu = _trich_du_lieu_request(tham_so)
+    except ValueError as exc:
+        _tra_loi_http(str(exc), 400)
+
+    email_raw = str(du_lieu.get("email") or "").strip()
+    dt_raw = str(du_lieu.get("dien_thoai") or "").strip()
+    nguoi_param = str(du_lieu.get("nguoi") or "").strip()
+    ma_code = str(du_lieu.get("ma_nhap") or du_lieu.get("ma_otp") or du_lieu.get("otp") or "").strip()
+
+    if len(email_raw) > form.DO_DAI_TOI_DA_EMAIL or len(dt_raw) > form.DO_DAI_TOI_DA_DIEN_THOAI:
+        _tra_loi_http("Thông tin kênh xác nhận vượt quá độ dài cho phép", 400)
+    if len(nguoi_param) > 140 or len(ma_code) > 32:
+        _tra_loi_http("Dữ liệu xác nhận không hợp lệ", 400)
+
+    em_chuan = gop_trung.chuan_hoa_email(email_raw)
+    dt_chuan = gop_trung.chuan_hoa_dien_thoai(dt_raw)
+    kenh_chuan = em_chuan or dt_chuan or xac_minh_marketing._chuan_kenh(email_raw)
+    if not kenh_chuan or not ma_code:
+        _tra_loi_http("Phải cung cấp kênh xác nhận và mã OTP", 400)
+
+    _kiem_gioi_han_theo_khoa(em_chuan, "", dt_chuan, tien_to="linhx_xm_mkt_rl")
+    luc_ghi = dong_y.bay_gio()
+
+    with _khoa_theo_lien_he(em_chuan or kenh_chuan, "", dt_chuan):
+        khoa_kenh = xac_minh_marketing._khoa_otp(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING)
+        doc_otp, kho_otp = _doc_otp_db_for_update(khoa_kenh)
+        if doc_otp is None:
+            if hasattr(frappe, "local") and isinstance(getattr(frappe.local, "response", None), dict):
+                frappe.local.response["http_status_code"] = 400
+            return {
+                "ok": False,
+                "ly_do": "khong_co_ma",
+            }
+
+        ma_nguoi_db = str(getattr(doc_otp, "nguoi", "") or "").strip()
+        if nguoi_param and ma_nguoi_db and nguoi_param != ma_nguoi_db:
+            if hasattr(frappe, "local") and isinstance(getattr(frappe.local, "response", None), dict):
+                frappe.local.response["http_status_code"] = 400
+            return {
+                "ok": False,
+                "ly_do": "khong_khop_nguoi",
+            }
+        ma_nguoi = ma_nguoi_db or nguoi_param
+        so_dong_y_cu = _lay_so_dong_y_hien_co(ma_nguoi) if ma_nguoi else []
+
+        ma_http, kq = xac_minh_marketing.xac_nhan_marketing(
+            "POST",
+            kho_otp,
+            kenh_chuan,
+            ma_nguoi,
+            ma_code,
+            so_dong_y_cu,
+            luc_ghi,
+            nguon="xac-minh-otp",
+        )
+
+        ban_ghi_cap_nhat = xac_minh_marketing._tim_ban_ghi_otp(kho_otp, kenh_chuan)
+        if isinstance(ban_ghi_cap_nhat, dict):
+            doc_otp.so_lan_sai = int(ban_ghi_cap_nhat.get("so_lan_sai", 0) or 0)
+            doc_otp.da_dung = 1 if ban_ghi_cap_nhat.get("da_dung") else 0
+            doc_otp.khoa_den = ban_ghi_cap_nhat.get("khoa_den") or None
+            doc_otp.flags.ignore_permissions = True
+            doc_otp.save(ignore_permissions=True)
+
+        if hasattr(frappe, "local") and isinstance(getattr(frappe.local, "response", None), dict):
+            frappe.local.response["http_status_code"] = ma_http
+
+        if ma_http != 200 or not kq.get("ok"):
+            return {
+                "ok": False,
+                "ly_do": kq.get("ly_do") or "xac_minh_that_bai",
+            }
+
+        doc_dy = frappe.get_doc(
+            {
+                "doctype": "LX Dong Y",
+                "nguoi": ma_nguoi,
+                "muc_dich": "marketing",
+                "dong_y": 1,
+                "trang_thai": "da_xac_minh",
+                "luc": luc_ghi,
+                "nguon": "xac-minh-otp",
+            }
+        )
+        doc_dy.flags.ignore_permissions = True
+        doc_dy.insert(ignore_permissions=True)
+
+        return {
+            "ok": True,
+            "nguoi": ma_nguoi,
+            "muc_dich": "marketing",
+            "trang_thai": "da_xac_minh",
+        }

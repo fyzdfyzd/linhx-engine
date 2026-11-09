@@ -40,7 +40,11 @@ class LXDongY(Document):
 	def before_insert(self):
 		if not getattr(self, "luc", None):
 			self.luc = _lay_luc_mac_dinh()
-		self.dong_y = 1 if dong_y._chuan_dong_y(getattr(self, "dong_y", 0)) else 0
+		tt = str(getattr(self, "trang_thai", "") or "").strip()
+		if tt == "cho_xac_minh":
+			self.dong_y = 0
+		else:
+			self.dong_y = 1 if dong_y._chuan_dong_y(getattr(self, "dong_y", 0)) else 0
 
 	def validate(self):
 		if not self.is_new():
@@ -53,9 +57,15 @@ class LXDongY(Document):
 		muc_dich = str(getattr(self, "muc_dich", "") or "").strip()
 		if muc_dich not in dong_y.MUC_DICH:
 			_bao_loi_du_lieu(f"Mục đích đồng ý không hợp lệ: {muc_dich!r}")
+		tt = str(getattr(self, "trang_thai", "") or "").strip()
+		if tt and tt not in dong_y.TRANG_THAI_DONG_Y:
+			_bao_loi_du_lieu(f"Trạng thái đồng ý không hợp lệ: {tt!r}")
 		if not getattr(self, "luc", None):
 			self.luc = _lay_luc_mac_dinh()
-		self.dong_y = 1 if dong_y._chuan_dong_y(getattr(self, "dong_y", 0)) else 0
+		if tt == "cho_xac_minh":
+			self.dong_y = 0
+		else:
+			self.dong_y = 1 if dong_y._chuan_dong_y(getattr(self, "dong_y", 0)) else 0
 
 	def db_update(self, *args, **kwargs):
 		_chan_sua_xoa("Bản ghi LX Dong Y là nhật ký bất biến, không được cập nhật")

@@ -1,0 +1,42 @@
+{
+  "feature": "C2B",
+  "luc": "2026-11-09T20:17:51+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_c2b.py::test_dong_y_marketing_chi_co_hieu_luc_sau_khi_chu_kenh_xac_nhan PASSED [ 33%]",
+    "tests/nghiem-thu/test_c2b.py::test_link_xac_nhan_can_post_bo_quet_mail_mo_get_khong_ghi_dong_y PASSED [ 66%]",
+    "tests/nghiem-thu/test_c2b.py::test_ma_xac_nhan_luu_db_co_han_dung_dung_mot_lan PASSED [100%]",
+    "",
+    "============================== 3 passed in 0.37s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 11 items",
+    "",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_nhan_form_gop_trung_khong_ghi_de_du_lieu_cu PASSED [  9%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_khong_ghi_de_dong_rut_dong_y PASSED [ 18%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_chan_nguon_client_va_gioi_han_do_dai PASSED [ 27%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_khop_sdt_ngoac_va_rut_dong_y_nguoi_thu_hai PASSED [ 36%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_luu_hoac_lay_nguoi_c2_chi_bat_duplicate_entry_error PASSED [ 45%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_t1_ghi_ket_qua_nguoi_moi_va_dong_y_mot_buoc PASSED [ 54%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_t1_nguoi_da_co_khong_ghi_de_du_lieu_cu_va_khong_ghi_de_rut_dong_y PASSED [ 63%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_t1_gioi_han_do_dai_va_honeypot PASSED [ 72%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y PASSED [ 81%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_api_xac_nhan_marketing_db_post_va_get PASSED [ 90%]",
+    "apps/linhx_core/linhx_core/crm/test_api_form.py::test_luu_hoac_lay_nguoi_t1_chi_bat_duplicate_entry_error PASSED [100%]",
+    "",
+    "============================= 11 passed in 0.41s =============================="
+  ]
+}
