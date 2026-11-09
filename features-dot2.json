@@ -1,62 +1,280 @@
 {
- "dot": "2",
- "duyet": "Linh 'ok đợt 2' 9/11/2026 16:03. Đích: (1) thợ nhận phiếu từ Frappe, (2) danh tính bản 2, (3) Agent Force bản 1 cho ifagent. Mặc định Claude chọn khi Linh chưa nói: Zalo OA của IF Agent; đích 3 chạy khi có thợ rảnh, không chặn đích 1.",
- "features": [
-  {"id": "O1", "uu_tien": 1, "phu_thuoc": ["N3"], "vung": ["apps/linhx_core/linhx_core/ops/**"],
-   "mo_ta": "DocType LX Phieu Agy (loai_phieu, de, vung, trang_thai, phut, token, ly_do_tra) + luật chuyển trạng thái nhap → duyet → giao → nop → dat|tra",
-   "tieu_chi": ["loai_phieu ngoài danh sách cho phép thì lỗi", "chuyển trạng thái sai thứ tự thì lỗi", "chỉ vai điều hành duyệt được", "đề chứa lệnh shell (powershell, cmd, bash -c, curl|sh) bị từ chối"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o1.py -q", "passes": false, "bang_chung": ""},
-  {"id": "O2", "uu_tien": 1, "phu_thuoc": ["O1"], "vung": ["apps/linhx_core/linhx_core/ops/**"],
-   "mo_ta": "API thợ kéo phiếu: khoá riêng mỗi máy (băm, không lưu khoá trần), một phiếu một thợ, quá 150 phút tự về duyet",
-   "tieu_chi": ["hai thợ kéo cùng lúc chỉ một nhận", "khoá sai trả 401", "phiếu giao quá 150 phút về duyet và tăng so_lan_giao"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o2.py -q", "passes": false, "bang_chung": ""},
-  {"id": "O3", "uu_tien": 1, "phu_thuoc": ["O2"], "vung": ["apps/linhx_core/linhx_core/ops/**"],
-   "mo_ta": "API thợ nộp: commit, nhánh, nhật ký, phút, token ghi vào phiếu",
-   "tieu_chi": ["nộp phiếu không phải của mình trả 403", "phút và token lưu đúng", "nộp hai lần cùng commit không tạo bản ghi trùng"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o3.py -q", "passes": false, "bang_chung": ""},
-  {"id": "O4", "uu_tien": 1, "phu_thuoc": ["O3"], "vung": ["tho/**"],
-   "mo_ta": "linhx-tho Windows: kéo phiếu, chạy agy ẩn qua chay-an.vbs, nộp; không chạy lệnh shell lấy từ Frappe",
-   "tieu_chi": ["chế độ --chay-thu in JSON các bước, không gọi agy", "đề chứa lệnh shell bị từ chối phía thợ", "lệnh gọi agy dùng CREATE_NO_WINDOW hoặc chay-an.vbs", "chạy thật một phiếu thử trên máy cty"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o4.py -q", "passes": false, "bang_chung": "bang-chung/O4/phieu-that.json"},
-  {"id": "O5", "uu_tien": 1, "phu_thuoc": ["O1"], "vung": ["front/**", "apps/linhx_core/linhx_core/ops/**"],
-   "mo_ta": "Bàn /#/engine: hàng phiếu chờ duyệt, nút duyệt / trả lại có lý do, dùng được ở 390px",
-   "tieu_chi": ["#phieu-cho liệt kê phiếu nhap", "trả lại bắt buộc lý do, lý do lưu vào phiếu", "390 và 1280 không tràn ngang"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o5.py -q", "passes": false, "bang_chung": ""},
-  {"id": "O6", "uu_tien": 1, "phu_thuoc": ["O3"], "vung": ["apps/linhx_core/linhx_core/ops/**"],
-   "mo_ta": "Chấm tự động: phiếu nộp chạy cổng kiểm + rào vùng trước, chỉ khi xanh mới gọi Claude chấm",
-   "tieu_chi": ["cổng hoặc rào trượt thì không gọi hàm chấm Claude (đếm lượt gọi = 0), phiếu về tra", "cổng xanh thì gọi chấm đúng một lần, ghi DAT hoặc CHUA_DAT", "Claude hết hạn mức là lỗi máy, không tính lần"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o6.py -q", "passes": false, "bang_chung": ""},
-  {"id": "O7", "uu_tien": 1, "phu_thuoc": ["O4", "O5", "O6"], "vung": ["tests/e2e/**"],
-   "mo_ta": "Hành trình: phiếu đi trọn tạo → duyệt → thợ kéo → nộp → chấm → thấy trên bàn",
-   "tieu_chi": ["Playwright 390 + 1280 xanh trên VM"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o7.py -q", "passes": false, "bang_chung": "bang-chung/O7/hanh-trinh.json"},
-  {"id": "I1", "uu_tien": 2, "phu_thuoc": ["A1"], "vung": ["apps/linhx_core/linhx_core/id/**"],
-   "mo_ta": "Đăng nhập Google, gộp vào LX Nguoi theo khoá gộp trùng A1",
-   "tieu_chi": ["email đã có (khác hoa thường) thì không tạo người mới", "state OAuth sai thì từ chối", "ghi nhật ký gộp"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i1.py -q", "passes": false, "bang_chung": ""},
-  {"id": "I2", "uu_tien": 2, "phu_thuoc": ["I1"], "vung": ["apps/linhx_core/linhx_core/id/**"],
-   "mo_ta": "Đăng nhập Zalo (OA IF Agent), gộp như I1",
-   "tieu_chi": ["SĐT đã có (0… hoặc 84…) thì gộp", "zalo_id đã có thì gộp", "có nhật ký gộp"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i2.py -q", "passes": false, "bang_chung": ""},
-  {"id": "I3", "uu_tien": 2, "phu_thuoc": ["I1"], "vung": ["apps/linhx_core/linhx_core/id/**"],
-   "mo_ta": "OTP email dùng chung (C2B dùng lại)",
-   "tieu_chi": ["mã hết hạn sau 10 phút", "sai 5 lần thì khoá 15 phút", "chỉ lưu băm mã", "mã dùng một lần"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i3.py -q", "passes": false, "bang_chung": ""},
-  {"id": "F1", "uu_tien": 3, "phu_thuoc": ["A2"], "vung": ["apps/linhx_core/linhx_core/agent/**"],
-   "mo_ta": "LX Pilot gắn Cơ hội: playbook 7 bước, hạn 14 ngày, báo trễ",
-   "tieu_chi": ["pilot mới có đúng 7 bước", "quá 14 ngày chưa xong thì vào viec_cho", "không đi bước sau khi bước trước chưa xong"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q", "passes": false, "bang_chung": ""},
-  {"id": "F2", "uu_tien": 3, "phu_thuoc": ["F1", "C2"], "vung": ["apps/linhx_core/linhx_core/booking/**", "trang-bu/**"],
-   "mo_ta": "Đặt lịch gọi tư vấn từ Trang BU vào lịch người phụ trách",
-   "tieu_chi": ["đặt trùng giờ bị chặn", "ngoài giờ làm (8–18h giờ VN) bị chặn", "người phụ trách thấy lịch trong viec_cho"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f2.py -q", "passes": false, "bang_chung": ""},
-  {"id": "F3", "uu_tien": 3, "phu_thuoc": ["C3"], "vung": ["apps/linhx_core/linhx_core/cred/**", "sites/ifagent/**"],
-   "mo_ta": "Kho case có số (cred), hiện trên Trang BU ifagent qua cấu hình, không sửa code khuôn",
-   "tieu_chi": ["case chưa duyệt không ra API công khai", "trang ifagent dựng có mục case lấy từ API", "commit F3 không đụng trang-bu/**"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f3.py -q", "passes": false, "bang_chung": ""},
-  {"id": "T3", "uu_tien": 3, "phu_thuoc": ["F1", "F2", "F3", "T1"], "vung": ["tests/e2e/**"],
-   "mo_ta": "Hành trình ifagent: lead → đặt lịch → pilot → case",
-   "tieu_chi": ["Playwright 390 + 1280 xanh trên VM"],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t3.py -q", "passes": false, "bang_chung": "bang-chung/T3/hanh-trinh.json"}
- ]
+  "dot": "2",
+  "duyet": "Linh 'ok đợt 2' 9/11/2026 16:03. Đích: (1) thợ nhận phiếu từ Frappe, (2) danh tính bản 2, (3) Agent Force bản 1 cho ifagent. Mặc định Claude chọn khi Linh chưa nói: Zalo OA của IF Agent; đích 3 chạy khi có thợ rảnh, không chặn đích 1.",
+  "features": [
+    {
+      "id": "O1",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "N3"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/ops/**"
+      ],
+      "mo_ta": "DocType LX Phieu Agy (loai_phieu, de, vung, trang_thai, phut, token, ly_do_tra) + luật chuyển trạng thái nhap → duyet → giao → nop → dat|tra",
+      "tieu_chi": [
+        "loai_phieu ngoài danh sách cho phép thì lỗi",
+        "chuyển trạng thái sai thứ tự thì lỗi",
+        "chỉ vai điều hành duyệt được",
+        "đề chứa lệnh shell (powershell, cmd, bash -c, curl|sh) bị từ chối"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o1.py -q",
+      "passes": true,
+      "bang_chung": "bang-chung/O1/kiem.json"
+    },
+    {
+      "id": "O2",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O1"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/ops/**"
+      ],
+      "mo_ta": "API thợ kéo phiếu: khoá riêng mỗi máy (băm, không lưu khoá trần), một phiếu một thợ, quá 150 phút tự về duyet",
+      "tieu_chi": [
+        "hai thợ kéo cùng lúc chỉ một nhận",
+        "khoá sai trả 401",
+        "phiếu giao quá 150 phút về duyet và tăng so_lan_giao"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o2.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "O3",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O2"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/ops/**"
+      ],
+      "mo_ta": "API thợ nộp: commit, nhánh, nhật ký, phút, token ghi vào phiếu",
+      "tieu_chi": [
+        "nộp phiếu không phải của mình trả 403",
+        "phút và token lưu đúng",
+        "nộp hai lần cùng commit không tạo bản ghi trùng"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o3.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "O4",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O3"
+      ],
+      "vung": [
+        "tho/**"
+      ],
+      "mo_ta": "linhx-tho Windows: kéo phiếu, chạy agy ẩn qua chay-an.vbs, nộp; không chạy lệnh shell lấy từ Frappe",
+      "tieu_chi": [
+        "chế độ --chay-thu in JSON các bước, không gọi agy",
+        "đề chứa lệnh shell bị từ chối phía thợ",
+        "lệnh gọi agy dùng CREATE_NO_WINDOW hoặc chay-an.vbs",
+        "chạy thật một phiếu thử trên máy cty"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o4.py -q",
+      "passes": false,
+      "bang_chung": "bang-chung/O4/phieu-that.json"
+    },
+    {
+      "id": "O5",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O1"
+      ],
+      "vung": [
+        "front/**",
+        "apps/linhx_core/linhx_core/ops/**"
+      ],
+      "mo_ta": "Bàn /#/engine: hàng phiếu chờ duyệt, nút duyệt / trả lại có lý do, dùng được ở 390px",
+      "tieu_chi": [
+        "#phieu-cho liệt kê phiếu nhap",
+        "trả lại bắt buộc lý do, lý do lưu vào phiếu",
+        "390 và 1280 không tràn ngang"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o5.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "O6",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O3"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/ops/**"
+      ],
+      "mo_ta": "Chấm tự động: phiếu nộp chạy cổng kiểm + rào vùng trước, chỉ khi xanh mới gọi Claude chấm",
+      "tieu_chi": [
+        "cổng hoặc rào trượt thì không gọi hàm chấm Claude (đếm lượt gọi = 0), phiếu về tra",
+        "cổng xanh thì gọi chấm đúng một lần, ghi DAT hoặc CHUA_DAT",
+        "Claude hết hạn mức là lỗi máy, không tính lần"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o6.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "O7",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "O4",
+        "O5",
+        "O6"
+      ],
+      "vung": [
+        "tests/e2e/**"
+      ],
+      "mo_ta": "Hành trình: phiếu đi trọn tạo → duyệt → thợ kéo → nộp → chấm → thấy trên bàn",
+      "tieu_chi": [
+        "Playwright 390 + 1280 xanh trên VM"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o7.py -q",
+      "passes": false,
+      "bang_chung": "bang-chung/O7/hanh-trinh.json"
+    },
+    {
+      "id": "I1",
+      "uu_tien": 2,
+      "phu_thuoc": [
+        "A1"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/id/**"
+      ],
+      "mo_ta": "Đăng nhập Google, gộp vào LX Nguoi theo khoá gộp trùng A1",
+      "tieu_chi": [
+        "email đã có (khác hoa thường) thì không tạo người mới",
+        "state OAuth sai thì từ chối",
+        "ghi nhật ký gộp"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i1.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "I2",
+      "uu_tien": 2,
+      "phu_thuoc": [
+        "I1"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/id/**"
+      ],
+      "mo_ta": "Đăng nhập Zalo (OA IF Agent), gộp như I1",
+      "tieu_chi": [
+        "SĐT đã có (0… hoặc 84…) thì gộp",
+        "zalo_id đã có thì gộp",
+        "có nhật ký gộp"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i2.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "I3",
+      "uu_tien": 2,
+      "phu_thuoc": [
+        "I1"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/id/**"
+      ],
+      "mo_ta": "OTP email dùng chung (C2B dùng lại)",
+      "tieu_chi": [
+        "mã hết hạn sau 10 phút",
+        "sai 5 lần thì khoá 15 phút",
+        "chỉ lưu băm mã",
+        "mã dùng một lần"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i3.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "F1",
+      "uu_tien": 3,
+      "phu_thuoc": [
+        "A2"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/agent/**"
+      ],
+      "mo_ta": "LX Pilot gắn Cơ hội: playbook 7 bước, hạn 14 ngày, báo trễ",
+      "tieu_chi": [
+        "pilot mới có đúng 7 bước",
+        "quá 14 ngày chưa xong thì vào viec_cho",
+        "không đi bước sau khi bước trước chưa xong"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "F2",
+      "uu_tien": 3,
+      "phu_thuoc": [
+        "F1",
+        "C2"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/booking/**",
+        "trang-bu/**"
+      ],
+      "mo_ta": "Đặt lịch gọi tư vấn từ Trang BU vào lịch người phụ trách",
+      "tieu_chi": [
+        "đặt trùng giờ bị chặn",
+        "ngoài giờ làm (8–18h giờ VN) bị chặn",
+        "người phụ trách thấy lịch trong viec_cho"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f2.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "F3",
+      "uu_tien": 3,
+      "phu_thuoc": [
+        "C3"
+      ],
+      "vung": [
+        "apps/linhx_core/linhx_core/cred/**",
+        "sites/ifagent/**"
+      ],
+      "mo_ta": "Kho case có số (cred), hiện trên Trang BU ifagent qua cấu hình, không sửa code khuôn",
+      "tieu_chi": [
+        "case chưa duyệt không ra API công khai",
+        "trang ifagent dựng có mục case lấy từ API",
+        "commit F3 không đụng trang-bu/**"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f3.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "T3",
+      "uu_tien": 3,
+      "phu_thuoc": [
+        "F1",
+        "F2",
+        "F3",
+        "T1"
+      ],
+      "vung": [
+        "tests/e2e/**"
+      ],
+      "mo_ta": "Hành trình ifagent: lead → đặt lịch → pilot → case",
+      "tieu_chi": [
+        "Playwright 390 + 1280 xanh trên VM"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t3.py -q",
+      "passes": false,
+      "bang_chung": "bang-chung/T3/hanh-trinh.json"
+    }
+  ]
 }
