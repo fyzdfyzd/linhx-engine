@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 08:00 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
+Cập nhật 2026-11-09 08:11 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, D1, D3, E1, E2, A4B, W1, Q1, R1, R2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -23,7 +23,6 @@ Cập nhật 2026-11-09 08:00 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09T02:55:42 D2 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc f16257a9, bản hỏng giữ ở nhánh cục bộ hong/D2-20261109-0255, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\D2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 06:27 t2: commit phần dở của C2
 - 2026-11-09 06:27 t2: agy xong phiếu 20261109-0539-t2 (C2) sau 43 phút
 - 2026-11-09 06:28 t1: giao agy phiếu 20261109-0628-t1: B4 (lượt sửa)
 - 2026-11-09 07:10 t1: dừng agy phiếu 20261109-0628-t1 (B4): 15 phút không đổi gì
@@ -35,4 +34,5 @@ Cập nhật 2026-11-09 08:00 (giờ máy cty). Đạt: 25/33 (N1, N2, N3, N4, N
 - 2026-11-09 07:31 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-09 07:50 t2: RAM trống 1 GB < 1,5 GB, chưa giao C2
 - 2026-11-09 08:00 t2: RAM trống 0.7 GB < 1,5 GB, chưa giao C2
+- 2026-11-09 08:11 t2: RAM trống 1.4 GB < 1,5 GB, chưa giao C2
 
