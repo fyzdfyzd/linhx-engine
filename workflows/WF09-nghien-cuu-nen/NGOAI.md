@@ -16,3 +16,11 @@
 | LINHX: `le/linhx-4d`, `le/research-loop`, `deep-researcher`, `nghien-cuu-thi-truong` | SKILL.md | Xem NGHIEN-CUU.md | `deep-researcher`: số lượng 15 items và dự phòng "kiến thức LLM" |
 
 Còn thiếu: chưa tìm bài người làm nghề trên X/LinkedIn/Reddit, nguồn tiếng Việt, skills.sh/openskillindex; đã đưa vào `DR/DE-1.md`.
+
+## Bổ sung vòng 2 (9/11/2026)
+| Nguồn | Đã đọc gì | Lấy | Bỏ |
+|---|---|---|---|
+| daymade/claude-code-skills · deep-research `references/quality_gates.md`, `source_accessibility_policy.md` | 2 tệp đọc hết | Số đếm nguồn chỉ là chẩn đoán; gộp nguồn cùng gốc thành một họ; 4 trạng thái nguồn nội bộ/ngoài | 15 tệp tham chiếu còn lại (chưa đọc) |
+| Reuters Institute DNR 2025 · Methodology (https://reutersinstitute.politics.ox.ac.uk/digital-news-report/2025/methodology) | cả trang (WebFetch + tải về `vong-2/thu-cong3/tep-tai/N1.html`) | Cách tự nêu giới hạn mẫu | — |
+| Pew · Our Methods (https://www.pewresearch.org/methods/) | cả trang | Đội phương pháp tách riêng | Không có quy trình kiểm lại |
+| DeepResearch Bench trang chủ (https://deepresearch-bench.github.io) | cả trang (WebFetch) | C. Acc. cao nhất 90,24%; RACE khớp người 72,56% | — |

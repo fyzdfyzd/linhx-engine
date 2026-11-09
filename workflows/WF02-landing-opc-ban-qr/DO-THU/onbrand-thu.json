@@ -1,0 +1,52 @@
+{
+  "brand": "btmh",
+  "file": "LAB\\LAB012-BRAND-STANDARD\\brands\\chiemtinh\\guideline\\chiemtinh-brand-guideline.html",
+  "muc": {
+    "mau": {
+      "diem_ty_le": null,
+      "ghi_chu": "không ra được ảnh (pptx cần LibreOffice)",
+      "toi_da": 30
+    },
+    "chu": {
+      "diem_ty_le": 0.0,
+      "font_dung": [],
+      "font_la": [
+        "JetBrains Mono",
+        "Montserrat",
+        "Playfair Display"
+      ],
+      "toi_da": 20,
+      "diem": 0.0
+    },
+    "noi_dung": {
+      "diem_ty_le": 0.75,
+      "tu_cam_gap": [
+        {
+          "tu": "mua ngay kẻo lỡ",
+          "so_lan": 1
+        }
+      ],
+      "toi_da": 10,
+      "diem": 7.5
+    },
+    "logo": {
+      "diem_ty_le": null,
+      "toi_da": 25,
+      "can_claude_nhin": true
+    },
+    "hinh_bo_cuc": {
+      "diem_ty_le": null,
+      "toi_da": 15,
+      "can_claude_nhin": true
+    }
+  },
+  "diem_da_cham": 7.5,
+  "tren_tong": 30,
+  "diem_100": 25.0,
+  "xep_loai": "LỆCH CHUẨN",
+  "chua_cham": [
+    "mau",
+    "logo",
+    "hinh_bo_cuc"
+  ]
+}

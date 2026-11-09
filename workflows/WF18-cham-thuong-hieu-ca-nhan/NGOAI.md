@@ -24,3 +24,7 @@ Bước 0, tìm sơ bộ 9/11 (GitHub, trang skill, blog, mạng). Cập nhật 
 | SEJ về SparkToro/Gumshoe | bài | Dưới 1/100 lần ra cùng danh sách; cần nhiều lượt | Không có số lượt tối thiểu rõ |
 | Firon (kiểm 5 bước) | bài | Trình tự hỏi tên → theo ngành → so sánh → cảm xúc → kiểm chính xác; nhãn hallucination vs outdated | Khuyến nghị schema chung chung |
 | Tiếng Việt / tiếng Trung | chưa tìm được nguồn đáng đọc | | Đề DR `DR/DE-1.md` |
+| Ahrefs 75k thương hiệu (12/12/2025) | https://ahrefs.com/blog/ai-brand-visibility-correlations/ | kiểm gốc số 0,737 [đọc]; chỉ cho thương hiệu, tương quan |
+| SparkToro Office Hours (8/5/2026) | https://sparktoro.com/blog/office-hours-can-you-actually-track-ai-visibility/ | số lượt: 490 kết quả/lượt ≈ ±5 điểm; link nghiên cứu gốc [đọc] |
+| Nguyễn Phi Vân, đính chính Go Global Holdings | https://en.nguyenphivan.com/post/setting-the-record-straight-the-facts-about-go-global-holdings | mẫu trang đính chính lỗi AI, về tổ chức [đọc] |
+| LAB036 `CHUAN-ABC-v1.md`, `tu_kiem` | D:\LINHX\LAB\LAB036-BRAND-CHECK-AGENT | nhãn Nhầm đã phủ trùng tên; tự kiểm XANH [chạy] |

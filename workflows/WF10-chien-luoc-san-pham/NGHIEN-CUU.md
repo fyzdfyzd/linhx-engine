@@ -49,3 +49,51 @@ Chưa đủ 3–5 mẫu công khai đã mở được. Việc tiếp: máy cty t
 ## Nguồn
 [đọc] borghei/claude-skills product-strategist · alirezarezvani/claude-skills marketing-strategy-pmm · mohitagw15856/pm-claude-skills go-to-market · phuryn/pm-skills · deanpeters/Product-Manager-Skills · anthropics/knowledge-work-plugins product-management (link ở `NGOAI.md`) · https://www.alexmurrell.co.uk/summaries/richard-rumelt-good-strategy-bad-strategy · https://www.heinzmarketing.com/blog/10-step-positioning-process-an-obviously-awesome-book-summary-part-3/
 [chỉ thấy] https://strategyu.co/structure-your-ideas-pyramid-principle-part-1/ · https://conjointly.com/products/van-westendorp/ · brandsvietnam, advertisingvietnam (403) · Tesla, Slack, McKinsey (không mở được)
+
+## Bổ sung vòng 2
+Ngày 9/11/2026 (giờ VN, buổi trưa). Chỉ lấp các mục vòng 1 tự khai là mỏng. Phần "ArcFace" của WF14 không thuộc WF10, bỏ qua.
+
+### 1. Đã mở thêm nguồn (trước chỉ thấy)
+| Nguồn | Link | Trạng thái |
+|---|---|---|
+| Van Westendorp (Conjointly) | https://conjointly.com/products/van-westendorp/ | [đọc] HTTP 200 |
+| Gabor-Granger (Conjointly) | https://conjointly.com/products/gabor-granger/ | [đọc] HTTP 200 |
+| Pyramid Principle phần 1, phần 2; MECE (StrategyU) | https://strategyu.co/structure-your-ideas-pyramid-principle-part-1/ · https://strategyu.co/pyramid-principle-part-2-communicate-top-down/ · https://strategyu.co/wtf-is-mece-mutually-exclusive-collectively-exhaustive/ | [đọc] HTTP 200 cả ba |
+| Tesla Master Plan, Slack "Saddles" | xem `DR/DE-2.md` | [chỉ thấy] vẫn không mở được (Tesla 403; Slack lỗi tải; archive.org bị chặn ở máy này) |
+| Brands Vietnam, Advertising Vietnam | xem `DR/DE-2.md` | [chỉ thấy] vẫn 403 |
+
+### 2. Trích nguyên văn (đã đọc)
+- Van Westendorp, bốn câu hỏi: "Priced so low that you would feel the quality couldn't be very good?" (too cheap); "A bargain—a great buy for the money?" (cheap); "So expensive that you would not consider buying it?" (too expensive). (https://conjointly.com/products/van-westendorp/)
+- Cách đọc: "The intersection of “too cheap” and “expensive” is considered the lower end of the range of reasonable prices." và "The intersection of “cheap” and “too expensive” is considered the upper end of the range of reasonable prices." (cùng trang)
+- Cảnh báo: "The “optimal” and “normal” price points do not necessarily optimise for profit, volume, or revenue." (cùng trang) → khoảng giá Van Westendorp chỉ là khoảng chấp nhận được, không phải giá tối ưu lợi nhuận.
+- Gabor-Granger: "Each respondent is given a series of almost identical questions, such as “Would you buy product X at price Y?”." và số mức giá "ideally, between 8 and 15 price levels". (https://conjointly.com/products/gabor-granger/)
+- Pyramid, đáp án trước: "The default way of using the pyramid principle is to start with the “answer.”" và "This is almost always the best way to communicate if you are delivering something in writing." (https://strategyu.co/pyramid-principle-part-2-communicate-top-down/)
+- MECE: "MECE is an acronym for the phrase Mutually Exclusive, Collectively Exhaustive." (https://strategyu.co/wtf-is-mece-mutually-exclusive-collectively-exhaustive/)
+
+### 3. Điều chỉnh nhận định vòng 1
+- Bước 0 "giả thuyết trả lời trước" có nguồn đọc thật (Pyramid phần 2), nhưng trang cũng nói cách này không phải lúc nào cũng tối ưu với khán giả có thể phản đối; tài liệu cho Linh duyệt là văn bản viết nên áp dụng được.
+- **Cỡ mẫu giá: hai trang Conjointly KHÔNG nêu cỡ mẫu tối thiểu cho Van Westendorp và Gabor-Granger** (số "8–15" là số mức giá, không phải số người). Vì vậy mục Máy đo vòng 1 không được ghi con số cỡ mẫu giá nào; ghi "chưa có nguồn, Linh chốt theo đề, và DE-2 mục 5 đi tìm bài Q&Me/Kantar VN". Ngưỡng "10 phỏng vấn" vẫn chỉ là gợi ý của phuryn cho chọn bãi đổ bộ, không phải cho khảo sát giá.
+- Mục "ngưỡng" khác ở Máy đo vòng 1 (≥4 đối thủ, trung vị ≥4, 2/3 phiếu) là ngưỡng LINHX tự đặt trong skill/rubric, không phải số từ nguồn ngoài.
+
+### 4. Thử máy đo (script của repo, không tải code lạ, không Chrome)
+Script: `skills/le/linhx-chuan/scripts/kiem.py` (+ `loai.json`, loại `chien-luoc`). Python 3.12.2. Phải đặt `PYTHONUTF8=1`, nếu không script chết `UnicodeEncodeError` (cp1252) khi in tiếng Việt trên Windows này; không sửa script.
+Mẫu: `skills/le/linhx-chuan/khuon/` (khuôn rỗng) và thư mục WF10 này. Mẫu vàng thật của chiến lược không có trên máy này (`WF-CHUAN` chỉ có WF13).
+
+| # | Lệnh | Kết quả thật |
+|---|---|---|
+| 1 | `python kiem.py skills/le/linhx-chuan/khuon --pha dau` | CHUA_DAT, 5 lỗi: 4 mục hành trình người xem chưa điền, THAM-CHIEU.md 0 link (cần ≥5). Mã thoát 1 |
+| 2 | `python kiem.py …/khuon --pha cuoi --loai chien-luoc` | CHUA_DAT, 14 lỗi: thêm thiếu BRIEF, PHAN-KHUC*, DOI-THU*, KHOANG-TRONG*, QUYET-DINH*, CHUNG-THUC*, 0 file NC (cần ≥3), BAI-HOC 0 dòng, ảnh E2E không tồn tại |
+| 3 | `python kiem.py workflows/WF10-chien-luoc-san-pham --pha dau` | CHUA_DAT, 9 lỗi (thiếu 4 sổ STATUS/HANH-TRINH/THAM-CHIEU/DATA_GAPS…). Đúng, vì đây là thư mục nghiên cứu, không phải thư mục việc |
+| 4 | Sao khuôn sang `_refs/WF10/mau-kiem/`, điền 4 mục hành trình và 5 link vào THAM-CHIEU.md (mẫu thử, nội dung giả), `python kiem.py _refs/WF10/mau-kiem --pha dau` | **DAT**, mã thoát 0 |
+
+Kết luận về máy đo:
+- Chạy được, phân biệt đúng khuôn rỗng (trượt) và bản điền đủ (qua). Đây là kiểm **cấu trúc và truy nguồn**, đúng như dòng đầu script ghi: "Chỉ kiểm cấu trúc và truy nguồn; chất lượng do người chấm".
+- `loai.json` loại `chien-luoc` hiện chỉ đòi các mục cũ (BRIEF, PHAN-KHUC, DOI-THU, KHOANG-TRONG, QUYET-DINH, CHUNG-THUC, ≥3 NC). **Chưa có** kiểm "Chẩn đoán", "Không làm", "Giá" mà vòng 1 đề xuất: đề xuất thêm là đúng chỗ (thêm vào mảng mục của `QUYET-DINH*.md`), việc nhỏ.
+- Chưa thử được: pha `cuoi` đầy đủ trên một việc chiến lược thật (CTS nhánh B) vì mẫu đó không có ở máy này. Việc cần máy Linh/máy công ty.
+- Nhược điểm thấy khi chạy: lỗi mã hoá Windows (xem trên). Đề xuất thêm `sys.stdout.reconfigure(encoding="utf-8")` ở đầu `main` (chưa sửa; ngoài thư mục WF10).
+
+### 5. Còn thiếu sau vòng 2
+- Bản vàng công khai vẫn 0 mẫu mở được (Tesla, Slack). Đã ghi hàng đợi `DR/DE-2.md` cho máy cty.
+- Nguồn tiếng Việt: 0 bài đọc được (2 bài vẫn 403; chưa tìm được bài Q&Me/Kantar VN vì máy này không có công cụ tìm kiếm trong lượt này).
+- Cỡ mẫu tối thiểu cho nghiên cứu giá ở VN: chưa có nguồn.
+- Rumelt: vẫn chỉ qua tóm tắt Alex Murrell, chưa mở sách/bài gốc.

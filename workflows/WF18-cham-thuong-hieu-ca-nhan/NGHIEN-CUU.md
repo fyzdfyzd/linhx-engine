@@ -63,3 +63,27 @@ Cần **bản vàng thật**: một báo cáo chấm người do Linh duyệt �
 - [đọc] SEJ về SparkToro: "The data showed a <1-in-100 chance that ChatGPT or Google’s AI in Search (AI Overviews/AI Mode) would return the same list of brands across repeated runs of the same prompt." https://www.searchenginejournal.com/ai-recommendations-change-with-nearly-every-query-sparktoro/566242
 - [đọc] Firon, 5 bước kiểm: https://fironmarketing.com/insights/what-does-chatgpt-say-about-your-brand-audit
 - [chỉ thấy] trang gốc SparkToro (không tải được, 404), Search Engine Land hướng dẫn sửa ảo giác (403), Pixelmojo về nhầm thực thể (Wikidata P31/P452): https://www.pixelmojo.io/answers/why-does-chatgpt-confuse-my-company-with-another
+
+## Bổ sung vòng 2 (9/11/2026)
+
+### Máy đo thử (chạy thật, offline, không mạng, không code lạ)
+- Lệnh: `cd D:\LINHX\LAB\LAB036-BRAND-CHECK-AGENT\src\linhx-brand-check\scripts` rồi `python brandcheck.py tu-kiem` (Python 3.12.2). Kết quả: toàn bộ 10 kiểm đơn vị và 16 kiểm trọn luồng (dữ liệu giả) đều ✓, dòng cuối `XANH`. Mẫu này là thương hiệu giả, **chưa phải mẫu người**.
+- Lệnh thứ hai: gọi `wilson`, `mentions`, `negated_only` của `abc_lib.py` bằng tay. Khoảng Wilson (95%) với tỉ lệ nhắc 60%: n=3 → [21,94] (rộng 73 điểm); n=5 → [23,88] (65); n=10 → [31,83] (52); n=20 → [39,78] (39); n=60 → [47,71] (24); n=100 → [50,69] (19).
+- Hệ quả, **sửa ngưỡng vòng 1**: ngưỡng "tỉ lệ nhắc lệch ≤ 10 điểm giữa hai lần đo" không thể kiểm bằng 5 lượt (khoảng rộng 65 điểm). Phải ghi rõ: 5 lượt chỉ đủ để thấy lỗi lặp, không đủ để nói độ ổn định; muốn ±10 điểm (rộng ~20) cần khoảng 100 lượt mỗi ô, nên ngưỡng ổn định đặt ở mức **"hai khoảng Wilson có chồng nhau"**, và ô nào n<20 ghi "chưa đủ mẫu".
+- Hàm dò tên `mentions` khớp "Nguyễn Văn An" cả khi AI nói về một ca sĩ trùng tên ("nguyen van an la ca si" → True). Tức máy đo hiện **không phân biệt người trùng tên**; phải có bước giám khảo gán nhãn `Nhầm` dựa trên `person.json` (nghề, mốc đời, nơi ở).
+- Chưa thử được: chạy `abc_hoi` với mô hình thật (cần khoá, không làm ở máy này).
+
+### Lấp chỗ vòng 1 tự khai
+1. **Nhãn nhầm người trùng tên: đã kiểm, vòng 1 nói chưa chắc, nay chắc.** `CHUAN-ABC-v1.md` dòng 53: "Nhầm | thông tin của thực thể khác (trùng tên, đối thủ)" và dòng 20 (A3): "Nhầm thực thể là cờ đỏ riêng". Vậy **không cần nhãn mới `nham_nguoi`**; chỉ cần `person.json` đủ để giám khảo phân biệt. Bỏ ý này khỏi mục "Sửa vào skill nào".
+2. **Số 0,737 (geo-seo-claude): đã kiểm gốc.** Ahrefs, 12/12/2025, 75.000 thương hiệu: "YouTube mentions show the strongest correlation with AI visibility (~0.737), outperforming every other factor across ChatGPT, AI Mode, and AI Overviews." Kèm cảnh báo của chính Ahrefs: "correlation isn't causation". Nguồn: https://ahrefs.com/blog/ai-brand-visibility-correlations/ . Số này nói về **thương hiệu**, không phải người; chỉ dùng làm gợi ý ưu tiên kênh, không làm ngưỡng.
+3. **Trang gốc SparkToro: tìm được link.** Nghiên cứu gốc: https://sparktoro.com/blog/new-research-ais-are-highly-inconsistent-when-recommending-brands-or-products-marketers-should-take-care-when-tracking-ai-visibility/ (link lấy từ trang Office Hours của SparkToro; trang này tôi chưa tải được trực tiếp, ghi [chỉ thấy link]). Tóm từ nguồn tìm được: 600 tình nguyện viên, 12 lời nhắc, 2.961 phản hồi, tháng 11–12/2025, mỗi lời nhắc 60–100 lượt mỗi nền tảng (WebSearch + SEJ); top thương hiệu xuất hiện 55–77% phản hồi (WebSearch, chưa kiểm trang gốc [chỉ thấy]).
+4. **Số lượt tối thiểu: có số của Gumshoe.** SparkToro Office Hours (11/3/2026, đăng 8/5/2026): "if you want, you know, plus minus one, you would need to run ten prompts, seven phrasing, seven models. That means a single pass generates four hundred and ninety kind of results. You would need to run that twenty times to get plus or minus one percentage point. Or you could only run it once and you'd have plus or minus five percent". Tức 490 kết quả/lượt ≈ ±5 điểm; khớp với tính Wilson ở trên (cỡ trăm lượt cho ±10). https://sparktoro.com/blog/office-hours-can-you-actually-track-ai-visibility/ [đọc]
+5. **API khác web?** SEJ: nghiên cứu SparkToro dùng người dán tay ("just copy and paste them"), còn việc API có cùng biến động hay không "left open". Vòng 2 không tìm thêm nguồn trả lời. Vẫn để phần dán tay (bước 3) và đề DR.
+6. **Nguồn tiếng Việt:** chỉ tìm được một ca gần đề: Nguyễn Phi Vân đăng bài đính chính 10 lỗi mà ChatGPT, Perplexity, Google AI Overviews lặp lại về Go Global Holdings: "AI-powered research tools are surfacing outdated and fabricated information about the organizations doing this work." (về tổ chức, không phải cá nhân; năm đăng không rõ). https://en.nguyenphivan.com/post/setting-the-record-straight-the-facts-about-go-global-holdings [đọc]. Mẫu cách làm "trang đính chính công khai có danh sách lỗi" hợp với bước sửa 30 ngày. Không tìm thấy báo cáo tiếng Việt kiểm ChatGPT/Gemini nói gì về chuyên gia Việt Nam. Tiếng Trung: chưa tìm.
+7. **WF14 ArcFace:** lệnh này không thuộc WF18, không làm.
+
+### Còn thiếu sau vòng 2
+- Bản vàng thật cho báo cáo chấm người: vẫn không có; đã thêm `DR/DE-2.md` (đưa link cần xem tận mắt cho máy công ty).
+- Chưa chạy thử trên mẫu người thật và chưa chạy với mô hình thật.
+- Chưa kiểm số "top thương hiệu 55–77%" ở trang gốc SparkToro; chưa có số thời gian AI cập nhật sau khi sửa Wikidata/JSON-LD.
+- Nguồn tiếng Trung, nguồn Việt về cá nhân.

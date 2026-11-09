@@ -19,3 +19,14 @@
 | Luật dữ liệu cá nhân 2025 · https://luatvietnam.vn/dan-su/nghi-dinh-356-2025-nd-cp-quy-dinh-chi-tiet-luat-bao-ve-du-lieu-ca-nhan-422896-d1.html | Kết quả tìm kiếm | Luật 91/2025/QH15 hiệu lực 1/1/2026, NĐ 356/2025 thay NĐ 13/2023 | Chưa đọc điều khoản đồng ý → đề DR `DR/DE-1.md` |
 
 Chưa mở được: open-design (nexu-io), clone lỗi. Chưa tìm được nguồn tiếng Trung hay mã nguồn mở bán sản phẩm số tự động theo QR Việt hoàn chỉnh; chỉ thấy mã mẫu từng cổng.
+
+**Vòng 2 (9/11/2026, qua WebFetch tóm tắt):**
+| Nguồn | Đã đọc gì | Lấy | Bỏ |
+|---|---|---|---|
+| web.dev LCP · https://web.dev/articles/lcp | Ngưỡng | LCP ≤ 2,5 giây, đo p75, tách điện thoại/máy tính | — |
+| W3C WCAG 2.2 SC 2.5.8 · https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html | Yêu cầu | 24×24 px (AA); 44×44 là AAA (2.5.5) | — |
+| Baymard (đọc lại) · https://baymard.com/lists/cart-abandonment-rate | Trang gốc | 70,22%; 40% phí phát sinh; 18% tạo tài khoản; 12–14 phần tử | Số TMĐT Mỹ/EU |
+| Unbounce 2024 (đọc lại) · https://unbounce.com/conversion-benchmark-report/ | Trang gốc | Trung vị 6,6%; 83% lượt xem trên điện thoại; chữ lớp 5–7 chuyển đổi 11,1% | Số 8,3%/11,6% không thấy ở trang gốc |
+| SePay webhook Node (đọc lại) · https://developer.sepay.vn/en/sepay-webhooks/lap-trinh-webhooks/lap-trinh-webhook-nodejs | Header, chữ ký, mã trả về | 401 chữ ký sai, 400 body sai, 200 thành công; 300 giây | — |
+| Luật 19/2023/QH15 · https://caselaw.vn/van-ban-phap-luat/411464-luat-bao-ve-quyen-loi-nguoi-tieu-dung-so-19-2023-qh15-ngay-20-06-2023-cua-quoc-hoi | Điều 38 khoản 3 điểm b (tóm tắt) | Huỷ trong 30 ngày nếu thông tin thiếu/sai | Chưa thấy điều khoản về sản phẩm số |
+| Casso · https://developer.casso.vn/v1/thuc-hanh | Vẫn chỉ mục lục | — | [chỉ thấy] |

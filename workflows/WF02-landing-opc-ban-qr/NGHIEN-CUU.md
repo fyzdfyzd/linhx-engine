@@ -57,3 +57,41 @@ Chưa tải được mẫu vào `vang/`. Mốc đã có nguồn: taste-skill nó
 
 ## Nguồn
 [đọc] taste-skill, impeccable, anthropics/skills frontend-design, garden-skills web-design-engineer, vercel web-design-guidelines (SKILL.md) · [đọc qua tóm tắt] SePay QR, SePay webhook Node, SePay best-practices · [chỉ thấy] Casso, Baymard, Unbounce, luatvietnam NĐ 85/2021, luật dữ liệu 2025. Link đầy đủ ở `NGOAI.md`.
+
+## Bổ sung vòng 2
+Ngày 9/11/2026. Đọc thêm bằng WebFetch (qua tóm tắt, không phải nguyên trang), chạy thử máy đo trên máy này. Phần WF14 (ArcFace) không thuộc WF02, bỏ qua.
+
+### 1. Ngưỡng tự đề xuất của vòng 1 nay đã có nguồn
+| Ngưỡng | Kết quả | Nguồn |
+|---|---|---|
+| LCP ≤ 2,5 giây | Đúng. Nguyên văn: "sites should strive to have Largest Contentful Paint of 2.5 seconds or less"; 2,5–4,0 giây là cần cải thiện, trên 4,0 giây là kém; đo ở phân vị 75, tách điện thoại/máy tính ("a good threshold to measure is the 75th percentile of page loads, segmented across mobile and desktop devices"). Sửa máy đo: đo p75, không đo một lần. | https://web.dev/articles/lcp |
+| Nút ≥ 44px | **Phải sửa lời.** WCAG 2.2 mức AA (2.5.8) chỉ đòi 24×24 CSS px: "The size of the target for pointer inputs is at least 24 by 24 CSS pixels". 44×44 là mức AAA (2.5.5 Enhanced). Đề xuất: 24px là mức cứng; 44px là mức mục tiêu cho nút chính trên điện thoại (nút "tôi đã chuyển", nút trả tiền). | https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html |
+
+### 2. Số liệu Baymard (đọc trang gốc, sửa vòng 1)
+Vòng 1 ghi "48% vì phí phát sinh" và "12 phần tử" từ kết quả tìm kiếm. Trang gốc hiện ghi (qua tóm tắt WebFetch): tỉ lệ bỏ giỏ trung bình **70,22%** (50 nghiên cứu, 2006–2025, khoảng 55–84%); lý do: **40%** phí phát sinh, 20% giao chậm, 19% lo an toàn thẻ, **18% bắt tạo tài khoản**, 17% thanh toán dài/rối; biểu mẫu trung bình 23,48 phần tử, lý tưởng **12–14**. Sửa máy đo: số phần tử biểu mẫu mục tiêu ≤ 12–14 (không phải "7 ô"), và đề bài ghi rõ "không bắt tạo tài khoản". Lưu ý: số của TMĐT Mỹ/EU, hàng vật lý; không có số cho Việt Nam. https://baymard.com/lists/cart-abandonment-rate
+
+### 3. Unbounce (đọc trang gốc)
+Báo cáo 2024: trung vị chuyển đổi **6,6%**, theo ngành 3,8–12,3%; 83% lượt xem trên điện thoại; "nearly 5x more visitors" trên điện thoại nhưng "desktop converts 8% better"; mẫu 41.000+ trang, 464 triệu khách. Chữ viết ở trình độ lớp 5–7 chuyển đổi 11,1%, cao hơn 56% so với lớp 8–9. **Sửa vòng 1**: "điện thoại 8,3% so với máy tính 11,6%" lấy từ kết quả tìm kiếm, không thấy ở trang gốc, bỏ cho đến khi kiểm được. Dùng được: thêm "câu chữ đơn giản" vào rubric (mốc tham khảo, mẫu quốc tế, không phải ngưỡng cứng). https://unbounce.com/conversion-benchmark-report/
+
+### 4. SePay webhook: xác minh chữ ký (đọc lại trang Node.js)
+Header: `x-sepay-signature`, `x-sepay-timestamp`. Chữ ký: `"sha256=" + crypto.createHmac('sha256', secret).update(timestamp + "." + body)`. Chống phát lại: `Math.abs(Date.now() / 1000 - timestamp) > 300` (300 giây). Mã trả về: **401** khi chữ ký sai, **400** khi body không hợp lệ/trống, **200** `{success:true}` khi thành công.
+**Sửa vòng 1**: máy đo ghi "luôn trả 200". Theo tài liệu SePay thì chữ ký sai/lệch giờ trả 401; chỉ ca hợp lệ (kể cả trả thiếu, gửi trùng) trả 200. Ca webhook đổi thành: sai chữ ký → 401, lệch giờ → 401, còn lại 200. https://developer.sepay.vn/en/sepay-webhooks/lap-trinh-webhooks/lap-trinh-webhook-nodejs
+
+### 5. Casso: vẫn mỏng
+`https://developer.casso.vn/v1/thuc-hanh` chỉ ra mục lục; trang con "Tích hợp xác nhận thanh toán" chưa mở được; trang nói có bản `.md` cạnh mỗi trang và `llms.txt`. Chưa trích được gì nguyên văn. Việc kế: máy công ty mở (xem `DR/DE-2.md`).
+
+### 6. Luật: chỉ thêm được một mảnh
+Luật Bảo vệ quyền lợi người tiêu dùng 19/2023/QH15 (bản caselaw.vn, qua WebFetch): Điều 38 khoản 3 điểm b cho người tiêu dùng quyền "đơn phương chấm dứt thực hiện hợp đồng đã giao kết và thông báo cho tổ chức, cá nhân kinh doanh" trong **30 ngày** kể từ ngày giao kết, áp dụng khi bên bán cung cấp thông tin không chính xác hoặc không đầy đủ theo Điều 37; hoàn tiền trong 30 ngày kể từ khi người tiêu dùng thông báo. (Tóm tắt của công cụ, không phải nguyên văn điều luật.) Hệ quả cho trang bán: thông tin sản phẩm, giá, điều khoản phải đầy đủ, nếu thiếu khách có thể đòi huỷ trong 30 ngày. https://caselaw.vn/van-ban-phap-luat/411464-luat-bao-ve-quyen-loi-nguoi-tieu-dung-so-19-2023-qh15-ngay-20-06-2023-cua-quoc-hoi
+**Chưa tìm được**: điều khoản nói rõ sản phẩm số giao ngay có được từ chối hoàn trả không; văn bản gốc NĐ 85/2021 và luật dữ liệu (thuvienphapluat.vn bị 403 ở vòng 1, vòng 2 chưa thử lại). Vẫn cần luật sư.
+
+### 7. Thử máy đo trên máy này (lệnh và kết quả thật)
+Thư mục `DO-THU/`.
+- **Máy đo webhook 5 ca**: viết `DO-THU/webhook-5ca.mjs` (mã tự viết, không mạng, không gói ngoài; mô phỏng bên nhận theo định dạng chữ ký ở mục 4). Lệnh: `node webhook-5ca.mjs` (Node v24.21.0). Kết quả: **5/5 qua** (chữ ký sai 401; lệch giờ 400 giây 401; trả thiếu 200 không giao; trả thừa giao; gửi lại cùng id chỉ giao 1 lần). Giới hạn: đây là bản tham chiếu do tôi viết, **không phải đo một hệ thống thật**; chỉ chứng minh 5 ca viết được thành bài thử chạy tự động.
+- **Máy đo `onbrand-cham`** (script có sẵn `LAB/LAB043-DESIGN-ONBRAND/src/linhx-onbrand/scripts/onbrand.py`). Lệnh: `python onbrand.py cham LAB/LAB043-DESIGN-ONBRAND/brands/btmh/brand.json LAB/LAB012-BRAND-STANDARD/brands/chiemtinh/guideline/chiemtinh-brand-guideline.html --ra DO-THU/onbrand-thu.json`. Ba phát hiện thật:
+  1. `brand.json` của chiemtinh trong LAB012 **không chạy được** với máy này: `KeyError: 'trong_so_diem'` (khác lược đồ với LAB043). Nên "onbrand ≥ 85" cho chiemtinh hiện chưa chạy được; cần tạo brand.json đúng lược đồ.
+  2. Chạy với brand.json btmh (chỉ để thử máy chạy; sai brand nên điểm không có ý nghĩa): ra 25/100 "LỆCH CHUẨN", nhưng **màu không chấm được với tệp .html** (ghi chú của máy: "không ra được ảnh (pptx cần LibreOffice)"), logo và bố cục chờ Claude nhìn. Với trang HTML, máy chỉ chấm chữ (font) và từ cấm. Muốn chấm màu trang bán phải chụp ảnh trang trước rồi chấm ảnh.
+  3. Trên Windows mặc định, lệnh báo `UnicodeEncodeError` (cp1252) khi in dù đã ghi tệp; với `PYTHONUTF8=1` thoát mã 0. Cần ghi vào hướng dẫn chạy.
+- Chưa thử: Lighthouse, axe, chụp 360/1280 (cần trình duyệt, theo lệnh không dùng Chrome); taste-skill gate (cần Node 22 và Chrome, mã ngoài, không chạy).
+
+### 8. Còn thiếu sau vòng 2
+Bản vàng chưa có (cần xem tận mắt, đã ghi `DR/DE-2.md`); Casso thân bài; văn bản gốc luật; số chuyển đổi/bỏ giữa chừng cho Việt Nam; open-design (nexu-io) chưa thử lại; bộ luật vercel web-interface-guidelines chưa đọc.

@@ -59,3 +59,46 @@ Chưa tải được tệp. Mốc nguồn (đều [chỉ thấy], chưa xem ch�
 - [đọc] Remotion skills: https://github.com/remotion-dev/skills; ClipsAI: https://github.com/ClipsAI/clipsai; MoneyPrinterV2: https://github.com/FujiwaraChoki/MoneyPrinterV2 (lướt, ít giá trị: là công cụ đăng bài, không có kiểm chất lượng)
 - [chỉ thấy] blog hook 3 giây: https://dev.to/bulkdl/hook-engineering-the-science-of-the-first-3-seconds-in-short-form-video-2026-2jp9
 - [chỉ thấy] tiếng Việt: https://www.capcut.com/vi-vn/resource/best-tiktok-hooks
+
+## Bổ sung vòng 2 (9/11/2026)
+
+Đọc thêm nguồn thật bằng đọc trang web (không Chrome, không chạy code tải về). [đọc] = đã mở trang và trích; [chỉ thấy] = chỉ thấy qua tìm kiếm hoặc bài thứ cấp.
+
+### A. Vùng an toàn dọc: có số từ trang chính thức, lệch với số đang dùng
+- [đọc] Meta, thông số quảng cáo Instagram Reels (trang trả bản tiếng Việt), nguyên văn: "Tránh thêm văn bản, logo hoặc các thành phần nội dung quan trọng khác trong khoảng 14% không gian trên cùng, 35% không gian dưới cùng và 6% không gian ở mỗi cạnh bên của tài sản." https://www.facebook.com/business/ads-guide/update/video/instagram-reels
+  - Quy ra khung 1080×1920 (tôi tính: 14% × 1920 ≈ 269 px; 35% × 1920 = 672 px; 6% × 1080 ≈ 65 px): chữ nằm trong dải y ≈ 269–1248, cách mỗi bên ≈ 65 px. Bài flowjam ghi "roughly the top 270 pixels, the bottom 670 and 65 on each side", khớp phép tính. https://www.flowjam.com/blog/video-ad-specs [chỉ thấy]
+- [đọc] TikTok, thông số quảng cáo in-feed (cập nhật "June 2026"), nguyên văn: "The safe zone size is determined by the dimension (vertical, horizontal, or square), ad caption length, and any additional formats used." Không có số phần trăm; vùng an toàn là tệp zip mẫu (chưa mở). https://ads.tiktok.com/help/article/video-ads-specifications
+- YouTube: PDF "Universal Safe Zones for Video on YouTube" https://services.google.com/fh/files/misc/universalsafezones-youtube.pdf tải được nhưng là ảnh, chưa đọc được chữ. Đưa vào `DR/DE-2.md`.
+- reap.video tự đề xuất "15 percent at the top and 25 to 35 percent at the bottom" và tự nói "Treat these as working margins, not official universal specifications." https://reap.video/blog/short-form-video-safe-zones [chỉ thấy]
+- **Kết luận**: dải 168–1330 px của HyperFrames **rộng hơn** dải Meta (≈269–1248) ở cả hai đầu. Nếu làm quảng cáo Reels thì chữ sát mép sẽ bị che. [đề xuất, chưa thử] `kiem_khung.mjs` có hai chế độ: `organic` (168–1330, HyperFrames) và `ads` (Meta 14/35/6%).
+
+### B. Phụ đề tiếng Việt: có số tốc độ đọc (lấp mục "chữ Việt có dấu dài hơn")
+- [đọc] Netflix Vietnamese Timed Text Style Guide. Mục 2: "42 characters per line." Mục 14: "Adult programs: Up to 17 characters per second", "Children's programs: Up to 13 characters per second". Mục 21 (SDH): "Adult programs: Up to 20 characters per second". https://partnerhelp.netflixstudios.com/hc/en-us/articles/220447048-Vietnamese-Timed-Text-Style-Guide
+- [đọc] Quy định chung: tối thiểu "5/6 (five-sixths) of a second per subtitle event", tối đa "7 seconds per subtitle event", "2 lines maximum". https://partnerhelp.netflixstudios.com/hc/en-us/articles/215758617-Timed-Text-Style-Guide-General-Requirements
+- [đọc] Đối chiếu Anh Mỹ, mục I.14: "Adult programs: Up to 20 characters per second", "Children's programs: Up to 17 characters per second". https://partnerhelp.netflixstudios.com/hc/en-us/articles/217350977-English-USA-Timed-Text-Style-Guide
+- Tôi tính từ số trên: dòng đầy 42 ký tự cần ≥ 42/17 ≈ 2,5 giây (Việt) so với 42/20 = 2,1 giây (Anh). [đề xuất, chưa thử] giữ chữ = số lớn hơn của (0,5 + 0,3 × số chữ) và (số ký tự ÷ 17). Lưu ý Netflix là phim dài, phụ đề dịch; không có số chính thức riêng cho reel.
+- Bản cũ có "words per minute", đã bỏ ngày 2018-03-09 ("Revised section 14 Reading Speed - words per minute removed"): chỉ dùng cps.
+
+### C. Số "3 giây đầu": thay blog bằng nguồn có tên bên đo
+- [chỉ thấy] Social Media Today (Andrew Hutchinson, 22/3/2026) tóm báo cáo Emplifi, đo 10.110 Facebook Reels của 704 trang thương hiệu: "human speech performs even better than music, with 10-second retention increasing almost 25%"; "when a person appears for at least one second within the first three seconds of a Reels clip, retention improves by about 10% for 10-second views". https://www.socialmediatoday.com/news/human-speech-and-presence-help-drive-reels-engagement/815381 (gốc: https://emplifi.io/resources/facebook-reels-data/, chưa mở)
+- Giới hạn: chỉ Facebook Reels của thương hiệu, bên thứ ba, không phải số của Meta. Câu "47% of the value … first three seconds" gán cho "Meta's own research" chỉ thấy ở blog bên thứ ba, không kiểm được, không dùng.
+- Dùng làm gợi ý (có người nói/xuất hiện trong 3 giây đầu), không làm ngưỡng máy đo.
+
+### D. Remotion lõi
+- [đọc] "The `@remotion/captions` package provides utilities for dealing with subtitles." và "At the centre of this caption is the `Caption` type, which defines a standard shape for captions from different sources." https://www.remotion.dev/docs/captions/api
+- Học: một định dạng trung gian giữa bước chuyển giọng và bước dựng, chỗ để chèn phép kiểm cps. LINHX đã có `cues.json`, chỉ cần thêm phép kiểm đó.
+- Chưa đọc được: `/docs/` và `/docs/google-fonts/` trả 404; chưa có gì về kiểm tải phông chữ Việt của Remotion.
+
+### E. Máy đo thử trên mẫu thật (script của repo, không chạy code lạ)
+Script `skills/bo/linhx-phim-code/skills/phim-code/scripts/kiem_video.py` (cần ffmpeg/ffprobe, có sẵn). Mẫu: `D:\LINHX\ai-ugc-video\clips\scene1.mp4`, `scene2.mp4` (clip AI 8 giây của dự án UGC, không phải bản vàng).
+- Lệnh 1: `PYTHONUTF8=1 python scripts/kiem_video.py D:/LINHX/ai-ugc-video/clips/scene1.mp4 --kho 9:16 --giay 4-10`. Kết quả thật: `720x1280 24.00fps 8.0s tiếng=có -16.8 LUFS, đỉnh -2.4 dBTP`; LỖI 0; CẢNH BÁO 1 ("cạnh ngắn 720px < 1080"); thoát 0.
+- Lệnh 2: `scene2.mp4 --kho 16:9 --giay 4-10` (cố ý đặt sai khổ). Kết quả thật: `-22.7 LUFS, đỉnh -6.3 dBTP`; LỖI 2 ("khổ 720x1280 không phải 16:9", "độ to -22.7 LUFS, cần khoảng -14 (chấp nhận -18..-12)"); thoát 1. Nhánh báo lỗi chạy đúng.
+- Lần chạy đầu (không đặt `PYTHONUTF8`) **lỗi** `UnicodeEncodeError: 'charmap' codec can't encode character '\u1ec3'` ở dòng in kết quả (Python 3.12, Windows, cp1252). Đây là lỗi thật của script trên Windows. [đề xuất] thêm `sys.stdout.reconfigure(encoding="utf-8")` ở đầu `kiem_video.py`, nếu không thợ sẽ tưởng máy hỏng.
+- Đề xuất vòng 1 (LUFS −16…−14): `scene1` đo −16,8 LUFS vừa **qua** ngưỡng hiện tại (−18…−12) vừa **trượt** −16…−14, nên ngưỡng mới có tác dụng thật. Chưa biết −16…−14 có hợp nền tảng Việt (chỉ có nguồn HyperFrames).
+- Chưa thử: `kiem_khung.mjs` (cần trang HyperFrames, máy này không có mẫu) và các đề xuất đổi (giữ chữ, dải an toàn).
+
+### F. Còn thiếu sau vòng 2
+- Chưa đọc nguồn studio làm nghề nào: công cụ đọc trang không tự tìm được URL; cần URL cụ thể hoặc máy công ty. Xếp vào `DR/DE-2.md`.
+- Bản vàng chưa xem tận mắt; link ở `DR/DE-2.md`.
+- Vùng an toàn YouTube Shorts, zip mẫu TikTok, số giữ chân xem từ nền tảng chính thức: chưa có.
+- Mục ArcFace của WF14 không thuộc WF12, không làm ở đây.
