@@ -213,7 +213,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $maCk = $LASTEXITCODE
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
-  if ($ck -match 'Timeout \d+ms exceeded|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
+  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
