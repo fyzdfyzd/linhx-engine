@@ -29,14 +29,15 @@
    "vai": "trưởng: nghe nhóm, trả lời nhanh hồ sơ, nhận việc dài, chọn workflow, gộp kết quả",
    "bao_cao_cho": "chu",
    "chiu_trach_nhiem": "chu",
-   "tho": "claude",
+   "tho": "agy",
    "skills": [
     "linhx-chuan"
    ],
    "workflows": [
     "tra-ho-so",
     "viec-chung"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "lead",
@@ -44,14 +45,15 @@
    "vai": "đọc brief, soạn trả lời khách + 3 ý tưởng Idea Book",
    "bao_cao_cho": "truong",
    "chiu_trach_nhiem": "nhan-vien",
-   "tho": "claude",
+   "tho": "agy",
    "skills": [
     "proposal-brief",
     "proposal-ideas"
    ],
    "workflows": [
     "tra-loi-lead"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "proposal",
@@ -65,7 +67,8 @@
    ],
    "workflows": [
     "soan-proposal"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "bao-cao",
@@ -79,7 +82,8 @@
    ],
    "workflows": [
     "bao-cao-sau-su-kien"
-   ]
+   ],
+   "phan_khu": "run"
   },
   {
    "ma": "cham",
@@ -91,7 +95,8 @@
    "skills": [
     "linhx-chuan"
    ],
-   "workflows": []
+   "workflows": [],
+   "phan_khu": "learn"
   }
  ]
 }

@@ -375,3 +375,70 @@ def test_designer_dat_kiem(tmp_path):
     assert af.kiem(w) == []
     assert {'onboard-don-vi', 'dung-workforce', 'chay-bong', 'cham-muc', 'hoc-chuan-cao', 'nang-mau'} <= set(w.ds_workflow())
     assert af.d0_tra_loi(w)[0] == 7
+
+
+def test_phan_khu_design_run_learn(w):
+    assert af.kiem(w) == [] or all('skill' in x for x in af.kiem(w))
+    assert af.khu_cua(w, 'viec/LX-0001/dau-ra/a.md') == 'run'
+    assert af.khu_cua(w, 'workflow/viec-chung.json') == 'design'
+    assert af.khu_cua(w, 'HOC.jsonl') == 'learn'
+    tc = af.doc_json(w.p('to-chuc.json'))
+    tc['cong_nhan'][0]['tho'] = 'claude'  # truong ở khu run phải dùng agy
+    af.ghi_json(w.p('to-chuc.json'), tc)
+    wf = af.doc_json(w.p('workflow', 'viec-chung.json'))
+    wf['buoc'][0]['ghi'] = 'workflow/viec-chung.json'  # run không được sửa workflow
+    af.ghi_json(w.p('workflow', 'viec-chung.json'), wf)
+    loi = af.kiem(af.WF(w.goc))
+    assert any('khu run dùng thợ agy' in x for x in loi)
+    assert any('không được ghi workflow/viec-chung.json' in x for x in loi)
+
+
+def test_learn_tu_cai_thien_va_dem_nguon(w):
+    ma = giao(w)
+    chuyen(w, ma, 'dang_lam')
+    with pytest.raises(af.Loi):
+        chuyen(w, ma, 'cho_duyet')  # dau-ra trống: cổng chặn → bài học về công nhân
+    hoc = af.doc_dong(w.p('HOC.jsonl'))
+    assert any(h['dich'].startswith('cong-nhan:') and h['bang_chung'][0]['nguon'] == 'tu-cai-thien' for h in hoc)
+    lam_xong_buoc(w, ma)
+    with open(w.p('viec', ma, 'nhat-ky.md'), 'a', encoding='utf-8') as f:
+        f.write('\n## Phản tư\n- Quên đối chiếu tên đối tác, lần sau mở su-that trước\n')
+    chuyen(w, ma, 'cho_duyet')
+    af.ghi_json(w.p('thu', 'ket-qua', '2026-11-09.json'), {'tong': 1, 'dat': 0, 'nguoi_cham': 'cham',
+                'ca': [{'id': 'C1', 'dat': False, 'dich': 'workflow:viec-chung', 'ly_do': 'thiếu nguồn'}]})
+    af.lenh_hoc(N(thu_muc=w.goc), w)
+    af.lenh_hoc(N(thu_muc=w.goc), w)  # chạy lại không nhân đôi
+    dem = af.dem_nguon(w)
+    assert dem['tu-cai-thien'] >= 3 and dem['chu'] == 0
+    chuyen(w, ma, 'tra_lai', ai='hang', ly_do='thiếu lời cảm ơn cụ thể')
+    assert af.dem_nguon(w)['chu'] == 1
+
+
+def test_bai_hoc_cham_theo_ket_qua_viec(w):
+    hid = af.ghi_phan_hoi(w, 'workflow:viec-chung', 'xau', 'Luôn nêu tên đối tác trong câu đầu', 'LX-9999', 'hang')
+    for i in range(3):  # áp 3 lần, cả 3 đều bị trả lại
+        ma = giao(w, viec=f'Thư {i}')
+        assert hid in af.doc_json(w.p('viec', ma, 'viec.json'))['bai_hoc_ap']
+        chuyen(w, ma, 'dang_lam')
+        lam_xong_buoc(w, ma)
+        chuyen(w, ma, 'cho_duyet')
+        chuyen(w, ma, 'tra_lai', ai='hang', ly_do=f'lỗi khác số {i} hoàn toàn riêng biệt {i * 7}')
+    h = next(x for x in af.doc_dong(w.p('HOC.jsonl')) if x['id'] == hid)
+    assert h['ap_truot'] == 3 and af.chat_luong(h) == 0.3
+    af.lenh_hoc(N(thu_muc=w.goc), w)
+    assert next(x for x in af.doc_dong(w.p('HOC.jsonl')) if x['id'] == hid)['trang_thai'] == 'tia'
+
+
+def test_xuat_da_nen(w, tmp_path):
+    ra = str(tmp_path / 'ra')
+    ten = af.lenh_xuat(N(thu_muc=w.goc, ra=ra, nen='tat-ca'))
+    assert ten == 'workforce-thu' and len(ten) <= 64
+    for duong in (f'chung/.agents/skills/{ten}/SKILL.md', f'claude/.claude/skills/{ten}/SKILL.md',
+                  f'copilot/.github/skills/{ten}/SKILL.md', 'copilot/.github/prompts/viec-chung.prompt.md',
+                  f'gemini/{ten}/gemini-extension.json', f'gemini/{ten}/commands/viec-chung.toml',
+                  f'gemini/{ten}/skills/{ten}/scripts/af.py', 'task/GOI.md', 'task/TASK.md', 'task/workforce.zip'):
+        assert os.path.exists(os.path.join(ra, duong)), duong
+    sk = af.doc(os.path.join(ra, 'chung', '.agents', 'skills', ten, 'SKILL.md'))
+    assert sk.startswith('---\nname: ' + ten + '\ndescription: ')
+    mo_ta = json.loads(sk.split('description: ', 1)[1].split('\n', 1)[0])
+    assert 0 < len(mo_ta) <= 1024 and len(sk.splitlines()) < 500

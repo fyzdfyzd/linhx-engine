@@ -1,0 +1,13 @@
+{
+ "tong": 4,
+ "dat_moi": 3,
+ "dat_cu": 1,
+ "nguoi_cham": "claude haiku (phiên riêng)",
+ "tho": "claude sonnet",
+ "ca_truot_moi": [
+  {
+   "id": "ON02",
+   "ly_do": "Câu trả lời ghi chỗ lệch vào mục mau_thuan của su-that.json kèm ngày hiệu lực, nhưng không nói rõ việc dọn nguồn thành su-that.json có ngày hiệu lực trước khi dùng, nên ý phải có thứ nhất chỉ đạt hời hợt."
+  }
+ ]
+}

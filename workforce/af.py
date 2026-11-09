@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """af.py: lõi LINHX Agent Force. Một workforce = một thư mục. Chỉ Python stdlib.
 
-Vòng: SETUP (moi) -> RUNNING (giao, chuyen, bang) -> LEARNING (phan-hoi, hoc) -> UPDATE (thang-cap, lui) -> RUNNING.
+Ba khu design-run-learn (Linh 9/11), ranh giới ở PHAN_KHU / workforce.json "phan_khu":
+  DESIGN (Claude): moi, nap-skill, kiem, muc, thang-cap, lui, dong-goi
+  RUN (agy):       giao, chuyen, bang, lenh, may-chu
+  LEARN:           phan-hoi, nho, vang, ban-sua, hoc-ngoai, hoc, hoc-cheo -> de-xuat/ -> DESIGN duyệt
 
   python af.py moi <W> --ten "Nụ Event" --don-vi "ifAgent Event" [--kho ../skills --skills a,b]
   python af.py giao <W> --workflow tra-loi-lead --viec "..." [--nguoi-giao linh]
@@ -23,6 +26,7 @@ Vòng: SETUP (moi) -> RUNNING (giao, chuyen, bang) -> LEARNING (phan-hoi, hoc) -
   python af.py muc --mau ban-hang <W1> <W2>  # mức 3: bộ mẫu đã chạy ổn ở ≥ 2 đơn vị
   python af.py hoc-cheo ban-hang <W1> <W2> <W3>   # bài học lặp ở ≥ 3 đơn vị → sửa bộ mẫu
   python af.py dong-goi <W> <ra.zip> [--mot-file GOI.md]
+  python af.py xuat <W> <ra> [--nen chung|claude|copilot|gemini|task|tat-ca]   # một nguồn, mọi nền
   python af.py may-chu <W> [--cong 8120]    # server mỏng, token ở biến AF_TOKEN
 """
 import argparse, difflib, fnmatch, html, json, os, re, shutil, sys, time, zipfile
@@ -175,7 +179,7 @@ class WF:
         return doc_json(self.p('thong-ke.json'), {'cong_nhan': {}, 'skill': {}, 'workflow': {}})
 
 
-# ---------- SETUP ----------
+# ---------- DESIGN: dựng ----------
 def lenh_moi(a):
     if os.path.exists(a.thu_muc) and os.listdir(a.thu_muc):
         raise Loi(f'{a.thu_muc} đã có nội dung, không ghi đè')
@@ -246,7 +250,7 @@ def tim_skill(kho, ten):
     raise Loi(f'không thấy skill "{ten}" trong {kho}')
 
 
-# ---------- RUNNING ----------
+# ---------- RUN ----------
 def lenh_giao(a, w=None):
     w = w or WF(a.thu_muc)
     wf = w.workflow(a.workflow)
@@ -284,6 +288,7 @@ Trước khi làm: đọc `../../NHO.md`, `../../02-wiki/INDEX.md`, và các dò
 {bai_hoc_cho(w, wf)}
 """)
     ghi(os.path.join(d, 'nhat-ky.md'), f'# Nhật ký {ma}\n')
+    viec['bai_hoc_ap'] = [h['id'] for h in ds_bai_hoc_cho(w, wf)]
     ghi_json(os.path.join(d, 'viec.json'), viec)
     w.su_kien('giao', viec=ma, workflow=a.workflow, ai=a.nguoi_giao)
     w.thong_bao(a.nguoi_giao, f'Em nhận, mã {ma}: {a.viec}', ma)
@@ -296,11 +301,36 @@ def ds_vang(w, dich):
     return sorted(os.path.relpath(os.path.join(d, f), w.goc).replace('\\', '/') for f in os.listdir(d) if '.khong-dat' not in f) if os.path.isdir(d) else []
 
 
-def bai_hoc_cho(w, wf):
+def ds_bai_hoc_cho(w, wf):
     dich = {f'workflow:{wf["ten"]}', 'he-thong'} | {f'skill:{b["skill"]}' for b in wf['buoc'] if b.get('skill')} \
         | {f'cong-nhan:{b["cong_nhan"]}' for b in wf['buoc']}
-    ds = [h for h in doc_dong(w.p('HOC.jsonl')) if h['dich'] in dich and h['trang_thai'] in ('mo', 'de_xuat')]
-    return '\n'.join(f'- [{h["id"]}] ({h["dich"]}, +{h["ung_ho"]}/-{h["phan_doi"]}) {h["noi_dung"]}' for h in ds) or '- (chưa có)'
+    return [h for h in doc_dong(w.p('HOC.jsonl')) if h['dich'] in dich and h['trang_thai'] in ('mo', 'de_xuat')]
+
+
+def chat_luong(h):
+    """Chấm bài học theo kết quả việc đã áp nó (Ruflo ReasoningBank: 0,3 + 0,7 × tỉ lệ đạt); chưa áp lần nào thì None."""
+    dat, truot = h.get('ap_dat', 0), h.get('ap_truot', 0)
+    return round(0.3 + 0.7 * dat / (dat + truot), 2) if dat + truot else None
+
+
+def ghi_ket_qua_ap(w, v, dat):
+    """Việc xong hoặc bị trả lại: cộng kết quả cho mọi bài học đã chép vào TASK.md của việc đó."""
+    ap = set(v.get('bai_hoc_ap', []))
+    if not ap:
+        return
+    ds = doc_dong(w.p('HOC.jsonl'))
+    for h in ds:
+        if h['id'] in ap:
+            k = 'ap_dat' if dat else 'ap_truot'
+            h[k] = h.get(k, 0) + 1
+    ghi_lai_hoc(w, ds)
+
+
+def bai_hoc_cho(w, wf):
+    ds = ds_bai_hoc_cho(w, wf)
+    return '\n'.join(f'- [{h["id"]}] ({h["dich"]}, +{h["ung_ho"]}/-{h["phan_doi"]}'
+                     + (f', chất lượng {chat_luong(h)}' if chat_luong(h) is not None else '') + f') {h["noi_dung"]}'
+                     for h in ds) or '- (chưa có)'
 
 
 def kiem_dau_ra(w, ma):
@@ -333,7 +363,10 @@ def lenh_chuyen(a, w=None):
         raise Loi(f'{a.ma}: không chuyển được {tu} → {den}')
     if den == 'cho_duyet':
         loi = kiem_dau_ra(w, a.ma)
-        if loi:
+        if loi:  # tự cải thiện: cổng chặn thì thành bài học về công nhân
+            for x in loi:
+                ghi_phan_hoi(w, f'cong-nhan:{v["cong_nhan"]}', 'xau', 'Cổng chống slop chặn: ' + re.sub(r'"[^"]*"', '"…"', x),
+                             a.ma, 'cong', 'tu-cai-thien')
             raise Loi(f'{a.ma} chưa trình duyệt được:\n  ' + '\n  '.join(loi))
     if den in ('xong', 'tra_lai'):
         if a.ai != v['nguoi_duyet'] and not (w.nguoi(a.ai) or {}).get('vai') == 'chu':
@@ -349,16 +382,23 @@ def lenh_chuyen(a, w=None):
         v['vong'] += 1
         cn['tra_lai'] += 1
         wfk['tra_lai'] += 1
+        ghi_ket_qua_ap(w, v, False)
         ghi_phan_hoi(w, f'workflow:{v["workflow"]}', 'xau', a.ly_do, a.ma, a.ai)
         w.thong_bao(v['nguoi_giao'], f'{a.ma} bị trả lại vòng {v["vong"] - 1}: {a.ly_do}', a.ma)
     if den == 'xong':
         v['xong_luc'] = bay_gio()
+        ghi_ket_qua_ap(w, v, True)
         cn['xong'] += 1
         cn['dat_lan_dau'] += v['vong'] == 1
         wfk['xong'] += 1
         wfk['phut'].append(round((time.mktime(time.strptime(v['xong_luc'], '%Y-%m-%dT%H:%M:%S'))
                                   - time.mktime(time.strptime(v['tao_luc'], '%Y-%m-%dT%H:%M:%S'))) / 60, 1))
         w.thong_bao(v['nguoi_giao'], f'{a.ma} xong, file trong viec/{a.ma}/dau-ra', a.ma)
+    if den in ('cho_duyet', 'xong'):  # tự cải thiện: phản tư của thợ
+        da = {b['noi_dung'] for h in doc_dong(w.p('HOC.jsonl')) for b in h['bang_chung'] if b['viec'] == a.ma}
+        for x in phan_tu(w, a.ma):
+            if x not in da:
+                ghi_phan_hoi(w, f'workflow:{v["workflow"]}', 'xau', x, a.ma, 'tho', 'tu-cai-thien')
     if den == 'cho_duyet':
         w.thong_bao(v['nguoi_duyet'], f'{a.ma} chờ anh/chị duyệt: {v["viec"]}', a.ma)
     ghi_json(w.p('thong-ke.json'), tk)
@@ -380,7 +420,8 @@ def lenh_bang(a, w=None):
     if ds:
         dong += ['', f'Xong {len(xong)}/{len(ds)} · đạt lần đầu {sum(v["vong"] == 1 for v in xong)}/{len(xong) or 1}'
                      f' · bài học mở {sum(h["trang_thai"] == "mo" for h in doc_dong(w.p("HOC.jsonl")))}'
-                     f' · đề xuất chờ duyệt {len(ds_de_xuat(w, "cho_duyet"))}']
+                     f' · đề xuất chờ duyệt {len(ds_de_xuat(w, "cho_duyet"))}',
+                 'Nguồn học: ' + ' · '.join(f'{k} {n}' for k, n in dem_nguon(w).items())]
     van_ban = '\n'.join(dong)
     if getattr(a, 'html', None):
         ghi(a.html, '<!doctype html><meta charset="utf-8"><title>Bảng việc</title><pre style="font:15px/1.5 system-ui;max-width:860px;margin:24px auto;white-space:pre-wrap">'
@@ -389,12 +430,38 @@ def lenh_bang(a, w=None):
     return van_ban
 
 
-# ---------- LEARNING ----------
+# ---------- LEARN ----------
 def chuan_hoa(t):
     return re.sub(r'\s+', ' ', t.lower()).strip()
 
 
-def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
+NGUON_HOC = ('tu-cai-thien', 'chu', 'nguoi-gioi', 'cheo')  # bốn nguồn học của khu learn (Linh 9/11)
+
+
+def nguon_hoc(nhan):
+    if nhan in ('chuan-ngoai', 'ban-sua', 'vang', 'nguoi-gioi'):
+        return 'nguoi-gioi'
+    if nhan in ('tu-cai-thien', 'cheo'):
+        return nhan
+    return 'chu'  # phản hồi của chủ và người trong đơn vị (/gopy, /tra, /duyet, phan-hoi)
+
+
+def dem_nguon(w):
+    dem = dict.fromkeys(NGUON_HOC, 0)
+    for h in doc_dong(w.p('HOC.jsonl')):
+        for b in h['bang_chung']:
+            dem[b.get('nguon') or nguon_hoc(b.get('nhan'))] += 1
+    return dem
+
+
+def phan_tu(w, ma):
+    """Dòng '- ...' dưới mục '## Phản tư' cuối nhat-ky.md: thợ ghi vấp gì, đường đúng là gì."""
+    t = doc(w.p('viec', ma, 'nhat-ky.md'))
+    m = re.search(r'^##\s*Phản tư\s*$(.*?)(?=^## |\Z)', t, re.M | re.S)
+    return [x.strip() for x in re.findall(r'^- (.+)$', m.group(1), re.M)] if m else []
+
+
+def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None, chi_tiet=None):
     """Mỗi phản hồi thành bullet ACE trong HOC.jsonl. Ý giống bullet cũ (≥ 0,75) thì cộng dồn, không thêm dòng."""
     w.duong_dich(dich)
     ds = doc_dong(w.p('HOC.jsonl'))
@@ -410,7 +477,8 @@ def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
                'bang_chung': [], 'trang_thai': 'mo', 'tao_luc': bay_gio()}
         ds.append(gan)
     gan['ung_ho' if (tot == (gan['loai'] == 'tot')) else 'phan_doi'] += 1
-    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan})
+    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan,
+                              'nguon': nguon_hoc(nhan), **({'chi_tiet': chi_tiet} if chi_tiet else {})})
     ghi_lai_hoc(w, ds)
     w.su_kien('phan_hoi', dich=dich, loai=loai, viec=viec, ai=ai, bai_hoc=gan['id'], nhan=nhan)
     return gan['id']
@@ -426,7 +494,9 @@ def ghi_lai_hoc(w, ds):
         nhom = [h for h in ds if h['trang_thai'] == t]
         if nhom:
             dong.append(f'## {t}')
-            dong += [f'- [{h["id"]}] {h["dich"]} · +{h["ung_ho"]}/-{h["phan_doi"]} · {h["noi_dung"]}' for h in nhom]
+            dong += [f'- [{h["id"]}] {h["dich"]} · +{h["ung_ho"]}/-{h["phan_doi"]}'
+                     + (f' · áp {h.get("ap_dat", 0)} đạt/{h.get("ap_truot", 0)} trượt, chất lượng {chat_luong(h)}' if chat_luong(h) is not None else '')
+                     + f' · {h["noi_dung"]}' for h in nhom]
     ghi(w.p('HOC.md'), '\n'.join(dong) + '\n')
 
 
@@ -504,14 +574,35 @@ def ds_de_xuat(w, trang_thai=None):
     return [x for x in ds if x and (trang_thai is None or x['trang_thai'] == trang_thai)]
 
 
+def nap_ket_qua_thu(w):
+    """Tự cải thiện: mỗi ca trượt trong thu/ket-qua/*.json ({"ca": [{"id", "dat", "dich", "ly_do"}]}) thành một bài học."""
+    d = w.p('thu', 'ket-qua')
+    da = {b['viec'] for h in doc_dong(w.p('HOC.jsonl')) for b in h['bang_chung']}
+    for f in sorted(os.listdir(d)) if os.path.isdir(d) else []:
+        if not f.endswith('.json'):
+            continue
+        for c in (doc_json(os.path.join(d, f)) or {}).get('ca', []):
+            ma = f'THU:{f}:{c.get("id")}'
+            if not c.get('dat') and c.get('dich') and ma not in da:
+                # nội dung cố định theo đích: mọi ca trượt của một workflow gom vào một bài học; lời người chấm vào chi_tiet
+                ghi_phan_hoi(w, c['dich'], 'xau', f'Bộ thử trượt ở {c["dich"]}: sửa theo chi tiết từng ca', ma, 'cham', 'tu-cai-thien',
+                             c.get('ly_do'))
+
+
 def lenh_hoc(a, w=None):
-    """LEARNING: bài học đủ bằng chứng thành đề xuất sửa; bài học bị phản đối nhiều thì tỉa."""
+    """LEARN: bài học đủ bằng chứng thành đề xuất sửa; bài học bị phản đối nhiều thì tỉa."""
     w = w or WF(a.thu_muc)
+    nap_ket_qua_thu(w)
     nguong = w.cau_hinh.get('nguong_de_xuat', 2)
     ds = doc_dong(w.p('HOC.jsonl'))
     moi, tia = [], []
     for h in ds:
         if h['trang_thai'] != 'mo':
+            continue
+        cl = chat_luong(h)
+        if cl is not None and h.get('ap_dat', 0) + h.get('ap_truot', 0) >= 3 and cl < 0.6:
+            h['trang_thai'] = 'tia'  # áp nhiều lần mà việc vẫn bị trả lại: bài học không giúp
+            tia.append(h['id'])
             continue
         if h['phan_doi'] >= 2 and h['phan_doi'] >= h['ung_ho']:
             h['trang_thai'] = 'tia'
@@ -527,6 +618,7 @@ def lenh_hoc(a, w=None):
 
 Bài học: {h['noi_dung']} (+{h['ung_ho']}/-{h['phan_doi']})
 Bằng chứng: {', '.join(str(b['viec']) for b in h['bang_chung'])}
+{''.join(f"{chr(10)}- {b['viec']}: {b['chi_tiet']}" for b in h['bang_chung'] if b.get('chi_tiet'))}
 Đích: `{duong}` (đang v{w.ban(h['dich'])})
 
 ## Thợ (Claude/agy) làm
@@ -552,7 +644,7 @@ Bằng chứng: {', '.join(str(b['viec']) for b in h['bang_chung'])}
     return moi
 
 
-# ---------- UPDATE ----------
+# ---------- DESIGN: thăng cấp, lùi ----------
 def lenh_thang_cap(a, w=None):
     w = w or WF(a.thu_muc)
     d = w.p('de-xuat', a.ma)
@@ -680,6 +772,28 @@ def lenh_lenh(a, w=None):
 
 
 # ---------- KIỂM ----------
+PHAN_KHU = {  # design-run-learn: ba khu của mọi workforce (Linh 9/11); workforce.json "phan_khu" ghi đè được
+    'design': {'tho': 'claude', 'ghi': ['00-D0-NHU-CAU.md', '01-nguon/', '02-wiki/', 'to-chuc.json', 'workforce.json',
+                                        'cong-nhan/', 'workflow/', '.agents/skills/', 'thu/', 'vang/', 'phat-hanh/',
+                                        'AGENTS.md', 'CLAUDE.md', 'GEMINI.md']},
+    'run': {'tho': 'agy', 'ghi': ['viec/', 'bang-viec.jsonl', 'hop-thu/', 'thong-ke.json']},
+    'learn': {'tho': 'claude', 'ghi': ['HOC.jsonl', 'HOC.md', 'NHO.md', 'de-xuat/']},
+}
+
+
+def phan_khu(w):
+    return w.cau_hinh.get('phan_khu') or PHAN_KHU
+
+
+def khu_cua(w, duong):
+    """Đường (tương đối gốc workforce) thuộc khu nào; None nếu chưa xếp."""
+    duong = duong.replace('\\', '/')
+    for k, v in phan_khu(w).items():
+        if any(duong == g or (g.endswith('/') and duong.startswith(g)) for g in v['ghi']):
+            return k
+    return None
+
+
 def kiem(w):
     loi = []
     for f in ('AGENTS.md', 'CLAUDE.md', 'NHO.md', 'to-chuc.json', '02-wiki/INDEX.md', '02-wiki/su-that.json', '00-D0-NHU-CAU.md'):
@@ -699,6 +813,11 @@ def kiem(w):
         for f in ('ROLE.md', 'POLICIES.md', 'HEARTBEAT.md'):
             if not os.path.exists(w.p('cong-nhan', c['ma'], f)):
                 loi.append(f'thiếu cong-nhan/{c["ma"]}/{f}')
+        khu = phan_khu(w)
+        if c.get('phan_khu') not in khu:
+            loi.append(f'công nhân {c["ma"]}: phan_khu phải là một trong {"/".join(khu)}')
+        elif c['phan_khu'] != 'learn' and khu[c['phan_khu']].get('tho') not in str(c.get('tho', '')):
+            loi.append(f'công nhân {c["ma"]}: khu {c["phan_khu"]} dùng thợ {khu[c["phan_khu"]]["tho"]}, đang ghi "{c.get("tho")}"')
     for c in cn:  # vòng báo cáo
         thay, x = set(), c
         while x in cn:
@@ -721,6 +840,11 @@ def kiem(w):
         for b in wf.get('buoc', []):
             if b.get('cong_nhan') not in cn:
                 loi.append(f'workflow {ten} bước {b.get("id")}: công nhân "{b.get("cong_nhan")}" không có')
+            ghi = b.get('ghi')
+            if ghi and b.get('cong_nhan') in cn:
+                k = khu_cua(w, ghi)
+                if k != cn[b['cong_nhan']].get('phan_khu') and not (k == 'learn' and ghi == 'HOC.jsonl'):
+                    loi.append(f'workflow {ten} bước {b.get("id")}: {b["cong_nhan"]} (khu {cn[b["cong_nhan"]].get("phan_khu")}) không được ghi {ghi} (khu {k}); đi qua de-xuat')
             if b.get('skill') and b['skill'] not in skills:
                 loi.append(f'workflow {ten} bước {b.get("id")}: skill "{b["skill"]}" chưa có trong .agents/skills')
     try:
@@ -814,6 +938,9 @@ def lenh_muc(a):
         print(ten)
         for dieu, dat, ct in r[nhom]:
             print(f'  {"✓" if dat else "✗"} {dieu} ({ct})')
+    dem = dem_nguon(w)
+    print('Nguồn học (bằng chứng): ' + ' · '.join(f'{k} {n}' for k, n in dem.items())
+          + ('' if all(dem[k] for k in ('tu-cai-thien', 'chu', 'nguoi-gioi')) else ' · CHƯA học đủ ba nguồn chính'))
     return 0 if r['muc'] >= 1 else 1
 
 
@@ -887,6 +1014,116 @@ def ghi_mot_file(w, ra):
         them(f'Skill {s}', w.p('.agents', 'skills', s, 'SKILL.md'))
     ghi(ra, '\n'.join(phan) + '\n')
     print(f'Đã ghi {ra} ({os.path.getsize(ra)} byte)')
+
+
+# ---------- DESIGN: xuất đa nền ----------
+NEN = ('chung', 'claude', 'copilot', 'gemini', 'task')
+
+
+def ten_skill(w):
+    import unicodedata
+    t = unicodedata.normalize('NFD', w.cau_hinh.get('ten') or os.path.basename(w.goc)).replace('đ', 'd').replace('Đ', 'D')
+    t = re.sub(r'[^a-z0-9]+', '-', ''.join(c for c in t if unicodedata.category(c) != 'Mn').lower()).strip('-')
+    return (t if t.startswith('workforce') else 'workforce-' + t)[:64].rstrip('-')
+
+
+def mo_ta_skill(w):
+    vd = [v for t in w.ds_workflow() for v in w.workflow(t).get('vi_du', [])[:2]]
+    m = (f'{w.cau_hinh.get("ten")} của {w.cau_hinh.get("don_vi")}: ' + ', '.join(w.ds_workflow())
+         + '. Dùng khi người dùng nói: ' + '; '.join(f'"{v}"' for v in vd))
+    return m.replace('\n', ' ')[:1024]
+
+
+def ghi_skill(w, d):
+    """Một thư mục skill chuẩn agentskills.io: SKILL.md + references/ + scripts/af.py. Nền nào đọc SKILL.md cũng chạy."""
+    ten = ten_skill(w)
+    os.makedirs(d, exist_ok=True)
+    ref = os.path.join(d, 'references')
+    for f in ('AGENTS.md', 'NHO.md', 'HOC.md', 'to-chuc.json', 'workforce.json', '00-D0-NHU-CAU.md'):
+        if os.path.exists(w.p(f)):
+            os.makedirs(ref, exist_ok=True)
+            shutil.copy2(w.p(f), os.path.join(ref, f))
+    for x in ('cong-nhan', 'workflow', 'vang', '02-wiki', 'thu'):
+        if os.path.isdir(w.p(x)):
+            shutil.copytree(w.p(x), os.path.join(ref, x), dirs_exist_ok=True,
+                            ignore=shutil.ignore_patterns('ket-qua', '*.tam', '.gitkeep'))
+    os.makedirs(os.path.join(d, 'scripts'), exist_ok=True)
+    shutil.copy2(os.path.abspath(__file__), os.path.join(d, 'scripts', 'af.py'))
+    bang = '\n'.join(f'| `{t}` | {w.workflow(t).get("mo_ta", "")} | `references/workflow/{t}.json` |' for t in w.ds_workflow())
+    ghi(os.path.join(d, 'SKILL.md'), f"""---
+name: {ten}
+description: {json.dumps(mo_ta_skill(w), ensure_ascii=False)}
+metadata:
+  version: {w.cau_hinh.get('phien_ban_khuon', '0.1.0')}
+  nguon: linhx-engine/workforce (af.py xuat)
+---
+
+# {w.cau_hinh.get('ten')} · {w.cau_hinh.get('don_vi')}
+
+Luật chung ở `references/AGENTS.md`: đọc trước mọi việc. Ba khu design-run-learn; chỉ ghi trong khu của vai mình.
+
+## Chọn workflow
+| Workflow | Làm gì | Đọc |
+|---|---|---|
+{bang}
+
+## Cách làm một việc
+1. Chọn workflow theo câu người dùng (trường `vi_du`). Không khớp thì dùng `viec-chung` nếu có, hoặc hỏi lại một câu.
+2. Đọc workflow, vai công nhân trong `references/cong-nhan/<ma>/ROLE.md` và `POLICIES.md`, bản vàng trong `references/vang/`.
+3. Làm theo `buoc`; xong thì tự kiểm từng dòng `tieu_chi`, ghi bằng chứng. Thiếu dữ liệu thì nói thiếu, không bịa.
+4. Có chạy được Python: dùng `scripts/af.py` (`giao`, `chuyen`, `kiem`, `muc`) với thư mục workforce. Không chạy được: làm tay theo các bước trên.
+5. Cuối việc ghi mục "Phản tư": vấp gì, đường đúng là gì.
+""")
+    return ten
+
+
+def lenh_xuat(a):
+    w = WF(a.thu_muc)
+    loi = [x for x in kiem(w) if 'chưa có trong .agents/skills' not in x]
+    if loi:
+        raise Loi('kiem chưa đạt, không xuất:\n  ' + '\n  '.join(loi))
+    nen = NEN if a.nen == 'tat-ca' else (a.nen,)
+    ten = ten_skill(w)
+    for n in nen:
+        g = os.path.join(a.ra, n)
+        if n == 'chung':
+            ghi_skill(w, os.path.join(g, '.agents', 'skills', ten))
+            shutil.copy2(w.p('AGENTS.md'), os.path.join(g, 'AGENTS.md'))
+        elif n == 'claude':
+            ghi_skill(w, os.path.join(g, '.claude', 'skills', ten))
+            ghi(os.path.join(g, 'CLAUDE.md'), f'Dùng skill `{ten}` cho mọi việc của {w.cau_hinh.get("don_vi")}.\n')
+        elif n == 'copilot':
+            ghi_skill(w, os.path.join(g, '.github', 'skills', ten))
+            ghi(os.path.join(g, '.github', 'copilot-instructions.md'),
+                f'Dùng skill `{ten}` (thư mục .github/skills/{ten}) cho mọi việc của {w.cau_hinh.get("don_vi")}. Đọc SKILL.md trước.\n')
+            for t in w.ds_workflow():
+                ghi(os.path.join(g, '.github', 'prompts', f'{t}.prompt.md'),
+                    f'---\ndescription: {json.dumps(w.workflow(t).get("mo_ta", t), ensure_ascii=False)}\n---\n'
+                    f'Dùng skill `{ten}`, workflow `{t}` (references/workflow/{t}.json). Việc: ${{input:viec}}\n')
+        elif n == 'gemini':
+            e = os.path.join(g, ten)
+            ghi_skill(w, os.path.join(e, 'skills', ten))
+            ghi_json(os.path.join(e, 'gemini-extension.json'),
+                     {'name': ten, 'version': w.cau_hinh.get('phien_ban_khuon', '0.1.0'), 'contextFileName': 'GEMINI.md'})
+            ghi(os.path.join(e, 'GEMINI.md'), f'Dùng skill `{ten}` cho mọi việc của {w.cau_hinh.get("don_vi")}. Đọc skills/{ten}/SKILL.md trước.\n')
+            for t in w.ds_workflow():
+                mt = w.workflow(t).get('mo_ta', t).replace('"', "'")
+                ghi(os.path.join(e, 'commands', f'{t}.toml'),
+                    f'description = "{mt}"\nprompt = """Dùng skill {ten}, workflow {t} (skills/{ten}/references/workflow/{t}.json). Việc: {{{{args}}}}"""\n')
+        elif n == 'task':
+            os.makedirs(g, exist_ok=True)
+            ghi_mot_file(w, os.path.join(g, 'GOI.md'))
+            ghi(os.path.join(g, 'TASK.md'), f"""# Giao việc cho {w.cau_hinh.get('ten')}
+
+Nơi chạy: Gemini Task, ChatGPT project, Jules hay bất kỳ agent nào nhận file. Không cần mạng, không cần cài gì.
+1. Đọc `GOI.md` từ trên xuống (luật, tổ chức, workflow, skill, điều cần nhớ).
+2. Việc cần làm: <ghi việc ở đây>
+3. Chọn đúng một workflow trong GOI.md, làm theo bước, tự kiểm từng tiêu chí, ghi bằng chứng và mục "Phản tư".
+4. Có Python thì chạy `af.py kiem .` trên thư mục giải nén từ `workforce.zip`.
+""")
+            lenh_dong_goi(argparse.Namespace(thu_muc=w.goc, ra=os.path.join(g, 'workforce.zip'), kem_viec=False, mot_file=None))
+        print(f'Đã xuất {n}: {g}')
+    return ten
 
 
 # ---------- SERVER MỎNG ----------
@@ -968,6 +1205,7 @@ def tao_parser():
     x.add_argument('--bo-mau')
     x = s.add_parser('dong-goi'); x.add_argument('thu_muc'); x.add_argument('ra'); x.add_argument('--kem-viec', action='store_true')
     x.add_argument('--mot-file')
+    x = s.add_parser('xuat'); x.add_argument('thu_muc'); x.add_argument('ra'); x.add_argument('--nen', choices=NEN + ('tat-ca',), default='tat-ca')
     x = s.add_parser('may-chu'); x.add_argument('thu_muc'); x.add_argument('--cong', type=int, default=8120); x.add_argument('--host', default='127.0.0.1')
     return p
 
@@ -988,7 +1226,7 @@ def main(argv=None):
                 print(kq)
             return 0
         {'moi': lenh_moi, 'giao': lenh_giao, 'chuyen': lenh_chuyen, 'bang': lenh_bang, 'phan-hoi': lenh_phan_hoi, 'nho': lenh_nho, 'vang': lenh_vang, 'hoc-ngoai': lenh_hoc_ngoai, 'ban-sua': lenh_ban_sua,
-         'hoc': lenh_hoc, 'thang-cap': lenh_thang_cap, 'lui': lenh_lui, 'nap-skill': lenh_nap_skill, 'dong-goi': lenh_dong_goi, 'may-chu': lenh_may_chu}[a.lenh](a)
+         'hoc': lenh_hoc, 'thang-cap': lenh_thang_cap, 'lui': lenh_lui, 'nap-skill': lenh_nap_skill, 'dong-goi': lenh_dong_goi, 'xuat': lenh_xuat, 'may-chu': lenh_may_chu}[a.lenh](a)
         return 0
     except Loi as e:
         print(f'LOI: {e}', file=sys.stderr)

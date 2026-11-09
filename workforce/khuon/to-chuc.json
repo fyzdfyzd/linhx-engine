@@ -1,11 +1,37 @@
 {
  "nguoi": [
-  {"ma": "chu", "ten": "Chủ đơn vị", "vai": "chu", "kenh": "zalo", "dia_chi": ""}
+  {
+   "ma": "chu",
+   "ten": "Chủ đơn vị",
+   "vai": "chu",
+   "kenh": "zalo",
+   "dia_chi": ""
+  }
  ],
  "cong_nhan": [
-  {"ma": "truong", "ten": "Trưởng nhóm", "vai": "điều phối: nhận việc, chọn workflow, làm hoặc giao, gộp kết quả",
-   "bao_cao_cho": "chu", "chiu_trach_nhiem": "chu", "tho": "claude|agy|chatgpt", "skills": [], "workflows": ["viec-chung"]},
-  {"ma": "cham", "ten": "Người chấm", "vai": "chấm độc lập, không sửa bài",
-   "bao_cao_cho": "truong", "chiu_trach_nhiem": "chu", "tho": "phiên mới hoặc model khác thợ", "skills": [], "workflows": []}
+  {
+   "ma": "truong",
+   "ten": "Trưởng nhóm",
+   "vai": "điều phối: nhận việc, chọn workflow, làm hoặc giao, gộp kết quả",
+   "bao_cao_cho": "chu",
+   "chiu_trach_nhiem": "chu",
+   "tho": "agy",
+   "skills": [],
+   "workflows": [
+    "viec-chung"
+   ],
+   "phan_khu": "run"
+  },
+  {
+   "ma": "cham",
+   "ten": "Người chấm",
+   "vai": "chấm độc lập, không sửa bài",
+   "bao_cao_cho": "truong",
+   "chiu_trach_nhiem": "chu",
+   "tho": "phiên mới hoặc model khác thợ",
+   "skills": [],
+   "workflows": [],
+   "phan_khu": "learn"
+  }
  ]
 }

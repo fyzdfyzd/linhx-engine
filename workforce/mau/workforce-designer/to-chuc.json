@@ -23,7 +23,8 @@
     "onboard-don-vi",
     "dung-workforce",
     "nang-mau"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "nghien-cuu",
@@ -31,13 +32,14 @@
    "vai": "tìm skill tốt nhất (đọc code), người làm giỏi nhất ngành, chọn bản vàng",
    "bao_cao_cho": "designer",
    "chiu_trach_nhiem": "linh",
-   "tho": "claude|gemini",
+   "tho": "claude",
    "skills": [
     "research-loop"
    ],
    "workflows": [
     "hoc-chuan-cao"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "tho-dung",
@@ -45,14 +47,15 @@
    "vai": "nạp nguồn thành wiki, viết workflow, viết bộ thử từ ca thật",
    "bao_cao_cho": "designer",
    "chiu_trach_nhiem": "linh",
-   "tho": "agy",
+   "tho": "claude",
    "skills": [
     "linhx-chuan"
    ],
    "workflows": [
     "dung-workforce",
     "chay-bong"
-   ]
+   ],
+   "phan_khu": "design"
   },
   {
    "ma": "cham",
@@ -66,7 +69,8 @@
    ],
    "workflows": [
     "cham-muc"
-   ]
+   ],
+   "phan_khu": "learn"
   }
  ]
 }

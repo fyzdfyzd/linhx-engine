@@ -3,11 +3,11 @@
 Một workforce là **một thư mục** của một đơn vị. Trong đó có: dữ liệu nền thành wiki, công nhân số có người chịu trách nhiệm, skill và workflow có phiên bản, bảng việc với mỗi việc một thư mục, danh sách điều cần nhớ và điều cần học. Công cụ duy nhất là `af.py`, chỉ dùng Python stdlib. Zip thư mục này lại thì Claude, agy hay ChatGPT đều chạy được: agent đọc `AGENTS.md` (Claude đọc qua `CLAUDE.md`, Gemini qua `GEMINI.md`).
 
 ```
-          SETUP (một lần, bổ sung khi cần)
+          DESIGN (Claude, một lần, bổ sung khi cần)
   D0 7 câu → 01-nguon → 02-wiki (su-that.json) → to-chuc.json → skill từ kho LINHX → workflow → kiem DAT
                                    │
                                    ▼
-  ┌──────────── RUNNING ────────────┐      Zalo / Telegram / email
+  ┌────────── RUN (agy) ──────────┐      Zalo / Telegram / email
   │ /giao → viec/LX-0001/ (TASK.md,  │◀──── af.py lenh (quyền kiểm trong code)
   │ dau-vao, dau-ra, nhat-ky)        │────▶ hop-thu/ra.jsonl → bộ chuyển gửi
   │ cho → dang_lam → cho_duyet ──┐   │      server mỏng: af.py may-chu (token)
@@ -15,14 +15,23 @@ Một workforce là **một thư mục** của một đơn vị. Trong đó có:
   └──────────────┬──────────────────┘
                  │ mọi phản hồi (trả lại, /gopy, duyệt có lời khen)
                  ▼
-  LEARNING: HOC.jsonl, mỗi bài học một dòng gắn đích (skill / workflow / công nhân / hệ thống),
+  LEARN:    HOC.jsonl, mỗi bài học một dòng gắn đích (skill / workflow / công nhân / hệ thống),
             đếm ủng hộ và phản đối; ý trùng thì cộng dồn; việc mới tự chép bài học đang áp vào TASK.md
                  │ af.py hoc (cuối ngày): ≥ 2 bằng chứng từ ≥ 2 việc → đề xuất; bị phản đối nhiều → tỉa
                  ▼
-  UPDATE:   de-xuat/DX-001/moi/ (bản sửa nhỏ nhất) + ket-qua-thu.json (bản mới so với bản cũ, người chấm khác thợ)
+  DESIGN:   de-xuat/DX-001/moi/ (bản sửa nhỏ nhất) + ket-qua-thu.json (bản mới so với bản cũ, người chấm khác thợ)
             → af.py thang-cap --duyet <chủ|quản lý> → v1.0.0 → v1.1.0, bản cũ lưu ở phat-hanh/ban/
-            → af.py lui nếu bản mới kém → quay lại RUNNING
+            → af.py lui nếu bản mới kém → quay lại RUN
 ```
+
+## Ba khu design-run-learn (Linh 9/11)
+Mọi workforce có ba khu trong cùng một thư mục, không tách hệ. Ranh giới ở `phan_khu` (mặc định `PHAN_KHU` trong af.py, workforce.json ghi đè); mỗi công nhân trong `to-chuc.json` có `phan_khu`; `af.py kiem` chặn khi thợ sai khu hoặc bước workflow `ghi` vào khu khác.
+| Khu | Thợ | Ghi được | Lệnh |
+|---|---|---|---|
+| design | Claude | D0, 01-nguon, 02-wiki, to-chuc, cong-nhan, workflow, .agents/skills, thu, vang, phat-hanh, AGENTS/CLAUDE/GEMINI | moi, nap-skill, kiem, muc, thang-cap, lui, dong-goi |
+| run | agy | viec/, bang-viec.jsonl, hop-thu/, thong-ke.json | giao, chuyen, bang, lenh, may-chu |
+| learn | Claude (người chấm khác thợ) | HOC.jsonl, HOC.md, NHO.md, de-xuat/ | phan-hoi, nho, vang, ban-sua, hoc-ngoai, hoc, hoc-cheo |
+Run chỉ đọc design, ghi phản hồi vào HOC.jsonl; mọi thay đổi design đi qua de-xuat → bộ thử → duyệt. Design và learn không gửi tin ra kênh. Bộ chuyển kênh (LAB119) chỉ nối vào `hop-thu/` và `af.py lenh`.
 
 ## Ba tầng mẫu
 1. `khuon/`: mọi con đều có (hiến chương, cổng chống slop, vòng học, phiên bản, tiêu chuẩn 3 mức).
@@ -37,12 +46,15 @@ Một workforce là **một thư mục** của một đơn vị. Trong đó có:
 | 3 | thành bộ mẫu | ≥ 2 đơn vị dựng từ cùng bộ mẫu đạt mức 2 (`af.py muc --mau`) |
 Số ngưỡng nằm ở `workforce.json` mục `tieu_chuan`, bộ mẫu ghi đè được.
 
-## Ba nguồn học, cùng quy về phiên bản
-| Nguồn | Lệnh | Ví dụ |
+## Bốn nguồn học của khu learn (Linh 9/11)
+| Nguồn (`nguon` trong HOC.jsonl) | Cách vào | Ví dụ |
 |---|---|---|
-| Dưới lên: phản hồi, trả lại | `phan-hoi`, `/gopy`, `/tra` | chị Hằng trả proposal vì thiếu timeline |
-| Ngang: bản sửa của người giỏi | `ban-sua --luat` | bản chị sửa thành bản vàng, bản thợ thành phản ví dụ, mỗi luật thành bài học |
-| Trên xuống: chuẩn cao nhất bên ngoài | `vang`, `hoc-ngoai` | bản vàng mỗi workflow; hai nguồn độc lập cùng ý thì thành đề xuất |
+| `tu-cai-thien`: tự cải thiện | cổng chống slop chặn → bài học về công nhân; mục `## Phản tư` cuối nhat-ky.md; ca trượt trong `thu/ket-qua/*.json` (`ca: [{id, dat, dich, ly_do}]`) khi chạy `hoc` | thợ trình duyệt khi dau-ra trống |
+| `chu`: feedback của chủ và người trong đơn vị | `phan-hoi`, `/gopy`, `/tra`, `/duyet` có lời khen | chị Hằng trả proposal vì thiếu timeline |
+| `nguoi-gioi`: học từ người giỏi nhất | `ban-sua --luat`, `hoc-ngoai`, `vang`, workflow `hoc-chuan-cao` | bản chị sửa thành bản vàng, bản thợ thành phản ví dụ |
+| `cheo`: học chéo đơn vị | `hoc-cheo` | bài học lặp ở ≥ 3 đơn vị sửa bộ mẫu |
+Mỗi bài học còn được chấm theo kết quả việc đã áp nó (học từ Ruflo): `ap_dat`, `ap_truot`, chất lượng = 0,3 + 0,7 × tỉ lệ đạt; áp ≥ 3 lần mà chất lượng < 0,6 thì `hoc` tỉa.
+`bang` và `muc` in số bằng chứng theo từng nguồn; `muc` báo "CHƯA học đủ ba nguồn chính" khi một trong ba nguồn đầu bằng 0.
 Tất cả vào `HOC.jsonl` → `hoc` → đề xuất → bộ thử + duyệt → `thang-cap`. Xuyên đơn vị: `hoc-cheo <mau> <các con>`, bài học ở ≥ 3 đơn vị thì sửa bộ mẫu bằng PR (Linh duyệt PR).
 
 ## Workforce designer (`mau/workforce-designer`)
@@ -61,6 +73,17 @@ Một workforce dựng workforce khác, Linh chịu trách nhiệm. 6 workflow: 
 | `.agents/skills/<ten>/SKILL.md`, `AGENTS.md` | chuẩn Agent Skills + agents.md (Codex, Antigravity, Gemini CLI, Hermes đọc chung) |
 | Router theo câu ví dụ, onboard 7 câu, untrusted-content, absent-is-not-zero, tenant-scope | anthropics/knowledge-work-plugins |
 | Một nick một listen, hub nhóm → thư mục | LAB116 hub trên máy cty (đang chạy) |
+
+## Xuất đa nền (`af.py xuat`)
+Một nguồn là thư mục workforce. `python workforce/af.py xuat <W> <ra> --nen tat-ca` sinh:
+| Nền | Ra | Ghi chú |
+|---|---|---|
+| chung | `.agents/skills/<ten>/` + AGENTS.md | Gemini CLI, Antigravity, Copilot đều đọc (LAB092) |
+| claude | `.claude/skills/<ten>/` + CLAUDE.md | |
+| copilot | `.github/skills/<ten>/`, `copilot-instructions.md`, `prompts/<workflow>.prompt.md` | |
+| gemini | extension: `gemini-extension.json`, GEMINI.md, `skills/`, `commands/<workflow>.toml` | |
+| task | `GOI.md` một file + `TASK.md` + `workforce.zip` | Gemini Task, ChatGPT, Jules: không mạng, 3 file |
+Skill theo chuẩn agentskills.io: `SKILL.md` (name ≤ 64, description ≤ 1024, < 500 dòng) + `references/` + `scripts/af.py`. Sửa nội dung ở thư mục workforce rồi xuất lại, không sửa bản xuất.
 
 ## Lệnh
 ```
