@@ -1,0 +1,5 @@
+muc_tieu: [{id: O1, cau: "Hiểu về agent"}]
+phan:
+  - {loai: khai_niem, phut: 40}
+  - {loai: thuc_hanh, phut: 10}
+ban_giang_vien: {theo_phut: true}
