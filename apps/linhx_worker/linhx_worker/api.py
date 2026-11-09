@@ -110,6 +110,11 @@ def nhan_viec(ma, phien_ban=None, may=None):
     return {
         "viec": job.name, "workflow": wf.name, "che_do": wf.che_do or "agy",
         "de": de, "dau_vao": job.dau_vao, "tran_phut": wf.tran_phut or 40,
+        "sandbox": quy_trinh.chinh_sach_sandbox(
+            wf.name,
+            nguon=getattr(job, "nguon", None),
+            co_cha=bool(getattr(job, "cha", None)),
+        ),
     }
 
 

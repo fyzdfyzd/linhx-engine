@@ -20,7 +20,9 @@
   "thi_truong",
   "doi_thu",
   "su_that",
-  "can_xu_ly"
+  "can_xu_ly",
+  "so_lan_thu_job",
+  "lan_thu_job_cuoi"
  ],
  "fields": [
   {
@@ -114,6 +116,19 @@
    "fieldtype": "Check",
    "label": "Cần xử lý tạo việc",
    "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "so_lan_thu_job",
+   "fieldtype": "Int",
+   "label": "Số lần thử tạo việc",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lan_thu_job_cuoi",
+   "fieldtype": "Datetime",
+   "label": "Lần thử tạo việc cuối",
+   "read_only": 1
   }
  ],
  "permissions": [

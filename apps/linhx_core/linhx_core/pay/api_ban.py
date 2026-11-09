@@ -49,7 +49,7 @@ def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
 
 
 @frappe.whitelist(allow_guest=True)
-@rate_limit(limit=30, seconds=60)
+@rate_limit(limit=10, seconds=3600)
 def tao_don(
     brand,
     goi,
