@@ -1,0 +1,42 @@
+{
+  "feature": "F1",
+  "luc": "2026-11-09T23:02:08+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 9 items",
+    "",
+    "tests/nghiem-thu/test_f1.py::test_pilot_moi_co_dung_7_buoc PASSED        [ 11%]",
+    "tests/nghiem-thu/test_f1.py::test_khong_di_buoc_sau_khi_buoc_truoc_chua_xong PASSED [ 22%]",
+    "tests/nghiem-thu/test_f1.py::test_qua_14_ngay_chua_xong_thi_vao_viec_cho PASSED [ 33%]",
+    "tests/nghiem-thu/test_f1.py::test_doctype_lx_pilot PASSED                [ 44%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_tao_pilot_kiem_tra_dau_vao_va_7_buoc PASSED [ 55%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_hoan_thanh_buoc_khong_sua_dict_dau_vao_va_chan_bien PASSED [ 66%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_viec_cho_xep_thu_tu_han_hoan_thanh_tang_dan PASSED [ 77%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_controller_lx_pilot_ke_thua_co_hoi_va_kiem_luat PASSED [ 88%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_phan_quyen_don_vi_chan_doc_ghi_sua_xoa_cheo_don_vi PASSED [100%]",
+    "",
+    "============================== 9 passed in 3.22s =============================="
+  ],
+  "kiem_bench_wsl": {
+    "site": "test",
+    "user_a": "nva-1794240078@test.local",
+    "dv_a": "DV-PILOT-A-1794240078",
+    "dv_b": "DV-PILOT-B-1794240078",
+    "pilot_a": "jot2cjs0tu",
+    "pilot_b": "jotcqc2e4u",
+    "get_list_user_a": [
+      "jot2cjs0tu"
+    ],
+    "so_ban_ghi_don_vi_khac": 0,
+    "chan_doc_b": true,
+    "chan_sua_b": true,
+    "chan_tao_b": true,
+    "chan_ch_khong_ton_tai": true
+  }
+}
