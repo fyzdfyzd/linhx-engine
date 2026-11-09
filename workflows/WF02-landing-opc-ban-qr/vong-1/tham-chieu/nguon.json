@@ -1,121 +1,172 @@
 [
-  {
-    "ten": "o8",
-    "url": "https://www.o8.agency/ai-search-visibility-audit",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "aimentionsyou",
-    "url": "https://aimentionsyou.com/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "ascero",
-    "url": "https://asceroai.com/ai-visibility-audit",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "pixelmojo",
-    "url": "https://www.pixelmojo.io/answers/how-much-does-an-ai-visibility-audit-cost",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "otterly",
-    "url": "https://otterly.ai/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "peec",
-    "url": "https://peec.ai/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "hashmeta-vn",
-    "url": "https://hashmeta.com/vn/ai-visibility-audit-vietnam",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "costar",
-    "url": "https://www.costarastrology.com/",
-    "tac_gia_hoac_studio": "@pseuyi",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "chani",
-    "url": "https://www.chani.com/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "gumroad",
-    "url": "https://gumroad.com/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": "không lỗi tải; ảnh 390 chỉ được màn đầu vì trang cuộn trong khung riêng"
-  },
-  {
-    "ten": "cts-trang-chu",
-    "url": "https://chiemtinh.vn/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "cts-san-pham",
-    "url": "https://chiemtinh.vn/san-pham",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "ifagent",
-    "url": "https://ifagent.net/",
-    "tac_gia_hoac_studio": "",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "lb1",
-    "url": "https://cortea.ai/",
-    "tac_gia_hoac_studio": "nguồn: land-book.com/websites/101527 (AI audit agents)",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "lb2",
-    "url": "https://equals.com/",
-    "tac_gia_hoac_studio": "nguồn: land-book.com/websites/64202 (analysis and reporting)",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "lb3",
-    "url": "https://peekinsights.co/",
-    "tac_gia_hoac_studio": "nguồn: land-book.com/websites/67923 (CRO audit agency)",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  },
-  {
-    "ten": "lb4",
-    "url": "https://designjoy.co/",
-    "tac_gia_hoac_studio": "Brett Williams (Designjoy); thấy qua land-book.com/websites/67923, thay graphite.io vì trang đó nền tối",
-    "ngay_chup": "2026-11-09",
-    "loi": ""
-  }
+ {
+  "ten": "o8",
+  "file": "o8-390.png",
+  "file_1280": "o8-1280.png",
+  "link": "https://www.o8.agency/ai-search-visibility-audit",
+  "tac_gia": "O8 Agency",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Dòng giá ngay dưới nút chính; cuối trang là biểu mẫu ngắn. Bỏ: trang quá dài, chữ trắng trên nền tối ở 390 khó đọc."
+ },
+ {
+  "ten": "aimentionsyou",
+  "file": "aimentionsyou-390.png",
+  "file_1280": "aimentionsyou-1280.png",
+  "link": "https://aimentionsyou.com/",
+  "tac_gia": "aimentionsyou (không ghi tên tác giả trên trang)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Nút phụ 'See a real audit' cạnh nút mua; một dòng tin cậy dưới nút: không demo, không gọi sale, PDF trong 24h, hoàn tiền nếu < 5 phát hiện. Chép nguyên cấu trúc dòng này sang tiếng Việt."
+ },
+ {
+  "ten": "ascero",
+  "file": "ascero-390.png",
+  "file_1280": "ascero-1280.png",
+  "link": "https://asceroai.com/ai-visibility-audit",
+  "tac_gia": "Ascero AI (trang ghi tên 2 nhà sáng lập)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Nền sáng, tiêu đề to, giá nằm ngay trên nút ('Order the audit — $500'); người thật đứng tên ở cuối trang."
+ },
+ {
+  "ten": "pixelmojo",
+  "file": "pixelmojo-390.png",
+  "file_1280": "pixelmojo-1280.png",
+  "link": "https://www.pixelmojo.io/answers/how-much-does-an-ai-visibility-audit-cost",
+  "tac_gia": "Pixelmojo",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Bảng mốc giá audit theo cấp (máy / có người / agency) giúp khách tự đặt giá mình vào chỗ: dùng cho khối 'So với' một dòng."
+ },
+ {
+  "ten": "otterly",
+  "file": "otterly-390.png",
+  "file_1280": "otterly-1280.png",
+  "link": "https://otterly.ai/",
+  "tac_gia": "Otterly.AI",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Ảnh sản phẩm thật (dashboard) ngay màn đầu, không minh hoạ trừu tượng. Bỏ: logo khách và thẻ tính năng xếp ba."
+ },
+ {
+  "ten": "peec",
+  "file": "peec-390.png",
+  "file_1280": "peec-1280.png",
+  "link": "https://peec.ai/",
+  "tac_gia": "Peec AI",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Chữ ít, khoảng trắng rộng, ảnh sản phẩm lớn; bảng xếp hạng thương hiệu là 'bằng chứng có số' nhìn 1 giây hiểu."
+ },
+ {
+  "ten": "hashmeta-vn",
+  "file": "hashmeta-vn-390.png",
+  "file_1280": "hashmeta-vn-1280.png",
+  "link": "https://hashmeta.com/vn/ai-visibility-audit-vietnam",
+  "tac_gia": "Hashmeta (agency VN)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Phản mẫu: form 9 ô, giọng doạ 'vô hình trên AI', giá trị miễn phí ghi 3 con số khác nhau. Trang mình làm ngược lại cả ba."
+ },
+ {
+  "ten": "costar",
+  "file": "costar-390.png",
+  "file_1280": "costar-1280.png",
+  "link": "https://www.costarastrology.com/",
+  "tac_gia": "Co–Star Astrology Society",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Chữ đen trên nền sáng, một câu một màn, không trang trí thừa: nhịp đọc mình muốn cho tiêu đề serif."
+ },
+ {
+  "ten": "chani",
+  "file": "chani-390.png",
+  "file_1280": "chani-1280.png",
+  "link": "https://www.chani.com/",
+  "tac_gia": "CHANI Nicholas Inc.",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Serif lớn, màu ấm, ảnh sản phẩm trong khung điện thoại; nút một màu đặc."
+ },
+ {
+  "ten": "gumroad",
+  "file": "gumroad-390.png",
+  "file_1280": "gumroad-1280.png",
+  "link": "https://gumroad.com/",
+  "tac_gia": "Gumroad Inc.",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Trang bán một sản phẩm số: giá to cạnh nút, mua không cần tài khoản."
+ },
+ {
+  "ten": "cts-trang-chu",
+  "file": "cts-trang-chu-390.png",
+  "file_1280": "cts-trang-chu-1280.png",
+  "link": "https://chiemtinh.vn/",
+  "tac_gia": "Chiêm Tinh Số (nội bộ LINHX)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Nhịp và serif Linh muốn giữ: tiêu đề Playfair, nền kem, nút đen bo tròn, chân trang có Bảo mật / Hoàn tiền."
+ },
+ {
+  "ten": "cts-san-pham",
+  "file": "cts-san-pham-390.png",
+  "file_1280": "cts-san-pham-1280.png",
+  "link": "https://chiemtinh.vn/san-pham",
+  "tac_gia": "Chiêm Tinh Số (nội bộ LINHX)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Giá ghi ngay dưới tên sản phẩm; banner cookie có hai nút ngang nhau (không ép đồng ý)."
+ },
+ {
+  "ten": "ifagent",
+  "file": "ifagent-390.png",
+  "file_1280": "ifagent-1280.png",
+  "link": "https://ifagent.net/",
+  "tac_gia": "IF Agent",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Màu thương hiệu #0088FF và gradient #0088FF→#00D4AA; giọng chuyên nghiệp. Trang bán dùng bản sáng của brand."
+ },
+ {
+  "ten": "lb1",
+  "file": "lb1-390.png",
+  "file_1280": "lb1-1280.png",
+  "link": "https://cortea.ai/",
+  "tac_gia": "Cortea (qua land-book.com)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Tiêu đề hai dòng, nút + dòng phụ nhỏ ngay dưới, ảnh sản phẩm tràn khung."
+ },
+ {
+  "ten": "lb2",
+  "file": "lb2-390.png",
+  "file_1280": "lb2-1280.png",
+  "link": "https://equals.com/",
+  "tac_gia": "Equals (qua land-book.com)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Dải số đo lớn tách bằng đường kẻ mảnh, không thẻ: cách trình bày 4 chỉ số của báo cáo."
+ },
+ {
+  "ten": "lb3",
+  "file": "lb3-390.png",
+  "file_1280": "lb3-1280.png",
+  "link": "https://peekinsights.co/",
+  "tac_gia": "Peek Insights (qua land-book.com)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Tiêu đề serif + ảnh báo cáo trong khung, dải logo mờ bên dưới: gần nhất với hướng A."
+ },
+ {
+  "ten": "lb4",
+  "file": "lb4-390.png",
+  "file_1280": "lb4-1280.png",
+  "link": "https://designjoy.co/",
+  "tac_gia": "Designjoy · Brett Williams (qua land-book.com)",
+  "ngay_chup": "2026-11-09",
+  "may_chup": "DESKTOP-PVHR2CD (Chrome qua Playwright)",
+  "hoc": "Trộn serif nghiêng trong tiêu đề, một thẻ giá duy nhất có danh sách 'bạn nhận gì'."
+ }
 ]

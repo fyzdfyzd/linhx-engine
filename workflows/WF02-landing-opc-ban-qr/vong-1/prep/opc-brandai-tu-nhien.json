@@ -1,0 +1,9 @@
+{
+  "ten": "BrandAI 499k · kênh tự nhiên (T1 Khám + bài Linh) · SỐ ƯỚC, chưa đo",
+  "thi_truong": {"do_gap": 6, "co_thi_truong": 6, "suc_dinh_gia": 6, "chi_phi_gianh_khach": 6, "chi_phi_giao": 8,
+                 "khac_biet": 5, "toc_do_ra_cho": 9, "von_dau": 9, "ban_them": 8, "ben_lau": 5},
+  "rao_can_canh_tranh": ["danh tiếng", "dữ liệu riêng"],
+  "kinh_te": {"gia": 499000, "gia_von_token": 15000, "phi_cong_thanh_toan": 0, "so_lan_mua_trong_doi": 1.5,
+              "chi_phi_co_dinh_thang": 1500000, "gio_linh_thang": 8, "gia_gio_linh": 300000, "cac_du_kien": 100000},
+  "du_thang": 30000000
+}

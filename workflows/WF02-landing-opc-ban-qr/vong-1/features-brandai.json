@@ -1,0 +1,123 @@
+{
+ "dot": "1c-brandai",
+ "nhap": true,
+ "features": [
+  {
+   "id": "Q2",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q1"
+   ],
+   "vung": [
+    "front/**"
+   ],
+   "mo_ta": "Màn đầu BrandAI hướng A: tiêu đề serif, giá từ catalog dưới tiêu đề, nút Xem báo cáo mẫu, khối ảnh báo cáo mẫu thật từ cấu hình; bỏ bộ ba thẻ",
+   "tieu_chi": [
+    "360 và 390: giá và nút trong 800 px đầu",
+    "Không có ba thẻ giống nhau liền nhau",
+    "Không tràn ngang; front không viết cứng giá"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q2.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q3",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q1",
+    "A3"
+   ],
+   "vung": [
+    "front/**",
+    "apps/linhx_core/linhx_core/pay/api_ban.py"
+   ],
+   "mo_ta": "Biểu mẫu: email bắt buộc, 2 ô đồng ý không tích sẵn tách mục đích, ghi LX Dong Y",
+   "tieu_chi": [
+    "Không tích ô xử lý dữ liệu thì không tạo đơn",
+    "Front không gửi cứng đồng ý = true",
+    "Tạo đơn ghi LX Dong Y đúng mục đích"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q3.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q4",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q3",
+    "B3"
+   ],
+   "vung": [
+    "front/**",
+    "apps/linhx_core/linhx_core/pay/api_ban.py"
+   ],
+   "mo_ta": "Màn QR theo luồng Chiêm Tinh Số: Tải ảnh QR, giữ đơn 30 phút, bảng số tiền/nội dung/người nhận có Sao chép, hỏi trạng thái 3 giây, da_tra thì tự chuyển",
+   "tieu_chi": [
+    "QR giải được, CRC đúng, số tiền = catalog, nội dung = mã đơn",
+    "Đơn sang da_tra thì trang chuyển trong 6 giây",
+    "Từ vào trang tới QR ≤ 3 chạm"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q4.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q5",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q1"
+   ],
+   "vung": [
+    "front/**"
+   ],
+   "mo_ta": "Chân trang định danh (tên chủ, địa chỉ, MST, email, điện thoại) từ cấu hình + trang Bảo mật, Hoàn tiền",
+   "tieu_chi": [
+    "Đủ 5 trường, thiếu thì đỏ",
+    "Hai link chính sách mở được",
+    "Không viết cứng thông tin chủ trong front"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q5.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q6",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q2"
+   ],
+   "vung": [
+    "front/**"
+   ],
+   "mo_ta": "Câu hỏi trước khi mua + title và thẻ chia sẻ riêng BrandAI",
+   "tieu_chi": [
+    "≥ 5 câu hỏi details",
+    "title khác LINHX Engine, có og:image",
+    "Quét từ cấm = 0"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q6.py -q",
+   "passes": false,
+   "bang_chung": null
+  },
+  {
+   "id": "Q7",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "Q2"
+   ],
+   "vung": [
+    "deploy/**"
+   ],
+   "mo_ta": "brandai.ifagent.net trỏ vào trang bán của bản cài ifagent, HTTPS",
+   "tieu_chi": [
+    "curl -I trả 200 và trang có data-tra-qr",
+    "Không lộ trang quản trị ở tên miền này"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_q7.py -q",
+   "passes": false,
+   "bang_chung": null
+  }
+ ]
+}

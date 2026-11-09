@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BrandAI · AI nói gì về thương hiệu của bạn</title>
+<meta name="description" content="Báo cáo nguyên văn ChatGPT, Gemini và Claude trả lời 8 câu khách hay hỏi về thương hiệu của bạn. 499.000đ, nhận trong 24 giờ.">
+<meta property="og:title" content="AI nói gì về thương hiệu của bạn?">
+<meta property="og:description" content="Nguyên văn câu trả lời của 3 trợ lý AI, chấm đúng sai, nhận trong 24 giờ.">
+<meta property="og:image" content="og-brandai.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Bản dựng tham chiếu cho agy (hướng A). Chữ có nền vàng nhạt = GIỮ CHỖ, bản thật đọc từ catalog / cấu hình / báo cáo mẫu. */
+:root{
+  --nen:#F7F8FA; --mat:#FFFFFF; --chu:#1A1D21; --phu:#656D76; --ke:#D9DEE4;
+  --link:#0066CC; --nut:#0088FF; --nut-chu:#0D1117; --xanh2:#00D4AA;
+  --cho:#9A6700; --giu:#FFF4CC;
+  --serif:"Playfair Display", Georgia, "Times New Roman", serif;
+  --sans:"Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--nen);color:var(--chu);font:16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:var(--link)}
+.khung{max-width:1080px;margin:0 auto;padding:0 20px}
+.giu{background:var(--giu);border-radius:3px;padding:0 3px}
+header.dau{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-weight:600;letter-spacing:.01em;text-decoration:none;color:var(--chu);display:flex;gap:8px;align-items:center}
+.logo i{width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--nut),var(--xanh2));display:inline-block}
+.logo span{color:var(--phu);font-weight:400}
+.dau nav a{font-size:15px;text-decoration:none}
+
+/* Màn đầu */
+.hero{display:grid;gap:32px;padding:24px 0 56px}
+h1{font:500 40px/1.15 var(--serif);margin:0 0 16px;letter-spacing:-.01em}
+h1 em{font-style:italic}
+.mo{font-size:17px;color:var(--phu);margin:0 0 24px;max-width:34em}
+.gia{display:flex;align-items:baseline;gap:10px;margin:0 0 16px}
+.gia b{font:600 30px/1 var(--serif)}
+.gia small{color:var(--phu);font-size:15px}
+.nut{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;font:600 16px var(--sans);text-decoration:none;border:0;cursor:pointer;width:100%}
+.nut-chinh{background:var(--nut);color:var(--nut-chu)}
+.nut-chinh:hover{filter:brightness(1.05)}
+.nut-phu{background:transparent;color:var(--chu);border:1px solid var(--chu)}
+.hai-nut{display:grid;gap:10px;max-width:420px}
+.tin{font-size:14px;color:var(--phu);margin:14px 0 0;max-width:420px}
+.tin span+span:before{content:" · "}
+
+/* Tờ báo cáo mẫu đặt nghiêng */
+.to-wrap{position:relative;padding:8px 6px 0}
+.to{background:var(--mat);border:1px solid var(--ke);border-radius:6px;box-shadow:0 18px 40px -18px rgba(26,29,33,.28);padding:22px 20px;transform:rotate(-2deg);max-width:440px;margin:0 auto}
+.to-wrap .nhan{position:absolute;top:0;right:8px;background:var(--chu);color:#fff;font-size:12px;padding:3px 8px;border-radius:4px;z-index:2}
+.to h3{font:600 18px/1.3 var(--serif);margin:0 0 4px}
+.to .meta{font-size:12px;color:var(--phu);margin:0 0 14px}
+.so-do{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ke);border-bottom:1px solid var(--ke);margin:0 0 14px}
+.so-do div{padding:10px 4px;text-align:center}
+.so-do div+div{border-left:1px solid var(--ke)}
+.so-do b{display:block;font:600 22px/1.1 var(--serif)}
+.so-do small{font-size:11px;color:var(--phu);line-height:1.3;display:block;margin-top:4px}
+.trich{border-left:3px solid #CF222E;padding:2px 0 2px 12px;margin:0;font-size:14px}
+.trich p{margin:0 0 4px}
+.trich small{color:var(--phu);font-size:12px}
+.sai{color:#CF222E;font-weight:600;font-size:12px}
+
+section{padding:56px 0;border-top:1px solid var(--ke)}
+h2{font:500 30px/1.2 var(--serif);margin:0 0 20px}
+.chu-phu{color:var(--phu);margin:-8px 0 24px;max-width:36em}
+
+/* Cách làm: danh sách đánh số, không thẻ */
+ol.buoc{list-style:none;margin:0;padding:0;counter-reset:b;max-width:640px}
+ol.buoc li{counter-increment:b;display:grid;grid-template-columns:44px 1fr;gap:4px 12px;padding:16px 0;border-bottom:1px solid var(--ke)}
+ol.buoc li:before{content:counter(b);font:500 28px/1 var(--serif);color:var(--nut)}
+ol.buoc b{display:block}
+ol.buoc p{margin:2px 0 0;color:var(--phu);font-size:15px}
+
+/* So giá: bảng ba dòng */
+table.so{width:100%;max-width:640px;border-collapse:collapse;font-size:15px}
+table.so td{padding:12px 0;border-bottom:1px solid var(--ke);vertical-align:top}
+table.so td:last-child{text-align:right;white-space:nowrap;padding-left:12px}
+table.so tr.ta td{font-weight:600}
+.nguon{font-size:12px;color:var(--phu);margin-top:8px}
+
+/* Một thẻ giá */
+.the-gia{background:var(--mat);border:1px solid var(--ke);border-radius:12px;padding:24px;max-width:460px}
+.the-gia ul{margin:12px 0 20px;padding-left:20px}
+.the-gia li{margin:6px 0}
+
+/* Câu hỏi */
+details{border-bottom:1px solid var(--ke);max-width:720px}
+summary{cursor:pointer;padding:16px 28px 16px 0;font-weight:500;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";position:absolute;right:4px;top:12px;font-size:22px;color:var(--phu)}
+details[open] summary:after{content:"–"}
+details p{margin:0 0 16px;color:var(--phu)}
+
+/* Biểu mẫu */
+form{max-width:460px;display:grid;gap:16px}
+label.o span{display:block;font-weight:500;margin-bottom:6px}
+input[type=text],input[type=email]{width:100%;min-height:48px;padding:0 14px;border:1px solid #AEB6BF;border-radius:10px;font:16px var(--sans);background:var(--mat);color:var(--chu)}
+input:focus{outline:2px solid var(--nut);outline-offset:1px}
+label.tich{display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:15px;align-items:start}
+label.tich input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--nut)}
+.bat-buoc{color:#CF222E}
+.loi{color:#CF222E;font-size:14px;display:none}
+
+/* Màn QR như Chiêm Tinh Số */
+.man-qr{max-width:460px;margin:0 auto;padding:16px 0 56px}
+.quay{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--ke);border-radius:999px;padding:8px 14px;text-decoration:none;color:var(--chu);font-size:15px;margin:8px 0 16px;background:var(--mat)}
+.o-qr{background:var(--mat);border:1px solid var(--ke);border-radius:16px;padding:24px;text-align:center}
+.o-qr svg{width:100%;max-width:240px;height:auto;display:block;margin:0 auto}
+.o-qr p{color:var(--phu);font-size:14px;margin:14px 0 12px}
+.nut-nho{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border:1px solid var(--ke);border-radius:999px;background:var(--mat);color:var(--chu);font:500 15px var(--sans);cursor:pointer;text-decoration:none}
+.cho{color:var(--cho);font-weight:600;font-size:15px;margin:20px 0 4px;display:flex;align-items:center;gap:8px}
+.cho:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--cho);animation:nhay 1.4s infinite}
+@keyframes nhay{50%{opacity:.25}}
+.man-qr h2{margin:0 0 6px}
+.bang{background:var(--mat);border:1px solid var(--ke);border-radius:16px;margin-top:16px}
+.bang .d{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--ke)}
+.bang .d:last-child{border-bottom:0}
+.bang .d small{color:var(--phu);font-size:14px}
+.bang .d b{font-weight:600;text-align:right}
+.bang .d b.tien{font:600 20px var(--serif)}
+.bang .d code{font:600 14px ui-monospace,Menlo,monospace;background:#EEF1F4;padding:4px 8px;border-radius:6px}
+.tiep{font-size:14px;color:var(--phu);margin-top:16px}
+.da-tra{display:none;background:#DAFBE1;border:1px solid #4AC26B;border-radius:12px;padding:16px;margin-top:16px}
+
+footer{border-top:1px solid var(--ke);padding:32px 0 48px;font-size:14px;color:var(--phu)}
+footer dl{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:0 0 16px}
+footer dt{color:var(--chu)}
+footer dd{margin:0}
+footer nav{display:flex;gap:20px;flex-wrap:wrap}
+
+.man{display:none}.man.hien{display:block}
+
+@media (min-width:880px){
+  h1{font-size:56px}
+  .hero{grid-template-columns:1.1fr 1fr;align-items:center;padding:48px 0 80px}
+  .hai-nut{grid-template-columns:1fr 1fr;max-width:460px}
+  .nut{width:auto}
+  .to{transform:rotate(-3deg)}
+  h2{font-size:36px}
+  .hai-cot{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+}
+@media (prefers-reduced-motion:reduce){.cho:before{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="khung">
+<header class="dau">
+  <a class="logo" href="#/"><i aria-hidden="true"></i>BrandAI <span>· ifAgent</span></a>
+  <nav><a href="#mau">Báo cáo mẫu</a></nav>
+</header>
+</div>
+
+<main id="trang" class="man hien">
+<div class="khung">
+  <div class="hero">
+    <div>
+      <h1>AI đang nói gì về <em>thương hiệu</em> của bạn?</h1>
+      <p class="mo">Chúng mình hỏi ChatGPT, Gemini và Claude 8 câu khách hay hỏi trước khi mua, lưu lại nguyên văn và chấm câu nào đúng, câu nào sai so với thông tin thật của bạn.</p>
+      <div class="gia"><b class="giu" data-gia>499.000đ</b><small>trả một lần · nhận trong 24 giờ</small></div>
+      <div class="hai-nut">
+        <a class="nut nut-chinh" href="#/mua">Nhận báo cáo của tôi</a>
+        <a class="nut nut-phu" href="#mau">Xem báo cáo mẫu</a>
+      </div>
+      <p class="tin"><span>Không gọi tư vấn</span><span>Trả bằng QR</span><span>Hoàn lại toàn bộ tiền nếu sau 24 giờ chưa nhận được báo cáo</span></p>
+    </div>
+
+    <div class="to-wrap" id="mau">
+      <span class="nhan">Báo cáo mẫu · đã ẩn danh</span>
+      <article class="to" aria-label="Trang báo cáo mẫu">
+        <h3>Thương hiệu X · <span class="giu">chuỗi cà phê, Hà Nội</span></h3>
+        <p class="meta">Hỏi 3 trợ lý AI · 8 câu · mỗi câu 3 lượt · chụp ngày <span class="giu">02/11/2026</span></p>
+        <div class="so-do">
+          <div><b class="giu">7/8</b><small>câu có nhắc tên</small></div>
+          <div><b class="giu">5/7</b><small>lần nói đúng</small></div>
+          <div><b class="giu">2/3</b><small>AI trả lời giống nhau</small></div>
+          <div><b class="giu">3/8</b><small>câu được gợi ý mua</small></div>
+        </div>
+        <blockquote class="trich">
+          <p>“<span class="giu">Thương hiệu X đã đóng cửa chi nhánh Cầu Giấy từ năm 2024.</span>”</p>
+          <small>Gemini, câu 4, lượt 2 · <span class="sai">Sai: chi nhánh vẫn mở</span></small>
+        </blockquote>
+      </article>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="khung hai-cot">
+    <div>
+      <h2>Bạn nhận được gì</h2>
+      <p class="chu-phu">Một trang báo cáo đọc trên điện thoại, kèm bảng nguyên văn tải về được.</p>
+    </div>
+    <ol class="buoc">
+      <li><div><b>Nguyên văn từng câu trả lời</b><p>8 câu khách hay hỏi, ví dụ “nên mua … ở đâu”, hỏi 3 lượt trên mỗi trợ lý AI, lưu lại đúng từng chữ.</p></div></li>
+      <li><div><b>Chấm đúng sai bằng số</b><p>Máy đếm 4 chỉ số: có nhắc tên, nói đúng, trả lời nhất quán, được gợi ý mua. Người của ifAgent kiểm lại nhãn trước khi gửi.</p></div></li>
+      <li><div><b>Chỗ sai đáng sửa trước</b><p>Danh sách câu AI nói sai về bạn, kèm thông tin đúng nên đăng ở đâu. Báo cáo chỉ ra chỗ sai, không làm thay.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="khung hai-cot">
+    <div>
+      <h2>Giá, đặt cạnh các cách khác</h2>
+      <table class="so">
+        <tr><td>Tự hỏi ChatGPT vài câu</td><td>0đ</td></tr>
+        <tr><td>Agency làm audit, kèm buổi tư vấn</td><td>15–30 triệu</td></tr>
+        <tr class="ta"><td>BrandAI: 3 trợ lý AI, nguyên văn, có người kiểm</td><td class="giu" data-gia>499.000đ</td></tr>
+      </table>
+      <p class="nguon">Giá agency: hashmeta.com/vn, tháng 11/2026.</p>
+    </div>
+    <div class="the-gia">
+      <div class="gia"><b class="giu" data-gia>499.000đ</b><small>một lần</small></div>
+      <ul>
+        <li>Báo cáo đầy đủ trong 24 giờ, gửi link qua email</li>
+        <li>Bảng nguyên văn tải về được</li>
+        <li>Hoàn lại toàn bộ tiền nếu sau 24 giờ chưa nhận được báo cáo</li>
+      </ul>
+      <a class="nut nut-chinh" href="#/mua">Nhận báo cáo của tôi</a>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="khung">
+    <h2>Câu hỏi trước khi mua</h2>
+    <details><summary>Hỏi những AI nào, bản trả phí hay miễn phí?</summary><p>ChatGPT, Gemini và Claude, bản miễn phí mà khách của bạn thường dùng. Mỗi câu hỏi 3 lượt.</p></details>
+    <details><summary>Bao lâu thì nhận được?</summary><p>Trong 24 giờ kể từ khi chuyển khoản. Link báo cáo hiện ngay trên trang này và gửi vào email của bạn.</p></details>
+    <details><summary>AI mỗi lần trả lời một khác, báo cáo có đúng không?</summary><p>Báo cáo là ảnh chụp tại một thời điểm. Vì vậy mỗi câu được hỏi 3 lượt và ghi rõ AI trả lời giống nhau bao nhiêu lần. Vài tháng sau kết quả có thể đổi.</p></details>
+    <details><summary>Có hứa đưa thương hiệu tôi lên đầu câu trả lời của AI không?</summary><p>Không. Không ai kiểm soát được câu trả lời của AI. Báo cáo cho bạn biết AI đang nói gì và sai ở đâu.</p></details>
+    <details><summary>Thông tin tôi nhập dùng làm gì?</summary><p>Tên thương hiệu dùng để hỏi AI, email dùng để gửi báo cáo. Chỉ nhận tin từ ifAgent khi bạn tích ô đó. Xem <a href="#/bao-mat">Chính sách bảo mật</a>.</p></details>
+    <details><summary>Không hài lòng thì sao?</summary><p>Nếu sau 24 giờ chưa nhận được báo cáo, chúng mình hoàn lại toàn bộ tiền. Xem <a href="#/hoan-tien">Chính sách hoàn tiền</a>.</p></details>
+  </div>
+</section>
+</main>
+
+<main id="mua" class="man">
+<div class="khung">
+  <a class="quay" href="#/">‹ Quay lại</a>
+  <h2>Thông tin để làm báo cáo</h2>
+  <p class="chu-phu">Hai ô, chưa đến một phút. Bấm nút là thấy mã QR.</p>
+  <form id="f" novalidate>
+    <label class="o"><span>Tên thương hiệu</span><input type="text" name="brand" autocomplete="organization" required placeholder="Ví dụ: Cà phê Lá"></label>
+    <label class="o"><span>Email nhận báo cáo</span><input type="email" name="email" autocomplete="email" required placeholder="ban@congty.vn"></label>
+    <label class="tich"><input type="checkbox" name="dong_y_xu_ly"><span>Tôi đồng ý để ifAgent dùng tên thương hiệu và email này để làm và gửi báo cáo. <span class="bat-buoc">(bắt buộc)</span></span></label>
+    <label class="tich"><input type="checkbox" name="dong_y_nhan_tin"><span>Tôi muốn nhận tin về sản phẩm mới của ifAgent. (tuỳ chọn)</span></label>
+    <p class="loi" id="loi">Cần tên thương hiệu, email đúng và ô đồng ý thứ nhất.</p>
+    <button class="nut nut-chinh" type="submit">Tạo mã QR · <span data-gia>499.000đ</span></button>
+  </form>
+</div>
+</main>
+
+<main id="qr" class="man">
+<div class="khung">
+<div class="man-qr">
+  <a class="quay" href="#/mua">‹ Quay lại</a>
+  <div class="o-qr">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37" role="img" aria-label="Mã QR chuyển khoản (giữ chỗ)" shape-rendering="crispEdges" class="segno"><path class="qrline" stroke="#1a1d21" d="M0 0.5h7m1 0h2m6 0h1m1 0h1m1 0h2m1 0h2m2 0h1m2 0h7m-37 1h1m5 0h1m1 0h4m2 0h1m1 0h2m2 0h1m3 0h1m1 0h1m3 0h1m5 0h1m-37 1h1m1 0h3m1 0h1m3 0h1m1 0h2m1 0h2m2 0h2m1 0h1m1 0h2m4 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m1 0h1m1 0h4m4 0h2m1 0h1m2 0h1m5 0h1m1 0h3m1 0h1m-37 1h1m1 0h3m1 0h1m4 0h3m2 0h2m2 0h1m2 0h1m2 0h1m3 0h1m1 0h3m1 0h1m-37 1h1m5 0h1m2 0h1m2 0h1m2 0h3m3 0h2m2 0h1m1 0h2m1 0h1m5 0h1m-37 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-29 1h1m1 0h2m3 0h2m1 0h2m1 0h1m1 0h1m2 0h1m-27 1h1m1 0h2m1 0h3m4 0h2m1 0h2m2 0h1m5 0h1m4 0h1m2 0h1m1 0h2m-37 1h4m4 0h2m1 0h2m2 0h2m1 0h1m1 0h3m1 0h1m8 0h1m2 0h1m-37 1h2m1 0h1m1 0h2m2 0h3m1 0h1m1 0h1m1 0h1m6 0h1m1 0h1m1 0h2m1 0h1m1 0h3m-36 1h3m7 0h2m3 0h1m4 0h2m2 0h2m1 0h2m1 0h2m1 0h2m-34 1h4m1 0h1m1 0h1m2 0h2m5 0h1m1 0h2m1 0h2m2 0h2m1 0h1m1 0h1m3 0h1m-36 1h1m1 0h1m1 0h1m2 0h1m2 0h2m1 0h1m1 0h1m3 0h1m3 0h1m1 0h3m1 0h2m1 0h1m2 0h1m-37 1h3m2 0h3m4 0h2m2 0h2m1 0h1m2 0h4m2 0h2m4 0h1m1 0h1m-37 1h3m4 0h4m1 0h1m1 0h2m1 0h1m2 0h2m7 0h1m1 0h1m1 0h1m-33 1h2m1 0h1m1 0h3m1 0h5m1 0h1m5 0h2m1 0h3m4 0h1m-33 1h1m2 0h3m2 0h1m3 0h2m2 0h1m1 0h1m2 0h1m1 0h1m1 0h1m1 0h2m1 0h2m1 0h2m-32 1h14m1 0h1m2 0h2m1 0h1m2 0h3m6 0h1m-35 1h2m4 0h2m3 0h1m3 0h1m3 0h1m1 0h2m1 0h1m2 0h1m2 0h1m1 0h2m-33 1h2m1 0h3m1 0h5m1 0h1m2 0h1m1 0h1m3 0h1m3 0h1m1 0h1m2 0h1m-35 1h2m1 0h1m1 0h1m1 0h1m4 0h2m1 0h1m2 0h1m5 0h2m1 0h3m3 0h1m1 0h2m-36 1h1m3 0h9m3 0h2m1 0h1m1 0h1m3 0h1m2 0h1m-22 1h1m1 0h1m1 0h1m1 0h1m1 0h2m1 0h1m1 0h2m2 0h2m1 0h1m1 0h2m1 0h2m1 0h1m-37 1h1m1 0h2m1 0h3m3 0h1m2 0h2m1 0h2m1 0h3m1 0h6m2 0h2m2 0h1m-34 1h1m4 0h1m2 0h2m1 0h1m1 0h2m2 0h1m2 0h2m1 0h1m2 0h2m1 0h1m2 0h1m-35 1h1m4 0h1m1 0h2m1 0h2m1 0h3m2 0h2m1 0h1m2 0h1m2 0h1m3 0h3m1 0h1m-37 1h1m1 0h1m1 0h1m2 0h1m3 0h1m2 0h1m1 0h1m1 0h4m2 0h2m5 0h1m-30 1h2m2 0h1m4 0h1m1 0h3m1 0h1m1 0h2m2 0h1m1 0h1m1 0h6m2 0h2m-29 1h2m1 0h1m4 0h1m2 0h1m1 0h2m5 0h1m3 0h1m1 0h1m1 0h1m-37 1h7m1 0h1m1 0h1m3 0h2m2 0h3m1 0h1m1 0h1m2 0h2m1 0h1m1 0h2m2 0h1m-37 1h1m5 0h1m1 0h2m2 0h1m4 0h1m1 0h3m1 0h2m1 0h1m1 0h1m3 0h1m2 0h1m-36 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h2m3 0h2m1 0h2m2 0h5m1 0h1m-35 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m1 0h2m4 0h2m1 0h2m2 0h1m5 0h3m-36 1h1m1 0h3m1 0h1m1 0h4m5 0h1m4 0h3m1 0h1m2 0h1m2 0h1m2 0h1m-36 1h1m5 0h1m4 0h2m1 0h1m1 0h1m2 0h1m2 0h3m1 0h4m1 0h1m1 0h1m2 0h1m-37 1h7m1 0h3m2 0h3m2 0h1m2 0h1m1 0h2m5 0h1m1 0h2m2 0h1"/></svg>
+    <p>Mở ứng dụng ngân hàng và quét mã. Số tiền và nội dung đã điền sẵn.</p>
+    <a class="nut-nho" href="#" download="qr-brandai.svg">Tải ảnh QR</a>
+  </div>
+  <p class="cho">Đang chờ chuyển khoản · Giữ đơn 30 phút</p>
+  <h2>Quét mã để trả tiền</h2>
+  <p class="chu-phu" style="margin:0">Trang tự cập nhật khi ngân hàng báo tiền về. Gói: báo cáo AI nói gì về <b>Cà phê Lá</b>.</p>
+  <div class="bang">
+    <div class="d"><small>Số tiền</small><b class="tien giu">499.000đ</b><button class="nut-nho" type="button">Sao chép</button></div>
+    <div class="d"><small>Nội dung chuyển khoản</small><code class="giu">BAI7K3QX</code><button class="nut-nho" type="button">Sao chép</button></div>
+    <div class="d"><small>Người nhận</small><b class="giu">MB · 0000000000<br><small>CONG TY ...</small></b><button class="nut-nho" type="button">Sao chép</button></div>
+  </div>
+  <div class="da-tra" id="da-tra"><b>Đã nhận tiền.</b> Báo cáo đang được làm, link sẽ hiện ở đây và gửi vào email trước <span class="giu">10:30 ngày 10/11</span>.</div>
+  <p class="tiep">Trả xong, trang tự chuyển sang báo cáo, bạn không cần bấm gì. Chuyển nhầm số tiền hoặc nội dung? Gửi email cho <a href="mailto:hotro@ifagent.net" class="giu">hotro@ifagent.net</a>.</p>
+</div>
+</div>
+</main>
+
+<footer>
+<div class="khung">
+  <dl>
+    <dt>Đơn vị bán</dt><dd class="giu">{ten_chu}</dd>
+    <dt>Địa chỉ</dt><dd class="giu">{dia_chi}</dd>
+    <dt>Mã số thuế</dt><dd class="giu">{mst}</dd>
+    <dt>Email</dt><dd class="giu">{email}</dd>
+    <dt>Điện thoại</dt><dd class="giu">{dien_thoai}</dd>
+  </dl>
+  <nav><a href="#/bao-mat">Chính sách bảo mật</a><a href="#/hoan-tien">Chính sách hoàn tiền</a></nav>
+</div>
+</footer>
+
+<script>
+const man=()=>{const h=location.hash;const id=h==='#/mua'?'mua':h.startsWith('#/qr')?'qr':'trang';
+  document.querySelectorAll('.man').forEach(m=>m.classList.toggle('hien',m.id===id));
+  if(id!=='trang')scrollTo(0,0);
+  if(h==='#/qr-da-tra')document.getElementById('da-tra').style.display='block';};
+addEventListener('hashchange',man);man();
+document.getElementById('f').addEventListener('submit',e=>{e.preventDefault();const f=e.target;
+  const ok=f.brand.value.trim()&&/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value)&&f.dong_y_xu_ly.checked;
+  document.getElementById('loi').style.display=ok?'none':'block';if(ok)location.hash='#/qr';});
+</script>
+</body>
+</html>

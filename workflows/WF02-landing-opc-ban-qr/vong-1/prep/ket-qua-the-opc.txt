@@ -1,0 +1,25 @@
+{
+  "ten": "BrandAI 499k · kênh tự nhiên (T1 Khám + bài Linh) · SỐ ƯỚC, chưa đo",
+  "diem_thi_truong": 68,
+  "lai_moi_don": 484000,
+  "ltv": 726000,
+  "cac_cho_phep": 239580,
+  "don_hoa_von_thang": 11,
+  "don_de_du_thang": 89,
+  "canh_bao": [],
+  "qua_cong": true
+}
+{
+  "ten": "BrandAI 499k · quảng cáo trả tiền B2B · SỐ ƯỚC",
+  "diem_thi_truong": 68,
+  "lai_moi_don": 484000,
+  "ltv": 726000,
+  "cac_cho_phep": 239580,
+  "don_hoa_von_thang": null,
+  "don_de_du_thang": null,
+  "canh_bao": [
+    "CAC dự kiến 600,000 vượt mức cho phép 239,580: A5 không mở ads",
+    "mỗi đơn lỗ sau CAC: không bao giờ hoà vốn"
+  ],
+  "qua_cong": false
+}
