@@ -51,7 +51,7 @@ if ($Tho -eq 0) {
     Get-ChildItem "$Canh\t*\phieu.txt" -ErrorAction SilentlyContinue | ForEach-Object { $id = ((Get-Content $_.FullName) -split ";")[0]; Stop-Process -Id $id -Force -ErrorAction SilentlyContinue }
     Ghi "dung_han: đã dừng agy"
   } else {
-    # Dọn mồ côi (Linh 9/11): lượt thợ treo quá 90 phút, tiến trình chấm/kiểm của engine mất cha quá 60 phút,
+    # Dọn mồ côi (Linh 9/11): lượt thợ treo quá 150 phút (gồm agy ≤40 + chấm), tiến trình chấm/kiểm của engine mất cha quá 60 phút,
     # claude chấm (.canh-tho) quá 60 phút. Chỉ đụng tiến trình có dòng lệnh trỏ vào engine; không đụng agy, phiên Claude khác.
     try {
       $bay = Get-CimInstance Win32_Process -ErrorAction Stop
@@ -59,7 +59,7 @@ if ($Tho -eq 0) {
       foreach ($p in $bay) {
         if ([int]$p.ProcessId -eq $PID -or -not $p.CommandLine -or -not $p.CreationDate) { continue }
         $tuoi = ((Get-Date) - $p.CreationDate).TotalMinutes; $cl = $p.CommandLine; $ly = $null
-        if ($cl -match 'dieu-phoi-engine\.ps1' -and $cl -match '-Tho\s+[1-9]' -and $tuoi -gt 90) { $ly = "lượt thợ treo" }
+        if ($cl -match 'dieu-phoi-engine\.ps1' -and $cl -match '-Tho\s+[1-9]' -and $tuoi -gt 150) { $ly = "lượt thợ treo" }
         elseif ($cl -match 'Doc file \.canh-tho' -and $tuoi -gt 60) { $ly = "claude chấm treo" }
         elseif ($cl -match 'LINHX[\\-]ENGINE|ENGINE-t\d' -and $cl -match 'cong_kiem|pytest|next build|npm|node' -and -not $song[[int]$p.ParentProcessId] -and $tuoi -gt 60) { $ly = "kiểm mồ côi" }
         if ($ly) { & taskkill.exe /PID $p.ProcessId /T /F 2>&1 | Out-Null; Ghi "dọn mồ côi ($ly): PID $($p.ProcessId) $([int]$tuoi) phút: $($cl.Substring(0, [math]::Min(120, $cl.Length)))" }
