@@ -23,7 +23,35 @@ async function docNoiDung() {
     if (fs.existsSync(p)) {
       const raw = fs.readFileSync(p, "utf-8");
       const data = JSON.parse(raw);
-      return data?.noi_dung || data;
+      const nd = data?.noi_dung ? { ...data.noi_dung } : { ...data };
+      const dsCase = Array.isArray(data?.cases)
+        ? data.cases
+        : Array.isArray(nd?.cases)
+          ? nd.cases
+          : [];
+      if (dsCase.length > 0) {
+        const mucGoc = Array.isArray(nd.muc) ? [...nd.muc] : [];
+        for (const c of dsCase) {
+          if (
+            c &&
+            (c.da_duyet === true || c.da_duyet === 1) &&
+            typeof c.tieu_de === "string" &&
+            c.tieu_de.trim() &&
+            typeof c.chi_so === "string" &&
+            c.chi_so.trim()
+          ) {
+            const tenCase = `${c.tieu_de.trim()} — ${c.chi_so.trim()}`;
+            if (!mucGoc.some((m) => m?.ten === tenCase)) {
+              mucGoc.push({
+                ten: tenCase,
+                mo_ta: typeof c.mo_ta === "string" ? c.mo_ta : "",
+              });
+            }
+          }
+        }
+        nd.muc = mucGoc;
+      }
+      return nd;
     }
   }
 
@@ -75,6 +103,22 @@ export default function TrangBU({ noiDung, apiGoc = "" }) {
   const [dangGui, datDangGui] = useState(false);
   const [daGui, datDaGui] = useState(false);
   const [loiForm, datLoiForm] = useState("");
+  const [maNguoiLead, datMaNguoiLead] = useState("");
+  const [maCoHoiLead, datMaCoHoiLead] = useState("");
+
+  const [nguoiLich, datNguoiLich] = useState("");
+  const [phuTrachLich, datPhuTrachLich] = useState("");
+  const [hoTenLich, datHoTenLich] = useState("");
+  const [dienThoaiLich, datDienThoaiLich] = useState("");
+  const [emailLich, datEmailLich] = useState("");
+  const [batDauLich, datBatDauLich] = useState("2026-11-10 09:00:00");
+  const [phutLich, datPhutLich] = useState("30");
+  const [ghiChuLich, datGhiChuLich] = useState("");
+  const [dongYLich, datDongYLich] = useState(true);
+  const [websiteLich, datWebsiteLich] = useState("");
+  const [dangDatLich, datDangDatLich] = useState(false);
+  const [daDatLich, datDaDatLich] = useState(false);
+  const [loiDatLich, datLoiDatLich] = useState("");
 
   async function xuLyGuiForm(e) {
     e.preventDefault();
@@ -117,11 +161,100 @@ export default function TrangBU({ noiDung, apiGoc = "" }) {
         datLoiForm("Không gửi được thông tin, vui lòng kiểm tra lại.");
         return;
       }
+      const kq = await res.json().catch(() => ({}));
+      const msg = kq?.message || kq || {};
+      if (typeof msg?.nguoi === "string" && msg.nguoi.trim()) {
+        datMaNguoiLead(msg.nguoi.trim());
+        if (!nguoiLich.trim()) {
+          datNguoiLich(msg.nguoi.trim());
+        }
+      }
+      if (typeof msg?.co_hoi === "string" && msg.co_hoi.trim()) {
+        datMaCoHoiLead(msg.co_hoi.trim());
+      }
+      if (hoTen.trim() && !hoTenLich.trim()) {
+        datHoTenLich(hoTen.trim());
+      }
+      if (dienThoai.trim() && !dienThoaiLich.trim()) {
+        datDienThoaiLich(dienThoai.trim());
+      }
+      if (email.trim() && !emailLich.trim()) {
+        datEmailLich(email.trim());
+      }
       datDaGui(true);
     } catch {
       datLoiForm("Lỗi kết nối máy chủ, vui lòng thử lại.");
     } finally {
       datDangGui(false);
+    }
+  }
+
+  async function xuLyDatLich(e) {
+    e.preventDefault();
+    datLoiDatLich("");
+    datDaDatLich(false);
+    if (websiteLich.trim()) {
+      return;
+    }
+    if (!dongYLich) {
+      datLoiDatLich("Vui lòng đồng ý liên hệ để đặt lịch gọi tư vấn.");
+      return;
+    }
+    const batDauGui = batDauLich.trim();
+    if (!batDauGui) {
+      datLoiDatLich("Vui lòng chọn thời gian bắt đầu lịch gọi (08:00–18:00 giờ VN).");
+      return;
+    }
+    const nguoiGui = (nguoiLich || maNguoiLead).trim();
+    const dtGui = (dienThoaiLich || dienThoai).trim();
+    const emGui = (emailLich || email).trim();
+    const htGui = (hoTenLich || hoTen).trim();
+    if (!nguoiGui && !dtGui && !emGui) {
+      datLoiDatLich("Vui lòng nhập số điện thoại, email hoặc mã khách hàng để đặt lịch.");
+      return;
+    }
+
+    datDangDatLich(true);
+    try {
+      const goc = typeof apiGoc === "string" ? apiGoc.replace(/\/+$/, "") : "";
+      const dich = `${goc}/api/method/linhx_core.booking.api_booking.dat_lich_goi`;
+      const goiTin = {
+        nguoi: nguoiGui,
+        phu_trach: phuTrachLich.trim(),
+        ho_ten: htGui,
+        dien_thoai: dtGui,
+        email: emGui,
+        bat_dau: batDauGui,
+        phut: Number(phutLich) || 30,
+        ghi_chu: ghiChuLich.trim(),
+        dong_y_lien_he: Boolean(dongYLich),
+      };
+      if (maCoHoiLead.trim()) {
+        goiTin.co_hoi = maCoHoiLead.trim();
+      }
+      const res = await fetch(dich, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(goiTin),
+      });
+      if (res.status === 429) {
+        datLoiDatLich("Bạn gửi yêu cầu quá nhanh, vui lòng thử lại sau ít phút.");
+        return;
+      }
+      if (!res.ok) {
+        datLoiDatLich(
+          "Không đặt được lịch gọi (khung giờ ngoài 08:00–18:00 giờ VN hoặc trùng lịch người phụ trách)."
+        );
+        return;
+      }
+      datDaDatLich(true);
+    } catch {
+      datLoiDatLich("Lỗi kết nối máy chủ khi đặt lịch, vui lòng thử lại.");
+    } finally {
+      datDangDatLich(false);
     }
   }
 
@@ -266,7 +399,7 @@ export default function TrangBU({ noiDung, apiGoc = "" }) {
           overflow-wrap: anywhere;
         }
         .khu-form {
-          padding: 8px 0 48px;
+          padding: 8px 0 32px;
         }
         .khung-form {
           background: var(--mat);
@@ -302,6 +435,7 @@ export default function TrangBU({ noiDung, apiGoc = "" }) {
         .truong-form input[type="text"],
         .truong-form input[type="tel"],
         .truong-form input[type="email"],
+        .truong-form input[type="number"],
         .truong-form textarea {
           width: 100%;
           max-width: 100%;
@@ -505,6 +639,159 @@ export default function TrangBU({ noiDung, apiGoc = "" }) {
                 {daGui && (
                   <div className="hop-cam-on" data-cam-on>
                     Cảm ơn bạn! Chúng tôi đã ghi nhận thông tin và sẽ liên hệ sớm.
+                  </div>
+                )}
+              </form>
+            </div>
+          </section>
+
+          <section className="khu-form" aria-label="Form đặt lịch gọi tư vấn">
+            <div className="khung-form">
+              <h2>Đặt lịch gọi tư vấn 1-1</h2>
+              <p className="mo-ta-form">
+                Chọn khung giờ trong giờ làm việc (08:00–18:00 giờ VN) để đặt lịch trực tiếp với người phụ trách.
+              </p>
+
+              <form data-dat-lich onSubmit={xuLyDatLich} noValidate>
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <label htmlFor="lich-website">Website</label>
+                  <input
+                    id="lich-website"
+                    type="text"
+                    name="website_lich"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={websiteLich}
+                    onChange={(e) => datWebsiteLich(e.target.value)}
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-ho-ten">Họ và tên</label>
+                  <input
+                    id="lich-ho-ten"
+                    type="text"
+                    name="ho_ten"
+                    maxLength={120}
+                    value={hoTenLich}
+                    onChange={(e) => datHoTenLich(e.target.value)}
+                    placeholder="Nguyễn Văn A"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-dien-thoai">Số điện thoại</label>
+                  <input
+                    id="lich-dien-thoai"
+                    type="tel"
+                    name="dien_thoai"
+                    maxLength={20}
+                    value={dienThoaiLich}
+                    onChange={(e) => datDienThoaiLich(e.target.value)}
+                    placeholder="0912345678"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-email">Email</label>
+                  <input
+                    id="lich-email"
+                    type="email"
+                    name="email"
+                    maxLength={254}
+                    value={emailLich}
+                    onChange={(e) => datEmailLich(e.target.value)}
+                    placeholder="ban@doanhnghiep.vn"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-nguoi">Mã khách hàng (nếu đã đăng ký)</label>
+                  <input
+                    id="lich-nguoi"
+                    type="text"
+                    name="nguoi"
+                    maxLength={120}
+                    value={nguoiLich}
+                    onChange={(e) => datNguoiLich(e.target.value)}
+                    placeholder="Tự điền sau khi gửi thông tin tư vấn"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-phu-trach">Người phụ trách (tuỳ chọn)</label>
+                  <input
+                    id="lich-phu-trach"
+                    type="text"
+                    name="phu_trach"
+                    maxLength={140}
+                    value={phuTrachLich}
+                    onChange={(e) => datPhuTrachLich(e.target.value)}
+                    placeholder="Để trống để hệ thống tự gán người phụ trách"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-bat-dau">Thời gian bắt đầu (08:00–18:00 giờ VN)</label>
+                  <input
+                    id="lich-bat-dau"
+                    type="text"
+                    name="bat_dau"
+                    maxLength={32}
+                    value={batDauLich}
+                    onChange={(e) => datBatDauLich(e.target.value)}
+                    placeholder="2026-11-10 09:00:00"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-phut">Thời lượng cuộc gọi (phút)</label>
+                  <input
+                    id="lich-phut"
+                    type="number"
+                    name="phut"
+                    min={5}
+                    max={600}
+                    value={phutLich}
+                    onChange={(e) => datPhutLich(e.target.value)}
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lich-ghi-chu">Ghi chú cuộc gọi</label>
+                  <textarea
+                    id="lich-ghi-chu"
+                    name="ghi_chu"
+                    maxLength={2000}
+                    value={ghiChuLich}
+                    onChange={(e) => datGhiChuLich(e.target.value)}
+                    placeholder="Nội dung muốn trao đổi trong buổi gọi"
+                  />
+                </div>
+
+                <label className="dong-kiem">
+                  <input
+                    type="checkbox"
+                    name="dong_y_lien_he"
+                    checked={dongYLich}
+                    onChange={(e) => datDongYLich(e.target.checked)}
+                  />
+                  <span>Tôi đồng ý để người phụ trách gọi tư vấn theo lịch đã đặt.</span>
+                </label>
+
+                {loiDatLich && (
+                  <p className="loi-form" data-dat-lich-loi>
+                    {loiDatLich}
+                  </p>
+                )}
+
+                <button type="submit" className="nut-gui" disabled={dangDatLich}>
+                  {dangDatLich ? "Đang đặt lịch..." : "Đặt lịch gọi tư vấn"}
+                </button>
+
+                {daDatLich && (
+                  <div className="hop-cam-on" data-dat-lich-thanh-cong>
+                    Đã đặt lịch gọi tư vấn thành công! Người phụ trách đã nhận lịch trong danh sách việc chờ.
                   </div>
                 )}
               </form>
