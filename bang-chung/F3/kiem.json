@@ -1,0 +1,45 @@
+{
+  "feature": "F3",
+  "luc": "2026-11-09T23:55:38+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f3.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 26.74s"
+  ],
+  "pytest_chi_tiet": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_f3.py::test_case_chua_duyet_khong_ra_api_cong_khai PASSED [ 33%]",
+    "tests/nghiem-thu/test_f3.py::test_trang_ifagent_dung_co_muc_case_lay_tu_api PASSED [ 66%]",
+    "tests/nghiem-thu/test_f3.py::test_commit_f3_khong_dung_trang_bu PASSED   [100%]",
+    "",
+    "============================= 3 passed in 18.08s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 5 items",
+    "",
+    "apps/linhx_core/linhx_core/cred/test_kho_case.py::test_case_cong_khai_loc_chinh_xac_va_khong_sua_dau_vao PASSED [ 20%]",
+    "apps/linhx_core/linhx_core/cred/test_kho_case.py::test_noi_dung_trang_bu_ghep_case_va_chong_trung PASSED [ 40%]",
+    "apps/linhx_core/linhx_core/cred/test_api_cred_danh_sach_case_va_noi_dung_ifagent PASSED [ 60%]",
+    "apps/linhx_core/linhx_core/cred/test_kho_case.py::test_noi_dung_ifagent_khi_db_trong_khong_lay_case_tu_site_json PASSED [ 80%]",
+    "apps/linhx_core/linhx_core/cred/test_kho_case.py::test_kiem_case_bat_buoc_tieu_de_va_chi_so_khi_duyet PASSED [100%]",
+    "",
+    "============================== 5 passed in 0.19s =============================="
+  ],
+  "doctypes": [
+    "LX Case"
+  ],
+  "ghi_chu": "File ghi nhận đầu ra chạy lệnh kiểm thực tế; trạng thái passes trong features-dot2.json do cổng kiểm ngoài canh/cong_kiem.py xác nhận độc lập."
+}

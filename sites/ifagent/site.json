@@ -18,5 +18,11 @@
         "mo_ta": "Tích hợp VietQR tự động đối soát và khởi chạy tiến trình tạo báo cáo ngay khi hoàn tất thanh toán."
       }
     ]
+  },
+  "case": {
+    "bat": true,
+    "mau_ten": "{tieu_de} — {chi_so}",
+    "api_danh_sach": "/api/method/linhx_core.cred.api_cred.danh_sach_case",
+    "api_noi_dung": "/api/method/linhx_core.cred.api_cred.noi_dung_ifagent"
   }
 }
