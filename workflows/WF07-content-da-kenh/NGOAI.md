@@ -20,3 +20,14 @@ Bước 0, tìm sơ bộ 9/11 (GitHub, trang skill, blog, mạng). **Mới tìm 
 | claude-gtm-plugin (manojbajaj95, 54 skill) | Đọc 9/11: social-media-management, mục lục newsletter-management | Quy ước lưu nháp `content/<kênh>/drafts/NGÀY_slug.md` và đẩy bài học về hồ sơ thương hiệu; khung số bản tin (mở 30–40%, huỷ < 0,5%/số), cần kiểm nguồn trước khi dùng | social-media-management gần như chép lại coreyhaines; không thêm gì mới |
 
 Ghi chú 9/11 04:15Z: thread cloud dừng ở đây theo đổi kế hoạch, nghiên cứu nền chuyển sang máy Linh (kết quả về linhx-engine nhánh claude/project-thread-jmaq7q, workflows/WF07/NGHIEN-CUU.md). Chưa đọc: ClaudeKit social, nguồn Việt (Zalo OA), quy trình duyệt của agency. So với LINHX: skill hiện có (chuyen-kenh, tao-bai, duyet-dang, ban-dang, Postiz) thiếu bước tách nguyên tử dùng chung và thiếu bộ lịch nhiều kênh; chuyen-kenh chưa có khuôn Zalo OA và bản tin.
+
+## Bổ sung 9/11 (máy Linh)
+| Nguồn | Đã đọc gì | Lấy | Bỏ |
+|---|---|---|---|
+| rampstackco/claude-skills content-repurposing (304 dòng) | Đọc toàn SKILL.md | Ba kiểu one-and-done / mass-blast / adapt-by-format; kiểm chọn bài gốc; phép thử 3 câu cho mỗi bài phụ; kiểm chồng lấn từ khoá | Mục tìm kiếm AI (chưa cần); các file references chưa đọc |
+| rampstackco editorial-qa | Mục AI-content audit, QA at scale | Danh sách dấu hiệu AI và dạng bịa (số giả, trích dẫn người không nói); ngưỡng dừng > 5% mẫu hỏng | Thủ tục dài, mục SEO |
+| openclaudia content-repurposing (236 dòng) | 110 dòng đầu | Kim tự tháp 1 bài gốc ra 15–25 mảnh | Công thức thread X, emoji, "RT if useful" sai giọng; không có máy chấm |
+| Girard Media blog (đề 22/8/2026) | Cả trang | Bản "atomization brief" có người làm và hạn; tỉ lệ nhân 12:1 | Số 12:1 là mục tiêu tự đặt |
+| Averi blog | Cả trang | Tách trong 24 giờ, chuyển hoá 2–3 ngày; cảnh báo không tách bài nông | Số "60-80%" không nguồn; hai ngày đăng lệch nhau |
+| mrgoonie/claudekit-skills | Clone, tìm "social" | Không có skill social ở đây | Chưa đọc docs.claudekit.cc |
+| Brands Vietnam (Zalo OA) | Không đọc được, 403 | — | Giao DR |
