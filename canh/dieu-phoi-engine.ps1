@@ -250,7 +250,9 @@ Chấm theo rủi ro: dữ liệu khách, quyền, tiền, bí mật là mức c
 Lỗi nhỏ ghi mục "## Lưu ý" (file:dòng + việc), không chặn. Ý tưởng ngoài phạm vi để mục "## Ý tưởng".
 Trả lời: dòng 1 chỉ là DAT hoặc CHUA_DAT. Sau đó tối đa 10 gạch đầu dòng, mỗi dòng file:dòng và việc phải sửa. Không sửa file nào, đọc ít file nhất có thể.
 "@
-  $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten"
+  # Linh 9/11 tiết kiệm token: rào cứng/cổng kiểm đã trượt (không do máy) thì không gọi Claude chấm
+  if ($loi.Count -gt 0 -and -not $loiMay) { $c = @{ kl = "CHUA_DAT"; review = "(Không gọi Claude chấm vì rào cứng/cổng kiểm đã trượt; sửa các điểm ở mục Rào cứng trước.)" } }
+  else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" }
   # Claude hết hạn mức (9/11 13:49 "You've hit your weekly limit" bị chấm CHUA_DAT, C2 chạm trần oan): lỗi máy, không tính lần
   if ($c.review -match "hit your (weekly |daily |usage )?limit|usage limit|rate.?limit|overloaded_error") { $loiMay = $true; $claudeHong = $true }
   $review = $c.review
