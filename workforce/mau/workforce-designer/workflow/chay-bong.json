@@ -1,0 +1,30 @@
+{
+ "ten": "chay-bong",
+ "mo_ta": "Chạy bóng: bot trả lời ca thật nhưng không gửi, người chấm so với người thật làm; đo giây trả lời",
+ "vi_du": [
+  "chạy bóng Nụ của đơn vị X"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "tho-dung",
+   "viec": "Chạy bộ thử, ghi thu/ket-qua/<ngày>.json {tong, dat, giay_trung_vi, nguoi_cham}",
+   "dau_ra": "ket-qua.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Chấm mù với bản vàng, ghi chỗ thua",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "Kết quả thử có người chấm khác thợ",
+  "Giây trả lời nhanh trung vị ≤ 60"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 40
+}

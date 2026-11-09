@@ -1,0 +1,30 @@
+{
+ "ten": "viec-chung",
+ "mo_ta": "Việc chưa có workflow riêng: trưởng làm, máy chấm kiểm, người duyệt chốt. Lặp ≥ 3 lần thì tách thành workflow riêng.",
+ "vi_du": [
+  "làm giúp anh cái này",
+  "soạn giúp em"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "truong",
+   "viec": "Làm theo TASK.md, ghi nguồn từng ý",
+   "dau_ra": "ket-qua.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "cham",
+   "viec": "Chấm theo tiêu chí, ghi điểm và chỗ sai vào nhat-ky.md",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Có file trong dau-ra/ trả lời đúng việc được giao",
+  "Mỗi số, tên, giá có nguồn (id su-that hoặc file)",
+  "Không có số hay tên không có trong nguồn",
+  "Không dùng mục cu trong su-that.json (tên, người, tên miền, liên hệ cũ)"
+ ],
+ "nguoi_duyet": "chu",
+ "tran_phut": 40
+}

@@ -9,12 +9,19 @@ Vòng: SETUP (moi) -> RUNNING (giao, chuyen, bang) -> LEARNING (phan-hoi, hoc) -
   python af.py bang <W> [--html bang.html]
   python af.py phan-hoi <W> --dich skill:tra-ho-so --loai xau --noi-dung "..." [--viec LX-0001]
   python af.py nho <W> "điều cần nhớ"
+  python af.py vang <W> --dich workflow:x --tep bai-tot.md --nguon "..." --vi-sao "..."   # thêm bản vàng
+  python af.py ban-sua <W> --viec LX-0003 --ban-tho a.md --ban-nguoi b.md --ai hang --luat "..."   # học từ bản sửa
+  python af.py hoc-ngoai <W> --dich skill:x --nguon "repo/người" --noi-dung "..."       # học từ chuẩn cao nhất
   python af.py hoc <W>                      # gom bài học thành đề xuất (chạy cuối ngày)
   python af.py thang-cap <W> <ma-de-xuat> --duyet linh
   python af.py lui <W> skill:tra-ho-so
   python af.py lenh <W> --tu <ma-nguoi> "/giao ..."   # cầu nối chat (Zalo/Telegram/email)
   python af.py nap-skill <W> --kho ../skills     # chép skill theo kenh.json (mẫu trong repo không kèm skill)
   python af.py kiem <W>
+  python af.py moi <W> --mau ban-hang --ten ... --don-vi ... --kho ../skills   # dựng từ bộ mẫu
+  python af.py muc <W>                       # chấm mức 1 (mở nhóm) / 2 (đạt 14 ngày)
+  python af.py muc --mau ban-hang <W1> <W2>  # mức 3: bộ mẫu đã chạy ổn ở ≥ 2 đơn vị
+  python af.py hoc-cheo ban-hang <W1> <W2> <W3>   # bài học lặp ở ≥ 3 đơn vị → sửa bộ mẫu
   python af.py dong-goi <W> <ra.zip> [--mot-file GOI.md]
   python af.py may-chu <W> [--cong 8120]    # server mỏng, token ở biến AF_TOKEN
 """
@@ -22,6 +29,7 @@ import argparse, difflib, fnmatch, html, json, os, re, shutil, sys, time, zipfil
 
 GOC = os.path.dirname(os.path.abspath(__file__))
 KHUON = os.path.join(GOC, 'khuon')
+BO_MAU = os.path.join(GOC, 'bo-mau')
 TRAN_NHO = 2200
 TRANG_THAI = ['cho', 'dang_lam', 'cho_duyet', 'tra_lai', 'xong', 'chan', 'huy']
 CHUYEN = {
@@ -172,12 +180,31 @@ def lenh_moi(a):
     if os.path.exists(a.thu_muc) and os.listdir(a.thu_muc):
         raise Loi(f'{a.thu_muc} đã có nội dung, không ghi đè')
     shutil.copytree(KHUON, a.thu_muc, dirs_exist_ok=True)
+    skills = [x for x in (a.skills or '').split(',') if x]
+    mau = None
+    if getattr(a, 'mau', None):
+        goc_mau = os.path.join(getattr(a, 'bo_mau', None) or BO_MAU, a.mau)
+        mau = doc_json(os.path.join(goc_mau, 'mau.json'))
+        if mau is None:
+            raise Loi(f'không có bộ mẫu "{a.mau}" (cần {goc_mau}/mau.json)')
+        for r, _, fs in os.walk(goc_mau):
+            for f in fs:
+                rel = os.path.relpath(os.path.join(r, f), goc_mau)
+                if rel == 'mau.json' or rel.split(os.sep)[0] in ('de-xuat', 'HOC-CHEO.md'):
+                    continue
+                dich = os.path.join(a.thu_muc, rel)
+                os.makedirs(os.path.dirname(dich), exist_ok=True)
+                shutil.copy2(os.path.join(r, f), dich)
+        skills = list(dict.fromkeys(mau.get('skills', []) + skills))
     w_json = os.path.join(a.thu_muc, 'workforce.json')
     d = doc_json(w_json)
     d.update({'ten': a.ten, 'don_vi': a.don_vi, 'tao_luc': bay_gio()})
+    if mau:
+        d['mau'] = {'ten': mau['ten'], 'ban': mau['ban']}
+        d['tieu_chuan'] = {**d.get('tieu_chuan', {}), **mau.get('tieu_chuan', {})}
     ghi_json(w_json, d)
     kenh = {}
-    for s in [x for x in (a.skills or '').split(',') if x]:
+    for s in skills:
         nguon = tim_skill(a.kho, s)
         shutil.copytree(nguon, os.path.join(a.thu_muc, '.agents', 'skills', s))
         kenh[f'skill:{s}'] = {'production': '1.0.0', 'truoc': [], 'nguon': os.path.relpath(nguon, a.kho).replace('\\', '/')}
@@ -250,6 +277,9 @@ Trước khi làm: đọc `../../NHO.md`, `../../02-wiki/INDEX.md`, và các dò
 ## Tiêu chí xong (đánh [x] từng dòng khi đã kiểm, kèm bằng chứng trong nhat-ky.md)
 {tieu_chi}
 
+## Bản vàng (chuẩn cao nhất đã chọn): đọc trước, làm ít nhất bằng
+{chr(10).join('- `../../' + x + '`' for x in ds_vang(w, 'workflow:' + a.workflow)) or '- (chưa có: báo người duyệt)'}
+
 ## Bài học đang áp
 {bai_hoc_cho(w, wf)}
 """)
@@ -259,6 +289,11 @@ Trước khi làm: đọc `../../NHO.md`, `../../02-wiki/INDEX.md`, và các dò
     w.thong_bao(a.nguoi_giao, f'Em nhận, mã {ma}: {a.viec}', ma)
     print(ma)
     return ma
+
+
+def ds_vang(w, dich):
+    d = w.p('vang', dich.replace(':', '-'))
+    return sorted(os.path.relpath(os.path.join(d, f), w.goc).replace('\\', '/') for f in os.listdir(d) if '.khong-dat' not in f) if os.path.isdir(d) else []
 
 
 def bai_hoc_cho(w, wf):
@@ -359,7 +394,7 @@ def chuan_hoa(t):
     return re.sub(r'\s+', ' ', t.lower()).strip()
 
 
-def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None):
+def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
     """Mỗi phản hồi thành bullet ACE trong HOC.jsonl. Ý giống bullet cũ (≥ 0,75) thì cộng dồn, không thêm dòng."""
     w.duong_dich(dich)
     ds = doc_dong(w.p('HOC.jsonl'))
@@ -375,9 +410,9 @@ def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None):
                'bang_chung': [], 'trang_thai': 'mo', 'tao_luc': bay_gio()}
         ds.append(gan)
     gan['ung_ho' if (tot == (gan['loai'] == 'tot')) else 'phan_doi'] += 1
-    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung})
+    gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan})
     ghi_lai_hoc(w, ds)
-    w.su_kien('phan_hoi', dich=dich, loai=loai, viec=viec, ai=ai, bai_hoc=gan['id'])
+    w.su_kien('phan_hoi', dich=dich, loai=loai, viec=viec, ai=ai, bai_hoc=gan['id'], nhan=nhan)
     return gan['id']
 
 
@@ -399,7 +434,56 @@ def lenh_phan_hoi(a, w=None):
     w = w or WF(a.thu_muc)
     if a.loai not in ('tot', 'xau'):
         raise Loi('--loai là tot hoặc xau')
-    print(ghi_phan_hoi(w, a.dich, a.loai, a.noi_dung, a.viec, a.ai))
+    print(ghi_phan_hoi(w, a.dich, a.loai, a.noi_dung, a.viec, a.ai, getattr(a, 'nhan', None)))
+
+
+def lenh_vang(a, w=None):
+    """Thêm một bản vàng: sản phẩm tốt nhất đã thấy (của người giỏi nhất, skill tốt nhất, hoặc việc được khen), kèm nguồn và vì sao vàng."""
+    w = w or WF(a.thu_muc)
+    w.duong_dich(a.dich)
+    if not os.path.exists(a.tep):
+        raise Loi(f'không thấy {a.tep}')
+    if not a.nguon or not a.vi_sao:
+        raise Loi('bản vàng phải có --nguon và --vi-sao (đo được: điểm nào hơn bài thường)')
+    d = w.p('vang', a.dich.replace(':', '-'))
+    os.makedirs(d, exist_ok=True)
+    dich = os.path.join(d, os.path.basename(a.tep))
+    shutil.copy2(a.tep, dich)
+    them_dong(w.p('vang', 'NGUON.jsonl'), {'luc': bay_gio(), 'dich': a.dich, 'tep': os.path.relpath(dich, w.goc).replace('\\', '/'),
+                                           'nguon': a.nguon, 'vi_sao': a.vi_sao, 'ai': a.ai})
+    w.su_kien('vang', dich=a.dich, nguon=a.nguon)
+    print(os.path.relpath(dich, w.goc))
+
+
+def lenh_hoc_ngoai(a, w=None):
+    """Bài học rút từ chuẩn ngoài (skill tốt nhất, người tiêu chuẩn cao nhất). Mỗi nguồn là một bằng chứng; hai nguồn độc lập cùng ý thì thành đề xuất."""
+    w = w or WF(a.thu_muc)
+    if not a.nguon:
+        raise Loi('học ngoài phải có --nguon (URL, repo:đường dẫn, tên người + tác phẩm)')
+    print(ghi_phan_hoi(w, a.dich, 'tot', a.noi_dung, f'NGOAI:{a.nguon}', a.ai or 'chuan-ngoai', 'chuan-ngoai'))
+
+
+def lenh_ban_sua(a, w=None):
+    """Học từ bản sửa của người giỏi: bản người sửa thành bản vàng của workflow, bản thợ giữ làm phản ví dụ, mỗi luật rút ra thành bài học."""
+    w = w or WF(a.thu_muc)
+    v = w.viec(a.viec)
+    if not a.luat:
+        raise Loi('phải rút ít nhất 1 --luat từ chỗ người sửa (vì sao bản sửa hơn)')
+    for f in (a.ban_tho, a.ban_nguoi):
+        if not os.path.exists(f):
+            raise Loi(f'không thấy {f}')
+    dich = f'workflow:{v["workflow"]}'
+    d = w.p('vang', dich.replace(':', '-'))
+    os.makedirs(d, exist_ok=True)
+    duoi = os.path.splitext(a.ban_nguoi)[1] or '.md'
+    shutil.copy2(a.ban_nguoi, os.path.join(d, f'{a.viec}-ban-sua-{a.ai}{duoi}'))
+    shutil.copy2(a.ban_tho, os.path.join(d, f'{a.viec}-ban-tho.khong-dat{os.path.splitext(a.ban_tho)[1] or ".md"}'))
+    giong = difflib.SequenceMatcher(None, doc(a.ban_tho), doc(a.ban_nguoi)).ratio()
+    them_dong(w.p('vang', 'NGUON.jsonl'), {'luc': bay_gio(), 'dich': dich, 'tep': f'{a.viec}-ban-sua-{a.ai}{duoi}', 'nguon': f'bản sửa của {a.ai}',
+                                           'vi_sao': '; '.join(a.luat), 'giong_ban_tho': round(giong, 2)})
+    ids = [ghi_phan_hoi(w, dich, 'xau', l, a.viec, a.ai, 'ban-sua') for l in a.luat]
+    print(f'bản sửa giống bản thợ {giong:.0%}; bài học {", ".join(ids)}')
+    return ids
 
 
 def lenh_nho(a, w=None):
@@ -664,6 +748,103 @@ def lenh_kiem(a):
     return 0 if not loi else 1
 
 
+# ---------- TIÊU CHUẨN 3 MỨC ----------
+def d0_tra_loi(w):
+    """D0 đã trả lời: mỗi câu có dòng '> ...' ngay sau, không còn '> (chưa'."""
+    t = doc(w.p('00-D0-NHU-CAU.md')) if os.path.exists(w.p('00-D0-NHU-CAU.md')) else ''
+    tl = [x for x in re.findall(r'^>\s*(.+)$', t, re.M) if x.strip()]
+    return len([x for x in tl if not re.match(r'\(?chưa', x.strip(), re.I)]), len(tl)
+
+
+def ket_qua_thu_moi(w):
+    d = w.p('thu', 'ket-qua')
+    fs = sorted(f for f in os.listdir(d) if f.endswith('.json')) if os.path.isdir(d) else []
+    return doc_json(os.path.join(d, fs[-1])) if fs else None
+
+
+def muc(w):
+    """Chấm mức: 1 = mở được nhóm, 2 = đạt 14 ngày. Mức 3 (thành bộ mẫu) chấm trên nhiều đơn vị bằng `muc --mau`."""
+    tc = w.cau_hinh.get('tieu_chuan', {})
+    t1, t2 = tc.get('m1', {}), tc.get('m2', {})
+    m1, m2 = [], []
+    loi = kiem(w)
+    m1.append(('kiem cấu trúc DAT (người chịu trách nhiệm, người duyệt, tiêu chí, câu ví dụ, không bí mật)', not loi, '; '.join(loi[:3])))
+    da, tong = d0_tra_loi(w)
+    m1.append(('D0 trả lời đủ 7 câu', da >= 7, f'{da}/7 (dòng "> " sau mỗi câu)'))
+    ca = sum(len(doc_dong(w.p('thu', f))) for f in os.listdir(w.p('thu')) if f.endswith('.jsonl')) if os.path.isdir(w.p('thu')) else 0
+    m1.append((f'bộ thử ≥ {t1.get("ca_thu_toi_thieu", 10)} ca thật', ca >= t1.get('ca_thu_toi_thieu', 10), f'{ca} ca'))
+    kq = ket_qua_thu_moi(w)
+    m1.append(('lần thử gần nhất đạt hết, người chấm khác thợ', bool(kq) and kq.get('dat') == kq.get('tong') and kq.get('nguoi_cham') not in (None, '', 'tho'),
+               f'{kq.get("dat")}/{kq.get("tong")}' if kq else 'chưa có thu/ket-qua/*.json'))
+    thieu_vang = [t for t in w.ds_workflow() if t != 'viec-chung' and not ds_vang(w, 'workflow:' + t)]
+    m1.append(('mỗi workflow có ≥ 1 bản vàng có nguồn', not thieu_vang, 'thiếu: ' + ', '.join(thieu_vang) if thieu_vang else 'đủ'))
+    gioi = t1.get('tra_loi_nhanh_giay', 60)
+    m1.append((f'trả lời nhanh ≤ {gioi} giây (trung vị)', bool(kq) and (kq.get('giay_trung_vi') or 1e9) <= gioi,
+               f'{kq.get("giay_trung_vi")} giây' if kq else '-'))
+    ngay = t2.get('ngay', 14)
+    moc = time.time() - ngay * 86400
+    ds = [v for v in w.ds_viec() if time.mktime(time.strptime(v['tao_luc'], '%Y-%m-%dT%H:%M:%S')) >= moc]
+    xong = [v for v in ds if v['trang_thai'] == 'xong']
+    m2.append((f'≥ {t2.get("viec_toi_thieu", 20)} việc trong {ngay} ngày', len(ds) >= t2.get('viec_toi_thieu', 20), f'{len(ds)} việc'))
+    ti_le = len(xong) / len(ds) if ds else 0
+    m2.append((f'≥ {int(t2.get("ti_le_xong", .65) * 100)}% xong', ds and ti_le >= t2.get('ti_le_xong', .65), f'{ti_le:.0%}'))
+    nguoi = {v['nguoi_giao'] for v in ds if (w.nguoi(v['nguoi_giao']) or {}).get('vai') != 'chu'}
+    m2.append((f'≥ {t2.get("nguoi_dung_toi_thieu", 2)} người ngoài chủ giao việc', len(nguoi) >= t2.get('nguoi_dung_toi_thieu', 2), ', '.join(sorted(nguoi)) or '-'))
+    cam = set(t2.get('nhan_cam', ['bia', 'lo-noi-bo']))
+    nang = [b for h in doc_dong(w.p('HOC.jsonl')) for b in h['bang_chung']
+            if b.get('nhan') in cam and time.mktime(time.strptime(b['luc'], '%Y-%m-%dT%H:%M:%S')) >= moc]
+    m2.append(('0 lỗi nặng (bịa số, lộ nội bộ)', not nang, f'{len(nang)} lỗi'))
+    dat1 = all(x[1] for x in m1)
+    dat2 = dat1 and all(x[1] for x in m2)
+    return {'muc': 2 if dat2 else 1 if dat1 else 0, 'm1': m1, 'm2': m2}
+
+
+def lenh_muc(a):
+    if a.mau:
+        ds = [WF(x) for x in a.thu_muc]
+        cung = [w for w in ds if w.cau_hinh.get('mau', {}).get('ten') == a.mau]
+        dat = [w for w in cung if muc(w)['muc'] >= 2]
+        can = (doc_json(os.path.join(a.bo_mau or BO_MAU, a.mau, 'mau.json')) or {}).get('tieu_chuan', {}).get('m3', {}).get('don_vi_toi_thieu', 2)
+        print(f'Bộ mẫu {a.mau}: {len(dat)}/{len(cung)} đơn vị đạt mức 2 (cần {can}) → {"MỨC 3: dùng làm mẫu cho đơn vị sau" if len(dat) >= can else "chưa mức 3"}')
+        return 0 if len(dat) >= can else 1
+    w = WF(a.thu_muc[0])
+    r = muc(w)
+    print(f'{w.cau_hinh["ten"]}: MỨC {r["muc"]}')
+    for nhom, ten in (('m1', 'Mức 1 · mở được nhóm'), ('m2', 'Mức 2 · đạt 14 ngày')):
+        print(ten)
+        for dieu, dat, ct in r[nhom]:
+            print(f'  {"✓" if dat else "✗"} {dieu} ({ct})')
+    return 0 if r['muc'] >= 1 else 1
+
+
+def lenh_hoc_cheo(a):
+    """Gom bài học xuyên đơn vị: cùng đích, ý giống nhau, ở ≥ N đơn vị cùng bộ mẫu → đề xuất sửa bộ mẫu (duyệt qua PR repo)."""
+    goc_mau = os.path.join(a.bo_mau or BO_MAU, a.mau)
+    if not os.path.exists(os.path.join(goc_mau, 'mau.json')):
+        raise Loi(f'không có bộ mẫu {a.mau}')
+    nhom = []  # [{dich, noi_dung, don_vi:set, id:[...]}]
+    for x in a.thu_muc:
+        w = WF(x)
+        if w.cau_hinh.get('mau', {}).get('ten') != a.mau:
+            continue
+        for h in doc_dong(w.p('HOC.jsonl')):
+            if h['trang_thai'] == 'tia':
+                continue
+            for g in nhom:
+                if g['dich'] == h['dich'] and difflib.SequenceMatcher(None, chuan_hoa(g['noi_dung']), chuan_hoa(h['noi_dung'])).ratio() >= 0.6:
+                    g['don_vi'].add(w.cau_hinh['don_vi']); g['id'].append(f'{w.cau_hinh["don_vi"]}:{h["id"]}')
+                    break
+            else:
+                nhom.append({'dich': h['dich'], 'noi_dung': h['noi_dung'], 'don_vi': {w.cau_hinh['don_vi']}, 'id': [f'{w.cau_hinh["don_vi"]}:{h["id"]}']})
+    du = [g for g in nhom if len(g['don_vi']) >= a.nguong]
+    dong = [f'# Bài học xuyên đơn vị · bộ mẫu {a.mau} ({bay_gio()})', '',
+            f'Bài học có ở ≥ {a.nguong} đơn vị. Designer sửa file tương ứng trong bộ mẫu bằng một PR; Linh duyệt PR là duyệt thăng cấp bộ mẫu.', '']
+    dong += [f'- {g["dich"]} · {len(g["don_vi"])} đơn vị ({", ".join(sorted(g["don_vi"]))}) · {g["noi_dung"]} · [{", ".join(g["id"])}]' for g in du] or ['- (chưa có)']
+    ghi(os.path.join(goc_mau, 'HOC-CHEO.md'), '\n'.join(dong) + '\n')
+    print(f'{len(du)} bài học đủ ngưỡng → {os.path.join(goc_mau, "HOC-CHEO.md")}')
+    return du
+
+
 # ---------- ĐÓNG GÓI ----------
 def lenh_dong_goi(a):
     w = WF(a.thu_muc)
@@ -760,7 +941,7 @@ def tao_parser():
     p = argparse.ArgumentParser(prog='af.py', description='Lõi LINHX Agent Force')
     s = p.add_subparsers(dest='lenh', required=True)
     x = s.add_parser('moi'); x.add_argument('thu_muc'); x.add_argument('--ten', required=True); x.add_argument('--don-vi', required=True)
-    x.add_argument('--kho'); x.add_argument('--skills')
+    x.add_argument('--kho'); x.add_argument('--skills'); x.add_argument('--mau', help='bộ mẫu trong workforce/bo-mau'); x.add_argument('--bo-mau')
     x = s.add_parser('giao'); x.add_argument('thu_muc'); x.add_argument('--workflow', required=True); x.add_argument('--viec', required=True)
     x.add_argument('--nguoi-giao', default='chu')
     x = s.add_parser('chuyen'); x.add_argument('thu_muc'); x.add_argument('ma'); x.add_argument('den', choices=TRANG_THAI)
@@ -768,13 +949,23 @@ def tao_parser():
     x = s.add_parser('bang'); x.add_argument('thu_muc'); x.add_argument('--html')
     x = s.add_parser('phan-hoi'); x.add_argument('thu_muc'); x.add_argument('--dich', required=True); x.add_argument('--loai', required=True)
     x.add_argument('--noi-dung', required=True); x.add_argument('--viec'); x.add_argument('--ai')
+    x.add_argument('--nhan', help='bia | lo-noi-bo | ... (lỗi nặng, chặn mức 2)')
     x = s.add_parser('nho'); x.add_argument('thu_muc'); x.add_argument('noi_dung')
+    x = s.add_parser('vang'); x.add_argument('thu_muc'); x.add_argument('--dich', required=True); x.add_argument('--tep', required=True)
+    x.add_argument('--nguon', required=True); x.add_argument('--vi-sao', required=True); x.add_argument('--ai')
+    x = s.add_parser('ban-sua'); x.add_argument('thu_muc'); x.add_argument('--viec', required=True); x.add_argument('--ban-tho', required=True)
+    x.add_argument('--ban-nguoi', required=True); x.add_argument('--ai', required=True); x.add_argument('--luat', action='append')
+    x = s.add_parser('hoc-ngoai'); x.add_argument('thu_muc'); x.add_argument('--dich', required=True); x.add_argument('--nguon', required=True)
+    x.add_argument('--noi-dung', required=True); x.add_argument('--ai')
     x = s.add_parser('hoc'); x.add_argument('thu_muc')
     x = s.add_parser('thang-cap'); x.add_argument('thu_muc'); x.add_argument('ma'); x.add_argument('--duyet', required=True)
     x = s.add_parser('lui'); x.add_argument('thu_muc'); x.add_argument('dich'); x.add_argument('--ly-do')
     x = s.add_parser('lenh'); x.add_argument('thu_muc'); x.add_argument('--tu', required=True); x.add_argument('tin')
     x = s.add_parser('nap-skill'); x.add_argument('thu_muc'); x.add_argument('--kho', required=True)
     x = s.add_parser('kiem'); x.add_argument('thu_muc')
+    x = s.add_parser('muc'); x.add_argument('thu_muc', nargs='+'); x.add_argument('--mau'); x.add_argument('--bo-mau')
+    x = s.add_parser('hoc-cheo'); x.add_argument('mau'); x.add_argument('thu_muc', nargs='+'); x.add_argument('--nguong', type=int, default=3)
+    x.add_argument('--bo-mau')
     x = s.add_parser('dong-goi'); x.add_argument('thu_muc'); x.add_argument('ra'); x.add_argument('--kem-viec', action='store_true')
     x.add_argument('--mot-file')
     x = s.add_parser('may-chu'); x.add_argument('thu_muc'); x.add_argument('--cong', type=int, default=8120); x.add_argument('--host', default='127.0.0.1')
@@ -786,12 +977,17 @@ def main(argv=None):
     try:
         if a.lenh == 'kiem':
             return lenh_kiem(a)
+        if a.lenh == 'muc':
+            return lenh_muc(a)
+        if a.lenh == 'hoc-cheo':
+            lenh_hoc_cheo(a)
+            return 0
         if a.lenh == 'lenh':
             kq = lenh_lenh(a)
             if kq:
                 print(kq)
             return 0
-        {'moi': lenh_moi, 'giao': lenh_giao, 'chuyen': lenh_chuyen, 'bang': lenh_bang, 'phan-hoi': lenh_phan_hoi, 'nho': lenh_nho,
+        {'moi': lenh_moi, 'giao': lenh_giao, 'chuyen': lenh_chuyen, 'bang': lenh_bang, 'phan-hoi': lenh_phan_hoi, 'nho': lenh_nho, 'vang': lenh_vang, 'hoc-ngoai': lenh_hoc_ngoai, 'ban-sua': lenh_ban_sua,
          'hoc': lenh_hoc, 'thang-cap': lenh_thang_cap, 'lui': lenh_lui, 'nap-skill': lenh_nap_skill, 'dong-goi': lenh_dong_goi, 'may-chu': lenh_may_chu}[a.lenh](a)
         return 0
     except Loi as e:

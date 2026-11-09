@@ -252,3 +252,126 @@ def test_mau_ifagent_event_dat(tmp_path):
     assert len(w.ds_viec()) == 5
     ma = next(v['ma'] for v in w.ds_viec() if v['workflow'] == 'tra-ho-so')
     assert 'dưới 60 giây' in af.doc(w.p('viec', ma, 'TASK.md')), 'bài học từ lần thử 1 phải vào TASK của việc tra-ho-so'
+
+
+# ---------- bộ mẫu, tiêu chuẩn 3 mức, học từ chuẩn cao ----------
+def dung_tu_mau(tmp_path, ten):
+    d = str(tmp_path / ten)
+    af.lenh_moi(N(thu_muc=d, ten=f'Bot {ten}', don_vi=ten, kho=os.path.join(GOC, 'skills'), skills='', mau='ban-hang', bo_mau=None))
+    return af.WF(d)
+
+
+def du_muc_1(w, tmp_path):
+    """Điền đủ điều kiện mức 1 cho một con dựng từ bộ mẫu."""
+    p = w.p('00-D0-NHU-CAU.md')
+    af.ghi(p, af.doc(p).replace('> (chưa)', '> đã trả lời'))
+    for i in range(6):
+        af.them_dong(w.p('thu', 'workflow-tra-loi-lead.jsonl'), {'id': f'R{i}', 'dau_vao': f'ca thật {i}', 'phai_co': ['x'], 'khong_duoc_co': []})
+    for t in w.ds_workflow():
+        if t != 'viec-chung':
+            f = tmp_path / f'vang-{t}.md'; f.write_text('bản tốt nhất', encoding='utf-8')
+            af.lenh_vang(N(dich=f'workflow:{t}', tep=str(f), nguon='giải X 2025', vi_sao='có số đo kết quả', ai='linh'), w)
+    af.ghi_json(w.p('thu', 'ket-qua', '2026-11-09.json'), {'tong': 16, 'dat': 16, 'giay_trung_vi': 42, 'nguoi_cham': 'cham'})
+
+
+def test_moi_tu_bo_mau(tmp_path):
+    w = dung_tu_mau(tmp_path, 'don-a')
+    assert w.cau_hinh['mau'] == {'ten': 'ban-hang', 'ban': '0.1.0'}
+    assert {'tra-ho-so', 'tra-loi-lead', 'soan-proposal', 'viec-chung'} <= set(w.ds_workflow())
+    assert w.cong_nhan('lead') and os.path.exists(w.p('.agents', 'skills', 'proposal-ideas', 'SKILL.md'))
+    assert 'không nhắc lại con số' in af.doc(w.p('cong-nhan', 'truong', 'POLICIES.md'))
+    assert af.kiem(w) == []
+
+
+def test_muc_0_roi_1(tmp_path):
+    w = dung_tu_mau(tmp_path, 'don-a')
+    r = af.muc(w)
+    assert r['muc'] == 0
+    truot = [d for d, ok, _ in r['m1'] if not ok]
+    assert any('D0' in d for d in truot) and any('bản vàng' in d for d in truot)
+    du_muc_1(w, tmp_path)
+    assert af.muc(w)['muc'] == 1
+    af.ghi_json(w.p('thu', 'ket-qua', '2026-11-10.json'), {'tong': 16, 'dat': 16, 'giay_trung_vi': 300, 'nguoi_cham': 'cham'})
+    assert af.muc(w)['muc'] == 0, 'chậm hơn 60 giây thì chưa mở nhóm được'
+
+
+def lam_xong(w, ma, ai_duyet):
+    chuyen(w, ma, 'dang_lam'); lam_xong_buoc(w, ma); chuyen(w, ma, 'cho_duyet'); chuyen(w, ma, 'xong', ai_duyet)
+
+
+def len_muc_2(w, tmp_path):
+    du_muc_1(w, tmp_path)
+    for i in range(20):
+        ma = af.lenh_giao(N(workflow='viec-chung', viec=f'v{i}', nguoi_giao='nhan-vien' if i % 2 else 'quan-ly'), w)
+        if i < 14:
+            lam_xong(w, ma, 'chu')
+
+
+def test_muc_2_va_loi_nang(tmp_path):
+    w = dung_tu_mau(tmp_path, 'don-a')
+    len_muc_2(w, tmp_path)
+    assert af.muc(w)['muc'] == 2
+    af.ghi_phan_hoi(w, 'workflow:tra-ho-so', 'xau', 'Bịa văn phòng Đà Nẵng', 'LX-0001', 'quan-ly', 'bia')
+    assert af.muc(w)['muc'] == 1, 'một lần bịa trong 14 ngày thì rớt mức 2'
+
+
+def test_muc_3_bo_mau(tmp_path, capsys):
+    a, b = dung_tu_mau(tmp_path, 'don-a'), dung_tu_mau(tmp_path, 'don-b')
+    len_muc_2(a, tmp_path)
+    assert af.lenh_muc(N(thu_muc=[a.goc, b.goc], mau='ban-hang', bo_mau=None)) == 1
+    len_muc_2(b, tmp_path)
+    assert af.lenh_muc(N(thu_muc=[a.goc, b.goc], mau='ban-hang', bo_mau=None)) == 0
+    assert 'MỨC 3' in capsys.readouterr().out
+
+
+def test_hoc_cheo_len_bo_mau(tmp_path):
+    import shutil
+    bm = tmp_path / 'bo-mau'
+    shutil.copytree(os.path.join(GOC, 'workforce', 'bo-mau', 'ban-hang'), bm / 'ban-hang')
+    ds = []
+    for i, ten in enumerate(['a', 'b', 'c', 'd']):
+        d = str(tmp_path / ten)
+        af.lenh_moi(N(thu_muc=d, ten=ten, don_vi=ten, kho=os.path.join(GOC, 'skills'), skills='', mau='ban-hang', bo_mau=str(bm)))
+        w = af.WF(d); ds.append(d)
+        if i < 3:
+            af.ghi_phan_hoi(w, 'workflow:tra-loi-lead', 'xau', 'Trả lời lead phải hỏi lại ngày sự kiện' + (' trước' if i else ''), 'LX-0001', 'quan-ly')
+        rieng = ['Logo phải để góc trái', 'Gửi kèm hồ sơ năng lực PDF', 'Không gọi điện sau 20 giờ', 'Viết tên khách in hoa'][i]
+        af.ghi_phan_hoi(w, 'workflow:tra-loi-lead', 'xau', rieng, 'LX-0002', 'quan-ly')
+    du = af.lenh_hoc_cheo(N(mau='ban-hang', thu_muc=ds, nguong=3, bo_mau=str(bm)))
+    assert len(du) == 1 and len(du[0]['don_vi']) == 3
+    assert 'hỏi lại ngày sự kiện' in (bm / 'ban-hang' / 'HOC-CHEO.md').read_text(encoding='utf-8')
+
+
+def test_vang_vao_task_va_hoc_ngoai(w, tmp_path):
+    f = tmp_path / 'thu-mau.md'; f.write_text('Thư mẫu của đội giỏi nhất', encoding='utf-8')
+    with pytest.raises(af.Loi, match='vi-sao'):
+        af.lenh_vang(N(dich='workflow:viec-chung', tep=str(f), nguon='x', vi_sao='', ai='linh'), w)
+    af.lenh_vang(N(dich='workflow:viec-chung', tep=str(f), nguon='Cannes Lions 2025', vi_sao='mở bằng số kết quả', ai='linh'), w)
+    assert 'vang/workflow-viec-chung/thu-mau.md' in af.doc(w.p('viec', giao(w), 'TASK.md'))
+    af.lenh_hoc_ngoai(N(dich='skill:linhx-chuan', nguon='anthropics/skills skill-creator', noi_dung='So bản mới với snapshot bản cũ trước khi nhận', ai=None), w)
+    assert af.lenh_hoc(N(), w) == [], 'một nguồn chưa đủ'
+    af.lenh_hoc_ngoai(N(dich='skill:linhx-chuan', nguon='Langfuse versioning', noi_dung='So bản mới với snapshot bản cũ trước khi nhận', ai=None), w)
+    assert af.lenh_hoc(N(), w) == ['DX-001'], 'hai nguồn độc lập cùng ý thì thành đề xuất'
+
+
+def test_ban_sua_cua_nguoi_gioi(w, tmp_path):
+    ma = giao(w)
+    a = tmp_path / 'tho.md'; a.write_text('Kính gửi quý khách, bên em gửi báo giá.', encoding='utf-8')
+    b = tmp_path / 'sua.md'; b.write_text('Chào bạn, em gửi 3 phương án theo ngân sách bạn đưa.', encoding='utf-8')
+    with pytest.raises(af.Loi, match='luat'):
+        af.lenh_ban_sua(N(viec=ma, ban_tho=str(a), ban_nguoi=str(b), ai='hang', luat=None), w)
+    ids = af.lenh_ban_sua(N(viec=ma, ban_tho=str(a), ban_nguoi=str(b), ai='hang', luat=['Gọi khách là bạn', 'Đưa phương án theo ngân sách, không gửi báo giá trơn']), w)
+    assert len(ids) == 2
+    vang = af.ds_vang(w, 'workflow:viec-chung')
+    assert any('ban-sua-hang' in x for x in vang) and not any('khong-dat' in x for x in vang)
+
+
+def test_designer_dat_kiem(tmp_path):
+    import shutil
+    d = str(tmp_path / 'wd')
+    shutil.copytree(os.path.join(GOC, 'workforce', 'mau', 'workforce-designer'), d)
+    w = af.WF(d)
+    af.lenh_nap_skill(N(kho=os.path.join(GOC, 'skills')), w)
+    assert af.kiem(w) == []
+    assert {'onboard-don-vi', 'dung-workforce', 'chay-bong', 'cham-muc', 'hoc-chuan-cao', 'nang-mau'} <= set(w.ds_workflow())
+    assert af.d0_tra_loi(w)[0] == 7

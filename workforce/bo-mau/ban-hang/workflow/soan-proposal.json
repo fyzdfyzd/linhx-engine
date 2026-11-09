@@ -1,0 +1,41 @@
+{
+ "ten": "soan-proposal",
+ "mo_ta": "Từ brief ra proposal theo mẫu proposal của đơn vị (bối cảnh, giải pháp, kỹ thuật, timeline), đúng brand của đơn vị, nộp nháp",
+ "vi_du": [
+  "/proposal <brief>",
+  "@<tên bot> làm proposal cho sự kiện ra mắt xe"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "proposal",
+   "skill": "proposal-brief",
+   "viec": "Chốt brief, ghi chỗ thiếu",
+   "dau_ra": "brief.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "proposal",
+   "skill": "proposal-studio",
+   "viec": "Soạn proposal",
+   "dau_ra": "proposal.md"
+  },
+  {
+   "id": "b3",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Chấm 16 tiêu chí linhx-chuan",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mỗi số, giá, tên có id trong 02-wiki/su-that.json mục chot hoặc file nguồn",
+  "Không có nội dung mục noi_bo (bảng giá đối tác, hoa hồng, giá sàn, pipeline)",
+  "Đủ 4 phần bối cảnh, giải pháp, kỹ thuật, timeline",
+  "Màu, chữ theo brand của đơn vị",
+  "Là bản nháp, không gửi khách",
+  "Không dùng mục cu trong su-that.json (tên, người, tên miền, liên hệ cũ)"
+ ],
+ "nguoi_duyet": "quan-ly",
+ "tran_phut": 60
+}

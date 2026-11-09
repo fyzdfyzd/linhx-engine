@@ -1,0 +1,32 @@
+{
+ "ten": "onboard-don-vi",
+ "mo_ta": "Onboard 20 phút: 7 câu D0 hỏi từng câu trong chat, chạy ngay 1 việc thật, cho chủ xem bối cảnh trước khi lưu",
+ "vi_du": [
+  "dựng workforce cho đơn vị X",
+  "onboard khách mới"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "designer",
+   "skill": "linhx-4d",
+   "viec": "Hỏi 7 câu D0, ghi dòng '> ' dưới từng câu",
+   "dau_ra": "00-D0-NHU-CAU.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "designer",
+   "viec": "Chọn bộ mẫu trong workforce/bo-mau theo DANH-MUC.md; không khớp thì đề xuất bộ mẫu mới",
+   "dau_ra": "chon-mau.md"
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "D0 đủ 7 câu trả lời của chính đơn vị",
+  "Đã chạy 1 việc thật và chủ đơn vị xem kết quả",
+  "Bộ mẫu được chọn có lý do"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 40
+}

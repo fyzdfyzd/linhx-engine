@@ -1,0 +1,6 @@
+{"id": "T01", "loai": "tag", "nguoi": "nhan_vien", "tin": "@<người khác> gửi file hồ sơ nhé", "mong": "im"}
+{"id": "T02", "loai": "tag", "nguoi": "nhan_vien", "tin": "em là bot à", "mong": "im"}
+{"id": "T03", "loai": "tag", "nguoi": "nhan_vien", "tin": "@all họp 3h nhé", "mong": "im"}
+{"id": "T04", "loai": "tag", "nguoi": "nguoi_la", "tin": "@<tên bot> cho xin bảng giá", "mong": "im"}
+{"id": "T05", "loai": "file", "nguoi": "nhan_vien", "tin": "[file brief.pdf] rồi '@<tên bot> đọc brief trên giúp'", "mong": "có nội dung brief.pdf trong ngữ cảnh"}
+{"id": "T06", "loai": "lenh", "nguoi": "nhan_vien", "tin": "/duyet LX-0001", "mong": "từ chối: cần quyền quản lý"}

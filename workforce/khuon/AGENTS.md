@@ -28,7 +28,8 @@ SETUP → RUNNING → LEARNING → UPDATE → RUNNING.
 | `HOC.jsonl` / `HOC.md` | điều cần học, dạng bullet có đếm ủng hộ/phản đối | `af.py phan-hoi`, `hoc` |
 | `de-xuat/` | bản sửa chờ duyệt | thợ viết, người duyệt |
 | `phat-hanh/kenh.json`, `CHANGELOG.jsonl`, `ban/` | phiên bản đang chạy, lịch sử, bản cũ bất biến | chỉ `af.py` |
-| `thu/` | bộ thử theo đích | thêm ca khi gặp lỗi |
+| `thu/` | bộ thử theo đích; `thu/ket-qua/*.json` kết quả mỗi lần chạy | thêm ca khi gặp lỗi |
+| `vang/` | bản vàng mỗi workflow + `NGUON.jsonl` | `af.py vang` |
 | `hop-thu/ra.jsonl` | tin cần báo (Zalo, email); bộ chuyển đọc rồi gửi | chỉ `af.py` |
 
 ## Làm một việc
@@ -54,3 +55,10 @@ SETUP → RUNNING → LEARNING → UPDATE → RUNNING.
 - Bài học có ≥ 2 bằng chứng từ ≥ 2 việc thì thành đề xuất. Bài học bị phản đối ≥ 2 lần và nhiều hơn ủng hộ thì bị tỉa.
 - Sửa nhỏ nhất (patch), ghi lý do cạnh luật mới; không viết lại cả file; tránh luật "PHẢI" dày đặc và sửa quá khớp một ca.
 - Việc lặp ≥ 3 lần trong `viec-chung` thì đề xuất workflow riêng.
+
+## Học từ chuẩn cao nhất (không chỉ học từ lỗi của mình)
+Phản hồi nội bộ chỉ kéo bài lên tới mức người duyệt nghĩ ra. Muốn hơn thì phải so với người làm giỏi nhất.
+- **Bản vàng** (`vang/<đích>/`): mỗi workflow có ít nhất 1 sản phẩm tốt nhất đã thấy, của người hoặc đội tiêu chuẩn cao nhất trong nghề, hoặc từ skill tốt nhất đã đọc code. Thêm bằng `af.py vang` kèm nguồn và vì sao vàng (điểm đo được: hơn bài thường ở đâu). TASK.md tự liệt kê bản vàng; thợ đọc trước, người chấm so mù bài với bản vàng (không cho biết bài nào của ai).
+- **Học ngoài** (`af.py hoc-ngoai`): đọc skill tốt nhất (code thật, không chỉ README), phỏng vấn hoặc đọc tác phẩm của người giỏi nhất, rút cách làm khác biệt thành bài học có nguồn. Hai nguồn độc lập cùng ý thì thành đề xuất như mọi bài học khác, vẫn qua bộ thử và duyệt.
+- **Nhịp**: mỗi bộ mẫu mỗi tháng một lượt "học chuẩn cao" (workforce designer làm): chọn 3 nguồn tốt nhất, so mù sản phẩm của mình với bản vàng, ghi chỗ thua thành bài học, thay bản vàng khi thấy bản tốt hơn.
+- Việc được khen có lý do cụ thể và hơn bản vàng hiện có ở ít nhất một điểm đo được thì đề cử làm bản vàng mới.

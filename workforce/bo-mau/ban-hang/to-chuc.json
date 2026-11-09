@@ -1,0 +1,97 @@
+{
+ "nguoi": [
+  {
+   "ma": "chu",
+   "ten": "Chủ đơn vị",
+   "vai": "chu",
+   "kenh": "zalo",
+   "dia_chi": ""
+  },
+  {
+   "ma": "quan-ly",
+   "ten": "Quản lý (duyệt proposal, báo cáo)",
+   "vai": "quan_ly",
+   "kenh": "zalo",
+   "dia_chi": ""
+  },
+  {
+   "ma": "nhan-vien",
+   "ten": "Nhân viên bán hàng",
+   "vai": "nhan_vien",
+   "kenh": "zalo",
+   "dia_chi": ""
+  }
+ ],
+ "cong_nhan": [
+  {
+   "ma": "truong",
+   "ten": "Trưởng (tên bot của đơn vị)",
+   "vai": "trưởng: nghe nhóm, trả lời nhanh hồ sơ, nhận việc dài, chọn workflow, gộp kết quả",
+   "bao_cao_cho": "chu",
+   "chiu_trach_nhiem": "chu",
+   "tho": "claude",
+   "skills": [
+    "linhx-chuan"
+   ],
+   "workflows": [
+    "tra-ho-so",
+    "viec-chung"
+   ]
+  },
+  {
+   "ma": "lead",
+   "ten": "Nụ Lead",
+   "vai": "đọc brief, soạn trả lời khách + 3 ý tưởng Idea Book",
+   "bao_cao_cho": "truong",
+   "chiu_trach_nhiem": "nhan-vien",
+   "tho": "claude",
+   "skills": [
+    "proposal-brief",
+    "proposal-ideas"
+   ],
+   "workflows": [
+    "tra-loi-lead"
+   ]
+  },
+  {
+   "ma": "proposal",
+   "ten": "Nụ Proposal",
+   "vai": "soạn proposal sự kiện đúng brand",
+   "bao_cao_cho": "truong",
+   "chiu_trach_nhiem": "quan-ly",
+   "tho": "agy",
+   "skills": [
+    "proposal-studio"
+   ],
+   "workflows": [
+    "soan-proposal"
+   ]
+  },
+  {
+   "ma": "bao-cao",
+   "ten": "Nụ Báo cáo",
+   "vai": "báo cáo sau sự kiện từ số người trong nhóm đưa",
+   "bao_cao_cho": "truong",
+   "chiu_trach_nhiem": "quan-ly",
+   "tho": "agy",
+   "skills": [
+    "bao-cao"
+   ],
+   "workflows": [
+    "bao-cao-sau-su-kien"
+   ]
+  },
+  {
+   "ma": "cham",
+   "ten": "Người chấm",
+   "vai": "chấm độc lập theo linhx-chuan, không sửa bài",
+   "bao_cao_cho": "truong",
+   "chiu_trach_nhiem": "chu",
+   "tho": "phiên mới hoặc model khác thợ",
+   "skills": [
+    "linhx-chuan"
+   ],
+   "workflows": []
+  }
+ ]
+}

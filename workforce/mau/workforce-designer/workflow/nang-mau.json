@@ -1,0 +1,23 @@
+{
+ "ten": "nang-mau",
+ "mo_ta": "Gom bài học xuyên đơn vị: af.py hoc-cheo <mau> <các đơn vị>; bài học lặp ≥ 3 đơn vị thì sửa bộ mẫu bằng PR, Linh duyệt PR",
+ "vi_du": [
+  "cập nhật bộ mẫu bán hàng từ các con"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "designer",
+   "viec": "Chạy hoc-cheo, viết bản sửa bộ mẫu, tăng ban trong mau.json, mở PR",
+   "dau_ra": "pr.md"
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "Mỗi sửa đổi dẫn id bài học ở ≥ 3 đơn vị",
+  "Bộ thử chung của bộ mẫu vẫn đạt"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 40
+}
