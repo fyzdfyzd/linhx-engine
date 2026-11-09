@@ -460,7 +460,7 @@ def phan_tu(w, ma):
     return [x.strip() for x in re.findall(r'^- (.+)$', m.group(1), re.M)] if m else []
 
 
-def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
+def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None, chi_tiet=None):
     """Mỗi phản hồi thành bullet ACE trong HOC.jsonl. Ý giống bullet cũ (≥ 0,75) thì cộng dồn, không thêm dòng."""
     w.duong_dich(dich)
     ds = doc_dong(w.p('HOC.jsonl'))
@@ -477,7 +477,7 @@ def ghi_phan_hoi(w, dich, loai, noi_dung, viec=None, ai=None, nhan=None):
         ds.append(gan)
     gan['ung_ho' if (tot == (gan['loai'] == 'tot')) else 'phan_doi'] += 1
     gan['bang_chung'].append({'viec': viec, 'ai': ai, 'luc': bay_gio(), 'loai': loai, 'noi_dung': noi_dung, 'nhan': nhan,
-                              'nguon': nguon_hoc(nhan)})
+                              'nguon': nguon_hoc(nhan), **({'chi_tiet': chi_tiet} if chi_tiet else {})})
     ghi_lai_hoc(w, ds)
     w.su_kien('phan_hoi', dich=dich, loai=loai, viec=viec, ai=ai, bai_hoc=gan['id'], nhan=nhan)
     return gan['id']
@@ -583,7 +583,9 @@ def nap_ket_qua_thu(w):
         for c in (doc_json(os.path.join(d, f)) or {}).get('ca', []):
             ma = f'THU:{f}:{c.get("id")}'
             if not c.get('dat') and c.get('dich') and ma not in da:
-                ghi_phan_hoi(w, c['dich'], 'xau', c.get('ly_do') or f'ca {c.get("id")} trượt', ma, 'cham', 'tu-cai-thien')
+                # nội dung cố định theo đích: mọi ca trượt của một workflow gom vào một bài học; lời người chấm vào chi_tiet
+                ghi_phan_hoi(w, c['dich'], 'xau', f'Bộ thử trượt ở {c["dich"]}: sửa theo chi tiết từng ca', ma, 'cham', 'tu-cai-thien',
+                             c.get('ly_do'))
 
 
 def lenh_hoc(a, w=None):
@@ -615,6 +617,7 @@ def lenh_hoc(a, w=None):
 
 Bài học: {h['noi_dung']} (+{h['ung_ho']}/-{h['phan_doi']})
 Bằng chứng: {', '.join(str(b['viec']) for b in h['bang_chung'])}
+{''.join(f"{chr(10)}- {b['viec']}: {b['chi_tiet']}" for b in h['bang_chung'] if b.get('chi_tiet'))}
 Đích: `{duong}` (đang v{w.ban(h['dich'])})
 
 ## Thợ (Claude/agy) làm

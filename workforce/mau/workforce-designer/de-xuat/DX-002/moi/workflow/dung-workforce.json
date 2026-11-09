@@ -1,0 +1,42 @@
+{
+ "ten": "dung-workforce",
+ "mo_ta": "Dựng con từ bộ mẫu: af.py moi --mau, nạp nguồn thành wiki + su-that, người thật, ca thử thật, bản vàng",
+ "vi_du": [
+  "dựng con Nụ cho đơn vị X từ bộ mẫu bán hàng"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "tho-dung",
+   "skill": "linhx-chuan",
+   "viec": "af.py moi --mau; nạp 01-nguon → 02-wiki, su-that.json có nguồn từng dòng",
+   "dau_ra": "bao-cao-dung.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "tho-dung",
+   "skill": "linhx-chuan",
+   "viec": "Viết ≥ 10 ca thử từ việc thật của đơn vị",
+   "dau_ra": "ca-thu.md"
+  },
+  {
+   "id": "b3",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "af.py muc: mức 1 trừ dòng tốc độ và kết quả thử",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "af.py kiem DAT",
+  "≥ 10 ca thử thật, không còn ô '<...>'",
+  "Mỗi workflow có ≥ 1 bản vàng có nguồn",
+  "Hai nguồn lệch số: đối chiếu file gốc, chỉ ghi một số đã kiểm kèm nguồn và ngày, không ghi cả hai",
+  "Đơn vị không có mẫu: nói rõ 'không có mẫu', đề xuất nguồn có ghi rõ, không bịa",
+  "Người lạ nhắn: im, không nhận việc, không ghi vào hộp thư"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 40
+}
