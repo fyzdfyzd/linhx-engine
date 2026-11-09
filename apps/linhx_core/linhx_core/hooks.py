@@ -93,3 +93,10 @@ doc_events = {
         "on_update": "linhx_core.co_module.xoa_cache_cau_hinh",
     },
 }
+
+scheduler_events = {
+    "cron": {
+        "* * * * *": ["linhx_core.pay.sau_tra.quet_don_da_tra_chua_co_job"],
+        "0 * * * *": ["linhx_core.pay.api_ban.don_dep_don_cho_tra_qua_han"],
+    },
+}

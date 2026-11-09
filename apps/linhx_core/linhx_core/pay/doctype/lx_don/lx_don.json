@@ -19,7 +19,8 @@
   "nganh",
   "thi_truong",
   "doi_thu",
-  "su_that"
+  "su_that",
+  "can_xu_ly"
  ],
  "fields": [
   {
@@ -106,6 +107,13 @@
    "fieldtype": "Small Text",
    "label": "Sự thật thương hiệu",
    "length": 600
+  },
+  {
+   "default": "0",
+   "fieldname": "can_xu_ly",
+   "fieldtype": "Check",
+   "label": "Cần xử lý tạo việc",
+   "search_index": 1
   }
  ],
  "permissions": [

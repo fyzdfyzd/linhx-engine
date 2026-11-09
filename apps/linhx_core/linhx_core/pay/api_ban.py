@@ -2,10 +2,38 @@
 from __future__ import annotations
 
 import frappe
+from frappe.rate_limiter import rate_limit
+from frappe.utils import add_to_date, now_datetime
 
 from linhx_core.pay import vietqr
 from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
 from linhx_core.pay.sau_tra import mot_dong
+
+CHO_TRA_QUA_HAN_GIO = 24
+
+
+def don_dep_don_cho_tra_qua_han(gio_qua_han: int = CHO_TRA_QUA_HAN_GIO) -> int:
+    """Chuyển các đơn `cho_tra` quá hạn chưa có `tx_id` sang `huy` để tránh làm đầy bảng `LX Don` và nhiễu đối soát."""
+    if not frappe.db.table_exists("LX Don"):
+        return 0
+    moc = add_to_date(now_datetime(), hours=-int(gio_qua_han))
+    ds_qua_han = frappe.get_all(
+        "LX Don",
+        filters={
+            "trang_thai": "cho_tra",
+            "creation": ["<", moc],
+        },
+        fields=["name", "tx_id"],
+        limit_page_length=200,
+        ignore_permissions=True,
+    )
+    da_huy = 0
+    for d in ds_qua_han or []:
+        if str(d.get("tx_id") or "").strip():
+            continue
+        frappe.db.set_value("LX Don", d["name"], "trang_thai", "huy", update_modified=False)
+        da_huy += 1
+    return da_huy
 
 
 def _ds_goi() -> list[dict]:
@@ -48,6 +76,7 @@ def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
 
 
 @frappe.whitelist(allow_guest=True)
+@rate_limit(limit=10, seconds=3600)
 def tao_don(
     brand,
     goi,
@@ -58,14 +87,19 @@ def tao_don(
     su_that=None,
 ) -> dict:
     """Tạo đơn báo cáo theo gói trong catalog (không nhận giá từ client) và trả thông tin VietQR."""
-    ten_brand = str(brand or "").replace("\r", " ").replace("\n", " ").strip()
-    ma_goi = str(goi or "").replace("\r", " ").replace("\n", " ").strip()
+    ten_brand = mot_dong(brand, 90)
+    ma_goi = mot_dong(goi, 80)
     if not ten_brand:
         frappe.throw("Vui lòng nhập tên thương hiệu")
     if len(ten_brand) > 80:
         frappe.throw("Tên thương hiệu không được vượt quá 80 ký tự")
     if not ma_goi:
         frappe.throw("Vui lòng chọn gói báo cáo")
+
+    try:
+        don_dep_don_cho_tra_qua_han()
+    except Exception:
+        pass
 
     ds = _ds_goi()
     tien = so_tien_don(ma_goi, ds)

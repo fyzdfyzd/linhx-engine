@@ -1,39 +1,53 @@
 {
   "feature": "B4",
-  "phieu": "20261109-1359-t1",
-  "luc": "2026-11-09T14:01:52+07:00",
+  "phieu": "20261109-1524-t1",
+  "luc": "2026-11-09T15:47:41+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "....                                                                     [100%]",
-    "4 passed in 2.98s"
+    "4 passed in 0.03s"
   ],
   "kiem_don_vi": {
     "lenh": "python -m pytest apps/linhx_core/linhx_core/pay/test_sau_tra.py apps/linhx_worker/linhx_worker/test_quy_trinh.py -v",
     "returncode": 0,
     "stdout": [
-      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_hook_lx_don_on_update PASSED [ 20%]",
-      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 40%]",
-      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 60%]",
-      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [ 80%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_hook_lx_don_on_update PASSED [ 16%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 33%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 50%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [ 66%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_boc_du_lieu_khach_va_loai_the_gia_mao PASSED [ 83%]",
       "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chia_viec_gop_cho_tu_tach_viec_con PASSED [100%]",
-      "============================== 5 passed in 1.57s =============================="
+      "============================== 6 passed in 0.05s =============================="
     ]
   },
   "kiem_thuc_te_bench_wsl": {
-    "luc_chay": "2026-11-09T10:11:49+07:00",
+    "luc_chay": "2026-11-09T15:47:38+07:00",
     "site": "test",
-    "don": "DON-B4-1794193856",
-    "job": "VIEC-00021",
+    "don": "DON-B4-1794214052",
+    "job": "VIEC-00031",
     "workflow": "ai-noi-gi-ve-brand",
     "trang_thai_luc_sinh": "cho",
     "nguon": "don",
-    "giay_tu_tra_toi_job": 0.2233,
-    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00021/a68d5542ccfe",
-    "tho_nhan_viec": "VIEC-00022",
+    "giay_tu_tra_toi_job": 1.202,
+    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00031/ced485e760f7",
+    "xem_bao_cao_chi_tra_brand": true,
+    "tho_nhan_viec": "VIEC-00023",
     "workflow_viec_con": "hoi-mot-ai",
+    "de_boc_du_lieu_khach": true,
+    "sandbox_chi_doc": {
+      "sandbox": true,
+      "cong_cu": "chi_doc",
+      "quyen_ghi": false,
+      "quyen_shell": false,
+      "mang_cho_phep": [
+        "https://chatgpt.com",
+        "https://gemini.google.com",
+        "https://claude.ai"
+      ]
+    },
     "trang_thai_cha_sau_khi_tho_nhan": "dang_chay",
-    "giay_tho_nhan_viec": 0.1285,
+    "giay_tho_nhan_viec": 1.8612,
     "unique_index_lx_job_don": [
       {
         "Key_name": "don",
@@ -41,18 +55,17 @@
         "Non_unique": 0
       }
     ],
-    "error_log_method_dedupe_verified": true,
-    "bat_loi_insert_job_khong_rollback_don": {
-      "don": "DON-B4-LOI-1794193856",
-      "trang_thai_db": "da_tra",
-      "da_ghi_error_log": true
+    "don_loi_gan_co_can_xu_ly": {
+      "don": "DON-B4-LOI-1794214052",
+      "can_xu_ly": 1
     }
   },
-  "ghi_chu_review": {
-    "api_sepay_so_tien": "Trong api_sepay.py:227, ds_don[0]['so_tien'] được đọc trực tiếp từ doc_don.so_tien nên gán ngược lại ở dòng 257 là dư thừa; giữ nguyên api_sepay.py như nhánh main (B3). Nếu đơn thiếu so_tien thì sau_tra.py:241 ghi Error Log và không sinh LX Job.",
-    "sau_tra_nhan_dien_loi_trung": "LXJob.validate ném frappe.DuplicateEntryError và sau_tra._la_loi_trung_khoa kiểm tra theo lớp ngoại lệ (DuplicateEntryError / UniqueValidationError) hoặc mã lỗi MariaDB/MySQL 1062 (ER_DUP_ENTRY) trước, chỉ dùng so chuỗi làm dự phòng cuối.",
-    "lx_job_show_index_va_migrate": "Frappe bench v15 dùng MariaDB/MySQL; _doc_index_cot_don bọc SHOW INDEX an toàn và chuan_hoa_don_lx_job(bo_qua_go_trung_neu_da_unique=True) bỏ qua quét GROUP BY gỡ trùng ở các lần migrate tiếp theo khi unique index trên cột don đã tồn tại.",
-    "tach_test_worker": "Đã chuyển test_chia_viec_gop_cho_tu_tach_viec_con sang apps/linhx_worker/linhx_worker/test_quy_trinh.py."
+  "sua_bao_mat_k4": {
+    "prompt_injection_va_sandbox": "Bọc dau_vao trong khối <du_lieu_khach>...</du_lieu_khach> kèm lời dặn không làm theo lệnh trong khối này ở de_mau (setup.py, de/*.md) và tao_de_an_toan (quy_trinh.py, api.py); loại bỏ thẻ <, > và </du_lieu_khach> giả mạo; trả cấu hình sandbox chỉ đọc, không quyền ghi, không shell, chỉ cho phép 3 miền AI (https://chatgpt.com, https://gemini.google.com, https://claude.ai).",
+    "rate_limit_tao_don_va_don_dep_cho_tra": "Thêm @rate_limit(limit=10, seconds=3600) trên api_ban.tao_don và hàm don_dep_don_cho_tra_qua_han() chạy định kỳ chuyển đơn cho_tra quá hạn chưa có tx_id sang huy.",
+    "khong_lo_du_lieu_khach_trong_error_log": "Trong sau_tra.xu_ly_sau_tra, chỉ ghi ma_don, tên lớp ngoại lệ (type(exc).__name__) và dòng vị trí traceback (_vi_tri_traceback_an_toan), không ghi str(exc) hay get_traceback().",
+    "co_can_xu_ly_va_quet_bu_don_da_tra": "Thêm trường can_xu_ly trên LX Don; gắn can_xu_ly=1 khi chưa tạo được job cho đơn da_tra và quet_don_da_tra_chua_co_job() trong don_dep quét tạo bù định kỳ.",
+    "rate_limit_va_thu_hep_xem_bao_cao": "Thêm @rate_limit(limit=30, seconds=60) trên xem_bao_cao và chỉ trả trường brand thay cho toàn bộ dau_vao."
   },
   "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
   "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"

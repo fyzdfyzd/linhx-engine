@@ -9,7 +9,8 @@ import json
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_core.pay.sau_tra import mot_dong, tao_dau_vao
+from linhx_core.pay.api_ban import don_dep_don_cho_tra_qua_han
+from linhx_core.pay.sau_tra import mot_dong, quet_don_da_tra_chua_co_job, tao_dau_vao
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
 
@@ -94,7 +95,13 @@ def nhan_viec(ma, phien_ban=None, may=None):
         return None
     job = frappe.get_doc("LX Job", rows[0][0])
     wf = frappe.get_doc("LX Workflow", job.workflow)
-    de = (wf.de_mau or "{dau_vao}").replace("{dau_vao}", job.dau_vao or "")
+    de = quy_trinh.tao_de_an_toan(
+        wf.name,
+        wf.de_mau,
+        job.dau_vao,
+        nguon=getattr(job, "nguon", None),
+        co_cha=bool(getattr(job, "cha", None)),
+    )
     job.db_set({
         "trang_thai": "dang_chay", "tho": ma, "nhan_luc": now_datetime(),
         "de_gui": de, "lan_thu": (job.lan_thu or 0) + 1,
@@ -104,6 +111,7 @@ def nhan_viec(ma, phien_ban=None, may=None):
     return {
         "viec": job.name, "workflow": wf.name, "che_do": wf.che_do or "agy",
         "de": de, "dau_vao": job.dau_vao, "tran_phut": wf.tran_phut or 40,
+        "sandbox": quy_trinh.chinh_sach_sandbox(wf.name),
     }
 
 
@@ -278,6 +286,7 @@ def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that=""
 
 
 @frappe.whitelist(allow_guest=True)
+@rate_limit(limit=30, seconds=60)
 def xem_bao_cao(viec, ma_xem):
     d = frappe.db.get_value("LX Job", viec, ["ma_xem", "trang_thai", "ket_qua", "dau_vao", "creation", "xong_luc", "nguon"], as_dict=True)
     ma_db = str((d or {}).get("ma_xem") or "")
@@ -289,7 +298,7 @@ def xem_bao_cao(viec, ma_xem):
     if tr in ("cho_duyet", "cho"):
         truoc = frappe.db.count("LX Job", {"trang_thai": ["in", ["cho", "dang_chay"]], "creation": ["<", d.creation]})
     return {
-        "viec": viec, "trang_thai": tr, "dau_vao": d.dau_vao, "truoc": truoc,
+        "viec": viec, "trang_thai": tr, "brand": quy_trinh._brand(d.dau_vao), "truoc": truoc,
         "bao_cao": bao_cao.dung(d.ket_qua) if tr == "xong" else None, "xong_luc": d.xong_luc,
         "tien_do": quy_trinh.tien_do(viec) if tr == "dang_chay" else [],
     }
@@ -298,6 +307,8 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
+    don_dep_don_cho_tra_qua_han()
+    quet_don_da_tra_chua_co_job()
     quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)
     frappe.db.sql("update `tabLX Worker` set trang_thai='offline' where trang_thai!='offline' and (lan_cuoi is null or lan_cuoi < %s)", moc)
