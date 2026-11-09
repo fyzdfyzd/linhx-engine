@@ -452,11 +452,13 @@ def _luu_hoac_lay_nguoi_t1(
             "t1_muc": nguoi_moi.get("t1_muc"),
         }
     )
+    dup_err = getattr(frappe, "DuplicateEntryError", None)
+    loai_loi_trung = (dup_err,) if isinstance(dup_err, type) and issubclass(dup_err, Exception) else ()
     doc_nguoi.flags.ignore_permissions = True
     try:
         doc_nguoi.insert(ignore_permissions=True)
         return str(doc_nguoi.name)
-    except Exception:
+    except loai_loi_trung:
         ds_lai = _tim_nguoi_trung(du_lieu_goc)
         if ds_lai and ds_lai[0].get("name"):
             return str(ds_lai[0]["name"]).strip()

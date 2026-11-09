@@ -167,8 +167,12 @@ def _tao_frappe_gia(kho: dict[str, list[dict]]):
     class PermissionError(Exception):
         pass
 
+    class DuplicateEntryError(Exception):
+        pass
+
     frappe_mod.ValidationError = ValidationError
     frappe_mod.PermissionError = PermissionError
+    frappe_mod.DuplicateEntryError = DuplicateEntryError
     frappe_mod.local = types.SimpleNamespace(
         site="ifagent",
         request_ip="127.0.0.1",
@@ -313,3 +317,44 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
                 ("marketing", 0),
                 ("lien_he", 1),
             ]
+
+
+def test_luu_hoac_lay_nguoi_t1_chi_bat_duplicate_entry_error():
+    kho: dict[str, list[dict]] = {"LX Nguoi": [], "LX Dong Y": []}
+    frappe_mod, rate_mod = _tao_frappe_gia(kho)
+
+    with patch.dict(sys.modules, {"frappe": frappe_mod, "frappe.rate_limiter": rate_mod}):
+        sys.modules.pop("linhx_core.crm.api_form", None)
+        import linhx_core.crm.api_form as api_form
+
+        # Khi insert ném DuplicateEntryError (race condition), tìm lại bản ghi trùng và trả về mã
+        def _insert_trung(self, ignore_permissions: bool = False):
+            kho["LX Nguoi"].append(
+                {
+                    "name": "LX-Nguoi-Race",
+                    "email": "race@vd.vn",
+                    "nguon": "T1",
+                    "tang_pheu": "moi",
+                }
+            )
+            raise frappe_mod.DuplicateEntryError("Trùng khoá")
+
+        with patch.object(_DocGia, "insert", _insert_trung):
+            ma = api_form._luu_hoac_lay_nguoi_t1(
+                {"email": "race@vd.vn", "t1_tong": 12, "t1_muc": "Sẵn sàng một phần"},
+                [],
+                du_lieu_goc={"email": "race@vd.vn"},
+            )
+            assert ma == "LX-Nguoi-Race"
+
+        # Khi insert ném lỗi khác (RuntimeError), phải ném lại chứ không nuốt lỗi
+        def _insert_loi_khac(self, ignore_permissions: bool = False):
+            raise RuntimeError("Lỗi cơ sở dữ liệu thật")
+
+        with patch.object(_DocGia, "insert", _insert_loi_khac):
+            with pytest.raises(RuntimeError, match="Lỗi cơ sở dữ liệu thật"):
+                api_form._luu_hoac_lay_nguoi_t1(
+                    {"email": "race@vd.vn", "t1_tong": 12, "t1_muc": "Sẵn sàng một phần"},
+                    [],
+                    du_lieu_goc={"email": "race@vd.vn"},
+                )
