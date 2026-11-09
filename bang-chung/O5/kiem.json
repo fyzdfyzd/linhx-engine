@@ -1,0 +1,22 @@
+{
+  "feature": "O5",
+  "luc": "2026-11-09T21:55:00+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o5.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "..                                                                       [100%]",
+    "2 passed in 3.38s"
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 2 items",
+    "apps/linhx_core/linhx_core/ops/test_ban_phieu.py::test_ds_phieu_cho_va_duyet_tra_phieu PASSED [ 50%]",
+    "apps/linhx_core/linhx_core/ops/test_ban_phieu.py::test_api_ban_phieu_voi_frappe_gia PASSED [100%]",
+    "============================== 2 passed in 0.08s =============================="
+  ]
+}
