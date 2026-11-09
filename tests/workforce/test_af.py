@@ -412,3 +412,18 @@ def test_learn_tu_cai_thien_va_dem_nguon(w):
     assert dem['tu-cai-thien'] >= 3 and dem['chu'] == 0
     chuyen(w, ma, 'tra_lai', ai='hang', ly_do='thiếu lời cảm ơn cụ thể')
     assert af.dem_nguon(w)['chu'] == 1
+
+
+def test_bai_hoc_cham_theo_ket_qua_viec(w):
+    hid = af.ghi_phan_hoi(w, 'workflow:viec-chung', 'xau', 'Luôn nêu tên đối tác trong câu đầu', 'LX-9999', 'hang')
+    for i in range(3):  # áp 3 lần, cả 3 đều bị trả lại
+        ma = giao(w, viec=f'Thư {i}')
+        assert hid in af.doc_json(w.p('viec', ma, 'viec.json'))['bai_hoc_ap']
+        chuyen(w, ma, 'dang_lam')
+        lam_xong_buoc(w, ma)
+        chuyen(w, ma, 'cho_duyet')
+        chuyen(w, ma, 'tra_lai', ai='hang', ly_do=f'lỗi khác số {i} hoàn toàn riêng biệt {i * 7}')
+    h = next(x for x in af.doc_dong(w.p('HOC.jsonl')) if x['id'] == hid)
+    assert h['ap_truot'] == 3 and af.chat_luong(h) == 0.3
+    af.lenh_hoc(N(thu_muc=w.goc), w)
+    assert next(x for x in af.doc_dong(w.p('HOC.jsonl')) if x['id'] == hid)['trang_thai'] == 'tia'

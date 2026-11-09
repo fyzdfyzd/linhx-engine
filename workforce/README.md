@@ -53,6 +53,7 @@ Số ngưỡng nằm ở `workforce.json` mục `tieu_chuan`, bộ mẫu ghi đ�
 | `chu`: feedback của chủ và người trong đơn vị | `phan-hoi`, `/gopy`, `/tra`, `/duyet` có lời khen | chị Hằng trả proposal vì thiếu timeline |
 | `nguoi-gioi`: học từ người giỏi nhất | `ban-sua --luat`, `hoc-ngoai`, `vang`, workflow `hoc-chuan-cao` | bản chị sửa thành bản vàng, bản thợ thành phản ví dụ |
 | `cheo`: học chéo đơn vị | `hoc-cheo` | bài học lặp ở ≥ 3 đơn vị sửa bộ mẫu |
+Mỗi bài học còn được chấm theo kết quả việc đã áp nó (học từ Ruflo): `ap_dat`, `ap_truot`, chất lượng = 0,3 + 0,7 × tỉ lệ đạt; áp ≥ 3 lần mà chất lượng < 0,6 thì `hoc` tỉa.
 `bang` và `muc` in số bằng chứng theo từng nguồn; `muc` báo "CHƯA học đủ ba nguồn chính" khi một trong ba nguồn đầu bằng 0.
 Tất cả vào `HOC.jsonl` → `hoc` → đề xuất → bộ thử + duyệt → `thang-cap`. Xuyên đơn vị: `hoc-cheo <mau> <các con>`, bài học ở ≥ 3 đơn vị thì sửa bộ mẫu bằng PR (Linh duyệt PR).
 

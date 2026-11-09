@@ -287,6 +287,7 @@ Trước khi làm: đọc `../../NHO.md`, `../../02-wiki/INDEX.md`, và các dò
 {bai_hoc_cho(w, wf)}
 """)
     ghi(os.path.join(d, 'nhat-ky.md'), f'# Nhật ký {ma}\n')
+    viec['bai_hoc_ap'] = [h['id'] for h in ds_bai_hoc_cho(w, wf)]
     ghi_json(os.path.join(d, 'viec.json'), viec)
     w.su_kien('giao', viec=ma, workflow=a.workflow, ai=a.nguoi_giao)
     w.thong_bao(a.nguoi_giao, f'Em nhận, mã {ma}: {a.viec}', ma)
@@ -299,11 +300,36 @@ def ds_vang(w, dich):
     return sorted(os.path.relpath(os.path.join(d, f), w.goc).replace('\\', '/') for f in os.listdir(d) if '.khong-dat' not in f) if os.path.isdir(d) else []
 
 
-def bai_hoc_cho(w, wf):
+def ds_bai_hoc_cho(w, wf):
     dich = {f'workflow:{wf["ten"]}', 'he-thong'} | {f'skill:{b["skill"]}' for b in wf['buoc'] if b.get('skill')} \
         | {f'cong-nhan:{b["cong_nhan"]}' for b in wf['buoc']}
-    ds = [h for h in doc_dong(w.p('HOC.jsonl')) if h['dich'] in dich and h['trang_thai'] in ('mo', 'de_xuat')]
-    return '\n'.join(f'- [{h["id"]}] ({h["dich"]}, +{h["ung_ho"]}/-{h["phan_doi"]}) {h["noi_dung"]}' for h in ds) or '- (chưa có)'
+    return [h for h in doc_dong(w.p('HOC.jsonl')) if h['dich'] in dich and h['trang_thai'] in ('mo', 'de_xuat')]
+
+
+def chat_luong(h):
+    """Chấm bài học theo kết quả việc đã áp nó (Ruflo ReasoningBank: 0,3 + 0,7 × tỉ lệ đạt); chưa áp lần nào thì None."""
+    dat, truot = h.get('ap_dat', 0), h.get('ap_truot', 0)
+    return round(0.3 + 0.7 * dat / (dat + truot), 2) if dat + truot else None
+
+
+def ghi_ket_qua_ap(w, v, dat):
+    """Việc xong hoặc bị trả lại: cộng kết quả cho mọi bài học đã chép vào TASK.md của việc đó."""
+    ap = set(v.get('bai_hoc_ap', []))
+    if not ap:
+        return
+    ds = doc_dong(w.p('HOC.jsonl'))
+    for h in ds:
+        if h['id'] in ap:
+            k = 'ap_dat' if dat else 'ap_truot'
+            h[k] = h.get(k, 0) + 1
+    ghi_lai_hoc(w, ds)
+
+
+def bai_hoc_cho(w, wf):
+    ds = ds_bai_hoc_cho(w, wf)
+    return '\n'.join(f'- [{h["id"]}] ({h["dich"]}, +{h["ung_ho"]}/-{h["phan_doi"]}'
+                     + (f', chất lượng {chat_luong(h)}' if chat_luong(h) is not None else '') + f') {h["noi_dung"]}'
+                     for h in ds) or '- (chưa có)'
 
 
 def kiem_dau_ra(w, ma):
@@ -355,10 +381,12 @@ def lenh_chuyen(a, w=None):
         v['vong'] += 1
         cn['tra_lai'] += 1
         wfk['tra_lai'] += 1
+        ghi_ket_qua_ap(w, v, False)
         ghi_phan_hoi(w, f'workflow:{v["workflow"]}', 'xau', a.ly_do, a.ma, a.ai)
         w.thong_bao(v['nguoi_giao'], f'{a.ma} bị trả lại vòng {v["vong"] - 1}: {a.ly_do}', a.ma)
     if den == 'xong':
         v['xong_luc'] = bay_gio()
+        ghi_ket_qua_ap(w, v, True)
         cn['xong'] += 1
         cn['dat_lan_dau'] += v['vong'] == 1
         wfk['xong'] += 1
@@ -465,7 +493,9 @@ def ghi_lai_hoc(w, ds):
         nhom = [h for h in ds if h['trang_thai'] == t]
         if nhom:
             dong.append(f'## {t}')
-            dong += [f'- [{h["id"]}] {h["dich"]} · +{h["ung_ho"]}/-{h["phan_doi"]} · {h["noi_dung"]}' for h in nhom]
+            dong += [f'- [{h["id"]}] {h["dich"]} · +{h["ung_ho"]}/-{h["phan_doi"]}'
+                     + (f' · áp {h.get("ap_dat", 0)} đạt/{h.get("ap_truot", 0)} trượt, chất lượng {chat_luong(h)}' if chat_luong(h) is not None else '')
+                     + f' · {h["noi_dung"]}' for h in nhom]
     ghi(w.p('HOC.md'), '\n'.join(dong) + '\n')
 
 
@@ -565,6 +595,11 @@ def lenh_hoc(a, w=None):
     moi, tia = [], []
     for h in ds:
         if h['trang_thai'] != 'mo':
+            continue
+        cl = chat_luong(h)
+        if cl is not None and h.get('ap_dat', 0) + h.get('ap_truot', 0) >= 3 and cl < 0.6:
+            h['trang_thai'] = 'tia'  # áp nhiều lần mà việc vẫn bị trả lại: bài học không giúp
+            tia.append(h['id'])
             continue
         if h['phan_doi'] >= 2 and h['phan_doi'] >= h['ung_ho']:
             h['trang_thai'] = 'tia'
