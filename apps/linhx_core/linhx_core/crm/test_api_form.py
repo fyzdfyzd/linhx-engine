@@ -1,6 +1,7 @@
-"""Kiểm thử đơn vị cho linhx_core.crm.t1 và linhx_core.crm.api_form (D2)."""
+"""Kiểm thử hộp trắng cho form.py, t1.py và api_form (C2 + D2: gộp trùng, rút đồng ý, bảo mật K4)."""
 from __future__ import annotations
 
+import importlib
 import json
 import sys
 import types
@@ -8,11 +9,390 @@ from unittest.mock import patch
 
 import pytest
 
-from linhx_core.crm import dong_y, t1
+from linhx_core.crm import dong_y, form, t1
 
 LUC_1 = "2026-11-09 09:00:00"
 LUC_2 = "2026-11-09 09:05:00"
 LUC_3 = "2026-11-09 09:10:00"
+
+
+class _FakeDoc:
+    def __init__(self, data: dict, kho: dict[str, list[dict]], bo_dem: dict[str, int]):
+        self._kho = kho
+        self._bo_dem = bo_dem
+        self.doctype = data["doctype"]
+        self.flags = types.SimpleNamespace(ignore_permissions=False)
+        for k, v in data.items():
+            setattr(self, k, v)
+        self.name = data.get("name")
+
+    def insert(self, ignore_permissions: bool = False):
+        loai = self.doctype
+        self._bo_dem[loai] = self._bo_dem.get(loai, 0) + 1
+        tien_to = {
+            "LX Nguoi": "LX-NGUOI",
+            "LX Co Hoi": "LX-CH",
+            "LX Dong Y": "LX-DY",
+        }.get(loai, "DOC")
+        self.name = f"{tien_to}-{self._bo_dem[loai]:04d}"
+        ban_ghi = {
+            k: v
+            for k, v in self.__dict__.items()
+            if not k.startswith("_") and k not in ("doctype", "flags")
+        }
+        ban_ghi["creation"] = f"2026-11-09 09:00:{self._bo_dem[loai]:02d}"
+        self._kho.setdefault(loai, []).append(ban_ghi)
+        return self
+
+
+def _tao_moi_truong_frappe(monkeypatch, site: str = "ifagent"):
+    kho: dict[str, list[dict]] = {
+        "LX Nguoi": [],
+        "LX Co Hoi": [],
+        "LX Dong Y": [],
+    }
+    bo_dem: dict[str, int] = {}
+    lich_su_get_all: list[dict] = []
+
+    fake_frappe = types.ModuleType("frappe")
+
+    class ValidationError(Exception):
+        pass
+
+    class PermissionError(Exception):
+        pass
+
+    class DuplicateEntryError(Exception):
+        pass
+
+    fake_frappe.ValidationError = ValidationError
+    fake_frappe.PermissionError = PermissionError
+    fake_frappe.DuplicateEntryError = DuplicateEntryError
+    fake_frappe.local = types.SimpleNamespace(
+        site=site,
+        request_ip="127.0.0.1",
+        response={},
+        form_dict={},
+        request=None,
+    )
+    fake_frappe.conf = {}
+
+    def whitelist(allow_guest: bool = False, methods=None):
+        def _dec(fn):
+            return fn
+        return _dec
+
+    fake_frappe.whitelist = whitelist
+    fake_frappe.cache = lambda: None
+
+    def throw(msg, exc=ValidationError):
+        if isinstance(exc, type) and issubclass(exc, Exception):
+            raise exc(msg)
+        raise ValidationError(msg)
+
+    fake_frappe.throw = throw
+
+    def get_single(doctype: str):
+        if doctype == "LX Cau Hinh":
+            return types.SimpleNamespace(bat_crm=1, bat_pay=1)
+        return types.SimpleNamespace()
+
+    fake_frappe.get_single = get_single
+
+    def get_all(
+        doctype: str,
+        fields=None,
+        filters=None,
+        or_filters=None,
+        order_by=None,
+        limit=None,
+        **kwargs,
+    ):
+        lich_su_get_all.append(
+            {
+                "doctype": doctype,
+                "fields": fields,
+                "filters": filters,
+                "or_filters": or_filters,
+                "order_by": order_by,
+                "limit": limit,
+            }
+        )
+        ds = list(kho.get(doctype, []))
+        if isinstance(filters, dict):
+            ds = [
+                d
+                for d in ds
+                if all(d.get(k) == v for k, v in filters.items())
+            ]
+        if or_filters:
+            ket_qua_loc = []
+            for d in ds:
+                khop = False
+                for dieu_kien in or_filters:
+                    _, truong, toan_tu, gia_tri = dieu_kien
+                    val = d.get(truong)
+                    if toan_tu == "in" and val in (gia_tri or []):
+                        khop = True
+                        break
+                    if toan_tu == "=" and val == gia_tri:
+                        khop = True
+                        break
+                    if toan_tu == "like" and isinstance(val, str) and isinstance(gia_tri, str):
+                        mau = gia_tri.strip("%")
+                        if mau in val:
+                            khop = True
+                            break
+                if khop:
+                    ket_qua_loc.append(d)
+            ds = ket_qua_loc
+        if limit is not None:
+            ds = ds[: int(limit)]
+        return [dict(x) for x in ds]
+
+    fake_frappe.get_all = get_all
+    fake_frappe.get_doc = lambda data: _FakeDoc(data, kho, bo_dem)
+
+    class _FakeDB:
+        def get_single_value(self, doctype: str, fieldname: str):
+            if doctype == "LX Cau Hinh":
+                return 1
+            return None
+
+        def set_value(self, doctype: str, name: str, fieldname, value=None, **kwargs):
+            for ban_ghi in kho.get(doctype, []):
+                if ban_ghi.get("name") == name:
+                    if isinstance(fieldname, dict):
+                        ban_ghi.update(fieldname)
+                    else:
+                        ban_ghi[fieldname] = value
+
+    fake_frappe.db = _FakeDB()
+
+    fake_rl = types.ModuleType("frappe.rate_limiter")
+    fake_rl.rate_limit = lambda **kw: (lambda fn: fn)
+
+    monkeypatch.setitem(sys.modules, "frappe", fake_frappe)
+    monkeypatch.setitem(sys.modules, "frappe.rate_limiter", fake_rl)
+    monkeypatch.delitem(sys.modules, "linhx_core.crm.api_form", raising=False)
+    api_form = importlib.import_module("linhx_core.crm.api_form")
+    api_form._BO_DEM_KHOA_DU_PHONG.clear()
+    return api_form, kho, lich_su_get_all
+
+
+def test_nhan_form_gop_trung_khong_ghi_de_du_lieu_cu(monkeypatch):
+    api_form, kho, lich_su = _tao_moi_truong_frappe(monkeypatch)
+    try:
+        r1 = api_form.nhan_form(
+            ho_ten="Nguyễn Thị Lan",
+            dien_thoai="0912345678",
+            email="lan@vd.vn",
+            nhu_cau="Tư vấn lần 1",
+            dong_y_lien_he=True,
+            dong_y_marketing=False,
+        )
+        assert r1["ok"] is True
+        assert r1["ban_cai"] == "ifagent"
+        assert r1["nguoi"] == "LX-NGUOI-0001"
+        assert "ho_ten" not in r1 and "email" not in r1 and "t1_tong" not in r1
+        assert len(kho["LX Nguoi"]) == 1
+        assert len(kho["LX Co Hoi"]) == 1
+        assert len(kho["LX Dong Y"]) == 1
+
+        # Gửi lần 2 cùng SĐT với tên/email khác và tick thêm marketing
+        r2 = api_form.nhan_form(
+            ho_ten="Tên Giả Mạo",
+            dien_thoai="+84912345678",
+            email="giamao@vd.vn",
+            nhu_cau="Tư vấn lần 2",
+            dong_y_lien_he=True,
+            dong_y_marketing=True,
+        )
+        assert r2["ok"] is True
+        assert r2["nguoi"] == "LX-NGUOI-0001"
+        assert len(kho["LX Nguoi"]) == 1, "Gửi lại cùng SĐT không được tạo LX Nguoi trùng"
+        # Dữ liệu cũ trên LX Nguoi không bị ghi đè bằng dữ liệu form
+        assert kho["LX Nguoi"][0]["ho_ten"] == "Nguyễn Thị Lan"
+        assert kho["LX Nguoi"][0]["email"] == "lan@vd.vn"
+        assert len(kho["LX Co Hoi"]) == 2
+        assert "giamao@vd.vn" in (kho["LX Co Hoi"][1].get("ghi_chu") or "")
+        assert dong_y.hieu_luc(kho["LX Dong Y"], "LX-NGUOI-0001", "marketing") is True
+        assert len(kho["LX Dong Y"]) == 3, "Ghi đủ 3 dòng (lien_he lần 1, lien_he lần 2, marketing lần 2)"
+        assert [(d["muc_dich"], d["dong_y"]) for d in kho["LX Dong Y"]] == [
+            ("lien_he", 1),
+            ("lien_he", 1),
+            ("marketing", 1),
+        ], "Mỗi lượt gửi form đều chủ đích ghi lại dòng bằng chứng đồng ý theo ô khách tick của lượt đó"
+
+        truy_van_nguoi = [q for q in lich_su if q["doctype"] == "LX Nguoi"]
+        for q in truy_van_nguoi:
+            assert q["or_filters"], "Phải lọc theo khoá liên hệ, không quét toàn bảng"
+            assert q["limit"] == api_form.GIOI_HAN_TRUY_VAN_NGUOI
+    finally:
+        sys.modules.pop("linhx_core.crm.api_form", None)
+
+
+def test_khong_ghi_de_dong_rut_dong_y(monkeypatch):
+    api_form, kho, _ = _tao_moi_truong_frappe(monkeypatch)
+    try:
+        api_form.nhan_form(
+            ho_ten="Trần Minh",
+            dien_thoai="0987654321",
+            email="minh@vd.vn",
+            nhu_cau="Lần 1",
+            dong_y_lien_he=True,
+            dong_y_marketing=True,
+        )
+        ma_nguoi = kho["LX Nguoi"][0]["name"]
+        assert dong_y.hieu_luc(kho["LX Dong Y"], ma_nguoi, "marketing") is True
+
+        # Khách rút đồng ý marketing (dong_y=0)
+        kho["LX Dong Y"].append(
+            {
+                "name": "LX-DY-RUT",
+                "nguoi": ma_nguoi,
+                "muc_dich": "marketing",
+                "dong_y": 0,
+                "luc": "2099-01-01 00:00:00",
+                "nguon": "khach-rut",
+            }
+        )
+        assert dong_y.hieu_luc(kho["LX Dong Y"], ma_nguoi, "marketing") is False
+
+        # Kẻ lạ gửi lại form với dong_y_marketing=True -> không được ghi đè dòng rút đồng ý
+        api_form.nhan_form(
+            ho_ten="Trần Minh",
+            dien_thoai="0987654321",
+            nhu_cau="Lần 2",
+            dong_y_lien_he=True,
+            dong_y_marketing=True,
+        )
+        assert dong_y.hieu_luc(kho["LX Dong Y"], ma_nguoi, "marketing") is False
+    finally:
+        sys.modules.pop("linhx_core.crm.api_form", None)
+
+
+def test_chan_nguon_client_va_gioi_han_do_dai(monkeypatch):
+    api_form, kho, _ = _tao_moi_truong_frappe(monkeypatch)
+    try:
+        api_form.nhan_form(
+            ho_ten="Lê Hoa",
+            dien_thoai="0901112233",
+            nhu_cau="Kiểm nguồn",
+            dong_y_lien_he=True,
+            nguon="nguon-gia-mao-tu-client",
+        )
+        assert kho["LX Co Hoi"][0]["nguon"] == "trang-ifagent"
+        assert kho["LX Dong Y"][0]["nguon"] == "trang-ifagent"
+
+        with pytest.raises(Exception):
+            api_form.nhan_form(
+                ho_ten="A" * (form.DO_DAI_TOI_DA_HO_TEN + 1),
+                dien_thoai="0901112233",
+                dong_y_lien_he=True,
+            )
+    finally:
+        sys.modules.pop("linhx_core.crm.api_form", None)
+
+
+def test_khop_sdt_ngoac_va_rut_dong_y_nguoi_thu_hai(monkeypatch):
+    api_form, kho, _ = _tao_moi_truong_frappe(monkeypatch)
+    try:
+        kho["LX Nguoi"].append(
+            {
+                "name": "LX-NGUOI-CU1",
+                "ho_ten": "Người Một",
+                "dien_thoai": "(0994) / 178 / 778",
+                "email": "mot@vd.vn",
+                "creation": "2026-11-09 08:00:01",
+            }
+        )
+        kho["LX Nguoi"].append(
+            {
+                "name": "LX-NGUOI-CU2",
+                "ho_ten": "Người Hai",
+                "dien_thoai": "0909998887",
+                "email": "hai@vd.vn",
+                "creation": "2026-11-09 08:00:02",
+            }
+        )
+        kho["LX Dong Y"].append(
+            {
+                "name": "LX-DY-1",
+                "nguoi": "LX-NGUOI-CU1",
+                "muc_dich": "marketing",
+                "dong_y": 1,
+                "luc": "2026-11-09 08:10:00",
+                "nguon": "trang-ifagent",
+            }
+        )
+        kho["LX Dong Y"].append(
+            {
+                "name": "LX-DY-2",
+                "nguoi": "LX-NGUOI-CU2",
+                "muc_dich": "marketing",
+                "dong_y": 0,
+                "luc": "2099-01-01 00:00:00",
+                "nguon": "khach-rut",
+            }
+        )
+
+        r = api_form.nhan_form(
+            ho_ten="Khách Gửi Lại",
+            dien_thoai="0994178778",
+            email="hai@vd.vn",
+            nhu_cau="Kiểm gộp SĐT định dạng lạ + sổ người thứ hai",
+            dong_y_lien_he=True,
+            dong_y_marketing=True,
+        )
+        assert r["ok"] is True
+        assert r["nguoi"] == "LX-NGUOI-CU1"
+        assert len(kho["LX Nguoi"]) == 2
+        cac_dy_mkt_moi = [
+            d
+            for d in kho["LX Dong Y"]
+            if d.get("muc_dich") == "marketing" and d.get("name") not in ("LX-DY-1", "LX-DY-2")
+        ]
+        assert not cac_dy_mkt_moi, "Phải tôn trọng dòng rút đồng ý trên bản ghi khớp thứ hai"
+    finally:
+        sys.modules.pop("linhx_core.crm.api_form", None)
+
+
+def test_luu_hoac_lay_nguoi_c2_chi_bat_duplicate_entry_error(monkeypatch):
+    api_form, kho, _ = _tao_moi_truong_frappe(monkeypatch)
+    try:
+        fake_frappe = sys.modules["frappe"]
+
+        def _insert_trung(self, ignore_permissions: bool = False):
+            kho["LX Nguoi"].append(
+                {
+                    "name": "LX-NGUOI-RACE-C2",
+                    "dien_thoai": "0912345678",
+                    "email": "racec2@vd.vn",
+                }
+            )
+            raise fake_frappe.DuplicateEntryError("Trùng khoá")
+
+        with patch.object(_FakeDoc, "insert", _insert_trung):
+            ma = api_form._luu_hoac_lay_nguoi(
+                {"ho_ten": "Lan", "dien_thoai": "0912345678", "email": "racec2@vd.vn"},
+                [],
+                du_lieu_goc={"dien_thoai": "0912345678", "email": "racec2@vd.vn"},
+            )
+            assert ma == "LX-NGUOI-RACE-C2"
+
+        def _insert_loi_khac(self, ignore_permissions: bool = False):
+            raise RuntimeError("Lỗi cơ sở dữ liệu thật C2")
+
+        with patch.object(_FakeDoc, "insert", _insert_loi_khac):
+            with pytest.raises(RuntimeError, match="Lỗi cơ sở dữ liệu thật C2"):
+                api_form._luu_hoac_lay_nguoi(
+                    {"ho_ten": "Lan", "dien_thoai": "0912345678", "email": "racec2@vd.vn"},
+                    [],
+                    du_lieu_goc={"dien_thoai": "0912345678", "email": "racec2@vd.vn"},
+                )
+    finally:
+        sys.modules.pop("linhx_core.crm.api_form", None)
 
 
 def test_t1_ghi_ket_qua_nguoi_moi_va_dong_y_mot_buoc():
@@ -83,7 +463,6 @@ def test_t1_nguoi_da_co_khong_ghi_de_du_lieu_cu_va_khong_ghi_de_rut_dong_y():
     assert n["t1_muc"] == "Sẵn sàng một phần"
     assert n["lich_su_t1"] == [{"luc": LUC_3, "t1_tong": 20, "t1_muc": "Sẵn sàng"}]
 
-    # marketing đã rút (dong_y=False ở LUC_2) nên không được ghi đè thành True
     assert dong_y.hieu_luc(r["so_dong_y"], "NGUOI-001", "marketing") is False
     assert dong_y.hieu_luc(r["so_dong_y"], "NGUOI-001", "lien_he") is True
     assert [(x["muc_dich"], x["dong_y"]) for x in r["so_dong_y"]] == [
@@ -251,7 +630,6 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
         import linhx_core.crm.api_form as api_form
 
         with patch("linhx_core.co_module._doc_cau_hinh_frappe", return_value={"bat_crm": 1}):
-            # Lần 1: khách mới gửi email nhận kết quả T1
             res1 = api_form.nhan_ket_qua_t1(
                 email="Khach1@VD.vn",
                 ho_ten="Khách Gốc Bí Mật",
@@ -270,7 +648,6 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
             assert kho["LX Nguoi"][0]["tang_pheu"] == "moi"
             assert kho["LX Nguoi"][0]["t1_tong"] == 12
 
-            # Khách rút đồng ý marketing (dong_y=0)
             kho["LX Dong Y"].append(
                 {
                     "name": "LX-Dong-Y-3",
@@ -282,7 +659,6 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
                 }
             )
 
-            # Lần 2: gửi lại với cùng email nhưng tên khác và điểm khác (19 - Sẵn sàng)
             res2 = api_form.nhan_ket_qua_t1(
                 email="khach1@vd.vn",
                 ho_ten="Kẻ Lạ Thăm Dò",
@@ -292,14 +668,12 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
                 dong_y_lien_he=True,
                 dong_y_marketing=True,
             )
-            # Phản hồi chỉ chứa điểm vừa gửi (19), KHÔNG lộ tên cũ, email cũ hay điểm cũ (12)
             chu_res2 = json.dumps(res2, ensure_ascii=False)
             assert "Khách Gốc Bí Mật" not in chu_res2
             assert "khach1@vd.vn" not in chu_res2
             assert res2["ket_qua_day_du"]["tong"] == 19
             assert res2["ket_qua_day_du"]["muc"] == "Sẵn sàng"
 
-            # Trong DB: hồ sơ cũ giữ nguyên tên, điểm cũ (12) và marketing vẫn ở trạng thái rút (False)
             ng_db = kho["LX Nguoi"][0]
             assert ng_db["ho_ten"] == "Khách Gốc Bí Mật"
             assert ng_db.get("zalo") is None
@@ -310,7 +684,6 @@ def test_api_nhan_ket_qua_t1_khong_lo_du_lieu_cu_va_ton_trong_rut_dong_y():
 
             assert dong_y.hieu_luc(kho["LX Dong Y"], "LX-Nguoi-1", "marketing") is False
             assert dong_y.hieu_luc(kho["LX Dong Y"], "LX-Nguoi-1", "lien_he") is True
-            # Trình tự sổ đồng ý: lần 1 (lien_he=1, marketing=1), rút (marketing=0), lần 2 chỉ ghi thêm lien_he=1
             assert [(d["muc_dich"], int(d["dong_y"])) for d in kho["LX Dong Y"]] == [
                 ("lien_he", 1),
                 ("marketing", 1),
@@ -327,7 +700,6 @@ def test_luu_hoac_lay_nguoi_t1_chi_bat_duplicate_entry_error():
         sys.modules.pop("linhx_core.crm.api_form", None)
         import linhx_core.crm.api_form as api_form
 
-        # Khi insert ném DuplicateEntryError (race condition), tìm lại bản ghi trùng và trả về mã
         def _insert_trung(self, ignore_permissions: bool = False):
             kho["LX Nguoi"].append(
                 {
@@ -347,7 +719,6 @@ def test_luu_hoac_lay_nguoi_t1_chi_bat_duplicate_entry_error():
             )
             assert ma == "LX-Nguoi-Race"
 
-        # Khi insert ném lỗi khác (RuntimeError), phải ném lại chứ không nuốt lỗi
         def _insert_loi_khac(self, ignore_permissions: bool = False):
             raise RuntimeError("Lỗi cơ sở dữ liệu thật")
 

@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { useState } from "react";
 import Head from "next/head";
 
 async function docNoiDung() {
@@ -44,20 +45,85 @@ export async function getStaticProps() {
         }))
       : [],
   };
+  const apiGoc =
+    typeof process.env.API_GOC === "string"
+      ? process.env.API_GOC.trim().replace(/\/+$/, "")
+      : "";
 
   return {
     props: {
       noiDung,
+      apiGoc,
     },
   };
 }
 
-export default function TrangBU({ noiDung }) {
+export default function TrangBU({ noiDung, apiGoc = "" }) {
   const { tieu_de, mo_ta, muc } = noiDung || {
     tieu_de: "Trang BU",
     mo_ta: "",
     muc: [],
   };
+
+  const [hoTen, datHoTen] = useState("");
+  const [dienThoai, datDienThoai] = useState("");
+  const [email, datEmail] = useState("");
+  const [nhuCau, datNhuCau] = useState("");
+  const [website, datWebsite] = useState("");
+  const [dongYLienHe, datDongYLienHe] = useState(false);
+  const [dongYMarketing, datDongYMarketing] = useState(false);
+  const [dangGui, datDangGui] = useState(false);
+  const [daGui, datDaGui] = useState(false);
+  const [loiForm, datLoiForm] = useState("");
+
+  async function xuLyGuiForm(e) {
+    e.preventDefault();
+    datLoiForm("");
+    if (website.trim()) {
+      return;
+    }
+    if (!dongYLienHe) {
+      datLoiForm("Vui lòng đồng ý để chúng tôi liên hệ tư vấn.");
+      return;
+    }
+    if (!dienThoai.trim() && !email.trim()) {
+      datLoiForm("Vui lòng nhập ít nhất số điện thoại hoặc email.");
+      return;
+    }
+    datDangGui(true);
+    try {
+      const goc = typeof apiGoc === "string" ? apiGoc.replace(/\/+$/, "") : "";
+      const dich = `${goc}/api/method/linhx_core.crm.api_form.nhan_form`;
+      const res = await fetch(dich, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          ho_ten: hoTen,
+          dien_thoai: dienThoai,
+          email: email,
+          nhu_cau: nhuCau,
+          dong_y_lien_he: Boolean(dongYLienHe),
+          dong_y_marketing: Boolean(dongYMarketing),
+        }),
+      });
+      if (res.status === 429) {
+        datLoiForm("Bạn gửi yêu cầu quá nhanh, vui lòng thử lại sau ít phút.");
+        return;
+      }
+      if (!res.ok) {
+        datLoiForm("Không gửi được thông tin, vui lòng kiểm tra lại.");
+        return;
+      }
+      datDaGui(true);
+    } catch {
+      datLoiForm("Lỗi kết nối máy chủ, vui lòng thử lại.");
+    } finally {
+      datDangGui(false);
+    }
+  }
 
   return (
     <>
@@ -75,6 +141,9 @@ export default function TrangBU({ noiDung }) {
           --vien: #e3e1da;
           --nhan: #1f4fd6;
           --nhan-nhat: #e8eefc;
+          --xanh: #0f766e;
+          --xanh-nhat: #e6f6f4;
+          --do: #b91c1c;
         }
         *,
         *::before,
@@ -87,6 +156,7 @@ export default function TrangBU({ noiDung }) {
           padding: 0;
           width: 100%;
           max-width: 100%;
+          overflow-x: hidden;
           background: var(--bg);
           color: var(--chu);
           font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -168,7 +238,7 @@ export default function TrangBU({ noiDung }) {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
           gap: 16px;
-          padding: 16px 0 48px;
+          padding: 16px 0 32px;
         }
         @media (max-width: 420px) {
           .luoi-muc {
@@ -192,6 +262,110 @@ export default function TrangBU({ noiDung }) {
           font-size: 15px;
           color: var(--phu);
           margin: 0;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .khu-form {
+          padding: 8px 0 48px;
+        }
+        .khung-form {
+          background: var(--mat);
+          border: 1px solid var(--vien);
+          border-radius: 14px;
+          padding: 24px 20px;
+          width: 100%;
+          max-width: 640px;
+          min-width: 0;
+        }
+        .khung-form h2 {
+          font-size: 20px;
+          margin: 0 0 6px;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .khung-form .mo-ta-form {
+          font-size: 14px;
+          color: var(--phu);
+          margin: 0 0 18px;
+        }
+        .truong-form {
+          margin-bottom: 14px;
+          width: 100%;
+          min-width: 0;
+        }
+        .truong-form label {
+          display: block;
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 6px;
+        }
+        .truong-form input[type="text"],
+        .truong-form input[type="tel"],
+        .truong-form input[type="email"],
+        .truong-form textarea {
+          width: 100%;
+          max-width: 100%;
+          min-width: 0;
+          padding: 10px 12px;
+          font-size: 15px;
+          font-family: inherit;
+          color: var(--chu);
+          background: #ffffff;
+          border: 1px solid var(--vien);
+          border-radius: 10px;
+        }
+        .truong-form textarea {
+          min-height: 84px;
+          resize: vertical;
+        }
+        .dong-kiem {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          margin-bottom: 10px;
+          font-size: 14px;
+          color: var(--chu);
+          cursor: pointer;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .dong-kiem input[type="checkbox"] {
+          margin-top: 3px;
+          flex-shrink: 0;
+        }
+        .nut-gui {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          max-width: 100%;
+          padding: 12px 18px;
+          margin-top: 6px;
+          font-size: 15px;
+          font-weight: 600;
+          color: #ffffff;
+          background: var(--nhan);
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+        }
+        .nut-gui:disabled {
+          opacity: 0.65;
+          cursor: not-allowed;
+        }
+        .loi-form {
+          margin: 10px 0 0;
+          font-size: 14px;
+          color: var(--do);
+        }
+        .hop-cam-on {
+          margin-top: 16px;
+          padding: 14px 16px;
+          border-radius: 10px;
+          background: var(--xanh-nhat);
+          color: var(--xanh);
+          font-size: 15px;
+          font-weight: 600;
           word-break: break-word;
           overflow-wrap: anywhere;
         }
@@ -228,6 +402,113 @@ export default function TrangBU({ noiDung }) {
                 <p>{item.mo_ta}</p>
               </article>
             ))}
+          </section>
+
+          <section className="khu-form" aria-label="Form đăng ký tư vấn">
+            <div className="khung-form">
+              <h2>Đăng ký nhận tư vấn</h2>
+              <p className="mo-ta-form">
+                Để lại thông tin liên hệ để đội ngũ tư vấn phản hồi nhanh nhất.
+              </p>
+
+              <form data-lead onSubmit={xuLyGuiForm} noValidate>
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <label htmlFor="lead-website">Website</label>
+                  <input
+                    id="lead-website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => datWebsite(e.target.value)}
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lead-ho-ten">Họ và tên</label>
+                  <input
+                    id="lead-ho-ten"
+                    type="text"
+                    name="ho_ten"
+                    maxLength={120}
+                    value={hoTen}
+                    onChange={(e) => datHoTen(e.target.value)}
+                    placeholder="Nguyễn Văn A"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lead-dien-thoai">Số điện thoại</label>
+                  <input
+                    id="lead-dien-thoai"
+                    type="tel"
+                    name="dien_thoai"
+                    maxLength={20}
+                    value={dienThoai}
+                    onChange={(e) => datDienThoai(e.target.value)}
+                    placeholder="0912345678"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lead-email">Email</label>
+                  <input
+                    id="lead-email"
+                    type="email"
+                    name="email"
+                    maxLength={254}
+                    value={email}
+                    onChange={(e) => datEmail(e.target.value)}
+                    placeholder="ban@doanhnghiep.vn"
+                  />
+                </div>
+
+                <div className="truong-form">
+                  <label htmlFor="lead-nhu-cau">Nhu cầu cần tư vấn</label>
+                  <textarea
+                    id="lead-nhu-cau"
+                    name="nhu_cau"
+                    maxLength={2000}
+                    value={nhuCau}
+                    onChange={(e) => datNhuCau(e.target.value)}
+                    placeholder="Mô tả ngắn nhu cầu của bạn"
+                  />
+                </div>
+
+                <label className="dong-kiem">
+                  <input
+                    type="checkbox"
+                    name="dong_y_lien_he"
+                    checked={dongYLienHe}
+                    onChange={(e) => datDongYLienHe(e.target.checked)}
+                  />
+                  <span>Tôi đồng ý để đơn vị liên hệ tư vấn theo thông tin đã cung cấp.</span>
+                </label>
+
+                <label className="dong-kiem">
+                  <input
+                    type="checkbox"
+                    name="dong_y_marketing"
+                    checked={dongYMarketing}
+                    onChange={(e) => datDongYMarketing(e.target.checked)}
+                  />
+                  <span>Tôi đồng ý nhận bản tin và tài liệu chuyên môn (marketing).</span>
+                </label>
+
+                {loiForm && <p className="loi-form">{loiForm}</p>}
+
+                <button type="submit" className="nut-gui" disabled={dangGui}>
+                  {dangGui ? "Đang gửi..." : "Gửi thông tin"}
+                </button>
+
+                {daGui && (
+                  <div className="hop-cam-on" data-cam-on>
+                    Cảm ơn bạn! Chúng tôi đã ghi nhận thông tin và sẽ liên hệ sớm.
+                  </div>
+                )}
+              </form>
+            </div>
           </section>
         </main>
 
