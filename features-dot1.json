@@ -350,8 +350,8 @@
         "Trang chạy trên IP, form về bản cài ifagent"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_c3.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/C3/chay.json"
     },
     {
       "id": "D1",

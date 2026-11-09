@@ -2,7 +2,7 @@
   "ten": "ifagent",
   "ban_cai": "ifagent",
   "noi_dung": {
-    "tieu_de": "ifAgent — Trang BU Trợ lý AI & Tự động hoá",
+    "tieu_de": "ifAgent — Trang BU Trợ lý AI và Tự động hoá",
     "mo_ta": "Giải pháp chuẩn hoá quy trình kinh doanh, chăm sóc khách hàng và vận hành tự động trên nền LINHX ENGINE.",
     "muc": [
       {
@@ -14,7 +14,7 @@
         "mo_ta": "Đo lường độ hiện diện, độ chính xác và mức độ đề xuất của thương hiệu trên các mô hình AI lớn."
       },
       {
-        "ten": "Thanh toán & Bàn giao tức thì",
+        "ten": "Thanh toán và Bàn giao tức thì",
         "mo_ta": "Tích hợp VietQR tự động đối soát và khởi chạy tiến trình tạo báo cáo ngay khi hoàn tất thanh toán."
       }
     ]

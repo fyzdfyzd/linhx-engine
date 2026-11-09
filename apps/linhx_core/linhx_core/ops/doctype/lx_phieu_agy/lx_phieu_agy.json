@@ -1,0 +1,164 @@
+{
+ "doctype": "DocType",
+ "name": "LX Phieu Agy",
+ "module": "ops",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "loai_phieu",
+  "de",
+  "vung",
+  "trang_thai",
+  "phut",
+  "token",
+  "ly_do_tra",
+  "tho",
+  "giao_luc",
+  "so_lan_giao",
+  "commit",
+  "nhanh",
+  "nhat_ky",
+  "nop_luc",
+  "ket_luan",
+  "nhan_xet",
+  "loi_may",
+  "so_lan_chua_dat"
+ ],
+ "fields": [
+  {
+   "default": "feature",
+   "fieldname": "loai_phieu",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Loại phiếu",
+   "options": "feature\nsua_loi\nkiem_thu\nbao_tri",
+   "reqd": 1
+  },
+  {
+   "fieldname": "de",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Đề bài",
+   "reqd": 1
+  },
+  {
+   "fieldname": "vung",
+   "fieldtype": "Small Text",
+   "label": "Vùng được sửa"
+  },
+  {
+   "default": "nhap",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Trạng thái",
+   "options": "nhap\nduyet\ngiao\nnop\ndat\ntra",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "phut",
+   "fieldtype": "Float",
+   "label": "Số phút"
+  },
+  {
+   "default": "0",
+   "fieldname": "token",
+   "fieldtype": "Int",
+   "label": "Số token"
+  },
+  {
+   "fieldname": "ly_do_tra",
+   "fieldtype": "Small Text",
+   "label": "Lý do trả"
+  },
+  {
+   "fieldname": "tho",
+   "fieldtype": "Data",
+   "label": "Thợ nhận"
+  },
+  {
+   "fieldname": "giao_luc",
+   "fieldtype": "Datetime",
+   "label": "Thời điểm giao"
+  },
+  {
+   "default": "0",
+   "fieldname": "so_lan_giao",
+   "fieldtype": "Int",
+   "label": "Số lần giao"
+  },
+  {
+   "fieldname": "commit",
+   "fieldtype": "Data",
+   "label": "Mã commit"
+  },
+  {
+   "fieldname": "nhanh",
+   "fieldtype": "Data",
+   "label": "Nhánh git"
+  },
+  {
+   "fieldname": "nhat_ky",
+   "fieldtype": "Long Text",
+   "label": "Nhật ký chạy"
+  },
+  {
+   "fieldname": "nop_luc",
+   "fieldtype": "Datetime",
+   "label": "Thời điểm nộp"
+  },
+  {
+   "fieldname": "ket_luan",
+   "fieldtype": "Data",
+   "label": "Kết luận chấm"
+  },
+  {
+   "fieldname": "nhan_xet",
+   "fieldtype": "Long Text",
+   "label": "Nhận xét chấm"
+  },
+  {
+   "default": "0",
+   "fieldname": "loi_may",
+   "fieldtype": "Check",
+   "label": "Lỗi máy"
+  },
+  {
+   "default": "0",
+   "fieldname": "so_lan_chua_dat",
+   "fieldtype": "Int",
+   "label": "Số lần chưa đạt"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "LX Operator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 16:45:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 16:45:00.000000"
+}

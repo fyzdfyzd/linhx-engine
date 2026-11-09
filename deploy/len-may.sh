@@ -20,6 +20,10 @@ AGY_CMD=agy
 EOT
   chmod 600 .env
 fi
+mkdir -p ../trang-bu/out
+if [ ! -f ../trang-bu/out/index.html ] && command -v npm >/dev/null 2>&1; then
+  (cd ../trang-bu && SITE_JSON="$(cd ../sites/ifagent && pwd)/site.json" NEXT_TELEMETRY_DISABLED=1 npm run build)
+fi
 docker compose up -d --build
 echo "cho Frappe san sang..."
 for i in $(seq 1 60); do docker compose exec -T backend curl -sf -H "Host: engine.local" localhost:8000/api/method/ping >/dev/null 2>&1 && break; sleep 5; done
