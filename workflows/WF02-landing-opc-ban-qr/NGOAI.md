@@ -1,0 +1,21 @@
+# Người ngoài đã làm: WF02
+
+Đọc thật 9/11/2026 (clone nông vào `_refs/WF02/src/`, coi là dữ liệu, không chạy). Nhánh nội dung bán sản phẩm số qua QR Việt Nam: đọc tài liệu chính thức của cổng thanh toán.
+
+| Nguồn | Đã đọc gì | Lấy | Bỏ |
+|---|---|---|---|
+| taste-skill `design-taste-frontend` v2.5.1 · https://github.com/Leonxlnx/taste-skill (commit f6b7657) | SKILL.md (31 KB), danh sách `scripts/` (gate.mjs, consistency.mjs, copy-lint.mjs, perf.mjs, shoot.mjs), đầu gate.mjs | Cổng cuối bằng máy: chạy Chrome thật ở 1440/1024/768/390, 3 vòng, FAIL chặn kết thúc; 9 luật cứng (không chú thích dưới ảnh, một mục một màn hình, hai mép bằng nhau); copy-lint chặn từ sáo | Hiệu ứng shader, cảnh award-site (không hợp trang bán chiêm tinh); cần Node 22 + Chrome |
+| impeccable v4.8.1 (Apache 2.0) · https://github.com/pbakaus/impeccable (613fbf8) | SKILL.md, `reference/craft-floor.md` | Bảng "Verify": tương phản thân ≥4.5:1, chữ lớn ≥3:1, độ rộng dòng 65–75ch; danh sách "Refuse" (eyebrow trên tiêu đề, số 01/02/03 không có thứ tự thật, chữ gradient, thẻ giống nhau icon+tiêu đề+chữ); đủ trạng thái hover/disabled/loading/error/empty | Bộ lệnh con (animate, overdrive…); launcher tải binary |
+| Anthropic `frontend-design` · https://github.com/anthropics/skills (2c5958e) | SKILL.md | Quy trình hai lượt: lập kế hoạch token (4–6 màu có tên, chữ, bố cục) → tự so với "mặc định AI" → rồi mới dựng; danh sách dấu vết trang do AI làm (nền kem + serif + đất nung; thẻ SaaS; eyebrow in hoa) | Không có máy đo |
+| garden-skills `web-design-engineer` · https://github.com/ConardLi/garden-skills (08150e7) | SKILL.md, mục Step 0, Step 1, Pre-delivery Checklist | Bước 0 "kiểm sự kiện trước khi thiết kế", bảng khi nào hỏi khi nào làm; phê bình 5 chiều; kiểm nghiệm trình duyệt chỉ khi được yêu cầu | Phần slide/animation |
+| vercel `web-design-guidelines` · https://github.com/vercel-labs/agent-skills (1a2c79d) | SKILL.md | Cách làm: tải bộ luật tươi từ URL `web-interface-guidelines/command.md` rồi đối chiếu theo `file:line` | Chưa đọc bộ luật (nằm ở repo khác), ghi [chỉ thấy] |
+| SePay: trang QR · https://developer.sepay.vn/en/sepay-webhooks/tao-qr-va-form-thanh-toan | Qua WebFetch (tóm tắt) | Mã thanh toán duy nhất mỗi đơn; trang thanh toán hỏi trạng thái mỗi 3 giây; so tiền webhook ≥ tiền đơn; ghi mã giao dịch để không xử lý hai lần | Mã mẫu PHP/WordPress |
+| SePay: webhook Node.js · https://developer.sepay.vn/en/sepay-webhooks/lap-trinh-webhooks/lap-trinh-webhook-nodejs | Qua WebFetch (tóm tắt) | HMAC-SHA256 `sha256=HMAC(secret, timestamp.body)`; từ chối lệch giờ quá 5 phút; so khớp an toàn thời gian; UNIQUE `sepay_id`; luôn trả 200 | — |
+| SePay best-practices (gói `@unclecat/agent-skills-cli`) · https://cdn.jsdelivr.net/npm/@unclecat/agent-skills-cli@1.0.9/skills/payment-integration/references/sepay/best-practices.md | Qua WebFetch (tóm tắt) | Nhận trả thừa, từ chối trả thiếu; ghi sự kiện webhook trước khi xử lý; ngân hàng có thể bỏ dấu gạch trong nội dung chuyển khoản | Giảm giá/giới thiệu (chưa cần) |
+| Casso · https://developer.casso.vn/v1/thuc-hanh | Chỉ trang mục lục | — | [chỉ thấy] chưa đọc thân bài |
+| Baymard · https://baymard.com/lists/cart-abandonment-rate | Kết quả tìm kiếm (trích dẫn) | Mốc: 70% bỏ giỏ; 48% vì phí phát sinh; 18% vì bắt tạo tài khoản; mẫu thanh toán lý tưởng 12 phần tử | Số cho TMĐT hàng vật lý, không trùng hẳn sản phẩm số |
+| Unbounce · https://unbounce.com/conversion-benchmark-report/ | Kết quả tìm kiếm (trích dẫn) | Mốc: trung vị 6,6%; điện thoại 8,3% so với máy tính 11,6% | Chỉ làm mốc, không phải ngưỡng cứng |
+| Luật: NĐ 85/2021 qua luatvietnam.vn · https://luatvietnam.vn/doanh-nghiep/diem-moi-cua-nghi-dinh-85-2021-ve-thuong-mai-dien-tu-561-33179-article.html | WebFetch | Chính sách kiểm hàng, hoàn trả phải công bố từ 1/1/2022 | Cần văn bản gốc: thuvienphapluat.vn trả 403 |
+| Luật dữ liệu cá nhân 2025 · https://luatvietnam.vn/dan-su/nghi-dinh-356-2025-nd-cp-quy-dinh-chi-tiet-luat-bao-ve-du-lieu-ca-nhan-422896-d1.html | Kết quả tìm kiếm | Luật 91/2025/QH15 hiệu lực 1/1/2026, NĐ 356/2025 thay NĐ 13/2023 | Chưa đọc điều khoản đồng ý → đề DR `DR/DE-1.md` |
+
+Chưa mở được: open-design (nexu-io), clone lỗi. Chưa tìm được nguồn tiếng Trung hay mã nguồn mở bán sản phẩm số tự động theo QR Việt hoàn chỉnh; chỉ thấy mã mẫu từng cổng.

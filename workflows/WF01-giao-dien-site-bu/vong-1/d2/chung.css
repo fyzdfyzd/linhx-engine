@@ -1,0 +1,17 @@
+@font-face{font-family:BVP;src:url(f/BeVietnamPro-Bold.ttf);font-weight:700}
+@font-face{font-family:IN;src:url(f/Inter-Regular.ttf);font-weight:400}
+@font-face{font-family:IN;src:url(f/Inter-Bold.ttf);font-weight:700}
+@font-face{font-family:JB;src:url(f/JetBrainsMono-Regular.ttf)}
+:root{--nen:#0D1117;--the:#161B22;--vien:#21262D;--chu:#fff;--phu:#8B949E;--xanh:#0088FF;--ngoc:#00D4AA;--grad:linear-gradient(135deg,#0088FF,#00D4AA);--sang:#F7F8FA;--den:#1A1D21}
+*{box-sizing:border-box;margin:0}
+body{background:var(--nen);color:var(--chu);font:16px/1.55 IN,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+nav{display:flex;align-items:center;justify-content:space-between;height:76px}
+nav img{height:30px}
+nav .lk{display:flex;gap:28px;align-items:center;color:var(--phu);font-size:15px}
+.nut{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 22px;border-radius:12px;font:700 16px IN;text-decoration:none}
+.nut.chinh{background:var(--grad);color:var(--nen)}
+.nut.phu{border:1px solid var(--vien);color:var(--chu)}
+h1{font:700 clamp(36px,5.2vw,64px)/1.1 BVP;letter-spacing:-.02em}
+.mo{color:var(--phu);font-size:19px;max-width:34ch}
+@media(max-width:700px){.wrap{padding:0 20px}nav .lk a.an{display:none}nav img{height:24px}.mo{font-size:17px}}

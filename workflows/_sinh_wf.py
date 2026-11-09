@@ -1,0 +1,194 @@
+import os, json
+GOC = "/mnt/project-files/WF-CHUAN/"
+WF = [
+ dict(ma="WF01", ten="giao-dien-site-bu", tieu="Giao diện + own media cho một BU", lan=1, dv="BU",
+  ra="Một BU có đủ own channel: site trên khuôn Trang BU (form lead về crm) + content hub + lịch đăng mạng xã hội, Zalo OA, bản tin; một giọng, một brand, đo phễu",
+  skill="web-thiet-ke (LAB058), thiet-ke landing (LAB106), onbrand-*, brand-<bu>, design:* ; chuyen-kenh, tao-bai, duyet-dang, ban-dang, Postiz (LAB068), soat-giong; h23 Own Channel OS",
+  nay="Quy trình giao diện Linh chốt sau 1 lần (Sakédemy v1.0); content đa kênh mới là skill rời; ifAgent là BU đầu (h23: nói ifAgent là hiểu own channel OS)",
+  vd=["ifAgent: ifagent.net mới + 2 tuần nội dung trước CSMO 18/11", "TUVA: tuva.work + chuỗi Decent AI", "Unikon: trang agency + chuỗi case"],
+  ai="Claude: đề, mẫu tham chiếu, lịch kênh, chấm · agy: dựng site, viết và dựng bài · ChatGPT Plus máy cty: ảnh · người của BU (CEO ifAgent): duyệt giọng · Linh: D2 hướng, D4",
+  do="onbrand ≥ 85/100; chụp 360/1280 không vỡ; chấm mù ≤ 1/3 đoán là AI; form lead ghi vào crm; bài đúng giọng, chữ máy ≤ 2/1000; mỗi bài có link đo; lead đếm được sau 14 ngày"),
+ dict(ma="WF02", ten="landing-opc-ban-qr", tieu="Trang bán OPC (QR)", lan=2, dv="OPC",
+  ra="Trang bán một sản phẩm B2C: giới thiệu, nhập thông tin, QR, giao hàng tự động",
+  skill="web-thiet-ke, thiet-ke landing, ux-copy, ra-phap-che (LAB107), brand-chiemtinh",
+  nay="chiemtinh.vn đang bán; landing CTS LAB106 dựng 3 nhánh; chưa có khuôn chung",
+  vd=["Báo cáo 'AI nói gì về thương hiệu' (B4 đợt 1)", "Trang sản phẩm chiemtinh.vn làm lại trên khuôn", "OPC kế tiếp (gia phả AI, LAB115)"],
+  ai="Claude: đề, copy, pháp chế, chấm · agy: dựng · Linh: D2, D4, giá",
+  do="một đơn QR đi trọn (kiểm T2); 0 lỗi đỏ pháp chế; chụp 360/1280; thời gian từ vào trang tới QR ≤ 3 bước"),
+ dict(ma="WF03", ten="deck-thuyet-trinh", tieu="Deck thuyết trình, chào khách", lan=2, dv="Chung",
+  ra="Deck HTML/PPTX từng slide một ý, đúng brand, có vòng tự chấm",
+  skill="linhx-deck 15 bước (LAB027), vong-lap-slide (LAB099), dung-deck, anh-sang-slide, proposal-studio",
+  nay="Chạy trọn 1 lần, Linh OK 30/10 (deck Sakédemy chào VCB 11/11 slide đạt)",
+  vd=["Bài nói CSMO Topic 07 (18/11)", "Deck ifAgent Event chào một brief thật", "Deck Agent Force chào DN đầu tiên"],
+  ai="Claude: ghost deck, chấm · agy: dựng slide · ChatGPT Plus: ảnh rời không chữ · Claude máy cty: chấm mắt mới · Linh: D2 template, D4",
+  do="vls.py đo trên render: tương phản, tràn chữ, phông đủ dấu; 3 người chấm tách thợ ≥ 4/5 mỗi slide; ≤ 3 vòng"),
+ dict(ma="WF04", ten="an-pham-kv-anh", tieu="Ấn phẩm, KV, ảnh", lan=2, dv="Chung",
+  ra="Poster, pano, KV, bộ social; tách lớp được (PSD/PNG trong suốt)",
+  skill="thiet-ke nhánh an-pham (LAB106), tach-kv (LAB078), luật tạo ảnh của Linh, kiem-chu-anh",
+  nay="Pano Tung Tăng chạy 3 nhánh, D2 chọn P3 (nhánh ảnh AI trước rồi gỡ)",
+  vd=["KV + booth ifAgent cho CSMO 18/11", "Pano Tung Tăng dựng hết tới D4", "Bộ 6 ảnh social Chiêm Tinh Số"],
+  ai="Claude: đề, tham chiếu, soi lỗi · ChatGPT Plus / Gemini máy cty: vẽ · agy: ghép chữ, tách lớp · Linh: D2, D4",
+  do="7 luật bố cục; soi 100% danh sách lỗi (tay, chữ giả, dấu sao Gemini…); chấm mù; logo/chữ bằng file thật hoặc ghi THAY-SAU.md"),
+ dict(ma="WF05", ten="bao-cao-pdf", tieu="Báo cáo PDF thiết kế đẹp", lan=2, dv="Chung",
+  ra="Sách trắng, báo cáo ngành/khảo sát/sự kiện, PDF A4 kiểu tạp chí cao cấp",
+  skill="linhx-report 13 bước (LAB028: bao-cao, viet-bao-cao, tim-mau-clone), hinh-du-lieu, Typst",
+  nay="1 ca thử tự động 17 trang, rubric 4,08; chưa qua mắt Linh; P2, P3 chưa dựng",
+  vd=["Báo cáo Listening 'AI ứng dụng tại Việt Nam'", "Báo cáo sự kiện CSMO trong 24 giờ (ifAgent Event)", "Báo cáo Người cao tuổi VN (nối LAB105)"],
+  ai="Claude: ghost report, chấm số · agy: viết chương, dựng trang · Gemini: phản biện · Linh: D2 phong cách, D4",
+  do="rubric tạp chí từng trang TB ≥ 3,5, không tiêu chí < 3; mọi số có nguồn; mỗi chương nói người đọc phải làm gì"),
+ dict(ma="WF06", ten="bai-viet-hay", tieu="Bài viết hay", lan=1, dv="Personal Brand",
+  ra="Bài báo/bài trụ giọng Linh, đăng được trên báo hoặc hub",
+  skill="new-article 9 bước (LAB025), viet-bai-giong-viet luồng Vân Anh (LAB049), linhx-bien-tap, luong-hoa, soat-su-that",
+  nay="Bài PA1 v3 qua 3 vòng chấm nhưng Vân Anh chê diễn đạt; luồng mới (Linh viết nháp gạch đầu dòng) chưa chạy trọn",
+  vd=["Bài CafeBiz/Dân trí về AI cho doanh nghiệp Việt", "Bài trụ ifAgent 'event technology' (SEO/GEO)", "Bài Expert OS từ vault giọng Linh"],
+  ai="Linh: 1–3 ý gốc + nháp gạch đầu dòng · Claude/agy: tìm dữ liệu, làm mượt · Gemini: phản biện CQS/APS · Vân Anh: biên tập",
+  do="0 câu bịa (mỗi câu sự kiện có mã nguồn); chữ máy ≤ 2/1000; câu TB quanh 27 từ; Vân Anh duyệt không viết lại"),
+ dict(ma="WF07", ten="content-da-kenh", tieu="Content đa kênh (đã gộp vào WF01, giữ cho BU sau)", lan=3, dv="Chung",
+  ra="Một ý gốc thành chuỗi bài Facebook, LinkedIn, Zalo OA, bản tin; có lịch và người duyệt",
+  skill="chuyen-kenh, tao-bai, duyet-dang, ban-dang, de-xuat-tuan, Postiz (LAB068)",
+  nay="Skill rời, chưa chạy chuỗi thật",
+  vd=["Chuỗi 2 tuần ifAgent trước CSMO", "Chuỗi TUVA Decent AI", "Chuỗi Sakedemy mở khoá tháng"],
+  ai="Claude: lịch, chấm · agy: viết và dựng ảnh · Linh: duyệt lịch",
+  do="đúng giọng (soat-giong), chữ máy ≤ 2/1000, ảnh qua luật ảnh; đo tương tác sau 7 ngày"),
+ dict(ma="WF08", ten="bao-cao-tu-dong-ban-qr", tieu="Báo cáo tự động bán QR", lan=3, dv="OPC",
+  ra="Báo cáo cá nhân hoá sinh từ dữ liệu, giao tự động sau khi trả QR",
+  skill="report-core (LAB046, cổng 17 luật), brand-check, bao-cao-va-sua, module report của engine",
+  nay="CTS đang bán; report-core chiêm tinh 97,5/100; báo cáo 'AI nói gì' chạy ở ENGINE 0.1",
+  vd=["'AI nói gì về thương hiệu' (B4)", "Bản đồ sao Chiêm Tinh Số chạy trên report chung", "Báo cáo mới: hướng nghiệp"],
+  ai="Claude: blueprint, cổng chất lượng · agy: domain, kho lời giải · Linh: D4 mẫu đầu",
+  do="cổng 17 luật đạt; 0 số bịa; trả tiền tới nhận báo cáo ≤ 10 phút; 20 mẫu ngẫu nhiên không lỗi"),
+ dict(ma="WF09", ten="nghien-cuu-nen", tieu="Nghiên cứu nền, thị trường", lan=2, dv="Chung",
+  ra="Bộ nghiên cứu có bằng chứng, trích nguyên văn, link sống",
+  skill="linhx-4d Discover (LAB105), research-loop (LAB085), research-write, Gemini Deep Research, linhx-crawler",
+  nay="NCT VN: D1 chưa đạt sau 3 vòng (agy bịa trích, ghi đè mất số)",
+  vd=["NCT Việt Nam (mở vòng 4 có chế độ chỉ vá)", "Thị trường agent cho DN vừa (Agent Force)", "Một ngách OPC mới"],
+  ai="Claude: đề, chấm · Gemini DR máy cty: quét rộng · máy quét: bài thật · agy: gộp · Linh: D1",
+  do="trích lời có nguyên văn trong bang-chung; 100% link sống; mọi số có nguồn và ngày"),
+ dict(ma="WF10", ten="chien-luoc-san-pham", tieu="Chiến lược, kế hoạch", lan=3, dv="Chung",
+  ra="Chiến lược sản phẩm/giá/khách theo chuẩn Trân Bảo của chị Hương",
+  skill="chien-luoc 7 bước (LAB106), linhx-chuan, agy-tu-chay, the_opc (LAB117)",
+  nay="A/B trên CTS: nhánh B qua D2 (3/11), nhánh A trượt P06",
+  vd=["CTS (đóng nhánh B tới D4)", "ifAgent Event 2027", "Agent Force gói thuê theo việc (LAB116)"],
+  ai="Claude: đề, chấm · agy: nghiên cứu và viết · Linh: D2, D4 · mốc chuẩn: bộ Trân Bảo",
+  do="12 tiêu chí high standard; PMF 12 tiêu chí; mọi giả định có ghi DATA_GAPS"),
+ dict(ma="WF11", ten="ho-so-de-xuat", tieu="Hồ sơ đề xuất, tài trợ", lan=2, dv="BU",
+  ra="Đề bài thành proposal + báo giá, hoặc hồ sơ tài trợ đủ tiêu chí",
+  skill="proposal-studio, proposal-brief/ideas/images, ho-so-tai-tro (LAB018), radar tài trợ (LAB013)",
+  nay="Skill có, chưa có lần chạy đo thời gian đề bài tới proposal",
+  vd=["Một call tài trợ thật cho TUVA Decent AI", "Brief event thật của ifAgent", "Đề xuất pilot 14 ngày Agent Force"],
+  ai="Claude: đọc đề, chấm theo tiêu chí bên mời · agy: viết, báo giá · Linh: giá, D4",
+  do="đề bài tới bản gửi ≤ 1 ngày; đủ 100% mục bên mời yêu cầu; lưu thắng/thua"),
+ dict(ma="WF12", ten="video-ngan", tieu="Video ngắn, reel", lan=3, dv="Chung",
+  ra="Reel, trailer, video giải thích; có giọng Việt, phụ đề",
+  skill="phim-code v0.3 (LAB059), sd-* (studio), gen-video anh Vinh, flow-canh-tron-khung",
+  nay="Render thử 4 giây; trailer CSMO đang có thread riêng",
+  vd=["Trailer diễn giả CSMO (gộp với thread đang chạy)", "Reel ifAgent Event", "Video giải thích báo cáo CTS"],
+  ai="Claude: kịch bản, chấm · agy: dựng · Gemini Flow/Veo máy cty: cảnh · Linh: D2, D4",
+  do="kiem_khung + kiem_video (LUFS, khung đen, freeze); phông đủ dấu; chấm từng shot"),
+ dict(ma="WF13", ten="khoa-hoc-lop-corp", tieu="Course OS: khoá lớp corp", lan=1, dv="EDU",
+  ra="Nhận đề lớp DN thành bộ khoá đủ: đề cương, slide, bài tập, phiếu, học liệu, bản theo khách; trợ giảng dạy được",
+  skill="course, course-architect, lesson-*, Course OS bản 2 (9 module, đã khoá đề 6/11), vong-lap-slide, linhx-chuan",
+  nay="25 khoá 2024–2026, mỗi lớp soạn gần như từ đầu; Course OS đã khoá đề, chưa chạy trọn một lớp",
+  vd=["Lớp AI cho chi nhánh ngân hàng (khách corp thật kế tiếp)", "Lớp agent cho DN, cuối lớp có cửa vào Agent Force", "Một lớp do trợ giảng dạy, agy tự soạn"],
+  ai="Linh: nhu cầu khách, quan điểm chuyên môn, D4 · Claude: khung, chấm · agy: soạn học liệu, slide · 6 trợ giảng: dạy thử, chấm dạy được không",
+  do="giờ công Linh ≤ 4 giờ/lớp; slide qua vls.py; trợ giảng dạy được không cần hỏi Linh; điểm học viên ≥ 4,5/5"),
+ dict(ma="WF14", ten="nhan-vat-ao", tieu="Nhân vật ảo", lan=3, dv="Personal Brand",
+  ra="Casting tới character sheet và bible",
+  skill="casting-mat v2, phat-trien-nhan-vat (LAB066)",
+  nay="Đã chạy 2 lần (Luna Mai, Trần AI tới C2): còn 1 vòng là nạp",
+  vd=["(đã có) Luna Mai", "(đã có) Trần AI", "Nhân vật thứ 3 do agy tự chạy"],
+  ai="Claude: chấm · ChatGPT + Gemini: vẽ · Linh: chọn mặt, D4",
+  do="spec 100% mục; ≤ 90 ảnh/nhân vật; giữ mặt qua mọi ảnh"),
+ dict(ma="WF15", ten="brand-guideline", tieu="Brand guideline", lan=3, dv="BU",
+  ra="Guideline công ty theo chuẩn BTMH 2026",
+  skill="brand-guideline-chuan (LAB043)",
+  nay="Đã làm 5–7 brand; còn chờ Linh chọn cũ/mới",
+  vd=["(đã có) IF Agent, Unikon", "Sakedemy, TUVA, URAH đóng nốt", "Brand OPC mới"],
+  ai="Claude: dựng, chấm · ChatGPT: mockup · Linh: chọn",
+  do="đủ khung chuẩn BTMH; theme web + slide đọc được từ brand.json"),
+ dict(ma="WF16", ten="vault-giong-linh", tieu="Vault giọng Linh (quét, digest)", lan=1, dv="Personal Brand",
+  ra="Mỗi tuần: bài quét theo 4 chủ đề Linh theo đuổi thành nugget bằng lời Linh trong vault, tìm lại được khi viết",
+  skill="linhx-crawler + máy quét mayquet, Content Vault _DIGEST (thẻ DG → nugget NG → TIL), research-write, Thư viện báo cáo",
+  nay="Máy quét chạy máy cty; vault có 2 bản rời (D:\\@WF\\TOOL\\CONTENT_VAULT 49 entry và bản LINHX), chưa gộp, chưa chạy đều",
+  vd=["Chủ đề AI ứng dụng cho DN Việt (tuần 1)", "Người cao tuổi (nối TUVA, LAB105)", "Ngoại tình (mở lại PU09 làm cuốn sách đầu)"],
+  ai="Máy quét: lấy bài 0 token · agy: digest · Claude: chấm giọng, chống bịa · Linh: duyệt 10 nugget đầu để làm bản vàng",
+  do="nugget có link nguồn sống + trích nguyên văn; giọng Linh (soat-giong); Linh tìm lại được ý cần trong ≤ 1 phút; ≥ 20 nugget/tuần/chủ đề"),
+ dict(ma="WF17", ten="show-podcast-ra-moi-thu", tieu="Show/podcast: 1 buổi ra mọi thứ", lan=1, dv="Personal Brand",
+  ra="Một buổi ghi hình 45 phút thành: 1 tập dài cungai, 5 clip ngắn, 1 bài CafeBiz, nugget vào vault, tư liệu chương sách",
+  skill="phim-code nhánh B dựng từ file record (cat_record.py, cắt ậm ờ), viet-bai-giong-viet, chuyen-kenh, giong-linh",
+  nay="Nhánh dựng từ record có code (25/10), chưa chạy với buổi ghi thật",
+  vd=["Tập 1 với một khách mời từ Sổ quan hệ", "Tập 2 với học viên corp kể case", "Tập 3 agy tự chạy cả chuỗi"],
+  ai="Linh: nói chuyện 45 phút · agy: cắt, dựng, viết · Claude: chấm, chọn clip · Vân Anh: biên bài · Linh: D4 ≤ 30 phút",
+  do="giờ Linh ngoài buổi ghi ≤ 30 phút; clip đủ dấu, phụ đề đúng; bài qua máy đo WF06; mỗi đầu ra có link về tập gốc"),
+ dict(ma="WF18", ten="cham-thuong-hieu-ca-nhan", tieu="Chấm thương hiệu cá nhân trên digital + AI", lan=1, dv="Personal Brand",
+  ra="Báo cáo: Google, mạng xã hội, ChatGPT/Gemini/Claude/Perplexity nói gì về một người; sai, nhầm, bịa ở đâu; việc sửa 30 ngày",
+  skill="Brand Truth (LAB015 bts.py), brand-check + bao-cao-va-sua (LAB036/086), linhx-audit (LAB082), person.json mới",
+  nay="Brand Truth của Linh 39,7 (đo một lần); máy cùng loại T4 ifAgent; chưa có person.json",
+  vd=["Linh (hồ sơ số 0)", "Một chuyên gia trong mạng Expert OS", "Một CEO khách (làm mồi Agent Force)"],
+  ai="Claude: hồ sơ sự thật, chấm · agy: chạy câu hỏi nhiều AI, dựng báo cáo · Linh: duyệt person.json, D4",
+  do="mọi khẳng định sai có câu trả lời AI gốc kèm ngày; chạy lại cùng bộ câu cho điểm lệch ≤ 5; việc sửa làm được trong 30 ngày"),
+ dict(ma="WF19", ten="cungai-ban-tin-freebie", tieu="cungai: bản tin tuần + freebie qua Zalo", lan=1, dv="EDU",
+  ra="Mỗi tuần một bản tin AI + 1 freebie (prompt/skill/template) gửi qua Zalo OA và Mini App, có mở khoá QR",
+  skill="cafebiz-radar, content-synthesizer, chuyen-kenh, prototype Zalo Mini App mở khoá QR (LAB075), Course OS cắt freebie",
+  nay="Prototype Mini App test 7/7 (LAB075), chưa có bản tin chạy đều",
+  vd=["Bản tin tuần 1 cho học viên corp cũ", "Freebie cắt từ khoá ngân hàng (WF13)", "Tuần 3 agy tự chạy"],
+  ai="Máy quét: tin · agy: soạn, dựng · Claude: chấm, chống bịa · trợ giảng: thử freebie · Linh: duyệt mẫu đầu",
+  do="0 tin sai nguồn; freebie dùng được ngay (trợ giảng thử pass); tỉ lệ mở ≥ 40% sau 4 tuần; Linh ≤ 30 phút/tuần"),
+ dict(ma="WF20", ten="workforce-zalo-cho-mot-ben", tieu="Agent Force: workforce trong nhóm Zalo", lan=1, dv="Agent Force",
+  ra="Một đội agent + bộ skill riêng cho một tổ chức, sống trong nhóm Zalo của đội: nhân viên tag để giao việc, hỏi đáp, nhận file; có phân quyền, nhật ký, đếm việc xong",
+  skill="Trợ lý Zalo LAB083 (nick phụ qua zalo-mcp vào được nhóm Zalo thường; OA chỉ 1-1, nhóm GMF phải mua riêng; phân quyền theo uid, claude -p), Agent Shell h10, linhx_worker, kho skill linhx-engine, sổ đếm việc LAB116, proposal-studio, brand-ifagent",
+  nay="Trợ lý Zalo 'Nụ' chạy thật máy cty 31/10 cho Linh; chưa có workforce theo vai cho một đơn vị",
+  vd=["Workforce nội bộ ifAgent: trả lời lead, tra hồ sơ năng lực, soạn proposal event, báo cáo sau sự kiện", "Workforce một BU khác (Unikon nhận brief agency, hoặc Sakedemy CSKH học viên)", "DN khách pilot 14 ngày đầu tiên"],
+  ai="Linh: chọn bên + 5 việc đầu · Claude: bản đồ việc, vai agent, bộ 50 câu thử thật · agy: dựng skill, nối Zalo · người của bên đó (CEO ifAgent): dùng thử 7 ngày",
+  do="đúng ≥ 90% trên bộ 50 câu thật, 0 bịa số/giá; chỉ trả lời khi được tag, người ngoài nhóm không lọt quyền; nick phụ không bị khoá sau 7 ngày; trả lời ≤ 2 phút; việc xong/tuần đếm được; người dùng thử chấm ≥ 4/5"),
+]
+os.makedirs(GOC, exist_ok=True)
+for w in WF:
+    d = os.path.join(GOC, f"{w['ma']}-{w['ten']}")
+    for s in ["vang", "vong-1", "vong-2", "vong-3"]:
+        os.makedirs(os.path.join(d, s), exist_ok=True)
+        p = os.path.join(d, s, "README.md")
+        if not os.path.exists(p):
+            open(p, "w").write({"vang":"Bản vàng: mẫu top tier đã được Linh duyệt, dùng làm mốc chấm.\n"}.get(s, f"Kết quả {s}: đề thật, sản phẩm, PHIEU-CHAM.md, NHAT-KY.tsv (phút, token, số lần Linh chạm).\n"))
+    bh = os.path.join(d, "BAI-HOC.md")
+    if not os.path.exists(bh):
+        open(bh, "w").write(f"# Bài học {w['ma']}\n\nMỗi vòng ghi lỗi gặp và luật rút ra. Luật có ≥ 2 bằng chứng thì sửa vào skill.\n")
+    v = w["vd"]
+    de = f"""# {w['ma']} · {w['tieu']}
+
+Làn {w['lan']} · {w.get('dv','')} · Đề sẵn để mở thread. Đọc trước: `/mnt/project-files/WF-CHUAN/KHUNG-CHUAN.md`.
+
+## Đầu ra
+{w['ra']}
+
+## Có sẵn
+- Skill: {w['skill']}
+- Hiện trạng: {w['nay']}
+
+## Ai làm
+{w['ai']}
+
+## Máy đo (đạt mới qua)
+{w['do']}
+
+## Bước 0
+Đọc `NGOAI.md` (người ngoài đã làm), đọc code ít nhất 3 cái tốt nhất, ghi lấy gì bỏ gì.
+
+## Ba vòng làm chuẩn
+| Vòng | Đề thật | Ai điều phối | Xong khi |
+|---|---|---|---|
+| 1 | {v[0]} | Claude điều phối, agy làm thợ | Ra sản phẩm, ghi đủ lỗi vào BAI-HOC.md, sửa skill |
+| 2 | {v[1]} | agy làm theo skill đã sửa, Claude chấm | Linh duyệt D4 không sửa lớn |
+| 3 | {v[2]} | agy tự chạy (agy-tu-chay), Claude chỉ canh | Đạt máy đo, Linh duyệt D4 không sửa lớn → nạp |
+
+## Chỗ lưu
+- Cloud: `/mnt/project-files/WF-CHUAN/{w['ma']}-{w['ten']}/` (vang/, vong-1/, vong-2/, vong-3/, BAI-HOC.md)
+- Máy cty (file lớn: ảnh, PDF, video): `D:\\LINHX\\WF-CHUAN\\{w['ma']}-{w['ten']}\\`
+- Đạt chuẩn: skill sửa trong `linhx-engine/skills/`, thêm loại phiếu vào `linhx_worker`, trang wiki.
+
+## Lệnh mở thread (dán cho coordinator)
+Mở thread "Chuẩn hoá {w['tieu'].lower()}": đọc `/mnt/project-files/WF-CHUAN/{w['ma']}-{w['ten']}/DE-THREAD.md` và KHUNG-CHUAN.md, chạy vòng 1 trên đề "{v[0]}".
+"""
+    open(os.path.join(d, "DE-THREAD.md"), "w").write(de)
+json.dump(WF, open(os.path.join(GOC, "danh-sach.json"), "w"), ensure_ascii=False, indent=1)
+print(len(WF))
