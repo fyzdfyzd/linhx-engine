@@ -7,7 +7,29 @@
 			header_up Host linhx
 		}
 	}
-	handle_path /ifagent/* {
+	@ifagent_api path /ifagent/api/* /ifagent/app /ifagent/app/* /ifagent/assets/* /ifagent/files/* /ifagent/private/* /ifagent/socket.io/* /ifagent/login* /ifagent/desk*
+	handle @ifagent_api {
+		uri strip_prefix /ifagent
+		reverse_proxy backend:8000 {
+			header_up X-Frappe-Site-Name ifagent
+			header_up Host ifagent
+		}
+	}
+	@trang_ifagent path /ifagent /ifagent/*
+	handle @trang_ifagent {
+		uri strip_prefix /ifagent
+		root * /srv/ifagent
+		try_files {path} {path}.html {path}/index.html /index.html
+		file_server
+	}
+	@ifagent_tinh path /_next/* /kham /kham/* /kham.html
+	handle @ifagent_tinh {
+		root * /srv/ifagent
+		try_files {path} {path}.html {path}/index.html /kham.html
+		file_server
+	}
+	@api_form path /api/method/linhx_core.crm.api_form.*
+	handle @api_form {
 		reverse_proxy backend:8000 {
 			header_up X-Frappe-Site-Name ifagent
 			header_up Host ifagent
@@ -36,9 +58,17 @@
 
 	@host_ifagent header_regexp Host ^ifagent(\..+)?(:[0-9]+)?$
 	handle @host_ifagent {
-		reverse_proxy backend:8000 {
-			header_up X-Frappe-Site-Name ifagent
-			header_up Host ifagent
+		@host_ifagent_api path /api/* /app /app/* /assets/* /files/* /private/* /socket.io/* /login* /desk*
+		handle @host_ifagent_api {
+			reverse_proxy backend:8000 {
+				header_up X-Frappe-Site-Name ifagent
+				header_up Host ifagent
+			}
+		}
+		handle {
+			root * /srv/ifagent
+			try_files {path} {path}.html {path}/index.html /index.html
+			file_server
 		}
 	}
 
