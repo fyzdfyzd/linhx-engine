@@ -31,7 +31,7 @@
    "vai": "trưởng: nghe nhóm, trả lời nhanh hồ sơ, nhận việc dài, chọn workflow, gộp kết quả",
    "bao_cao_cho": "linh",
    "chiu_trach_nhiem": "linh",
-   "tho": "claude",
+   "tho": "agy",
    "skills": [
     "brand-ifagent",
     "linhx-chuan"
@@ -47,7 +47,7 @@
    "vai": "đọc brief, soạn trả lời khách + 3 ý tưởng Idea Book",
    "bao_cao_cho": "nu",
    "chiu_trach_nhiem": "sales",
-   "tho": "claude",
+   "tho": "agy",
    "skills": [
     "brand-ifagent",
     "proposal-brief",

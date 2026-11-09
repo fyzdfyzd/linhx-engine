@@ -31,7 +31,7 @@
    "vai": "tìm skill tốt nhất (đọc code), người làm giỏi nhất ngành, chọn bản vàng",
    "bao_cao_cho": "designer",
    "chiu_trach_nhiem": "linh",
-   "tho": "claude|gemini",
+   "tho": "claude",
    "skills": [
     "research-loop"
    ],
@@ -45,7 +45,7 @@
    "vai": "nạp nguồn thành wiki, viết workflow, viết bộ thử từ ca thật",
    "bao_cao_cho": "designer",
    "chiu_trach_nhiem": "linh",
-   "tho": "agy",
+   "tho": "claude",
    "skills": [
     "linhx-chuan"
    ],
