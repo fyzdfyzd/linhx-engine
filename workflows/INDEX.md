@@ -26,3 +26,4 @@ Linh 9/11: chạy song song 3 thread, thread "Chuẩn hoá workflow chất lư�
 | WF12 | [Video ngắn, reel](WF12-video-ngan/DE-THREAD.md) | Chuẩn hoá dựng video ngắn | Chung | 3 | nghiên cứu nền (hạn 14h 9/11) |
 | WF14 | [Nhân vật ảo](WF14-nhan-vat-ao/DE-THREAD.md) | Đóng gói quy trình nhân vật ảo | Personal Brand | 3 | nghiên cứu nền (hạn 14h 9/11) |
 | WF15 | [Brand guideline](WF15-brand-guideline/DE-THREAD.md) | Đóng gói quy trình brand guideline | BU | 3 | nghiên cứu nền (hạn 14h 9/11) |
+| WF21 | [Quy trình video Hungazit](WF21-video-hungazit/DE-THREAD.md) | linhx-workflow: quy trình video Hungazit | Video | 1 | nghiên cứu nền (hạn 14h 9/11) |
