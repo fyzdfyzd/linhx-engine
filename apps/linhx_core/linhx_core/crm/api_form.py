@@ -1373,7 +1373,6 @@ def xac_nhan_marketing(
 
         return {
             "ok": True,
-            "nguoi": ma_nguoi,
             "muc_dich": "marketing",
             "trang_thai": "da_xac_minh",
         }

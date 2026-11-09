@@ -1,6 +1,6 @@
 {
   "feature": "C2B",
-  "luc": "2026-11-09T21:06:52+07:00",
+  "luc": "2026-11-09T21:15:32+07:00",
   "pytest_returncode": 0,
   "pytest_stdout": [
     "============================= test session starts =============================",
@@ -14,7 +14,7 @@
     "tests/nghiem-thu/test_c2b.py::test_link_xac_nhan_can_post_bo_quet_mail_mo_get_khong_ghi_dong_y PASSED [ 66%]",
     "tests/nghiem-thu/test_c2b.py::test_ma_xac_nhan_luu_db_co_han_dung_dung_mot_lan PASSED [100%]",
     "",
-    "============================== 3 passed in 0.09s =============================="
+    "============================== 3 passed in 0.04s =============================="
   ],
   "unit_test_returncode": 0,
   "unit_test_stdout": [
@@ -38,6 +38,6 @@
     "apps/linhx_core/linhx_core/crm/test_api_form.py::test_bao_mat_k4_giu_so_lan_sai_tran_phat_ma_va_ton_trong_rut_dong_y PASSED [ 91%]",
     "apps/linhx_core/linhx_core/crm/test_api_form.py::test_luu_hoac_lay_nguoi_t1_chi_bat_duplicate_entry_error PASSED [100%]",
     "",
-    "============================= 12 passed in 0.09s =============================="
+    "============================= 12 passed in 0.07s =============================="
   ]
 }

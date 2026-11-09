@@ -33,7 +33,7 @@ KHOA_PHUT = 15
 DO_DAI_MA_OTP = 8
 PHAT_TOI_DA_MOI_GIO = 5
 CUA_SO_PHAT_PHUT = 60
-_KHOA_HMAC_MAC_DINH = "linhx-c2b-otp-hmac-sha256-v1"
+_KHOA_TAM_TIEN_TRINH = secrets.token_bytes(32)
 
 
 def _chuan_kenh(email: str) -> str:
@@ -70,7 +70,7 @@ def _lay_khoa_bi_mat(khoa_bi_mat: str | None = None) -> bytes:
                     val = str(getter(ten_khoa) or "").strip()
                     if val:
                         return val.encode("utf-8")
-    return _KHOA_HMAC_MAC_DINH.encode("utf-8")
+    return _KHOA_TAM_TIEN_TRINH
 
 
 def bam_ma(
