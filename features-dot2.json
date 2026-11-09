@@ -193,8 +193,8 @@
         "mã dùng một lần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i3.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/I3/kiem.json"
     },
     {
       "id": "F1",
