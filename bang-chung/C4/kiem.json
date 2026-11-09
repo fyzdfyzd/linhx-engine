@@ -1,0 +1,29 @@
+{
+  "feature": "C4",
+  "luc": "2026-11-09T19:14:57+07:00",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_c4.py::test_chi_cau_hinh PASSED                    [ 33%]",
+    "tests/nghiem-thu/test_c4.py::test_diff_khong_dung_khuon PASSED           [ 66%]",
+    "tests/nghiem-thu/test_c4.py::test_dung_site_bang_cau_hinh PASSED         [100%]",
+    "",
+    "============================= 3 passed in 14.94s =============================="
+  ],
+  "site_json": "sites/unikon/site.json",
+  "ten": "unikon",
+  "tieu_de": "Unikon — Trang BU Chiến dịch Generative AI cho Agency và Nhãn hàng",
+  "so_muc": 3,
+  "anh": [
+    ".canh-tho/anh/c4-390.png",
+    ".canh-tho/anh/c4-1280.png",
+    "bang-chung/C4/c4-390.png",
+    "bang-chung/C4/c4-1280.png"
+  ]
+}
