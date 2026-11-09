@@ -38,8 +38,8 @@
         "phiếu giao quá 150 phút về duyet và tăng so_lan_giao"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O2/kiem.json"
     },
     {
       "id": "O3",
