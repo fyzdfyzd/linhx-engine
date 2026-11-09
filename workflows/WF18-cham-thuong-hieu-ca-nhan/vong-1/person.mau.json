@@ -1,0 +1,31 @@
+{
+ "_huong_dan": "Hồ sơ sự thật cho NGƯỜI (WF18), cùng khuôn brand-facts.json của linhx-brand-check để chạy được ngay. Chỉ điền điều có nguồn; không biết thì để trống. status: confirmed (Linh duyệt) / proposed. Linh duyệt file này trước khi hỏi AI.",
+ "loai": "person",
+ "brand": "(họ tên đầy đủ)",
+ "aliases": ["(tên gọi khác)", "(tên không dấu)", "(tên mạng xã hội)"],
+ "nguoi_trung_ten": [{"ten": "", "nghe": "", "noi": "", "link": "", "_ghi_chu": "người dễ bị nhầm; sinh câu gài G01.."}],
+ "website": "",
+ "category": "(lĩnh vực chuyên môn, ví dụ: AI cho marketing và doanh nghiệp)",
+ "market": "Việt Nam",
+ "city": "",
+ "personas": ["chủ doanh nghiệp vừa"],
+ "products": [{"name": "(dịch vụ/khoá chính)", "price": "", "url": ""}],
+ "competitors": [{"name": "(người cùng lĩnh vực 1)", "domain": "", "aliases": []}],
+ "positioning": ["(điều muốn AI nói về mình 1)", "(2)", "(3)"],
+ "forbidden_claims": ["(claim không dám nhận, ví dụ: số 1 Việt Nam)"],
+ "nhay_cam": ["(điều không được nói sai: đời tư, sức khoẻ, pháp lý; chỉ ghi loại, không ghi chi tiết riêng tư)"],
+ "facts": [
+  {"id": "nghe", "label": "Nghề, vai trò hiện tại", "value": "", "status": "proposed", "source": "", "kiem_kenh": true},
+  {"id": "cong_ty", "label": "Công ty đang điều hành/tham gia + vai trò", "value": "", "status": "proposed", "source": "", "kiem_kenh": true},
+  {"id": "moc", "label": "Các mốc sự nghiệp chính (năm: việc)", "value": "", "status": "proposed", "source": ""},
+  {"id": "hoc_van", "label": "Học vấn (chỉ khi công khai)", "value": "", "status": "proposed", "source": ""},
+  {"id": "thanh_tich", "label": "Thành tích, giải, khách, dự án có link", "value": "", "status": "proposed", "source": ""},
+  {"id": "quan_diem", "label": "2–3 quan điểm/chủ đề hay nói", "value": "", "status": "proposed", "source": ""},
+  {"id": "lien_he", "label": "Kênh liên hệ chính thức để mời", "value": "", "status": "proposed", "source": "", "kiem_kenh": true}
+ ],
+ "channels": [
+  {"type": "website", "url": ""}, {"type": "facebook", "url": ""}, {"type": "linkedin", "url": ""},
+  {"type": "youtube", "url": ""}, {"type": "bao_chi", "url": ""}, {"type": "wikidata", "url": ""}
+ ],
+ "abc": {"cau_hoi_them": []}
+}
