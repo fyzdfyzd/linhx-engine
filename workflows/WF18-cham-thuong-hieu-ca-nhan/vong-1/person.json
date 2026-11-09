@@ -1,0 +1,165 @@
+{
+ "_huong_dan": "Bản nháp từ tìm web 9/11 12:20. Mọi dòng proposed tới khi Linh duyệt (D2).",
+ "loai": "person",
+ "brand": "Đinh Trần Tuấn Linh",
+ "aliases": [
+  "Tuấn Linh",
+  "Dinh Tran Tuan Linh",
+  "LinhX",
+  "@fyzd",
+  "@tuanlinh"
+ ],
+ "nguoi_trung_ten": [
+  {
+   "ten": "Đinh Trần Tuấn Linh (thí sinh Đường lên đỉnh Olympia)",
+   "nghe": "",
+   "noi": "",
+   "link": "https://duong-len-dinh-olympia.fandom.com/vi/wiki/%C4%90inh_Tr%E1%BA%A7n_Tu%E1%BA%A5n_Linh",
+   "_ghi_chu": "chưa biết cùng người hay trùng tên, chờ Linh"
+  },
+  {
+   "ten": "Trần Tú Linh",
+   "nghe": "",
+   "noi": "",
+   "link": "https://en.wikipedia.org/wiki/Tr%E1%BA%A7n_T%C3%BA_Linh",
+   "_ghi_chu": "tên gần, hiện trong tìm kiếm"
+  }
+ ],
+ "website": "",
+ "category": "AI cho doanh nghiệp, marketing và truyền thông; chiêm tinh",
+ "market": "Việt Nam",
+ "city": "Hà Nội",
+ "personas": [
+  "chủ doanh nghiệp vừa"
+ ],
+ "products": [
+  {
+   "name": "Sách Chiêm tinh học nhập môn (2019, 196 trang)",
+   "price": "",
+   "url": "https://www.goodreads.com/book/show/55884228-chi-m-tinh-h-c-nh-p-m-n"
+  }
+ ],
+ "competitors": [],
+ "positioning": [],
+ "forbidden_claims": [
+  "(claim không dám nhận, ví dụ: số 1 Việt Nam)"
+ ],
+ "nhay_cam": [
+  "(điều không được nói sai: đời tư, sức khoẻ, pháp lý; chỉ ghi loại, không ghi chi tiết riêng tư)"
+ ],
+ "facts": [
+  {
+   "id": "nghe",
+   "label": "Nghề, vai trò hiện tại",
+   "value": "Chuyên gia AI; chiêm tinh gia",
+   "status": "proposed",
+   "source": "https://ngoisao.vnexpress.net/5-tu-duy-giup-dan-van-phong-dung-ai-hieu-qua-4982726.html ; Goodreads",
+   "kiem_kenh": true
+  },
+  {
+   "id": "cong_ty",
+   "label": "Công ty đang điều hành/tham gia + vai trò",
+   "value": "Giám đốc công nghệ Unikon (theo báo); TUVA Communication (LinkedIn); URAH, ifAgent, Sakédemy (chờ Linh xác nhận vai trò)",
+   "status": "proposed",
+   "source": "baomoi.com tag; https://www.linkedin.com/in/dinhtrantuanlinh/",
+   "kiem_kenh": true
+  },
+  {
+   "id": "moc",
+   "label": "Các mốc sự nghiệp chính (năm: việc)",
+   "value": "",
+   "status": "proposed",
+   "source": ""
+  },
+  {
+   "id": "hoc_van",
+   "label": "Học vấn (chỉ khi công khai)",
+   "value": "",
+   "status": "proposed",
+   "source": ""
+  },
+  {
+   "id": "thanh_tich",
+   "label": "Thành tích, giải, khách, dự án có link",
+   "value": "Tác giả Chiêm tinh học nhập môn (2019); diễn giả tọa đàm AI tại L'Espace cùng GS Hồ Tú Bảo; Talk Gender in Marcom",
+   "status": "proposed",
+   "source": "Goodreads; baomoi.com tag"
+  },
+  {
+   "id": "quan_diem",
+   "label": "2–3 quan điểm/chủ đề hay nói",
+   "value": "Người tiến xa là người biết dẫn dắt công nghệ như một cộng sự; cảnh báo sai lệch thông tin do AI",
+   "status": "proposed",
+   "source": "ngoisao.vnexpress.net"
+  },
+  {
+   "id": "lien_he",
+   "label": "Kênh liên hệ chính thức để mời",
+   "value": "",
+   "status": "proposed",
+   "source": "",
+   "kiem_kenh": true
+  }
+ ],
+ "channels": [
+  {
+   "type": "facebook",
+   "url": "https://www.facebook.com/tuanlinh/"
+  },
+  {
+   "type": "linkedin",
+   "url": "https://www.linkedin.com/in/dinhtrantuanlinh/"
+  },
+  {
+   "type": "x",
+   "url": "https://x.com/fyzd"
+  },
+  {
+   "type": "goodreads",
+   "url": "https://www.goodreads.com/author/show/20869591._inh_Tr_n_Tu_n_Linh"
+  },
+  {
+   "type": "bao_chi",
+   "url": "https://ngoisao.vnexpress.net/tag/dinh-tran-tuan-linh-569055"
+  },
+  {
+   "type": "bao_chi",
+   "url": "https://baomoi.com/tag/%C4%90inh-Tr%E1%BA%A7n-Tu%E1%BA%A5n-Linh.epi"
+  },
+  {
+   "type": "website",
+   "url": ""
+  },
+  {
+   "type": "wikidata",
+   "url": ""
+  }
+ ],
+ "abc": {
+  "cau_hoi_them": [
+   {
+    "id": "G01",
+    "goi": "NCS",
+    "loai": "branded",
+    "buoc": 2,
+    "giai_doan": "",
+    "chi_so": [
+     "A3"
+    ],
+    "text": "{brand} có phải người từng thi Đường lên đỉnh Olympia không? Nếu có, thi năm nào, trường nào?"
+   },
+   {
+    "id": "G02",
+    "goi": "CS",
+    "loai": "branded",
+    "buoc": 2,
+    "giai_doan": "",
+    "chi_so": [
+     "A3",
+     "A4"
+    ],
+    "text": "{brand} viết sách chiêm tinh và {brand} làm AI ở Unikon có phải là một người không?"
+   }
+  ]
+ }
+}
