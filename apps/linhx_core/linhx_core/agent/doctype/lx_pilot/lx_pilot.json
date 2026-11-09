@@ -1,0 +1,102 @@
+{
+ "doctype": "DocType",
+ "name": "LX Pilot",
+ "module": "agent",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "co_hoi",
+  "phu_trach",
+  "don_vi",
+  "bat_dau_luc",
+  "han_hoan_thanh",
+  "trang_thai",
+  "cac_buoc"
+ ],
+ "fields": [
+  {
+   "fieldname": "co_hoi",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Cơ hội",
+   "options": "LX Co Hoi",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "phu_trach",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Phụ trách",
+   "options": "User",
+   "search_index": 1
+  },
+  {
+   "fieldname": "don_vi",
+   "fieldtype": "Link",
+   "label": "Đơn vị",
+   "options": "LX Don Vi",
+   "search_index": 1
+  },
+  {
+   "fieldname": "bat_dau_luc",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Bắt đầu lúc",
+   "reqd": 1
+  },
+  {
+   "fieldname": "han_hoan_thanh",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Hạn hoàn thành",
+   "search_index": 1
+  },
+  {
+   "default": "dang_chay",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Trạng thái",
+   "options": "dang_chay\nxong\nhuy",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "cac_buoc",
+   "fieldtype": "JSON",
+   "label": "Các bước playbook"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1,
+   "ignore_user_permissions": 1
+  },
+  {
+   "role": "LX Nhan Vien",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 22:20:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 22:20:00.000000"
+}

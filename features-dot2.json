@@ -212,8 +212,8 @@
         "không đi bước sau khi bước trước chưa xong"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F1/kiem.json"
     },
     {
       "id": "F2",

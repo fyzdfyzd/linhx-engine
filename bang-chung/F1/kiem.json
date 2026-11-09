@@ -1,0 +1,21 @@
+{
+  "feature": "F1",
+  "luc": "2026-11-09T22:27:12+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 4 items",
+    "",
+    "tests/nghiem-thu/test_f1.py::test_pilot_moi_co_dung_7_buoc PASSED        [ 25%]",
+    "tests/nghiem-thu/test_f1.py::test_khong_di_buoc_sau_khi_buoc_truoc_chua_xong PASSED [ 50%]",
+    "tests/nghiem-thu/test_f1.py::test_qua_14_ngay_chua_xong_thi_vao_viec_cho PASSED [ 75%]",
+    "tests/nghiem-thu/test_f1.py::test_doctype_lx_pilot PASSED                [100%]",
+    "",
+    "============================== 4 passed in 0.04s =============================="
+  ]
+}
