@@ -29,6 +29,10 @@ function docKham() {
 
 export async function getStaticProps() {
   const raw = docKham();
+  const apiGoc =
+    typeof process.env.API_GOC === "string"
+      ? process.env.API_GOC.trim().replace(/\/+$/, "")
+      : "";
   const kham = {
     tieu_de: typeof raw?.tieu_de === "string" ? raw.tieu_de : "T1 Khám",
     cau: Array.isArray(raw?.cau)
@@ -56,11 +60,12 @@ export async function getStaticProps() {
   return {
     props: {
       kham,
+      apiGoc,
     },
   };
 }
 
-export default function TrangKham({ kham }) {
+export default function TrangKham({ kham, apiGoc = "" }) {
   const { tieu_de, cau, muc } = kham || {
     tieu_de: "T1 Khám",
     cau: [],
@@ -68,6 +73,14 @@ export default function TrangKham({ kham }) {
   };
 
   const [chon, datChon] = useState({});
+  const [email, datEmail] = useState("");
+  const [zalo, datZalo] = useState("");
+  const [website, datWebsite] = useState("");
+  const [dongYLienHe, datDongYLienHe] = useState(false);
+  const [dongYMarketing, datDongYMarketing] = useState(false);
+  const [daNhanKetQua, datDaNhanKetQua] = useState(false);
+  const [ketQuaDayDuServer, datKetQuaDayDuServer] = useState(null);
+  const [thongBaoLoi, datThongBaoLoi] = useState("");
 
   const soDaChon = cau.filter((c) => typeof chon[c.ma] === "number").length;
   const daTraLoiDu = cau.length > 0 && soDaChon === cau.length;
@@ -82,6 +95,62 @@ export default function TrangKham({ kham }) {
 
   const mucKetQua = daTraLoiDu
     ? muc.find((m) => Number(m.tu) <= tongDiem && tongDiem <= Number(m.den)) || null
+    : null;
+
+  async function guiNhanKetQua(e) {
+    e.preventDefault();
+    if (!mucKetQua) {
+      return;
+    }
+    if (website.trim()) {
+      return;
+    }
+    const emailTrim = email.trim();
+    const zaloTrim = zalo.trim();
+    if (!dongYLienHe || (!emailTrim && !zaloTrim)) {
+      datDaNhanKetQua(false);
+      datThongBaoLoi("Vui lòng nhập Email hoặc Zalo và đồng ý liên hệ để xem kết quả đầy đủ.");
+      return;
+    }
+
+    datThongBaoLoi("");
+    const endpoint = `${apiGoc || ""}/api/method/linhx_core.crm.api_form.nhan_ket_qua_t1`;
+    try {
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailTrim,
+          zalo: zaloTrim,
+          tong: Math.round(Number(tongDiem)),
+          muc: String(mucKetQua.ten || ""),
+          chon,
+          dong_y_lien_he: Boolean(dongYLienHe),
+          dong_y_marketing: Boolean(dongYMarketing),
+        }),
+      });
+      if (res.status === 200) {
+        const payload = await res.json().catch(() => ({}));
+        const msg = payload?.message || payload || {};
+        datKetQuaDayDuServer(msg?.ket_qua_day_du || null);
+        datDaNhanKetQua(true);
+      } else {
+        datDaNhanKetQua(false);
+        datThongBaoLoi("Máy chủ tạm thời chưa ghi nhận được yêu cầu. Vui lòng thử lại.");
+      }
+    } catch (_err) {
+      datDaNhanKetQua(false);
+      datThongBaoLoi("Không thể kết nối máy chủ. Vui lòng thử lại.");
+    }
+  }
+
+  const dsLoTrinh = Array.isArray(ketQuaDayDuServer?.lo_trinh_de_xuat)
+    ? ketQuaDayDuServer.lo_trinh_de_xuat
+    : [];
+  const dsHangMucServer = Array.isArray(ketQuaDayDuServer?.hang_muc)
+    ? ketQuaDayDuServer.hang_muc
     : null;
 
   return (
@@ -102,6 +171,7 @@ export default function TrangKham({ kham }) {
           --nhan-nhat: #e8eefc;
           --xanh: #0f766e;
           --xanh-nhat: #e6f6f4;
+          --do: #b91c1c;
         }
         *,
         *::before,
@@ -229,7 +299,7 @@ export default function TrangKham({ kham }) {
           border: 2px solid var(--nhan);
           border-radius: 14px;
           padding: 20px;
-          margin: 8px 0 36px;
+          margin: 8px 0 20px;
           min-width: 0;
         }
         .nhan-ket-qua {
@@ -252,6 +322,107 @@ export default function TrangKham({ kham }) {
           font-size: 15px;
           color: var(--chu);
           margin: 0;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .form-nhan-ket-qua {
+          background: var(--mat);
+          border: 1px solid var(--vien);
+          border-radius: 14px;
+          padding: 20px;
+          margin: 0 0 24px;
+          min-width: 0;
+        }
+        .form-nhan-ket-qua h3 {
+          font-size: 18px;
+          margin: 0 0 8px;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .form-nhan-ket-qua p {
+          font-size: 14px;
+          color: var(--phu);
+          margin: 0 0 14px;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .dong-nhap {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          margin-bottom: 12px;
+        }
+        .dong-nhap label {
+          font-size: 14px;
+          font-weight: 600;
+        }
+        .dong-nhap input[type="email"],
+        .dong-nhap input[type="text"] {
+          width: 100%;
+          max-width: 100%;
+          padding: 10px 12px;
+          border: 1px solid var(--vien);
+          border-radius: 8px;
+          font-size: 15px;
+        }
+        .dong-tick {
+          display: flex;
+          align-items: flex-start;
+          gap: 8px;
+          margin-bottom: 10px;
+          font-size: 14px;
+          cursor: pointer;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .dong-tick input[type="checkbox"] {
+          margin-top: 3px;
+          flex-shrink: 0;
+        }
+        .nut-gui-ket-qua {
+          display: inline-block;
+          margin-top: 6px;
+          padding: 10px 18px;
+          border: none;
+          border-radius: 10px;
+          background: var(--nhan);
+          color: #ffffff;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .loi-form {
+          color: var(--do);
+          font-size: 14px;
+          margin-top: 10px;
+        }
+        .khoi-ket-qua-day-du {
+          background: var(--mat);
+          border: 2px solid var(--xanh);
+          border-radius: 14px;
+          padding: 20px;
+          margin: 0 0 36px;
+          min-width: 0;
+        }
+        .khoi-ket-qua-day-du h3 {
+          font-size: 19px;
+          margin: 0 0 12px;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .ds-phan-tich {
+          list-style: none;
+          padding: 0;
+          margin: 12px 0 0;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .ds-phan-tich li {
+          padding: 10px 12px;
+          border-radius: 10px;
+          background: var(--bg);
+          font-size: 14px;
           word-break: break-word;
           overflow-wrap: anywhere;
         }
@@ -315,13 +486,138 @@ export default function TrangKham({ kham }) {
           </section>
 
           {daTraLoiDu && mucKetQua && (
-            <section className="khoi-tom-tat" data-tom-tat>
-              <span className="nhan-ket-qua">
-                Tổng điểm: {tongDiem} · Mức đánh giá
-              </span>
-              <h2>{mucKetQua.ten}</h2>
-              <p>{mucKetQua.tom_tat}</p>
-            </section>
+            <>
+              <section className="khoi-tom-tat" data-tom-tat>
+                <span className="nhan-ket-qua">
+                  Tổng điểm: {tongDiem} · Mức đánh giá
+                </span>
+                <h2>{mucKetQua.ten}</h2>
+                <p>{mucKetQua.tom_tat}</p>
+              </section>
+
+              <form
+                className="form-nhan-ket-qua"
+                data-nhan-ket-qua
+                onSubmit={guiNhanKetQua}
+                noValidate
+              >
+                <h3>Nhận bản phân tích T1 đầy đủ</h3>
+                <p>
+                  Để lại Email hoặc Zalo để mở khoá chi tiết điểm từng hạng mục và lộ trình
+                  tự động hoá đề xuất cho mức <strong>{mucKetQua.ten}</strong>.
+                </p>
+                <div style={{ display: "none" }} aria-hidden="true">
+                  <label htmlFor="t1-website">Website</label>
+                  <input
+                    id="t1-website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={website}
+                    onChange={(e) => datWebsite(e.target.value)}
+                  />
+                </div>
+                <div className="dong-nhap">
+                  <label htmlFor="t1-email">Email nhận kết quả</label>
+                  <input
+                    id="t1-email"
+                    type="email"
+                    name="email"
+                    maxLength={254}
+                    placeholder="ban@doanhnghiep.vn"
+                    value={email}
+                    onChange={(e) => datEmail(e.target.value)}
+                  />
+                </div>
+                <div className="dong-nhap">
+                  <label htmlFor="t1-zalo">Hoặc số Zalo</label>
+                  <input
+                    id="t1-zalo"
+                    type="text"
+                    name="zalo"
+                    maxLength={64}
+                    placeholder="0912345678"
+                    value={zalo}
+                    onChange={(e) => datZalo(e.target.value)}
+                  />
+                </div>
+                <label className="dong-tick">
+                  <input
+                    type="checkbox"
+                    name="dong_y_lien_he"
+                    checked={dongYLienHe}
+                    onChange={(e) => datDongYLienHe(e.target.checked)}
+                  />
+                  <span>
+                    Tôi đồng ý để ifAgent liên hệ tư vấn và gửi kết quả chẩn đoán T1.
+                  </span>
+                </label>
+                <label className="dong-tick">
+                  <input
+                    type="checkbox"
+                    name="dong_y_marketing"
+                    checked={dongYMarketing}
+                    onChange={(e) => datDongYMarketing(e.target.checked)}
+                  />
+                  <span>
+                    Tôi đồng ý nhận tài liệu và bản tin cập nhật giải pháp AI (tùy chọn).
+                  </span>
+                </label>
+                <button type="submit" className="nut-gui-ket-qua">
+                  Xem kết quả đầy đủ
+                </button>
+                {thongBaoLoi && <div className="loi-form">{thongBaoLoi}</div>}
+              </form>
+
+              {daNhanKetQua && (
+                <section className="khoi-ket-qua-day-du" data-ket-qua-day-du>
+                  <span className="nhan-ket-qua">
+                    Báo cáo chi tiết T1 · {ketQuaDayDuServer?.muc || mucKetQua.ten} (
+                    {ketQuaDayDuServer?.tong ?? tongDiem} điểm)
+                  </span>
+                  <h3>Phân tích chi tiết và lộ trình đề xuất</h3>
+                  <p>{ketQuaDayDuServer?.tom_tat || mucKetQua.tom_tat}</p>
+
+                  {dsLoTrinh.length > 0 && (
+                    <ul className="ds-phan-tich">
+                      {dsLoTrinh.map((buoc, i) => (
+                        <li key={i}>{buoc}</li>
+                      ))}
+                    </ul>
+                  )}
+
+                  <ul className="ds-phan-tich">
+                    {dsHangMucServer
+                      ? dsHangMucServer.map((hm) => (
+                          <li key={hm.ma}>
+                            <strong>{hm.hoi}</strong>
+                            <div>
+                              Hiện trạng: {hm.nhan} ({hm.diem}/4 điểm)
+                            </div>
+                            {hm.khuyen_nghi && <div>Khuyến nghị: {hm.khuyen_nghi}</div>}
+                          </li>
+                        ))
+                      : cau.map((c) => {
+                          const idx = chon[c.ma];
+                          const daChon =
+                            typeof idx === "number" && c.lua_chon && c.lua_chon[idx]
+                              ? c.lua_chon[idx]
+                              : null;
+                          return (
+                            <li key={c.ma}>
+                              <strong>{c.hoi}</strong>
+                              <div>
+                                Hiện trạng: {daChon ? daChon.nhan : ""} ({daChon ? daChon.diem : 0}/4
+                                điểm)
+                              </div>
+                            </li>
+                          );
+                        })}
+                  </ul>
+                </section>
+              )}
+            </>
           )}
         </main>
 

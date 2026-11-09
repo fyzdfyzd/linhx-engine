@@ -12,6 +12,11 @@
   "zalo",
   "don_vi",
   "to_chuc",
+  "nguon",
+  "tang_pheu",
+  "t1_tong",
+  "t1_muc",
+  "lich_su_t1",
   "ghi_cong"
  ],
  "fields": [
@@ -23,17 +28,20 @@
   {
    "fieldname": "dien_thoai",
    "fieldtype": "Data",
-   "label": "Điện thoại"
+   "label": "Điện thoại",
+   "search_index": 1
   },
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "search_index": 1
   },
   {
    "fieldname": "zalo",
    "fieldtype": "Data",
-   "label": "Zalo"
+   "label": "Zalo",
+   "search_index": 1
   },
   {
    "fieldname": "don_vi",
@@ -46,6 +54,32 @@
    "fieldtype": "Link",
    "label": "Tổ chức",
    "options": "LX To Chuc"
+  },
+  {
+   "fieldname": "nguon",
+   "fieldtype": "Data",
+   "label": "Nguồn"
+  },
+  {
+   "fieldname": "tang_pheu",
+   "fieldtype": "Select",
+   "label": "Tầng phễu",
+   "options": "biet\nmoi\nlien_he\nco_hoi_don\nkhach\nquay_lai"
+  },
+  {
+   "fieldname": "t1_tong",
+   "fieldtype": "Int",
+   "label": "Tổng điểm T1"
+  },
+  {
+   "fieldname": "t1_muc",
+   "fieldtype": "Data",
+   "label": "Mức đánh giá T1"
+  },
+  {
+   "fieldname": "lich_su_t1",
+   "fieldtype": "JSON",
+   "label": "Lịch sử điểm T1"
   },
   {
    "fieldname": "ghi_cong",

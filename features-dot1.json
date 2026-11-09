@@ -390,8 +390,8 @@
         "Không nhận nguon từ client; giới hạn độ dài trường; phản hồi API công khai không lộ dữ liệu cũ của Người (họ tên, email, điểm), giữ các trường test_c3 cần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_d2.py -q",
-      "passes": false,
-      "bang_chung": null
+      "passes": true,
+      "bang_chung": "bang-chung/D2/kiem.json"
     },
     {
       "id": "D3",
