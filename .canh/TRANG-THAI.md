@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-09 18:59 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, C2, C3, D1, D2, D3, E1, E2, A4B, W1, Q1, R1, R2, O1, I1)
+Cập nhật 2026-11-09 19:09 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B5, C1, C2, C3, D1, D2, D3, E1, E2, A4B, W1, Q1, R1, R2, O1, I1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -24,8 +24,6 @@ Cập nhật 2026-11-09 18:59 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N
 - 2026-11-09T13:49:10 C2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc 5564210c, bản hỏng giữ ở nhánh cục bộ hong/C2-20261109-1349, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\C2.txt
 
 ## Nhật ký gần nhất
-- 2026-11-09 18:40 t2: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
-- 2026-11-09 18:40 t3: RAM trống 0.5 GB < 1,5 GB, chưa giao I3
 - 2026-11-09 18:40 t4: RAM trống 0.6 GB < 1,5 GB, chưa giao T1
 - 2026-11-09 18:42 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-09 18:49 t2: RAM trống 0.5 GB < 1,5 GB, chưa giao T1
@@ -36,4 +34,6 @@ Cập nhật 2026-11-09 18:59 (giờ máy cty). Đạt: 30/47 (N1, N2, N3, N4, N
 - 2026-11-09 18:56 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-09 18:59 t1: RAM trống 0.9 GB < 1,5 GB, chưa giao B4
 - 2026-11-09 18:59 t2: RAM trống 0.9 GB < 1,5 GB, chưa giao T1
+- 2026-11-09 18:59 t4: RAM trống 1 GB < 1,5 GB, chưa giao T1
+- 2026-11-09 18:59 t3: RAM trống 1.1 GB < 1,5 GB, chưa giao I3
 
