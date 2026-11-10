@@ -66,3 +66,8 @@ Trước khi báo hoàn tất cho người dùng trên khung chat:
 - **Không lưu vết = Chưa làm**: Mọi thay đổi hoặc kiểm tra của Antigravity không có dấu vết trong `.handoff/` trên ổ cứng đều coi là vi phạm quy trình.
 - **Không giấu lỗi**: Test đỏ, cảnh báo SAST, hoặc workaround tạm thời đều phải ghi rõ vào `.handoff/VAN-DE.md`.
 - **Không ghi bí mật**: Tuyệt đối không đọc/in/ghi nội dung `.env`, `cau-hinh.env`, API key, token vào log hay báo cáo (chỉ ghi tên biến).
+
+## 6. Trình duyệt: đóng tab mình mở (bắt buộc, luật 11/11/2026)
+- Mỗi tab tự mở phải đóng ngay khi xong bước; tối đa 5 tab cùng lúc; cuối phiên (kể cả lỗi, dừng giữa chừng) đóng hết tab và cửa sổ browser của agy. Không đóng tab Linh đang dùng.
+- Ghi vào tracklog/BAO-CAO một dòng `Tab: đã đóng N/N`. Thiếu dòng này coi như chưa xong.
+- Chi tiết: skill `dong-tab-chrome`.

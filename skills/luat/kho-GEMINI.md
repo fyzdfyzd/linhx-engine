@@ -28,3 +28,8 @@ Khi anh Linh giao việc trực tiếp mà chưa có mã `T-NNN`:
 - **Đã thử / Cách xử lý tạm**: Đã thử cách A, B (kết quả...).
 - **Cần Claude / Anh Linh**: (Ví dụ: Claude chốt hướng xử lý / Anh Linh cấp biến env X).
 ```
+
+## 6. Trình duyệt: đóng tab mình mở (bắt buộc, luật 11/11/2026)
+- Mỗi tab tự mở phải đóng ngay khi xong bước; tối đa 5 tab cùng lúc; cuối phiên (kể cả lỗi, dừng giữa chừng) đóng hết tab và cửa sổ browser của agy. Không đóng tab Linh đang dùng.
+- Ghi vào tracklog/BAO-CAO một dòng `Tab: đã đóng N/N`. Thiếu dòng này coi như chưa xong.
+- Chi tiết: skill `dong-tab-chrome`.

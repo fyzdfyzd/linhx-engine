@@ -78,3 +78,7 @@ Luật riêng của một thư mục **thắng** luật gốc này khi khác nha
 - Luôn tìm và đính ảnh tham chiếu thật (ưu tiên nguồn có giấy phép như Wikimedia Commons), nói rõ học gì (bố cục, màu, nét); ghi nguồn vào thư mục dự án.
 - Prompt luôn có câu: "nhiều khoảng trống, tối giản, một chủ thể, không chi tiết thừa". Không để AI vẽ chữ, số, logo; chữ dựng sau bằng code hoặc công cụ thiết kế.
 - Tự duyệt trước khi dùng: xem toàn khung và ở 100%; kiểm tay, ngón, mặt méo; vật thể vô lý; chữ giả, watermark; vỡ hạt sau upscale; lệch tham chiếu; sai văn hoá, địa lý Việt Nam; 7 luật trên. Có lỗi thì vẽ lại hoặc sửa rồi kiểm lại; ghi bảng Đạt/Lỗi (ví dụ `TU-DUYET.md`). Không đưa Linh bản còn lỗi.
+
+## Trình duyệt: đóng tab mình mở (luật 11/11/2026)
+- Mọi agent điều khiển Chrome (Claude in Chrome, agy, Playwright) chỉ đóng tab **mình** mở, đóng ngay khi xong bước, tối đa 5 tab cùng lúc, cuối việc (kể cả khi lỗi) đóng hết, báo cáo ghi `Tab: đã đóng N/N`. Trình duyệt riêng của agent phải tắt hẳn khi xong.
+- Chi tiết và script chốt chặn `don-tab.ps1`: skill `dong-tab-chrome`.
