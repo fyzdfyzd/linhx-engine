@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 18:14 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
+Cập nhật 2026-11-10 18:30 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | U3 | 20261110-1755-t1 từ 2026-11-10T17:55:06 | CHUA_DAT · Feature U3 · commit 904be5d · nhánh tu-dong/engine-t1 · 2026-11-10T17:55:02 |
-| 2 | K2b | rảnh | DAT · Feature K2a · commit 98cef05 · nhánh tu-dong/engine-t2 · 2026-11-10T18:14:18 |
+| 2 | K2b | 20261110-1815-t2 từ 2026-11-10T18:15:18 | DAT · Feature K2a · commit 98cef05 · nhánh tu-dong/engine-t2 · 2026-11-10T18:14:18 |
 | 3 | T4 | 20261110-1800-t3 từ 2026-11-10T18:00:20 | CHUA_DAT · Feature U3 · commit 839d5b8 · nhánh tu-dong/engine-t3 · 2026-11-10T17:23:06 |
 | 4 | - | rảnh | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
 
@@ -15,6 +15,9 @@ Cập nhật 2026-11-10 18:14 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N
 
 ## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
 - K2
+
+## Đối chiếu VM
+- N5 lệch lần 1, lượt sau kiểm lại: linhx http://35.198.251.2/linhx/api/method/ping -> 500; ifagent http://35.198.251.2/ifagent/api/method/ping -> 417
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -45,7 +48,6 @@ Cập nhật 2026-11-10 18:14 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N
 - 2026-11-10T17:23:06 U3 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 6585d3a1, bản hỏng giữ ở nhánh cục bộ hong/U3-20261110-1723, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\U3.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 17:51 t1: agy xong phiếu 20261110-1739-t1 (U3) sau 10 phút
 - 2026-11-10 17:53 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-10 17:54 t1: U3: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
 - 2026-11-10 17:54 t1: U3: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
@@ -57,4 +59,5 @@ Cập nhật 2026-11-10 18:14 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N
 - 2026-11-10 18:00 t3: giao agy phiếu 20261110-1800-t3: T4
 - 2026-11-10 18:14 t2: K2a DAT, đã gộp vào main
 - 2026-11-10 18:15 t2: giao agy phiếu 20261110-1815-t2: K2b
+- 2026-11-10 18:20 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 
