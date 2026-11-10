@@ -1,0 +1,34 @@
+{
+  "luc": "2026-11-10T13:16:42.767293+00:00",
+  "url_linhx": "http://35.198.251.2/linhx",
+  "url_bu": "http://sakedemy.35-198-251-2.nip.io",
+  "ket_qua": "passed",
+  "rong": [
+    390,
+    1280
+  ],
+  "so_test": 2,
+  "su_kien": "xong",
+  "chi_tiet": [
+    {
+      "rong": 390,
+      "email": "e2e-t4-1794316517434-390@example.com",
+      "nguoi": "u9tl1gbuou",
+      "goi": "BC-AI-SAU",
+      "don": "DON-A5216D8A",
+      "su_kien_id": "uabsth4vqp",
+      "su_kien": "xong",
+      "job": "VIEC-00051"
+    },
+    {
+      "rong": 1280,
+      "email": "e2e-t4-1794316545662-1280@example.com",
+      "nguoi": "uheittbdjd",
+      "goi": "BC-AI-SAU",
+      "don": "DON-C0A44C0F",
+      "su_kien_id": "uhqlar6mj6",
+      "su_kien": "xong",
+      "job": "VIEC-00061"
+    }
+  ]
+}
