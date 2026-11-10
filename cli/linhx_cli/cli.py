@@ -7,6 +7,8 @@ import re
 import subprocess
 import sys
 
+from .ban_cai import GOC_MAC_DINH, ke_hoach, tao_ban_cai
+
 CAC_MODULE_MAC_DINH = ("crm", "pay")
 CAC_APP_BAT_BUOC = ("linhx_core", "linhx_worker")
 TEN_SITE_HOP_LE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9._-]{0,127}$")
@@ -199,6 +201,20 @@ def _tao_parser() -> argparse.ArgumentParser:
         dest="admin_password",
         help="Mật khẩu Administrator cho site mới (hoặc lấy từ biến môi trường ADMIN_PASSWORD)",
     )
+
+    p_bc = sub.add_parser("tao-ban-cai", help="Tạo bản cài cho một BU hay OPC bằng một lệnh")
+    p_bc.add_argument("--ten", required=True, dest="ten", help="Tên bản cài (ví dụ: sakedemy)")
+    p_bc.add_argument("--ten-mien", required=True, dest="ten_mien", help="Tên miền của bản cài")
+    p_bc.add_argument("--giao-dien", default=None, dest="giao_dien", help="Tên giao diện trong giao-dien/<ten>")
+    p_bc.add_argument("--goi", default="", dest="goi", help="Danh sách gói cách nhau bởi dấu phẩy (ví dụ: a,b)")
+    p_bc.add_argument("--goc", default=None, dest="goc", help="Thư mục gốc repo")
+    p_bc.add_argument("--bench-dir", default=None, dest="bench_dir", help="Thư mục gốc Frappe bench")
+    p_bc.add_argument(
+        "--chay-thu",
+        action="store_true",
+        dest="chay_thu",
+        help="Chỉ in ra JSON kế hoạch, không ghi cấu hình và không chạy lệnh",
+    )
     return parser
 
 
@@ -221,6 +237,24 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         if args.chay_thu:
             print(json.dumps({"lenh": lenh}, ensure_ascii=False))
+        return 0
+    if args.lenh_con == "tao-ban-cai":
+        ds_goi = [x.strip() for x in (args.goi or "").split(",") if x.strip()]
+        goc = pathlib.Path(args.goc) if args.goc else GOC_MAC_DINH
+        try:
+            kh = tao_ban_cai(
+                ten=args.ten,
+                ten_mien=args.ten_mien,
+                giao_dien=args.giao_dien,
+                goi=ds_goi,
+                chay_thu=args.chay_thu,
+                goc=goc,
+                bench_dir=args.bench_dir,
+            )
+        except Exception as exc:
+            print(f"Lỗi: {exc}", file=sys.stderr)
+            return 1
+        print(json.dumps(kh, ensure_ascii=False))
         return 0
     return 1
 

@@ -1,0 +1,10 @@
+{
+  "ten": "sakedemy",
+  "ten_mien": "sakedemy.35-198-251-2.nip.io",
+  "giao_dien": "sakedemy",
+  "goi": [],
+  "modules": {
+    "crm": true,
+    "pay": true
+  }
+}
