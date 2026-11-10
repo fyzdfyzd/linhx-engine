@@ -1488,6 +1488,14 @@
   "ban_goc": "thư mục chung/LAB092-SKILL-DA-NEN/src/chuyen-skill"
  },
  {
+  "ten": "dong-tab-chrome",
+  "mo_ta": "Luật bắt buộc mọi agent (Claude in Chrome, agy/Antigravity, Playwright) đóng tab Chrome do mình mở khi xong việc, kèm script don-tab.ps1 dọn tab cũ khi quá ngưỡng hoặc RAM thấp. Dùng mỗi khi agent điều khiển trình duyệt, và khi máy cty hay MSI tràn RAM vì Chrome.",
+  "duong_dan": "le/dong-tab-chrome",
+  "bo": "",
+  "nhom": "khac",
+  "ban_goc": ""
+ },
+ {
   "ten": "dong-thread",
   "mo_ta": "Đóng một thread Claude Code đang dở: viết file bàn giao gọn để Antigravity (hoặc phiên mới) làm tiếp. Dùng khi Linh nói 'đóng thread', 'bàn giao', 'chuyển sang Antigravity'.",
   "duong_dan": "le/dong-thread",
