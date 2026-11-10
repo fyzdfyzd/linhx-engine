@@ -50,6 +50,13 @@ services:
           if [ -f "deploy/sites/$$s.json" ]; then
             wait-for-it -t 120 db:3306
             ./env/bin/python -m linhx_cli tao-site "$$s" --cau-hinh "deploy/sites/$$s.json" --sites-dir sites --bench-dir /home/frappe/frappe-bench
+            for app in linhx_cts linhx_goi_chiemtinh linhx_vn linhx_goi_baocao linhx_goi_ifagent linhx_goi_booking linhx_goi_agentforce linhx_goi_ops; do
+              if [ -d "apps/$$app" ]; then
+                bench --site "$$s" list-apps | grep -qx "$$app" || bench --site "$$s" install-app "$$app"
+              fi
+            done
+            bench --site "$$s" migrate
+            bench --site "$$s" clear-cache
             bench --site "$$s" enable-scheduler
           fi
         done

@@ -321,8 +321,8 @@
     "một lượt CI giao diện xanh có bằng chứng"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u3.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/U3/ci.json"
   },
   {
    "id": "T4",
