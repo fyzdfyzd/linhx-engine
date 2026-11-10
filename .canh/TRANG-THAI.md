@@ -1,17 +1,20 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 10:39 (giờ máy cty). Đạt: 49/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1)
+Cập nhật 2026-11-10 10:49 (giờ máy cty). Đạt: 49/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | V1 | 20261110-1010-t1 từ 2026-11-10T10:10:07 | CHUA_DAT · Feature V1 · commit 86cfe09 · nhánh tu-dong/engine-t1 · 2026-11-10T10:09:55 |
 | 2 | U2 | 20261110-1036-t2 từ 2026-11-10T10:36:28 | CHUA_DAT · Feature U2 · commit 74bc9e3 · nhánh tu-dong/engine-t2 · 2026-11-10T10:36:14 |
-| 3 | O7 | rảnh | DAT · Feature O4 · commit c8e4a81 · nhánh tu-dong/engine-t3 · 2026-11-10T09:58:39 |
-| 4 | L4 | rảnh | CHUA_DAT · Feature L4 · commit d19053d · nhánh tu-dong/engine-t4 · 2026-11-10T10:39:44 |
+| 3 | O7 | 20261110-1043-t3 từ 2026-11-10T10:43:22 | CHUA_DAT · Feature O7 · commit 550c12d · nhánh tu-dong/engine-t3 · 2026-11-10T10:43:21 |
+| 4 | L2 | 20261110-1048-t4 từ 2026-11-10T10:48:10 | CHUA_DAT · Feature L4 · commit 230953f · nhánh tu-dong/engine-t4 · 2026-11-10T10:48:09 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
 - K3: chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)
+
+## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
+- L4
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -25,18 +28,19 @@ Cập nhật 2026-11-10 10:39 (giờ máy cty). Đạt: 49/68 (N1, N2, N3, N4, N
 - 2026-11-09T13:49:10 C2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc 5564210c, bản hỏng giữ ở nhánh cục bộ hong/C2-20261109-1349, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\C2.txt
 - 2026-11-09T23:29:57 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6464e48d, bản hỏng giữ ở nhánh cục bộ hong/O4-20261109-2329, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 - 2026-11-10T08:01:48 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6ae646f7, bản hỏng giữ ở nhánh cục bộ hong/O4-20261110-0801, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
+- 2026-11-10T10:48:09 L4 cùng lỗi 2 lần liền (L4 chưa đặt passes=true (thợ chưa báo xong)) (thợ 4): đã lùi tu-dong/engine-t4 về mốc 51bd71c4, bản hỏng giữ ở nhánh cục bộ hong/L4-20261110-1048, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\L4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 10:09 t1: V1 CHUA_DAT lần 1 (commit 86cfe09)
-- 2026-11-10 10:10 t1: giao agy phiếu 20261110-1010-t1: V1 (lượt sửa)
-- 2026-11-10 10:10 t4: L1 DAT, đã gộp vào main
-- 2026-11-10 10:10 t4: giao agy phiếu 20261110-1010-t4: L4
-- 2026-11-10 10:17 t2: agy xong phiếu 20261110-0951-t2 (U2) sau 27 phút
-- 2026-11-10 10:33 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
-- 2026-11-10 10:36 t2: U2 CHUA_DAT lần 1 (commit 74bc9e3)
-- 2026-11-10 10:36 t2: giao agy phiếu 20261110-1036-t2: U2 (lượt sửa)
-- 2026-11-10 10:37 t3: agy xong phiếu 20261110-0958-t3 (O7) sau 38 phút
-- 2026-11-10 10:39 t4: agy xong phiếu 20261110-1010-t4 (L4) sau 29 phút
-- 2026-11-10 10:39 t4: L4 CHUA_DAT lần 1 (commit d19053d)
 - 2026-11-10 10:39 t4: giao agy phiếu 20261110-1039-t4: L4 (lượt sửa)
+- 2026-11-10 10:42 t0: mv bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-10 10:43 t3: O7 CHUA_DAT lần 1 (commit 550c12d)
+- 2026-11-10 10:43 t3: giao agy phiếu 20261110-1043-t3: O7 (lượt sửa)
+- 2026-11-10 10:48 t4: agy xong phiếu 20261110-1039-t4 (L4) sau 8 phút
+- 2026-11-10 10:48 t4: L4 CHUA_DAT lần 2 (commit 230953f)
+- 2026-11-10 10:48 t4: L4 trượt cùng lỗi 2 lần liền: dừng như chạm trần, cần chia nhỏ
+- 2026-11-10 10:48 t4: L4 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
+- 2026-11-10 10:48 t4: giao agy phiếu 20261110-1048-t4: L2
+- 2026-11-10 10:49 t1: dừng agy phiếu 20261110-1010-t1 (V1): quá 40 phút
+- 2026-11-10 10:49 t1: commit phần dở của V1
+- 2026-11-10 10:49 t1: agy xong phiếu 20261110-1010-t1 (V1) sau 40 phút
 
