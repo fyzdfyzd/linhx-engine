@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 19:59 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
+Cập nhật 2026-11-10 20:12 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | U3 | rảnh | CHUA_DAT · Feature U3 · commit 63768e2 · nhánh tu-dong/engine-t1 · 2026-11-10T18:47:28 |
+| 1 | - | rảnh | DAT · Feature U3 · commit 9fc90a0 · nhánh tu-dong/engine-t1 · 2026-11-10T20:07:31 |
 | 2 | K2b | 20261110-1949-t2 từ 2026-11-10T19:49:47 | CHUA_DAT · Feature K2b · commit 8e799f8 · nhánh tu-dong/engine-t2 · 2026-11-10T18:43:09 |
 | 3 | T4 | 20261110-1949-t3 từ 2026-11-10T19:49:59 | CHUA_DAT · Feature T4 · commit 90ac99d · nhánh tu-dong/engine-t3 · 2026-11-10T18:41:07 |
 | 4 | N5 | 20261110-1949-t4 từ 2026-11-10T19:49:48 | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
@@ -48,8 +48,6 @@ Cập nhật 2026-11-10 19:59 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-10 19:29 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
-- 2026-11-10 19:29 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:29 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:39 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:39 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
@@ -60,4 +58,6 @@ Cập nhật 2026-11-10 19:59 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10 19:49 t1: giao agy phiếu 20261110-1949-t1: U3 (lượt sửa)
 - 2026-11-10 19:49 t3: giao agy phiếu 20261110-1949-t3: T4 (lượt sửa)
 - 2026-11-10 19:59 t1: agy xong phiếu 20261110-1949-t1 (U3) sau 10 phút
+- 2026-11-10 20:07 t1: U3 DAT, đã gộp vào main
+- 2026-11-10 20:07 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 
