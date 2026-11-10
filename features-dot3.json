@@ -22,8 +22,8 @@
     "phụ thuộc thiếu, vòng, can_loi lệch, lớp lạ thì báo lỗi có tên app"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l1.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/L1/kiem.json"
   },
   {
    "id": "L2",
