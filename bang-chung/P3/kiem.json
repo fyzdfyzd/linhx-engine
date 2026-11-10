@@ -1,0 +1,100 @@
+{
+  "feature": "P3",
+  "luc": "2026-11-10T12:32:29+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_p3.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 0.30s"
+  ],
+  "pytest_day_du_returncode": 0,
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 27 items",
+    "",
+    "tests/nghiem-thu/test_p3.py::test_app_va_khai_bao PASSED                 [  3%]",
+    "tests/nghiem-thu/test_p3.py::test_da_chuyen_het PASSED                   [  7%]",
+    "tests/nghiem-thu/test_p3.py::test_kien_truc PASSED                       [ 11%]",
+    "tests/nghiem-thu/test_r1.py::test_thuan_python_va_co_endpoint PASSED     [ 14%]",
+    "tests/nghiem-thu/test_r1.py::test_tao_don_cung_dang_cts PASSED           [ 18%]",
+    "tests/nghiem-thu/test_r1.py::test_webhook_dung_luat_cts PASSED           [ 22%]",
+    "tests/nghiem-thu/test_r1.py::test_webhook_sai_khoa_401_va_khong_doi_kho PASSED [ 25%]",
+    "tests/nghiem-thu/test_r1.py::test_tao_don_roi_tra_tien_tron_vong PASSED  [ 29%]",
+    "tests/nghiem-thu/test_r2.py::test_co_tat_mac_dinh_thi_khong_nhan PASSED  [ 33%]",
+    "tests/nghiem-thu/test_r2.py::test_100_don_khop_so_tien_trang_thai PASSED [ 37%]",
+    "tests/nghiem-thu/test_r2.py::test_bao_lech_khi_khac PASSED               [ 40%]",
+    "tests/nghiem-thu/test_r2.py::test_khong_giao_hang_trong_ma PASSED        [ 44%]",
+    "tests/nghiem-thu/test_l1.py::test_app_hien_co_khai_bao PASSED            [ 48%]",
+    "tests/nghiem-thu/test_l1.py::test_doc_va_xep_phu_thuoc PASSED            [ 51%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[thieu_dep] PASSED [ 55%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[vong] PASSED      [ 59%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[can_loi] PASSED   [ 62%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[lop_la] PASSED    [ 66%]",
+    "tests/nghiem-thu/test_l4.py::test_api_cong_khai PASSED                   [ 70%]",
+    "tests/nghiem-thu/test_l4.py::test_luat_ba_lop PASSED                     [ 74%]",
+    "apps/linhx_cts/linhx_cts/test_cts.py::test_nap_thuan_python_khong_can_frappe PASSED [ 77%]",
+    "apps/linhx_cts/linhx_cts/test_cts.py::test_thieu_cau_hinh_qr_va_gioi_han_du_lieu_dau_vao PASSED [ 81%]",
+    "apps/linhx_cts/linhx_cts/test_cts.py::test_webhook_tu_choi_so_tien_am_va_het_han_chuyen_can_hoan_tien PASSED [ 85%]",
+    "apps/linhx_cts/linhx_cts/test_cts.py::test_api_luu_db_thu_lai_trung_ma_va_chong_dua_webhook PASSED [ 88%]",
+    "apps/linhx_cts/linhx_cts/test_cts.py::test_che_do_bong_khong_luu_pii_va_luon_khong_giao PASSED [ 92%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_doctype_pii_permissions_va_unique_tx_id PASSED [ 96%]",
+    "apps/linhx_core/linhx_core/cts_adapter/test_cts_adapter.py::test_controller_quyen_don_cts PASSED [100%]",
+    "",
+    "============================= 27 passed in 0.79s =============================="
+  ],
+  "tep_log": "bang-chung/P3/kiem.log",
+  "module_json": {
+    "ten": "linhx_cts",
+    "ban": "0.1.0",
+    "lop": "adapter",
+    "can_loi": ">=0.3.0",
+    "phu_thuoc": [],
+    "nghe": {},
+    "cung_cap": {
+      "cts.tao_don": "linhx_cts.hop_dong.tao_don",
+      "cts.nhan_webhook": "linhx_cts.hop_dong.nhan_webhook",
+      "cts.checkout": "linhx_cts.api.checkout",
+      "cts.sepay_webhook": "linhx_cts.api.sepay_webhook",
+      "cts.bat_bong": "linhx_cts.bong.bat",
+      "cts.nhan_don_bong": "linhx_cts.bong.nhan_don_bong",
+      "cts.nhan_bong": "linhx_cts.bong.nhan_bong",
+      "cts.so_lech": "linhx_cts.bong.so_lech"
+    },
+    "giao": {}
+  },
+  "tra_ham_cung_cap": {
+    "cts.tao_don": [
+      "linhx_cts.hop_dong.tao_don"
+    ],
+    "cts.nhan_webhook": [
+      "linhx_cts.hop_dong.nhan_webhook"
+    ],
+    "cts.checkout": [
+      "linhx_cts.api.checkout"
+    ],
+    "cts.sepay_webhook": [
+      "linhx_cts.api.sepay_webhook"
+    ],
+    "cts.bat_bong": [
+      "linhx_cts.bong.bat"
+    ],
+    "cts.nhan_don_bong": [
+      "linhx_cts.bong.nhan_don_bong"
+    ],
+    "cts.nhan_bong": [
+      "linhx_cts.bong.nhan_bong"
+    ],
+    "cts.so_lech": [
+      "linhx_cts.bong.so_lech"
+    ]
+  },
+  "da_xoa_file_cu": [
+    true,
+    true,
+    true
+  ]
+}
