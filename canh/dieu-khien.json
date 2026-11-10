@@ -123,7 +123,8 @@
   ],
   "cho": {
     "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG",
-    "K3": "chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)"
+    "K3": "chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)",
+    "K2b": "chờ Linh cho biết bản pg_dump CTS ở đâu (xoá dòng này khi bản sao DB đã có trên VM)"
   },
   "nhom": {
     "N1": "ci",
