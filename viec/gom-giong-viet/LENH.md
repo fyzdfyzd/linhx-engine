@@ -3,12 +3,12 @@
 Người ra lệnh: Linh. Quản trị: Claude (cloud). Thợ + người chấm: agy trên máy cty DESKTOP-PVHR2CD, repo `D:\linhx\linhx-engine`, nhánh `claude/project-thread-tw74mw`.
 
 ## Việc
-Hiện có 4 bộ skill viết chồng nhau: `new-article` (LinhX Write 9 bước), `viet-bai` (7 trạm), `viet-bai-giong-viet` (luồng Vân Anh), `le/bm1_01..09`. Gom thành **một cửa vào**: skill `viet-giong-linh` trong `skills/bo/linhx-viet-bai/skills/`. Không xoá bộ cũ; bộ cũ thành bước con được cửa vào gọi tới.
+Hiện có 4 bộ skill viết chồng nhau: `new-article` (LinhX Write 9 bước), `viet-bai` (7 trạm), `viet-bai-giong-viet` (luồng Vân Anh), `le/bm1_01..09`. Gom thành **một cửa vào**: skill `viet-giong-linh` trong `skills/bo/linhx-viet-bai/skills/`. Không xoá bộ cũ, nhưng cửa vào KHÔNG gọi new-article, viet-bai 7 trạm, BM1 (Linh 10/11: bỏ quy trình cũ, chỉ giữ phản biện Vân Anh: `linhx-bien-tap/ho-so-bien-tap/van-anh/LUAT.md` VA-01..08 + quy tắc BTV longform).
 
 ## Cửa vào phải làm gì
 1. **Hỏi loại việc, định tuyến** (bảng 4 dòng):
    - Bài báo/op-ed có ý của Linh → luồng Vân Anh (`viet-bai-giong-viet`) là luồng CHÍNH: máy tìm ý + dữ liệu → Linh viết nháp gạch đầu dòng → máy chỉ làm mượt.
-   - Chưa có tứ → chỉ mượn bước 1–5 của `new-article`/BM1 (gieo ý, 11 câu hỏi, nguồn ≥15, 30 tứ, 3 phương án) rồi DỪNG chờ Linh chọn và viết nháp. Không viết bài tự động từ đầu.
+   - Chưa có tứ → Giai đoạn 1 + 2 bên dưới, rồi DỪNG chờ Linh viết nháp. Không viết bài tự động từ đầu.
    - Bài có sẵn cần sửa → `soat-giong` + `linhx-bien-tap/bien-tap-bai`.
    - Đoạn ngắn/nugget → register ngắn, không chấm bằng mốc essay.
 2. **Hồ sơ giọng chính** = `giong-linh` (sổ tay 11 nước đi) + vault giọng Linh (nugget lời Linh, nhãn từng câu LINH/NGUON; WF16) + mốc 7 bài đã đăng (`references/bai-mau`). Giọng tác giả đè luật chung.
@@ -18,7 +18,12 @@ Hiện có 4 bộ skill viết chồng nhau: `new-article` (LinhX Write 9 bướ
 6. **Ngưỡng đặt bằng dương tính giả**: chạy máy dò lên 7 bài đã đăng; ngưỡng sao cho 7 bài đó không bị gắn cờ.
 7. Bỏ khi sang tiếng Việt: luật gạch ngang dài, ngoặc cong, viết tắt, từ ghép gạch nối.
 
-## Luồng Linh 10/11 (thay bước 1–5 của new-article cho dòng "chưa có tứ")
+## Luồng Linh 10/11
+Giai đoạn 1 = phát triển ý, tìm nguyên liệu (B1–B3, đích KHO-Y.md). Giai đoạn 2 = ấn định ý và nguyên liệu viết (B4, đích PHIEU-NGUYEN-LIEU.md). Ý ở GĐ2 được phép khác GĐ1, nhưng:
+- ghi 1 dòng "đổi từ … sang … vì nguyên liệu …";
+- ý đổi thì chấm lại toàn bộ nguyên liệu theo ý mới; thiếu thì quay GĐ1 một vòng hẹp chỉ cho chỗ thiếu, tối đa 1 lần;
+- ý mới do Linh chốt, máy chỉ đề xuất.
+GĐ3 = Linh viết nháp gạch đầu dòng (luồng Vân Anh), máy chỉ làm mượt.
 - B1 Linh nạp ý loé lên + kênh đăng + MỘT câu "tôi nghĩ gì mà người khác chưa nói" (tạm, được đổi).
 - B2 Ba độc giả theo kênh, neo vào độc giả thật (bình luận, bài cũ cùng kênh, phân tầng LAB048); chọn MỘT độc giả chính; thêm "họ đã đọc gì về chủ đề này". Không dùng độc giả ảo làm giám khảo giọng.
 - B3 Kho ý, nguồn kho = VAULT CỦA LINH (bài cũ + bài tâm đắc; LAB070, D:\LINHX\IDEA\CONTENT_VAULT, D:\@WF\TOOL\CONTENT_VAULT), tìm vault trước rồi mới ra ngoài: chuyện thật đa ngôn ngữ (có Trung, châu Á) → quote → ngạn ngữ, ca dao, tục ngữ, thành ngữ cổ (Việt + nước khác, ghi xuất xứ) → chuyện xuyên ngành làm nền (văn học, sinh học, động vật học, vật lý, hoá học, tôn giáo..., mỗi chuyện có nguồn khoa học/văn bản gốc) → khung lý thuyết (≤ 2) → meme, phim, nhạc, tranh, sách. Hạn mức mỗi loại ≤ 5 mục, chuyện thật ≤ 10; lọc theo độc giả chính.
