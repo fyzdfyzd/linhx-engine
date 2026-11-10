@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 18:49 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
+Cập nhật 2026-11-10 18:59 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -48,10 +48,6 @@ Cập nhật 2026-11-10 18:49 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-10 18:42 t2: K2b agy thoát sau 0 phút lần 1, .err: error: Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 43m32s. / AGY_ERROR: {"short_error":"RESOURCE_EXHAUSTED (code 429): Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 43m32s.","status":"RESOURCE_EXHAUSTED
-- 2026-11-10 18:42 t2: K2b: agy hết hạn mức, không tính trần; ngưng giao tới 2026-11-10T19:42:54
-- 2026-11-10 18:43 t2: K2b: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
-- 2026-11-10 18:43 t2: K2b: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
 - 2026-11-10 18:43 t2: K2b trượt do lỗi máy (commit 8e799f8), không tính lần
 - 2026-11-10 18:43 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 18:43 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
@@ -60,4 +56,8 @@ Cập nhật 2026-11-10 18:49 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10 18:47 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-10 18:49 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 18:49 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:49 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:49 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:59 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:59 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
 
