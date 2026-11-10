@@ -1,0 +1,22 @@
+{
+  "luc": "2026-11-10T09:20:15+07:00",
+  "may": "DESKTOP-PVHR2CD",
+  "ma_phieu": "PH-O4-20261110-T3",
+  "tho": "tho-3",
+  "trang_thai_cuoi": "nop",
+  "commit": "1a2461bc907b9030409a12345ce8d6f000c8a5f0",
+  "nhanh": "tu-dong/engine-t3",
+  "phut": 1.36,
+  "token": 25537,
+  "token_vao": 24174,
+  "token_ra": 1363,
+  "cua_so_an": true,
+  "buoc": [
+    "keo_phieu",
+    "kiem_de",
+    "ghi_phieu_md",
+    "chay_agy_an",
+    "nop_phieu"
+  ],
+  "da_goi_agy": true
+}
