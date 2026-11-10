@@ -163,8 +163,8 @@
     "api_form của lõi gọi T1 qua tra hàm, không import gói"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g1.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/G1/kiem.json"
   },
   {
    "id": "G2",

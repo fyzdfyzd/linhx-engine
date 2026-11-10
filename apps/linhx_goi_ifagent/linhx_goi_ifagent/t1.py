@@ -7,10 +7,20 @@ Tham khảo luồng CRM và tuân thủ từ:
 """
 from __future__ import annotations
 
-from linhx_core.crm import dong_y, gop_trung
+from datetime import datetime
+
+from linhx_core.api import (
+    chuan_hoa_email,
+    chuan_hoa_zalo,
+    ghi_dong_y,
+    gop_nguoi,
+    hieu_luc_dong_y,
+    khoa_gop,
+)
 
 NGUON_T1 = "T1"
 TANG_PHEU_MOI = "moi"
+DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
 
 DO_DAI_TOI_DA_HO_TEN = 120
 DO_DAI_TOI_DA_DIEN_THOAI = 20
@@ -108,6 +118,24 @@ CAU_HINH_KHAM_MAC_DINH: dict = {
 }
 
 
+def _la_trong(gia_tri: object) -> bool:
+    return gia_tri is None or (isinstance(gia_tri, str) and not gia_tri.strip())
+
+
+def _ma_nguoi(nguoi: object) -> str:
+    if isinstance(nguoi, dict):
+        for k in ("name", "nguoi", "id", "ma", "email", "dien_thoai", "zalo"):
+            val = str(nguoi.get(k) or "").strip()
+            if val:
+                return val
+        return ""
+    return str(nguoi or "").strip()
+
+
+def _bay_gio() -> str:
+    return datetime.now().replace(microsecond=0).strftime(DINH_DANG_TG)
+
+
 def _kiem_tra_dau_vao(du_lieu: dict) -> tuple[str, str, str, str, str]:
     """Kiểm tra honeypot và giới hạn độ dài các trường đầu vào trước khi chuẩn hoá."""
     for tr_hp in TRUONG_HONEYPOT:
@@ -157,7 +185,7 @@ def da_rut_dong_y(
     for d in so_dong_y:
         if not isinstance(d, dict):
             continue
-        ma_d = dong_y._ma_nguoi(d.get("nguoi"))
+        ma_d = _ma_nguoi(d.get("nguoi"))
         if ma_d in tap_ma:
             if str(d.get("trang_thai") or "").strip() == "cho_xac_minh":
                 continue
@@ -169,7 +197,7 @@ def da_rut_dong_y(
 
     if not co_dong:
         return False
-    return not dong_y.hieu_luc(so_quy_doi, ma_dai_dien, muc_dich)
+    return not hieu_luc_dong_y(so_quy_doi, ma_dai_dien, muc_dich)
 
 
 def kiem_diem_theo_bang_muc(
@@ -289,8 +317,8 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
         raise ValueError("Phải đồng ý liên hệ để nhận kết quả T1 đầy đủ")
 
     ho_ten, dien_thoai, email_raw, zalo_raw, t1_muc = _kiem_tra_dau_vao(du_lieu)
-    email_chuan = gop_trung.chuan_hoa_email(email_raw)
-    zalo_chuan = gop_trung.chuan_hoa_zalo(zalo_raw)
+    email_chuan = chuan_hoa_email(email_raw)
+    zalo_chuan = chuan_hoa_zalo(zalo_raw)
     if not email_chuan and not zalo_chuan:
         raise ValueError("Phải cung cấp ít nhất email hoặc Zalo")
 
@@ -316,7 +344,7 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
             du_lieu.get("chon"),
         )
 
-    luc_str = str(luc or "").strip() or dong_y.bay_gio()
+    luc_str = str(luc or "").strip() or _bay_gio()
 
     ban_lien_he: dict = {}
     if ho_ten:
@@ -328,10 +356,10 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
     if zalo_raw:
         ban_lien_he["zalo"] = zalo_raw
 
-    khoa_moi = gop_trung.khoa_gop(ban_lien_he)
+    khoa_moi = khoa_gop(ban_lien_he)
     nguoi_cu_khop = None
     for cu in ds_nguoi or []:
-        if isinstance(cu, dict) and (gop_trung.khoa_gop(cu) & khoa_moi):
+        if isinstance(cu, dict) and (khoa_gop(cu) & khoa_moi):
             nguoi_cu_khop = cu
             break
 
@@ -342,7 +370,7 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
         ban_moi["tang_pheu"] = TANG_PHEU_MOI
         ban_moi["t1_tong"] = t1_tong
         ban_moi["t1_muc"] = t1_muc
-        ds_moi = gop_trung.gop(ds_nguoi, ban_moi)
+        ds_moi = gop_nguoi(ds_nguoi, ban_moi)
         nguoi_ket_qua = ds_moi[-1]
     else:
         # Người đã có: không ghi đè dữ liệu cũ (ho_ten, email, zalo, dien_thoai, nguon, tang_pheu, điểm cũ)
@@ -350,10 +378,10 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
         ds_moi = [dict(x) if isinstance(x, dict) else x for x in (ds_nguoi or [])]
         nguoi_ket_qua = None
         for item in ds_moi:
-            if isinstance(item, dict) and (gop_trung.khoa_gop(item) & khoa_moi):
-                if gop_trung._la_trong(item.get("nguon")):
+            if isinstance(item, dict) and (khoa_gop(item) & khoa_moi):
+                if _la_trong(item.get("nguon")):
                     item["nguon"] = NGUON_T1
-                if gop_trung._la_trong(item.get("tang_pheu")):
+                if _la_trong(item.get("tang_pheu")):
                     item["tang_pheu"] = TANG_PHEU_MOI
                 cu_da_co_diem = (
                     item.get("t1_tong") not in (None, "", 0)
@@ -397,21 +425,21 @@ def ghi_ket_qua(du_lieu: dict, ds_nguoi: list, so_dong_y: list, luc: str) -> dic
 
     so_moi = [dict(d) if isinstance(d, dict) else d for d in (so_dong_y or [])]
     if not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "lien_he")):
-        so_moi = dong_y.ghi(so_moi, ma_nguoi, "lien_he", True, luc_str, NGUON_T1)
+        ghi_dong_y(ma_nguoi, "lien_he", True, luc_str, NGUON_T1, kho=so_moi)
 
     if du_lieu.get("dong_y_marketing") is True:
         if (
             not (da_co_nguoi and da_rut_dong_y(so_moi, cac_dinh_danh, "marketing"))
-            and not dong_y.hieu_luc(so_moi, ma_nguoi, "marketing")
+            and not hieu_luc_dong_y(so_moi, ma_nguoi, "marketing")
         ):
-            so_moi = dong_y.ghi(
-                so_moi,
+            ghi_dong_y(
                 ma_nguoi,
                 "marketing",
                 True,
                 luc_str,
                 NGUON_T1,
                 trang_thai="cho_xac_minh",
+                kho=so_moi,
             )
 
     return {

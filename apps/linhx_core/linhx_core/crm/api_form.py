@@ -2,20 +2,43 @@
 from __future__ import annotations
 
 from contextlib import ExitStack, contextmanager
+import importlib
 import ipaddress
 import json
 import logging
 from pathlib import Path
+import sys
 import threading
 import time
 
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_core import co_module
-from linhx_core.crm import dong_y, form, gop_trung, t1, xac_minh_marketing
+from linhx_core import co_module, dang_ky_module
+from linhx_core.crm import dong_y, form, gop_trung
 
 logger = logging.getLogger(__name__)
+
+_THU_MUC_APPS = Path(__file__).resolve().parents[3]
+NGUON_T1 = "T1"
+TANG_PHEU_MOI = "moi"
+MUC_DICH_MARKETING = "marketing"
+
+
+def _tim_ham_cung_cap(khoa: str):
+    """Tra hàm gói qua `dang_ky_module.tim_ham(..., "cung_cap", ...)` và nạp module tương ứng."""
+    ds = dang_ky_module.quet(_THU_MUC_APPS)
+    cac_duong = dang_ky_module.tim_ham(ds, "cung_cap", khoa)
+    if not cac_duong:
+        raise RuntimeError(f"Không tìm thấy hàm cung_cap cho khoá: {khoa}")
+    duong_ham = cac_duong[0]
+    ten_mod, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_mod.split(".")[0]
+    thu_muc_app = _THU_MUC_APPS / ten_app
+    if thu_muc_app.is_dir() and str(thu_muc_app) not in sys.path:
+        sys.path.insert(0, str(thu_muc_app))
+    mod = importlib.import_module(ten_mod)
+    return getattr(mod, ten_ham)
 
 GIOI_HAN_MOI_PHUT = 10
 GIOI_HAN_THEO_KHOA_MOI_PHUT = 5
@@ -322,7 +345,9 @@ def _doc_cau_hinh_kham() -> dict:
         except (OSError, ValueError) as exc:
             logger.warning("Không đọc được cấu hình khám từ file, dùng mặc định: %s", type(exc).__name__)
 
-    _CACHE_KHAM_JSON = dict(t1.CAU_HINH_KHAM_MAC_DINH)
+    ham_t1 = _tim_ham_cung_cap("t1.ghi_ket_qua")
+    mod_t1 = sys.modules.get(ham_t1.__module__)
+    _CACHE_KHAM_JSON = dict(getattr(mod_t1, "CAU_HINH_KHAM_MAC_DINH", {}))
     return _CACHE_KHAM_JSON
 
 
@@ -466,7 +491,7 @@ def _nguoi_so_huu_kenh(nguoi_dict: dict | None, kenh_chuan: str) -> bool:
     """Kiểm tra hồ sơ LX Nguoi có thực sự sở hữu kênh liên hệ `kenh_chuan` hay không."""
     if not isinstance(nguoi_dict, dict):
         return False
-    kenh = xac_minh_marketing._chuan_kenh(kenh_chuan)
+    kenh = _tim_ham_cung_cap("xac_minh_marketing.chuan_kenh")(kenh_chuan)
     if not kenh:
         return False
     em_db = gop_trung.chuan_hoa_email(nguoi_dict.get("email"))
@@ -693,8 +718,8 @@ def _luu_hoac_lay_nguoi_t1(
             "dien_thoai": nguoi_moi.get("dien_thoai"),
             "email": em_luu,
             "zalo": zl_luu,
-            "nguon": t1.NGUON_T1,
-            "tang_pheu": t1.TANG_PHEU_MOI,
+            "nguon": NGUON_T1,
+            "tang_pheu": TANG_PHEU_MOI,
             "t1_tong": nguoi_moi.get("t1_tong"),
             "t1_muc": nguoi_moi.get("t1_muc"),
         }
@@ -869,7 +894,7 @@ def nhan_ket_qua_t1(
 
     try:
         du_lieu = _trich_du_lieu_request(tham_so)
-        t1._kiem_tra_dau_vao(du_lieu)
+        _tim_ham_cung_cap("t1.kiem_tra_dau_vao")(du_lieu)
     except ValueError as exc:
         _tra_loi_http(str(exc), 400)
 
@@ -901,7 +926,7 @@ def nhan_ket_qua_t1(
         so_luong_dy_cu = len(so_dong_y_cu)
 
         try:
-            ket_qua = t1.ghi_ket_qua(du_lieu_chuan, ds_nguoi_cu, so_dong_y_cu, luc_ghi)
+            ket_qua = _tim_ham_cung_cap("t1.ghi_ket_qua")(du_lieu_chuan, ds_nguoi_cu, so_dong_y_cu, luc_ghi)
         except ValueError as exc:
             _tra_loi_http(str(exc), 400)
 
@@ -921,7 +946,7 @@ def nhan_ket_qua_t1(
         cac_dong_dy_moi = ket_qua["so_dong_y"][so_luong_dy_cu:]
         for dy in cac_dong_dy_moi:
             muc_dich = dy["muc_dich"]
-            if nguoi_da_co is not None and t1.da_rut_dong_y(so_dong_y_cu, ma_nguoi, muc_dich):
+            if nguoi_da_co is not None and _tim_ham_cung_cap("t1.da_rut_dong_y")(so_dong_y_cu, ma_nguoi, muc_dich):
                 continue
             if muc_dich == "marketing":
                 if dong_y.hieu_luc(so_dong_y_cu, ma_nguoi, "marketing"):
@@ -936,7 +961,7 @@ def nhan_ket_qua_t1(
                 "muc_dich": muc_dich,
                 "dong_y": dong_y_db,
                 "luc": dy.get("luc") or luc_ghi,
-                "nguon": t1.NGUON_T1,
+                "nguon": NGUON_T1,
             }
             if trang_thai_dy:
                 du_lieu_dy["trang_thai"] = trang_thai_dy
@@ -950,12 +975,12 @@ def nhan_ket_qua_t1(
                     ma_nguoi,
                     ket_qua["so_dong_y"],
                     luc_ghi,
-                    t1.NGUON_T1,
+                    NGUON_T1,
                 )
 
     t1_tong_gui = int(du_lieu_chuan["tong"])
     t1_muc_gui = str(du_lieu_chuan["muc"]).strip()
-    ket_qua_day_du = t1.tao_ket_qua_day_du(
+    ket_qua_day_du = _tim_ham_cung_cap("t1.tao_ket_qua_day_du")(
         t1_tong_gui,
         t1_muc_gui,
         du_lieu_chuan["bang_muc"],
@@ -1156,13 +1181,13 @@ def _luu_yeu_cau_otp_marketing_db(
     ma_otp: str | None = None,
 ) -> dict | None:
     """Phát mã OTP xác minh marketing, lưu bản băm vào DB trước rồi mới gửi email thông báo."""
-    kenh_chuan = xac_minh_marketing._chuan_kenh(kenh_raw)
+    kenh_chuan = _tim_ham_cung_cap("xac_minh_marketing.chuan_kenh")(kenh_raw)
     if not kenh_chuan or not ma_nguoi:
         return None
     if not _kiem_nguoi_so_huu_kenh_db(ma_nguoi, kenh_chuan):
         return None
 
-    khoa_kenh = xac_minh_marketing._khoa_otp(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING)
+    khoa_kenh = _tim_ham_cung_cap("xac_minh_marketing.khoa_otp")(kenh_chuan, MUC_DICH_MARKETING)
     doc_cu, kho_otp = _doc_otp_db_for_update(khoa_kenh)
     ban_ghi_cu = kho_otp.get(khoa_kenh) if isinstance(kho_otp, dict) else None
 
@@ -1171,7 +1196,7 @@ def _luu_yeu_cau_otp_marketing_db(
         return {
             "email": kenh_chuan,
             "nguoi": ma_nguoi,
-            "muc_dich": xac_minh_marketing.MUC_DICH_MARKETING,
+            "muc_dich": MUC_DICH_MARKETING,
             "trang_thai": "cho_xac_minh",
             "het_han_luc": ban_ghi_cu.get("het_han_luc"),
             "so_dong_y": so_dong_y,
@@ -1179,7 +1204,7 @@ def _luu_yeu_cau_otp_marketing_db(
 
     hang_doi_mail: list[tuple[str, str, str]] = []
     try:
-        kq_yc = xac_minh_marketing.tao_yeu_cau(
+        kq_yc = _tim_ham_cung_cap("xac_minh_marketing.tao_yeu_cau")(
             kho_otp,
             kenh_chuan,
             ma_nguoi,
@@ -1196,7 +1221,7 @@ def _luu_yeu_cau_otp_marketing_db(
         )
         return None
 
-    ban_ghi = xac_minh_marketing._tim_ban_ghi_otp(kho_otp, kenh_chuan)
+    ban_ghi = _tim_ham_cung_cap("xac_minh_marketing.tim_ban_ghi_otp")(kho_otp, kenh_chuan)
     if not isinstance(ban_ghi, dict):
         return kq_yc
 
@@ -1204,7 +1229,7 @@ def _luu_yeu_cau_otp_marketing_db(
         "khoa_kenh": khoa_kenh,
         "email": kenh_chuan,
         "nguoi": ma_nguoi,
-        "muc_dich": xac_minh_marketing.MUC_DICH_MARKETING,
+        "muc_dich": MUC_DICH_MARKETING,
         "ma_bam": str(ban_ghi.get("ma_bam") or ""),
         "tao_luc": str(ban_ghi.get("tao_luc") or luc_ghi),
         "het_han_luc": str(ban_ghi.get("het_han_luc") or ""),
@@ -1295,7 +1320,7 @@ def xac_nhan_marketing(
 
     em_chuan = gop_trung.chuan_hoa_email(email_raw)
     dt_chuan = gop_trung.chuan_hoa_dien_thoai(dt_raw)
-    kenh_chuan = em_chuan or dt_chuan or xac_minh_marketing._chuan_kenh(email_raw)
+    kenh_chuan = em_chuan or dt_chuan or _tim_ham_cung_cap("xac_minh_marketing.chuan_kenh")(email_raw)
     if not kenh_chuan or not ma_code:
         _tra_loi_http("Phải cung cấp kênh xác nhận và mã OTP", 400)
 
@@ -1303,20 +1328,20 @@ def xac_nhan_marketing(
     luc_ghi = dong_y.bay_gio()
 
     with _khoa_theo_lien_he(em_chuan or kenh_chuan, "", dt_chuan):
-        khoa_kenh = xac_minh_marketing._khoa_otp(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING)
+        khoa_kenh = _tim_ham_cung_cap("xac_minh_marketing.khoa_otp")(kenh_chuan, MUC_DICH_MARKETING)
         doc_otp, kho_otp = _doc_otp_db_for_update(khoa_kenh)
         if doc_otp is None:
-            xac_minh_marketing.bam_ma(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING, ma_code)
+            _tim_ham_cung_cap("xac_minh_marketing.bam_ma")(kenh_chuan, MUC_DICH_MARKETING, ma_code)
             return _tra_loi_xac_minh_that_bai()
 
         ma_nguoi_db = str(getattr(doc_otp, "nguoi", "") or "").strip()
         if nguoi_param and ma_nguoi_db and nguoi_param != ma_nguoi_db:
-            xac_minh_marketing.bam_ma(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING, ma_code)
+            _tim_ham_cung_cap("xac_minh_marketing.bam_ma")(kenh_chuan, MUC_DICH_MARKETING, ma_code)
             return _tra_loi_xac_minh_that_bai()
 
         ma_nguoi = ma_nguoi_db or nguoi_param
         if not ma_nguoi or not _kiem_nguoi_so_huu_kenh_db(ma_nguoi, kenh_chuan):
-            xac_minh_marketing.bam_ma(kenh_chuan, xac_minh_marketing.MUC_DICH_MARKETING, ma_code)
+            _tim_ham_cung_cap("xac_minh_marketing.bam_ma")(kenh_chuan, MUC_DICH_MARKETING, ma_code)
             return _tra_loi_xac_minh_that_bai()
 
         ds_nguoi_lien_quan = _tim_nguoi_trung({"email": em_chuan, "dien_thoai": dt_chuan})
@@ -1326,7 +1351,7 @@ def xac_nhan_marketing(
                 cac_ho_so_so.append(u)
         so_dong_y_cu = _lay_so_dong_y_hien_co(cac_ho_so_so)
 
-        ma_http, kq = xac_minh_marketing.xac_nhan_marketing(
+        ma_http, kq = _tim_ham_cung_cap("xac_minh_marketing.xac_nhan_marketing")(
             "POST",
             kho_otp,
             kenh_chuan,
@@ -1337,7 +1362,7 @@ def xac_nhan_marketing(
             nguon="xac-minh-otp",
         )
 
-        ban_ghi_cap_nhat = xac_minh_marketing._tim_ban_ghi_otp(kho_otp, kenh_chuan)
+        ban_ghi_cap_nhat = _tim_ham_cung_cap("xac_minh_marketing.tim_ban_ghi_otp")(kho_otp, kenh_chuan)
         if isinstance(ban_ghi_cap_nhat, dict):
             doc_otp.so_lan_sai = int(ban_ghi_cap_nhat.get("so_lan_sai", 0) or 0)
             doc_otp.da_dung = 1 if ban_ghi_cap_nhat.get("da_dung") else 0
@@ -1349,7 +1374,7 @@ def xac_nhan_marketing(
         if (
             ma_http != 200
             or not kq.get("ok")
-            or xac_minh_marketing.da_rut_dong_y_sau_otp(so_dong_y_cu, ma_nguoi, tao_luc_otp)
+            or _tim_ham_cung_cap("xac_minh_marketing.da_rut_dong_y_sau_otp")(so_dong_y_cu, ma_nguoi, tao_luc_otp)
         ):
             return _tra_loi_xac_minh_that_bai()
 

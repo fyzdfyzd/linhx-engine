@@ -1,7 +1,6 @@
 """Xác minh chủ email/SĐT (double opt-in) trước khi đồng ý marketing có hiệu lực (C2B).
 
 Thuần Python, không import frappe ở đầu file.
-Tái sử dụng cơ chế OTP của I3 (`linhx_core.id.otp` khi có sẵn, hoặc bộ hàm chuẩn tương đương):
 - Chỉ lưu mã băm HMAC-SHA256 (có khoá bí mật) trong `kho_otp`, tuyệt đối không lưu mã OTP trần.
 - Mã OTP tự sinh có độ dài 8 chữ số; hạn dùng 10 phút (`HAN_PHUT = 10`), dùng một lần (`da_dung = True`).
 - Sai 5 lần khoá 15 phút; phát lại mã giữ nguyên `so_lan_sai` và `khoa_den`, có trần số lần phát mỗi kênh mỗi giờ.
@@ -19,14 +18,16 @@ import secrets
 import sys
 from typing import Callable
 
-from linhx_core.crm import dong_y, form, gop_trung
-
-try:
-    from linhx_core.id import otp as _id_otp
-except ImportError:
-    _id_otp = None
+from linhx_core.api import (
+    chuan_hoa_dien_thoai,
+    chuan_hoa_email,
+    ghi_dong_y,
+    hieu_luc_dong_y,
+)
+from linhx_goi_ifagent import t1
 
 MUC_DICH_MARKETING = "marketing"
+DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
 HAN_PHUT = 10
 SAI_TOI_DA = 5
 KHOA_PHUT = 15
@@ -36,14 +37,52 @@ CUA_SO_PHAT_PHUT = 60
 _KHOA_TAM_TIEN_TRINH = secrets.token_bytes(32)
 
 
+def _ma_nguoi(nguoi: object) -> str:
+    return t1._ma_nguoi(nguoi)
+
+
+def _chuan_dong_y(gia_tri: object) -> bool:
+    if isinstance(gia_tri, bool):
+        return gia_tri
+    if isinstance(gia_tri, (int, float)):
+        return gia_tri == 1
+    if isinstance(gia_tri, str):
+        return gia_tri.strip().lower() in ("1", "true", "yes", "co", "có")
+    return False
+
+
+def _parse_tg(gia_tri: object) -> datetime:
+    if isinstance(gia_tri, datetime):
+        return gia_tri
+    chu = str(gia_tri or "").strip()
+    if not chu:
+        raise ValueError("Thời điểm không được để trống")
+    for fmt in (DINH_DANG_TG, "%Y-%m-%dT%H:%M:%S", "%Y-%m-%d %H:%M:%S.%f", "%Y-%m-%dT%H:%M:%S.%f"):
+        try:
+            return datetime.strptime(chu, fmt)
+        except ValueError:
+            continue
+    try:
+        return datetime.fromisoformat(chu)
+    except ValueError as exc:
+        raise ValueError(f"Định dạng thời điểm không hợp lệ: {gia_tri!r}") from exc
+
+
+def _khoa_luc(gia_tri: object) -> tuple[int, object]:
+    try:
+        return (1, _parse_tg(gia_tri))
+    except ValueError:
+        return (0, str(gia_tri or "").strip())
+
+
 def _chuan_kenh(email: str) -> str:
     """Chuẩn hoá kênh xác nhận (email chữ thường hoặc SĐT chuẩn 84...)."""
     raw = str(email or "").strip()
     if not raw:
         return ""
     if "@" in raw:
-        return gop_trung.chuan_hoa_email(raw) or raw.lower()
-    dt = gop_trung.chuan_hoa_dien_thoai(raw)
+        return chuan_hoa_email(raw) or raw.lower()
+    dt = chuan_hoa_dien_thoai(raw)
     if dt:
         return dt
     return raw.lower()
@@ -96,12 +135,12 @@ def _loc_lich_su_phat_1_gio(lich_su_cu: object, dt_luc: datetime) -> list[str]:
     nguong = timedelta(minutes=CUA_SO_PHAT_PHUT)
     for moc in lich_su_cu:
         try:
-            dt_moc = dong_y._parse_tg(moc)
+            dt_moc = _parse_tg(moc)
         except ValueError:
             continue
         khoang = dt_luc - dt_moc
         if timedelta(0) <= khoang < nguong:
-            ket_qua.append(dt_moc.replace(microsecond=0).strftime(dong_y.DINH_DANG_TG))
+            ket_qua.append(dt_moc.replace(microsecond=0).strftime(DINH_DANG_TG))
     return ket_qua
 
 
@@ -128,8 +167,8 @@ def phat_ma(
     if not md_chuan:
         raise ValueError("Thiếu mục đích xác minh OTP")
 
-    dt_luc = dong_y._parse_tg(luc)
-    luc_str = dt_luc.replace(microsecond=0).strftime(dong_y.DINH_DANG_TG)
+    dt_luc = _parse_tg(luc)
+    luc_str = dt_luc.replace(microsecond=0).strftime(DINH_DANG_TG)
     khoa = _khoa_otp(em_chuan, md_chuan)
 
     hien_co = kho.get(khoa)
@@ -141,7 +180,7 @@ def phat_ma(
         nguoi_giu = str(hien_co.get("nguoi") or "").strip() or None
         khoa_den_cu = hien_co.get("khoa_den")
         if khoa_den_cu:
-            dt_khoa_den = dong_y._parse_tg(khoa_den_cu)
+            dt_khoa_den = _parse_tg(khoa_den_cu)
             if dt_luc <= dt_khoa_den:
                 raise ValueError(f"Kênh đang bị khoá tạm thời tới {khoa_den_cu}")
             # Đã qua thời hạn khoá 15 phút -> cho phép đặt lại bộ đếm sai
@@ -167,7 +206,7 @@ def phat_ma(
         raise ValueError("Mã OTP không được rỗng")
 
     het_han_dt = dt_luc + timedelta(minutes=HAN_PHUT)
-    het_han_str = het_han_dt.replace(microsecond=0).strftime(dong_y.DINH_DANG_TG)
+    het_han_str = het_han_dt.replace(microsecond=0).strftime(DINH_DANG_TG)
     ma_bam = bam_ma(em_chuan, md_chuan, ma_sinh)
 
     ban_ghi_moi: dict = {
@@ -213,13 +252,11 @@ def xac_minh(
     khoa = _khoa_otp(em_chuan, md_chuan)
     ban_ghi = kho.get(khoa)
     if not isinstance(ban_ghi, dict):
-        if _id_otp is not None and hasattr(_id_otp, "xac_minh"):
-            return _id_otp.xac_minh(kho, email, muc_dich, ma_nhap, luc)
         return {"ok": False, "ly_do": "khong_co_ma"}
 
-    dt_luc = dong_y._parse_tg(luc)
+    dt_luc = _parse_tg(luc)
     if ban_ghi.get("khoa_den"):
-        dt_khoa_den = dong_y._parse_tg(ban_ghi["khoa_den"])
+        dt_khoa_den = _parse_tg(ban_ghi["khoa_den"])
         if dt_luc <= dt_khoa_den:
             return {"ok": False, "ly_do": "bi_khoa"}
 
@@ -227,7 +264,7 @@ def xac_minh(
         return {"ok": False, "ly_do": "da_dung"}
 
     het_han_raw = ban_ghi.get("het_han_luc")
-    if not het_han_raw or dt_luc > dong_y._parse_tg(het_han_raw):
+    if not het_han_raw or dt_luc > _parse_tg(het_han_raw):
         return {"ok": False, "ly_do": "het_han"}
 
     ma_nhap_str = str(ma_nhap or "").strip()
@@ -235,16 +272,13 @@ def xac_minh(
     bam_luu = str(ban_ghi.get("ma_bam") or "")
 
     khop = bool(bam_luu) and hmac.compare_digest(bam_luu, bam_nhap)
-    if not khop and _id_otp is not None and hasattr(_id_otp, "bam_ma"):
-        bam_id = str(_id_otp.bam_ma(em_chuan, md_chuan, ma_nhap_str) or "")
-        khop = bool(bam_luu and bam_id) and hmac.compare_digest(bam_luu, bam_id)
 
     if not khop:
         so_lan_sai = int(ban_ghi.get("so_lan_sai") or 0) + 1
         ban_ghi["so_lan_sai"] = so_lan_sai
         if so_lan_sai >= SAI_TOI_DA:
             khoa_den_dt = dt_luc + timedelta(minutes=KHOA_PHUT)
-            ban_ghi["khoa_den"] = khoa_den_dt.replace(microsecond=0).strftime(dong_y.DINH_DANG_TG)
+            ban_ghi["khoa_den"] = khoa_den_dt.replace(microsecond=0).strftime(DINH_DANG_TG)
             return {"ok": False, "ly_do": "bi_khoa"}
         return {"ok": False, "ly_do": "sai_ma"}
 
@@ -282,20 +316,20 @@ def da_rut_dong_y_sau_otp(
     """Kiểm tra người dùng đã rút đồng ý marketing (trạng thái hiệu lực đang rút hoặc có dòng rút >= tao_luc_otp)."""
     if not so_dong_y or not ma_nguoi:
         return False
-    if form.da_rut_dong_y(so_dong_y, ma_nguoi, MUC_DICH_MARKETING):
+    if t1.da_rut_dong_y(so_dong_y, ma_nguoi, MUC_DICH_MARKETING):
         return True
-    khoa_tao = dong_y._khoa_luc(tao_luc_otp) if str(tao_luc_otp or "").strip() else None
+    khoa_tao = _khoa_luc(tao_luc_otp) if str(tao_luc_otp or "").strip() else None
     for d in so_dong_y:
         if not isinstance(d, dict):
             continue
-        if dong_y._ma_nguoi(d.get("nguoi")) != ma_nguoi:
+        if _ma_nguoi(d.get("nguoi")) != ma_nguoi:
             continue
         if d.get("muc_dich") != MUC_DICH_MARKETING:
             continue
         if str(d.get("trang_thai") or "").strip() == "cho_xac_minh":
             continue
-        if not dong_y._chuan_dong_y(d.get("dong_y")):
-            if khoa_tao is None or dong_y._khoa_luc(d.get("luc")) >= khoa_tao:
+        if not _chuan_dong_y(d.get("dong_y")):
+            if khoa_tao is None or _khoa_luc(d.get("luc")) >= khoa_tao:
                 return True
     return False
 
@@ -315,12 +349,12 @@ def tao_yeu_cau(
     em_chuan = _chuan_kenh(email)
     if not em_chuan:
         raise ValueError("Thiếu email hoặc kênh liên hệ để xác minh đồng ý marketing")
-    ma_nguoi = dong_y._ma_nguoi(nguoi)
+    ma_nguoi = _ma_nguoi(nguoi)
     if not ma_nguoi:
         raise ValueError("Thiếu mã người cần xác minh đồng ý marketing")
 
-    dt_luc = dong_y._parse_tg(luc)
-    luc_str = dt_luc.replace(microsecond=0).strftime(dong_y.DINH_DANG_TG)
+    dt_luc = _parse_tg(luc)
+    luc_str = dt_luc.replace(microsecond=0).strftime(DINH_DANG_TG)
 
     kq_phat = phat_ma(
         kho_otp,
@@ -336,19 +370,19 @@ def tao_yeu_cau(
         ban_ghi["nguoi"] = ma_nguoi
 
     if isinstance(so_dong_y, list):
-        da_hieu_luc = dong_y.hieu_luc(so_dong_y, ma_nguoi, MUC_DICH_MARKETING)
-        da_rut = form.da_rut_dong_y(so_dong_y, ma_nguoi, MUC_DICH_MARKETING)
+        da_hieu_luc = hieu_luc_dong_y(so_dong_y, ma_nguoi, MUC_DICH_MARKETING)
+        da_rut = t1.da_rut_dong_y(so_dong_y, ma_nguoi, MUC_DICH_MARKETING)
         if not da_hieu_luc and not da_rut:
             ung_vien_mkt: list[tuple[tuple[int, object], int, dict]] = []
             for idx, d in enumerate(so_dong_y):
                 if not isinstance(d, dict):
                     continue
-                if dong_y._ma_nguoi(d.get("nguoi")) == ma_nguoi and d.get("muc_dich") == MUC_DICH_MARKETING:
-                    ung_vien_mkt.append((dong_y._khoa_luc(d.get("luc")), idx, d))
+                if _ma_nguoi(d.get("nguoi")) == ma_nguoi and d.get("muc_dich") == MUC_DICH_MARKETING:
+                    ung_vien_mkt.append((_khoa_luc(d.get("luc")), idx, d))
 
             if ung_vien_mkt:
                 _, _, dong_moi_nhat = max(ung_vien_mkt, key=lambda item: (item[0], item[1]))
-                if dong_y._chuan_dong_y(dong_moi_nhat.get("dong_y")):
+                if _chuan_dong_y(dong_moi_nhat.get("dong_y")):
                     dong_moi_nhat["trang_thai"] = "cho_xac_minh"
             else:
                 so_dong_y.append(
@@ -407,7 +441,7 @@ def xac_nhan_marketing(
         )
 
     em_chuan = _chuan_kenh(email)
-    ma_nguoi = dong_y._ma_nguoi(nguoi)
+    ma_nguoi = _ma_nguoi(nguoi)
     ma_nhap_str = str(ma_nhap or "").strip()
     if not isinstance(kho_otp, dict) or not em_chuan or not ma_nguoi or not ma_nhap_str:
         return (
@@ -435,7 +469,9 @@ def xac_nhan_marketing(
             )
 
     try:
-        kq_otp = xac_minh(kho_otp, em_chuan, MUC_DICH_MARKETING, ma_nhap_str, luc)
+        dt_luc = _parse_tg(luc)
+        luc_str = dt_luc.replace(microsecond=0).strftime(DINH_DANG_TG)
+        kq_otp = xac_minh(kho_otp, em_chuan, MUC_DICH_MARKETING, ma_nhap_str, dt_luc)
     except ValueError:
         return (
             400,
@@ -466,14 +502,15 @@ def xac_nhan_marketing(
             },
         )
 
-    so_moi = dong_y.ghi(
-        so_ban_sao,
+    so_moi = list(so_ban_sao)
+    ghi_dong_y(
         ma_nguoi,
         MUC_DICH_MARKETING,
         True,
-        luc,
+        luc_str,
         str(nguon or "").strip() or "xac-minh-otp",
         trang_thai="da_xac_minh",
+        kho=so_moi,
     )
     return (
         200,
