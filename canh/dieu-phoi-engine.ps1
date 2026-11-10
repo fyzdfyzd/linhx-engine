@@ -270,7 +270,8 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     for ($i = 1; $i -le 2 -and -not $daDay; $i++) { git push -q -f origin "HEAD:refs/heads/$Nhanh" 2>&1 | Out-Null; $daDay = ($LASTEXITCODE -eq 0) }
     if ($daDay) {
       $gcK = (Get-Command gcloud.cmd -ErrorAction SilentlyContinue).Source
-      $lenhVm = "cd ~/linhx-engine && git fetch -q origin main && git show origin/main:deploy/cong_kiem_vm.py > /tmp/cong_kiem_vm.py && sudo python3 /tmp/cong_kiem_vm.py --nhanh $Nhanh --features $FF --them $fid"
+      # ~/linhx-engine trên VM không phải repo git (17:21 "fatal: not a git repository"): giữ một bản main riêng ở /opt/ck-main, chỉ để lấy cong_kiem_vm.py
+      $lenhVm = "sudo sh -c 'test -d /opt/ck-main/.git || git clone -q --depth 1 https://github.com/fyzdfyzd/linhx-engine.git /opt/ck-main; git -C /opt/ck-main fetch -q --depth 1 origin main && git -C /opt/ck-main reset -q --hard origin/main && python3 /opt/ck-main/deploy/cong_kiem_vm.py --nhanh $Nhanh --features $FF --them $fid'"
       for ($lan = 1; $lan -le 2 -and $gcK; $lan++) {
         $raV = "$tamTho\ck-vm.out"; $erV = "$tamTho\ck-vm.err"
         $pV = Start-Process $gcK -NoNewWindow -PassThru -RedirectStandardOutput $raV -RedirectStandardError $erV -ArgumentList @("compute", "ssh", "linhx-engine-1", "--project", "linhx-engine", "--zone", "asia-southeast1-b", "--quiet", "--command", "`"$lenhVm`"")
