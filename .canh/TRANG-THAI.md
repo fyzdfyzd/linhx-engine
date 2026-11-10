@@ -1,13 +1,13 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 14:19 (giờ máy cty). Đạt: 55/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, L3, L4, P3, U2)
+Cập nhật 2026-11-10 14:29 (giờ máy cty). Đạt: 55/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, L3, L4, P3, U2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | U1 | rảnh | CHUA_DAT · Feature U1 · commit 17de91d · nhánh tu-dong/engine-t1 · 2026-11-10T12:50:02 |
-| 2 | - | rảnh | CHUA_DAT · Feature G5 · commit d959ce6 · nhánh tu-dong/engine-t2 · 2026-11-10T12:56:05 |
-| 3 | - | rảnh | CHUA_DAT · Feature G2 · commit d959ce6 · nhánh tu-dong/engine-t3 · 2026-11-10T12:53:07 |
-| 4 | - | rảnh | CHUA_DAT · Feature G3 · commit d959ce6 · nhánh tu-dong/engine-t4 · 2026-11-10T12:53:10 |
+| 1 | U1 | 20261110-1419-t1 từ 2026-11-10T14:20:01 | CHUA_DAT · Feature U1 · commit 17de91d · nhánh tu-dong/engine-t1 · 2026-11-10T12:50:02 |
+| 2 | G2 | 20261110-1419-t2 từ 2026-11-10T14:19:58 | CHUA_DAT · Feature G5 · commit d959ce6 · nhánh tu-dong/engine-t2 · 2026-11-10T12:56:05 |
+| 3 | G5 | 20261110-1419-t3 từ 2026-11-10T14:19:58 | CHUA_DAT · Feature G2 · commit d959ce6 · nhánh tu-dong/engine-t3 · 2026-11-10T12:53:07 |
+| 4 | G3 | 20261110-1419-t4 từ 2026-11-10T14:20:04 | CHUA_DAT · Feature G3 · commit d959ce6 · nhánh tu-dong/engine-t4 · 2026-11-10T12:53:10 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -54,10 +54,6 @@ Cập nhật 2026-11-10 14:19 (giờ máy cty). Đạt: 55/68 (N1, N2, N3, N4, N
 - 2026-11-10T12:56:05 G5 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc d959ce6f, bản hỏng giữ ở nhánh cục bộ hong/G5-20261110-1256, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\G5.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 12:55 t2: agy xong phiếu 20261110-1253-t2 (G5) sau 2 phút
-- 2026-11-10 12:55 t2: G5 agy thoát sau 2 phút lần 4, .err: error: Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 89h47m30s. / AGY_ERROR: {"short_error":"RESOURCE_EXHAUSTED (code 429): Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 89h47m30s.","status":"RESOURCE_EXH
-- 2026-11-10 12:55 t2: G5 CHUA_DAT lần 2 (commit d959ce6)
-- 2026-11-10 12:55 t2: giao agy phiếu 20261110-1255-t2: G5 (lượt sửa)
 - 2026-11-10 12:56 t2: agy xong phiếu 20261110-1255-t2 (G5) sau 0 phút
 - 2026-11-10 12:56 t2: G5 agy thoát sau 0 phút lần 5, .err: error: Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 89h47m10s. / AGY_ERROR: {"short_error":"RESOURCE_EXHAUSTED (code 429): Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 89h47m10s.","status":"RESOURCE_EXH
 - 2026-11-10 12:56 t2: G5 CHUA_DAT lần 3 (commit d959ce6)
@@ -66,4 +62,8 @@ Cập nhật 2026-11-10 14:19 (giờ máy cty). Đạt: 55/68 (N1, N2, N3, N4, N
 - 2026-11-10 12:59 t0: xoá đếm CHUA_DAT của G2 (G2@1011-agy-quota)
 - 2026-11-10 12:59 t0: xoá đếm CHUA_DAT của G3 (G3@1011-agy-quota)
 - 2026-11-10 12:59 t0: xoá đếm CHUA_DAT của G5 (G5@1011-agy-quota)
+- 2026-11-10 14:19 t2: giao agy phiếu 20261110-1419-t2: G2
+- 2026-11-10 14:19 t3: giao agy phiếu 20261110-1419-t3: G5
+- 2026-11-10 14:20 t1: giao agy phiếu 20261110-1419-t1: U1 (lượt sửa)
+- 2026-11-10 14:20 t4: giao agy phiếu 20261110-1419-t4: G3
 
