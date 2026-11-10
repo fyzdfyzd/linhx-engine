@@ -1,5 +1,5 @@
 {
-  "luc": "2026-11-10T13:16:42.767293+00:00",
+  "luc": "2026-11-10T21:44:49.612046+00:00",
   "url_linhx": "http://35.198.251.2/linhx",
   "url_bu": "http://sakedemy.35-198-251-2.nip.io",
   "ket_qua": "passed",
@@ -12,23 +12,31 @@
   "chi_tiet": [
     {
       "rong": 390,
-      "email": "e2e-t4-1794316517434-390@example.com",
-      "nguoi": "u9tl1gbuou",
+      "email": "e2e-t4-1794346980129-390@example.com",
+      "nguoi": "7pja86fpe0",
       "goi": "BC-AI-SAU",
-      "don": "DON-A5216D8A",
-      "su_kien_id": "uabsth4vqp",
+      "don": "DON-FCE2D996",
+      "su_kien_id": "7pud27hcak",
       "su_kien": "xong",
-      "job": "VIEC-00051"
+      "da_giao": [
+        "linhx_core.giao_hang.nghe",
+        "linhx_vn.pay.so_s1a.nghe_don_da_tra"
+      ],
+      "job": "VIEC-00071"
     },
     {
       "rong": 1280,
-      "email": "e2e-t4-1794316545662-1280@example.com",
-      "nguoi": "uheittbdjd",
+      "email": "e2e-t4-1794347029540-1280@example.com",
+      "nguoi": "87ldrgshcb",
       "goi": "BC-AI-SAU",
-      "don": "DON-C0A44C0F",
-      "su_kien_id": "uhqlar6mj6",
+      "don": "DON-237C0791",
+      "su_kien_id": "880veq0cns",
       "su_kien": "xong",
-      "job": "VIEC-00061"
+      "da_giao": [
+        "linhx_core.giao_hang.nghe",
+        "linhx_vn.pay.so_s1a.nghe_don_da_tra"
+      ],
+      "job": "VIEC-00081"
     }
   ]
 }

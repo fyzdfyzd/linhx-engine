@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import logging
 import os
 import re
 import time
@@ -17,6 +18,7 @@ import pytest
 from playwright.sync_api import sync_playwright
 
 
+_LOG = logging.getLogger("e2e.t4")
 PNG_1X1 = bytes.fromhex(
     "89504e470d0a1a0a0000000d4948445200000001000000010806000000"
     "1f15c4890000000d49444154789c6360f8cfc0f01f0005000201e2b2a3f40000000049454e44ae426082"
@@ -25,6 +27,21 @@ RONG_MAN_HINH = (390, 1280)
 _KET_QUA_RONG: list[int] = []
 _SU_KIEN_TRANG_THAI: list[str] = []
 _CHI_TIET_CHAY: list[dict] = []
+_SDT_DA_DUNG: set[str] = set()
+
+
+def _ghi_buoc(rong: int, thong_diep: str) -> None:
+    luc = dt.datetime.now(dt.timezone.utc).isoformat()
+    _LOG.info("[%s] [rong=%s] %s", luc, rong, thong_diep)
+
+
+def _sinh_sdt_duy_nhat() -> str:
+    while True:
+        so = int.from_bytes(os.urandom(5), "big") % 100_000_000
+        sdt = f"09{so:08d}"
+        if sdt not in _SDT_DA_DUNG:
+            _SDT_DA_DUNG.add(sdt)
+            return sdt
 
 
 def _url_linhx() -> str:
@@ -173,7 +190,21 @@ def _tim_su_kien_don(phien: _PhienFrappe, ma_don: str) -> dict | None:
             dl = {}
         if isinstance(dl, dict) and str(dl.get("don") or "").strip() == ma_don:
             return muc
-    return ds[0] if ds else None
+    return None
+
+
+def _ds_da_giao(su_kien_doc: dict) -> list[str]:
+    tho = su_kien_doc.get("da_giao")
+    if isinstance(tho, list):
+        return [str(x) for x in tho if x]
+    if isinstance(tho, str) and tho.strip():
+        try:
+            parsed = json.loads(tho)
+        except ValueError:
+            return []
+        if isinstance(parsed, list):
+            return [str(x) for x in parsed if x]
+    return []
 
 
 def _tim_job_theo_don(phien: _PhienFrappe, ma_don: str) -> dict | None:
@@ -204,7 +235,8 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
     hat_giong = int(time.time() * 1000)
     dau_moc = f"{hat_giong}-{rong}"
     email_lead = f"e2e-t4-{dau_moc}@example.com"
-    sdt_lead = f"09{(hat_giong * 10 + (1 if rong == 390 else 2)) % 100000000:08d}"
+    sdt_lead = _sinh_sdt_duy_nhat()
+    _ghi_buoc(rong, f"bat dau hanh trinh url_bu={url_bu} email={email_lead}")
 
     with sync_playwright() as p:
         trinh_duyet = p.chromium.launch(headless=True, args=launch_args)
@@ -230,13 +262,13 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
             )
             assert not tran_bu, f"Trang BU tran ngang o viewport {rong}px"
 
-            trang.fill("#form-brief input[name='ho_ten']", f"Khach E2E T4 {rong}")
-            trang.fill("#form-brief input[name='cong_ty']", f"Cong ty E2E T4 {rong}")
+            trang.fill("#form-brief input[name='ho_ten']", f"e2e-t4-{dau_moc}")
+            trang.fill("#form-brief input[name='cong_ty']", f"e2e-t4-cty-{rong}")
             trang.fill("#form-brief input[name='dien_thoai']", sdt_lead)
             trang.fill("#form-brief input[name='email']", email_lead)
             trang.fill(
                 "#form-brief textarea[name='nhu_cau']",
-                f"Kiem thu hanh trinh 3 lop T4 viewport {rong}px",
+                f"e2e-t4 kiem thu hanh trinh 3 lop viewport {rong}px",
             )
             trang.check("#form-brief input[name='dong_y']")
 
@@ -257,6 +289,7 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
                     break
                 time.sleep(0.5)
             assert nguoi_doc and nguoi_doc.get("name"), f"Chua tao LX Nguoi cho {email_lead}"
+            _ghi_buoc(rong, f"da tao LX Nguoi={nguoi_doc['name']} tu form BU")
 
             # Buoc 2: Tao don cho goi co loai_giao=bao_cao tren engine
             phan_hoi = trang.goto(f"{url_linhx}/#/", wait_until="networkidle", timeout=30000)
@@ -288,7 +321,7 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
             assert nut_chon is not None and ma_goi_chon, "Khong tim thay LX Goi co loai_giao=bao_cao"
             nut_chon.click()
 
-            ten_brand = f"E2E-T4-{rong}"
+            ten_brand = f"e2e-t4-{dau_moc}"
             trang.fill("input[name='brand']", ten_brand)
             if trang.locator("input[name='email']").count():
                 trang.fill("input[name='email']", email_lead)
@@ -313,14 +346,15 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
             trang.wait_for_selector("img[data-qr]", state="visible", timeout=10000)
             src_qr = str(trang.get_attribute("img[data-qr]", "src") or "")
             assert src_qr == qr_url, f"img[data-qr] src khong khop qr_url: {src_qr} != {qr_url}"
+            _ghi_buoc(rong, f"da tao LX Don={ma_don} goi={ma_goi_chon}")
 
             # Buoc 3: Goi webhook SePay gia lap -> LX Su Kien don.da_tra = xong
-            ma_gd = f"E2E-T4-{int(time.time() * 1000)}-{rong}"
+            ma_gd = f"e2e-t4-{int(time.time() * 1000)}-{rong}"
             ma_http, kq_webhook = _goi_webhook_sepay(
                 url_linhx, khoa_webhook, noi_dung_ck, so_tien, ma_gd
             )
             assert ma_http == 200, f"Webhook tra HTTP {ma_http}"
-            assert kq_webhook.get("khop") is True, f"Webhook khong khop don: {kq_webhook}"
+            assert kq_webhook.get("khop") is True, f"Webhook khop != True: {kq_webhook}"
 
             su_kien_doc = None
             for _ in range(90):
@@ -331,6 +365,17 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
             assert su_kien_doc is not None, f"Khong tim thay LX Su Kien don.da_tra cho {ma_don}"
             assert su_kien_doc.get("trang_thai") == "xong", (
                 f"LX Su Kien don.da_tra chua xong: {su_kien_doc}"
+            )
+            ds_da_giao = _ds_da_giao(su_kien_doc)
+            assert "linhx_core.giao_hang.nghe" in ds_da_giao, (
+                f"LX Su Kien chua ghi nhan da_giao giao_hang: {su_kien_doc}"
+            )
+            assert not str(su_kien_doc.get("loi") or "").strip(), (
+                f"LX Su Kien con loi: {su_kien_doc}"
+            )
+            _ghi_buoc(
+                rong,
+                f"LX Su Kien={su_kien_doc['name']} trang_thai=xong da_giao={ds_da_giao}",
             )
 
             # Buoc 4: Xac minh LX Job duoc tao qua linhx_goi_baocao va co link xem bao cao
@@ -364,6 +409,7 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
                 "() => document.documentElement.scrollWidth > document.documentElement.clientWidth"
             )
             assert not tran_bc, f"Trang bao cao tran ngang o viewport {rong}px"
+            _ghi_buoc(rong, f"hoan tat xem bao cao LX Job={ten_job}")
 
             boi_canh.close()
         finally:
@@ -381,6 +427,7 @@ def test_hanh_trinh_lead_don_tra_giao_qua_goi(rong: int) -> None:
             "don": ma_don,
             "su_kien_id": su_kien_doc["name"],
             "su_kien": su_kien_doc["trang_thai"],
+            "da_giao": ds_da_giao,
             "job": ten_job,
         }
     )
