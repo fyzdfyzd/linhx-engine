@@ -43,6 +43,18 @@ Phong cách tác giả, tổng 15: hướng dùng được bao nhiêu nước đ
 
 Hiệu chuẩn: chấm thử ma trận lên 7 bài đã đăng; bài Linh không vào top thì sửa ma trận trước khi dùng.
 
+### Đích của B4: PHIEU-NGUYEN-LIEU.md (nguyên liệu đã sơ chế, Linh 10/11)
+Đạt khi đủ cả:
+1. 1 ý lớn viết thành câu X→Y, ma trận ý lớn ≥ 40/55, qua cổng loại.
+2. 2–3 ý phụ, mỗi ý ≥ 15/25, mỗi ý một dòng "vậy thì sao" cho độc giả chính.
+3. Mỗi ý phụ 1–2 chất liệu, trong đó ≥ 1 chuyện thật; cả phiếu ≥ 1 chất liệu xuyên ngành hoặc ngạn ngữ, ≤ 2 khung lý thuyết.
+4. 100% chất liệu có link gốc + trích nguyên văn + nhãn LINH/NGUON/GIẢ LẬP; 0 mục không nguồn.
+5. 1 phản bác mạnh nhất + câu trả lời.
+6. 1 gợi ý mở (chuyện hoặc cảnh) + 1 điều độc giả mang về ở kết.
+7. Mật độ ý nằm trong dải mat_do_y của 7 bài, theo độ dài kênh.
+8. Phiếu ≤ 800 từ, đọc trong 5 phút; mục bị loại để ở phụ lục, không xoá.
+Phép thử cuối: Linh viết được nháp gạch đầu dòng từ phiếu mà không phải tìm thêm gì. Phải tìm thêm thì ghi lại thiếu gì để sửa B3.
+
 ### Lượng ý vừa sức đọc (Linh 10/11)
 - Ngân sách ý theo độ dài: đo từ 7 bài đã đăng (số ý phụ / 1000 từ, số khái niệm mới mỗi đoạn, số liệu mỗi đoạn), đặt dải theo 7 bài, không tự bịa số.
 - Mỗi ý phụ phải có chỗ thở: một chất liệu (chuyện, ví dụ) + một câu "vậy thì sao" cho độc giả. Ý không có chỗ thở thì bỏ hoặc gộp.
