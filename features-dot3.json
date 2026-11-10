@@ -179,7 +179,9 @@
     "apps/linhx_core/linhx_core/pay/sau_tra.py",
     "apps/linhx_core/linhx_core/pay/ban_bao_cao.py",
     "apps/linhx_core/linhx_core/pay/api_ban.py",
-    "apps/linhx_core/linhx_core/hooks.py"
+    "apps/linhx_core/linhx_core/hooks.py",
+    "apps/linhx_worker/linhx_worker/api.py",
+    "apps/linhx_worker/linhx_worker/quy_trinh.py"
    ],
    "mo_ta": "gói báo cáo: phần làm báo cáo sau trả ra khỏi lõi, giao qua luồng giao hàng chung (loai_giao bao_cao).",
    "tieu_chi": [

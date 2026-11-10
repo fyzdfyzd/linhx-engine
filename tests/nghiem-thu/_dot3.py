@@ -46,14 +46,15 @@ def cac_import(app):
 
 
 def kiem_kien_truc():
-    """Lõi không import adapter/gói; adapter/gói chỉ import linhx_core.api từ lõi; gói không import gói khác."""
+    """Lõi chỉ import lõi (không adapter/gói); adapter/gói chỉ import linhx_core.api từ lõi; gói không import gói khác."""
     loi = []
-    for a in sorted(x.name for x in APPS.iterdir() if (x / "module.json").exists()):
-        lop = doc_module_json(a)["lop"]
+    cac = {x.name: doc_module_json(x.name)["lop"] for x in APPS.iterdir() if (x / "module.json").exists()}
+    for a in sorted(cac):
+        lop = cac[a]
         for p, m in cac_import(a):
             goc = m.split(".")[0]
-            if goc == a or goc == "linhx_worker":
-                continue
+            if goc == a or (lop == "loi" and cac.get(goc) == "loi"):
+                continue  # trong app, hoặc lõi gọi lõi (linhx_worker <-> linhx_core)
             r = p.relative_to(GOC).as_posix()
             if lop == "loi":
                 loi.append(f"{r}: lõi import {m}")
