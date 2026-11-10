@@ -392,6 +392,12 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
     if (-not (Test-Path "$S\moc-$chon.txt")) { (git rev-parse HEAD).Trim() | Set-Content "$S\moc-$chon.txt" }
     $tf = TimF $dk $TichHop $chon; $y = $tf.f; $FF = $tf.ff
     $ten = "$(Get-Date -Format 'yyyyMMdd-HHmm')-t$Tho"
+    # B (Linh 10/11): bản đồ chữ ký theo vùng (scripts/ban_do.py bản main, M1) để thợ khỏi đọc cả repo
+    $bdTs = @("$TichHop\scripts\ban_do.py", "--goc", $Wt, "--gioi-han", "8000", "--vung") + @($y.vung)
+    $banDo = (py -3.12 @bdTs 2>$null | Out-String)
+    if ($LASTEXITCODE -eq 0 -and $banDo.Trim()) { $banDo | Set-Content -Encoding utf8 "$tamTho\BAN-DO.md" } else { Remove-Item "$tamTho\BAN-DO.md" -Force -ErrorAction SilentlyContinue }
+    # lượt sửa: nhắc lỗi lượt trước để không lặp lại
+    if ($loaiMoi -eq "sua" -and (Test-Path "$Canh\tac\$chon.loi.txt")) { $cu = (Get-Content "$Canh\tac\$chon.loi.txt" -Raw -Encoding utf8).Trim(); if ($cu) { $them += "`n## Lỗi lượt trước, đừng lặp lại`n" + (($cu -split '\|' | ForEach-Object { "- $_" }) -join "`n") + "`n" } }
     $rieng = switch ($chon) {
       "N1" { "- Riêng N1: được ``git push -u origin $Nhanh`` để CI GitHub chạy. Máy không có gh: đọc kết quả lượt chạy qua API GitHub (lấy quyền bằng git credential, KHÔNG in hay ghi token ra file). Workflow đặt ở .github/workflows/linhx-engine.yml, chạy py canh/cong_kiem.py kiem cho từng features-dot1*.json." }
       "N2" { "- Riêng N2: chép từ D:\LINHX\PROTO\03_OPC_OS và D:\LINHX\PROTO\01_MAY_TAO_NOI_DUNG. Bỏ .env*, khoá, token, file phiên, cơ sở dữ liệu, dữ liệu khách, node_modules, ảnh/video nặng." }
@@ -407,6 +413,7 @@ Tiêu chí:
 $(($y.tieu_chi | ForEach-Object { "- $_" }) -join "`n")
 Lệnh kiểm (chạy ở gốc repo): ``$($y.lenh_kiem)``
 Hợp đồng đường dẫn, tên hàm, dạng bằng chứng: tests/nghiem-thu/HOP-DONG.md và tests/nghiem-thu/test_$($chon.ToLower()).py. Đọc, không sửa.
+$(if (Test-Path "$tamTho\BAN-DO.md") { "Bản đồ chữ ký hàm/lớp/DocType của vùng: .canh-tho/BAN-DO.md. Đọc bản đồ trước, chỉ mở file cần sửa; không quét cả repo." })
 $them
 
 ## Luật
