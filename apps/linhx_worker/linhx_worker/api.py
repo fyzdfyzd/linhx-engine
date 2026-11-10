@@ -3,11 +3,13 @@
 Tho:   heartbeat -> nhan_viec -> (chay agy) -> bao_ket_qua
 Mat tien (linhx-front): bang, giao_viec, huy_viec
 """
+import hmac
 import json
 
 import frappe
 from frappe.rate_limiter import rate_limit
 
+from linhx_core.pay.sau_tra import mot_dong, quet_don_da_tra_chua_co_job, tao_dau_vao
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
 
@@ -66,8 +68,25 @@ def heartbeat(ma, phien_ban=None, may=None):
 
 
 @frappe.whitelist(methods=["POST"])
-def nhan_viec(ma, phien_ban=None, may=None):
-    """Tra ve 1 viec hoac None. Khoa hang bang SKIP LOCKED de nhieu tho khong tranh nhau."""
+def nhan_viec(ma, phien_ban=None, may=None, chu_ky_sandbox=None):
+    """Tra ve 1 viec hoac None. Khoa hang bang SKIP LOCKED de nhieu tho khong tranh nhau.
+
+    Luồng B4 và cổng xác thực sandbox cho việc nguồn khách/đơn:
+    - Đơn `da_tra` sinh `LX Job` (`nguon='don'`, `trang_thai='cho'`); `quy_trinh.chia_viec_gop_cho()`
+      tự động tách ngay thành các việc con `trang_thai='cho'`, `nguon='don'` mà không qua `duyet_viec`
+      (`duyet_viec` chỉ dành cho `trang_thai='cho_duyet'` của luồng `dat_bao_cao` chưa trả tiền).
+    - Server KHÔNG nhận hay tin cờ `sandbox: true`/dict do thợ tự khai. Thay vào đó, `quy_trinh.xac_thuc_sandbox_tho`
+      kiểm tra đồng thời: (1) `LX Worker` trên server có nhãn `sandbox` và không có nhãn `repo` (chỉ `LX Operator` /
+      `System Manager` mới có quyền ghi `LX Worker`), (2) `phien_ban` thuộc runner đã nâng cấp (`>= 0.2.0-sandbox`),
+      và (3) chữ ký HMAC-SHA256 `chu_ky_sandbox` khớp hằng thời gian (`hmac.compare_digest`) với `sandbox_khoa`
+      trong `site_config.json` của server.
+    - Tiến trình runner đã nâng cấp (`linhx_worker.quy_trinh.vong_tho_sandbox` gọi `chay_agy_sandbox`) gửi kèm
+      `chu_ky_sandbox` hợp lệ nên tự nhận và chạy hết luồng việc `nguon='don'` hoàn toàn không cần duyệt tay.
+    - Lưu ý rõ cho Linh: file `runner/linhx_runner.py` v0.1.1 nằm ngoài `vung` được sửa của B4 (cổng K1 `canh/rao.py`),
+      chưa đọc `viec["sandbox"]` và chưa ký `chu_ky_sandbox`; vì vậy nếu chỉ chạy `runner/linhx_runner.py` v0.1.1 cũ
+      thì `nhan_viec` giữ lại các việc `nguon in ('khach', 'don')` ở trạng thái `cho` cho tới khi thợ chạy qua
+      `linhx_worker.quy_trinh.vong_tho_sandbox` hoặc Linh duyệt phiếu nâng cấp `runner/linhx_runner.py`.
+    """
     tho = _lay_tho(ma)
     heartbeat(ma, phien_ban, may)
     if tho.tam_dung:
@@ -79,10 +98,26 @@ def nhan_viec(ma, phien_ban=None, may=None):
     wfs = _workflow_cho_tho(tho)
     if not wfs:
         return None
+    quy_trinh.chia_viec_gop_cho()
+    cho_phep_sandbox = quy_trinh.xac_thuc_sandbox_tho(
+        tho,
+        phien_ban=phien_ban,
+        chu_ky_sandbox=chu_ky_sandbox,
+    )
+    dk_nguon = ""
+    if not cho_phep_sandbox:
+        dk_nguon = """
+          and ifnull(nguon, 'noi_bo') not in ('khach', 'don')
+          and (ifnull(cha, '') = '' or not exists (
+            select 1 from `tabLX Job` p
+            where p.name = `tabLX Job`.cha and ifnull(p.nguon, 'noi_bo') in ('khach', 'don')
+          ))
+        """
     rows = frappe.db.sql(
-        """select name from `tabLX Job`
+        f"""select name from `tabLX Job`
         where trang_thai='cho' and workflow in %(wfs)s
           and (ifnull(muon_tho,'')='' or muon_tho=%(ma)s)
+          {dk_nguon}
         order by creation asc limit 1 for update skip locked""",
         {"wfs": tuple(wfs), "ma": ma},
     )
@@ -90,8 +125,20 @@ def nhan_viec(ma, phien_ban=None, may=None):
         frappe.db.rollback()
         return None
     job = frappe.get_doc("LX Job", rows[0][0])
+    nguon_job = getattr(job, "nguon", None)
+    nguon_cha = frappe.db.get_value("LX Job", job.cha, "nguon") if getattr(job, "cha", None) else None
+    if (nguon_job in ("khach", "don") or nguon_cha in ("khach", "don")) and not cho_phep_sandbox:
+        frappe.db.rollback()
+        return None
     wf = frappe.get_doc("LX Workflow", job.workflow)
-    de = (wf.de_mau or "{dau_vao}").replace("{dau_vao}", job.dau_vao or "")
+    nguon_hieu_luc = nguon_job if nguon_job in ("khach", "don") else (nguon_cha or nguon_job or "noi_bo")
+    de = quy_trinh.tao_de_an_toan(
+        wf.name,
+        wf.de_mau,
+        job.dau_vao,
+        nguon=nguon_hieu_luc,
+        co_cha=bool(getattr(job, "cha", None)),
+    )
     job.db_set({
         "trang_thai": "dang_chay", "tho": ma, "nhan_luc": now_datetime(),
         "de_gui": de, "lan_thu": (job.lan_thu or 0) + 1,
@@ -100,7 +147,13 @@ def nhan_viec(ma, phien_ban=None, may=None):
     frappe.db.commit()
     return {
         "viec": job.name, "workflow": wf.name, "che_do": wf.che_do or "agy",
+        "nguon": nguon_hieu_luc,
         "de": de, "dau_vao": job.dau_vao, "tran_phut": wf.tran_phut or 40,
+        "sandbox": quy_trinh.chinh_sach_sandbox(
+            wf.name,
+            nguon=nguon_hieu_luc,
+            co_cha=bool(getattr(job, "cha", None)),
+        ),
     }
 
 
@@ -253,21 +306,21 @@ def _ip():
 @frappe.whitelist(allow_guest=True, methods=["POST"])
 @rate_limit(limit=5, seconds=3600)
 def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that="", email="", ten=""):
-    brand = (brand or "").strip()[:80]
+    brand = mot_dong(brand, 80)
     if len(brand) < 2:
         frappe.throw("Cần tên thương hiệu")
-    dau_vao = "\n".join([
-        f"brand: {brand}",
-        f"nganh: {(nganh or '').strip()[:80]}",
-        f"thi_truong: {(thi_truong or 'Việt Nam').strip()[:60]}",
-        f"doi_thu: {(doi_thu or '').strip()[:120]}",
-        f"su_that: {(su_that or '').strip()[:600]}",
-    ])
+    dau_vao = tao_dau_vao({
+        "brand": brand,
+        "nganh": nganh,
+        "thi_truong": thi_truong,
+        "doi_thu": doi_thu,
+        "su_that": su_that,
+    })
     ma_xem = frappe.generate_hash(length=12)
     job = frappe.get_doc({
         "doctype": "LX Job", "workflow": "ai-noi-gi-ve-brand", "dau_vao": dau_vao,
         "trang_thai": "cho_duyet", "nguon": "khach", "ma_xem": ma_xem,
-        "email_khach": (email or "").strip()[:120] or None, "ten_khach": (ten or "").strip()[:80],
+        "email_khach": mot_dong(email, 120) or None, "ten_khach": mot_dong(ten, 80),
     })
     job.insert(ignore_permissions=True)
     frappe.db.commit()
@@ -275,16 +328,19 @@ def dat_bao_cao(brand, nganh="", thi_truong="Việt Nam", doi_thu="", su_that=""
 
 
 @frappe.whitelist(allow_guest=True)
+@rate_limit(limit=30, seconds=60)
 def xem_bao_cao(viec, ma_xem):
     d = frappe.db.get_value("LX Job", viec, ["ma_xem", "trang_thai", "ket_qua", "dau_vao", "creation", "xong_luc", "nguon"], as_dict=True)
-    if not d or d.nguon != "khach" or not ma_xem or d.ma_xem != ma_xem:
+    ma_db = str((d or {}).get("ma_xem") or "")
+    ma_gui = str(ma_xem or "")
+    if not d or d.nguon not in ("khach", "don") or not ma_db or not ma_gui or not hmac.compare_digest(ma_db.encode("utf-8"), ma_gui.encode("utf-8")):
         frappe.throw("Không tìm thấy báo cáo", frappe.DoesNotExistError)
     tr = d.trang_thai
     truoc = 0
     if tr in ("cho_duyet", "cho"):
         truoc = frappe.db.count("LX Job", {"trang_thai": ["in", ["cho", "dang_chay"]], "creation": ["<", d.creation]})
     return {
-        "viec": viec, "trang_thai": tr, "dau_vao": d.dau_vao, "truoc": truoc,
+        "viec": viec, "trang_thai": tr, "brand": quy_trinh._brand(d.dau_vao), "truoc": truoc,
         "bao_cao": bao_cao.dung(d.ket_qua) if tr == "xong" else None, "xong_luc": d.xong_luc,
         "tien_do": quy_trinh.tien_do(viec) if tr == "dang_chay" else [],
     }
@@ -293,6 +349,8 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
+    quet_don_da_tra_chua_co_job()
+    quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)
     frappe.db.sql("update `tabLX Worker` set trang_thai='offline' where trang_thai!='offline' and (lan_cuoi is null or lan_cuoi < %s)", moc)
     for j in frappe.get_all("LX Job", filters={"trang_thai": "dang_chay", "tho": ["is", "set"]}, fields=["name", "workflow", "nhan_luc", "lan_thu", "tho"]):

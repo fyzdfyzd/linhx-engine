@@ -99,27 +99,35 @@ def test_api_google_callback_tieu_thu_state_va_gop_nguoi():
     rl_mod = types.ModuleType("frappe.rate_limiter")
     rl_mod.rate_limit = lambda *a, **kw: (lambda fn: fn)
 
-    with mock.patch.dict(sys.modules, {"frappe": frappe_mod, "frappe.rate_limiter": rl_mod}):
-        sys.modules.pop("linhx_core.id.api_auth", None)
-        from linhx_core.id import api_auth
+    try:
+        with mock.patch.dict(sys.modules, {"frappe": frappe_mod, "frappe.rate_limiter": rl_mod}):
+            sys.modules.pop("linhx_core.id.api_auth", None)
+            import linhx_core.id as _id_pkg
 
-        api_auth._kiem_module_crm_bat = lambda: None
-        kho_db = [{"name": "NG-55", "ho_ten": "Lan Cũ", "email": "LAN.CU@VD.VN", "dien_thoai": "0909000111"}]
-        api_auth._tim_nguoi_theo_email = lambda em: list(kho_db)
-        api_auth._luu_nguoi_sau_gop = lambda ng, dg, em: ng.get("name") or "NG-MOI"
+            _id_pkg.__dict__.pop("api_auth", None)
+            from linhx_core.id import api_auth
 
-        kq = api_auth.google_callback(
-            state="st-session-99",
-            ho_so_google={"sub": "gg-55", "email": "lan.cu@vd.vn", "email_verified": True, "name": "Lan Mới"},
-        )
-        assert kq["ok"] is True
-        assert kq["nguoi"] == "NG-55"
-        assert kq["da_gop"] is True
-        assert "oauth_state_google" not in session_data, "state OAuth trong session phải được tiêu thụ một lần"
+            api_auth._kiem_module_crm_bat = lambda: None
+            kho_db = [{"name": "NG-55", "ho_ten": "Lan Cũ", "email": "LAN.CU@VD.VN", "dien_thoai": "0909000111"}]
+            api_auth._tim_nguoi_theo_email = lambda em: list(kho_db)
+            api_auth._luu_nguoi_sau_gop = lambda ng, dg, em: ng.get("name") or "NG-MOI"
 
-        # Gọi lại lần 2 với cùng state -> bị từ chối vì state trong session đã được tiêu thụ
-        with pytest.raises(ValueError):
-            api_auth.google_callback(
+            kq = api_auth.google_callback(
                 state="st-session-99",
-                ho_so_google={"sub": "gg-55", "email": "lan.cu@vd.vn", "email_verified": True},
+                ho_so_google={"sub": "gg-55", "email": "lan.cu@vd.vn", "email_verified": True, "name": "Lan Mới"},
             )
+            assert kq["ok"] is True
+            assert kq["nguoi"] == "NG-55"
+            assert kq["da_gop"] is True
+            assert "oauth_state_google" not in session_data, "state OAuth trong session phải được tiêu thụ một lần"
+
+            # Gọi lại lần 2 với cùng state -> bị từ chối vì state trong session đã được tiêu thụ
+            with pytest.raises(ValueError):
+                api_auth.google_callback(
+                    state="st-session-99",
+                    ho_so_google={"sub": "gg-55", "email": "lan.cu@vd.vn", "email_verified": True},
+                )
+    finally:
+        sys.modules.pop("linhx_core.id.api_auth", None)
+        if "linhx_core.id" in sys.modules:
+            sys.modules["linhx_core.id"].__dict__.pop("api_auth", None)

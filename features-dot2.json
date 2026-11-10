@@ -38,8 +38,8 @@
         "phiếu giao quá 150 phút về duyet và tăng so_lan_giao"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O2/kiem.json"
     },
     {
       "id": "O3",
@@ -57,8 +57,8 @@
         "nộp hai lần cùng commit không tạo bản ghi trùng"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o3.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O3/kiem.json"
     },
     {
       "id": "O4",
@@ -97,8 +97,8 @@
         "390 và 1280 không tràn ngang"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o5.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O5/kiem.json"
     },
     {
       "id": "O6",
@@ -116,8 +116,8 @@
         "Claude hết hạn mức là lỗi máy, không tính lần"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o6.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/O6/kiem.json"
     },
     {
       "id": "O7",
@@ -173,8 +173,8 @@
         "có nhật ký gộp"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_i2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/I2/kiem.json"
     },
     {
       "id": "I3",
@@ -212,8 +212,8 @@
         "không đi bước sau khi bước trước chưa xong"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f1.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F1/kiem.json"
     },
     {
       "id": "F2",
@@ -233,8 +233,8 @@
         "người phụ trách thấy lịch trong viec_cho"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f2.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F2/kiem.json"
     },
     {
       "id": "F3",
@@ -253,8 +253,8 @@
         "commit F3 không đụng trang-bu/**"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_f3.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/F3/kiem.json"
     },
     {
       "id": "T3",
@@ -273,7 +273,7 @@
         "Playwright 390 + 1280 xanh trên VM"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t3.py -q",
-      "passes": false,
+      "passes": true,
       "bang_chung": "bang-chung/T3/hanh-trinh.json"
     }
   ]

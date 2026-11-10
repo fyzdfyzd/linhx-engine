@@ -1,0 +1,29 @@
+{
+  "feature": "O6",
+  "luc": "2026-11-09T22:25:08+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o6.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "tests/nghiem-thu/test_o6.py::test_cong_hoac_rao_truot_khong_goi_claude_va_phieu_ve_tra PASSED [ 33%]",
+    "tests/nghiem-thu/test_o6.py::test_cong_xanh_thi_goi_cham_dung_mot_lan_ghi_dat_hoac_chua_dat PASSED [ 66%]",
+    "tests/nghiem-thu/test_o6.py::test_claude_het_han_muc_la_loi_may_khong_tinh_lan PASSED [100%]",
+    "============================== 3 passed in 0.03s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t1",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 1 item",
+    "apps/linhx_core/linhx_core/ops/test_cham_phieu.py::test_cham_phieu_rao_cong_claude_va_ngoai_le_het_han_muc PASSED [100%]",
+    "============================== 1 passed in 0.02s =============================="
+  ]
+}

@@ -2,15 +2,17 @@
 from __future__ import annotations
 
 import frappe
+from frappe.rate_limiter import rate_limit
 
 from linhx_core.pay import vietqr
 from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
+from linhx_core.pay.sau_tra import mot_dong
 
 
 def _ds_goi() -> list[dict]:
     rows = frappe.get_all(
         "LX Goi",
-        fields=["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban"],
+        fields=["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban", "workflow"],
         ignore_permissions=True,
     )
     ket_qua: list[dict] = []
@@ -40,13 +42,30 @@ def goi() -> list[dict]:
     return goi_cong_khai(_ds_goi())
 
 
+def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
+    if gt is None:
+        return None
+    return mot_dong(gt, toi_da) or None
+
+
 @frappe.whitelist(allow_guest=True)
-def tao_don(brand, goi, email=None) -> dict:
+@rate_limit(limit=10, seconds=3600)
+def tao_don(
+    brand,
+    goi,
+    email=None,
+    nganh=None,
+    thi_truong=None,
+    doi_thu=None,
+    su_that=None,
+) -> dict:
     """Tạo đơn báo cáo theo gói trong catalog (không nhận giá từ client) và trả thông tin VietQR."""
-    ten_brand = str(brand or "").strip()
-    ma_goi = str(goi or "").strip()
+    ten_brand = mot_dong(brand, 90)
+    ma_goi = mot_dong(goi, 80)
     if not ten_brand:
         frappe.throw("Vui lòng nhập tên thương hiệu")
+    if len(ten_brand) > 80:
+        frappe.throw("Tên thương hiệu không được vượt quá 80 ký tự")
     if not ma_goi:
         frappe.throw("Vui lòng chọn gói báo cáo")
 
@@ -70,7 +89,11 @@ def tao_don(brand, goi, email=None) -> dict:
             "noi_dung_ck": don["noi_dung_ck"],
             "qr_url": don["qr_url"],
             "brand": ten_brand,
-            "email": str(email or "").strip() or None,
+            "email": _truong_tuy_chon(email, 120),
+            "nganh": _truong_tuy_chon(nganh, 80),
+            "thi_truong": _truong_tuy_chon(thi_truong, 60),
+            "doi_thu": _truong_tuy_chon(doi_thu, 120),
+            "su_that": _truong_tuy_chon(su_that, 600),
         }
     )
     doc.insert(ignore_permissions=True)

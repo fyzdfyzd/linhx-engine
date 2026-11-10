@@ -1,0 +1,89 @@
+{
+  "feature": "B4",
+  "phieu": "20261109-2000-t1",
+  "luc": "2026-11-09T20:29:32+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_b4.py -q",
+  "pytest_returncode": 0,
+  "pytest_stdout": [
+    "....                                                                     [100%]",
+    "4 passed in 3.46s"
+  ],
+  "kiem_don_vi": {
+    "lenh": "python -m pytest apps/linhx_core/linhx_core/pay/test_sau_tra.py apps/linhx_worker/linhx_worker/test_quy_trinh.py -v",
+    "returncode": 0,
+    "stdout": [
+      "============================= test session starts =============================",
+      "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "rootdir: D:\\LINHX\\ENGINE-t1",
+      "configfile: pytest.ini",
+      "plugins: anyio-4.15.1, platformdirs-4.14.0",
+      "collecting ... collected 9 items",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_hook_lx_don_on_update PASSED [ 11%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_viec_can_tao_du_truong_dau_vao_va_gia_san PASSED [ 22%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_link_bao_cao_loi_khi_thieu_truong PASSED [ 33%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_xu_ly_sau_tra_tao_job_va_chong_trung_log PASSED [ 44%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_boc_du_lieu_khach_va_loai_the_gia_mao PASSED [ 55%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_khach_tra_sau_han_24h_van_ra_job PASSED [ 66%]",
+      "apps/linhx_core/linhx_core/pay/test_sau_tra.py::test_quet_don_da_tra_backoff_khong_bo_roi_va_reset_khi_nguoi_sua PASSED [ 77%]",
+      "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chia_viec_gop_cho_tu_tach_viec_con PASSED [ 88%]",
+      "apps/linhx_worker/linhx_worker/test_quy_trinh.py::test_chay_agy_sandbox_va_cong_chan_tho PASSED [100%]",
+      "============================== 9 passed in 3.92s =============================="
+    ]
+  },
+  "kiem_thuc_te_bench_wsl": {
+    "luc_chay": "2026-11-09T20:27:20+07:00",
+    "site": "test",
+    "don": "DON-B4-1794230840",
+    "job": "VIEC-00094",
+    "workflow": "ai-noi-gi-ve-brand",
+    "trang_thai_luc_sinh": "cho",
+    "nguon": "don",
+    "giay_tu_tra_toi_job": 0.287,
+    "link_bao_cao": "http://127.0.0.1:8000/#/bao-cao/VIEC-00094/fdef3326db25",
+    "dau_vao_giu_dau_lon_hon_va_loai_the": true,
+    "xem_bao_cao_chi_tra_brand": true,
+    "tu_tach_viec_con_khong_duyet_tay": true,
+    "runner_cu_0_1_1_bi_chan": true,
+    "tho_tu_khai_sandbox_khong_chu_ky_hmac_bi_chan": true,
+    "tho_co_nhan_repo_bi_chan": true,
+    "tho_nhan_viec": "VIEC-00095",
+    "workflow_viec_con": "hoi-mot-ai",
+    "nguon_viec_con": "don",
+    "de_boc_du_lieu_khach_kem_loi_dan": true,
+    "nhan_viec_sandbox": {
+      "sandbox": true,
+      "cong_cu": "chi_doc",
+      "quyen_ghi": false,
+      "quyen_shell": false,
+      "thu_muc_cach_ly": true,
+      "mang_cho_phep": [
+        "https://chatgpt.com",
+        "https://gemini.google.com",
+        "https://claude.ai"
+      ]
+    },
+    "trang_thai_cha_sau_khi_tho_nhan": "dang_chay",
+    "giay_tho_nhan_viec": 0.0344,
+    "kiem_backoff_db_that": {
+      "don_backoff": "DON-B4-BO-1794230840",
+      "so_lan_thu_sau_loi_1": 1,
+      "bo_qua_khi_chua_du_1_phut": true,
+      "job_sinh_ngay_sau_khi_nguoi_sua": "VIEC-00105",
+      "reset_bo_dem_sau_khi_sinh_job": true
+    },
+    "unique_index_lx_job_don": [
+      {
+        "Key_name": "don",
+        "Column_name": "don",
+        "Non_unique": 0
+      }
+    ]
+  },
+  "sua_theo_review": {
+    "bo_duyet_tay_va_tu_tach_viec_don": "Khôi phục duyet_viec (apps/linhx_worker/linhx_worker/api.py) chỉ duyệt việc trang_thai == 'cho_duyet' (luồng dat_bao_cao chưa trả tiền), bỏ hoàn toàn cờ da_duyet_tay trên việc nguon='don'. Trong quy_trinh.chia_viec_gop_cho(), tự động tách ngay mọi việc cha ai-noi-gi-ve-brand ở trạng thái 'cho' (kể cả nguon='don') thành 9 việc con trang_thai='cho' kế thừa nguon='don' mà không cần duyệt tay.",
+    "xac_thuc_chu_ky_hmac_sandbox_va_vong_tho_sandbox": "Thay tham số sandbox tự khai bằng xác thực chữ ký HMAC-SHA256 hằng thời gian (quy_trinh.tao_chu_ky_sandbox, quy_trinh.xac_thuc_sandbox_tho với hmac.compare_digest và sandbox_khoa từ site_config.json), đồng thời bắt buộc LX Worker trên server có nhãn 'sandbox', không có nhãn 'repo', và phien_ban >= '0.2.0-sandbox'. Bổ sung vòng lặp runner đã nâng cấp quy_trinh.vong_tho_sandbox gọi chay_agy_sandbox để tự động nhận và chạy hết luồng việc nguon='don' không qua duyệt tay. Nêu rõ cho Linh: runner/linhx_runner.py v0.1.1 nằm ngoài vùng sửa của B4 (cổng K1 canh/rao.py), chưa đọc viec['sandbox'] và chưa ký chu_ky_sandbox, nên với runner v0.1.1 cũ việc nguon='don' sẽ giữ ở trạng thái 'cho' cho tới khi chạy qua vong_tho_sandbox hoặc Linh duyệt phiếu nâng cấp runner/linhx_runner.py.",
+    "rate_limit_tao_don": "Khôi phục @rate_limit(limit=10, seconds=3600) trên apps/linhx_core/linhx_core/pay/api_ban.py:tao_don đúng mức chống spam ban đầu."
+  },
+  "doc_events_lx_don": "linhx_core.pay.sau_tra.xu_ly_sau_tra",
+  "nguon_proto": "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
+}

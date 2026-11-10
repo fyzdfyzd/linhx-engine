@@ -1,0 +1,98 @@
+{
+ "doctype": "DocType",
+ "name": "LX Case",
+ "module": "cred",
+ "custom": 0,
+ "issingle": 0,
+ "engine": "InnoDB",
+ "field_order": [
+  "tieu_de",
+  "khach_hang",
+  "cho_phep_hien_ten",
+  "chi_so",
+  "mo_ta",
+  "da_duyet",
+  "pilot"
+ ],
+ "fields": [
+  {
+   "fieldname": "tieu_de",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Tiêu đề",
+   "reqd": 1
+  },
+  {
+   "fieldname": "khach_hang",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Khách hàng"
+  },
+  {
+   "default": "0",
+   "fieldname": "cho_phep_hien_ten",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Cho phép hiện tên khách hàng"
+  },
+  {
+   "fieldname": "chi_so",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Chỉ số kết quả",
+   "reqd": 1
+  },
+  {
+   "fieldname": "mo_ta",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Mô tả"
+  },
+  {
+   "default": "0",
+   "fieldname": "da_duyet",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Đã duyệt",
+   "search_index": 1
+  },
+  {
+   "fieldname": "pilot",
+   "fieldtype": "Link",
+   "label": "Pilot",
+   "options": "LX Pilot"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1
+  },
+  {
+   "role": "LX Operator",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-09 23:33:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-09 23:33:00.000000"
+}

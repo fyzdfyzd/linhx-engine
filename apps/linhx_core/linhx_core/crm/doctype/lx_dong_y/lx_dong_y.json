@@ -9,6 +9,7 @@
   "nguoi",
   "muc_dich",
   "dong_y",
+  "trang_thai",
   "luc",
   "nguon"
  ],
@@ -35,6 +36,13 @@
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Đồng ý"
+  },
+  {
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Trạng thái xác minh",
+   "options": "\ncho_xac_minh\nda_xac_minh"
   },
   {
    "default": "Now",

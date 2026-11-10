@@ -6,6 +6,7 @@ app_email = "dev@linhx.vn"
 app_license = "mit"
 
 after_install = "linhx_worker.setup.after_install"
+before_migrate = "linhx_worker.setup.before_migrate"
 after_migrate = "linhx_worker.setup.after_install"
 
 scheduler_events = {

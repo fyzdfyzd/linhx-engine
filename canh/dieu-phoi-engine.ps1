@@ -35,10 +35,11 @@ function DayTH { $ra = ""
   for ($i = 1; $i -le 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { return }; KeoTH; Start-Sleep -Seconds (5 * $i) }
   Ghi "đẩy $NhanhTH hỏng 3 lần: $($ra.Trim().Substring(0, [math]::Min(200, $ra.Trim().Length)))" }
 # Gọi claude chấm; trả @{kl = DAT|CHUA_DAT; review = chữ}
-function ChamClaude($de, $tep, $nhan) {
+# Linh 10/11: chấm thường dùng Sonnet; chấm bảo mật và feature trong bao_mat (tiền, quyền, dữ liệu khách) dùng Opus
+function ChamClaude($de, $tep, $nhan, $model = "sonnet") {
   $de | Set-Content -Encoding utf8 $tep
   $rel = ".canh-tho/" + (Split-Path $tep -Leaf)
-  $raw = claude -p "Doc file $rel (UTF-8) va lam dung yeu cau trong do." --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
+  $raw = claude -p "Doc file $rel (UTF-8) va lam dung yeu cau trong do." --model $model --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
   try { $j = $raw | ConvertFrom-Json; $rv = $j.result
         Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`t$nhan`t$fid`t$([int]$j.usage.input_tokens + [int]$j.usage.cache_read_input_tokens)`t$($j.usage.output_tokens)`t" } catch { $rv = $raw }
   $d1 = @("$rv" -split "`n" | Where-Object { $_.Trim().Trim('*', '#', ' ', [char]0xFEFF) -cmatch '^(DAT|CHUA_DAT)\b' }) | Select-Object -First 1
@@ -189,7 +190,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $fid, $ten, $loai, $dung, $bd, $phut = (Get-Content "$S\can-cham.txt" -Encoding utf8) -split ";"
   $goc = (Get-Content "$S\goc.txt").Trim()
   $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
-  $loi = @(); $luuY = @(); $loiMay = $false; $claudeHong = $false
+  $loi = @(); $luuY = @(); $loiMay = $false; $claudeHong = $false; $bmTruot = $false
   if ((git rev-parse HEAD).Trim() -eq $goc) { $loi += "agy không commit gì" }
   # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
   $camNgoai = (@($TichHop, $Canh) + @(Get-ChildItem "D:\LINHX\ENGINE-t*" -Directory -ErrorAction SilentlyContinue | Where-Object FullName -ne $Wt | ForEach-Object FullName)) -join ";"
@@ -228,15 +229,20 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     git diff --name-only "$mbK..HEAD" 2>$null | Set-Content -Encoding utf8 "$tamTho\doi.txt"
     $env:CONG_KIEM_DOI = "$tamTho\doi.txt"; $env:CONG_KIEM_THEM = $fid
   } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
+  # pytest mỗi thợ một thư mục tạm riêng: chung pytest-of-ADMIN thì agy và cổng kiểm giẫm nhau, WinError 5 (C2B, O4 9/11)
+  $env:PYTEST_ADDOPTS = "--basetemp=$($tamTho.Replace('\', '/'))/pytest-tmp"
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
-  Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM -ErrorAction SilentlyContinue
   $maCk = $LASTEXITCODE
+  Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM, Env:PYTEST_ADDOPTS -ErrorAction SilentlyContinue
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
-  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command') { $loiMay = $true }
+  if ($ck -match 'Timeout \d+ms exceeded|TimeoutExpired|timed out after \d+ seconds|SIGTERM|page-data-collection-timeout|is not recognized as an internal|PageNotFoundError|Unknown command|pytest-of-\w+\\+pytest-current') { $loiMay = $true }
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
+  # Linh 10/11 tiết kiệm token: đề chấm kèm sẵn diff (≤ 40k ký tự, quá thì để Claude tự git diff) và chỉ phần cuối đầu ra cổng kiểm
+  function KemDiff($khoang) { $d = (git diff $khoang 2>$null | Out-String); if ($d.Length -gt 0 -and $d.Length -le 40000) { "Diff đã kèm dưới đây, không cần chạy lại git diff; chỉ mở file khi cần thêm ngữ cảnh:`n``````diff`n$d`n``````" } else { "Diff dài $($d.Length) ký tự, tự xem bằng git diff $khoang (chỉ file cần)." } }
+  $ckNgan = if ($ck.Length -gt 3000) { "...(cắt phần đầu)`n" + $ck.Substring($ck.Length - 3000) } else { $ck }
   $de = @"
 Bạn là Bàng Thống, người canh LINHX ENGINE. Review phần agy làm cho feature $fid trên nhánh ${Nhanh}: git diff $goc..HEAD (chỉ phần này).
 Feature $fid`: $($x.mo_ta)
@@ -244,15 +250,16 @@ Tiêu chí:
 $tieuChi
 Vùng được sửa: $(@($x.vung) -join ', ') (cổng vùng đã chạy bằng máy).
 Hợp đồng: tests/nghiem-thu/HOP-DONG.md và tests/nghiem-thu/test_$($fid.ToLower()).py.
-Kết quả cổng kiểm (đã chạy ngoài tay thợ, không cần tự chạy lại): $ck
+Kết quả cổng kiểm (đã chạy ngoài tay thợ, không cần tự chạy lại): $ckNgan
 Chấm theo rủi ro: dữ liệu khách, quyền, tiền, bí mật là mức cao, lỗi là CHUA_DAT. Phần còn lại chỉ CHUA_DAT khi luồng chính sai hoặc làm cho qua test mà không làm thật
 (ví dụ bằng chứng VM bịa: log/JSON không giống đầu ra thật, thời điểm vô lý; hàm trả cứng theo đúng dữ liệu test).
 Lỗi nhỏ ghi mục "## Lưu ý" (file:dòng + việc), không chặn. Ý tưởng ngoài phạm vi để mục "## Ý tưởng".
 Trả lời: dòng 1 chỉ là DAT hoặc CHUA_DAT. Sau đó tối đa 10 gạch đầu dòng, mỗi dòng file:dòng và việc phải sửa. Không sửa file nào, đọc ít file nhất có thể.
+$(KemDiff "$goc..HEAD")
 "@
   # Linh 9/11 tiết kiệm token: rào cứng/cổng kiểm đã trượt (không do máy) thì không gọi Claude chấm
   if ($loi.Count -gt 0 -and -not $loiMay) { $c = @{ kl = "CHUA_DAT"; review = "(Không gọi Claude chấm vì rào cứng/cổng kiểm đã trượt; sửa các điểm ở mục Rào cứng trước.)" } }
-  else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" }
+  else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" $(if (@($dk.bao_mat) -contains $fid) { "opus" } else { "sonnet" }) }
   # Claude hết hạn mức (9/11 13:49 "You've hit your weekly limit" bị chấm CHUA_DAT, C2 chạm trần oan): lỗi máy, không tính lần
   if ($c.review -match "hit your (weekly |daily |usage )?limit|usage limit|rate.?limit|overloaded_error") { $loiMay = $true; $claudeHong = $true }
   $review = $c.review
@@ -265,10 +272,11 @@ Chỉ tìm lỗi bảo mật thật, có đường khai thác cụ thể: thiế
 chống trùng giao dịch sai, lộ dữ liệu khách (email, SĐT, hồ sơ) ra API công khai hoặc log, SQL/lệnh ghép chuỗi từ dữ liệu ngoài,
 bí mật viết trong code, so khoá không hằng thời gian, đổi trạng thái tiền không trong giao dịch.
 Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT. Sau đó tối đa 8 gạch đầu dòng: file:dòng, cách khai thác, cách sửa. Không sửa file nào.
+$(KemDiff "$NhanhTH...HEAD")
 "@
-    $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
+    $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten" "opus"
     $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
-    if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
+    if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $bmTruot = $true; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
   }
   # K7: feature có kiểm tích hợp HTTP thật trên bench (dieu-khien.json tich_hop: {ID: "th_x.py"}) chạy sau khi đạt hộp đen
   $thTep = if ($dk.tich_hop) { $dk.tich_hop.$fid } else { $null }
@@ -290,7 +298,7 @@ Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT.
     else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
-  if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT") -or $claudeHong)) {
+  if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT" -and -not $bmTruot) -or $claudeHong)) {
     # lỗi máy (npm/next build/RAM), không phải lỗi thợ: không tính vào trần K2
     Ghi "$fid trượt do lỗi máy (commit $sha), không tính lần"
     $luuY += "Lượt này trượt do lỗi máy của canh (npm, next build, RAM), không tính vào trần. Không cần sửa gì vì lý do này."

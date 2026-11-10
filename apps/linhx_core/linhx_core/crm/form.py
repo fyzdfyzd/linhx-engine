@@ -74,6 +74,8 @@ def da_rut_dong_y(
             continue
         ma_d = dong_y._ma_nguoi(d.get("nguoi"))
         if ma_d in tap_ma:
+            if str(d.get("trang_thai") or "").strip() == "cho_xac_minh":
+                continue
             if d.get("muc_dich") == muc_dich:
                 co_dong = True
             ban_sao = dict(d)
@@ -192,7 +194,10 @@ def xu_ly(
         )
 
     if _la_dong_y_true(du_lieu.get("dong_y_marketing")):
-        if _can_ghi_dong_y(so_dong_y_moi, cac_dinh_danh, "marketing", da_co_nguoi):
+        if (
+            _can_ghi_dong_y(so_dong_y_moi, cac_dinh_danh, "marketing", da_co_nguoi)
+            and not dong_y.hieu_luc(so_dong_y_moi, ma_nguoi, "marketing")
+        ):
             so_dong_y_moi = dong_y.ghi(
                 so_dong_y_moi,
                 nguoi_ket_qua,
@@ -200,6 +205,7 @@ def xu_ly(
                 True,
                 luc_str,
                 nguon_str,
+                trang_thai="cho_xac_minh",
             )
 
     co_hoi_moi = {
