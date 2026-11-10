@@ -1,17 +1,21 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 17:20 (giờ máy cty). Đạt: 63/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G2, G3, G4, G5, U1, U2, K1)
+Cập nhật 2026-11-10 17:29 (giờ máy cty). Đạt: 63/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G2, G3, G4, G5, U1, U2, K1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature N5 · commit d543347 · nhánh tu-dong/engine-t1 · 2026-11-10T17:16:34 |
-| 2 | K2 | rảnh | CHUA_DAT · Feature K2 · commit 659276b · nhánh tu-dong/engine-t2 · 2026-11-10T16:38:11 |
-| 3 | U3 | 20261110-1649-t3 từ 2026-11-10T16:49:57 | CHUA_DAT · Feature U3 · commit 6f11888 · nhánh tu-dong/engine-t3 · 2026-11-10T16:37:22 |
-| 4 | G1 | 20261110-1700-t4 từ 2026-11-10T17:00:55 | DAT · Feature G4 · commit 94940e9 · nhánh tu-dong/engine-t4 · 2026-11-10T17:00:52 |
+| 2 | - | rảnh | CHUA_DAT · Feature K2 · commit 16812fd · nhánh tu-dong/engine-t2 · 2026-11-10T17:23:03 |
+| 3 | - | rảnh | CHUA_DAT · Feature U3 · commit 839d5b8 · nhánh tu-dong/engine-t3 · 2026-11-10T17:23:06 |
+| 4 | G1 | rảnh | DAT · Feature G4 · commit 94940e9 · nhánh tu-dong/engine-t4 · 2026-11-10T17:00:52 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
 - K3: chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)
+
+## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
+- K2
+- U3
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -38,18 +42,20 @@ Cập nhật 2026-11-10 17:20 (giờ máy cty). Đạt: 63/68 (N1, N2, N3, N4, N
 - 2026-11-10T12:53:10 G3 CHUA_DAT 3 lần liền (thợ 4): đã lùi tu-dong/engine-t4 về mốc d959ce6f, bản hỏng giữ ở nhánh cục bộ hong/G3-20261110-1253, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\G3.txt
 - 2026-11-10T12:56:05 G5 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc d959ce6f, bản hỏng giữ ở nhánh cục bộ hong/G5-20261110-1256, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\G5.txt
 - 2026-11-10T16:30:30 đối chiếu VM: - N5 HẠ VỀ chưa đạt (sai 2 lượt liền): linhx http://35.198.251.2/linhx/api/method/ping -> 500
+- 2026-11-10T17:23:03 K2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc bd6862e0, bản hỏng giữ ở nhánh cục bộ hong/K2-20261110-1722, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\K2.txt
+- 2026-11-10T17:23:06 U3 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 6585d3a1, bản hỏng giữ ở nhánh cục bộ hong/U3-20261110-1723, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\U3.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 16:54 t4: agy xong phiếu 20261110-1624-t4 (G4) sau 29 phút
-- 2026-11-10 17:00 t4: G4 DAT, đã gộp vào main
-- 2026-11-10 17:00 t4: giao agy phiếu 20261110-1700-t4: G1
-- 2026-11-10 17:10 t1: agy xong phiếu 20261110-1649-t1 (N5) sau 20 phút
-- 2026-11-10 17:10 t1: N5: cổng kiểm VM không trả JSON (lần 1): fatal: not a git repository (or any of the parent directories): .git
-- 2026-11-10 17:10 t1: N5: cổng kiểm VM không trả JSON (lần 2): fatal: not a git repository (or any of the parent directories): .git
-- 2026-11-10 17:13 t2: agy xong phiếu 20261110-1649-t2 (K2) sau 24 phút
-- 2026-11-10 17:14 t2: K2: cổng kiểm VM không trả JSON (lần 1): fatal: not a git repository (or any of the parent directories): .git
-- 2026-11-10 17:15 t2: K2: cổng kiểm VM không trả JSON (lần 2): fatal: not a git repository (or any of the parent directories): .git
-- 2026-11-10 17:16 t1: N5 DAT, đã gộp vào main
-- 2026-11-10 17:16 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
-- 2026-11-10 17:21 t3: dừng agy phiếu 20261110-1649-t3 (U3): 10 phút không commit, không chạy test mới
+- 2026-11-10 17:21 t3: agy xong phiếu 20261110-1649-t3 (U3) sau 31 phút
+- 2026-11-10 17:21 t4: agy xong phiếu 20261110-1700-t4 (G1) sau 21 phút
+- 2026-11-10 17:21 t3: U3: cổng kiểm VM không trả JSON (lần 1): fatal: not a git repository (or any of the parent directories): .git
+- 2026-11-10 17:22 t3: U3: cổng kiểm VM không trả JSON (lần 2): fatal: not a git repository (or any of the parent directories): .git
+- 2026-11-10 17:22 t2: K2 CHUA_DAT lần 3 (commit 16812fd)
+- 2026-11-10 17:23 t3: U3 CHUA_DAT lần 3 (commit 839d5b8)
+- 2026-11-10 17:23 t2: K2 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
+- 2026-11-10 17:23 t3: U3 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
+- 2026-11-10 17:23 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-10 17:23 t3: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-10 17:23 t4: G1: cổng kiểm VM không trả JSON (lần 1): fatal: not a git repository (or any of the parent directories): .git
+- 2026-11-10 17:23 t4: G1: cổng kiểm VM không trả JSON (lần 2): fatal: not a git repository (or any of the parent directories): .git
 
