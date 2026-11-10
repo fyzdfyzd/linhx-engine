@@ -93,3 +93,9 @@ doc_events = {
         "on_update": "linhx_core.co_module.xoa_cache_cau_hinh",
     },
 }
+
+scheduler_events = {
+    "all": [
+        "linhx_core.su_kien.chay",
+    ],
+}

@@ -44,8 +44,8 @@
     "hàm lỗi được chạy lại, hàm đã xong không gọi lại, quá trần thì hong"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l2.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/L2/kiem.json"
   },
   {
    "id": "L3",
