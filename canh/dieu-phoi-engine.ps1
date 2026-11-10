@@ -262,8 +262,32 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
   # pytest mỗi thợ một thư mục tạm riêng: chung pytest-of-ADMIN thì agy và cổng kiểm giẫm nhau, WinError 5 (C2B, O4 9/11)
   $env:PYTEST_ADDOPTS = "--basetemp=$($tamTho.Replace('\', '/'))/pytest-tmp"
-  $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
-  $maCk = $LASTEXITCODE
+  # C (Linh 10/11, V1 đạt): cổng kiểm chạy trên VM linhx-engine-1 (deploy/cong_kiem_vm.py bản của main, trần RAM, cách ly mạng)
+  # để máy cty đỡ RAM. Lỗi máy (loi_may) thì chạy lại 1 lần; ssh hỏng hay vẫn lỗi máy thì quay về cổng kiểm trên máy này.
+  $ck = $null; $maCk = 0
+  if ($dk.cong_kiem_vm) {
+    $daDay = $false
+    for ($i = 1; $i -le 2 -and -not $daDay; $i++) { git push -q -f origin "HEAD:refs/heads/$Nhanh" 2>&1 | Out-Null; $daDay = ($LASTEXITCODE -eq 0) }
+    if ($daDay) {
+      $gcK = (Get-Command gcloud.cmd -ErrorAction SilentlyContinue).Source
+      $lenhVm = "cd ~/linhx-engine && git fetch -q origin main && git show origin/main:deploy/cong_kiem_vm.py > /tmp/cong_kiem_vm.py && sudo python3 /tmp/cong_kiem_vm.py --nhanh $Nhanh --features $FF --them $fid"
+      for ($lan = 1; $lan -le 2 -and $gcK; $lan++) {
+        $raV = "$tamTho\ck-vm.out"; $erV = "$tamTho\ck-vm.err"
+        $pV = Start-Process $gcK -NoNewWindow -PassThru -RedirectStandardOutput $raV -RedirectStandardError $erV -ArgumentList @("compute", "ssh", "linhx-engine-1", "--project", "linhx-engine", "--zone", "asia-southeast1-b", "--quiet", "--command", "`"$lenhVm`"")
+        $null = $pV.Handle
+        if (-not $pV.WaitForExit(1500000)) { taskkill /PID $pV.Id /T /F 2>&1 | Out-Null; Ghi "${fid}: cổng kiểm VM quá 25 phút (lần $lan)"; continue }
+        $dongJ = @(Get-Content $raV -Encoding utf8 -ErrorAction SilentlyContinue | Where-Object { $_ -match '^\s*\{.*"ma"' }) | Select-Object -Last 1
+        if (-not $dongJ) { Ghi "${fid}: cổng kiểm VM không trả JSON (lần $lan): $(((Get-Content $erV -Tail 3 -ErrorAction SilentlyContinue) -join ' / '))"; continue }
+        $kq = $dongJ | ConvertFrom-Json
+        if ($kq.loi_may) { Ghi "${fid}: cổng kiểm VM lỗi máy (lần $lan), mã $($kq.ma)"; continue }
+        $ck = "[cổng kiểm VM linhx-engine-1]`n$($kq.ra)"; $maCk = [int]$kq.ma; Ghi "${fid}: cổng kiểm VM mã $maCk"; break
+      }
+    } else { Ghi "${fid}: đẩy $Nhanh lên GitHub hỏng, dùng cổng kiểm máy này" }
+  }
+  if ($null -eq $ck) {
+    $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
+    $maCk = $LASTEXITCODE
+  }
   Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM, Env:PYTEST_ADDOPTS -ErrorAction SilentlyContinue
   try { $mxK.ReleaseMutex() } catch {}
   if ($maCk -ne 0) { $loi += "cong_kiem trượt:`n$ck" }
