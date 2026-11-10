@@ -1,16 +1,16 @@
 {
-  "luc": "2026-11-10T09:04:40+00:00",
+  "luc": "2026-11-10T09:09:30+00:00",
   "may": "linhx-engine-1",
-  "nhanh": "main",
+  "nhanh": "tu-dong/engine-t1",
   "features": "features-dot2c.json",
-  "unit": "cong-kiem-vm-main",
-  "commit_nhanh": "404679e54946a6d4508275ba734b260f25362ac3",
+  "unit": "cong-kiem-vm-tu-dong-engine-t1",
+  "commit_nhanh": "b77d8a0e10235c765430501d4018248e437c2817",
   "commit_main": "404679e54946a6d4508275ba734b260f25362ac3",
   "bam_khoa": "d3ab31704f6b6fafaddc69b36c6a0cc241ef934128975003a0931061ba482253",
   "bam_cong_kiem": "d9582310a448d249192a6ce372f3e95d98da15f16e6dd82ca55296b901fd7f98",
   "ma": 0,
   "loi_may": false,
-  "giay": 17.842,
+  "giay": 11.849,
   "ram": "3G",
-  "ra_cuoi": "đạt thật 1/2, vi phạm 0\n"
+  "ra_cuoi": "đạt thật 2/2, vi phạm 0\n"
 }
