@@ -232,5 +232,5 @@
     "C2": "th_c2.py",
     "A4B": "th_a4b.py"
   },
-  "cong_kiem_vm": false
+  "cong_kiem_vm": true
 }
