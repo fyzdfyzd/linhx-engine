@@ -283,8 +283,8 @@
     "ba site BU trả 200 trên VM, tự lên trong 10 phút sau merge"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u1.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/U1/vm.json"
   },
   {
    "id": "U2",
