@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-11 05:00 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, T4, K1, K2a)
+Cập nhật 2026-11-11 05:09 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, T4, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -49,7 +49,6 @@ Cập nhật 2026-11-11 05:00 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N
 - 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-11 04:13 t0: đẩy main hỏng 3 lần: git : To https://github.com/fyzdfyzd/linhx-engine.git
 At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
 + ... 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-S ...
 +
@@ -61,4 +60,5 @@ At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
 - 2026-11-11 04:49 t0: nhả giữ cũ N5 của t4 (thợ đang )
 - 2026-11-11 04:50 t2: agy xong phiếu 20261111-0424-t2 (K2b) sau 24 phút
 - 2026-11-11 05:00 t3: T4 DAT, đã gộp vào main
+- 2026-11-11 05:02 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 
