@@ -252,7 +252,8 @@ def test_chan_url_http_tu_xa_chan_redirect_va_bat_buoc_hmac_kem_tho_han_nonce(tm
     try:
         kq = keo_phieu_http(url, "tho-1", "khoa-tho-1", khoa_hmac=khoa_hmac)
         assert kq is not None and kq["ma_phieu"] == "PH-KY-1"
-        _, than_gui, hdr_khoa = nhan_duoc[-1]
+        duong_api, than_gui, hdr_khoa = nhan_duoc[-1]
+        assert duong_api == "/api/method/linhx_goi_ops.ops.api_tho.keo"
         assert hdr_khoa == "khoa-tho-1"
         assert "khoa" not in than_gui and "khoa_tran" not in than_gui
 

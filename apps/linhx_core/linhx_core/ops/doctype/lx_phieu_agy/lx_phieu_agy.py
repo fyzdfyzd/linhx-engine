@@ -1,6 +1,33 @@
+from collections.abc import Callable
+import importlib
+import pathlib
+import sys
+
 from frappe.model.document import Document
 
-from linhx_core.ops import phieu_agy
+from linhx_core import dang_ky_module
+
+_THU_MUC_APPS = pathlib.Path(__file__).resolve().parents[5]
+
+
+def _tra_ham_phieu_agy(khoa: str) -> Callable:
+    """Tra hàm cung_cap của gói phieu_agy qua dang_ky_module (không import trực tiếp gói ở tầng lõi)."""
+    ds_module = dang_ky_module.quet(_THU_MUC_APPS)
+    ds_duong = dang_ky_module.tim_ham(ds_module, "cung_cap", khoa)
+    if not ds_duong:
+        raise RuntimeError(f"Không tìm thấy hàm cung_cap cho khoá {khoa!r}")
+    duong_ham = ds_duong[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    duong_app = str(_THU_MUC_APPS / ten_app)
+    if duong_app not in sys.path and (_THU_MUC_APPS / ten_app).is_dir():
+        sys.path.insert(0, duong_app)
+    mod = importlib.import_module(ten_module)
+    ham = getattr(mod, ten_ham, None)
+    if not callable(ham):
+        raise AttributeError(f"Hàm cung_cap không gọi được: {duong_ham!r}")
+    return ham
+
 
 
 def _lay_vai_tro_hien_tai() -> list[str]:
@@ -64,11 +91,13 @@ class LXPhieuAgy(Document):
         if not getattr(self, "trang_thai", None):
             self.trang_thai = "nhap"
         du_lieu = self._to_dict()
-        phieu_agy.kiem_phieu(du_lieu)
+        kiem_phieu = _tra_ham_phieu_agy("ops.phieu_agy.kiem_phieu")
+        chuyen_trang_thai = _tra_ham_phieu_agy("ops.phieu_agy.chuyen_trang_thai")
+        kiem_phieu(du_lieu)
 
         trang_thai_cu = _lay_trang_thai_cu(self)
         if trang_thai_cu and trang_thai_cu != self.trang_thai:
-            kq = phieu_agy.chuyen_trang_thai(
+            kq = chuyen_trang_thai(
                 self._to_dict(trang_thai=trang_thai_cu),
                 self.trang_thai,
                 vai_tro=_lay_vai_tro_hien_tai(),
@@ -78,7 +107,7 @@ class LXPhieuAgy(Document):
             if "ly_do_tra" in kq:
                 self.ly_do_tra = kq["ly_do_tra"]
         elif trang_thai_cu is None and self.trang_thai != "nhap":
-            kq = phieu_agy.chuyen_trang_thai(
+            kq = chuyen_trang_thai(
                 self._to_dict(trang_thai="nhap"),
                 self.trang_thai,
                 vai_tro=_lay_vai_tro_hien_tai(),

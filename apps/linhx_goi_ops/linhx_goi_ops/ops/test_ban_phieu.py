@@ -1,11 +1,12 @@
-"""Test đơn vị cho linhx_core.ops.ban_phieu và linhx_core.ops.api_ban_phieu."""
+"""Test đơn vị cho linhx_goi_ops.ops.ban_phieu và linhx_goi_ops.ops.api_ban_phieu."""
 from __future__ import annotations
 
+import importlib
 import sys
 import types
 import pytest
 
-from linhx_core.ops import ban_phieu
+from linhx_goi_ops.ops import ban_phieu
 
 
 def test_ds_phieu_cho_va_duyet_tra_phieu():
@@ -103,10 +104,9 @@ def test_api_ban_phieu_voi_frappe_gia(monkeypatch):
     fake_frappe.get_doc = lambda dt, name: kho[name]
 
     monkeypatch.setitem(sys.modules, "frappe", fake_frappe)
-    sys.modules.pop("linhx_core.ops.api_ban_phieu", None)
-    import importlib
+    sys.modules.pop("linhx_goi_ops.ops.api_ban_phieu", None)
 
-    api_bp = importlib.import_module("linhx_core.ops.api_ban_phieu")
+    api_bp = importlib.import_module("linhx_goi_ops.ops.api_ban_phieu")
 
     ds = api_bp.phieu_cho()
     assert [x["name"] for x in ds] == ["PH-11", "PH-10"]

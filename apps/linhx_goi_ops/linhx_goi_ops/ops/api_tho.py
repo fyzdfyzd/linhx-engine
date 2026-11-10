@@ -1,27 +1,63 @@
-"""API Frappe cho thợ kéo và nộp phiếu Agy."""
+"""API Frappe cho thợ kéo và nộp phiếu Agy.
+
+Thuần Python ở mức nạp file (không `import frappe` ở đầu file); nạp trễ `frappe` trong hàm.
+"""
 from __future__ import annotations
 
+from datetime import datetime
 import json
 import re
 
-import frappe
-from frappe.utils import now_datetime
-
-from linhx_core.ops.keo_phieu import (
+from linhx_goi_ops.ops.keo_phieu import (
     DINH_DANG_TG,
     dang_ky_tho,
     keo_phieu,
     xac_thuc_tho,
 )
-from linhx_core.ops.nop_phieu import nop_phieu
+from linhx_goi_ops.ops.nop_phieu import nop_phieu
 
 _MAU_HEX_64 = re.compile(r"^[0-9a-fA-F]{64}$")
+
+
+def _lay_frappe():
+    try:
+        import frappe
+    except ImportError:
+        return None
+    return frappe
+
+
+def _yeu_cau_frappe():
+    frappe = _lay_frappe()
+    if frappe is None:
+        raise RuntimeError("Cần môi trường Frappe để gọi API thợ")
+    return frappe
+
+
+def _now_datetime():
+    try:
+        from frappe.utils import now_datetime
+
+        return now_datetime()
+    except ImportError:
+        return datetime.now()
+
+
+def _whitelist(*, allow_guest: bool = False, methods: list[str] | None = None):
+    def _trang_tri(fn):
+        frappe = _lay_frappe()
+        if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+            return frappe.whitelist(allow_guest=allow_guest, methods=methods)(fn)
+        return fn
+
+    return _trang_tri
 
 
 def _doc_payload(kwargs: dict) -> dict:
     """Đọc dữ liệu JSON từ body request HTTP hoặc kwargs khi gọi trực tiếp."""
     du_lieu: dict = {}
-    req = getattr(frappe, "request", None)
+    frappe = _lay_frappe()
+    req = getattr(frappe, "request", None) if frappe is not None else None
     if req is not None:
         try:
             body = req.get_json(silent=True)
@@ -46,6 +82,7 @@ def _doc_payload(kwargs: dict) -> dict:
 
 def _nap_kho_tho() -> dict:
     """Đọc danh sách mã băm khoá của các thợ từ cấu hình site (`tho_khoa_bam` / `tho_khoa`)."""
+    frappe = _yeu_cau_frappe()
     kho: dict = {"tho": {}, "phieu": []}
     cfg: dict = {}
     try:
@@ -60,7 +97,7 @@ def _nap_kho_tho() -> dict:
     conf = getattr(frappe, "conf", None)
     if conf:
         for ten_muc in ("tho_khoa_bam", "tho_agy", "tho_khoa"):
-            gia_tri = getattr(conf, ten_muc, None) or conf.get(ten_muc)
+            gia_tri = getattr(conf, ten_muc, None) or (conf.get(ten_muc) if hasattr(conf, "get") else None)
             if isinstance(gia_tri, dict):
                 cfg[ten_muc] = gia_tri
 
@@ -107,21 +144,24 @@ def _trich_khoa_tran(payload: dict, khoa: str | None) -> str | None:
         val = payload.get(truong)
         if isinstance(val, str):
             return val
-    try:
-        hdr = frappe.get_request_header("X-Tho-Khoa")
-        if isinstance(hdr, str) and hdr:
-            return hdr
-        auth = frappe.get_request_header("Authorization")
-        if isinstance(auth, str) and auth.strip().lower().startswith("bearer "):
-            return auth.strip()[7:].strip()
-    except Exception:
-        pass
+    frappe = _lay_frappe()
+    if frappe is not None:
+        try:
+            hdr = frappe.get_request_header("X-Tho-Khoa")
+            if isinstance(hdr, str) and hdr:
+                return hdr
+            auth = frappe.get_request_header("Authorization")
+            if isinstance(auth, str) and auth.strip().lower().startswith("bearer "):
+                return auth.strip()[7:].strip()
+        except Exception:
+            pass
     return khoa
 
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@_whitelist(allow_guest=True, methods=["POST"])
 def keo(ma_tho: str | None = None, khoa: str | None = None, **kwargs):
     """API cho thợ kéo phiếu: kiểm khoá thợ, khoá dòng (FOR UPDATE), thu hồi quá hạn và giao phiếu."""
+    frappe = _yeu_cau_frappe()
     payload = _doc_payload(kwargs)
     ma = ma_tho if isinstance(ma_tho, str) and ma_tho else payload.get("ma_tho") or payload.get("tho")
     ma_chuan = str(ma or "").strip()
@@ -132,7 +172,7 @@ def keo(ma_tho: str | None = None, khoa: str | None = None, **kwargs):
         frappe.local.response["http_status_code"] = 401
         return {"ok": False, "loi": "unauthorized"}
 
-    luc_dt = now_datetime()
+    luc_dt = _now_datetime()
     luc_str = luc_dt.strftime(DINH_DANG_TG) if hasattr(luc_dt, "strftime") else str(luc_dt)
 
     try:
@@ -196,7 +236,7 @@ def keo(ma_tho: str | None = None, khoa: str | None = None, **kwargs):
         raise
 
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@_whitelist(allow_guest=True, methods=["POST"])
 def nop(
     ma_tho: str | None = None,
     khoa: str | None = None,
@@ -211,6 +251,7 @@ def nop(
     """API cho thợ nộp phiếu: kiểm khoá thợ, chặn nộp phiếu của thợ khác (403),
     lưu commit/nhánh/nhật ký/phút/token và chống tạo bản ghi trùng khi nộp lại cùng commit.
     """
+    frappe = _yeu_cau_frappe()
     payload = _doc_payload(kwargs)
     du_lieu_con = payload.get("du_lieu")
     if isinstance(du_lieu_con, dict):
@@ -246,7 +287,7 @@ def nop(
         "token": token if token is not None else payload.get("token", 0),
     }
 
-    luc_dt = now_datetime()
+    luc_dt = _now_datetime()
     luc_str = luc_dt.strftime(DINH_DANG_TG) if hasattr(luc_dt, "strftime") else str(luc_dt)
 
     try:

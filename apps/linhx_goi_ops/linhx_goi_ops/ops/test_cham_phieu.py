@@ -1,7 +1,7 @@
 """Unit test cho ops/cham_phieu.py (O6)."""
 from __future__ import annotations
 
-from linhx_core.ops.cham_phieu import cham_phieu, la_loi_het_han_muc
+from linhx_goi_ops.ops.cham_phieu import cham_phieu, la_loi_het_han_muc
 
 
 def test_cham_phieu_rao_cong_claude_va_ngoai_le_het_han_muc():

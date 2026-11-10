@@ -3,7 +3,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from linhx_core.ops import phieu_agy
+from linhx_goi_ops.ops import phieu_agy
 
 DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
 

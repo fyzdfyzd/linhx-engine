@@ -262,8 +262,8 @@
     "không import ngược lớp"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g5.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/G5/kiem.json"
   },
   {
    "id": "U1",

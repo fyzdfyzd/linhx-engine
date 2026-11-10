@@ -1498,7 +1498,7 @@ def keo_phieu_http(
     kho_nonce: pathlib.Path | str | set[str] | None = None,
     ghi_nhan_nonce: bool = True,
 ) -> dict | None:
-    """Gọi API Frappe `/api/method/linhx_core.ops.api_tho.keo` và bắt buộc kiểm chữ ký HMAC + chống phát lại."""
+    """Gọi API Frappe `/api/method/linhx_goi_ops.ops.api_tho.keo` và bắt buộc kiểm chữ ký HMAC + chống phát lại."""
     goc = _kiem_url_api(api_url)
     ma = str(ma_tho or "").strip()
     if not ma or not _MAU_MA_THO.match(ma):
@@ -1519,7 +1519,7 @@ def keo_phieu_http(
         kho_nonce_thuc = _thu_muc_trang_thai_tho() / "nonce-da-dung.json"
 
     ma_http, than = _goi_json_http(
-        f"{goc}/api/method/linhx_core.ops.api_tho.keo",
+        f"{goc}/api/method/linhx_goi_ops.ops.api_tho.keo",
         {"ma_tho": ma},
         khoa_tho,
     )
@@ -1552,7 +1552,7 @@ def nop_phieu_http(
     *,
     ds_bi_mat: tuple[str, ...] | list[str] | None = None,
 ) -> dict:
-    """Gọi API Frappe `/api/method/linhx_core.ops.api_tho.nop` (khoá chỉ qua header, nhật ký đã lọc sạch)."""
+    """Gọi API Frappe `/api/method/linhx_goi_ops.ops.api_tho.nop` (khoá chỉ qua header, nhật ký đã lọc sạch)."""
     goc = _kiem_url_api(api_url)
     ma = str(ma_tho or "").strip()
     if not ma or not _MAU_MA_THO.match(ma):
@@ -1570,7 +1570,7 @@ def nop_phieu_http(
         "token": ket_qua_chay["token"],
     }
     ma_http, than = _goi_json_http(
-        f"{goc}/api/method/linhx_core.ops.api_tho.nop",
+        f"{goc}/api/method/linhx_goi_ops.ops.api_tho.nop",
         payload,
         khoa_tho,
     )

@@ -2,8 +2,6 @@ import sys
 import types
 import pytest
 
-from linhx_core.ops import phieu_agy
-
 
 def _nap_controller():
     if "frappe" not in sys.modules or sys.modules["frappe"] is None:
@@ -26,6 +24,7 @@ def _nap_controller():
     from linhx_core.ops.doctype.lx_phieu_agy.lx_phieu_agy import LXPhieuAgy
 
     return LXPhieuAgy
+
 
 
 def test_controller_validate_va_chuyen_trang_thai(monkeypatch):
@@ -74,10 +73,14 @@ def test_controller_validate_va_chuyen_trang_thai(monkeypatch):
 
 
 def test_nhap_sang_tra_bat_buoc_ly_do():
+    _nap_controller()
+    from linhx_core.ops.doctype.lx_phieu_agy.lx_phieu_agy import _tra_ham_phieu_agy
+
+    chuyen_trang_thai = _tra_ham_phieu_agy("ops.phieu_agy.chuyen_trang_thai")
     p = {"loai_phieu": "sua_loi", "de": "Sửa lỗi hiển thị", "trang_thai": "nhap"}
     with pytest.raises(PermissionError):
-        phieu_agy.chuyen_trang_thai(p, "tra", vai_tro=["Guest"], ly_do_tra="Chưa rõ")
+        chuyen_trang_thai(p, "tra", vai_tro=["Guest"], ly_do_tra="Chưa rõ")
     with pytest.raises(ValueError):
-        phieu_agy.chuyen_trang_thai(p, "tra", vai_tro=["System Manager"], ly_do_tra="   ")
-    kq = phieu_agy.chuyen_trang_thai(p, "tra", vai_tro=["System Manager"], ly_do_tra="Trùng phiếu cũ")
+        chuyen_trang_thai(p, "tra", vai_tro=["System Manager"], ly_do_tra="   ")
+    kq = chuyen_trang_thai(p, "tra", vai_tro=["System Manager"], ly_do_tra="Trùng phiếu cũ")
     assert kq["trang_thai"] == "tra" and kq["ly_do_tra"] == "Trùng phiếu cũ"
