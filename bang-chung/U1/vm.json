@@ -1,0 +1,24 @@
+{
+  "luc": "2026-11-10T07:32:14Z",
+  "may": "linhx-engine-1",
+  "commit": "d00c8bd56fee281e66e5eaa7bdf424a4b9057387",
+  "commit_giao_dien": "736a2b0e80c1b963e36c769324caa426b9abb342",
+  "phut_tu_merge": 4.38,
+  "site": [
+    {
+      "ten": "sakedemy",
+      "url": "http://sakedemy.35-198-251-2.nip.io/",
+      "ma": 200
+    },
+    {
+      "ten": "tuva",
+      "url": "http://tuva.35-198-251-2.nip.io/",
+      "ma": 200
+    },
+    {
+      "ten": "unikon",
+      "url": "http://unikon.35-198-251-2.nip.io/",
+      "ma": 200
+    }
+  ]
+}
