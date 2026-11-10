@@ -309,12 +309,14 @@ def test_hoan_tac_worktree_khong_phan_biet_hoa_thuong_va_chan_tep_tu_chay(tmp_pa
         "apps/linhx_core/.gemini/settings.json",
         ".AGENTS/rules.md",
         "THO/linhx_tho/evil.py",
+        "trang-bu/Package.json",
+        "trang-bu/Next.config.js",
     ):
         p_cam = tmp_path / duong_cam
         p_cam.parent.mkdir(parents=True, exist_ok=True)
         p_cam.write_text("evil = 1\n", encoding="utf-8")
         with pytest.raises(ValueError):
-            _dam_bao_commit_ket_qua(tmp_path, "PH-1", "feature", ["apps/linhx_core/**"], truoc)
+            _dam_bao_commit_ket_qua(tmp_path, "PH-1", "feature", ["apps/linhx_core/**", "trang-bu/**"], truoc)
         assert not p_cam.exists(), f"{duong_cam} phải bị dọn sạch sau khi từ chối"
 
     tep_ok = tmp_path / "apps" / "linhx_core" / "ok.py"
@@ -336,7 +338,7 @@ def test_chan_tep_bi_mat_nhieu_mau_va_gia_tri_khoa_dang_dung(tmp_path: pathlib.P
 
     cac_mau_khoa_gia = (
         "sk" + "-ant-" + ("a1B2_" * 4),
-        "AI" + "za" + ("B7x9_aZ1" * 4),
+        "AI" + "za" + ("B7x9_" * 4),
         "-----BEG" + "IN RSA PRI" + "VATE KEY-----",
         "gh" + "p_" + ("mN8pQ2rS" * 4),
         "github" + "_pat_" + ("Z9_aK3mP" * 4),
@@ -479,3 +481,43 @@ def test_chay_agy_an_trong_cay_tam_tach_roi_khong_git_va_khong_tho(tmp_path: pat
     assert kq["token"] == 150
     assert (repo_goc / "kiem-thu" / "ket-qua.md").is_file()
     assert not da_ghi_cwd[-1].exists()
+
+
+def test_chay_an_vbs_bao_tham_so_gach_nguoc_va_dau_nhay(tmp_path: pathlib.Path):
+    import os
+    import sys
+
+    assert _la_tep_bi_mat("kiem-thu/khoa.ppk", tmp_path / "khoa.ppk") is not None
+    assert _la_tep_bi_mat("kiem-thu/.git-credentials", tmp_path / ".git-credentials") is not None
+
+    if os.name == "nt":
+        wscript_sys = pathlib.Path(os.environ.get("SYSTEMROOT", r"C:\Windows")) / "System32" / "wscript.exe"
+        if wscript_sys.is_file():
+            tep_ra = tmp_path / "argv-out.json"
+            tap_stdout = tmp_path / "vbs.out"
+            tap_stderr = tmp_path / "vbs.err"
+            tham_so_kho = [
+                r"C:\thu muc co dau cach\\",
+                'co "nhay kep" va \\"gach\\',
+                "binh-thuong",
+            ]
+            ma_py = (
+                "import json, pathlib, sys; "
+                f"pathlib.Path({str(tep_ra)!r}).write_text(json.dumps(sys.argv[1:]), encoding='utf-8')"
+            )
+            env_vbs = dict(os.environ)
+            env_vbs["LINHX_THO_PYTHON"] = sys.executable
+            env_vbs["LINHX_THO_EXE"] = sys.executable
+            env_vbs["LINHX_THO_ARGS_JSON"] = json.dumps(["-I", "-c", ma_py, *tham_so_kho], ensure_ascii=False)
+            env_vbs["LINHX_THO_CWD"] = str(tmp_path)
+            env_vbs["LINHX_THO_STDOUT"] = str(tap_stdout)
+            env_vbs["LINHX_THO_STDERR"] = str(tap_stderr)
+            env_vbs["LINHX_THO_TIMEOUT"] = "20"
+            r = subprocess.run(
+                [str(wscript_sys), "//B", str(CHAY_AN_VBS), sys.executable],
+                env=env_vbs,
+                timeout=20,
+                check=False,
+            )
+            assert r.returncode == 0
+            assert json.loads(tep_ra.read_text(encoding="utf-8")) == tham_so_kho

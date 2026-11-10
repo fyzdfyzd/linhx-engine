@@ -201,12 +201,22 @@ LUON_CAM_COMMIT = (
     "**/hooks.json",
     "mcp_config.json",
     "**/mcp_config.json",
+    "package.json",
+    "**/package.json",
+    "package-lock.json",
+    "**/package-lock.json",
+    "next.config.*",
+    "**/next.config.*",
+    "postcss.config.*",
+    "**/postcss.config.*",
+    "tailwind.config.*",
+    "**/tailwind.config.*",
 )
 
 _MAU_TEN_TEP_BI_MAT = re.compile(
-    r"(?i)(^|/)(\.env|tho\.env|id_rsa|id_ed25519|credentials\.json|token\.json|service-account\.json|site_config\.json)$"
+    r"(?i)(^|/)(\.env|tho\.env|\.git-credentials|\.netrc|id_rsa|id_ed25519|credentials\.json|token\.json|service-account\.json|site_config\.json)$"
     r"|(^|/)\.env\.(?!example$|mau$|sample$)"
-    r"|\.(pem|key|p12|pfx|keystore|kdbx|env)$"
+    r"|\.(pem|key|p12|pfx|ppk|jks|ovpn|keystore|kdbx|env)$"
 )
 
 _TEN_BIEN_BI_MAT_MOI_TRUONG = (
@@ -225,10 +235,11 @@ _TEN_BIEN_BI_MAT_MOI_TRUONG = (
 def _bien_dich_mau_bi_mat() -> tuple[re.Pattern[str], ...]:
     # LƯU Ý BẢO TRÌ: Tách đôi các tiền tố khoá/token thành cặp (dau, duoi) rồi mới ghép lúc chạy
     # để trình quét bí mật tĩnh trên `git diff` không báo dương tính giả vào chính mã nguồn bộ lọc.
+    # Ngưỡng độ dài hậu tố khoá Google là {20,} để đồng bộ với ngưỡng quét tĩnh của bộ canh.
     # Không gộp lại thành chuỗi liền nguyên văn.
     cac_cap = (
         ("sk", "-ant-" + r"[A-Za-z0-9_-]{10,}"),
-        ("AI", "za" + r"[0-9A-Za-z_-]{30,}"),
+        ("AI", "za" + r"[0-9A-Za-z_-]{20,}"),
         ("-----BEG" + "IN ", r"[A-Z ]*PRI" + "VATE KEY"),
         ("gh", "p_" + r"[A-Za-z0-9]{30,}"),
         ("github", "_pat_" + r"[A-Za-z0-9_]{30,}"),
@@ -388,13 +399,38 @@ def _khop_glob(duong_tuong_doi: str, ds_glob: tuple[str, ...] | list[str]) -> bo
     return any(_glob_thanh_regex(g.lower()).match(chuan) for g in ds_glob)
 
 
+_KY_TU_CAM_TEN_TEP_NTFS = frozenset('<>:"/\\|?*')
+
+
 def _phan_duong_dan_hop_le_ntfs(phan: str) -> bool:
     if not phan or phan in (".", "..") or phan.startswith(".") or phan.endswith((".", " ")) or "~" in phan:
+        return False
+    if any(ch in _KY_TU_CAM_TEN_TEP_NTFS or ord(ch) < 32 for ch in phan):
         return False
     goc_ten = phan.split(".", 1)[0].lower()
     if goc_ten in _TEN_THIET_BI_WINDOWS:
         return False
     return True
+
+
+def _la_lien_ket_hoac_reparse(duong: pathlib.Path) -> bool:
+    """Phát hiện cả POSIX/Windows symlink lẫn NTFS Directory Junction / Reparse Point."""
+    if duong.is_symlink():
+        return True
+    is_junc = getattr(duong, "is_junction", None)
+    if callable(is_junc):
+        try:
+            if is_junc():
+                return True
+        except OSError:
+            return True
+    try:
+        st = duong.lstat()
+        if int(getattr(st, "st_reparse_tag", 0) or 0) != 0:
+            return True
+    except OSError:
+        pass
+    return False
 
 
 def _chuan_vung_cho_phep(phieu: dict, bat_buoc_co_vung: bool = False) -> list[str]:
@@ -872,8 +908,8 @@ def _la_tep_bi_mat(
     rel = duong_tuong_doi.replace("\\", "/").lstrip("/")
     if _MAU_TEN_TEP_BI_MAT.search(rel):
         return f"Tên tệp nhạy cảm bị cấm commit: {rel}"
-    if duong_day_du.is_symlink():
-        return f"Không cho phép commit symlink: {rel}"
+    if _la_lien_ket_hoac_reparse(duong_day_du):
+        return f"Không cho phép commit symlink hoặc NTFS junction/reparse point: {rel}"
     if duong_day_du.is_file():
         try:
             kich_thuoc = duong_day_du.stat().st_size
@@ -929,7 +965,7 @@ def _liet_ke_thay_doi_porcelain(thu_muc: pathlib.Path) -> list[str]:
             elif duong and not duong.lower().startswith(".canh-tho") and "__pycache__" not in duong.lower():
                 # Tệp bị .gitignore che nhưng mới xuất hiện ngoài .canh-tho vẫn phải kiểm duyệt
                 p_check = thu_muc / duong
-                if p_check.is_file() or p_check.is_symlink():
+                if p_check.is_file() or _la_lien_ket_hoac_reparse(p_check):
                     ket_qua.append(duong.replace("\\", "/"))
             if "R" in trang_thai or "C" in trang_thai:
                 i += 1
@@ -943,8 +979,8 @@ def _kiem_khong_symlink_cha(goc: pathlib.Path, rel: str) -> None:
     hien_tai = goc
     for phan in rel.split("/")[:-1]:
         hien_tai = hien_tai / phan
-        if hien_tai.is_symlink():
-            raise ValueError(f"Thư mục cha chứa symlink không an toàn: {rel}")
+        if _la_lien_ket_hoac_reparse(hien_tai):
+            raise ValueError(f"Thư mục cha chứa symlink hoặc NTFS junction không an toàn: {rel}")
 
 
 def _kiem_va_chon_tep_stage(
@@ -973,7 +1009,9 @@ def _kiem_va_chon_tep_stage(
 
         _kiem_khong_symlink_cha(goc, rel)
         day_du = goc / rel
-        if day_du.exists() or day_du.is_symlink():
+        if day_du.exists() or _la_lien_ket_hoac_reparse(day_du):
+            if _la_lien_ket_hoac_reparse(day_du):
+                raise ValueError(f"Không cho phép commit symlink hoặc NTFS junction: {rel}")
             try:
                 da_phan_giai = day_du.resolve()
             except OSError as exc:
@@ -1127,8 +1165,8 @@ def _liet_ke_thay_doi_cay_tam(wt_tam: pathlib.Path, manifest_truoc: dict[str, st
         for d in dirnames:
             p_dir = thu_muc_ht / d
             rel_dir = p_dir.relative_to(goc_tam).as_posix()
-            if p_dir.is_symlink():
-                raise ValueError(f"Phát hiện thư mục symlink trái phép trong vùng tạm: {rel_dir}")
+            if _la_lien_ket_hoac_reparse(p_dir):
+                raise ValueError(f"Phát hiện thư mục symlink hoặc NTFS junction trái phép trong vùng tạm: {rel_dir}")
             if rel_dir.lower() == ".canh-tho":
                 continue
             giu_dir.append(d)
@@ -1139,8 +1177,8 @@ def _liet_ke_thay_doi_cay_tam(wt_tam: pathlib.Path, manifest_truoc: dict[str, st
             rel = p_tep.relative_to(goc_tam).as_posix()
             if rel.lower().startswith(".canh-tho/"):
                 continue
-            if p_tep.is_symlink():
-                raise ValueError(f"Phát hiện tệp symlink trái phép trong vùng tạm: {rel}")
+            if _la_lien_ket_hoac_reparse(p_tep):
+                raise ValueError(f"Phát hiện tệp symlink hoặc reparse point trái phép trong vùng tạm: {rel}")
             rel_thap = rel.lower()
             hien_tai_thap.add(rel_thap)
             kich_thuoc = p_tep.stat().st_size
@@ -1170,8 +1208,8 @@ def _dong_bo_tep_da_duyet(
         _kiem_khong_symlink_cha(goc_dich, rel)
         nguon = wt_nguon / rel
         dich = goc_dich / rel
-        if nguon.is_symlink() or dich.is_symlink():
-            raise ValueError(f"Nguồn hoặc đích chứa symlink không an toàn: {rel}")
+        if _la_lien_ket_hoac_reparse(nguon) or _la_lien_ket_hoac_reparse(dich):
+            raise ValueError(f"Nguồn hoặc đích chứa symlink/junction không an toàn: {rel}")
         if nguon.is_file():
             dich.parent.mkdir(parents=True, exist_ok=True)
             dich.write_bytes(nguon.read_bytes())
@@ -1494,10 +1532,6 @@ def keo_phieu_http(
         raise ValueError("Dữ liệu phiếu từ Frappe không hợp lệ")
     if "ma_phieu" not in phieu and "name" in phieu:
         phieu["ma_phieu"] = phieu["name"]
-    tho_giao = str(phieu.get("tho") or "").strip()
-    if tho_giao != ma:
-        raise ValueError(f"Phiếu không được ký giao cho thợ hiện tại ({tho_giao!r} != {ma!r})")
-    _kiem_phieu_hop_le(phieu, bat_buoc_co_vung=True)
     if not xac_thuc_chu_ky_phieu(
         phieu,
         khoa_ky,
@@ -1505,7 +1539,8 @@ def keo_phieu_http(
         kho_nonce=kho_nonce_thuc,
         ghi_nhan_nonce=ghi_nhan_nonce,
     ):
-        raise ValueError("Chữ ký HMAC, hạn dùng hoặc nonce của phiếu từ Frappe không hợp lệ / đã phát lại")
+        raise ValueError("Chữ ký HMAC, mã thợ, hạn dùng hoặc nonce của phiếu từ Frappe không hợp lệ / đã phát lại")
+    _kiem_phieu_hop_le(phieu, bat_buoc_co_vung=True)
     return phieu
 
 

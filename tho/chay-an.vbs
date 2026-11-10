@@ -24,15 +24,43 @@ Sub KiemDuoiThucThiAnToan(fsoObj, duong)
 End Sub
 
 Function BaoThamSo(xau)
-  Dim s
+  Dim s, canBao, ketQua, i, ch, demGach, k
   s = CStr(xau)
   Call KiemThamSoAnToan(s)
-  s = Replace(s, """", """""")
-  If InStr(s, " ") > 0 Or InStr(s, vbTab) > 0 Or Len(s) = 0 Then
-    BaoThamSo = """" & s & """"
-  Else
-    BaoThamSo = s
+  If Len(s) = 0 Then
+    BaoThamSo = """"""
+    Exit Function
   End If
+  canBao = (InStr(s, " ") > 0) Or (InStr(s, vbTab) > 0) Or (InStr(s, """") > 0)
+  If Not canBao Then
+    BaoThamSo = s
+    Exit Function
+  End If
+  ketQua = """"
+  demGach = 0
+  For i = 1 To Len(s)
+    ch = Mid(s, i, 1)
+    If ch = "\" Then
+      demGach = demGach + 1
+    ElseIf ch = """" Then
+      For k = 1 To (demGach * 2 + 1)
+        ketQua = ketQua & "\"
+      Next
+      ketQua = ketQua & """"
+      demGach = 0
+    Else
+      For k = 1 To demGach
+        ketQua = ketQua & "\"
+      Next
+      ketQua = ketQua & ch
+      demGach = 0
+    End If
+  Next
+  For k = 1 To (demGach * 2)
+    ketQua = ketQua & "\"
+  Next
+  ketQua = ketQua & """"
+  BaoThamSo = ketQua
 End Function
 
 Dim sh, fso, env, pyExe, tapOut, thuMucGoc, duongChayAn
