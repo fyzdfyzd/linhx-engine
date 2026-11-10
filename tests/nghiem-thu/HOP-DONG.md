@@ -102,3 +102,7 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 - Mỗi feature có trường `lop` (loi, adapter, goi, giao_dien, kiem). Feature lớp goi/adapter chỉ chạm linhx_core để gỡ code cũ và sửa hooks.py; DocType ở lại linhx_core.
 - Code đã chuyển: nghiệm thu cũ tìm chỗ mới qua `CHUYEN_CHO` trong `_chung.py` (`nap_module`, `ma()`, `tim_doctype` tìm cả apps/). Luật ba lớp ở `_dot3.py`.
 - Giao diện BU ở `giao-dien/<bu>/` (từ skill bu-frontpage), không ở sites/ (sites/ chỉ cấu hình, C4).
+
+## Đợt 4 (`features-dot4.json`, Linh duyệt 10/11 09:28 VN)
+- K1 tạo bản cài một lệnh, K2 CTS chạy thật song song (cờ cts_that tắt mặc định; bật cắt hệ cũ là quyết định của Linh), K3 DNS ifagent (chờ Linh đổi bản ghi A). Hợp đồng ở đầu test_k1–k3.
+- Giao diện 3 BU lên tạm (U1) với chữ an toàn đang có trong cau-hinh.json; liên hệ, giá điền sau.

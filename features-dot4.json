@@ -1,0 +1,73 @@
+{
+ "san_pham": "LINHX ENGINE nền tảng",
+ "dot": "4",
+ "prd": "Linh duyệt 10/11 09:28 VN: tạo bản cài BU/OPC bằng một lệnh, CTS sang chạy thật, đổi DNS ifagent",
+ "dich": "Từ ý tới một bản cài BU/OPC chạy thật trong 15 phút; CTS chạy trên engine",
+ "trang_thai": "viết 10/11; K3 cần Linh đổi DNS; P2 OAuth chưa viết",
+ "features": [
+  {
+   "id": "K1",
+   "lop": "loi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L1",
+    "U1"
+   ],
+   "vung": [
+    "cli/linhx_cli/**",
+    "deploy/sites/sakedemy.json"
+   ],
+   "mo_ta": "tạo bản cài cho một BU hay OPC bằng một lệnh: site Frappe riêng + gói bật sẵn + giao diện + tên miền.",
+   "tieu_chi": [
+    "kế hoạch cài lõi trước, gói theo thứ tự phụ thuộc, lệnh là list đối số",
+    "tên, giao diện, gói không có thì từ chối",
+    "CLI --chay-thu in kế hoạch JSON, không chạy lệnh",
+    "tạo thật bản cài sakedemy trên VM trong 15 phút"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "K2",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "P3",
+    "L3",
+    "G2"
+   ],
+   "vung": [
+    "apps/linhx_goi_chiemtinh/**"
+   ],
+   "mo_ta": "Chiêm Tinh Số chạy thật trên engine: gói linhx_goi_chiemtinh giao báo cáo qua luồng chung, song song với hệ cũ.",
+   "tieu_chi": [
+    "gói chiemtinh đủ khung, khai giao bao_cao_cts",
+    "so khớp đơn engine với đơn CTS chỉ ra trường lệch",
+    "ít nhất 3 đơn thật chạy song song không lệch"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k2.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "K3",
+   "lop": "adapter",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "U1"
+   ],
+   "vung": [
+    "deploy/Caddyfile"
+   ],
+   "mo_ta": "ifagent.net trỏ về bản mới trên VM (HTTPS), event.ifagent.net giữ nguyên.",
+   "tieu_chi": [
+    "Caddy phục vụ ifagent.net và www",
+    "ifagent.net trả HTTPS 200 từ VM, event.ifagent.net vẫn chạy"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k3.py -q",
+   "passes": false,
+   "bang_chung": ""
+  }
+ ]
+}
