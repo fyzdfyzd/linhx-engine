@@ -1,43 +1,43 @@
 {
- "san_pham": "LINHX ENGINE nền",
- "dot": "2c",
- "prd": "Việc C Linh duyệt 10/11: cổng kiểm ra khỏi máy cty (VM 35.198.251.2 / CI), Linh xác nhận VM còn dùng 10/11 09:16 VN",
- "dich": "Máy cty chỉ chạy agy; cổng kiểm có trần RAM, lỗi máy không tính trần",
- "trang_thai": "viết 10/11",
- "features": [
-  {
-   "id": "V1",
-   "uu_tien": 1,
-   "phu_thuoc": [],
-   "vung": [
-    "deploy/cong_kiem_vm.py"
-   ],
-   "mo_ta": "Cổng kiểm trên VM linhx-engine-1: kéo nhánh thợ, chạy canh/cong_kiem.py bản main dưới systemd-run MemoryMax, khoá flock, trả JSON tách lỗi máy",
-   "tieu_chi": [
-    "chỉ nhận nhánh main hoặc tu-dong/engine-tN, chặn tên chèn lệnh",
-    "lệnh là list đối số qua systemd-run có MemoryMax, không nối chuỗi shell",
-    "tách lỗi máy (hết RAM, quá giờ, hết đĩa) khỏi lỗi code",
-    "chạy thật một lượt trên VM linhx-engine-1"
-   ],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_v1.py -q",
-   "passes": false,
-   "bang_chung": ""
-  },
-  {
-   "id": "V2",
-   "uu_tien": 1,
-   "phu_thuoc": [],
-   "vung": [
-    ".github/workflows/linhx-engine.yml"
-   ],
-   "mo_ta": "CI GitHub xanh: cài Playwright Chromium + Node cho trang-bu, kiểm mọi features-dot*.json",
-   "tieu_chi": [
-    "workflow cài Playwright Chromium và Node, kiểm mọi features-dot*.json",
-    "một lượt CI xanh có bằng chứng"
-   ],
-   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_v2.py -q",
-   "passes": false,
-   "bang_chung": ""
-  }
- ]
+  "san_pham": "LINHX ENGINE nền",
+  "dot": "2c",
+  "prd": "Việc C Linh duyệt 10/11: cổng kiểm ra khỏi máy cty (VM 35.198.251.2 / CI), Linh xác nhận VM còn dùng 10/11 09:16 VN",
+  "dich": "Máy cty chỉ chạy agy; cổng kiểm có trần RAM, lỗi máy không tính trần",
+  "trang_thai": "viết 10/11",
+  "features": [
+    {
+      "id": "V1",
+      "uu_tien": 1,
+      "phu_thuoc": [],
+      "vung": [
+        "deploy/cong_kiem_vm.py"
+      ],
+      "mo_ta": "Cổng kiểm trên VM linhx-engine-1: kéo nhánh thợ, chạy canh/cong_kiem.py bản main dưới systemd-run MemoryMax, khoá flock, trả JSON tách lỗi máy",
+      "tieu_chi": [
+        "chỉ nhận nhánh main hoặc tu-dong/engine-tN, chặn tên chèn lệnh",
+        "lệnh là list đối số qua systemd-run có MemoryMax, không nối chuỗi shell",
+        "tách lỗi máy (hết RAM, quá giờ, hết đĩa) khỏi lỗi code",
+        "chạy thật một lượt trên VM linhx-engine-1"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_v1.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "V2",
+      "uu_tien": 1,
+      "phu_thuoc": [],
+      "vung": [
+        ".github/workflows/linhx-engine.yml"
+      ],
+      "mo_ta": "CI GitHub xanh: cài Playwright Chromium + Node cho trang-bu, kiểm mọi features-dot*.json",
+      "tieu_chi": [
+        "workflow cài Playwright Chromium và Node, kiểm mọi features-dot*.json",
+        "một lượt CI xanh có bằng chứng"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_v2.py -q",
+      "passes": true,
+      "bang_chung": "bang-chung/V2/ci.json"
+    }
+  ]
 }
