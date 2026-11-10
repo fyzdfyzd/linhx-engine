@@ -14,7 +14,7 @@ Hợp đồng (HOP-DONG.md):
           ghi 1 bản ghi vào kho.setdefault("lan_nop", []) và trả (200, {"ok": True, "trung": False, "phieu": ...}).
 - apps/linhx_core/linhx_core/ops/api_tho.py thêm @frappe.whitelist(allow_guest=True, methods=["POST"]) `nop`.
 """
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 
 def _np():
@@ -116,6 +116,6 @@ def test_nop_hai_lan_cung_commit_khong_tao_ban_ghi_trung():
 
 def test_api_tho_nop():
     """Kiểm tra hàm nop trong api_tho.py và tính thuần Python của nop_phieu.py."""
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "ops" / "nop_phieu.py")
-    chu = (CORE / "linhx_core" / "ops" / "api_tho.py").read_text(encoding="utf-8")
+    khong_import_frappe_dau_file(ma("ops/nop_phieu.py"))
+    chu = (ma("ops/api_tho.py")).read_text(encoding="utf-8")
     assert "def nop(" in chu and "403" in chu

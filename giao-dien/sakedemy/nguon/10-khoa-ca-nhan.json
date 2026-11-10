@@ -1,0 +1,16 @@
+{
+ "path": "/khoa-ca-nhan/",
+ "kenh": "trang-khoa-ca-nhan",
+ "title": "Khoá AI ứng dụng cho người học cá nhân · Sakédemy",
+ "desc": "Người học một mình bắt đầu bằng bài học thử, chọn khoá cá nhân theo việc, học xong học tiếp hoặc giới thiệu lớp cho công ty.",
+ "vet": [
+  [
+   "Khoá cá nhân",
+   "/khoa-ca-nhan/"
+  ]
+ ],
+ "h1": "Học AI ứng dụng một mình",
+ "mo": "Trang chủ Sakédemy dành cho doanh nghiệp đặt lớp. Nếu bạn học một mình, đường đi gồm ba bước dưới đây.",
+ "ghi_chu": "Danh mục khoá cá nhân, giá và cách thanh toán QR chưa chốt; trang sẽ liệt kê khi có (link_khoa_ca_nhan trong cau-hinh.json).",
+ "than": "## Ba bước\n1. **Học thử một bài** miễn phí trên điện thoại. [Nhận bài học thử](/hoc-thu/).\n2. **Chọn khoá theo việc**, thanh toán bằng mã QR.\n3. **Học xong**, học khoá kế tiếp hoặc giới thiệu lớp doanh nghiệp cho công ty của bạn.\n\n## Công ty bạn cần cả đội cùng học\nXem [lớp doanh nghiệp](/lop-doanh-nghiep/) hoặc [đăng ký tư vấn](/?kenh=trang-khoa-ca-nhan#dang-ky)."
+}

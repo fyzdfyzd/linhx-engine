@@ -1,0 +1,16 @@
+{
+ "path": "/404.html",
+ "kenh": "trang-404",
+ "cta": false,
+ "title": "Không tìm thấy trang · Unikon",
+ "desc": "Trang bạn tìm không có hoặc đã đổi địa chỉ. Quay về trang chủ Unikon hoặc gửi brief pitch.",
+ "vet": [
+  [
+   "Không tìm thấy",
+   "/404.html"
+  ]
+ ],
+ "h1": "Không tìm thấy trang này",
+ "mo": "Địa chỉ có thể đã đổi. Bạn thử một trong các trang dưới.",
+ "than": "- [Trang chủ](/)\n- [Pitch mẫu 48 giờ](/pitch-48-gio/)\n- [Dịch vụ](/dich-vu/)\n- [Liên hệ](/lien-he/)"
+}

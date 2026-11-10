@@ -1,0 +1,18 @@
+{
+ "path": "/de-xuat-tai-tro/",
+ "kenh": "trang-de-xuat",
+ "loai": "service",
+ "form": true,
+ "title": "Viết hạng mục truyền thông và AI cho đề xuất tài trợ · TUVA",
+ "desc": "TUVA viết hợp phần truyền thông và năng lực AI cho đề xuất tài trợ của NGO: concept note, dòng ngân sách, đầu ra và chỉ số logframe.",
+ "vet": [
+  [
+   "Đề xuất tài trợ",
+   "/de-xuat-tai-tro/"
+  ]
+ ],
+ "h1": "Hạng mục truyền thông và AI trong đề xuất tài trợ",
+ "mo": "Phần truyền thông và AI thường được viết vội vào những ngày cuối, nên mỏng và khó được duyệt. Chúng tôi viết phần này cùng cán bộ chương trình, đúng ba chỗ hội đồng xét duyệt sẽ đọc.",
+ "than": "## Ba chỗ chúng tôi viết\n| Phần | TUVA viết gì | Bạn cần đưa |\n|---|---|---|\n| Concept note | Vì sao cần hợp phần, ai hưởng lợi, rủi ro và cách xử lý | Mục tiêu dự án, khung của nhà tài trợ |\n| Ngân sách | Dòng chi theo hạng mục, đơn vị tính, số lượng | Quy định chi phí của nhà tài trợ, đơn giá nội bộ |\n| Logframe | Đầu ra, chỉ số đo được, nguồn kiểm chứng | Mục tiêu chung, khung logframe của dự án |\n\n## Thanh toán theo đợt tài trợ\nKhi đề xuất được duyệt, hai bên ký hợp đồng đúng phạm vi đã viết. Thanh toán theo các đợt giải ngân của hợp đồng tài trợ, bằng VND hoặc ngoại tệ theo hợp đồng.\n\n## Làm bằng tiếng Anh\nConcept note, ngân sách và logframe có thể viết bằng tiếng Anh hoặc song ngữ. Đọc [bản tiếng Anh của trang chủ](/en/).\n\n## Gửi thông tin đề xuất\nĐiền form dưới đây, càng sớm trước hạn nộp càng có nhiều lựa chọn.",
+ "cta": false
+}

@@ -1,0 +1,18 @@
+{
+ "path": "/hoc-thu/",
+ "kenh": "trang-hoc-thu",
+ "title": "Bài học thử AI ứng dụng miễn phí · Sakédemy",
+ "desc": "Học thử một bài AI ứng dụng miễn phí trên điện thoại. Để lại email, Sakédemy gửi đường vào bài học và gợi ý khoá cá nhân hợp với việc của bạn.",
+ "vet": [
+  [
+   "Học thử",
+   "/hoc-thu/"
+  ]
+ ],
+ "h1": "Học thử một bài AI ứng dụng",
+ "mo": "Bài học thử dành cho người học một mình, muốn xem cách Sakédemy dạy trước khi chọn khoá. Học trên điện thoại, không cần cài gì.",
+ "ghi_chu": "Đường vào bài học thử (cungai) chưa chốt. Khi có, điền link_hoc_thu trong cau-hinh.json để form mở thẳng bài học.",
+ "than": "## Sau bài học thử\n1. Bạn nhận email có đường vào bài học.\n2. Học xong, bạn chọn [khoá cá nhân](/khoa-ca-nhan/) hợp với việc của mình, hoặc dừng ở đó.\n3. Nếu công ty bạn muốn cả đội cùng học, chuyển sang [lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "form_hoc_thu": true,
+ "cta": false
+}

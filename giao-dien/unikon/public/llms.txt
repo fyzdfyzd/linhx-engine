@@ -1,0 +1,24 @@
+# Unikon
+
+> Unikon là đơn vị AI production cho agency tại Việt Nam: sản xuất asset sáng tạo bằng AI (ảnh và key visual, video AI, nhân vật và giọng AI), có người duyệt từng asset, giao trắng nhãn dưới tên agency. Agency gửi brief, sau 48 giờ nhận ba hướng ý tưởng có hình AI trong deck trắng nhãn, kèm báo giá theo giá sàn từng loại asset.
+
+Khách hàng: agency quảng cáo và sáng tạo (account manager, producer, creative director, người quyết ngân sách). Tên nhãn hàng của khách agency được ẩn. Thu tiền: hoá đơn theo job và phí Brand kit hằng tháng. Liên hệ: form trên https://unikon.vn/lien-he/.
+
+## Trang chính
+- [Trang chủ, form gửi brief pitch](https://unikon.vn/)
+- [AI production cho agency: chọn đơn vị, gửi brief, giữ an toàn thương hiệu](https://unikon.vn/ai-production-cho-agency/)
+- [Pitch mẫu 48 giờ](https://unikon.vn/pitch-48-gio/)
+- [Cách tính giá](https://unikon.vn/bao-gia/)
+- [Brand kit hằng tháng](https://unikon.vn/brand-kit/)
+- [An toàn thương hiệu cho asset AI](https://unikon.vn/an-toan-thuong-hieu/)
+
+## Dịch vụ
+- [Ảnh AI và key visual](https://unikon.vn/dich-vu/anh-ai/)
+- [Video AI](https://unikon.vn/dich-vu/video-ai/)
+- [Nhân vật và giọng AI](https://unikon.vn/dich-vu/nhan-vat-giong-ai/)
+
+## Khác
+- [Làm việc cùng agency](https://unikon.vn/cho-agency/)
+- [Hỏi đáp](https://unikon.vn/hoi-dap/)
+- [Chính sách dữ liệu](https://unikon.vn/chinh-sach-du-lieu/)
+- [Pitch mẫu trên demo](https://demo.unikon.vn/)

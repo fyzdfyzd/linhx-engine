@@ -1,0 +1,18 @@
+{
+ "path": "/cam-on/",
+ "kenh": "trang-cam-on",
+ "cta": false,
+ "cam_on": true,
+ "noindex": true,
+ "title": "Đã nhận đăng ký · Sakédemy",
+ "desc": "Sakédemy đã nhận đăng ký tư vấn lớp doanh nghiệp của bạn và sẽ liên hệ để hẹn buổi trao đổi về đề bài của đội.",
+ "vet": [
+  [
+   "Đã nhận đăng ký",
+   "/cam-on/"
+  ]
+ ],
+ "h1": "Đã nhận đăng ký của bạn",
+ "mo": "Sakédemy sẽ liên hệ qua điện thoại hoặc email bạn để lại để hẹn buổi trao đổi.",
+ "than": "## Tiếp theo\n1. Chúng tôi đọc nhu cầu của đội và gọi lại để hỏi thêm nếu cần.\n2. Bạn nhận bảng khảo sát đầu vào để gửi cho học viên.\n3. Sakédemy gửi đề cương theo phòng ban, báo giá và lịch học đề xuất.\n\n## Trong lúc chờ\n- [Đọc năm câu hỏi trước khi đặt lớp AI cho nhân viên](/khoa-ai-ung-dung-uy-tin/)\n- [Xem chương trình theo phòng ban](/chuong-trinh/)"
+}

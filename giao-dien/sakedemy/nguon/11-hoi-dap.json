@@ -1,0 +1,57 @@
+{
+ "path": "/hoi-dap/",
+ "kenh": "trang-hoi-dap",
+ "title": "Hỏi đáp về khoá AI ứng dụng cho doanh nghiệp · Sakédemy",
+ "desc": "Giá, hoá đơn, hình thức học, dữ liệu công ty, hỗ trợ sau khoá: câu trả lời ngắn cho doanh nghiệp trước khi đặt lớp AI ứng dụng.",
+ "vet": [
+  [
+   "Hỏi đáp",
+   "/hoi-dap/"
+  ]
+ ],
+ "h1": "Câu hỏi trước khi đặt lớp",
+ "mo": "Những câu doanh nghiệp hay hỏi trước khi đặt lớp AI ứng dụng cho nhân viên.",
+ "than": "",
+ "hoi_dap": [
+  [
+   "Một lớp doanh nghiệp giá bao nhiêu?",
+   "Giá phụ thuộc số học viên, số buổi, hình thức tại văn phòng hay online và mức may đo giáo trình. Sakédemy gửi báo giá sau buổi trao đổi đầu tiên và bản khảo sát đầu vào."
+  ],
+  [
+   "Sakédemy có xuất hoá đơn cho doanh nghiệp không?",
+   "Có. Sakédemy xuất hoá đơn đào tạo cho doanh nghiệp. Thông tin pháp nhân và thuế suất ghi trong báo giá."
+  ],
+  [
+   "Học tại văn phòng hay online?",
+   "Cả hai. Lớp thường học tại văn phòng của doanh nghiệp; đội ở nhiều nơi thì học online hoặc kết hợp."
+  ],
+  [
+   "Một khoá kéo dài bao lâu?",
+   "Lớp nội bộ mẫu trong hồ sơ của Sakédemy gồm 2 buổi, mỗi buổi 2 đến 3 giờ. Số buổi thật chốt theo đề bài."
+  ],
+  [
+   "Nhân viên có phải đưa dữ liệu công ty vào AI khi học không?",
+   "Không bắt buộc. Bài thực hành dùng mẫu biểu đã che thông tin nhạy cảm, và lớp có phần riêng về việc gì được đưa vào AI, việc gì không."
+  ],
+  [
+   "Học xong có ai hỗ trợ tiếp không?",
+   "Có. Sakédemy hỗ trợ học viên trong và sau khoá, kèm một lần khảo sát sau khoá để đo đội đã dùng AI vào việc tới đâu."
+  ],
+  [
+   "Đội chúng tôi chưa ai dùng AI, có học được không?",
+   "Được. Bảng khảo sát đầu vào cho biết mức của từng người, giáo trình bắt đầu từ phần nền tảng nếu cần."
+  ],
+  [
+   "Có dạy riêng cho ban lãnh đạo không?",
+   "Có. Buổi cho lãnh đạo tập trung vào chọn việc giao cho AI và đặt luật dùng AI trong công ty."
+  ],
+  [
+   "Tôi học một mình thì bắt đầu từ đâu?",
+   "Bắt đầu bằng bài học thử miễn phí. Để lại email, Sakédemy gửi đường vào bài học thử và gợi ý khoá cá nhân hợp với việc của bạn."
+  ],
+  [
+   "Làm sao biết khoá AI ứng dụng nào uy tín?",
+   "Hỏi bên dạy ba điều: có khảo sát đầu vào không, ví dụ trong lớp lấy từ việc của ai, và đo kết quả sau khoá thế nào. Xem bài chọn khoá AI ứng dụng trong cẩm nang."
+  ]
+ ]
+}

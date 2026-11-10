@@ -1,0 +1,16 @@
+{
+ "path": "/chinh-sach-du-lieu/",
+ "kenh": "trang-chinh-sach",
+ "cta": false,
+ "title": "Chính sách dữ liệu · Unikon",
+ "desc": "Unikon thu gì khi bạn gửi brief, để lại số hay đăng ký nhận bộ kiểm, dùng vào việc gì, giữ bao lâu và cách bạn yêu cầu xoá. Bản nháp chờ pháp chế.",
+ "vet": [
+  [
+   "Chính sách dữ liệu",
+   "/chinh-sach-du-lieu/"
+  ]
+ ],
+ "h1": "Chính sách dữ liệu",
+ "ghi_chu": "Bản nháp theo Nghị định 13/2023/NĐ-CP, chờ pháp chế Unikon duyệt. Tên pháp nhân và đầu mối nhận yêu cầu sẽ cập nhật khi chốt.",
+ "than": "## Chúng tôi thu gì\n- Form brief: họ tên, agency, vai trò, điện thoại hoặc email, hạn pitch, khách hàng cuối (có thể ẩn), loại asset, ngân sách, nội dung brief.\n- Form gọi lại: họ tên, số điện thoại.\n- Form bộ kiểm: họ tên, email, agency.\n- Kèm theo: thời điểm gửi, câu đồng ý bạn đã tick, địa chỉ IP, nguồn truy cập (đường dẫn có `kenh` hoặc `utm`).\n\n## Dùng vào việc gì\n- Liên hệ về brief, gọi lại, gửi bộ kiểm.\n- Không bán, không chia sẻ cho bên thứ ba ngoài đơn vị hỗ trợ vận hành đã ký cam kết bảo mật.\n\n## Giữ bao lâu và xoá\nThời hạn lưu chờ pháp chế chốt. Bạn có thể yêu cầu xem, sửa hoặc xoá dữ liệu bằng cách để lại thông tin ở [trang liên hệ](/lien-he/) và ghi \"yêu cầu dữ liệu\".\n\n## Ô đồng ý\nÔ đồng ý trên mọi form không bao giờ được tick sẵn. Chúng tôi lưu nguyên văn câu bạn đồng ý cùng thời điểm."
+}

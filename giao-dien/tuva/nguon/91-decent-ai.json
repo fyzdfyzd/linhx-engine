@@ -1,0 +1,35 @@
+{
+ "path": "/decent-ai/",
+ "kenh": "bai-decent-ai",
+ "loai": "article",
+ "ngay": "2026-11-10",
+ "title": "Decent AI: AI tử tế cho tổ chức phát triển · TUVA",
+ "desc": "Decent AI là cách TUVA giúp NGO dùng AI tử tế: có quy tắc, có người chịu trách nhiệm, bảo vệ dữ liệu người yếu thế, ghi nhãn rõ ràng.",
+ "vet": [
+  [
+   "Cẩm nang",
+   "/cam-nang/"
+  ],
+  [
+   "Decent AI",
+   "/decent-ai/"
+  ]
+ ],
+ "h1": "Decent AI: AI tử tế cho tổ chức phát triển",
+ "mo": "Decent AI là tên chương trình của TUVA, cũng là một cách nghĩ: tổ chức phát triển dùng AI thì phải dùng theo đúng những giá trị mà chính tổ chức đang bảo vệ. Chữ \"decent\" mượn từ \"decent work\", việc làm tử tế, một khái niệm quen thuộc trong ngành phát triển.",
+ "than": "## Năm nguyên tắc\n1. **Có quy tắc thành văn.** Mọi người trong tổ chức dùng AI theo cùng một bộ quy tắc, không ai phải đoán.\n2. **Có người chịu trách nhiệm.** Mỗi loại nội dung có AI hỗ trợ có một người duyệt trước khi gửi đi.\n3. **Bảo vệ người yếu thế.** Dữ liệu của người thụ hưởng không đi vào công cụ AI công cộng. Ảnh tạo bằng AI không giả làm ảnh người thật.\n4. **Minh bạch.** Nội dung có AI hỗ trợ được ghi nhãn khi công bố, số liệu được kiểm nguồn.\n5. **Con người quyết định.** AI giúp đội ngũ làm nhanh hơn, còn quyết định và trách nhiệm vẫn thuộc về con người.\n\n## Chương trình Decent AI gồm gì\n- **Hiểu biết AI**: tập huấn theo vai trò cho lãnh đạo, cán bộ chương trình, truyền thông, MEL.\n- **Quản trị AI có đạo đức**: bộ quy tắc, quy trình duyệt, cách xử lý sự cố dữ liệu.\n- **Lắng nghe dữ liệu và câu chuyện**: dùng dữ liệu mạng xã hội để hiểu công chúng, qua Listening Vietnam.\n- **Chia sẻ kiến thức**: bài viết, câu lệnh mẫu và các buổi trao đổi cho cộng đồng tổ chức phát triển.\n\n## Vì sao TUVA làm việc này\nTUVA làm truyền thông cho các dự án xã hội từ nhiều năm trước khi AI phổ biến. Chúng tôi thấy khoảng cách công nghệ đang mở rộng: tổ chức lớn có đội ngũ số, tổ chức nhỏ thì tự xoay xở. Decent AI muốn thu hẹp khoảng cách đó để các tổ chức xã hội không bị bỏ lại phía sau.\n\n## Bắt đầu từ đâu\n[Tự chấm mức sẵn sàng AI](/tu-cham-ai/), [tải bộ quy tắc AI an toàn](/bo-quy-tac-ai/), hoặc đọc [AI cho NGO ở Việt Nam: bắt đầu từ đâu](/cam-nang/ai-cho-ngo/).",
+ "hoi_dap": [
+  [
+   "Decent AI có phải một phần mềm không?",
+   "Không. Đó là chương trình gồm tập huấn, quy tắc và quy trình. Tổ chức dùng công cụ AI nào cũng áp dụng được."
+  ],
+  [
+   "Decent AI có viết được vào đề xuất tài trợ không?",
+   "Được. Hợp phần năng lực AI có thể thành một đầu ra riêng, có dòng ngân sách và chỉ số trong logframe."
+  ],
+  [
+   "Tổ chức không làm về công nghệ có cần Decent AI không?",
+   "Cần nhất là những tổ chức này, vì nhân viên đã dùng AI nhưng chưa có ai đặt quy tắc."
+  ]
+ ]
+}

@@ -18,7 +18,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import json
 
-from _chung import CORE, GOC, dung_trang_bu, git, khong_import_frappe_dau_file, may_chu_web, nap_module, tim_doctype
+from _chung import ma, CORE, GOC, dung_trang_bu, git, khong_import_frappe_dau_file, may_chu_web, nap_module, tim_doctype
 
 SITE_IFAGENT = GOC / "sites" / "ifagent" / "site.json"
 
@@ -42,9 +42,9 @@ def test_case_chua_duyet_khong_ra_api_cong_khai():
 
     _, d = tim_doctype("LX Case")
     assert d, "thiếu DocType LX Case"
-    api_p = CORE / "linhx_core" / "cred" / "api_cred.py"
+    api_p = ma("cred/api_cred.py")
     assert api_p.exists() and "case_cong_khai" in api_p.read_text(encoding="utf-8")
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "cred" / "kho_case.py")
+    khong_import_frappe_dau_file(ma("cred/kho_case.py"))
 
 
 def test_trang_ifagent_dung_co_muc_case_lay_tu_api():

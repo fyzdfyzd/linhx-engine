@@ -1,0 +1,31 @@
+{
+ "path": "/dich-vu/video-ai/",
+ "kenh": "trang-video-ai",
+ "loai": "service",
+ "title": "Video AI cho agency: video ngắn, khung hình động · Unikon",
+ "desc": "Video ngắn cho mạng xã hội, khung hình động, cảnh khó quay bằng máy thật, làm bằng AI từ hướng hình đã duyệt. Người duyệt từng bản, giao trắng nhãn.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/dich-vu/"
+  ],
+  [
+   "Video AI",
+   "/dich-vu/video-ai/"
+  ]
+ ],
+ "h1": "Video AI cho chiến dịch của agency",
+ "mo": "Video AI hợp nhất khi đi tiếp từ hình đã duyệt ở bước pitch: khách đã thấy chất hình, video giữ đúng chất đó.",
+ "than": "## Hợp với\n- Video ngắn cho mạng xã hội, nhiều phiên bản theo kênh.\n- Khung hình động cho màn hình tại điểm bán, sự kiện.\n- Cảnh khó hoặc tốn kém khi quay thật: không gian giả tưởng, sản phẩm phóng to, bối cảnh nước ngoài.\n\n## Chưa hợp với\n- Phim cần diễn viên thật nói lời thoại dài.\n- Cảnh cần gương mặt người nổi tiếng khi chưa có hợp đồng.\n\n## Cách làm\n1. Chốt hướng hình và kịch bản khung với agency.\n2. Làm bản nháp chuyển động để duyệt nhịp.\n3. Làm bản hoàn chỉnh, ghép giọng và nhạc nếu có.\n4. Người duyệt soát từng khung trước khi giao.",
+ "ghi_chu": "Độ dài tối đa và định dạng giao của video AI chờ Unikon chốt. Ghi yêu cầu vào brief, chúng tôi trả lời trong báo giá.",
+ "hoi_dap": [
+  [
+   "Có dùng gương mặt hay giọng người nổi tiếng được không?",
+   "Chỉ khi có hợp đồng với chính người đó. Mặc định, nhân vật AI của Unikon là người hư cấu."
+  ],
+  [
+   "Giá tính thế nào?",
+   "Mỗi loại asset có một giá sàn. Báo giá cộng theo số asset, số biến thể và độ khó của hướng khách chọn. Gửi brief để nhận báo giá cụ thể."
+  ]
+ ]
+}

@@ -1,0 +1,20 @@
+{
+ "path": "/giai-phap/lang-nghe-du-lieu/",
+ "kenh": "trang-lang-nghe",
+ "loai": "service",
+ "title": "Lắng nghe dữ liệu mạng xã hội cho dự án · TUVA",
+ "desc": "Qua Listening Vietnam, TUVA theo dõi thảo luận trên mạng xã hội về vấn đề dự án theo đuổi, rồi chuyển dữ liệu thành báo cáo và thông điệp.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/giai-phap/"
+  ],
+  [
+   "Lắng nghe dữ liệu",
+   "/giai-phap/lang-nghe-du-lieu/"
+  ]
+ ],
+ "h1": "Lắng nghe dữ liệu mạng xã hội cho dự án phát triển",
+ "mo": "Trước khi nói, hãy nghe. Lắng nghe mạng xã hội cho biết công chúng đang nói gì, bằng từ ngữ nào, về vấn đề dự án theo đuổi.",
+ "than": "## Dùng vào việc gì\n- **Trước dự án**: hiểu bối cảnh, viết phần phân tích vấn đề cho đề xuất tài trợ.\n- **Trong chiến dịch**: biết thông điệp nào được bàn tới, thông điệp nào bị hiểu sai.\n- **Đánh giá**: có số liệu thảo luận trước và sau để đưa vào báo cáo cho nhà tài trợ.\n\n## Bạn nhận được\nBáo cáo dữ liệu ngắn, dễ đọc, có biểu đồ và ví dụ thảo luận đã ẩn danh, kèm gợi ý thông điệp và chỉ số theo dõi cho logframe.\n\n## Listening Vietnam\nListening Vietnam là sáng kiến lắng nghe dữ liệu mạng xã hội của TUVA, có trang riêng tại [listening.vn](https://listening.vn/?kenh=tuva-lang-nghe&utm_source=tuva.work&utm_medium=referral&utm_campaign=lang-nghe)."
+}

@@ -1,0 +1,16 @@
+{
+ "path": "/chinh-sach-du-lieu/",
+ "kenh": "trang-chinh-sach",
+ "title": "Chính sách dữ liệu cá nhân · TUVA Communication",
+ "desc": "TUVA thu thông tin gì qua các form trên tuva.work, dùng để làm gì, lưu bao lâu và bạn yêu cầu sửa, xoá như thế nào.",
+ "vet": [
+  [
+   "Chính sách dữ liệu",
+   "/chinh-sach-du-lieu/"
+  ]
+ ],
+ "h1": "Chính sách dữ liệu cá nhân",
+ "ghi_chu": "Bản nháp, chờ TUVA và pháp chế duyệt theo Nghị định 13/2023/NĐ-CP. Tên pháp nhân và đầu mối liên hệ sẽ được điền khi có xác nhận.",
+ "than": "## Chúng tôi thu gì\nHọ tên, tổ chức, vai trò, điện thoại, email, thông tin dự án bạn tự điền ở form; kết quả tự chấm nếu bạn gửi kèm; trang bạn đến từ đâu (mã kênh, utm).\n\n## Dùng để làm gì\nLiên hệ về dự án hoặc đề xuất bạn gửi, gọi lại theo yêu cầu, gửi bộ quy tắc AI và cập nhật liên quan.\n\n## Bằng chứng đồng ý\nMỗi lần gửi, hệ thống lưu câu đồng ý bạn đã tick, thời điểm và địa chỉ IP. Ô đồng ý không bao giờ được tick sẵn.\n\n## Lưu bao lâu, ai xem\nChỉ người phụ trách trao đổi dự án của TUVA xem. Thời hạn lưu sẽ ghi rõ trong bản chính thức.\n\n## Quyền của bạn\nBạn có thể yêu cầu xem, sửa hoặc xoá thông tin của mình bằng cách để lại yêu cầu qua form liên hệ.",
+ "cta": false
+}

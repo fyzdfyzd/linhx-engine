@@ -74,8 +74,54 @@ def file_bi_mat(goc):
     return loi
 
 
+# Đợt 3 (Linh 10/11 "sửa luôn"): code chuyển khỏi linhx_core sang adapter/gói. Nghiệm thu cũ tìm chỗ mới trước, chỗ cũ sau.
+# tiền tố module cũ -> (thư mục app mới tính từ GOC, tiền tố module mới)
+CHUYEN_CHO = {
+    "linhx_core.crm.t1": ("apps/linhx_goi_ifagent", "linhx_goi_ifagent.t1"),
+    "linhx_core.crm.xac_minh_marketing": ("apps/linhx_goi_ifagent", "linhx_goi_ifagent.xac_minh_marketing"),
+    "linhx_core.pay.sau_tra": ("apps/linhx_goi_baocao", "linhx_goi_baocao.sau_tra"),
+    "linhx_core.pay.ban_bao_cao": ("apps/linhx_goi_baocao", "linhx_goi_baocao.ban_bao_cao"),
+    "linhx_core.pay.sepay": ("apps/linhx_vn", "linhx_vn.pay.sepay"),
+    "linhx_core.pay.api_sepay": ("apps/linhx_vn", "linhx_vn.pay.api_sepay"),
+    "linhx_core.pay.vietqr": ("apps/linhx_vn", "linhx_vn.pay.vietqr"),
+    "linhx_core.pay.so_s1a": ("apps/linhx_vn", "linhx_vn.pay.so_s1a"),
+    "linhx_core.pay.api_thue": ("apps/linhx_vn", "linhx_vn.pay.api_thue"),
+    "linhx_core.id.zalo_oauth": ("apps/linhx_vn", "linhx_vn.id.zalo_oauth"),
+    "linhx_core.id.google_oauth": ("apps/linhx_vn", "linhx_vn.id.google_oauth"),
+    "linhx_core.cts_adapter": ("apps/linhx_cts", "linhx_cts"),
+    "linhx_core.booking": ("apps/linhx_goi_booking", "linhx_goi_booking"),
+    "linhx_core.agent": ("apps/linhx_goi_agentforce", "linhx_goi_agentforce.agent"),
+    "linhx_core.cred": ("apps/linhx_goi_agentforce", "linhx_goi_agentforce.cred"),
+    "linhx_core.ops": ("apps/linhx_goi_ops", "linhx_goi_ops.ops"),
+}
+
+
+def cho_moi(ten_module):
+    """(tên module, thư mục gốc) ở chỗ mới nếu đã chuyển, None nếu chưa."""
+    for cu, (app, moi) in CHUYEN_CHO.items():
+        if ten_module == cu or ten_module.startswith(cu + "."):
+            ten = moi + ten_module[len(cu):]
+            f = GOC / app / pathlib.Path(*ten.split("."))
+            if f.with_suffix(".py").exists() or (f / "__init__.py").exists():
+                return ten, GOC / app
+    return None
+
+
+def ma(duong_trong_core):
+    """Đường file code: "pay/vietqr.py" (tính từ apps/linhx_core/linhx_core) -> chỗ mới nếu đã chuyển, chỗ cũ nếu chưa."""
+    ten = "linhx_core." + duong_trong_core.removesuffix(".py").replace("/", ".")
+    m = cho_moi(ten)
+    if m:
+        return m[1] / (m[0].replace(".", "/") + ".py")
+    return CORE / "linhx_core" / duong_trong_core
+
+
 def nap_module(ten_module, duong_dan_goc, chan_frappe=True):
-    """Nạp module Python thuần (không cần Frappe). chan_frappe=True: `import frappe` ở đầu module sẽ lỗi."""
+    """Nạp module Python thuần (không cần Frappe). chan_frappe=True: `import frappe` ở đầu module sẽ lỗi.
+    Module đã chuyển chỗ ở đợt 3 (CHUYEN_CHO) thì nạp bản ở chỗ mới."""
+    m = cho_moi(ten_module)
+    if m:
+        ten_module, duong_dan_goc = m
     duong_dan_goc = str(duong_dan_goc)
     if duong_dan_goc not in sys.path:
         sys.path.insert(0, duong_dan_goc)
@@ -94,10 +140,12 @@ def nap_module(ten_module, duong_dan_goc, chan_frappe=True):
                 sys.modules["frappe"] = cu
 
 
-def tim_doctype(ten, goc=CORE):
+def tim_doctype(ten, goc=None):
     """Tìm file JSON định nghĩa DocType có "name" == ten trong goc. Trả (đường dẫn, dict) hoặc (None, None)."""
     tep = ten.lower().replace(" ", "_") + ".json"
-    for p in pathlib.Path(goc).rglob(tep):
+    # goc=None: linhx_core trước rồi mọi app (DocType có thể đã chuyển sang adapter/gói ở đợt 3)
+    cac_goc = [goc] if goc is not None else [CORE, GOC / "apps"]
+    for p in (q for g in cac_goc for q in pathlib.Path(g).rglob(tep)):
         if "doctype" in p.parts:
             try:
                 d = doc_json(p)

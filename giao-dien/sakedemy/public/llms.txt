@@ -1,0 +1,21 @@
+# Sakédemy
+
+> Sakédemy (sakedemy.com) đào tạo AI ứng dụng cho nhân viên doanh nghiệp tại Việt Nam. Mỗi lớp doanh nghiệp đi qua bốn bước: nhận đề bài, khảo sát đầu vào, may giáo trình theo phòng ban, dạy tại văn phòng hoặc online rồi khảo sát lại sau khoá. Xuất hoá đơn đào tạo cho doanh nghiệp. Người học cá nhân bắt đầu bằng bài học thử miễn phí.
+
+Giảng viên: Đinh Trần Tuấn Linh. Trợ giảng: Phạm Vân Anh, Hoàng Ngọc Minh. Đã đào tạo cho Vinhomes, Taseco, Tập đoàn ROX, Onsen Fuji, Viện FSB, ĐH Phenikaa. Tagline: Khi sáng tạo gặp công nghệ.
+
+## Trang chính
+- [Trang chủ, chương trình và form đăng ký tư vấn lớp doanh nghiệp](https://sakedemy.com/)
+- [Lớp doanh nghiệp: quy trình bốn bước](https://sakedemy.com/lop-doanh-nghiep/)
+- [Khoá AI ứng dụng uy tín: năm câu hỏi trước khi đặt lớp](https://sakedemy.com/khoa-ai-ung-dung-uy-tin/)
+- [Hỏi đáp](https://sakedemy.com/hoi-dap/)
+
+## Chương trình theo phòng ban
+- [Marketing và truyền thông](https://sakedemy.com/chuong-trinh/marketing-truyen-thong/)
+- [Kinh doanh và chăm sóc khách](https://sakedemy.com/chuong-trinh/kinh-doanh-cham-soc-khach/)
+- [Vận hành, hành chính, nhân sự](https://sakedemy.com/chuong-trinh/van-hanh-hanh-chinh/)
+- [Ban lãnh đạo](https://sakedemy.com/chuong-trinh/ban-lanh-dao/)
+- [Chi nhánh ngân hàng](https://sakedemy.com/chuong-trinh/chi-nhanh-ngan-hang/)
+
+## Khác
+- [Bài học thử](https://sakedemy.com/hoc-thu/) · [Khoá cá nhân](https://sakedemy.com/khoa-ca-nhan/) · [Giảng viên](https://sakedemy.com/giang-vien/) · [Chính sách dữ liệu](https://sakedemy.com/chinh-sach-du-lieu/)

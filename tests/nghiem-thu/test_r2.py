@@ -18,7 +18,7 @@ import copy
 import random
 import re
 
-from _chung import CORE, nap_module
+from _chung import ma, CORE, nap_module
 
 BAT = {"bat_bong": True}
 
@@ -138,7 +138,7 @@ def test_bao_lech_khi_khac():
 
 
 def test_khong_giao_hang_trong_ma():
-    chu = (CORE / "linhx_core" / "cts_adapter" / "bong.py").read_text(encoding="utf-8")
+    chu = (ma("cts_adapter/bong.py")).read_text(encoding="utf-8")
     for cam in ["linhx_worker", "LX Job", "enqueue", "sendmail", "send_mail", "tao_job", "giao_bao_cao"]:
         assert cam not in chu, f"bong.py không được gọi giao hàng ({cam})"
     assert "hop_dong" in chu, "bong.py phải dùng lại luật của hop_dong (R1), không viết luật thứ hai"

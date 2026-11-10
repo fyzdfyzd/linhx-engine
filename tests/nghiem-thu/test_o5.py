@@ -21,7 +21,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, dong_trang, khong_import_frappe_dau_file, nap_module, trang_front_engine
+from _chung import ma, CORE, dong_trang, khong_import_frappe_dau_file, nap_module, trang_front_engine
 
 
 def _bp():
@@ -50,7 +50,7 @@ def test_phieu_cho_va_tra_lai_bat_buoc_ly_do():
 
     da_duyet = bp.duyet_phieu(ds, "PH-3", ["LX Operator"])
     assert da_duyet["trang_thai"] == "duyet"
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "ops" / "ban_phieu.py")
+    khong_import_frappe_dau_file(ma("ops/ban_phieu.py"))
 
 
 def test_ban_engine_phieu_cho_va_390_1280_khong_tran_ngang():

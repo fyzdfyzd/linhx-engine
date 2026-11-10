@@ -1,0 +1,27 @@
+{
+ "path": "/an-toan-thuong-hieu/",
+ "kenh": "trang-an-toan",
+ "form": "form-bo-kiem",
+ "title": "An toàn thương hiệu cho asset AI, tải bộ kiểm · Unikon",
+ "desc": "Cách Unikon kiểm asset AI trước khi giao cho agency: người duyệt, luật với người thật, trắng nhãn. Tải Bộ kiểm an toàn thương hiệu cho asset AI.",
+ "vet": [
+  [
+   "An toàn thương hiệu",
+   "/an-toan-thuong-hieu/"
+  ]
+ ],
+ "h1": "An toàn thương hiệu cho asset AI",
+ "mo": "Agency chịu trách nhiệm trước khách về từng hình. Đây là những gì chúng tôi soát trước khi asset rời tay, và bộ kiểm để đội của bạn tự soát.",
+ "than": "## Bốn lớp kiểm của Unikon\n1. **Hình**: bàn tay, khuôn mặt, chữ trong hình, chi tiết sản phẩm.\n2. **Thương hiệu**: logo, màu, bao bì đúng tỉ lệ; không lẫn màu hay biểu tượng của đối thủ.\n3. **Người thật**: không gương mặt, giọng người thật khi chưa có hợp đồng.\n4. **Trắng nhãn**: file giao không có logo Unikon, tên khách được ẩn trong tài liệu của chúng tôi.\n\n## Bộ kiểm an toàn thương hiệu cho asset AI\nDanh sách điểm cần soát trước khi đưa asset AI cho khách duyệt, dùng được cho cả asset không do Unikon làm. Để lại email ở form dưới, chúng tôi gửi bộ kiểm cho bạn.",
+ "ghi_chu": "Bản PDF của bộ kiểm đang hoàn thiện. Email để lại ở đây vào danh sách chờ, chúng tôi gửi ngay khi có.",
+ "hoi_dap": [
+  [
+   "Có dùng gương mặt hay giọng người nổi tiếng được không?",
+   "Chỉ khi có hợp đồng với chính người đó. Mặc định, nhân vật AI của Unikon là người hư cấu."
+  ],
+  [
+   "Asset AI có vướng bản quyền không?",
+   "Chúng tôi không đưa hình, logo, nhân vật của bên thứ ba vào asset khi chưa có quyền. Điều khoản quyền với asset ghi trong hợp đồng từng job."
+  ]
+ ]
+}

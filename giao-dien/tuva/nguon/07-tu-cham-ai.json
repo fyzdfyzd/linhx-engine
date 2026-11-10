@@ -1,0 +1,18 @@
+{
+ "path": "/tu-cham-ai/",
+ "kenh": "trang-tu-cham",
+ "cham": true,
+ "form_tai": true,
+ "title": "Tự chấm mức sẵn sàng AI của NGO trong 3 phút · TUVA",
+ "desc": "Mười câu hỏi giúp NGO và tổ chức phát triển biết mình đang ở mức nào khi dùng AI, kèm ba gợi ý nên làm trước. Kết quả hiện ngay.",
+ "vet": [
+  [
+   "Tự chấm mức sẵn sàng AI",
+   "/tu-cham-ai/"
+  ]
+ ],
+ "h1": "Tự chấm mức sẵn sàng AI của tổ chức",
+ "mo": "Mười câu, mỗi câu ba lựa chọn. Kết quả hiện ngay trên trang, không cần để lại thông tin.",
+ "than": "## Bốn mức\n- **Mức 1 · Bắt đầu**: chưa có quy tắc, nhân viên tự dùng AI.\n- **Mức 2 · Thử nghiệm**: đã có người dùng, mỗi người một kiểu.\n- **Mức 3 · Có nề nếp**: có quy tắc và người duyệt.\n- **Mức 4 · Sẵn sàng mở rộng**: AI đã có chỗ trong chương trình và đề xuất tài trợ.\n\n## Nhận bản đầy đủ\nĐể lại email, bạn nhận bộ quy tắc AI và gợi ý cho từng câu theo kết quả của mình.",
+ "cta": false
+}

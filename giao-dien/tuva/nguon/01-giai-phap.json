@@ -1,0 +1,16 @@
+{
+ "path": "/giai-phap/",
+ "kenh": "trang-dich-vu",
+ "loai": "service",
+ "title": "Dịch vụ truyền thông và AI cho NGO · TUVA",
+ "desc": "Ba việc TUVA làm cùng NGO và dự án phát triển: AI cho tổ chức (Decent AI), truyền thông dự án theo lĩnh vực, lắng nghe dữ liệu mạng xã hội.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/giai-phap/"
+  ]
+ ],
+ "h1": "Dịch vụ của TUVA cho tổ chức phát triển",
+ "mo": "Ba nhóm việc, chọn theo điều dự án của bạn cần. Nhiều dự án ghép hai nhóm với nhau, ví dụ lắng nghe dữ liệu trước rồi mới làm chiến dịch.",
+ "than": "## Chọn theo việc\n| Bạn cần | Nên chọn | Bạn nhận được |\n|---|---|---|\n| Đội ngũ dùng AI an toàn, đúng việc | [AI cho tổ chức phát triển](/giai-phap/ai-cho-ngo/) | Tập huấn theo vai trò, bộ quy tắc AI, quy trình duyệt, câu lệnh mẫu |\n| Thông điệp dự án tới đúng nhóm công chúng | [Truyền thông dự án và chiến dịch](/giai-phap/truyen-thong-du-an/) | Chiến lược, nội dung đa kênh, sự kiện, tập huấn truyền thông cho đối tác |\n| Biết công chúng đang nói gì về vấn đề | [Lắng nghe dữ liệu mạng xã hội](/giai-phap/lang-nghe-du-lieu/) | Báo cáo dữ liệu, thông điệp gợi ý, chỉ số theo dõi |\n\n## Cả ba đều viết được vào đề xuất tài trợ\nMỗi nhóm việc có sẵn cách viết cho concept note, dòng ngân sách và chỉ số logframe. Xem [cách TUVA viết hạng mục cho đề xuất tài trợ](/de-xuat-tai-tro/).\n\n## Chưa chắc bắt đầu từ đâu\n[Tự chấm mức sẵn sàng AI của tổ chức](/tu-cham-ai/) trong ba phút, hoặc gửi thông tin dự án để chúng tôi gợi ý."
+}

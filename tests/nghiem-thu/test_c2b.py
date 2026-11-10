@@ -25,7 +25,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import json
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 LUC = "2026-11-09 09:00:00"
 
@@ -129,6 +129,6 @@ def test_ma_xac_nhan_luu_db_co_han_dung_dung_mot_lan():
     assert ma1 == 200 and kq1["ok"] is True
     assert ma2 == 400 and kq2["ok"] is False
 
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "crm" / "xac_minh_marketing.py")
+    khong_import_frappe_dau_file(ma("crm/xac_minh_marketing.py"))
     chu = (CORE / "linhx_core" / "crm" / "api_form.py").read_text(encoding="utf-8")
     assert "def xac_nhan_marketing(" in chu

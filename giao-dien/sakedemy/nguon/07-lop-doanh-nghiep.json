@@ -1,0 +1,34 @@
+{
+ "path": "/lop-doanh-nghiep/",
+ "kenh": "trang-lop-dn",
+ "loai": "service",
+ "title": "Lớp đào tạo AI cho doanh nghiệp: quy trình bốn bước · Sakédemy",
+ "desc": "Quy trình lớp AI doanh nghiệp của Sakédemy: nhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Học tại văn phòng hoặc online.",
+ "vet": [
+  [
+   "Lớp doanh nghiệp",
+   "/lop-doanh-nghiep/"
+  ]
+ ],
+ "h1": "Lớp AI doanh nghiệp: đo trước, may đo, học, đo lại",
+ "mo": "Mỗi lớp doanh nghiệp đi qua bốn bước. Theo hồ sơ đào tạo của Sakédemy, lớp nội bộ mẫu gồm 2 buổi, mỗi buổi 2 đến 3 giờ, học tại văn phòng đối tác.",
+ "anh": [
+  "/img/anh/anh-giang-vien-taseco.jpg",
+  "Giảng viên Sakédemy trong lớp tại Taseco"
+ ],
+ "than": "## Bốn bước\n1. **Nhận đề bài.** Trao đổi với bên đặt lớp để nắm nhu cầu đào tạo, phòng ban, số người và thời gian học.\n2. **Khảo sát đầu vào.** Gửi bảng khảo sát để đo học viên hiểu và đang dùng AI tới đâu, làm căn cứ xây giáo trình.\n3. **May giáo trình.** Xây khung bài giảng từ đề bài và kết quả khảo sát, ví dụ lấy sát việc của doanh nghiệp.\n4. **Dạy và đo đầu ra.** Giảng dạy, hỗ trợ học viên trong và sau khoá, khảo sát lại khi kết thúc.\n\n## Hình thức\n| | Tại văn phòng | Online | Kết hợp |\n|---|---|---|---|\n| Hợp với | Đội ngồi chung một nơi | Đội ở nhiều chi nhánh | Buổi nền tảng chung, thực hành theo nhóm |\n| Thực hành | Giảng viên và trợ giảng đi từng bàn | Chia phòng nhỏ theo nhóm | Theo từng buổi |\n\n## Đội giảng dạy\nGiảng viên Đinh Trần Tuấn Linh, trợ giảng Phạm Vân Anh và Hoàng Ngọc Minh (theo hồ sơ đào tạo doanh nghiệp). Xem [trang giảng viên](/giang-vien/).\n\n## Hoá đơn và thanh toán\nSakédemy xuất hoá đơn đào tạo cho doanh nghiệp. Thông tin pháp nhân, thuế suất và cách thanh toán ghi trong báo giá.",
+ "hoi_dap": [
+  [
+   "Một lớp tối đa bao nhiêu người?",
+   "Tuỳ hình thức và mức thực hành. Đội đông thường chia thành nhiều lớp theo phòng ban, chốt sau bảng khảo sát đầu vào."
+  ],
+  [
+   "Bao lâu từ lúc đăng ký đến buổi học đầu?",
+   "Tuỳ lịch của doanh nghiệp và thời gian khảo sát. Sakédemy báo lịch cụ thể trong báo giá."
+  ],
+  [
+   "Có chứng nhận cho học viên không?",
+   "Hỏi trong buổi trao đổi; nội dung này ghi trong báo giá nếu doanh nghiệp cần."
+  ]
+ ]
+}

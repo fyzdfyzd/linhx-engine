@@ -1,0 +1,15 @@
+{
+ "path": "/chuong-trinh/",
+ "kenh": "trang-chuong-trinh",
+ "title": "Chương trình đào tạo AI theo phòng ban · Sakédemy",
+ "desc": "Năm hướng đào tạo AI ứng dụng theo phòng ban: marketing, kinh doanh, vận hành, ban lãnh đạo, chi nhánh ngân hàng. Mỗi lớp có giáo trình riêng.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ]
+ ],
+ "h1": "Chương trình đào tạo AI theo phòng ban",
+ "mo": "Sakédemy không dạy một khoá chung cho mọi người. Mỗi đề bài của doanh nghiệp có một giáo trình riêng, ví dụ lấy từ việc thật của đội.",
+ "than": "## Chọn theo phòng ban\n| Phòng ban | Học để làm gì | Xem |\n|---|---|---|\n| Marketing, truyền thông | Ý tưởng, bài viết theo giọng thương hiệu, ảnh và video ngắn | [Chương trình marketing](/chuong-trinh/marketing-truyen-thong/) |\n| Kinh doanh, chăm sóc khách | Email, báo giá, kịch bản trả lời khách nhất quán | [Chương trình kinh doanh](/chuong-trinh/kinh-doanh-cham-soc-khach/) |\n| Vận hành, hành chính, nhân sự | Biên bản, văn bản đúng mẫu, báo cáo tuần | [Chương trình vận hành](/chuong-trinh/van-hanh-hanh-chinh/) |\n| Ban lãnh đạo | Chọn việc giao cho AI, đặt luật dùng AI | [Chương trình lãnh đạo](/chuong-trinh/ban-lanh-dao/) |\n| Chi nhánh ngân hàng | Tờ trình, email khách, báo cáo theo khuôn ngân hàng | [Chương trình ngân hàng](/chuong-trinh/chi-nhanh-ngan-hang/) |\n\n## Phần nền chung của mọi lớp\nTheo hồ sơ đào tạo doanh nghiệp của Sakédemy, buổi đầu thường gồm:\n- AI là gì, phân biệt AI tạo sinh và AI tự hành.\n- Tư duy hợp tác với AI: chuyển từ người tự làm hết sang người giao việc.\n- Cấu trúc câu lệnh Vai trò, Bối cảnh, Nhiệm vụ, Định dạng.\n- Thực hành trước và sau khi học kỹ thuật viết câu lệnh để thấy khác biệt.\n\nBuổi sau đi vào việc của từng phòng ban: quy tắc viết câu lệnh, một số khung làm việc, kỹ thuật trò chuyện với AI, và sản phẩm cụ thể như văn bản, ảnh, nhạc, video.\n\n## Phòng ban khác\nGửi đề bài ở [form đăng ký tư vấn](/?kenh=trang-chuong-trinh#dang-ky). Sakédemy may giáo trình riêng cho vấn đề thực tế của doanh nghiệp."
+}

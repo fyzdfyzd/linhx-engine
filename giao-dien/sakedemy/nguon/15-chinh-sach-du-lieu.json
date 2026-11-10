@@ -1,0 +1,17 @@
+{
+ "path": "/chinh-sach-du-lieu/",
+ "kenh": "trang-chinh-sach",
+ "title": "Chính sách dữ liệu cá nhân · Sakédemy",
+ "desc": "Sakédemy thu gì khi bạn đăng ký tư vấn, gọi lại hoặc học thử, dùng để làm gì, lưu bao lâu, và cách bạn yêu cầu sửa hoặc xoá dữ liệu.",
+ "vet": [
+  [
+   "Chính sách dữ liệu",
+   "/chinh-sach-du-lieu/"
+  ]
+ ],
+ "h1": "Chính sách dữ liệu cá nhân",
+ "mo": "Bản nháp theo Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.",
+ "ghi_chu": "Bản nháp, chờ pháp chế duyệt và chờ tên pháp nhân, địa chỉ, kênh liên hệ chính thức.",
+ "than": "## Chúng tôi thu gì\n- Form đăng ký tư vấn: họ tên, công ty, vai trò, điện thoại hoặc email, số học viên, phòng ban, hình thức, thời gian và nhu cầu bạn ghi.\n- Form gọi lại: họ tên và số điện thoại.\n- Form học thử: email.\n- Kèm theo mỗi lần gửi: thời điểm, câu đồng ý bạn đã tick, địa chỉ IP, trang và nguồn bạn đến (ví dụ đường dẫn có `kenh`).\n\n## Dùng để làm gì\n- Liên hệ tư vấn, gọi lại, gửi bài học thử theo đúng việc bạn đã đồng ý.\n- Đo kênh nào đưa người đăng ký tới, để cải thiện nội dung.\n\n## Không làm gì\n- Không bán hay cho thuê dữ liệu của bạn.\n- Không gửi tin quảng cáo ngoài phạm vi bạn đồng ý.\n\n## Lưu bao lâu\n[Chờ pháp chế chốt thời hạn lưu.]\n\n## Quyền của bạn\nBạn có quyền xem, sửa, rút lại đồng ý và yêu cầu xoá dữ liệu. Kênh tiếp nhận yêu cầu đang cập nhật; trong lúc chờ, bạn gửi yêu cầu qua [form liên hệ](/lien-he/).",
+ "cta": false
+}

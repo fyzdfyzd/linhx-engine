@@ -21,7 +21,7 @@ Hợp đồng (HOP-DONG.md):
            - Nếu ket_luan == "CHUA_DAT": trang_thai = "tra", ket_luan = "CHUA_DAT", loi_may = False,
              so_lan_chua_dat = int(phieu.get("so_lan_chua_dat") or 0) + 1, ly_do_tra = nhan_xet.
 """
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 
 def _cp():
@@ -118,4 +118,4 @@ def test_claude_het_han_muc_la_loi_may_khong_tinh_lan():
         assert kq.get("loi_may") is True
         assert kq["so_lan_chua_dat"] == 2, "Claude hết hạn mức là lỗi máy, không được tăng so_lan_chua_dat"
         assert kq["trang_thai"] != "tra", "lỗi máy không được đẩy phiếu về tra như lỗi thợ"
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "ops" / "cham_phieu.py")
+    khong_import_frappe_dau_file(ma("ops/cham_phieu.py"))

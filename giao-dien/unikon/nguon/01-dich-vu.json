@@ -1,0 +1,26 @@
+{
+ "path": "/dich-vu/",
+ "kenh": "trang-dich-vu",
+ "loai": "service",
+ "title": "Dịch vụ AI production cho agency theo loại asset · Unikon",
+ "desc": "Unikon sản xuất asset sáng tạo bằng AI cho agency: ảnh và key visual, video AI, nhân vật và giọng AI. Mỗi asset có người duyệt, giao trắng nhãn.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/dich-vu/"
+  ]
+ ],
+ "h1": "Dịch vụ AI production, chọn theo loại asset",
+ "mo": "Agency mang ý tưởng và quan hệ với khách, Unikon làm phần sản xuất bằng AI. Bảng dưới giúp bạn biết nên ghi gì vào brief.",
+ "than": "## Chọn theo thứ bạn cần giao cho khách\n| Bạn cần | Loại asset | Hợp khi |\n|---|---|---|\n| Hình để pitch, rồi nhiều biến thể cho kênh | [Ảnh AI và key visual](/dich-vu/anh-ai/) | Chiến dịch nhiều kênh, nhiều cỡ, nhiều tệp khách |\n| Chuyển động, cảnh khó quay | [Video AI](/dich-vu/video-ai/) | Video ngắn mạng xã hội, khung hình động cho màn hình |\n| Gương mặt, giọng nói cho nhãn hàng | [Nhân vật và giọng AI](/dich-vu/nhan-vat-giong-ai/) | Đại sứ ảo, giọng đọc quảng cáo, nhạc nền |\n\n## Điểm chung của mọi job\n- Người duyệt từng asset trước khi giao: bàn tay, chữ, khuôn mặt, logo, màu thương hiệu.\n- File giao không có logo Unikon. Tên nhãn hàng của khách được ẩn trong tài liệu của chúng tôi.\n- Báo giá theo giá sàn từng loại asset, xem [cách tính giá](/bao-gia/).\n- Nhãn chạy đều hằng tháng có thể chuyển sang [Brand kit hằng tháng](/brand-kit/).\n\n## Bắt đầu từ đâu\nPhần lớn agency bắt đầu bằng [pitch mẫu 48 giờ](/pitch-48-gio/): ba hướng ý tưởng có hình, trong deck trắng nhãn. Trúng pitch thì sản xuất tiếp theo job.",
+ "hoi_dap": [
+  [
+   "Khách của tôi có biết Unikon đứng sau không?",
+   "Không, nếu bạn không muốn. Deck và file giao không mang logo Unikon. Tên nhãn hàng của khách được ẩn trong mọi tài liệu của chúng tôi."
+  ],
+  [
+   "Giá tính thế nào?",
+   "Mỗi loại asset có một giá sàn. Báo giá cộng theo số asset, số biến thể và độ khó của hướng khách chọn. Gửi brief để nhận báo giá cụ thể."
+  ]
+ ]
+}

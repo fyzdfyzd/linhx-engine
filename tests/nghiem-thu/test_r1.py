@@ -19,7 +19,7 @@ import copy
 import json
 import re
 
-from _chung import CORE, DU_LIEU, nap_module
+from _chung import ma, CORE, DU_LIEU, nap_module
 
 CTS = DU_LIEU / "cts"
 KHOA = "khoa-thu-r1"
@@ -79,7 +79,7 @@ def _kho_tu(mau):
 def test_thuan_python_va_co_endpoint():
     hd = _hd()
     assert callable(hd.tao_don) and callable(hd.nhan_webhook)
-    api = CORE / "linhx_core" / "cts_adapter" / "api.py"
+    api = ma("cts_adapter/api.py")
     assert api.exists(), "thiếu cts_adapter/api.py (endpoint Frappe)"
     chu = api.read_text(encoding="utf-8")
     assert chu.count("allow_guest=True") >= 2, "checkout và sepay_webhook phải whitelist allow_guest=True"

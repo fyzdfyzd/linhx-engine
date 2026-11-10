@@ -1,0 +1,22 @@
+{
+ "path": "/du-an/",
+ "kenh": "trang-du-an",
+ "title": "Dự án AI production cùng agency · Unikon",
+ "desc": "Dự án Unikon làm cùng agency được trình bày trong deck credential trắng nhãn. Tên khách chỉ nêu khi được phép. Gửi yêu cầu để nhận deck.",
+ "vet": [
+  [
+   "Dự án",
+   "/du-an/"
+  ]
+ ],
+ "h1": "Dự án làm cùng agency",
+ "mo": "Phần lớn việc của Unikon giao dưới tên agency, nên chúng tôi không đăng tên khách lên web khi chưa được phép.",
+ "ghi_chu": "Chưa có case được phép công khai. Trang này giữ khung; case sẽ thêm khi có văn bản đồng ý của agency và khách.",
+ "than": "## Xem năng lực ở đâu\nUnikon gửi deck credential trắng nhãn khi agency yêu cầu: loại chiến dịch, ngành hàng, asset đã làm, không nêu tên khách khi chưa được phép.\n\n## Mỗi case khi được phép sẽ có\n- Ngành hàng và loại agency.\n- Việc cần làm và hạn.\n- Asset đã giao, số lượng và kênh chạy.\n- Người xác nhận phía agency.\n\n## Muốn xem ngay\n[Gửi brief](/?kenh=trang-du-an#brief) hoặc để lại số ở [trang liên hệ](/lien-he/), ghi \"cần deck credential\".",
+ "hoi_dap": [
+  [
+   "Vì sao không có logo khách trên trang?",
+   "Vì phần lớn job giao trắng nhãn qua agency. Logo và tên chỉ đăng khi cả agency và khách cho phép bằng văn bản."
+  ]
+ ]
+}

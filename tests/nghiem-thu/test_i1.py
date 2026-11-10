@@ -19,7 +19,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 LUC = "2026-11-09 10:00:00"
 
@@ -90,6 +90,6 @@ def test_ghi_nhat_ky_gop():
     assert dong.get("kenh") == "google" and dong.get("hanh_dong") == "gop"
     assert dong.get("email") == "lan@vd.vn" and dong.get("luc") == LUC
 
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "id" / "google_oauth.py")
+    khong_import_frappe_dau_file(ma("id/google_oauth.py"))
     api_p = CORE / "linhx_core" / "id" / "api_auth.py"
     assert api_p.exists() and "def google_callback(" in api_p.read_text(encoding="utf-8")

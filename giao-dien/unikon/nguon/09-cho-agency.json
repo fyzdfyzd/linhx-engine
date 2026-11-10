@@ -1,0 +1,25 @@
+{
+ "path": "/cho-agency/",
+ "kenh": "trang-cho-agency",
+ "title": "Làm việc cùng agency: AM, producer, người quyết · Unikon",
+ "desc": "Unikon là đơn vị AI production cho agency: account manager gửi brief, producer theo lịch, người quyết xem báo giá theo giá sàn. Agency giữ khách.",
+ "vet": [
+  [
+   "Cho agency",
+   "/cho-agency/"
+  ]
+ ],
+ "h1": "Unikon làm việc cùng agency thế nào",
+ "mo": "Agency giữ khách hàng, ý tưởng lớn và lời pitch. Unikon đứng sau làm phần sản xuất bằng AI, giao dưới tên agency.",
+ "than": "## Mỗi vai trò cần gì từ chúng tôi\n| Vai trò | Cần | Unikon đưa |\n|---|---|---|\n| Account manager | Có hình để pitch kịp hạn | Pitch mẫu 48 giờ, deck trắng nhãn |\n| Producer | Lịch sản xuất rõ, ít vòng sửa | Báo giá chốt số asset, người duyệt trước khi giao |\n| Creative director | Hình đúng ý tưởng, không bị AI làm hỏng | Ba hướng để chọn, Brand kit giữ chất hình |\n| Người quyết ngân sách | Biết phần sản xuất tốn bao nhiêu | Giá sàn từng loại asset, hoá đơn theo job |\n\n## Cách làm cùng nhau\n1. Agency gửi brief và hạn pitch.\n2. Unikon gửi ba hướng, deck trắng nhãn, báo giá.\n3. Agency pitch. Trúng thì ký job.\n4. Sản xuất, duyệt, giao file mang tên agency.\n\n## Tên agency và tên khách\nKhông xuất hiện trong case, bài đăng, hồ sơ năng lực của Unikon khi chưa có văn bản cho phép của cả agency và khách.",
+ "hoi_dap": [
+  [
+   "Khách của tôi có biết Unikon đứng sau không?",
+   "Không, nếu bạn không muốn. Deck và file giao không mang logo Unikon. Tên nhãn hàng của khách được ẩn trong mọi tài liệu của chúng tôi."
+  ],
+  [
+   "Agency nhỏ có làm được không?",
+   "Được. Gửi brief như bình thường, báo giá theo giá sàn không phụ thuộc cỡ agency."
+  ]
+ ]
+}

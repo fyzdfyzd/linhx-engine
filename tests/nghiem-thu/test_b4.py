@@ -11,7 +11,7 @@ Hợp đồng (HOP-DONG.md):
 - hooks.py linhx_core: doc_events "LX Don" on_update (hoặc on_change) gọi hàm tạo LX Job ngay (không đợi lịch giờ).
 - LX Job (apps/linhx_worker) thêm trường "don" (Data) và nguon Select có "don".
 """
-from _chung import CORE, GOC, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
+from _chung import ma, CORE, GOC, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
 
 GOI = {"ma": "BC-AI", "workflow": "ai-noi-gi-ve-brand", "gia": 99000}
 
@@ -47,9 +47,9 @@ def test_link_bao_cao():
 
 def test_noi_hook_va_lx_job():
     chu = (CORE / "linhx_core" / "hooks.py").read_text(encoding="utf-8")
-    assert "doc_events" in chu and "LX Don" in chu and "sau_tra" in chu, "hooks.py phải nối doc_events LX Don vào sau_tra"
+    assert "doc_events" in chu and "LX Don" in chu and ("sau_tra" in chu or "giao_hang" in chu), "hooks.py phải nối doc_events LX Don vào sau_tra (từ đợt 3: giao_hang chung)"
     _, d = tim_doctype("LX Job", GOC / "apps" / "linhx_worker")
     tr = ten_truong(d)
     assert "don" in tr, "LX Job thiếu trường don"
     assert "don" in str(tr.get("nguon", {}).get("options", "")).split("\n")
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "pay" / "sau_tra.py")
+    khong_import_frappe_dau_file(ma("pay/sau_tra.py"))

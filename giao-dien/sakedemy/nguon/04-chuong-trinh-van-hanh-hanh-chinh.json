@@ -1,0 +1,35 @@
+{
+ "path": "/chuong-trinh/van-hanh-hanh-chinh/",
+ "kenh": "ct-van-hanh-hanh-chinh",
+ "loai": "service",
+ "title": "Đào tạo AI cho vận hành, hành chính, nhân sự · Sakédemy",
+ "desc": "Khoá AI ứng dụng cho vận hành, hành chính, nhân sự: tóm tắt họp, soạn văn bản đúng mẫu, tổng hợp báo cáo tuần từ số liệu thô.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ],
+  [
+   "Vận hành, hành chính, nhân sự",
+   "/chuong-trinh/van-hanh-hanh-chinh/"
+  ]
+ ],
+ "h1": "AI ứng dụng cho vận hành, hành chính, nhân sự",
+ "mo": "Khoá AI ứng dụng cho vận hành, hành chính, nhân sự: tóm tắt họp, soạn văn bản đúng mẫu, tổng hợp báo cáo tuần từ số liệu thô.",
+ "ghi_chu": "Đầu việc dưới đây là ví dụ thường gặp. Giáo trình thật chốt sau buổi trao đổi và bảng khảo sát đầu vào của đội bạn.",
+ "anh": [
+  "/img/anh/anh-lop-onsen-fuji.jpg",
+  "Lớp đào tạo AI tại Onsen Fuji"
+ ],
+ "than": "## Đầu việc thường đưa vào lớp\n- Biên bản và tóm tắt cuộc họp từ ghi chú hoặc ghi âm\n- Soạn công văn, thông báo, quy định nội bộ theo mẫu\n- Tổng hợp báo cáo tuần từ bảng số liệu\n- Soạn mô tả công việc, câu hỏi phỏng vấn, tài liệu hội nhập\n\n## Học viên mang về\n- Bộ câu lệnh cho văn bản hành chính hay dùng\n- Mẫu báo cáo tuần có AI hỗ trợ\n- Cách kiểm số liệu AI tổng hợp trước khi gửi lên trên\n\n## Cách lớp chạy\nNhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Xem chi tiết ở [quy trình lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "hoi_dap": [
+  [
+   "Nhân viên lớn tuổi, ít dùng máy tính có học được không?",
+   "Bảng khảo sát đầu vào cho biết mức của từng người. Lớp có thể chia nhóm hoặc thêm buổi nền tảng cho người mới."
+  ],
+  [
+   "Có dạy trên Excel, Google Sheets không?",
+   "Có thể đưa vào giáo trình nếu báo cáo của đội làm trên bảng tính. Ghi rõ nhu cầu này khi đăng ký."
+  ]
+ ]
+}

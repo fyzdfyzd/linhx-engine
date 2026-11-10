@@ -1,0 +1,30 @@
+{
+ "path": "/dich-vu/anh-ai/",
+ "kenh": "trang-anh-ai",
+ "loai": "service",
+ "title": "Ảnh AI và key visual cho chiến dịch của agency · Unikon",
+ "desc": "Key visual cho pitch và hàng loạt biến thể theo kênh, làm bằng AI, giữ đúng màu, logo, bao bì nhãn hàng. Có người duyệt từng ảnh, giao trắng nhãn.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/dich-vu/"
+  ],
+  [
+   "Ảnh AI và key visual",
+   "/dich-vu/anh-ai/"
+  ]
+ ],
+ "h1": "Ảnh AI và key visual cho chiến dịch",
+ "mo": "Từ một hướng hình đã chốt ở pitch, chúng tôi làm key visual và các biến thể theo kênh, theo tệp khách, theo cỡ hiển thị.",
+ "than": "## Làm được gì\n- Key visual cho pitch và cho chiến dịch chạy thật.\n- Biến thể theo kênh: bài đăng, story, banner, màn hình ngoài trời.\n- Sản phẩm của nhãn đặt vào bối cảnh mới mà không dựng studio.\n- Nhiều phiên bản cho nhiều tệp khách trong cùng một chiến dịch.\n\n## Agency cần gửi gì\n1. Brief và hướng hình khách đã chọn.\n2. Logo, bao bì, màu, phông của nhãn hàng (file gốc nếu có).\n3. Danh sách cỡ và kênh cần giao.\n4. Những điều nhãn hàng cấm (màu đối thủ, cử chỉ, bối cảnh nhạy cảm).\n\n## Người duyệt soát gì trước khi giao\n- Bàn tay, ngón tay, khuôn mặt không méo.\n- Chữ trong hình đúng chính tả hoặc để trống cho thiết kế chèn sau.\n- Logo, bao bì đúng tỉ lệ và màu.\n- Không có biểu tượng, gương mặt người thật lọt vào khung.",
+ "hoi_dap": [
+  [
+   "Ảnh AI có in khổ lớn được không?",
+   "Ghi cỡ in vào brief. Chúng tôi báo trước trong báo giá cỡ nào làm được và cần bước nâng độ phân giải nào."
+  ],
+  [
+   "Giá tính thế nào?",
+   "Mỗi loại asset có một giá sàn. Báo giá cộng theo số asset, số biến thể và độ khó của hướng khách chọn. Gửi brief để nhận báo giá cụ thể."
+  ]
+ ]
+}
