@@ -1,5 +1,5 @@
 {
-  "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE (canh/dieu-phoi-engine.ps1 đọc mỗi lượt từ nhánh main). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có tests/nghiem-thu/test_<id>.py); feature tìm trong cac_file_features theo thứ tự. cho: feature tạm giữ, kèm lý do (N2 tự mở khi có D:\\LINHX\\PROTO). nhom: hai thợ không cùng lúc giữ hai feature cùng nhóm (khác với vung trong features: vung là rào file). tran_chua_dat: số lần CHUA_DAT liền thì lùi về mốc, dừng feature, ghi CAN-LINH (K2). bao_mat: feature phải qua thêm lượt chấm bảo mật sau khi đạt (K4). agy_dinh_dang: stream-json (để K3 đọc file agy ghi) hoặc json. tich_hop: {ID: file} kiểm tích hợp HTTP thật trên bench (tests/nghiem-thu/tich-hop) chạy sau khi đạt hộp đen (K7). Đối chiếu VM mỗi vòng: canh/doi_chieu_vm.py (K8).",
+  "_huong_dan": "Điều khiển vòng thợ LINHX ENGINE (canh/dieu-phoi-engine.ps1 đọc mỗi lượt từ nhánh main). trang_thai: chay | tam_dung (chỉ chấm, không giao) | dung_han (dừng agy). giao: thứ tự feature được giao (chỉ feature đã có tests/nghiem-thu/test_<id>.py); feature tìm trong cac_file_features theo thứ tự. cho: feature tạm giữ, kèm lý do (N2 tự mở khi có D:\\LINHX\\PROTO). nhom: hai thợ không cùng lúc giữ hai feature cùng nhóm (khác với vung trong features: vung là rào file). tran_chua_dat: số lần CHUA_DAT liền thì lùi về mốc, dừng feature, ghi CAN-LINH (K2). bao_mat: feature phải qua thêm lượt chấm bảo mật sau khi đạt (K4). agy_dinh_dang: stream-json (để K3 đọc file agy ghi) hoặc json. tich_hop: {ID: file} kiểm tích hợp HTTP thật trên bench (tests/nghiem-thu/tich-hop) chạy sau khi đạt hộp đen (K7). Đối chiếu VM mỗi vòng: canh/doi_chieu_vm.py (K8). phut_khong_tien: dừng agy khi chừng ấy phút không commit, không chạy test mới (A). Cùng lỗi trượt 2 lần liền thì dừng như chạm trần. Smoke test trước khi giao: RAM, bench WSL, Claude hạn mức. Khoá features chạy canh/kiem_de.py trước (A).",
   "trang_thai": "chay",
   "so_tho": 4,
   "xoa_tac": [
@@ -24,11 +24,14 @@
   "agy_effort": "",
   "agy_dinh_dang": "stream-json",
   "phut_toi_da": 40,
+  "phut_khong_tien": 10,
   "tran_chua_dat": 3,
   "cac_file_features": [
     "features-dot1.json",
     "features-dot1b.json",
-    "features-dot2.json"
+    "features-dot2.json",
+    "features-dot2b.json",
+    "features-dot2c.json"
   ],
   "giao": [
     "N1",
@@ -74,6 +77,9 @@
     "O6",
     "O4",
     "O7",
+    "V1",
+    "V2",
+    "M1",
     "F1",
     "F2",
     "F3",
@@ -129,7 +135,10 @@
     "F1": "agent",
     "F2": "trang-bu",
     "F3": "sites",
-    "C2B": "trang-bu"
+    "C2B": "trang-bu",
+    "M1": "ban-do",
+    "V1": "vm-kiem",
+    "V2": "ci"
   },
   "bao_mat": [
     "B2",
@@ -150,7 +159,8 @@
     "I1",
     "I2",
     "I3",
-    "C2B"
+    "C2B",
+    "V1"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {
