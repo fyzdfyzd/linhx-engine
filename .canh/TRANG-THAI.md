@@ -1,13 +1,13 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 11:39 (giờ máy cty). Đạt: 52/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, U2)
+Cập nhật 2026-11-10 11:49 (giờ máy cty). Đạt: 52/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, U2)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | U1 | 20261110-1123-t1 từ 2026-11-10T11:23:22 | CHUA_DAT · Feature U1 · commit 2317d8c · nhánh tu-dong/engine-t1 · 2026-11-10T11:23:13 |
-| 2 | L4 | 20261110-1117-t2 từ 2026-11-10T11:17:37 | DAT · Feature U2 · commit 229bf86 · nhánh tu-dong/engine-t2 · 2026-11-10T11:17:25 |
+| 2 | L4 | rảnh | DAT · Feature U2 · commit 229bf86 · nhánh tu-dong/engine-t2 · 2026-11-10T11:17:25 |
 | 3 | U3 | 20261110-1133-t3 từ 2026-11-10T11:33:43 | CHUA_DAT · Feature U3 · commit 7ad6f27 · nhánh tu-dong/engine-t3 · 2026-11-10T11:33:43 |
-| 4 | L3 | 20261110-1119-t4 từ 2026-11-10T11:19:13 | DAT · Feature L2 · commit aebd3c7 · nhánh tu-dong/engine-t4 · 2026-11-10T11:19:11 |
+| 4 | L3 | rảnh | DAT · Feature L2 · commit aebd3c7 · nhánh tu-dong/engine-t4 · 2026-11-10T11:19:11 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -29,8 +29,6 @@ Cập nhật 2026-11-10 11:39 (giờ máy cty). Đạt: 52/68 (N1, N2, N3, N4, N
 - 2026-11-10T11:22:20 V1 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 0742e19e, bản hỏng giữ ở nhánh cục bộ hong/V1-20261110-1122, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\V1.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 11:22 t1: giao agy phiếu 20261110-1122-t1: U1
-- 2026-11-10 11:23 t1: agy xong phiếu 20261110-1122-t1 (U1) sau 1 phút
 - 2026-11-10 11:23 t1: U1 CHUA_DAT lần 1 (commit 2317d8c)
 - 2026-11-10 11:23 t1: giao agy phiếu 20261110-1123-t1: U1 (lượt sửa)
 - 2026-11-10 11:29 t3: dừng agy phiếu 20261110-1043-t3 (O7): quá 40 phút
@@ -41,4 +39,6 @@ Cập nhật 2026-11-10 11:39 (giờ máy cty). Đạt: 52/68 (N1, N2, N3, N4, N
 - 2026-11-10 11:33 t3: U3 CHUA_DAT lần 1 (commit 7ad6f27)
 - 2026-11-10 11:33 t3: giao agy phiếu 20261110-1133-t3: U3 (lượt sửa)
 - 2026-11-10 11:39 t0: xoá đếm CHUA_DAT của V1 (V1@1011-va-k4-canh)
+- 2026-11-10 11:40 t2: agy xong phiếu 20261110-1117-t2 (L4) sau 22 phút
+- 2026-11-10 11:40 t4: agy xong phiếu 20261110-1119-t4 (L3) sau 21 phút
 
