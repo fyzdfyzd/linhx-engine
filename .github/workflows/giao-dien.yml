@@ -42,6 +42,7 @@ jobs:
           NODE_PATH: /tmp/pw/node_modules
           EVENT_NAME: ${{ github.event_name }}
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
           BEFORE_SHA: ${{ github.event.before }}
           HEAD_SHA: ${{ github.sha }}
         run: |
@@ -65,32 +66,46 @@ jobs:
           # Tìm danh sách file đổi theo sự kiện PR hoặc push
           CHANGED=""
           if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$BASE_SHA" ]; then
-            CHANGED=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" 2>/dev/null || git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)
-          elif [ "$EVENT_NAME" = "push" ]; then
-            if [ -n "$BEFORE_SHA" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
-              CHANGED=$(git diff --name-only "$BEFORE_SHA" "$HEAD_SHA" || true)
-            else
-              MB=$(git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
-              CHANGED=$(git diff --name-only "$MB" HEAD || true)
+            if ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+              git fetch --no-tags origin "$BASE_SHA" 2>/dev/null || git fetch --no-tags origin "${BASE_REF:-main}:refs/remotes/origin/${BASE_REF:-main}" 2>/dev/null || true
             fi
+            if ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+              echo "Không tìm thấy BASE_SHA ($BASE_SHA) trong clone" >&2
+              exit 1
+            fi
+            CHANGED=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" 2>/dev/null || git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+          elif [ "$EVENT_NAME" = "push" ]; then
+            if ! git rev-parse --verify origin/main >/dev/null 2>&1; then
+              git fetch --no-tags origin main:refs/remotes/origin/main 2>/dev/null || true
+            fi
+            CHANGED_PUSH=""
+            if [ -n "$BEFORE_SHA" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+              CHANGED_PUSH=$(git diff --name-only "$BEFORE_SHA" "$HEAD_SHA")
+            fi
+            CHANGED_BRANCH=""
+            if MB=$(git merge-base HEAD origin/main 2>/dev/null); then
+              CHANGED_BRANCH=$(git diff --name-only "$MB" HEAD)
+            elif [ -z "$CHANGED_PUSH" ] && git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
+              CHANGED_BRANCH=$(git diff --name-only HEAD~1 HEAD)
+            fi
+            CHANGED=$(printf "%s\n%s\n" "$CHANGED_PUSH" "$CHANGED_BRANCH" | sed '/^$/d' | sort -u)
           fi
 
           SITES=$(echo "$CHANGED" | awk -F/ '$1 == "giao-dien" && NF >= 2 { print $2 }' | sort -u | tr '\n' ' ')
           VALID_SITES=""
-          LOI=0
           for s in $SITES; do
             if [ -d "giao-dien/$s" ]; then
               if [ -f "giao-dien/$s/server.mjs" ] && [ -f "giao-dien/$s/kiem/kiem.cjs" ]; then
                 VALID_SITES="$VALID_SITES $s"
               else
                 echo "Thiếu server.mjs hoặc kiem/kiem.cjs trong giao-dien/$s" >&2
-                LOI=1
+                exit 1
               fi
             fi
           done
 
           # Nếu thay đổi workflow hoặc chạy thủ công (không có site cụ thể trong diff) thì kiểm toàn bộ site BU
-          if { [ -z "${VALID_SITES// }" ] || echo "$CHANGED" | grep -qx ".github/workflows/giao-dien.yml"; } && [ "$LOI" -eq 0 ]; then
+          if [ -z "${VALID_SITES// }" ] || echo "$CHANGED" | grep -qx ".github/workflows/giao-dien.yml"; then
             VALID_SITES=""
             for d in giao-dien/*/; do
               s=$(basename "$d")
@@ -131,7 +146,8 @@ jobs:
             }).listen(18999, "127.0.0.1", () => console.log("Mock form engine listening on 127.0.0.1:18999"));
           ' &
           MOCK_PID=$!
-          trap 'kill $MOCK_PID 2>/dev/null || true; wait $MOCK_PID 2>/dev/null || true' EXIT
+          SRV_PID=""
+          trap 'kill ${SRV_PID:-} ${MOCK_PID:-} 2>/dev/null || true; wait ${SRV_PID:-} ${MOCK_PID:-} 2>/dev/null || true' EXIT
 
           MOCK_READY=0
           for i in $(seq 1 20); do
@@ -146,38 +162,42 @@ jobs:
             exit 1
           fi
 
+          ROOT_DIR=$(pwd)
+          # Trong giao-dien/*/kiem/kiem.cjs (dòng 62–70), cổng K7 gửi đúng 2 form (#form-brief và #form-goi-lai) về LINHX_FORM_URL
+          SO_LEAD_K7_TOI_THIEU=2
           PORT=8100
           for site in $VALID_SITES; do
             PORT=$((PORT + 1))
             echo "=== Kiểm giao-dien/$site trên cổng $PORT ==="
-            (
-              cd "giao-dien/$site"
-              PORT="$PORT" RATE_MAX=1000 LINHX_FORM_URL="http://127.0.0.1:18999/api/method/linhx_core.crm.api_form.nhan_form" node server.mjs &
-              SRV_PID=$!
-              trap 'kill $SRV_PID 2>/dev/null || true; wait $SRV_PID 2>/dev/null || true' EXIT
+            cd "$ROOT_DIR/giao-dien/$site"
+            PORT="$PORT" RATE_MAX=1000 LINHX_FORM_URL="http://127.0.0.1:18999/api/method/linhx_core.crm.api_form.nhan_form" node server.mjs &
+            SRV_PID=$!
 
-              READY=0
-              for i in $(seq 1 30); do
-                if curl -fsS "http://localhost:$PORT/api/song" >/dev/null 2>&1; then
-                  READY=1
-                  break
-                fi
-                sleep 0.5
-              done
-              if [ "$READY" -ne 1 ]; then
-                echo "server.mjs của $site không sẵn sàng trên cổng $PORT" >&2
-                exit 1
+            READY=0
+            for i in $(seq 1 30); do
+              if curl -fsS "http://localhost:$PORT/api/song" >/dev/null 2>&1; then
+                READY=1
+                break
               fi
+              sleep 0.5
+            done
+            if [ "$READY" -ne 1 ]; then
+              echo "server.mjs của $site không sẵn sàng trên cổng $PORT" >&2
+              kill "$SRV_PID" 2>/dev/null || true
+              exit 1
+            fi
 
-              NODE_OPTIONS="--require /tmp/pw-preload.cjs" node kiem/kiem.cjs "http://localhost:$PORT"
+            NODE_OPTIONS="--require /tmp/pw-preload.cjs" node kiem/kiem.cjs "http://localhost:$PORT" || exit 1
 
-              LEADS=$(curl -fsS "http://127.0.0.1:18999/counts" | node -e 'const fs=require("fs"); const d=JSON.parse(fs.readFileSync(0,"utf8")); console.log(d[process.argv[1]] || 0);' "$site")
-              echo "Số lead máy giả nhận từ $site: $LEADS"
-              if [ "$LEADS" -lt 2 ]; then
-                echo "Máy giả chưa nhận đủ lead từ $site ($LEADS < 2)" >&2
-                exit 1
-              fi
-            ) || LOI=1
+            kill "$SRV_PID" 2>/dev/null || true
+            wait "$SRV_PID" 2>/dev/null || true
+            SRV_PID=""
+            cd "$ROOT_DIR"
+
+            LEADS=$(curl -fsS "http://127.0.0.1:18999/counts" | node -e 'const fs=require("fs"); const d=JSON.parse(fs.readFileSync(0,"utf8")); console.log(d[process.argv[1]] || 0);' "$site")
+            echo "Số lead máy giả nhận từ $site: $LEADS"
+            if [ "$LEADS" -lt "$SO_LEAD_K7_TOI_THIEU" ]; then
+              echo "Máy giả chưa nhận đủ lead K7 từ $site ($LEADS < $SO_LEAD_K7_TOI_THIEU: #form-brief + #form-goi-lai)" >&2
+              exit 1
+            fi
           done
-
-          exit "$LOI"
