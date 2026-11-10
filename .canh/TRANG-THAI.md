@@ -1,13 +1,13 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-11 04:39 (giờ máy cty). Đạt: 66/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, K1, K2a)
+Cập nhật 2026-11-11 04:49 (giờ máy cty). Đạt: 66/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature U3 · commit 9fc90a0 · nhánh tu-dong/engine-t1 · 2026-11-10T20:07:31 |
 | 2 | K2b | 20261111-0424-t2 từ 2026-11-11T04:26:02 | CHUA_DAT · Feature K2b · commit 4ff8d82 · nhánh tu-dong/engine-t2 · 2026-11-10T20:37:37 |
-| 3 | T4 | 20261111-0423-t3 từ 2026-11-11T04:24:31 | CHUA_DAT · Feature T4 · commit eaff8fd · nhánh tu-dong/engine-t3 · 2026-11-10T21:48:48 |
-| 4 | N5 | rảnh | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
+| 3 | T4 | rảnh | CHUA_DAT · Feature T4 · commit eaff8fd · nhánh tu-dong/engine-t3 · 2026-11-10T21:48:48 |
+| 4 | - | rảnh | CHUA_DAT · Feature N5 · commit 08a781b · nhánh tu-dong/engine-t4 · 2026-11-11T04:40:54 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -55,10 +55,10 @@ Cập nhật 2026-11-11 04:39 (giờ máy cty). Đạt: 66/69 (N1, N2, N3, N4, N
 At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
 + ... 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-S ...
 +
-- 2026-11-11 04:13 t0: đẩy main hỏng 3 lần: git : To https://github.com/fyzdfyzd/linhx-engine.git
-At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
-+ ... 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-S ...
-+
 - 2026-11-11 04:24 t3: giao agy phiếu 20261111-0423-t3: T4 (lượt sửa)
 - 2026-11-11 04:26 t2: giao agy phiếu 20261111-0424-t2: K2b (lượt sửa)
+- 2026-11-11 04:40 t4: N5 CHUA_DAT lần 1 (commit 08a781b)
+- 2026-11-11 04:40 t4: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-11 04:48 t3: agy xong phiếu 20261111-0423-t3 (T4) sau 24 phút
+- 2026-11-11 04:49 t0: nhả giữ cũ N5 của t4 (thợ đang )
 
