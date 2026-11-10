@@ -67,8 +67,8 @@
     "gọi đúng hàm giao của gói theo loai_giao, thiếu hoặc trùng thì lỗi"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l3.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/L3/kiem.json"
   },
   {
    "id": "L4",

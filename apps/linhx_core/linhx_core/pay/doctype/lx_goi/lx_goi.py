@@ -1,6 +1,7 @@
 import frappe
 from frappe.model.document import Document
 
+from linhx_core.giao_hang import LOAI_GIAO_HOP_LE
 from linhx_core.pay import dang_ky_auth_hook
 
 
@@ -16,3 +17,11 @@ class LXGoi(Document):
 			ung_vien = str(self.ten).strip()
 		if ung_vien and not frappe.db.exists("LX Goi", ung_vien):
 			self.name = ung_vien
+
+	def validate(self):
+		loai = getattr(self, "loai_giao", None)
+		if loai is not None:
+			loai_sach = str(loai).strip()
+			if loai_sach and loai_sach not in LOAI_GIAO_HOP_LE:
+				frappe.throw(f"Loại giao hàng không hợp lệ: {loai_sach!r}")
+			self.loai_giao = loai_sach or None
