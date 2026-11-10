@@ -1,0 +1,30 @@
+{
+ "path": "/giai-phap/minigame/",
+ "kenh": "trang-minigame",
+ "loai": "service",
+ "title": "Minigame quét QR cho sự kiện · IF Agent Event",
+ "desc": "Khách quét mã, chơi trên điện thoại, đua bảng xếp hạng trên màn lớn. Không cần cài ứng dụng, chạy trên mạng di động của khách.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/#giai-phap"
+  ],
+  [
+   "Minigame quét QR",
+   "/giai-phap/minigame/"
+  ]
+ ],
+ "h1": "Minigame quét QR: cả hội trường cùng chơi trên điện thoại",
+ "mo": "Khách quét mã QR, chơi ngay trên trình duyệt điện thoại, điểm số hiện trên màn LED theo thời gian thực. Không cần cài ứng dụng, không cần thiết bị riêng cho từng người.",
+ "than": "## Kiểu chơi hay dùng\n| Kiểu | Hợp với | Khách làm gì |\n|---|---|---|\n| Đố nhanh | Hội nghị, ra mắt sản phẩm | Trả lời câu hỏi về thương hiệu, tính giờ |\n| Vòng quay quà | Gian hàng, sampling | Để lại thông tin, quay nhận quà |\n| Thử thách chạm | Activation, roadshow | Chạm nhanh, đua điểm với người khác |\n| Check-in và khảo sát | Hội nghị, hội thảo | Điểm danh, chấm phiên, bình chọn |\n\n## Vì sao minigame thu được thông tin\nKhách muốn lên bảng xếp hạng và nhận quà, nên tự để lại tên và số điện thoại. Ô đồng ý tách riêng, không tick sẵn, nên danh sách bạn nhận dùng được cho chăm sóc sau sự kiện.\n\n## Mạng ở hội trường\nMinigame chạy trên mạng di động của khách. Màn LED và máy điều khiển dùng mạng riêng của đội IF Agent, có đường dự phòng.\n\n## Sau sự kiện bạn nhận\n- Báo cáo số đo trong 24 giờ: lượt chơi, người chơi, lượt để lại liên hệ, câu hỏi khó nhất, giờ đông khách.\n- Danh sách khách đã đồng ý, xuất Excel.",
+ "hoi_dap": [
+  [
+   "Bao nhiêu người chơi cùng lúc được?",
+   "Tuỳ cấu hình máy chủ cho từng sự kiện. Gửi số khách dự kiến trong brief, chúng tôi chuẩn bị theo số đó và chạy thử tải trước."
+  ],
+  [
+   "Có gắn quà với điểm số không?",
+   "Có. Quà theo hạng, theo mốc điểm, hoặc vòng quay sau khi chơi."
+  ]
+ ]
+}

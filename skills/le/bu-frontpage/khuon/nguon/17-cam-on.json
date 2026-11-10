@@ -1,0 +1,18 @@
+{
+ "path": "/cam-on/",
+ "kenh": "trang-cam-on",
+ "cta": false,
+ "cam_on": true,
+ "noindex": true,
+ "title": "Đã nhận brief · IF Agent Event",
+ "desc": "IF Agent đã nhận brief của bạn và sẽ liên hệ trong 1 ngày làm việc qua điện thoại, Zalo hoặc email.",
+ "vet": [
+  [
+   "Đã nhận brief",
+   "/cam-on/"
+  ]
+ ],
+ "h1": "Đã nhận brief của bạn",
+ "mo": "Chúng tôi sẽ liên hệ trong 1 ngày làm việc qua điện thoại, Zalo hoặc email bạn để lại.",
+ "than": "## Tiếp theo\n1. Bộ phận phát triển kinh doanh đọc brief và gọi lại để hỏi thêm nếu cần.\n2. Bạn nhận một đến ba ý tưởng, demo với logo của bạn, báo giá và thời gian dựng.\n3. Hai bên chốt, chúng tôi bắt đầu dựng và hẹn ngày chạy thử.\n\n## Trong lúc chờ\n- [Thử demo trên điện thoại](https://demo.ifagent.net/?kenh=cam-on)\n- [Đọc cẩm nang công nghệ sự kiện](/cong-nghe-su-kien/)\n- Gấp thì nhắn Zalo [0904 106 143](https://zalo.me/0904106143)."
+}

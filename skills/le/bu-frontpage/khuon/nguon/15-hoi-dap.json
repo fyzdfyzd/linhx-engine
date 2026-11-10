@@ -1,0 +1,57 @@
+{
+ "path": "/hoi-dap/",
+ "kenh": "trang-hoi-dap",
+ "title": "Hỏi đáp về công nghệ sự kiện · IF Agent Event",
+ "desc": "Giá, thời gian dựng, mạng tại hội trường, dữ liệu khách, cách làm với agency: câu trả lời ngắn cho người tổ chức sự kiện.",
+ "vet": [
+  [
+   "Hỏi đáp",
+   "/hoi-dap/"
+  ]
+ ],
+ "h1": "Câu hỏi hay gặp",
+ "mo": "Những câu bên tổ chức sự kiện và agency hỏi nhiều nhất trước khi gửi brief.",
+ "than": "",
+ "hoi_dap": [
+  [
+   "Dựng một nhân vật AI mất bao lâu?",
+   "Tuỳ độ riêng của kịch bản, giọng và ngoại hình. Khi nhận brief, chúng tôi báo thời gian cụ thể cùng demo."
+  ],
+  [
+   "Giá một gói khoảng bao nhiêu?",
+   "Tuỳ gói, số ngày chạy và số thiết bị. Gửi brief, bạn nhận báo giá kèm demo trong 1 ngày làm việc."
+  ],
+  [
+   "Sau sự kiện tôi nhận được gì?",
+   "Trong 24 giờ: báo cáo số đo (lượt tương tác, lượt để lại liên hệ, giờ đông khách, ảnh được chia sẻ) và danh sách khách đã đồng ý nhận tin, xuất Excel."
+  ],
+  [
+   "Sự kiện ở hội trường sóng yếu thì sao?",
+   "Chúng tôi khảo sát mạng tại địa điểm và mang thiết bị mạng dự phòng. Minigame QR chạy trên mạng di động của khách."
+  ],
+  [
+   "Dữ liệu khách tham dự thuộc về ai?",
+   "Thuộc về thương hiệu tổ chức. Khách chỉ để lại thông tin khi tự đồng ý, ô đồng ý không bao giờ được tick sẵn. Ảnh và dữ liệu được xoá theo thời hạn hai bên thống nhất."
+  ],
+  [
+   "Agency có thể dùng dưới tên mình không?",
+   "Có. Agency giữ quan hệ với khách hàng, IF Agent đứng sau làm công nghệ và hỗ trợ pitch."
+  ],
+  [
+   "Có cần cài ứng dụng không?",
+   "Không. Khách quét mã QR và dùng trên trình duyệt điện thoại, hoặc dùng kiosk và màn LED tại chỗ."
+  ],
+  [
+   "Nhân vật AI có trả lời sai về sản phẩm không?",
+   "Nhân vật chỉ trả lời trong nội dung bạn duyệt; câu hỏi ngoài phạm vi được chuyển sang mời gặp nhân viên. Chúng tôi chạy thử với câu hỏi khó trước sự kiện."
+  ],
+  [
+   "IF Agent làm sự kiện ở tỉnh được không?",
+   "Được. Chi phí đi lại và lưu trú của đội đứng máy tính vào báo giá."
+  ],
+  [
+   "Đặt cọc thế nào?",
+   "Gói dựng sẵn đặt cọc trước khi bắt đầu dựng; dự án may đo theo hợp đồng. Chi tiết ghi trong báo giá."
+  ]
+ ]
+}

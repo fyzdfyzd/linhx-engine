@@ -1456,6 +1456,14 @@
   "ban_goc": "D:/LINHX/PRJ/BTMH TRAINING/.agents/skills/btmh-monthly-retail-intelligence"
  },
  {
+  "ten": "bu-frontpage",
+  "mo_ta": "Dựng trọn mặt tiền web của một BU B2B (trang chủ lấy lead, 15–20 trang con, form brief + gọi lại, GEO, own media 3 pha) từ khuôn đã chạy thật ở event.ifagent.net, khoá giao diện và qua cổng máy K1–K10. Dùng khi Linh bảo làm site, landing, trang lấy lead hay own media cho một BU (IF Agent, Unikon, TUVA, Sakédemy...). Không đụng lõi engine.",
+  "duong_dan": "le/bu-frontpage",
+  "bo": "",
+  "nhom": "khac",
+  "ban_goc": ""
+ },
+ {
   "ten": "cafebiz-radar",
   "mo_ta": "Phân tích tin công nghệ cho mảng công nghệ CafeBiz theo quy chuẩn News Listening (mã trend T01–T13, nước và hướng lan, khoảng trống VN, độ hút, 6 chỉ số H M V G R C, góc viết). Dùng khi được giao gom cụm hoặc chấm thẻ từ data/CAFEBIZ_TECH_RADAR/RUNS/<ngày>/. Trả JSON đúng schema được đưa, không tự tính điểm tổng.",
   "duong_dan": "le/cafebiz-radar",

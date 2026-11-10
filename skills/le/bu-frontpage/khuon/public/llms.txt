@@ -1,0 +1,18 @@
+# IF Agent Event
+
+> IF Agent dựng công nghệ AI tương tác cho sự kiện tại Việt Nam: nhân vật AI biết nói tiếng Việt, AI Photobooth và minigame quét QR, chạy trên kiosk, màn LED hoặc điện thoại của khách. Mỗi sự kiện kèm báo cáo số đo trong 24 giờ và danh sách khách đã đồng ý nhận tin.
+
+Khách hàng: bên tổ chức sự kiện, agency event, phòng marketing của thương hiệu. Liên hệ: Hằng Nguyễn, Phát triển kinh doanh, Zalo 0904 106 143, hangnt@ifagent.vn.
+
+## Trang chính
+- [Trang chủ, gói dựng sẵn và form gửi brief](https://event.ifagent.net/)
+- [Cẩm nang công nghệ sự kiện](https://event.ifagent.net/cong-nghe-su-kien/): cách chọn giải pháp tương tác AI cho gian hàng, activation, hội nghị
+
+## Giải pháp
+- [Nhân vật AI biết nói](https://event.ifagent.net/giai-phap/nhan-vat-ai/)
+- [AI Photobooth](https://event.ifagent.net/giai-phap/photobooth/)
+- [Minigame quét QR](https://event.ifagent.net/giai-phap/minigame/)
+
+## Khác
+- [Chính sách dữ liệu](https://event.ifagent.net/chinh-sach-du-lieu/)
+- [Demo chạy thử](https://demo.ifagent.net/)

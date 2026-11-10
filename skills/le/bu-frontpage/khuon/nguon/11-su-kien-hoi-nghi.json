@@ -1,0 +1,20 @@
+{
+ "path": "/su-kien/hoi-nghi/",
+ "kenh": "trang-hoi-nghi",
+ "loai": "service",
+ "title": "Hội nghị, summit · IF Agent Event",
+ "desc": "Nhân vật AI dẫn dắt ở sân khấu hoặc sảnh, minigame cả hội trường chơi trên điện thoại, check-in và khảo sát qua QR, báo cáo cho ban tổ chức trong 24 giờ.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/giai-phap/"
+  ],
+  [
+   "Hội nghị, summit",
+   "/su-kien/hoi-nghi/"
+  ]
+ ],
+ "h1": "Công nghệ tương tác cho hội nghị và summit",
+ "mo": "Nhân vật AI dẫn dắt ở sân khấu hoặc sảnh, minigame cả hội trường chơi trên điện thoại, check-in và khảo sát qua QR, báo cáo cho ban tổ chức trong 24 giờ.",
+ "than": "## Việc khó của hội nghị\n- Khách ngồi nghe lâu, khó giữ sự chú ý giữa các phiên.\n- Nhà tài trợ cần chứng minh gian hàng có người ghé.\n- Ban tổ chức cần số liệu tham dự nhanh sau sự kiện.\n\n## Ghép đề xuất\n| Mục tiêu | Ghép |\n|---|---|\n| Khuấy không khí giữa phiên | Minigame toàn hội trường, bảng xếp hạng màn LED |\n| Đón khách, hướng dẫn | Nhân vật AI ở sảnh |\n| Số liệu cho nhà tài trợ | Check-in QR theo gian, báo cáo 24 giờ |\n\nGói phù hợp: [Hội nghị](/goi/).\n\n## Chuẩn bị\n- Lịch phiên và khung giờ được chen minigame.\n- Danh sách nhà tài trợ, gian hàng cần đặt mã check-in.\n- Thông số màn LED và hệ thống âm thanh của địa điểm."
+}

@@ -1,0 +1,16 @@
+{
+ "path": "/du-an/",
+ "kenh": "trang-du-an",
+ "title": "Dự án đã và sắp chạy · IF Agent Event",
+ "desc": "Các sự kiện IF Agent chạy công nghệ tương tác. Mỗi dự án ghi rõ việc, giải pháp và số đo khi khách đồng ý công bố.",
+ "vet": [
+  [
+   "Dự án",
+   "/du-an/"
+  ]
+ ],
+ "h1": "Dự án",
+ "mo": "Chúng tôi chỉ đăng một dự án khi có số đo thật và khách đồng ý công bố. Mỗi dự án ghi ba thứ: việc của sự kiện, giải pháp đã chạy, con số sau 24 giờ.",
+ "ghi_chu": "Trang đang chờ số đo và ảnh thật. Phần dưới là khung, IF Agent điền khi có.",
+ "than": "## Sắp chạy\n### CSMO Summit 2026\nHội nghị giám đốc marketing và bán hàng, 19–20/11/2026 tại Ascott Tây Hồ, Hà Nội, hơn 70 diễn giả và hơn 1.500 khách. IF Agent chạy công nghệ tương tác tại sự kiện. Số đo sẽ đăng trong 24 giờ sau khi sự kiện kết thúc.\n\n## Khung mỗi dự án\n| Mục | Ghi gì |\n|---|---|\n| Sự kiện | Tên, ngày, địa điểm, số khách |\n| Việc cần làm | Mục tiêu của bên tổ chức, một câu |\n| Giải pháp | Nhân vật AI, Photobooth, Minigame, ghép thế nào |\n| Số đo | Lượt tương tác, lượt để lại liên hệ, giờ đông khách |\n| Người xác nhận | Tên, chức vụ bên tổ chức, nếu đồng ý nêu tên |"
+}

@@ -1,0 +1,34 @@
+{
+ "path": "/giai-phap/photobooth/",
+ "kenh": "trang-photobooth",
+ "loai": "service",
+ "title": "AI Photobooth cho sự kiện · IF Agent Event",
+ "desc": "Khách chụp một tấm, nhận ảnh đã đưa vào khung cảnh thương hiệu trong vài giây, chia sẻ ngay. Ảnh và dữ liệu xoá theo thời hạn hai bên thống nhất.",
+ "vet": [
+  [
+   "Giải pháp",
+   "/#giai-phap"
+  ],
+  [
+   "AI Photobooth",
+   "/giai-phap/photobooth/"
+  ]
+ ],
+ "h1": "AI Photobooth: khách chụp một tấm, mang thương hiệu của bạn về nhà",
+ "mo": "Khách đứng trước máy hoặc dùng điện thoại, chụp một tấm. AI đưa khách vào khung cảnh của thương hiệu, trả ảnh trong vài giây để tải về và chia sẻ.",
+ "than": "## Luồng của khách\n1. Quét mã hoặc đứng trước máy chụp.\n2. Chọn một trong các khung cảnh thương hiệu.\n3. Nhận ảnh qua mã QR, Zalo hoặc email sau khi tự đồng ý để lại thông tin.\n4. Ảnh có logo, hashtag sự kiện, sẵn để chia sẻ.\n\n## Bạn quyết những gì\n| Phần | Lựa chọn |\n|---|---|\n| Khung cảnh | Theo chiến dịch, sản phẩm, mùa lễ |\n| Nơi chụp | Máy đặt tại gian hàng hoặc điện thoại của khách |\n| Nhận ảnh | Mã QR, Zalo, email, in tại chỗ |\n| Dữ liệu thu | Họ tên, điện thoại, email, câu hỏi khảo sát ngắn |\n\n## Ảnh chân dung và dữ liệu\nẢnh khuôn mặt là dữ liệu cá nhân. Khách phải tự tick ô đồng ý trước khi chụp; ô không bao giờ được tick sẵn. Ảnh lưu trên máy chủ trong thời hạn hai bên thống nhất rồi xoá, có biên bản xoá nếu bạn cần.\n\n## Sau sự kiện bạn nhận\n- Báo cáo số đo trong 24 giờ: lượt chụp, lượt tải ảnh, lượt để lại liên hệ, khung cảnh được chọn nhiều nhất.\n- Danh sách khách đã đồng ý, xuất Excel.",
+ "hoi_dap": [
+  [
+   "Ảnh trả về mất bao lâu?",
+   "Vài giây đến vài chục giây tuỳ khung cảnh và mạng tại địa điểm. Chúng tôi đo trên mạng thật khi chạy thử."
+  ],
+  [
+   "Có in ảnh tại chỗ được không?",
+   "Có, cần thêm máy in và một người đứng máy."
+  ],
+  [
+   "Ảnh khách lưu bao lâu?",
+   "Theo thời hạn ghi trong hợp đồng, sau đó xoá và gửi bạn biên bản xoá nếu cần."
+  ]
+ ]
+}

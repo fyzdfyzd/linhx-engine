@@ -1,0 +1,19 @@
+{
+ "path": "/mau-bao-cao/",
+ "kenh": "trang-mau-bao-cao",
+ "title": "Mẫu báo cáo số đo 24 giờ · IF Agent Event",
+ "desc": "Sau mỗi sự kiện, bên tổ chức nhận báo cáo trong 24 giờ. Đây là các chỉ số có trong báo cáo, cách đo, và danh sách khách đã đồng ý đi kèm.",
+ "vet": [
+  [
+   "Gói và giá",
+   "/goi/"
+  ],
+  [
+   "Mẫu báo cáo 24 giờ",
+   "/mau-bao-cao/"
+  ]
+ ],
+ "h1": "Báo cáo số đo trong 24 giờ sau sự kiện",
+ "mo": "Trong 24 giờ sau khi sự kiện kết thúc, bạn nhận một báo cáo ngắn để gửi sếp hoặc khách hàng, và danh sách khách đã đồng ý nhận tin. Trang này cho bạn thấy trước báo cáo gồm những gì.",
+ "than": "## Trang 1: tóm tắt\n| Chỉ số | Đo thế nào |\n|---|---|\n| Lượt tương tác | Mỗi cuộc trò chuyện với nhân vật AI, mỗi lượt chụp, mỗi lượt chơi tính một lần |\n| Người tham gia | Đếm theo thiết bị hoặc số điện thoại, không đếm trùng |\n| Lượt để lại liên hệ | Khách tự điền và tick ô đồng ý |\n| Tỉ lệ để lại liên hệ | Lượt để lại liên hệ chia người tham gia |\n| Giờ đông khách | Số lượt theo từng khung 30 phút |\n| Ảnh được chia sẻ | Lượt tải ảnh photobooth và lượt bấm chia sẻ |\n\n## Trang 2: theo giải pháp\n- Nhân vật AI: số cuộc trò chuyện, độ dài trung bình, 10 câu khách hỏi nhiều nhất, câu hỏi ngoài kịch bản.\n- AI Photobooth: lượt chụp, khung cảnh được chọn, lượt tải ảnh.\n- Minigame: lượt chơi, điểm cao nhất, câu hỏi khó nhất, quà đã phát.\n\n## Trang 3: việc nên làm tiếp\nBa gợi ý chăm sóc khách sau sự kiện dựa trên câu hỏi và lựa chọn của khách tại gian hàng.\n\n## Đi kèm\n- Danh sách khách đã đồng ý, xuất Excel: họ tên, điện thoại hoặc email, thời điểm đồng ý, câu trả lời khảo sát nếu có.\n- Ảnh và dữ liệu thô lưu theo thời hạn trong hợp đồng, sau đó xoá.\n\nBáo cáo không có con số nào chúng tôi không đo được. Chỉ số nào sự kiện không dùng thì bỏ khỏi báo cáo."
+}

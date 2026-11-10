@@ -1,0 +1,16 @@
+{
+ "path": "/chinh-sach-du-lieu/",
+ "kenh": "trang-chinh-sach",
+ "cta": false,
+ "title": "Chính sách dữ liệu · IF Agent Event",
+ "desc": "IF Agent thu gì khi bạn gửi brief hoặc chơi tại sự kiện, dùng vào việc gì, lưu bao lâu và cách bạn rút lại đồng ý.",
+ "vet": [
+  [
+   "Chính sách dữ liệu",
+   "/chinh-sach-du-lieu/"
+  ]
+ ],
+ "h1": "Chính sách dữ liệu",
+ "ghi_chu": "Bản nháp ngày 10/11/2026, cần pháp chế IF Agent duyệt trước khi đăng. Những chỗ ghi [CẦN XÁC NHẬN] chưa được chốt.",
+ "than": "## Ai giữ dữ liệu\nCông ty quản lý event.ifagent.net [CẦN XÁC NHẬN: tên pháp nhân, địa chỉ, mã số thuế]. Liên hệ về dữ liệu: hangnt@ifagent.vn.\n\n## Khi bạn gửi brief trên trang này\n| Chúng tôi thu | Để làm gì |\n|---|---|\n| Họ tên, công ty, điện thoại hoặc email | Liên hệ trao đổi về brief của bạn |\n| Ngày sự kiện, số khách, ngân sách, nội dung brief | Chuẩn bị ý tưởng, demo, báo giá |\n| Trang bạn đến từ đâu (mã kênh, utm) | Biết kênh nào mang khách tới |\n| Thời điểm và địa chỉ IP lúc bạn đồng ý | Lưu bằng chứng đồng ý theo Nghị định 13/2023/NĐ-CP |\n\nChúng tôi không bán và không chia sẻ thông tin này cho bên khác ngoài người xử lý cần thiết (máy chủ, công cụ gửi tin), có ràng buộc bảo mật.\n\n## Khi bạn chơi hoặc chụp ảnh tại sự kiện\nDữ liệu người chơi thu cho thương hiệu tổ chức sự kiện. Thương hiệu đó là bên kiểm soát dữ liệu; IF Agent xử lý theo hợp đồng với họ. Bạn chỉ để lại thông tin khi tự tick ô đồng ý, ô này không bao giờ tick sẵn. Ảnh chân dung lưu theo thời hạn ghi trong hợp đồng rồi xoá.\n\n## Lưu bao lâu\nThông tin brief lưu [CẦN XÁC NHẬN: đề xuất 24 tháng] kể từ lần liên hệ cuối, hoặc tới khi bạn yêu cầu xoá.\n\n## Quyền của bạn\n- Xem, sửa, xoá thông tin của bạn.\n- Rút lại đồng ý bất cứ lúc nào; việc rút không ảnh hưởng xử lý trước đó.\n- Gửi yêu cầu tới hangnt@ifagent.vn hoặc Zalo 0904 106 143. Chúng tôi trả lời trong [CẦN XÁC NHẬN: đề xuất 72 giờ]."
+}

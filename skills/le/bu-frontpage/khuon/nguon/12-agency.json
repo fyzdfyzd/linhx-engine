@@ -1,0 +1,25 @@
+{
+ "path": "/agency/",
+ "kenh": "trang-agency",
+ "title": "Cho agency event · IF Agent Event",
+ "desc": "Agency giữ khách hàng, IF Agent làm công nghệ tương tác và hỗ trợ pitch: demo mang logo khách của bạn, báo giá nhanh, đứng máy tại sự kiện.",
+ "vet": [
+  [
+   "Cho agency",
+   "/agency/"
+  ]
+ ],
+ "h1": "Cho agency: bạn giữ khách, chúng tôi lo công nghệ",
+ "mo": "Agency gửi brief của khách hàng, IF Agent làm demo mang logo khách để bạn đi pitch, rồi dựng và đứng máy tại sự kiện dưới tên của bạn nếu cần.",
+ "than": "## Agency nhận được gì\n- Demo chạy được với logo và màu của khách hàng, gửi kèm đề xuất.\n- Báo giá trong 1 ngày làm việc để kịp đưa vào proposal.\n- Tài liệu giải thích giải pháp không mang tên IF Agent nếu bạn muốn.\n- Đội đứng máy mặc đồng phục của agency hoặc của sự kiện.\n\n## Cách làm cùng nhau\n1. Bạn gửi brief của khách và hạn pitch.\n2. Chúng tôi gửi ý tưởng, demo, báo giá cho bạn.\n3. Bạn pitch; trúng thì hai bên ký hợp đồng.\n4. Dựng, chạy thử, vận hành; báo cáo 24 giờ gửi bạn trước để bạn chuyển khách.\n\n## Quyền với dữ liệu\nDữ liệu người chơi thuộc thương hiệu tổ chức sự kiện. IF Agent xử lý theo hợp đồng và xoá theo thời hạn đã thống nhất.",
+ "hoi_dap": [
+  [
+   "Agency có được dùng demo cho nhiều khách không?",
+   "Mỗi demo làm riêng cho một khách. Bạn cần cho khách khác thì gửi brief mới, chúng tôi đổi logo và kịch bản."
+  ],
+  [
+   "Có hoa hồng cho agency không?",
+   "Trao đổi trực tiếp với bộ phận phát triển kinh doanh theo từng dự án."
+  ]
+ ]
+}

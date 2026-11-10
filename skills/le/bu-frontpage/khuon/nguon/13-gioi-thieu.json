@@ -1,0 +1,16 @@
+{
+ "path": "/gioi-thieu/",
+ "kenh": "trang-gioi-thieu",
+ "title": "Giới thiệu IF Agent Event",
+ "desc": "IF Agent dựng công nghệ AI tương tác cho sự kiện tại Việt Nam: nhân vật AI biết nói tiếng Việt, AI Photobooth, minigame QR, kèm số đo sau sự kiện.",
+ "vet": [
+  [
+   "Giới thiệu",
+   "/gioi-thieu/"
+  ]
+ ],
+ "h1": "IF Agent Event",
+ "mo": "IF Agent dựng công nghệ AI tương tác cho sự kiện tại Việt Nam. Chúng tôi làm cho khách dừng lại, nói chuyện, chơi, và để lại thông tin một cách tự nguyện.",
+ "ghi_chu": "Phần đội ngũ và pháp nhân chờ IF Agent cung cấp.",
+ "than": "## Chúng tôi tin ba điều\n1. Khách dừng lại vì được tham gia, không vì được phát tờ rơi.\n2. Dữ liệu khách chỉ có giá trị khi khách tự đồng ý.\n3. Bên tổ chức cần số đo ngay sau sự kiện để báo cáo, không phải một tuần sau.\n\n## Liên hệ phát triển kinh doanh\n**Hằng Nguyễn**, Phát triển kinh doanh. Zalo [0904 106 143](https://zalo.me/0904106143), email [hangnt@ifagent.vn](mailto:hangnt@ifagent.vn).\n\n## Hệ sinh thái\n- [ifagent.net](https://ifagent.net): IF Agent.\n- [demo.ifagent.net](https://demo.ifagent.net): thử nhân vật AI, photobooth, minigame."
+}
