@@ -1,0 +1,1 @@
+"""Module Frappe LINHX CTS."""

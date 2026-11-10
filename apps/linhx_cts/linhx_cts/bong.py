@@ -6,12 +6,7 @@ tuyệt đối không thực hiện bước bàn giao sản phẩm cho khách.
 """
 from __future__ import annotations
 
-import copy
-
-from linhx_core.cts_adapter import hop_dong
-
-_KHOA_BONG_NOI_BO = "_che_do_bong_noi_bo_"
-_AUTH_BONG_NOI_BO = f"Apikey {_KHOA_BONG_NOI_BO}"
+from linhx_cts import hop_dong
 
 
 def bat(cau_hinh: dict | None) -> bool:
@@ -27,6 +22,7 @@ def nhan_don_bong(
     """Ghi bản sao đơn bóng từ CTS vào `kho_bong` với `da_nhan = 0`.
 
     Khi cờ `bat_bong` tắt, trả `None` và không thay đổi `kho_bong`.
+    Chỉ giữ các trường phục vụ đối chiếu thanh toán (không sao chép dữ liệu khách nhạy cảm).
     """
     if not bat(cau_hinh):
         return None
@@ -40,12 +36,15 @@ def nhan_don_bong(
     ds_don = kho_bong.setdefault("don", [])
     kho_bong.setdefault("tx", [])
 
-    don_bong = copy.deepcopy(don_cts)
-    don_bong["order_id"] = str(don_cts.get("order_id") or "")
-    don_bong["noi_dung_ck"] = noi_dung_ck
-    don_bong["tong"] = int(don_cts.get("tong") or 0)
-    don_bong["da_nhan"] = 0
-    don_bong["trang_thai"] = str(don_cts.get("trang_thai") or "cho_thanh_toan")
+    don_bong: dict = {
+        "order_id": str(don_cts.get("order_id") or ""),
+        "noi_dung_ck": noi_dung_ck,
+        "tong": int(don_cts.get("tong") or 0),
+        "da_nhan": 0,
+        "trang_thai": str(don_cts.get("trang_thai") or "cho_thanh_toan"),
+    }
+    if don_cts.get("expires_at"):
+        don_bong["expires_at"] = str(don_cts["expires_at"])
 
     da_co = hop_dong.tim_don_theo_ma(ds_don, noi_dung_ck)
     if da_co is None:
@@ -59,7 +58,7 @@ def nhan_bong(
     cau_hinh: dict | None,
     kho_bong: dict,
 ) -> dict | None:
-    """Nhận bản sao webhook SePay từ CTS và áp dụng luật `hop_dong.nhan_webhook` lên `kho_bong`.
+    """Nhận bản sao webhook SePay từ CTS và áp dụng luật `hop_dong` lên `kho_bong`.
 
     Khi cờ `bat_bong` tắt, trả `None` và không thay đổi `kho_bong`.
     Khi cờ bật, luôn trả kèm `"giao": False`.
@@ -69,12 +68,7 @@ def nhan_bong(
     if not isinstance(webhook, dict) or not isinstance(kho_bong, dict):
         return None
 
-    ma_http, than = hop_dong.nhan_webhook(
-        webhook,
-        kho_bong,
-        _AUTH_BONG_NOI_BO,
-        _KHOA_BONG_NOI_BO,
-    )
+    ma_http, than = hop_dong.xu_ly_webhook_noi_bo(webhook, kho_bong)
     if ma_http != 200:
         return None
 

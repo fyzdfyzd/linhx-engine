@@ -86,8 +86,8 @@
     "không app nào import ngược lớp"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l4.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/L4/kiem.json"
   },
   {
    "id": "P1",
@@ -137,8 +137,8 @@
     "không import ngược lớp"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_p3.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/P3/kiem.json"
   },
   {
    "id": "G1",

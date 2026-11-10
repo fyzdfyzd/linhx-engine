@@ -1,0 +1,19 @@
+{
+  "ten": "linhx_cts",
+  "ban": "0.1.0",
+  "lop": "adapter",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "cts.tao_don": "linhx_cts.hop_dong.tao_don",
+    "cts.nhan_webhook": "linhx_cts.hop_dong.nhan_webhook",
+    "cts.checkout": "linhx_cts.api.checkout",
+    "cts.sepay_webhook": "linhx_cts.api.sepay_webhook",
+    "cts.bat_bong": "linhx_cts.bong.bat",
+    "cts.nhan_don_bong": "linhx_cts.bong.nhan_don_bong",
+    "cts.nhan_bong": "linhx_cts.bong.nhan_bong",
+    "cts.so_lech": "linhx_cts.bong.so_lech"
+  },
+  "giao": {}
+}
