@@ -207,9 +207,12 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   if ($them | Select-String -Pattern 'pytest\.mark\.skip|@skip|xfail|\.skip\(|pytest\.skip|importorskip') { $loi += "Có test bị skip/xfail" }
   if ($them | Select-String -Pattern '(sk-ant-|AIza[0-9A-Za-z_-]{20}|-----BEGIN [A-Z ]*PRIVATE KEY|ghp_[A-Za-z0-9]{30}|github_pat_)') { $loi += "Có thứ giống khoá trong diff" }
   if (-not $x.passes) { $loi += "$fid chưa đặt passes=true (thợ chưa báo xong)" }
+  # V1 K4 10/11: symlink trong commit (trang-bu, node_modules trỏ ra ngoài) là đường lách cổng kiểm
+  if (git diff "$goc..HEAD" --summary | Select-String 'mode 120000') { $loi += "Có symlink trong commit (cấm, cổng kiểm không theo symlink)" }
   # môi trường của canh (không phải việc của agy): thư mục con có package.json (vd trang-bu) mà thiếu node_modules hoặc lock mới hơn thì cài trước khi chạy lệnh kiểm
   Get-ChildItem $Wt -Directory -ErrorAction SilentlyContinue | Where-Object { $_.Name -notmatch '^(node_modules|\.git|\.canh.*)$' -and (Test-Path "$($_.FullName)\package.json") } | ForEach-Object {
     $d = $_.FullName; $lk = "$d\package-lock.json"; $nm = "$d\node_modules"
+    if ((Get-Item $d -Force).LinkType -or ((Test-Path $nm) -and (Get-Item $nm -Force).LinkType)) { $loi += "$($_.Name) hoặc node_modules của nó là symlink (cấm)"; return }
     $can = -not (Test-Path "$nm\.bin") -or ((Test-Path $lk) -and (Get-Item $lk).LastWriteTime -gt (Get-Item $nm).LastWriteTime)
     if ($can) {
       Push-Location $d
