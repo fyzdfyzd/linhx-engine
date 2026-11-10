@@ -1,0 +1,12 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linhx-tho"
+version = "0.1.0"
+description = "Trình thợ Windows kéo phiếu Agy từ Frappe, chạy agy ẩn và nộp kết quả"
+requires-python = ">=3.10"
+
+[project.scripts]
+linhx-tho = "linhx_tho.tho:main"
