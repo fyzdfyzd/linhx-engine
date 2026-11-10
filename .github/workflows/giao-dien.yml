@@ -1,0 +1,183 @@
+name: giao-dien
+
+on:
+  pull_request:
+    paths:
+      - "giao-dien/**"
+      - ".github/workflows/giao-dien.yml"
+  push:
+    branches:
+      - main
+      - "tu-dong/*"
+    paths:
+      - "giao-dien/**"
+      - ".github/workflows/giao-dien.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kiem-giao-dien:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright Chromium
+        run: |
+          npm --prefix /tmp/pw install playwright
+          npx --prefix /tmp/pw playwright install --with-deps chromium
+
+      - name: Xác định site giao diện bị đổi và chạy cổng K1–K10
+        env:
+          NODE_PATH: /tmp/pw/node_modules
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+
+          # Chuẩn hoá cờ kết xuất phông chữ headless Chromium khớp ảnh chuẩn K8
+          cat << 'EOF' > /tmp/pw-preload.cjs
+          const { chromium } = require("playwright");
+          const origLaunch = chromium.launch.bind(chromium);
+          chromium.launch = (opts = {}) =>
+            origLaunch({
+              ...opts,
+              args: [
+                "--font-render-hinting=none",
+                "--disable-lcd-text",
+                ...(opts.args || []),
+              ],
+            });
+          EOF
+
+          # Tìm danh sách file đổi theo sự kiện PR hoặc push
+          CHANGED=""
+          if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$BASE_SHA" ]; then
+            CHANGED=$(git diff --name-only "$BASE_SHA...$HEAD_SHA" 2>/dev/null || git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)
+          elif [ "$EVENT_NAME" = "push" ]; then
+            if [ -n "$BEFORE_SHA" ] && [ "$BEFORE_SHA" != "0000000000000000000000000000000000000000" ] && git cat-file -e "$BEFORE_SHA^{commit}" 2>/dev/null; then
+              CHANGED=$(git diff --name-only "$BEFORE_SHA" "$HEAD_SHA" || true)
+            else
+              MB=$(git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
+              CHANGED=$(git diff --name-only "$MB" HEAD || true)
+            fi
+          fi
+
+          SITES=$(echo "$CHANGED" | awk -F/ '$1 == "giao-dien" && NF >= 2 { print $2 }' | sort -u | tr '\n' ' ')
+          VALID_SITES=""
+          LOI=0
+          for s in $SITES; do
+            if [ -d "giao-dien/$s" ]; then
+              if [ -f "giao-dien/$s/server.mjs" ] && [ -f "giao-dien/$s/kiem/kiem.cjs" ]; then
+                VALID_SITES="$VALID_SITES $s"
+              else
+                echo "Thiếu server.mjs hoặc kiem/kiem.cjs trong giao-dien/$s" >&2
+                LOI=1
+              fi
+            fi
+          done
+
+          # Nếu thay đổi workflow hoặc chạy thủ công (không có site cụ thể trong diff) thì kiểm toàn bộ site BU
+          if { [ -z "${VALID_SITES// }" ] || echo "$CHANGED" | grep -qx ".github/workflows/giao-dien.yml"; } && [ "$LOI" -eq 0 ]; then
+            VALID_SITES=""
+            for d in giao-dien/*/; do
+              s=$(basename "$d")
+              if [ -f "giao-dien/$s/server.mjs" ] && [ -f "giao-dien/$s/kiem/kiem.cjs" ]; then
+                VALID_SITES="$VALID_SITES $s"
+              fi
+            done
+          fi
+
+          if [ -z "${VALID_SITES// }" ]; then
+            echo "Không tìm thấy site giao diện hợp lệ để kiểm" >&2
+            exit 1
+          fi
+
+          echo "Các site sẽ kiểm:$VALID_SITES"
+
+          # Mở máy giả nhận form lead cục bộ cho LINHX_FORM_URL
+          node -e '
+            const http = require("node:http");
+            const counts = {};
+            http.createServer((req, res) => {
+              if (req.method === "GET" && req.url.startsWith("/counts")) {
+                res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+                return res.end(JSON.stringify(counts));
+              }
+              let body = "";
+              req.on("data", c => body += c);
+              req.on("end", () => {
+                try {
+                  const d = JSON.parse(body || "{}");
+                  if (d && typeof d.nguon === "string") {
+                    counts[d.nguon] = (counts[d.nguon] || 0) + 1;
+                  }
+                } catch {}
+                res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+                res.end(JSON.stringify({ ok: true, message: { ok: true } }));
+              });
+            }).listen(18999, "127.0.0.1", () => console.log("Mock form engine listening on 127.0.0.1:18999"));
+          ' &
+          MOCK_PID=$!
+          trap 'kill $MOCK_PID 2>/dev/null || true; wait $MOCK_PID 2>/dev/null || true' EXIT
+
+          MOCK_READY=0
+          for i in $(seq 1 20); do
+            if curl -fsS "http://127.0.0.1:18999/counts" >/dev/null 2>&1; then
+              MOCK_READY=1
+              break
+            fi
+            sleep 0.25
+          done
+          if [ "$MOCK_READY" -ne 1 ]; then
+            echo "Máy giả nhận form không khởi động kịp" >&2
+            exit 1
+          fi
+
+          PORT=8100
+          for site in $VALID_SITES; do
+            PORT=$((PORT + 1))
+            echo "=== Kiểm giao-dien/$site trên cổng $PORT ==="
+            (
+              cd "giao-dien/$site"
+              PORT="$PORT" RATE_MAX=1000 LINHX_FORM_URL="http://127.0.0.1:18999/api/method/linhx_core.crm.api_form.nhan_form" node server.mjs &
+              SRV_PID=$!
+              trap 'kill $SRV_PID 2>/dev/null || true; wait $SRV_PID 2>/dev/null || true' EXIT
+
+              READY=0
+              for i in $(seq 1 30); do
+                if curl -fsS "http://localhost:$PORT/api/song" >/dev/null 2>&1; then
+                  READY=1
+                  break
+                fi
+                sleep 0.5
+              done
+              if [ "$READY" -ne 1 ]; then
+                echo "server.mjs của $site không sẵn sàng trên cổng $PORT" >&2
+                exit 1
+              fi
+
+              NODE_OPTIONS="--require /tmp/pw-preload.cjs" node kiem/kiem.cjs "http://localhost:$PORT"
+
+              LEADS=$(curl -fsS "http://127.0.0.1:18999/counts" | node -e 'const fs=require("fs"); const d=JSON.parse(fs.readFileSync(0,"utf8")); console.log(d[process.argv[1]] || 0);' "$site")
+              echo "Số lead máy giả nhận từ $site: $LEADS"
+              if [ "$LEADS" -lt 2 ]; then
+                echo "Máy giả chưa nhận đủ lead từ $site ($LEADS < 2)" >&2
+                exit 1
+              fi
+            ) || LOI=1
+          done
+
+          exit "$LOI"
