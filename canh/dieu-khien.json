@@ -25,7 +25,12 @@
     "U3@1011-agy-thoat-ngay",
     "G2@1011-agy-quota",
     "G3@1011-agy-quota",
-    "G5@1011-agy-quota"
+    "G5@1011-agy-quota",
+    "G1@1011-agy-quota-2",
+    "G4@1011-agy-quota-2",
+    "P1@1011-agy-quota-2",
+    "U3@1011-agy-quota-2",
+    "V1@1011-agy-quota-2"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",
