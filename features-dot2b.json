@@ -1,0 +1,29 @@
+{
+ "san_pham": "LINHX ENGINE nền",
+ "dot": "2b",
+ "prd": "Claude Doc https://claude.ai/artifact/C24pbEpCXVdQLaYLPuWe5m; việc B Linh duyệt 10/11 (repo map kiểu Aider)",
+ "dich": "Thợ đọc bản đồ chữ ký thay vì cả repo, bớt token và lượt trượt",
+ "trang_thai": "Linh chọn làm A, B, C, D 10/11 09:02 VN; M1 viết 10/11",
+ "features": [
+  {
+   "id": "M1",
+   "uu_tien": 1,
+   "phu_thuoc": [],
+   "vung": [
+    "scripts/ban_do.py"
+   ],
+   "mo_ta": "Bộ sinh bản đồ repo cho thợ: chữ ký hàm/lớp + trường DocType theo vùng feature, một bậc import, có trần ký tự",
+   "tieu_chi": [
+    "tóm tắt .py có chữ ký hàm, lớp, method và dòng đầu docstring, không có thân hàm",
+    "tóm tắt DocType có tên và fieldname:fieldtype",
+    "bản đồ gồm file trong vùng rồi file chúng import một bậc, bỏ test_*.py, ổn định",
+    "tổng độ dài không quá gioi_han",
+    "CLI chạy trên repo thật dưới 10 giây, không import frappe",
+    "bằng chứng chạy thật trên repo này"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_m1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  }
+ ]
+}
