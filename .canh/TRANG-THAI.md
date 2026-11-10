@@ -1,13 +1,13 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 09:19 (giờ máy cty). Đạt: 45/50 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
+Cập nhật 2026-11-10 09:30 (giờ máy cty). Đạt: 45/65 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | - | rảnh | CHUA_DAT · Feature O4 · commit b12d16f · nhánh tu-dong/engine-t1 · 2026-11-10T08:01:48 |
-| 2 | - | rảnh | DAT · Feature F2 · commit dca7d30 · nhánh tu-dong/engine-t2 · 2026-11-09T23:58:38 |
-| 3 | O4 | 20261110-0852-t3 từ 2026-11-10T08:52:14 | CHUA_DAT · Feature I3 · commit 635ddb8 · nhánh tu-dong/engine-t3 · 2026-11-09T19:42:19 |
-| 4 | - | rảnh | DAT · Feature C4 · commit 2f449ee · nhánh tu-dong/engine-t4 · 2026-11-09T19:35:35 |
+| 1 | V1 | 20261110-0919-t1 từ 2026-11-10T09:19:41 | CHUA_DAT · Feature O4 · commit b12d16f · nhánh tu-dong/engine-t1 · 2026-11-10T08:01:48 |
+| 2 | V2 | 20261110-0919-t2 từ 2026-11-10T09:19:42 | DAT · Feature F2 · commit dca7d30 · nhánh tu-dong/engine-t2 · 2026-11-09T23:58:38 |
+| 3 | O4 | 20261110-0925-t3 từ 2026-11-10T09:25:52 | CHUA_DAT · Feature O4 · commit c0e428a · nhánh tu-dong/engine-t3 · 2026-11-10T09:25:51 |
+| 4 | M1 | 20261110-0919-t4 từ 2026-11-10T09:19:43 | DAT · Feature C4 · commit 2f449ee · nhánh tu-dong/engine-t4 · 2026-11-09T19:35:35 |
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
@@ -26,16 +26,16 @@ Cập nhật 2026-11-10 09:19 (giờ máy cty). Đạt: 45/50 (N1, N2, N3, N4, N
 - 2026-11-10T08:01:48 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6ae646f7, bản hỏng giữ ở nhánh cục bộ hong/O4-20261110-0801, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 07:41 t1: O4 CHUA_DAT lần 2 (commit 2ba2657)
-- 2026-11-10 07:41 t1: giao agy phiếu 20261110-0741-t1: O4 (lượt sửa)
-- 2026-11-10 08:01 t1: commit phần dở của O4
-- 2026-11-10 08:01 t1: agy xong phiếu 20261110-0741-t1 (O4) sau 20 phút
-- 2026-11-10 08:01 t1: O4 CHUA_DAT lần 3 (commit b12d16f)
-- 2026-11-10 08:01 t1: O4 chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
-- 2026-11-10 08:01 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-10 08:47 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-10 08:50 t0: xoá đếm CHUA_DAT của O4 (O4@1011-pytest-tmp-ngoai-vung)
 - 2026-11-10 08:52 t3: giao agy phiếu 20261110-0852-t3: O4
 - 2026-11-10 08:55 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-10 09:12 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-10 09:19 t1: giao agy phiếu 20261110-0919-t1: V1
+- 2026-11-10 09:19 t2: giao agy phiếu 20261110-0919-t2: V2
+- 2026-11-10 09:19 t4: giao agy phiếu 20261110-0919-t4: M1
+- 2026-11-10 09:24 t3: agy xong phiếu 20261110-0852-t3 (O4) sau 32 phút
+- 2026-11-10 09:24 t3: cổng kiểm chạy toàn bộ (12 giờ một lần)
+- 2026-11-10 09:25 t3: O4 CHUA_DAT lần 1 (commit c0e428a)
+- 2026-11-10 09:25 t3: giao agy phiếu 20261110-0925-t3: O4 (lượt sửa)
 
