@@ -84,23 +84,25 @@
   },
   {
    "ma": "P04",
-   "viec": "Viết khuôn: khuon/SO-QUY-UOC.md (tên riêng, thuật ngữ, cách viết số, ai nói gì) và khuon/CONG-CAU-TRUC.md (luận đề một câu, ≤ 3 ý, mỗi ý một dòng bằng chứng) trong skill viet-giong-linh.",
+   "viec": "Viết khuôn: khuon/SO-QUY-UOC.md (tên riêng, thuật ngữ, cách viết số, ai nói gì) và khuon/CONG-CAU-TRUC.md (luận đề một câu, ≤ 3 ý, mỗi ý một dòng bằng chứng) trong skill viet-giong-linh. Thêm khuon/MA-TRAN-CHAM.md theo LENH mục 'Ma trận chấm' (bảng ý lớn, ý phụ, phong cách, cổng loại, hiệu chuẩn 7 bài).",
    "doc": [
     "nguon/WF06.md",
     "LENH.md"
    ],
    "dau_ra": [
     "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/SO-QUY-UOC.md",
-    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/CONG-CAU-TRUC.md"
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/CONG-CAU-TRUC.md",
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/MA-TRAN-CHAM.md"
    ],
    "tieu_chi": [
     "có file SO-QUY-UOC.md",
-    "có file CONG-CAU-TRUC.md có mục 'Luận đề'"
+    "có file CONG-CAU-TRUC.md có mục 'Luận đề'",
+    "có file MA-TRAN-CHAM.md có mục 'Cổng loại'"
    ],
    "lenh_kiem": "python -c \"t=open('../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/CONG-CAU-TRUC.md',encoding='utf-8').read();assert 'Luận đề' in t;open('../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/SO-QUY-UOC.md');print('DAT')\"",
    "tho": "agy",
    "nguoi_cham": "agy-moi",
-   "tran_phut": 20,
+   "tran_phut": 35,
    "phu_thuoc": [],
    "trang_thai": "cho",
    "vong": 0,

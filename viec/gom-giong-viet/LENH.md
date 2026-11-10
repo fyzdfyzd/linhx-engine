@@ -24,6 +24,24 @@ Hiện có 4 bộ skill viết chồng nhau: `new-article` (LinhX Write 9 bướ
 - B3 Kho ý, nguồn kho = VAULT CỦA LINH (bài cũ + bài tâm đắc; LAB070, D:\LINHX\IDEA\CONTENT_VAULT, D:\@WF\TOOL\CONTENT_VAULT), tìm vault trước rồi mới ra ngoài: chuyện thật đa ngôn ngữ (có Trung, châu Á) → quote → ngạn ngữ, ca dao, tục ngữ, thành ngữ cổ (Việt + nước khác, ghi xuất xứ) → chuyện xuyên ngành làm nền (văn học, sinh học, động vật học, vật lý, hoá học, tôn giáo..., mỗi chuyện có nguồn khoa học/văn bản gốc) → khung lý thuyết (≤ 2) → meme, phim, nhạc, tranh, sách. Hạn mức mỗi loại ≤ 5 mục, chuyện thật ≤ 10; lọc theo độc giả chính.
 - Mỗi mục: link gốc + trích nguyên văn ngôn ngữ gốc + nhãn LINH/NGUON/GIẢ LẬP. Quote phải truy được người nói. Nhạc chỉ ghi tên + vì sao hợp, không chép lời.
 - DỪNG: ra KHO-Y.md (bảng: mục, loại, nguồn, nhãn, độ hợp 1–3) cho Linh gạch, thêm, phản biện. Chưa duyệt thì không sang dàn ý.
+- B4 Từ KHO-Y đã duyệt, đề xuất 3 hướng khác nhau ở LUẬN ĐỀ (không chỉ khác mở bài). Mục tiêu lớn: đổi nhận thức độc giả chính, đưa tới điều mới. Chấm bằng khuon/MA-TRAN-CHAM.md (P04 viết theo bảng dưới), giám khảo phiên mới, không phải phiên tạo hướng. Linh chọn.
+
+### Ma trận chấm (thang 1–5, mỗi mức có mô tả neo)
+Ý lớn (luận đề), tổng 55:
+| Tiêu chí | Hệ số | 5 điểm khi |
+|---|---|---|
+| Đổi nhận thức | ×3 | viết được rõ "trước khi đọc độc giả chính nghĩ X, sau khi đọc nghĩ Y", X là niềm tin phổ biến có dẫn chứng |
+| Mới với độc giả chính | ×3 | không có trong những gì họ đã đọc (B2); không phải ngược đời cho lạ |
+| Đứng vững | ×2 | ≥ 3 mục NGUON trong kho đỡ; đã trả lời phản bác mạnh nhất |
+| Của Linh | ×2 | có trong vault/kinh nghiệm Linh; Linh có quyền nói |
+| Hợp kênh | ×1 | đúng độ dài, giọng kênh |
+Cổng loại: "Đổi nhận thức" < 4 hoặc không viết được X→Y thì loại, bất kể tổng.
+
+Ý phụ (≤ 3 mỗi hướng), mỗi ý tổng 25: đỡ ý lớn (bỏ đi thì ý lớn yếu hẳn) · bằng chứng có nguồn · chất liệu bất ngờ (chuyện thật, xuyên ngành, ngạn ngữ) · chạm pain/gain độc giả chính · không trùng ý phụ khác. Ý phụ < 15 thì thay.
+
+Phong cách tác giả, tổng 15: hướng dùng được bao nhiêu nước đi trong giong-linh · có chuyện người thật + tầm vóc + điều mang về · mức không bị làm phẳng (tránh luật VA-01..08).
+
+Hiệu chuẩn: chấm thử ma trận lên 7 bài đã đăng; bài Linh không vào top thì sửa ma trận trước khi dùng.
 
 ## Ràng buộc
 - Nguồn luật: `/mnt/project-files/BAN-GIAO-0911/WF06-bai-viet-hay.md` (bản chép sẵn ở `viec/gom-giong-viet/nguon/WF06.md`), WF06 + WF16 `NGHIEN-CUU.md` (chép ở `nguon/`).
