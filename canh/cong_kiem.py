@@ -38,6 +38,46 @@ def khoa(path):
     pathlib.Path(str(path) + ".khoa").write_text(json.dumps(moc, indent=1), encoding="utf-8")
     print(f"đã khoá {len(moc['features'])} feature")
 
+MOC_CAU = {"conftest.py", "pytest.py", "sitecustomize.py", "usercustomize.py", "_pytest"}
+BO_QUA = {".git", "node_modules", ".venv", "venv", "__pycache__", ".next"}
+
+
+def tep_moc_cau(goc):
+    """File Python/pytest tự nạp (lách cổng kiểm bằng cách tự cho mình qua) ngoài tests/nghiem-thu. V1 K4 10/11."""
+    ra = []
+    for d, ds, fs in os.walk(goc):
+        ds[:] = [x for x in ds if x not in BO_QUA]
+        tuong = pathlib.Path(d).relative_to(goc).as_posix()
+        if tuong == "tests/nghiem-thu" or tuong.startswith("tests/nghiem-thu/"):
+            continue
+        for x in fs + [y for y in ds if y in MOC_CAU]:
+            if x in MOC_CAU or x.endswith(".pth"):
+                ra.append(f"{tuong}/{x}".lstrip("./"))
+    return sorted(ra)
+
+
+def bang_chung_hop_le(goc, fid, bc):
+    """bang_chung phải là file/thư mục thật dưới bang-chung/<ID>/, không .., không tuyệt đối, không symlink ra ngoài."""
+    bc = str(bc).replace("\\", "/")
+    if bc.startswith("/") or ":" in bc or ".." in bc.split("/"):
+        return False
+    p = goc / bc
+    try:
+        that = p.resolve(strict=True)
+        that.relative_to((goc / "bang-chung" / fid).resolve())
+    except (OSError, ValueError):
+        return False
+    return not any(q.is_symlink() for q in [p, *p.parents] if q != goc and goc in q.parents)
+
+
+def moi_truong_kiem():
+    e = dict(os.environ)
+    e["PYTHONSAFEPATH"] = "1"  # không tự thêm cwd vào sys.path (chặn pytest.py, sitecustomize.py giả ở gốc)
+    e["PYTHONNOUSERSITE"] = "1"
+    e["PYTEST_ADDOPTS"] = (e.get("PYTEST_ADDOPTS", "") + " --confcutdir=tests/nghiem-thu -p no:cacheprovider").strip()
+    return e
+
+
 def kiem(path, timeout=600):
     path = pathlib.Path(path)
     data, moc = doc(path), doc(str(path) + ".khoa")
@@ -52,6 +92,8 @@ def kiem(path, timeout=600):
         if doi is None or f["id"] in them:
             return True
         return any(fnmatch.fnmatch(t, v) or t.startswith(v.rstrip("*").rstrip("/") + "/") for v in f.get("vung", []) for t in doi)
+    for t in tep_moc_cau(goc):
+        vi_pham.append(f"có {t}: file nạp tự động của Python/pytest chỉ được nằm trong tests/nghiem-thu")
     if bam({k: v for k, v in data.items() if k != "features"}) != moc["meta"]:
         vi_pham.append("sửa phần đầu file (mục tiêu/phạm vi)")
     ids = {f["id"] for f in data["features"]}
@@ -69,7 +111,7 @@ def kiem(path, timeout=600):
             ket.append({"id": fid, "trang_thai": "chua"})
             continue
         bc = f.get("bang_chung")
-        if not bc or not (goc / bc).exists():
+        if not bc or not bang_chung_hop_le(goc, fid, bc):
             vi_pham.append(f"{fid}: báo đạt nhưng thiếu file bằng chứng")
             f["passes"] = False
             ket.append({"id": fid, "trang_thai": "ha_ve_chua"})
@@ -79,7 +121,7 @@ def kiem(path, timeout=600):
             continue
         try:
             r = subprocess.run(f["lenh_kiem"], shell=True, cwd=goc, capture_output=True,
-                               text=True, timeout=timeout)
+                               text=True, timeout=timeout, env=moi_truong_kiem())
             ok = r.returncode == 0
             if not ok:
                 print(f"--- {fid} trượt: {f['lenh_kiem']}")

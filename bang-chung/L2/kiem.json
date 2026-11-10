@@ -1,0 +1,104 @@
+{
+  "feature": "L2",
+  "luc": "2026-11-10T04:03:22.702519+00:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l2.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 2.33s"
+  ],
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_l2.py::test_doctype_su_kien PASSED                 [ 33%]",
+    "tests/nghiem-thu/test_l2.py::test_phat_va_giao_mot_lan PASSED            [ 66%]",
+    "tests/nghiem-thu/test_l2.py::test_loi_chay_lai_khong_trung_va_hong_sau_tran PASSED [100%]",
+    "",
+    "============================== 3 passed in 0.04s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 4 items",
+    "",
+    "apps/linhx_core/linhx_core/linhx_core/doctype/lx_su_kien/test_lx_su_kien.py::test_phat_sao_chep_du_lieu_va_chong_sua_ngoai PASSED [ 25%]",
+    "apps/linhx_core/linhx_core/linhx_core/doctype/lx_su_kien/test_lx_su_kien.py::test_chay_hoi_phuc_truoc_tran_va_su_kien_khong_nguoi_nghe PASSED [ 50%]",
+    "apps/linhx_core/linhx_core/linhx_core/doctype/lx_su_kien/test_lx_su_kien.py::test_lay_bang_nghe_va_goi_ham_nghe_dong PASSED [ 75%]",
+    "apps/linhx_core/linhx_core/linhx_core/doctype/lx_su_kien/test_lx_su_kien.py::test_che_do_frappe_db_rollback_khi_loi_va_validate_controller PASSED [100%]",
+    "",
+    "============================== 4 passed in 0.05s =============================="
+  ],
+  "doctype_lx_su_kien": {
+    "name": "LX Su Kien",
+    "module": "LINHX Core",
+    "fields": [
+      "ten",
+      "trang_thai",
+      "lan",
+      "du_lieu",
+      "da_giao",
+      "loi"
+    ]
+  },
+  "chay_that": {
+    "giao_mot_lan": {
+      "kq_lan_1": {
+        "xong": 1,
+        "loi": 0
+      },
+      "kq_lan_2": {
+        "xong": 0,
+        "loi": 0
+      },
+      "nhan": [
+        [
+          "a.giao",
+          "DON-1"
+        ],
+        [
+          "b.ghi_so",
+          "DON-1"
+        ]
+      ],
+      "ban_ghi": {
+        "ten": "don.da_tra",
+        "du_lieu": {
+          "don": "DON-1"
+        },
+        "trang_thai": "xong",
+        "lan": 0,
+        "da_giao": [
+          "a.giao",
+          "b.ghi_so"
+        ],
+        "loi": ""
+      }
+    },
+    "loi_va_hong_sau_tran": {
+      "tran_lan": 5,
+      "dem_a_ok": 1,
+      "dem_b_loi": 5,
+      "ban_ghi": {
+        "ten": "don.da_tra",
+        "du_lieu": {
+          "don": "DON-2"
+        },
+        "trang_thai": "hong",
+        "lan": 5,
+        "da_giao": [
+          "a.ok"
+        ],
+        "loi": "b.loi: RuntimeError: mạng"
+      }
+    }
+  }
+}

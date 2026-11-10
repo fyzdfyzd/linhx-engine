@@ -1,0 +1,86 @@
+{
+ "doctype": "DocType",
+ "name": "LX Su Kien",
+ "module": "LINHX Core",
+ "custom": 0,
+ "issingle": 0,
+ "autoname": "hash",
+ "engine": "InnoDB",
+ "field_order": [
+  "ten",
+  "trang_thai",
+  "lan",
+  "du_lieu",
+  "da_giao",
+  "loi"
+ ],
+ "fields": [
+  {
+   "fieldname": "ten",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Tên sự kiện",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "default": "cho",
+   "fieldname": "trang_thai",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Trạng thái",
+   "options": "cho\nxong\nhong",
+   "reqd": 1,
+   "search_index": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "lan",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Số lần lỗi"
+  },
+  {
+   "fieldname": "du_lieu",
+   "fieldtype": "Long Text",
+   "label": "Dữ liệu sự kiện"
+  },
+  {
+   "fieldname": "da_giao",
+   "fieldtype": "Long Text",
+   "label": "Các hàm đã giao xong"
+  },
+  {
+   "fieldname": "loi",
+   "fieldtype": "Long Text",
+   "label": "Lỗi gần nhất"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "share": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "export": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "states": [],
+ "actions": [],
+ "links": [],
+ "index_web_pages_for_search": 0,
+ "modified": "2026-11-10 10:50:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "creation": "2026-11-10 10:50:00.000000"
+}
