@@ -1,0 +1,12 @@
+[Unit]
+Description=LINHX dong bo giao dien BU tu main moi 5 phut
+
+[Timer]
+OnBootSec=1min
+OnCalendar=*:0/5
+AccuracySec=15s
+Persistent=true
+Unit=linhx-giao-dien.service
+
+[Install]
+WantedBy=timers.target
