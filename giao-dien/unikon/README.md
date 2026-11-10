@@ -9,10 +9,10 @@ python3 nguon/_trang-bu.py && python3 nguon/_bai-tru.py && python3 tao-trang.py
 ## Chạy
 ```
 node server.mjs                        # Node ≥ 18, không cần cài gói, mặc định cổng 8080
-PORT=8101 LEAD_DIR=/var/leads/unikon node server.mjs
+PORT=8101 LINHX_FORM_URL=http://127.0.0.1:8999/nhan node server.mjs
 ```
-Lead ghi vào `LEAD_DIR/leads.jsonl` (loai: brief | goi-lai | tai-bo-kiem), kèm nguồn (`?kenh=`, utm), câu đồng ý nguyên văn, thời điểm, IP. Đăng ký bộ kiểm ghi thêm vào `LEAD_DIR/cho-bo-kiem.jsonl` (danh sách chờ gửi PDF).
-Báo tin (tuỳ chọn, biến môi trường, không ghi vào repo): `TG_TOKEN` + `TG_CHAT`, `SHEET_WEBHOOK`. Sau proxy: `TRUST_PROXY=1`. Giới hạn: `RATE_MAX` (mặc định 5 lần/10 phút/IP).
+Lead chuyển tiếp về engine qua `LINHX_FORM_URL` (mặc định `http://127.0.0.1/api/method/linhx_core.crm.api_form.nhan_form`), gắn `nguon: "unikon"`, kèm `loai` (`brief | goi-lai | tai-bo-kiem`), nguồn (`?kenh=`, utm), câu đồng ý nguyên văn, thời điểm, IP.
+Sau proxy: `TRUST_PROXY=1`. Nếu `LINHX_FORM_URL` trỏ ra ngoài loopback thì bắt buộc dùng `https://` để mã hoá dữ liệu liên hệ. Giới hạn: `RATE_MAX` (mặc định 5 lần/10 phút/IP).
 
 ## Giao diện đã khoá
 Phương án A "Bảng pitch 48 giờ" (Claude khoá theo khuyến nghị, chờ Linh duyệt). `DESIGN.md`, `DESIGN.khoa`, `khoa/anh-chuan/`. PA B, C ở `../_phuong-an-bo/`.

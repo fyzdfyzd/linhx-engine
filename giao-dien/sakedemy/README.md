@@ -5,10 +5,10 @@
 ## Chạy
 ```
 node server.mjs                                   # Node ≥ 18, không cần cài gói, cổng 8080
-RATE_MAX=1000 PORT=8103 LEAD_DIR=/tmp/leads node server.mjs   # chạy thử
+RATE_MAX=1000 PORT=8103 LINHX_FORM_URL=http://127.0.0.1:8999/nhan node server.mjs   # chạy thử với máy giả
 NODE_PATH=$(npm root -g) node kiem/kiem.cjs http://localhost:8103   # cổng K1–K10
 ```
-Báo tin (tuỳ chọn, qua biến môi trường, không ghi vào repo): `TG_TOKEN` + `TG_CHAT`, `SHEET_WEBHOOK`. Sau proxy: `TRUST_PROXY=1`.
+Chuyển tiếp lead về engine qua `LINHX_FORM_URL` (mặc định `http://127.0.0.1/api/method/linhx_core.crm.api_form.nhan_form`), gắn `nguon: "sakedemy"`. Nếu `LINHX_FORM_URL` trỏ ra ngoài loopback thì bắt buộc dùng `https://` để mã hoá dữ liệu liên hệ. Sau proxy: `TRUST_PROXY=1`.
 
 ## Sửa nội dung
 - Trang chủ: `public/index.html` (đã khoá; sửa thì chạy cổng, Linh duyệt rồi `--chup-chuan`).

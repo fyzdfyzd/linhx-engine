@@ -5,9 +5,9 @@
 ## Chạy
 ```
 node server.mjs                                    # Node ≥ 18, không cần cài gói, cổng 8080
-RATE_MAX=1000 PORT=8102 LEAD_DIR=/duong/dan/leads node server.mjs   # chạy thử
+RATE_MAX=1000 PORT=8102 LINHX_FORM_URL=http://127.0.0.1:8999/nhan node server.mjs   # chạy thử với máy giả
 ```
-Báo tin (tuỳ chọn): `TG_TOKEN` + `TG_CHAT`, `SHEET_WEBHOOK`. Sau proxy HTTPS: `TRUST_PROXY=1`. Lead ghi vào `$LEAD_DIR/leads.jsonl`, mã `TV-yymmdd-xxxx`, có câu đồng ý, thời điểm, IP, nguồn (`kenh`, utm), ngôn ngữ.
+Chuyển tiếp lead về engine qua `LINHX_FORM_URL` (mặc định `http://127.0.0.1/api/method/linhx_core.crm.api_form.nhan_form`), gắn `nguon: "tuva"`. Nếu `LINHX_FORM_URL` trỏ ra ngoài loopback thì bắt buộc dùng `https://` để mã hoá dữ liệu liên hệ. Sau proxy HTTPS: `TRUST_PROXY=1`. Lead có mã `TV-yymmdd-xxxx`, câu đồng ý, thời điểm, IP, nguồn (`kenh`, utm), ngôn ngữ.
 
 ## Sửa nội dung
 - Trang con: `nguon/_trang-bu.py` → `python3 nguon/_trang-bu.py && python3 nguon/_bai-tru.py && python3 tao-trang.py`.

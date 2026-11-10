@@ -302,8 +302,8 @@
     "giao diện không chứa IP, token, mật khẩu viết cứng"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u2.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/U2/kiem.json"
   },
   {
    "id": "U3",
