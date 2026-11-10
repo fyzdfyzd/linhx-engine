@@ -9,3 +9,6 @@ trang-bu/.next/
 trang-bu/out/
 .canh/log/
 .canh-tho/
+
+# pytest basetemp (lỗi O4 10/11)
+*pytest-tmp*/

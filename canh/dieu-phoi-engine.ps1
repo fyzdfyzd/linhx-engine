@@ -229,7 +229,7 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
     $env:CONG_KIEM_DOI = "$tamTho\doi.txt"; $env:CONG_KIEM_THEM = $fid
   } else { "$(Get-Date -Format s) $fid" | Set-Content $dauDD; Ghi "cổng kiểm chạy toàn bộ (12 giờ một lần)" }
   # pytest mỗi thợ một thư mục tạm riêng: chung pytest-of-ADMIN thì agy và cổng kiểm giẫm nhau, WinError 5 (C2B, O4 9/11)
-  $env:PYTEST_ADDOPTS = "--basetemp=$tamTho\pytest-tmp"
+  $env:PYTEST_ADDOPTS = "--basetemp=$($tamTho.Replace('\', '/'))/pytest-tmp"
   $ck =py -3.12 "$TichHop\canh\cong_kiem.py" kiem "$Wt\$FF" 2>&1 | Out-String
   $maCk = $LASTEXITCODE
   Remove-Item Env:CONG_KIEM_DOI, Env:CONG_KIEM_THEM, Env:PYTEST_ADDOPTS -ErrorAction SilentlyContinue
