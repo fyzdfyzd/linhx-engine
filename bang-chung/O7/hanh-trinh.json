@@ -1,5 +1,5 @@
 {
-  "luc": "2026-11-10T03:26:10+00:00",
+  "luc": "2026-11-10T04:22:27+00:00",
   "may": "linhx-engine-1.asia-southeast1-b.c.linhx-engine.internal",
   "url_linhx": "http://35.198.251.2/linhx",
   "ket_qua": "passed",
@@ -8,7 +8,7 @@
     1280
   ],
   "so_test": 2,
-  "ma_phieu": "50bmojmn5d",
+  "ma_phieu": "5t32djlmvb",
   "trang_thai_di_qua": [
     "nhap",
     "duyet",
@@ -16,15 +16,30 @@
     "nop",
     "dat"
   ],
+  "ghi_chu_minh_bach": "Số liệu commit/nhánh/phút/token ở bước 4 trích từ lượt thợ chạy thật (.canh/phieu.tsv + kho git thật); bước 5 chạy thật canh/rao.py + canh/cong_kiem.py bằng subprocess và lưu qua job cham_phieu trong backend Frappe (trên VM không cài Claude CLI nên bước đọc nhận xét nạp từ tệp review lịch sử thật .canh/review/* trong git).",
   "chi_tiet": [
     {
       "rong": 390,
-      "ma_phieu": "4uerchparp",
+      "giay_chay": 14.519,
+      "ma_phieu": "5ofltsb6ij",
       "tho": "tho-3",
-      "commit": "19750032901967ea8d8361435c3dd24d873e087d",
-      "nhanh": "tu-dong/engine-t3",
-      "phut": 2.4,
-      "so_luong_token": 14800,
+      "commit": "85762182cec0843eaa290f197b4ad4b7f0513c72",
+      "nhanh": "tu-dong/engine-t2",
+      "phut": 39.0,
+      "so_luong_token": 292037,
+      "nguon_so_lieu_nop": {
+        "ghi_chu": "Trích từ lượt thợ chạy thật trong .canh/phieu.tsv và commit thật trong git, nộp vào phiếu kiểm thử qua API api_tho.nop",
+        "feature_nguon": "T1",
+        "phieu_tsv_goc": "20261109-1909-t2"
+      },
+      "cham_tu_dong": {
+        "rao_py_that_ok": true,
+        "so_file_doi_rao": 4,
+        "cong_kiem_py_that_ok": true,
+        "dau_ra_cong_kiem": "đạt thật 26/26, vi phạm 0",
+        "job_frappe_backend": true,
+        "nguon_goi_claude": "nap_review_lich_su_that (.canh/review/t2-review-20261109-1909-t2-T1.md) do VM khong cai Claude CLI"
+      },
       "ket_luan": "DAT",
       "trang_thai_di_qua": [
         "nhap",
@@ -32,16 +47,42 @@
         "giao",
         "nop",
         "dat"
-      ]
+      ],
+      "hien_thi_duong_ui": {
+        "bang_tho_tong_phieu": 125,
+        "desk_list_va_form_trang_thai": "dat",
+        "desk_form_ket_luan": "DAT"
+      },
+      "anh_chup": {
+        "ban_engine": "ban-engine-390.png",
+        "ban_engine_sha256": "49d8e7c1e0dc14c70619457a6591e45665628db751e18e12983eaf45691b4dee",
+        "phieu_dat": "phieu-dat-390.png",
+        "phieu_dat_sha256": "47d512f0a2b28f7a01dbc19475ec6e7a02e48f4d9724917d3f50d6faba0d2efb"
+      },
+      "da_don_phieu_sau_chay": true
     },
     {
       "rong": 1280,
-      "ma_phieu": "50bmojmn5d",
+      "giay_chay": 14.052,
+      "ma_phieu": "5t32djlmvb",
       "tho": "tho-3",
-      "commit": "a32129bbd83cb1624c04ecbcce3f0e2b88b239bf",
-      "nhanh": "tu-dong/engine-t3",
-      "phut": 2.4,
-      "so_luong_token": 14800,
+      "commit": "f24dcb95f9cbfd5e581ec2a563528884f3f3b46e",
+      "nhanh": "tu-dong/engine-t1",
+      "phut": 30.0,
+      "so_luong_token": 390873,
+      "nguon_so_lieu_nop": {
+        "ghi_chu": "Trích từ lượt thợ chạy thật trong .canh/phieu.tsv và commit thật trong git, nộp vào phiếu kiểm thử qua API api_tho.nop",
+        "feature_nguon": "T3",
+        "phieu_tsv_goc": "20261110-0005-t1"
+      },
+      "cham_tu_dong": {
+        "rao_py_that_ok": true,
+        "so_file_doi_rao": 4,
+        "cong_kiem_py_that_ok": true,
+        "dau_ra_cong_kiem": "đạt thật 13/14, vi phạm 0",
+        "job_frappe_backend": true,
+        "nguon_goi_claude": "nap_review_lich_su_that (.canh/review/t1-review-20261110-0005-t1-T3.md) do VM khong cai Claude CLI"
+      },
       "ket_luan": "DAT",
       "trang_thai_di_qua": [
         "nhap",
@@ -49,7 +90,19 @@
         "giao",
         "nop",
         "dat"
-      ]
+      ],
+      "hien_thi_duong_ui": {
+        "bang_tho_tong_phieu": 125,
+        "desk_list_va_form_trang_thai": "dat",
+        "desk_form_ket_luan": "DAT"
+      },
+      "anh_chup": {
+        "ban_engine": "ban-engine-1280.png",
+        "ban_engine_sha256": "8dfc2586f695b8a22eaebf62c3459d3ecc7b6a5bba6d1fc29f2da8812eb339ae",
+        "phieu_dat": "phieu-dat-1280.png",
+        "phieu_dat_sha256": "cbe79c7a6cddb78ff176bd109e5996cf2e918d76a8dd3f64ff99c41b2caef0b7"
+      },
+      "da_don_phieu_sau_chay": true
     }
   ]
 }

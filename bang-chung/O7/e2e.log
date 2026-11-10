@@ -1,2 +1,10 @@
-..                                                                       [100%]
-2 passed in 11.67s
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /home/ADMIN/venv-e2e/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ADMIN/linhx-engine
+collecting ... collected 2 items
+
+tests/e2e/test_hanh_trinh_phieu.py::test_hanh_trinh_phieu[390] PASSED    [ 50%]
+tests/e2e/test_hanh_trinh_phieu.py::test_hanh_trinh_phieu[1280] PASSED   [100%]
+
+============================== 2 passed in 28.96s ==============================
