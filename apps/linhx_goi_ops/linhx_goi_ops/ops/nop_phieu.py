@@ -3,7 +3,7 @@ lưu commit/nhánh/nhật ký/phút/token và chống tạo bản ghi trùng khi
 """
 from __future__ import annotations
 
-from linhx_core.ops.keo_phieu import _KHOA_LUONG, xac_thuc_tho
+from linhx_goi_ops.ops.keo_phieu import _KHOA_LUONG, xac_thuc_tho
 
 
 def _chuan_phut(gia_tri: object) -> int | float:

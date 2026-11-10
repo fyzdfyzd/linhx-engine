@@ -5,7 +5,7 @@ import datetime
 import sys
 import types
 
-from linhx_core.ops import keo_phieu as kp
+from linhx_goi_ops.ops import keo_phieu as kp
 
 
 def _stub_frappe(monkeypatch, ds_db: list[dict], tho_khoa_bam: dict):
@@ -47,8 +47,8 @@ def _stub_frappe(monkeypatch, ds_db: list[dict], tho_khoa_bam: dict):
 
     monkeypatch.setitem(sys.modules, "frappe", frappe_mod)
     monkeypatch.setitem(sys.modules, "frappe.utils", utils_mod)
-    sys.modules.pop("linhx_core.ops.api_tho", None)
-    from linhx_core.ops import api_tho
+    sys.modules.pop("linhx_goi_ops.ops.api_tho", None)
+    from linhx_goi_ops.ops import api_tho
 
     return api_tho, frappe_mod, ghi_sql, ghi_set_value, da_commit, da_rollback
 
@@ -59,7 +59,7 @@ def test_api_tho_nop_401_403_200_va_chong_trung(monkeypatch):
             "name": "PH-301",
             "loai_phieu": "feature",
             "de": "Làm O3 API nộp phiếu",
-            "vung": "apps/linhx_core/linhx_core/ops/**",
+            "vung": "apps/linhx_goi_ops/**",
             "trang_thai": "giao",
             "tho": "tho-1",
             "giao_luc": "2026-11-09 21:55:00",

@@ -1,16 +1,45 @@
-"""API Frappe cho bàn duyệt phiếu Agy (/engine): liệt kê phiếu chờ, duyệt và trả lại phiếu."""
+"""API Frappe cho bàn duyệt phiếu Agy (/engine): liệt kê phiếu chờ, duyệt và trả lại phiếu.
+
+Thuần Python ở mức nạp file (không `import frappe` ở đầu file); nạp trễ `frappe` trong hàm.
+"""
 from __future__ import annotations
 
 import json
 
-import frappe
+from linhx_goi_ops.ops import ban_phieu, phieu_agy
 
-from linhx_core.ops import ban_phieu, phieu_agy
+
+def _lay_frappe():
+    try:
+        import frappe
+    except ImportError:
+        return None
+    return frappe
+
+
+def _yeu_cau_frappe():
+    frappe = _lay_frappe()
+    if frappe is None:
+        raise RuntimeError("Cần môi trường Frappe để gọi API bàn phiếu")
+    return frappe
+
+
+def _whitelist(*, allow_guest: bool = False, methods: list[str] | None = None):
+    def _trang_tri(fn):
+        frappe = _lay_frappe()
+        if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+            if methods is not None:
+                return frappe.whitelist(allow_guest=allow_guest, methods=methods)(fn)
+            return frappe.whitelist(allow_guest=allow_guest)(fn)
+        return fn
+
+    return _trang_tri
 
 
 def _doc_payload(kwargs: dict) -> dict:
     du_lieu: dict = {}
-    req = getattr(frappe, "request", None)
+    frappe = _lay_frappe()
+    req = getattr(frappe, "request", None) if frappe is not None else None
     if req is not None:
         try:
             body = req.get_json(silent=True)
@@ -34,12 +63,16 @@ def _doc_payload(kwargs: dict) -> dict:
 
 
 def _lay_vai_tro_dieu_hanh() -> list[str]:
+    frappe = _yeu_cau_frappe()
     user = getattr(getattr(frappe, "session", None), "user", "Guest")
     if not user or user == "Guest":
         frappe.throw("Cần đăng nhập điều hành", frappe.PermissionError)
     vai_tro = list(frappe.get_roles() or [])
     if not (set(vai_tro) & set(phieu_agy.VAI_DIEU_HANH)):
-        frappe.throw("Chỉ vai điều hành (System Manager, LX Operator) mới được duyệt hoặc trả phiếu", frappe.PermissionError)
+        frappe.throw(
+            "Chỉ vai điều hành (System Manager, LX Operator) mới được duyệt hoặc trả phiếu",
+            frappe.PermissionError,
+        )
     return vai_tro
 
 
@@ -53,9 +86,10 @@ def _chuan_ban_ghi(d: dict) -> dict:
     return ban_ghi
 
 
-@frappe.whitelist()
+@_whitelist()
 def phieu_cho():
     """Trả danh sách phiếu Agy đang ở trạng thái 'nhap' (mới nhất trước)."""
+    frappe = _yeu_cau_frappe()
     _lay_vai_tro_dieu_hanh()
     if not frappe.db.exists("DocType", "LX Phieu Agy"):
         return []
@@ -69,9 +103,10 @@ def phieu_cho():
     return ban_phieu.ds_phieu_cho([_chuan_ban_ghi(x) for x in (ds or [])])
 
 
-@frappe.whitelist(methods=["POST"])
+@_whitelist(methods=["POST"])
 def duyet(ma_phieu: str | None = None, **kwargs):
     """Duyệt phiếu từ 'nhap' sang 'duyet'."""
+    frappe = _yeu_cau_frappe()
     vai_tro = _lay_vai_tro_dieu_hanh()
     payload = _doc_payload(kwargs)
     ma = str(ma_phieu if ma_phieu is not None else (payload.get("ma_phieu") or payload.get("name") or "")).strip()
@@ -93,9 +128,10 @@ def duyet(ma_phieu: str | None = None, **kwargs):
     return {"ok": True, "name": doc.name, "trang_thai": doc.trang_thai}
 
 
-@frappe.whitelist(methods=["POST"])
+@_whitelist(methods=["POST"])
 def tra_lai(ma_phieu: str | None = None, ly_do: str | None = None, **kwargs):
     """Trả lại phiếu từ 'nhap' sang 'tra' kèm lý do bắt buộc."""
+    frappe = _yeu_cau_frappe()
     vai_tro = _lay_vai_tro_dieu_hanh()
     payload = _doc_payload(kwargs)
     ma = str(ma_phieu if ma_phieu is not None else (payload.get("ma_phieu") or payload.get("name") or "")).strip()

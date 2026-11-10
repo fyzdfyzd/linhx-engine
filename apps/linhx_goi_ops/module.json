@@ -1,0 +1,29 @@
+{
+  "ten": "linhx_goi_ops",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "ops.phieu_agy.kiem_de": "linhx_goi_ops.ops.phieu_agy.kiem_de",
+    "ops.phieu_agy.kiem_phieu": "linhx_goi_ops.ops.phieu_agy.kiem_phieu",
+    "ops.phieu_agy.chuyen_trang_thai": "linhx_goi_ops.ops.phieu_agy.chuyen_trang_thai",
+    "ops.keo_phieu.bam_khoa": "linhx_goi_ops.ops.keo_phieu.bam_khoa",
+    "ops.keo_phieu.dang_ky_tho": "linhx_goi_ops.ops.keo_phieu.dang_ky_tho",
+    "ops.keo_phieu.xac_thuc_tho": "linhx_goi_ops.ops.keo_phieu.xac_thuc_tho",
+    "ops.keo_phieu.thu_hoi_qua_han": "linhx_goi_ops.ops.keo_phieu.thu_hoi_qua_han",
+    "ops.keo_phieu.keo_phieu": "linhx_goi_ops.ops.keo_phieu.keo_phieu",
+    "ops.nop_phieu.nop_phieu": "linhx_goi_ops.ops.nop_phieu.nop_phieu",
+    "ops.cham_phieu.cham_phieu": "linhx_goi_ops.ops.cham_phieu.cham_phieu",
+    "ops.ban_phieu.ds_phieu_cho": "linhx_goi_ops.ops.ban_phieu.ds_phieu_cho",
+    "ops.ban_phieu.duyet_phieu": "linhx_goi_ops.ops.ban_phieu.duyet_phieu",
+    "ops.ban_phieu.tra_phieu": "linhx_goi_ops.ops.ban_phieu.tra_phieu",
+    "ops.api_tho.keo": "linhx_goi_ops.ops.api_tho.keo",
+    "ops.api_tho.nop": "linhx_goi_ops.ops.api_tho.nop",
+    "ops.api_ban_phieu.phieu_cho": "linhx_goi_ops.ops.api_ban_phieu.phieu_cho",
+    "ops.api_ban_phieu.duyet": "linhx_goi_ops.ops.api_ban_phieu.duyet",
+    "ops.api_ban_phieu.tra_lai": "linhx_goi_ops.ops.api_ban_phieu.tra_lai"
+  },
+  "giao": {}
+}
