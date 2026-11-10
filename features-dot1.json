@@ -91,7 +91,7 @@
         "DB tách riêng"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_n5.py -q",
-      "passes": true,
+      "passes": false,
       "bang_chung": "bang-chung/N5/ping.json"
     },
     {
