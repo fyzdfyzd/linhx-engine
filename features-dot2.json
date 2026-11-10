@@ -135,7 +135,7 @@
         "Playwright 390 + 1280 xanh trên VM"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o7.py -q",
-      "passes": false,
+      "passes": true,
       "bang_chung": "bang-chung/O7/hanh-trinh.json"
     },
     {
