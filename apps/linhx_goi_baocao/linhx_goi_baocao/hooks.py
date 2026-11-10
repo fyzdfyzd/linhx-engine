@@ -4,3 +4,7 @@ app_publisher = "LINHX"
 app_description = "Gói báo cáo cho LINHX ENGINE"
 app_email = "dev@linhx.vn"
 app_license = "mit"
+
+after_install = "linhx_goi_baocao.sau_tra.dam_bao_loai_giao_bao_cao"
+after_migrate = ["linhx_goi_baocao.sau_tra.dam_bao_loai_giao_bao_cao"]
+

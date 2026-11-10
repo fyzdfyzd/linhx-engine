@@ -8,17 +8,21 @@ from __future__ import annotations
 
 from datetime import datetime
 import os
-import pathlib
 import re
-import secrets
-import sys
 import traceback
 
-_THU_MUC_CORE = pathlib.Path(__file__).resolve().parents[2] / "linhx_core"
-if _THU_MUC_CORE.is_dir() and str(_THU_MUC_CORE) not in sys.path:
-	sys.path.insert(0, str(_THU_MUC_CORE))
-
-from linhx_core.api import gia_hop_le
+try:
+	from linhx_core.api import gia_hop_le
+except ModuleNotFoundError:
+	def gia_hop_le(so_tien: object, goi: dict) -> bool:
+		if not isinstance(goi, dict) or so_tien is None or isinstance(so_tien, bool):
+			return False
+		try:
+			tien = float(so_tien)
+			gia_san = float(goi.get("gia_san", 0) or 0)
+		except (TypeError, ValueError):
+			return False
+		return tien >= 0 and tien >= gia_san
 
 NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 WORKFLOW_BAO_CAO_MAC_DINH = "ai-noi-gi-ve-brand"
@@ -245,7 +249,7 @@ def _tim_goi_db(frappe_mod, ma_hoac_ten: str) -> dict | None:
 	if not ma_hoac_ten or not frappe_mod.db.table_exists("LX Goi"):
 		return None
 	fields = ["name", "ma", "ten", "gia", "gia_san", "workflow", "ban"]
-	if _co_cot_bang(frappe_mod.db, "LX Goi", "loai_giao"):
+	if _co_cot_loai_giao(frappe_mod.db):
 		fields.append("loai_giao")
 	rows = frappe_mod.get_all(
 		"LX Goi",
@@ -330,6 +334,38 @@ def _co_cot_bang(db, ten_doctype: str, ten_cot: str) -> bool:
 def _co_cot_lx_don(db, ten_cot: str) -> bool:
 	"""Kiểm tra bảng `tabLX Don` có cột `ten_cot` hay không."""
 	return _co_cot_bang(db, "LX Don", ten_cot)
+
+
+def _co_cot_loai_giao(db) -> bool:
+	"""Kiểm tra bảng `tabLX Goi` có cột `loai_giao` hay không."""
+	return _co_cot_bang(db, "LX Goi", "loai_giao")
+
+
+def dam_bao_loai_giao_bao_cao() -> list[str]:
+	"""Điền `loai_giao = 'bao_cao'` cho các gói báo cáo khi cài đặt hoặc migrate app."""
+	frappe_mod = _lay_frappe()
+	if not _frappe_co_db(frappe_mod):
+		return []
+	db = frappe_mod.db
+	if not db.table_exists("LX Goi") or not _co_cot_loai_giao(db):
+		return []
+	rows = frappe_mod.get_all(
+		"LX Goi",
+		fields=["name", "ma", "workflow", "loai_giao"],
+		ignore_permissions=True,
+	)
+	da_cap_nhat: list[str] = []
+	for r in rows or []:
+		ten = str(r.get("name") or "").strip()
+		ma = str(r.get("ma") or ten).strip()
+		loai_hien_tai = str(r.get("loai_giao") or "").strip()
+		wf = str(r.get("workflow") or "").strip()
+		if not ten or loai_hien_tai:
+			continue
+		if wf == WORKFLOW_BAO_CAO_MAC_DINH or ma.startswith("BC-"):
+			db.set_value("LX Goi", ten, "loai_giao", "bao_cao", update_modified=False)
+			da_cap_nhat.append(ten)
+	return da_cap_nhat
 
 
 def _gan_co_can_xu_ly(
@@ -426,31 +462,8 @@ def xu_ly_sau_tra(
 			(ten_don,),
 		)
 
-	goi_truyen = goi if isinstance(goi, dict) else (method if isinstance(method, dict) else None)
-	goi_id = str(
-		_lay_gia_tri(doc, "goi", None)
-		or (goi_truyen.get("name") or goi_truyen.get("ma") if isinstance(goi_truyen, dict) else "")
-		or ""
-	).strip()
-	goi_db = _tim_goi_db(frappe, goi_id)
-	if goi_db and isinstance(goi_truyen, dict):
-		goi_dung: dict | None = {**goi_truyen, **goi_db}
-		for k in ("workflow", "loai_giao", "gia", "gia_san"):
-			if not goi_dung.get(k) and goi_truyen.get(k) is not None:
-				goi_dung[k] = goi_truyen[k]
-	elif goi_db:
-		goi_dung = goi_db
-	elif isinstance(goi_truyen, dict) and (
-		goi_truyen.get("workflow")
-		or goi_truyen.get("loai_giao") == "bao_cao"
-		or goi_truyen.get("gia") is not None
-		or goi_truyen.get("gia_san") is not None
-	):
-		goi_dung = dict(goi_truyen)
-		goi_dung["ma"] = goi_dung.get("ma") or goi_dung.get("name") or goi_id
-	else:
-		goi_dung = None
-
+	goi_id = str(_lay_gia_tri(doc, "goi", None) or "").strip()
+	goi_dung = _tim_goi_db(frappe, goi_id)
 	if not goi_dung:
 		_gan_gia_tri(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
 		_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
@@ -461,9 +474,6 @@ def xu_ly_sau_tra(
 			message=f"Đơn {ma_don} đã trả nhưng không tìm thấy bản ghi LX Goi '{goi_id}'.",
 		)
 		return None
-
-	if not str(goi_dung.get("workflow") or "").strip() and str(goi_dung.get("loai_giao") or "").strip() == "bao_cao":
-		goi_dung = {**goi_dung, "workflow": WORKFLOW_BAO_CAO_MAC_DINH}
 
 	job_da_co = frappe.db.sql(
 		"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
@@ -579,52 +589,19 @@ def xu_ly_sau_tra(
 
 def giao_bao_cao(don: dict | object, goi: dict | None = None) -> dict | None:
 	"""Hàm giao hàng cho `loai_giao = 'bao_cao'` (khai trong `apps/linhx_goi_baocao/module.json`)."""
-	goi_chuan: dict | None = None
-	if isinstance(goi, dict):
-		goi_chuan = dict(goi)
-		if not str(goi_chuan.get("workflow") or "").strip():
-			goi_chuan["workflow"] = WORKFLOW_BAO_CAO_MAC_DINH
-		goi_chuan.setdefault("loai_giao", "bao_cao")
-
 	frappe_mod = _lay_frappe()
 	if _frappe_co_db(frappe_mod):
-		return xu_ly_sau_tra(don, goi=goi_chuan)
+		return xu_ly_sau_tra(don, goi=goi)
 
-	don_dict = dict(don) if isinstance(don, dict) else {
-		"name": _lay_gia_tri(don, "name", None),
-		"ma": _lay_gia_tri(don, "ma", None),
-		"goi": _lay_gia_tri(don, "goi", None),
-		"so_tien": _lay_gia_tri(don, "so_tien", None),
-		"trang_thai": _lay_gia_tri(don, "trang_thai", None),
-		"brand": _lay_gia_tri(don, "brand", None),
-		"email": _lay_gia_tri(don, "email", None),
-		"nganh": _lay_gia_tri(don, "nganh", None),
-		"thi_truong": _lay_gia_tri(don, "thi_truong", None),
-		"doi_thu": _lay_gia_tri(don, "doi_thu", None),
-		"su_that": _lay_gia_tri(don, "su_that", None),
-	}
-	if not don_dict.get("trang_thai"):
-		don_dict["trang_thai"] = "da_tra"
-	goi_mem = dict(goi_chuan or {"workflow": WORKFLOW_BAO_CAO_MAC_DINH, "loai_giao": "bao_cao"})
-	if don_dict.get("so_tien") is None and goi_mem.get("gia") is not None:
-		don_dict["so_tien"] = goi_mem.get("gia")
-	elif don_dict.get("so_tien") is None and goi_mem.get("gia_san") is not None:
-		don_dict["so_tien"] = goi_mem.get("gia_san")
-
-	viec = viec_can_tao(don_dict, goi_mem, [])
-	if not viec:
+	ten_don = str(_lay_gia_tri(don, "name", None) or _lay_gia_tri(don, "ma", None) or "").strip()
+	if _lay_gia_tri(don, "so_tien", None) is None:
+		_gan_gia_tri(don, "_ly_do_chua_tao_job", "can_nguoi_xu_ly")
+		_gan_co_can_xu_ly(frappe_mod, don, ten_don, 1)
 		return None
-	ten_job = str(don_dict.get("job_name") or f"VIEC-{viec['don']}").strip()
-	ma_xem = str(don_dict.get("ma_xem") or secrets.token_hex(6)).strip()
-	return {
-		"name": ten_job,
-		"ma_xem": ma_xem,
-		"don": viec["don"],
-		"trang_thai": viec["trang_thai"],
-		"workflow": viec["workflow"],
-		"dau_vao": viec["dau_vao"],
-		"link": link_bao_cao({"name": ten_job, "ma_xem": ma_xem}, ""),
-	}
+
+	_gan_gia_tri(don, "_ly_do_chua_tao_job", "loi_tam_thoi")
+	_gan_co_can_xu_ly(frappe_mod, don, ten_don, 1)
+	return None
 
 
 giao = giao_bao_cao
