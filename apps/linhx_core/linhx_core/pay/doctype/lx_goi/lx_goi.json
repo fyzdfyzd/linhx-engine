@@ -10,6 +10,7 @@
   "ten",
   "gia",
   "gia_san",
+  "loai_giao",
   "mo_ta",
   "ban",
   "workflow"
@@ -34,6 +35,14 @@
    "fieldname": "gia_san",
    "fieldtype": "Currency",
    "label": "Giá sàn"
+  },
+  {
+   "fieldname": "loai_giao",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Loại giao hàng",
+   "options": "bao_cao\nquyen_dung\nlich\ntep"
   },
   {
    "fieldname": "mo_ta",

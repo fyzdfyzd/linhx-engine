@@ -3,7 +3,9 @@
   "ban": "0.3.0",
   "lop": "loi",
   "phu_thuoc": [],
-  "nghe": {},
+  "nghe": {
+    "don.da_tra": "linhx_core.giao_hang.nghe"
+  },
   "cung_cap": {},
   "giao": {}
 }

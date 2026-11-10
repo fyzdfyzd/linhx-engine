@@ -1,0 +1,87 @@
+{
+  "feature": "L3",
+  "luc": "2026-11-10T04:36:27.218458+00:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l3.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 0.05s"
+  ],
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "tests/nghiem-thu/test_l3.py::test_goi_co_loai_giao PASSED                [ 33%]",
+    "tests/nghiem-thu/test_l3.py::test_can_phat_chi_khi_chuyen_sang_da_tra PASSED [ 66%]",
+    "tests/nghiem-thu/test_l3.py::test_chon_va_goi_ham_giao PASSED            [100%]",
+    "",
+    "============================== 3 passed in 0.05s =============================="
+  ],
+  "unit_test_returncode": 0,
+  "unit_test_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 3 items",
+    "",
+    "apps/linhx_core/linhx_core/pay/doctype/lx_goi/test_lx_goi.py::test_phat_mot_lan_khi_don_chuyen_sang_da_tra_bo_nho PASSED [ 33%]",
+    "apps/linhx_core/linhx_core/pay/doctype/lx_goi/test_lx_goi.py::test_chon_ham_va_xu_ly_cac_nhanh_loi PASSED [ 66%]",
+    "apps/linhx_core/linhx_core/pay/doctype/lx_goi/test_lx_goi.py::test_luong_day_du_su_kien_den_nghe_va_frappe_gia_lap PASSED [100%]",
+    "",
+    "============================== 3 passed in 0.05s =============================="
+  ],
+  "doctype_lx_goi": {
+    "name": "LX Goi",
+    "module": "pay",
+    "loai_giao_options": [
+      "bao_cao",
+      "quyen_dung",
+      "lich",
+      "tep"
+    ]
+  },
+  "module_json_nghe": {
+    "don.da_tra": "linhx_core.giao_hang.nghe"
+  },
+  "bang_nghe": {
+    "don.da_tra": [
+      "linhx_core.giao_hang.nghe"
+    ]
+  },
+  "chay_that": {
+    "can_phat": {
+      "cho_tra_sang_da_tra": true,
+      "da_tra_sang_da_tra": false,
+      "none_sang_cho_tra": false
+    },
+    "chon_ham_lich": "linhx_goi_booking.giao.giao",
+    "xu_ly_bao_cao": {
+      "duong_ham": "linhx_goi_baocao.giao.giao",
+      "da_goi": [
+        [
+          "linhx_goi_baocao.giao.giao",
+          "DON-9",
+          "G1"
+        ]
+      ]
+    },
+    "phat_mot_lan_kho": [
+      {
+        "ten": "don.da_tra",
+        "du_lieu": {
+          "don": "DON-9"
+        },
+        "trang_thai": "cho",
+        "lan": 0,
+        "da_giao": [],
+        "loi": ""
+      }
+    ]
+  }
+}
