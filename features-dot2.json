@@ -77,7 +77,7 @@
         "chạy thật một phiếu thử trên máy cty"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_o4.py -q",
-      "passes": false,
+      "passes": true,
       "bang_chung": "bang-chung/O4/phieu-that.json"
     },
     {
