@@ -56,7 +56,7 @@
   },
   {
    "ma": "P03",
-   "viec": "Chạy kiem_van.py và kiem_giu_nghia.py (chế độ một bản: chỉ đo nhịp) lên 7 bài đã đăng, đặt ngưỡng sao cho 0/7 bài bị gắn cờ, ghi du-lieu/nguong.json + DUONG-TINH-GIA.md (bảng 7 dòng).",
+   "viec": "Chạy kiem_van.py và kiem_giu_nghia.py (chế độ một bản: chỉ đo nhịp) lên 7 bài đã đăng, đặt ngưỡng sao cho 0/7 bài bị gắn cờ, ghi du-lieu/nguong.json + DUONG-TINH-GIA.md (bảng 7 dòng). Đo thêm mật độ ý trên 7 bài (ý phụ/1000 từ, khái niệm mới/đoạn, số liệu/đoạn) theo LENH mục 'Lượng ý vừa sức đọc', ghi dải vào nguong.json khoá 'mat_do_y'.",
    "doc": [
     "../../skills/bo/linhx-viet-bai/scripts/kiem_van.py",
     "../../skills/bo/linhx-viet-bai/scripts/kiem_giu_nghia.py",
@@ -68,12 +68,13 @@
    ],
    "tieu_chi": [
     "DUONG-TINH-GIA.md có 7 dòng bài",
-    "0/7 bài bị cờ ở ngưỡng mới"
+    "0/7 bài bị cờ ở ngưỡng mới",
+    "nguong.json có khoá mat_do_y với 3 chỉ số"
    ],
    "lenh_kiem": "python -c \"import json;json.load(open('../../skills/bo/linhx-viet-bai/du-lieu/nguong.json',encoding='utf-8'));t=open('DUONG-TINH-GIA.md',encoding='utf-8').read();assert t.count('.md')>=7;print('DAT')\"",
    "tho": "agy",
    "nguoi_cham": "agy-moi",
-   "tran_phut": 30,
+   "tran_phut": 40,
    "phu_thuoc": [
     "P01",
     "P02"

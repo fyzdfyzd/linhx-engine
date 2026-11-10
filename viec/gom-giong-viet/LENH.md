@@ -43,6 +43,13 @@ Phong cách tác giả, tổng 15: hướng dùng được bao nhiêu nước đ
 
 Hiệu chuẩn: chấm thử ma trận lên 7 bài đã đăng; bài Linh không vào top thì sửa ma trận trước khi dùng.
 
+### Lượng ý vừa sức đọc (Linh 10/11)
+- Ngân sách ý theo độ dài: đo từ 7 bài đã đăng (số ý phụ / 1000 từ, số khái niệm mới mỗi đoạn, số liệu mỗi đoạn), đặt dải theo 7 bài, không tự bịa số.
+- Mỗi ý phụ phải có chỗ thở: một chất liệu (chuyện, ví dụ) + một câu "vậy thì sao" cho độc giả. Ý không có chỗ thở thì bỏ hoặc gộp.
+- Đoạn mang > 1 khái niệm mới hoặc > 2 con số thì cờ (luật VA "thả số liệu").
+- Kiểm nhắc lại: phiên mới đọc mù bài, tóm tắt ý lớn + các ý phụ; so với KHO-Y/luận đề. Nhắc thiếu hay lẫn ý thì bài đang quá tải. Người thật (Linh, Vân Anh) kiểm lần cuối.
+- Thứ tự cắt khi thừa: ý phụ điểm thấp nhất → khung lý thuyết → chất liệu trùng chức năng.
+
 ## Ràng buộc
 - Nguồn luật: `/mnt/project-files/BAN-GIAO-0911/WF06-bai-viet-hay.md` (bản chép sẵn ở `viec/gom-giong-viet/nguon/WF06.md`), WF06 + WF16 `NGHIEN-CUU.md` (chép ở `nguon/`).
 - Không đổi văn bộ cũ ngoài dòng `description` + một dòng "Đã gộp" đầu SKILL.md.
