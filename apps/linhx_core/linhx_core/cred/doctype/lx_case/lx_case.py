@@ -1,11 +1,35 @@
 """Controller DocType LX Case: kiểm tra tính hợp lệ và bảo vệ case chưa duyệt."""
 from __future__ import annotations
 
+import importlib
+import pathlib
+import sys
+
 from frappe.model.document import Document
 
-from linhx_core.cred import kho_case
+from linhx_core import dang_ky_module
 
 VAI_QUAN_TRI_CASE = ("System Manager", "LX Operator")
+_THU_MUC_APPS = pathlib.Path(__file__).resolve().parents[5]
+
+
+def _tra_ham_case(khoa: str):
+    """Tra hàm cung_cap của gói Agent Force qua dang_ky_module (không import trực tiếp gói ở tầng lõi)."""
+    ds_module = dang_ky_module.quet(_THU_MUC_APPS)
+    ds_duong = dang_ky_module.tim_ham(ds_module, "cung_cap", khoa)
+    if not ds_duong:
+        raise RuntimeError(f"Không tìm thấy hàm cung_cap cho khoá {khoa!r}")
+    duong_ham = ds_duong[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    duong_app = str(_THU_MUC_APPS / ten_app)
+    if duong_app not in sys.path and (_THU_MUC_APPS / ten_app).is_dir():
+        sys.path.insert(0, duong_app)
+    mod = importlib.import_module(ten_module)
+    ham = getattr(mod, ten_ham, None)
+    if not callable(ham):
+        raise AttributeError(f"Hàm cung_cap không gọi được: {duong_ham!r}")
+    return ham
 
 
 def _nem_loi_hop_le(thong_bao: str) -> None:
@@ -74,8 +98,9 @@ class LXCase(Document):
         }
 
     def validate(self) -> None:
+        kiem_case = _tra_ham_case("cred.kho_case.kiem_case")
         try:
-            chuan = kho_case.kiem_case(self._to_dict())
+            chuan = kiem_case(self._to_dict())
         except ValueError as exc:
             _nem_loi_hop_le(str(exc))
             return

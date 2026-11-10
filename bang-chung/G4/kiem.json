@@ -1,0 +1,130 @@
+{
+  "feature": "G4",
+  "luc": "2026-11-10T16:51:57+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g4.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "...                                                                      [100%]",
+    "3 passed in 0.34s"
+  ],
+  "pytest_day_du_returncode": 0,
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 29 items",
+    "",
+    "tests/nghiem-thu/test_g4.py::test_app_va_khai_bao PASSED                 [  3%]",
+    "tests/nghiem-thu/test_g4.py::test_da_chuyen_het PASSED                   [  6%]",
+    "tests/nghiem-thu/test_g4.py::test_kien_truc PASSED                       [ 10%]",
+    "tests/nghiem-thu/test_f1.py::test_pilot_moi_co_dung_7_buoc PASSED        [ 13%]",
+    "tests/nghiem-thu/test_f1.py::test_khong_di_buoc_sau_khi_buoc_truoc_chua_xong PASSED [ 17%]",
+    "tests/nghiem-thu/test_f1.py::test_qua_14_ngay_chua_xong_thi_vao_viec_cho PASSED [ 20%]",
+    "tests/nghiem-thu/test_f1.py::test_doctype_lx_pilot PASSED                [ 24%]",
+    "tests/nghiem-thu/test_f3.py::test_case_chua_duyet_khong_ra_api_cong_khai PASSED [ 27%]",
+    "tests/nghiem-thu/test_f3.py::test_trang_ifagent_dung_co_muc_case_lay_tu_api PASSED [ 31%]",
+    "tests/nghiem-thu/test_f3.py::test_commit_f3_khong_dung_trang_bu PASSED   [ 34%]",
+    "tests/nghiem-thu/test_l1.py::test_app_hien_co_khai_bao PASSED            [ 37%]",
+    "tests/nghiem-thu/test_l1.py::test_doc_va_xep_phu_thuoc PASSED            [ 41%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[thieu_dep] PASSED [ 44%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[vong] PASSED      [ 48%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[can_loi] PASSED   [ 51%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[lop_la] PASSED    [ 55%]",
+    "tests/nghiem-thu/test_l4.py::test_api_cong_khai PASSED                   [ 58%]",
+    "tests/nghiem-thu/test_l4.py::test_luat_ba_lop PASSED                     [ 62%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/agent/test_pilot.py::test_tao_pilot_kiem_tra_dau_vao_va_7_buoc PASSED [ 65%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/agent/test_pilot.py::test_hoan_thanh_buoc_khong_sua_dict_dau_vao_va_chan_bien PASSED [ 68%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/agent/test_pilot.py::test_viec_cho_xep_thu_tu_han_hoan_thanh_tang_dan PASSED [ 72%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/cred/test_kho_case.py::test_case_cong_khai_loc_chinh_xac_va_khong_sua_dau_vao PASSED [ 75%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/cred/test_kho_case.py::test_noi_dung_trang_bu_ghep_case_va_chong_trung PASSED [ 79%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/cred/test_kho_case.py::test_api_cred_danh_sach_case_va_noi_dung_ifagent PASSED [ 82%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/cred/test_kho_case.py::test_noi_dung_ifagent_khi_db_trong_khong_lay_case_tu_site_json PASSED [ 86%]",
+    "apps/linhx_goi_agentforce/linhx_goi_agentforce/cred/test_kho_case.py::test_kiem_case_bat_buoc_tieu_de_va_chi_so_khi_duyet PASSED [ 89%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_controller_lx_pilot_ke_thua_co_hoi_va_kiem_luat PASSED [ 93%]",
+    "apps/linhx_core/linhx_core/agent/test_pilot.py::test_phan_quyen_don_vi_chan_doc_ghi_sua_xoa_cheo_don_vi PASSED [ 96%]",
+    "apps/linhx_core/linhx_core/cred/test_kho_case.py::test_controller_lx_case_validate_va_has_permission PASSED [100%]",
+    "",
+    "============================= 29 passed in 9.75s =============================="
+  ],
+  "tep_log": "bang-chung/G4/kiem.log",
+  "module_json": {
+    "ten": "linhx_goi_agentforce",
+    "ban": "0.1.0",
+    "lop": "goi",
+    "can_loi": ">=0.3.0",
+    "phu_thuoc": [],
+    "nghe": {},
+    "cung_cap": {
+      "agent.pilot.bay_gio": "linhx_goi_agentforce.agent.pilot.bay_gio",
+      "agent.pilot.chuan_hoa_tg": "linhx_goi_agentforce.agent.pilot.chuan_hoa_tg",
+      "agent.pilot.tinh_han_hoan_thanh": "linhx_goi_agentforce.agent.pilot.tinh_han_hoan_thanh",
+      "agent.pilot.tao_cac_buoc_mac_dinh": "linhx_goi_agentforce.agent.pilot.tao_cac_buoc_mac_dinh",
+      "agent.pilot.doc_cac_buoc": "linhx_goi_agentforce.agent.pilot.doc_cac_buoc",
+      "agent.pilot.tao_pilot": "linhx_goi_agentforce.agent.pilot.tao_pilot",
+      "agent.pilot.hoan_thanh_buoc": "linhx_goi_agentforce.agent.pilot.hoan_thanh_buoc",
+      "agent.pilot.kiem_pilot": "linhx_goi_agentforce.agent.pilot.kiem_pilot",
+      "agent.pilot.viec_cho": "linhx_goi_agentforce.agent.pilot.viec_cho",
+      "cred.kho_case.la_da_duyet": "linhx_goi_agentforce.cred.kho_case.la_da_duyet",
+      "cred.kho_case.kiem_case": "linhx_goi_agentforce.cred.kho_case.kiem_case",
+      "cred.kho_case.case_cong_khai": "linhx_goi_agentforce.cred.kho_case.case_cong_khai",
+      "cred.kho_case.noi_dung_trang_bu": "linhx_goi_agentforce.cred.kho_case.noi_dung_trang_bu",
+      "cred.api_cred.danh_sach_case": "linhx_goi_agentforce.cred.api_cred.danh_sach_case",
+      "cred.api_cred.noi_dung_ifagent": "linhx_goi_agentforce.cred.api_cred.noi_dung_ifagent"
+    },
+    "giao": {}
+  },
+  "tra_ham_cung_cap": {
+    "agent.pilot.bay_gio": [
+      "linhx_goi_agentforce.agent.pilot.bay_gio"
+    ],
+    "agent.pilot.chuan_hoa_tg": [
+      "linhx_goi_agentforce.agent.pilot.chuan_hoa_tg"
+    ],
+    "agent.pilot.tinh_han_hoan_thanh": [
+      "linhx_goi_agentforce.agent.pilot.tinh_han_hoan_thanh"
+    ],
+    "agent.pilot.tao_cac_buoc_mac_dinh": [
+      "linhx_goi_agentforce.agent.pilot.tao_cac_buoc_mac_dinh"
+    ],
+    "agent.pilot.doc_cac_buoc": [
+      "linhx_goi_agentforce.agent.pilot.doc_cac_buoc"
+    ],
+    "agent.pilot.tao_pilot": [
+      "linhx_goi_agentforce.agent.pilot.tao_pilot"
+    ],
+    "agent.pilot.hoan_thanh_buoc": [
+      "linhx_goi_agentforce.agent.pilot.hoan_thanh_buoc"
+    ],
+    "agent.pilot.kiem_pilot": [
+      "linhx_goi_agentforce.agent.pilot.kiem_pilot"
+    ],
+    "agent.pilot.viec_cho": [
+      "linhx_goi_agentforce.agent.pilot.viec_cho"
+    ],
+    "cred.kho_case.la_da_duyet": [
+      "linhx_goi_agentforce.cred.kho_case.la_da_duyet"
+    ],
+    "cred.kho_case.kiem_case": [
+      "linhx_goi_agentforce.cred.kho_case.kiem_case"
+    ],
+    "cred.kho_case.case_cong_khai": [
+      "linhx_goi_agentforce.cred.kho_case.case_cong_khai"
+    ],
+    "cred.kho_case.noi_dung_trang_bu": [
+      "linhx_goi_agentforce.cred.kho_case.noi_dung_trang_bu"
+    ],
+    "cred.api_cred.danh_sach_case": [
+      "linhx_goi_agentforce.cred.api_cred.danh_sach_case"
+    ],
+    "cred.api_cred.noi_dung_ifagent": [
+      "linhx_goi_agentforce.cred.api_cred.noi_dung_ifagent"
+    ]
+  },
+  "da_xoa_file_cu": [
+    true,
+    true,
+    true
+  ]
+}

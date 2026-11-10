@@ -1,0 +1,26 @@
+{
+  "ten": "linhx_goi_agentforce",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "agent.pilot.bay_gio": "linhx_goi_agentforce.agent.pilot.bay_gio",
+    "agent.pilot.chuan_hoa_tg": "linhx_goi_agentforce.agent.pilot.chuan_hoa_tg",
+    "agent.pilot.tinh_han_hoan_thanh": "linhx_goi_agentforce.agent.pilot.tinh_han_hoan_thanh",
+    "agent.pilot.tao_cac_buoc_mac_dinh": "linhx_goi_agentforce.agent.pilot.tao_cac_buoc_mac_dinh",
+    "agent.pilot.doc_cac_buoc": "linhx_goi_agentforce.agent.pilot.doc_cac_buoc",
+    "agent.pilot.tao_pilot": "linhx_goi_agentforce.agent.pilot.tao_pilot",
+    "agent.pilot.hoan_thanh_buoc": "linhx_goi_agentforce.agent.pilot.hoan_thanh_buoc",
+    "agent.pilot.kiem_pilot": "linhx_goi_agentforce.agent.pilot.kiem_pilot",
+    "agent.pilot.viec_cho": "linhx_goi_agentforce.agent.pilot.viec_cho",
+    "cred.kho_case.la_da_duyet": "linhx_goi_agentforce.cred.kho_case.la_da_duyet",
+    "cred.kho_case.kiem_case": "linhx_goi_agentforce.cred.kho_case.kiem_case",
+    "cred.kho_case.case_cong_khai": "linhx_goi_agentforce.cred.kho_case.case_cong_khai",
+    "cred.kho_case.noi_dung_trang_bu": "linhx_goi_agentforce.cred.kho_case.noi_dung_trang_bu",
+    "cred.api_cred.danh_sach_case": "linhx_goi_agentforce.cred.api_cred.danh_sach_case",
+    "cred.api_cred.noi_dung_ifagent": "linhx_goi_agentforce.cred.api_cred.noi_dung_ifagent"
+  },
+  "giao": {}
+}
