@@ -48,8 +48,8 @@
         "gói không xoá cứng bản ghi"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k2a.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/K2a/kiem.json"
     },
     {
       "id": "K2b",
