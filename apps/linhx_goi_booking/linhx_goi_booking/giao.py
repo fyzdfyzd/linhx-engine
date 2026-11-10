@@ -4,8 +4,12 @@ Thuần Python ở mức nạp file (không `import frappe` ở đầu file); ch
 """
 from __future__ import annotations
 
+import logging
+
 from linhx_core.api import cap_quyen_dung, gia_hop_le
 from linhx_goi_booking import dat_lich
+
+logger = logging.getLogger(__name__)
 
 
 def _lay_frappe():
@@ -25,18 +29,17 @@ def _co_db(frappe_mod) -> bool:
         return False
 
 
-def _cap_quyen_an_toan(don: dict, goi: dict, kho_quyen: list[dict] | None) -> dict | None:
+def _cap_quyen_an_toan(don: dict, goi: dict, kho_quyen: list[dict] | None) -> dict:
+    """Cấp quyền dùng cho đơn: chỉ dùng kho bộ nhớ khi người gọi truyền `kho_quyen`;
+    khi `kho_quyen is None` bắt buộc gọi thẳng `cap_quyen_dung(don, goi)` và để lỗi nổi lên.
+    """
     if kho_quyen is not None:
-        return cap_quyen_dung(don, goi, kho=kho_quyen)
-    frappe_mod = _lay_frappe()
-    if _co_db(frappe_mod):
-        try:
-            kq = cap_quyen_dung(don, goi)
-            if kq is not None:
-                return kq
-        except Exception:
-            pass
-    return cap_quyen_dung(don, goi, kho=[])
+        kq = cap_quyen_dung(don, goi, kho=kho_quyen)
+    else:
+        kq = cap_quyen_dung(don, goi)
+    if kq is None:
+        raise ValueError("Không cấp được quyền dùng cho đơn đặt lịch")
+    return kq
 
 
 def _luu_lich_db_neu_co(
@@ -64,8 +67,13 @@ def _luu_lich_db_neu_co(
             )
             if da_co and isinstance(da_co[0], dict):
                 return dict(da_co[0])
-        except Exception:
-            pass
+        except Exception as exc:
+            logger.warning(
+                "Lỗi kiểm tra lịch gọi đã giao của đơn %s: %s",
+                ma_don,
+                type(exc).__name__,
+            )
+            raise
 
     ds_hien_co: list[dict] = []
     if db is not None and callable(getattr(db, "sql", None)):
@@ -83,8 +91,14 @@ def _luu_lich_db_neu_co(
             )
             if isinstance(rows, (list, tuple)):
                 ds_hien_co = [dict(r) for r in rows if isinstance(r, dict)]
-        except Exception:
-            ds_hien_co = []
+        except Exception as exc:
+            logger.warning(
+                "Lỗi truy vấn FOR UPDATE lịch hiện có của %s khi giao đơn %s: %s",
+                phu_trach,
+                ma_don,
+                type(exc).__name__,
+            )
+            raise
     elif callable(get_all_fn):
         try:
             rows = get_all_fn(
@@ -95,8 +109,14 @@ def _luu_lich_db_neu_co(
             )
             if isinstance(rows, (list, tuple)):
                 ds_hien_co = [dict(r) for r in rows if isinstance(r, dict)]
-        except Exception:
-            ds_hien_co = []
+        except Exception as exc:
+            logger.warning(
+                "Lỗi get_all lịch hiện có của %s khi giao đơn %s: %s",
+                phu_trach,
+                ma_don,
+                type(exc).__name__,
+            )
+            raise
 
     goi_dat: dict = {
         "nguoi": nguoi,
@@ -150,9 +170,13 @@ def giao(
     """Hàm giao hàng của `linhx_goi_booking` cho `loai_giao == 'lich'`.
 
     - Kiểm tra đơn đã thanh toán (`trang_thai == 'da_tra'`) và đạt giá sàn của gói (`gia_hop_le`).
-    - Cấp quyền dùng (`LX Quyen Dung`) qua `linhx_core.api.cap_quyen_dung`.
-    - Nếu đơn kèm thông tin đặt lịch (`nguoi`, `phu_trach`, `bat_dau`), kiểm giờ làm việc (8–18h giờ VN)
-      và kiểm trùng giờ qua `dat_lich.dat_lich` rồi tạo lịch gọi.
+    - Cấp quyền dùng (`LX Quyen Dung`) qua `linhx_core.api.cap_quyen_dung`:
+      khi `kho_quyen is None`, bắt buộc cấp quyền thật trên DB và để lỗi nổi lên (không tạo kho tạm giả).
+    - Nếu đơn kèm thông tin đặt lịch (`nguoi`, `phu_trach`, `bat_dau`):
+      + Khi có `ds_lich` hoặc có kết nối Frappe DB: kiểm giờ làm việc (8–18h giờ VN), kiểm trùng giờ
+        qua `dat_lich.dat_lich`, lưu lịch và trả `trang_thai == 'da_dat_lich'`.
+      + Khi chạy thuần Python không có Frappe DB và không truyền `ds_lich`: chỉ kiểm giờ làm việc
+        trên danh sách rỗng (chưa có kho lịch để kiểm trùng giờ và lưu DB) và trả `trang_thai == 'tam_tinh_lich'`.
     """
     if not isinstance(don, dict):
         raise ValueError("don phải là dict")
@@ -196,6 +220,7 @@ def giao(
     don_vi = str(don.get("don_vi") or goi.get("don_vi") or "").strip()
 
     lich_tao: dict | None = None
+    da_kiem_va_luu_lich = False
     if bat_dau is not None and str(bat_dau).strip():
         if not nguoi:
             raise ValueError("Đơn có bat_dau nhưng thiếu mã khách hàng (nguoi)")
@@ -217,6 +242,7 @@ def giao(
             moi = dat_lich.dat_lich(ds_lich, goi_dat)
             ds_lich[:] = moi
             lich_tao = dict(moi[-1])
+            da_kiem_va_luu_lich = True
         else:
             frappe_mod = _lay_frappe()
             if _co_db(frappe_mod):
@@ -231,6 +257,7 @@ def giao(
                     co_hoi=co_hoi,
                     don_vi=don_vi,
                 )
+                da_kiem_va_luu_lich = True
             else:
                 moi = dat_lich.dat_lich(
                     [],
@@ -243,6 +270,14 @@ def giao(
                     },
                 )
                 lich_tao = dict(moi[-1])
+                da_kiem_va_luu_lich = False
+
+    if lich_tao is None:
+        trang_thai = "san_sang_dat_lich"
+    elif da_kiem_va_luu_lich:
+        trang_thai = "da_dat_lich"
+    else:
+        trang_thai = "tam_tinh_lich"
 
     return {
         "ok": True,
@@ -250,7 +285,7 @@ def giao(
         "don": ma_don,
         "goi": ma_goi,
         "nguoi": nguoi,
-        "trang_thai": "da_dat_lich" if lich_tao is not None else "san_sang_dat_lich",
+        "trang_thai": trang_thai,
         "quyen_dung": quyen,
         "lich": lich_tao,
     }

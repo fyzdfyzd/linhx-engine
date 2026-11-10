@@ -1,5 +1,7 @@
 """Kiểm thử DocType và controller `LX Lich Goi` trong `linhx_core` (F2 / G3):
 kiểm tra quyền đơn vị và tra hàm kiểm giờ làm / trùng giờ qua `dang_ky_module`.
+Note: các ca kiểm thử logic đặt lịch (`dat_lich`), endpoint `api_booking` và giao hàng (`giao`)
+đã chuyển sang `apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py`.
 """
 from __future__ import annotations
 
@@ -12,9 +14,10 @@ from unittest.mock import patch
 
 import pytest
 
-GOC_APP = pathlib.Path(__file__).resolve().parents[2]
-if str(GOC_APP) not in sys.path:
-    sys.path.insert(0, str(GOC_APP))
+GOC_APPS = pathlib.Path(__file__).resolve().parents[3]
+for p in (GOC_APPS / "linhx_core", GOC_APPS / "linhx_goi_booking"):
+    if str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
 
 def test_doctype_lx_lich_goi_cau_truc():
@@ -81,6 +84,8 @@ def test_controller_lx_lich_goi_goi_qua_dang_ky_module():
             return dict(kho_nguoi[name]) if as_dict else kho_nguoi[name].get(fieldname)
         if doctype == "LX Co Hoi" and name in kho_co_hoi:
             return dict(kho_co_hoi[name]) if as_dict else kho_co_hoi[name].get(fieldname)
+        if doctype == "LX Lich Goi" and name == "LG-001":
+            return dict(kho_lich[0]) if as_dict else kho_lich[0].get(fieldname)
         return None
 
     fake_frappe = types.ModuleType("frappe")
@@ -88,7 +93,7 @@ def test_controller_lx_lich_goi_goi_qua_dang_ky_module():
     fake_frappe.PermissionError = FakePermissionError
     fake_frappe.throw = fake_throw
     fake_frappe.get_all = fake_get_all
-    fake_frappe.get_roles = lambda u=None: ["LX Nhan Vien"]
+    fake_frappe.get_roles = lambda u=None: ["System Manager"] if u == "Administrator" else ["LX Nhan Vien"]
     fake_frappe.session = types.SimpleNamespace(user="sale1@vd.vn")
     fake_frappe.db = types.SimpleNamespace(
         get_value=fake_get_value,
@@ -135,6 +140,11 @@ def test_controller_lx_lich_goi_goi_qua_dang_ky_module():
             assert doc_hop_le.has_permission("read", user="sale1@vd.vn") is True
             assert doc_hop_le.has_permission("read", user="sale2@vd.vn") is False
 
+            # Điều kiện lọc SQL theo đơn vị
+            cond_s1 = mod_lg.frappe_permission_query_conditions(user="sale1@vd.vn")
+            assert "DV-A" in cond_s1
+            assert mod_lg.frappe_permission_query_conditions(user="Administrator") == ""
+
             # Trùng giờ với LG-001 (09:00 - 09:30) -> bị chặn
             doc_trung = mod_lg.LXLichGoi(
                 {
@@ -161,6 +171,21 @@ def test_controller_lx_lich_goi_goi_qua_dang_ky_module():
             )
             with pytest.raises(FakeValidationError):
                 doc_sai_co_hoi.before_insert()
+
+            # Không được đổi người đặt của lịch đã tạo
+            doc_sua_nguoi = mod_lg.LXLichGoi(
+                {
+                    "name": "LG-001",
+                    "nguoi": "NG-02",
+                    "phu_trach": "sale1@vd.vn",
+                    "don_vi": "DV-A",
+                    "bat_dau": "2026-11-10 16:00:00",
+                    "phut": 30,
+                    "trang_thai": "cho_goi",
+                }
+            )
+            with pytest.raises((FakeValidationError, FakePermissionError)):
+                doc_sua_nguoi.validate()
         finally:
             sys.modules.pop(ten_mod, None)
             from linhx_core.booking.doctype import lx_lich_goi as pkg_lg

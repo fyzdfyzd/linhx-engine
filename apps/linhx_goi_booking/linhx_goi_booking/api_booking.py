@@ -1,6 +1,17 @@
 """API đặt lịch gọi tư vấn từ Trang BU (allow_guest=True, có giới hạn tần suất) và xem lịch chờ gọi của người phụ trách.
 
 Thuần Python ở mức nạp file (không `import frappe` ở đầu file); chỉ giao tiếp với lõi qua `linhx_core.api`.
+
+Ghi chú kiến trúc (G3):
+- Theo luật 3 lớp (`_dot3.kiem_kien_truc`), app lớp `goi` (`linhx_goi_booking`) chỉ được phép import
+  `linhx_core.api` và không được import trực tiếp `linhx_core.crm.*`.
+- Đồng thời phạm vi vùng được sửa của phiếu G3 không bao gồm `apps/linhx_core/linhx_core/api.py`.
+- Vì vậy các hàm nội bộ phục vụ kiểm quyền đơn vị, gộp trùng Người, đối chiếu kênh OTP/chống đoán hồ sơ
+  và kiểm rút đồng ý (`_tim_nguoi_trung`, `_cac_dang_dien_thoai`, `_doc_nguoi_db`, `_nguoi_so_huu_kenh`,
+  `_chon_kenh_otp_cho_nguoi`, `_lay_so_dong_y_hien_co`, `_da_rut_dong_y`, `_loc_ung_vien_crm`,
+  `_la_user_mien`, `_lay_don_vi_cua_user`, `_chon_phu_trach_it_viec`) được giữ tại module này,
+  uỷ quyền tối đa qua các hàm mặt cắt `linhx_core.api` và được kiểm thử đối chiếu trực tiếp (parity test)
+  với bản gốc trong `linhx_core.crm` tại `test_goi_booking.py`.
 """
 from __future__ import annotations
 
@@ -702,7 +713,21 @@ def _kiem_tra_dau_vao(du_lieu: dict) -> tuple[str, str, str, str]:
     return ho_ten, dien_thoai, email, nhu_cau
 
 
+TRUONG_NGUOI_T1 = (
+    "ho_ten",
+    "dien_thoai",
+    "email",
+    "zalo",
+    "nguon",
+    "tang_pheu",
+    "t1_tong",
+    "t1_muc",
+    "lich_su_t1",
+)
+
+
 def _cac_dang_dien_thoai(dien_thoai_raw: str, dt_chuan: str) -> list[str]:
+    """Sinh các dạng biểu diễn SĐT (đồng bộ với `linhx_core.crm.api_form._cac_dang_dien_thoai`)."""
     if not dt_chuan:
         return []
     cac_dang = {dt_chuan, f"+{dt_chuan}"}
@@ -726,7 +751,22 @@ def _cac_dang_dien_thoai(dien_thoai_raw: str, dt_chuan: str) -> list[str]:
     return sorted(cac_dang)
 
 
+def _chuan_ban_ghi_nguoi(u: dict) -> dict:
+    ban_sao = dict(u)
+    raw_ls = ban_sao.get("lich_su_t1")
+    if isinstance(raw_ls, str) and raw_ls.strip():
+        try:
+            da_parse = json.loads(raw_ls)
+            ban_sao["lich_su_t1"] = da_parse if isinstance(da_parse, list) else []
+        except ValueError:
+            ban_sao["lich_su_t1"] = []
+    elif not isinstance(raw_ls, list):
+        ban_sao["lich_su_t1"] = []
+    return ban_sao
+
+
 def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
+    """Truy vấn các bản ghi LX Nguoi khớp khoá liên hệ chuẩn hoá (đồng bộ với `linhx_core.crm.api_form._tim_nguoi_trung`)."""
     if not isinstance(du_lieu, dict):
         return []
     frappe = _lay_frappe()
@@ -753,20 +793,9 @@ def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
         cac_zl = sorted({zl_chuan, zl_raw} if zl_raw else {zl_chuan})
         or_filters.append(["LX Nguoi", "zalo", "in", cac_zl])
 
-    truong_truy_van = [
-        "name",
-        "creation",
-        "ho_ten",
-        "dien_thoai",
-        "email",
-        "zalo",
-        "don_vi",
-        "nguon",
-        "tang_pheu",
-    ]
     ds_ung_vien = frappe.get_all(
         "LX Nguoi",
-        fields=truong_truy_van,
+        fields=["name", "creation", *TRUONG_NGUOI_T1],
         or_filters=or_filters,
         order_by="creation asc",
         limit=GIOI_HAN_TRUY_VAN_NGUOI,
@@ -786,7 +815,7 @@ def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
         if isinstance(u, dict):
             khop = khoa_gop(u) & khoa_tim
             if khop:
-                ket_qua.append(dict(u))
+                ket_qua.append(_chuan_ban_ghi_nguoi(u))
                 ten_u = str(u.get("name") or "").strip()
                 if ten_u:
                     da_co_ten.add(ten_u)
@@ -797,7 +826,7 @@ def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
         duoi_3 = dt_chuan[-3:]
         ds_phu = frappe.get_all(
             "LX Nguoi",
-            fields=truong_truy_van,
+            fields=["name", "creation", *TRUONG_NGUOI_T1],
             or_filters=[["LX Nguoi", "dien_thoai", "like", f"%{duoi_3}%"]],
             order_by="creation asc",
             limit=GIOI_HAN_TRUY_VAN_NGUOI,
@@ -809,7 +838,7 @@ def _tim_nguoi_trung(du_lieu: dict) -> list[dict]:
                 if ten_u and ten_u in da_co_ten:
                     continue
                 if khoa_gop(u) & khoa_tim:
-                    ket_qua.append(dict(u))
+                    ket_qua.append(_chuan_ban_ghi_nguoi(u))
                     co_them_phu = True
                     if ten_u:
                         da_co_ten.add(ten_u)
@@ -848,22 +877,36 @@ def _doc_nguoi_db(ma_nguoi: str) -> dict | None:
     return None
 
 
+def _chuan_kenh(kenh_raw: object) -> str:
+    """Chuẩn hoá kênh xác nhận (đồng bộ với `linhx_core.crm.xac_minh_marketing._chuan_kenh`)."""
+    raw = str(kenh_raw or "").strip()
+    if not raw:
+        return ""
+    if "@" in raw:
+        return chuan_hoa_email(raw) or raw.lower()
+    dt = chuan_hoa_dien_thoai(raw)
+    if dt:
+        return dt
+    return raw.lower()
+
+
 def _nguoi_so_huu_kenh(nguoi_dict: dict | None, kenh_chuan: str) -> bool:
+    """Kiểm tra hồ sơ LX Nguoi có thực sự sở hữu kênh liên hệ `kenh_chuan` hay không
+    (đồng bộ với `linhx_core.crm.api_form._nguoi_so_huu_kenh`).
+    """
     if not isinstance(nguoi_dict, dict):
         return False
-    kenh = str(kenh_chuan or "").strip()
+    kenh = _chuan_kenh(kenh_chuan)
     if not kenh:
         return False
     em_db = chuan_hoa_email(nguoi_dict.get("email"))
     dt_db = chuan_hoa_dien_thoai(nguoi_dict.get("dien_thoai"))
     zl_db = chuan_hoa_zalo(nguoi_dict.get("zalo"))
     if "@" in kenh:
-        return bool(em_db and chuan_hoa_email(kenh) == em_db)
-    dt_k = chuan_hoa_dien_thoai(kenh)
-    if dt_db and (kenh == dt_db or (dt_k and dt_k == dt_db)):
+        return bool(em_db and kenh == em_db)
+    if dt_db and kenh == dt_db:
         return True
-    zl_k = chuan_hoa_zalo(kenh)
-    if zl_db and (kenh == zl_db or (zl_k and zl_k == zl_db)):
+    if zl_db and kenh == zl_db:
         return True
     return False
 
@@ -875,6 +918,9 @@ def _chon_kenh_otp_cho_nguoi(
     dt_chuan: str = "",
     zl_chuan: str = "",
 ) -> str:
+    """Chọn kênh xác minh cho `nguoi_db`: chỉ chấp nhận khi mọi kênh liên hệ gửi lên đều khớp
+    đúng kênh đã lưu trên `nguoi_db` (chống kẻ tấn công ghép kênh của nạn nhân với kênh lạ).
+    """
     if not isinstance(nguoi_db, dict):
         return ""
     for kenh_gui in (em_chuan, dt_chuan, zl_chuan):
@@ -887,6 +933,9 @@ def _chon_kenh_otp_cho_nguoi(
 
 
 def _lay_so_dong_y_hien_co(ds_nguoi_cu: list[dict] | str) -> list[dict]:
+    """Đọc toàn bộ sổ đồng ý của các bản ghi LX Nguoi khớp khoá liên hệ
+    (đồng bộ với `linhx_core.crm.api_form._lay_so_dong_y_hien_co`).
+    """
     frappe = _lay_frappe()
     if frappe is None or not callable(getattr(frappe, "get_all", None)):
         return []
@@ -901,31 +950,29 @@ def _lay_so_dong_y_hien_co(ds_nguoi_cu: list[dict] | str) -> list[dict]:
                     cac_ma.append(m)
     if not cac_ma:
         return []
-
     ma_chinh = cac_ma[0]
-    bo_loc_nguoi: object = ma_chinh if len(cac_ma) == 1 else ["in", cac_ma]
-    ds_raw = frappe.get_all(
-        "LX Dong Y",
-        filters={"nguoi": bo_loc_nguoi},
-        fields=["nguoi", "muc_dich", "dong_y", "luc", "nguon", "trang_thai"],
-        order_by="luc asc, creation asc",
-    )
-    so: list[dict] = []
-    for d in ds_raw or []:
-        if not isinstance(d, dict):
-            continue
-        dong = {
-            "nguoi": ma_chinh,
-            "muc_dich": d.get("muc_dich"),
-            "dong_y": bool(int(d.get("dong_y") or 0)),
-            "luc": str(d.get("luc") or ""),
-            "nguon": str(d.get("nguon") or ""),
-        }
-        tt = str(d.get("trang_thai") or "").strip()
-        if tt:
-            dong["trang_thai"] = tt
-        so.append(dong)
-    return so
+    ket_qua: list[dict] = []
+    for ma in cac_ma:
+        try:
+            ds = frappe.get_all(
+                "LX Dong Y",
+                filters={"nguoi": ma},
+                fields=["name", "nguoi", "muc_dich", "dong_y", "trang_thai", "luc", "nguon"],
+                order_by="luc asc, creation asc",
+            )
+            for x in ds or []:
+                if isinstance(x, dict):
+                    ban_sao = dict(x)
+                    ban_sao["nguoi"] = ma_chinh
+                    ket_qua.append(ban_sao)
+        except Exception as exc:
+            logger.warning(
+                "Không đọc được sổ đồng ý hiện có của %s: %s",
+                _che_kenh(ma),
+                type(exc).__name__,
+            )
+    ket_qua.sort(key=lambda d: str(d.get("luc") or ""))
+    return ket_qua
 
 
 def _da_rut_dong_y(

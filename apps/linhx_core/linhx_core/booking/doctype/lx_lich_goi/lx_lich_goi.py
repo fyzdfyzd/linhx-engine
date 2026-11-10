@@ -3,8 +3,6 @@ from __future__ import annotations
 
 import importlib
 import logging
-import pathlib
-import sys
 
 from frappe.model.document import Document
 
@@ -20,25 +18,21 @@ from linhx_core.crm.quyen_don_vi import (
 
 logger = logging.getLogger(__name__)
 
-_THU_MUC_APPS = pathlib.Path(__file__).resolve().parents[5]
-PHUT_MAC_DINH = 30
-DINH_DANG_TG = "%Y-%m-%d %H:%M:%S"
-TRANG_THAI_LICH = ("cho_goi", "da_goi", "huy")
 
-
-def _goi_ham_booking(khoa: str, *args, **kwargs):
-    """Tra hàm cung_cap của gói đặt lịch qua dang_ky_module và gọi động."""
-    ds_duong = tim_ham("cung_cap", khoa, thu_muc_apps=_THU_MUC_APPS)
+def _lay_module_va_ham_booking(khoa: str):
+    """Tra đường hàm cung_cap của gói đặt lịch qua dang_ky_module và nạp module."""
+    ds_duong = tim_ham("cung_cap", khoa)
     if not ds_duong:
         raise RuntimeError(f"Chưa đăng ký hàm cung_cap cho '{khoa}' trong module.json")
     duong_ham = ds_duong[0]
     ten_module, ten_ham = duong_ham.rsplit(".", 1)
-    ten_app = ten_module.split(".")[0]
-    thu_muc_app = _THU_MUC_APPS / ten_app
-    if thu_muc_app.is_dir() and str(thu_muc_app) not in sys.path:
-        sys.path.insert(0, str(thu_muc_app))
     mod = importlib.import_module(ten_module)
-    ham = getattr(mod, ten_ham)
+    return mod, getattr(mod, ten_ham)
+
+
+def _goi_ham_booking(khoa: str, *args, **kwargs):
+    """Tra hàm cung_cap của gói đặt lịch qua dang_ky_module và gọi động."""
+    _, ham = _lay_module_va_ham_booking(khoa)
     return ham(*args, **kwargs)
 
 
@@ -419,23 +413,27 @@ class LXLichGoi(Document):
             _nem_loi_hop_le("Lịch gọi thiếu người phụ trách (phu_trach)")
         self.phu_trach = pt
 
+        mod_dl, ham_kiem_gio = _lay_module_va_ham_booking("booking.kiem_gio_lam_viec")
+        trang_thai_lich = getattr(mod_dl, "TRANG_THAI_LICH", ("cho_goi", "da_goi", "huy"))
+        phut_mac_dinh = getattr(mod_dl, "PHUT_MAC_DINH", 30)
+        dinh_dang_tg = getattr(mod_dl, "DINH_DANG_TG", "%Y-%m-%d %H:%M:%S")
+
         tt = str(getattr(self, "trang_thai", None) or "cho_goi").strip()
-        if tt not in TRANG_THAI_LICH:
+        if tt not in trang_thai_lich:
             _nem_loi_hop_le(f"Trạng thái lịch gọi không hợp lệ: {tt!r}")
         self.trang_thai = tt
 
         try:
-            dt_bd, dt_kt, phut_int = _goi_ham_booking(
-                "booking.kiem_gio_lam_viec",
+            dt_bd, dt_kt, phut_int = ham_kiem_gio(
                 getattr(self, "bat_dau", None),
-                getattr(self, "phut", PHUT_MAC_DINH),
+                getattr(self, "phut", phut_mac_dinh),
             )
         except ValueError as exc:
             _nem_loi_hop_le(str(exc))
             return
 
-        self.bat_dau = dt_bd.strftime(DINH_DANG_TG)
-        self.ket_thuc = dt_kt.strftime(DINH_DANG_TG)
+        self.bat_dau = dt_bd.strftime(dinh_dang_tg)
+        self.ket_thuc = dt_kt.strftime(dinh_dang_tg)
         self.phut = phut_int
 
         if self.trang_thai != "huy":
