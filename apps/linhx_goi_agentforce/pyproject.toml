@@ -1,0 +1,18 @@
+[project]
+name = "linhx_goi_agentforce"
+authors = [{ name = "LINHX", email = "dev@linhx.vn" }]
+description = "LINHX ENGINE: gói Agent Force (pilot và kho case có số)"
+requires-python = ">=3.10"
+readme = "README.md"
+version = "0.1.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["linhx_goi_agentforce*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.html", "*.txt"]
