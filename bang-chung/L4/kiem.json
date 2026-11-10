@@ -1,0 +1,89 @@
+{
+  "feature": "L4",
+  "luc": "2026-11-10T12:10:52+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l4.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "..                                                                       [100%]",
+    "2 passed in 12.01s"
+  ],
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 2 items",
+    "",
+    "tests/nghiem-thu/test_l4.py::test_api_cong_khai PASSED                   [ 50%]",
+    "tests/nghiem-thu/test_l4.py::test_luat_ba_lop PASSED                     [100%]",
+    "",
+    "============================== 2 passed in 0.38s =============================="
+  ],
+  "tep_log": "bang-chung/L4/kiem.log",
+  "api_cong_khai": [
+    "phat",
+    "tim_ham",
+    "tim_ham_trong_danh_sach",
+    "tao_nguoi",
+    "ghi_dong_y",
+    "tao_don",
+    "danh_dau_da_tra",
+    "cap_quyen_dung",
+    "doc_cau_hinh",
+    "gia_hop_le",
+    "module_bat",
+    "doctype_bi_an",
+    "khoa_gop",
+    "gop_nguoi",
+    "chuan_hoa_dien_thoai",
+    "chuan_hoa_email",
+    "chuan_hoa_zalo",
+    "hieu_luc_dong_y"
+  ],
+  "tat_ca_goi_duoc": true,
+  "khong_import_frappe_dau_file": true,
+  "apps_kiem_kien_truc": [
+    {
+      "ten": "linhx_core",
+      "lop": "loi",
+      "ban": "0.3.0",
+      "imports_linhx": [
+        "linhx_core",
+        "linhx_core.agent",
+        "linhx_core.booking",
+        "linhx_core.booking.doctype.lx_lich_goi.lx_lich_goi",
+        "linhx_core.co_module",
+        "linhx_core.cred",
+        "linhx_core.cred.kho_case",
+        "linhx_core.crm",
+        "linhx_core.crm.api_form",
+        "linhx_core.crm.doctype.lx_co_hoi.lx_co_hoi",
+        "linhx_core.crm.quyen_don_vi",
+        "linhx_core.cts_adapter",
+        "linhx_core.hooks",
+        "linhx_core.id",
+        "linhx_core.linhx_core.doctype.lx_nhat_ky_truy_cap.lx_nhat_ky_truy_cap",
+        "linhx_core.ops",
+        "linhx_core.ops.keo_phieu",
+        "linhx_core.ops.nop_phieu",
+        "linhx_core.pay",
+        "linhx_core.pay.ban_bao_cao",
+        "linhx_core.pay.quyen_dung",
+        "linhx_core.pay.sau_tra",
+        "linhx_core.pay.sepay",
+        "linhx_core.pay.so_s1a"
+      ]
+    },
+    {
+      "ten": "linhx_worker",
+      "lop": "loi",
+      "ban": "0.3.0",
+      "imports_linhx": [
+        "linhx_core.pay.sau_tra",
+        "linhx_worker",
+        "linhx_worker.linhx_worker.doctype.lx_job.lx_job"
+      ]
+    }
+  ]
+}
