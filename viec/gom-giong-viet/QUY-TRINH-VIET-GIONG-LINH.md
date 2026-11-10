@@ -50,7 +50,7 @@ Xong thì ghi 1 dòng vào NHAT-KY.md: giờ bắt đầu, giờ xong, file đã
 | Ứng viên | Không tiêu đề kiểu "X không biến mất, nó chuyển nhà"; tránh cụm dịch văn Mỹ; thuật ngữ giải nghĩa lần đầu; không kết có hậu gọn gàng. |
 
 **L5. Kho chung là vault của Linh**, không lập kho mới. Vault hiện ở 3 bản rời trên máy cty, tìm cả 3:
-- `D:\LINHX\LAB\LAB070-VAULT-MEDIUM` (vault.db FTS5, 3.578 bài, câu trích có kiểm)
+- `D:\LINHX\LAB\LAB070-VAULT-MEDIUM` (vault Medium, ĐANG BẮT ĐẦU LÀM 10/11: dùng phần đã có; chưa có gì liên quan thì ghi "vault chưa có" vào NHAT-KY rồi đi tiếp, không chờ)
 - `D:\LINHX\IDEA\CONTENT_VAULT` (có `_DIGEST`, nugget)
 - `D:\@WF\TOOL\CONTENT_VAULT`
 Bài cũ của Linh: 7 bài mẫu ở trên.
