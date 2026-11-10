@@ -7,7 +7,6 @@ import frappe
 from frappe.rate_limiter import rate_limit
 
 from linhx_core.api import tim_ham
-from linhx_core.pay import vietqr
 
 
 def _nap_ham_cung_cap(khoa: str):
@@ -107,7 +106,8 @@ def tao_don(
     goi_goc = next((x for x in ds if x.get("ma") == ma_goi or x.get("name") == ma_goi), None) or {"ma": ma_goi}
     goi_hop_le = {**goi_goc, "gia": tien}
     ma_don = f"DON-{frappe.generate_hash(length=8).upper()}"
-    don = vietqr.tao_don(goi_hop_le, nguoi="", ngan_hang=_ngan_hang(), ma_don=ma_don)
+    tao_don_vietqr = _nap_ham_cung_cap("vn.tao_don")
+    don = tao_don_vietqr(goi_hop_le, nguoi="", ngan_hang=_ngan_hang(), ma_don=ma_don)
 
     doc = frappe.get_doc(
         {

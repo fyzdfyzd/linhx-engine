@@ -1,19 +1,52 @@
-"""API nhận webhook SePay cho module pay."""
+"""API nhận webhook SePay cho adapter Việt Nam (linhx_vn)."""
 from __future__ import annotations
 
 import json
 import re
 
-import frappe
+try:
+	from linhx_core.api import danh_dau_da_tra
+except ModuleNotFoundError:
+	danh_dau_da_tra = None
 
-from linhx_core.pay.sepay import chuan_noi_dung, tim_cac_don_khop, xac_thuc_khoa, xu_ly
+from linhx_vn.pay.sepay import chuan_noi_dung, tim_cac_don_khop, xac_thuc_khoa, xu_ly
 
-DUONG_WEBHOOK = "/api/method/linhx_core.pay.api_sepay.webhook"
-CMD_WEBHOOK = "linhx_core.pay.api_sepay.webhook"
+DUONG_WEBHOOK = "/api/method/linhx_vn.pay.api_sepay.webhook"
+CMD_WEBHOOK = "linhx_vn.pay.api_sepay.webhook"
+CAC_DUONG_WEBHOOK = (
+	DUONG_WEBHOOK,
+	"/api/method/linhx_core.pay.api_sepay.webhook",
+)
+CAC_CMD_WEBHOOK = (
+	CMD_WEBHOOK,
+	"linhx_core.pay.api_sepay.webhook",
+)
+
+
+def _lay_frappe():
+	try:
+		import frappe
+	except ImportError:
+		return None
+	return frappe
+
+
+def _whitelist(*, allow_guest: bool = False, methods: list[str] | None = None):
+	def _trang_tri(fn):
+		frappe = _lay_frappe()
+		if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+			return frappe.whitelist(allow_guest=allow_guest, methods=methods)(fn)
+		return fn
+
+	return _trang_tri
 
 
 def _doc_sepay_khoa() -> str:
-	khoa = getattr(frappe.conf, "sepay_khoa", None) or frappe.conf.get("sepay_khoa")
+	frappe = _lay_frappe()
+	if frappe is None:
+		return ""
+	conf = getattr(frappe, "conf", None)
+	khoa = getattr(conf, "sepay_khoa", None) or (conf.get("sepay_khoa") if callable(getattr(conf, "get", None)) else None)
 	try:
 		duong = frappe.get_site_path("site_config.json")
 		with open(duong, encoding="utf-8") as f:
@@ -26,19 +59,23 @@ def _doc_sepay_khoa() -> str:
 
 
 def _la_request_webhook() -> bool:
-	req = getattr(frappe.local, "request", None) or getattr(frappe, "request", None)
+	frappe = _lay_frappe()
+	if frappe is None:
+		return False
+	req = getattr(getattr(frappe, "local", None), "request", None) or getattr(frappe, "request", None)
 	duong = (getattr(req, "path", "") or "").rstrip("/")
-	if duong == DUONG_WEBHOOK:
+	if duong in CAC_DUONG_WEBHOOK:
 		return True
-	form_dict = getattr(frappe.local, "form_dict", None)
-	if isinstance(form_dict, dict) and form_dict.get("cmd") == CMD_WEBHOOK:
+	form_dict = getattr(getattr(frappe, "local", None), "form_dict", None)
+	if isinstance(form_dict, dict) and form_dict.get("cmd") in CAC_CMD_WEBHOOK:
 		return True
 	return False
 
 
 def xac_thuc_sepay_hook() -> None:
 	"""Hook xác thực header 'Authorization: Apikey <sepay_khoa>' chỉ cho đường dẫn webhook SePay."""
-	if not _la_request_webhook():
+	frappe = _lay_frappe()
+	if frappe is None or not _la_request_webhook():
 		return
 	auth = frappe.get_request_header("Authorization")
 	if not isinstance(auth, str) or not auth.strip().lower().startswith("apikey "):
@@ -51,7 +88,8 @@ def xac_thuc_sepay_hook() -> None:
 
 def _doc_payload(kwargs: dict) -> dict:
 	"""Đọc payload JSON từ body của request HTTP; chỉ dùng `kwargs` khi gọi trực tiếp không qua HTTP."""
-	req = getattr(frappe, "request", None)
+	frappe = _lay_frappe()
+	req = getattr(frappe, "request", None) if frappe is not None else None
 	if req is not None:
 		try:
 			du_lieu = req.get_json(silent=True)
@@ -73,6 +111,9 @@ def _doc_payload(kwargs: dict) -> dict:
 
 def _tim_ds_don_ung_vien_db(noi_dung_gop: str) -> list[dict]:
 	"""Tìm ứng viên `LX Don` trong DB: lọc theo index `noi_dung_ck` trước, dự phòng lấy đơn `cho_tra`."""
+	frappe = _lay_frappe()
+	if frappe is None:
+		return []
 	fields = ["name", "ma", "so_tien", "trang_thai", "noi_dung_ck", "tx_id"]
 	nd_chuan = chuan_noi_dung(noi_dung_gop)
 	if not nd_chuan:
@@ -138,6 +179,9 @@ def _rut_gon_payload_nhat_ky(payload: dict) -> dict:
 
 def _ghi_nhat_ky_sepay(tx_id: str, payload: dict, kho: dict, ket_qua: dict) -> None:
 	"""Lưu giao dịch webhook SePay (đã trả, lệch hoặc bỏ qua) vào DocType `LX Nhat Ky Sepay`."""
+	frappe = _lay_frappe()
+	if frappe is None:
+		return
 	if ket_qua.get("bo_qua"):
 		loai_kq = "bo_qua"
 		ly_do = "tien_ra"
@@ -173,9 +217,12 @@ def _ghi_nhat_ky_sepay(tx_id: str, payload: dict, kho: dict, ket_qua: dict) -> N
 	nhat_ky.insert(ignore_permissions=True)
 
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@_whitelist(allow_guest=True, methods=["POST"])
 def webhook(**kwargs):
-	"""Nhận webhook SePay, đối soát với `LX Don` (khoá dòng `for_update`) và chuyển `da_tra`."""
+	"""Nhận webhook SePay, đối soát với `LX Don` (khoá dòng `for_update`) và gọi `linhx_core.api.danh_dau_da_tra`."""
+	frappe = _lay_frappe()
+	if frappe is None:
+		raise RuntimeError("Cần môi trường Frappe để gọi webhook SePay")
 	authorization = (
 		getattr(frappe.local, "_lx_sepay_auth", None)
 		or frappe.get_request_header("Authorization")
@@ -192,9 +239,6 @@ def webhook(**kwargs):
 		frappe.local.response["http_status_code"] = 400
 		return {"success": False, "error": "missing_tx_id"}
 
-	# Kiểm tra sớm tx_id đã tồn tại; khi hai request cùng tx_id chạy đua đồng thời,
-	# chống trùng cuối cùng dựa vào khoá chính/unique (name = tx_id ở LX Nhat Ky Sepay
-	# và unique tx_id ở LX Don) kết hợp bắt DuplicateEntryError bên dưới.
 	da_co_nhat_ky = frappe.db.sql(
 		"SELECT name FROM `tabLX Nhat Ky Sepay` WHERE tx_id = %s FOR UPDATE",
 		(tx_id,),
@@ -247,15 +291,20 @@ def webhook(**kwargs):
 		if (
 			doc_don is not None
 			and len(ds_don) == 1
-			and ds_don[0].get("trang_thai") == "da_tra"
+			and not kho.get("lech")
 			and not ket_qua.get("sai_so_tien")
 			and not ket_qua.get("da_tra_truoc")
 			and not ket_qua.get("don_da_huy")
 			and not ket_qua.get("trang_thai_khong_hop_le")
 		):
-			doc_don.trang_thai = "da_tra"
-			doc_don.tx_id = ds_don[0].get("tx_id") or tx_id
-			doc_don.save(ignore_permissions=True)
+			ham_danh_dau = danh_dau_da_tra
+			if ham_danh_dau is None:
+				from linhx_core.api import danh_dau_da_tra as ham_danh_dau
+			ham_danh_dau(
+				doc_don.name,
+				tx_id=ds_don[0].get("tx_id") or tx_id,
+				so_tien=payload.get("transferAmount"),
+			)
 		frappe.db.commit()
 	except frappe.DuplicateEntryError:
 		frappe.db.rollback()

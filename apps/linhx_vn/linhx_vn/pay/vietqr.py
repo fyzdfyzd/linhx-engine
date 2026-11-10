@@ -7,10 +7,31 @@ tạo URL ảnh QR theo số tiền + nội dung đơn hàng, khởi tạo đơn
 from __future__ import annotations
 
 import hashlib
+import math
 import re
 from urllib.parse import urlencode
 
-from linhx_core.pay.quyen_dung import gia_hop_le
+try:
+    from linhx_core.api import gia_hop_le
+except ModuleNotFoundError:
+    def gia_hop_le(so_tien: object, goi: dict) -> bool:
+        if not isinstance(goi, dict) or so_tien is None or isinstance(so_tien, bool):
+            return False
+        if "gia_san" not in goi:
+            return False
+        raw_gia_san = goi.get("gia_san")
+        if raw_gia_san is None or isinstance(raw_gia_san, bool):
+            return False
+        try:
+            tien = float(so_tien)
+            gia_san = float(raw_gia_san)
+        except (TypeError, ValueError):
+            return False
+        if not math.isfinite(tien) or not math.isfinite(gia_san):
+            return False
+        if gia_san < 0 or tien <= 0:
+            return False
+        return tien >= gia_san
 
 NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
 

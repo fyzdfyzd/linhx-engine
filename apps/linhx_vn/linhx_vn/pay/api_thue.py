@@ -1,26 +1,57 @@
 """API cảnh báo ngưỡng doanh thu thuế S1a-HKD cho bàn điều hành."""
 from __future__ import annotations
 
-import frappe
-from frappe.utils import now_datetime
+try:
+	from linhx_core.api import doc_cau_hinh, doctype_bi_an
+except ModuleNotFoundError:
+	doc_cau_hinh = None
+	doctype_bi_an = None
 
-from linhx_core.co_module import _doc_cau_hinh_frappe, doctype_bi_an
-from linhx_core.pay.so_s1a import NGUONG_MAC_DINH, canh_bao
+from linhx_vn.pay.so_s1a import NGUONG_MAC_DINH, canh_bao
+
+
+def _lay_frappe():
+	try:
+		import frappe
+	except ImportError:
+		return None
+	return frappe
+
+
+def _whitelist(fn):
+	frappe = _lay_frappe()
+	if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+		return frappe.whitelist()(fn)
+	return fn
 
 
 def _la_dieu_hanh() -> None:
+	frappe = _lay_frappe()
+	if frappe is None:
+		raise RuntimeError("Cần môi trường Frappe để gọi canh_bao_thue")
 	nguoi_dung = getattr(getattr(frappe, "session", None), "user", "Guest") or "Guest"
 	if nguoi_dung == "Guest":
 		frappe.throw("Cần đăng nhập điều hành", frappe.PermissionError)
 	roles = set(frappe.get_roles(nguoi_dung))
 	if not (roles & {"System Manager", "LX Operator", "Administrator"}):
 		frappe.throw("Cần quyền LX Operator", frappe.PermissionError)
-	if nguoi_dung != "Administrator" and doctype_bi_an("LX So S1a", _doc_cau_hinh_frappe()):
+	kiem_an = doctype_bi_an
+	if kiem_an is None:
+		from linhx_core.api import doctype_bi_an as kiem_an
+	if nguoi_dung != "Administrator" and kiem_an("LX So S1a"):
 		frappe.throw("Module Pay đang tắt", frappe.PermissionError)
 
 
 def _doc_nguong_cau_hinh() -> int:
-	if frappe.db.exists("DocType", "LX Cau Hinh Pay"):
+	frappe = _lay_frappe()
+	if doc_cau_hinh is not None:
+		try:
+			val_api = doc_cau_hinh("nguong_doanh_thu")
+			if val_api is not None and float(val_api) > 0:
+				return int(round(float(val_api)))
+		except Exception:
+			pass
+	if frappe is not None and frappe.db.exists("DocType", "LX Cau Hinh Pay"):
 		try:
 			val = frappe.db.get_single_value("LX Cau Hinh Pay", "nguong_doanh_thu")
 			if val is not None and float(val) > 0:
@@ -30,9 +61,13 @@ def _doc_nguong_cau_hinh() -> int:
 	return NGUONG_MAC_DINH
 
 
-@frappe.whitelist()
+@_whitelist
 def canh_bao_thue(nam: int | None = None):
 	"""Trả cảnh báo doanh thu năm hiện tại (hoặc `nam` truyền vào) theo sổ `LX So S1a` và ngưỡng `LX Cau Hinh Pay`."""
+	frappe = _lay_frappe()
+	if frappe is None:
+		raise RuntimeError("Cần môi trường Frappe để gọi canh_bao_thue")
+
 	_la_dieu_hanh()
 	if nam is not None and str(nam).strip() != "":
 		try:
@@ -40,7 +75,14 @@ def canh_bao_thue(nam: int | None = None):
 		except (TypeError, ValueError):
 			frappe.throw("Năm tra cứu không hợp lệ")
 	else:
-		nam_tinh = now_datetime().year
+		try:
+			from frappe.utils import now_datetime
+
+			nam_tinh = now_datetime().year
+		except ImportError:
+			from datetime import datetime
+
+			nam_tinh = datetime.now().year
 
 	nguong = _doc_nguong_cau_hinh()
 	ds_so: list[dict] = []

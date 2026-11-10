@@ -1,5 +1,7 @@
 """Module thanh toán (pay) của linhx_core."""
+import importlib
 import sys
+import types
 
 
 def _chuan_hoa_tx_id_rong() -> None:
@@ -14,14 +16,42 @@ def _chuan_hoa_tx_id_rong() -> None:
 		pass
 
 
+def _ghi_so_s1a_tu_don_qua_cung_cap(doc_don, method: str | None = None) -> object | None:
+	"""Tra hàm `vn.ghi_so_s1a_tu_don` qua `dang_ky_module` cho controller `LXDon`."""
+	try:
+		from linhx_core.api import tim_ham
+
+		ds_ham = tim_ham("cung_cap", "vn.ghi_so_s1a_tu_don")
+		if not ds_ham:
+			return None
+		ten_module, ten_ham = ds_ham[0].rsplit(".", 1)
+		mod = importlib.import_module(ten_module)
+		ham = getattr(mod, ten_ham, None)
+		if callable(ham):
+			return ham(doc_don)
+	except Exception:
+		pass
+	return None
+
+
 def dang_ky_auth_hook() -> None:
 	try:
-		import linhx_core.hooks as _hooks
+		if "linhx_core.pay.so_s1a" not in sys.modules:
+			mod_proxy = types.ModuleType("linhx_core.pay.so_s1a")
+			mod_proxy.ghi_so_s1a_tu_don = _ghi_so_s1a_tu_don_qua_cung_cap
+			sys.modules["linhx_core.pay.so_s1a"] = mod_proxy
 
-		hook_fn = "linhx_core.pay.api_sepay.xac_thuc_sepay_hook"
+		import linhx_core.hooks as _hooks
+		from linhx_core.api import tim_ham
+
+		ds_hook = tim_ham("cung_cap", "vn.xac_thuc_sepay_hook")
 		ds = list(getattr(_hooks, "auth_hooks", None) or [])
-		if hook_fn not in ds:
-			ds.append(hook_fn)
+		co_thay_doi = False
+		for hook_fn in ds_hook:
+			if hook_fn not in ds:
+				ds.append(hook_fn)
+				co_thay_doi = True
+		if co_thay_doi:
 			_hooks.auth_hooks = ds
 
 		frappe_mod = sys.modules.get("frappe")
