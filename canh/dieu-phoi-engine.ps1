@@ -35,10 +35,11 @@ function DayTH { $ra = ""
   for ($i = 1; $i -le 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-String; if ($LASTEXITCODE -eq 0) { return }; KeoTH; Start-Sleep -Seconds (5 * $i) }
   Ghi "đẩy $NhanhTH hỏng 3 lần: $($ra.Trim().Substring(0, [math]::Min(200, $ra.Trim().Length)))" }
 # Gọi claude chấm; trả @{kl = DAT|CHUA_DAT; review = chữ}
-function ChamClaude($de, $tep, $nhan) {
+# Linh 10/11: chấm thường dùng Sonnet; chấm bảo mật và feature trong bao_mat (tiền, quyền, dữ liệu khách) dùng Opus
+function ChamClaude($de, $tep, $nhan, $model = "sonnet") {
   $de | Set-Content -Encoding utf8 $tep
   $rel = ".canh-tho/" + (Split-Path $tep -Leaf)
-  $raw = claude -p "Doc file $rel (UTF-8) va lam dung yeu cau trong do." --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
+  $raw = claude -p "Doc file $rel (UTF-8) va lam dung yeu cau trong do." --model $model --output-format json --max-turns 15 --allowedTools "Read" "Grep" "Glob" "Bash(git diff:*)" "Bash(git log:*)" "Bash(git show:*)" 2>&1 | Out-String
   try { $j = $raw | ConvertFrom-Json; $rv = $j.result
         Add-Content -Encoding utf8 "$Canh\token.tsv" "$(Get-Date -Format s)`t$Tho`t$nhan`t$fid`t$([int]$j.usage.input_tokens + [int]$j.usage.cache_read_input_tokens)`t$($j.usage.output_tokens)`t" } catch { $rv = $raw }
   $d1 = @("$rv" -split "`n" | Where-Object { $_.Trim().Trim('*', '#', ' ', [char]0xFEFF) -cmatch '^(DAT|CHUA_DAT)\b' }) | Select-Object -First 1
@@ -258,7 +259,7 @@ $(KemDiff "$goc..HEAD")
 "@
   # Linh 9/11 tiết kiệm token: rào cứng/cổng kiểm đã trượt (không do máy) thì không gọi Claude chấm
   if ($loi.Count -gt 0 -and -not $loiMay) { $c = @{ kl = "CHUA_DAT"; review = "(Không gọi Claude chấm vì rào cứng/cổng kiểm đã trượt; sửa các điểm ở mục Rào cứng trước.)" } }
-  else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" }
+  else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" $(if (@($dk.bao_mat) -contains $fid) { "opus" } else { "sonnet" }) }
   # Claude hết hạn mức (9/11 13:49 "You've hit your weekly limit" bị chấm CHUA_DAT, C2 chạm trần oan): lỗi máy, không tính lần
   if ($c.review -match "hit your (weekly |daily |usage )?limit|usage limit|rate.?limit|overloaded_error") { $loiMay = $true; $claudeHong = $true }
   $review = $c.review
@@ -273,7 +274,7 @@ bí mật viết trong code, so khoá không hằng thời gian, đổi trạng 
 Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT. Sau đó tối đa 8 gạch đầu dòng: file:dòng, cách khai thác, cách sửa. Không sửa file nào.
 $(KemDiff "$NhanhTH...HEAD")
 "@
-    $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
+    $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten" "opus"
     $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
     if ($bm.kl -ne "DAT") { $kl = "CHUA_DAT"; $bmTruot = $true; $loi += "Chấm bảo mật (K4) CHUA_DAT: sửa đúng các điểm ở mục Bảo mật" }
   }
