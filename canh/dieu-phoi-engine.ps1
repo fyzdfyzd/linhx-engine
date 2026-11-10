@@ -71,7 +71,7 @@ if ($Tho -eq 0) {
     } catch { Ghi "dọn mồ côi lỗi: $_" }
     # xoa_tac: ["ID@nhan"] xoá đếm CHUA_DAT một lần (Khổng Minh giao lại sau lỗi máy)
     foreach ($xt in @($dk.xoa_tac)) { if (-not $xt) { continue }; $id = ($xt -split "@")[0]; $dau = "$Canh\tac\da-xoa-$($xt -replace '[^A-Za-z0-9]', '_').txt"
-      if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt", "$Canh\tac\$id.loi.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
+      if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt", "$Canh\tac\$id.loi.txt", "$Canh\tac\$id.thoat.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
     # nhả giữ cũ: nhan\<ID>.txt trỏ tới thợ mà dang.txt của thợ đó không còn là ID (phiếu bị giao đè, lỗi 8/11 D1 giữ nhóm trang-bu)
     $mxG = New-Object System.Threading.Mutex($false, "Global\ENGINE-Giao"); try { [void]$mxG.WaitOne(120000) } catch [System.Threading.AbandonedMutexException] {}
     Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | ForEach-Object {
@@ -105,7 +105,7 @@ if ($Tho -eq 0) {
     $bang += "| $i | $dang | $ph | $kl |`n"
   }
   $bang += "`n## Chờ`n" + (($dk.cho.PSObject.Properties | ForEach-Object { "- $($_.Name): $($_.Value)" }) -join "`n") + "`n"
-  $tac = @(Get-ChildItem "$Canh\tac\*.txt" -ErrorAction SilentlyContinue | Where-Object { (SoTac $_.BaseName) -ge [int]$dk.tran_chua_dat } | ForEach-Object BaseName)
+  $tac = @(Get-ChildItem "$Canh\tac\*.txt" -ErrorAction SilentlyContinue | Where-Object { (SoTac $_.BaseName) -ge [int]$dk.tran_chua_dat } | Where-Object { $_.BaseName -notmatch "\." } | ForEach-Object BaseName)
   if ($tac) { $bang += "`n## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)`n" + (($tac | ForEach-Object { "- $_" }) -join "`n") + "`n" }
   # K8: đối chiếu bằng chứng VM của feature đã đạt (2 lần liền sai thì hạ passes về false, ghi CAN-LINH)
   $dc = py -3.12 "$TichHop\canh\doi_chieu_vm.py" --goc $TichHop --trang-thai "$Canh\doi-chieu-vm.json" 2>&1 | Out-String
@@ -326,7 +326,7 @@ $(KemDiff "$NhanhTH...HEAD")
     KeoTH
     git -C $TichHop merge -q --no-ff -m "canh: gộp $fid từ $Nhanh (DAT, commit $sha)" $Nhanh 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { git -C $TichHop merge --abort 2>&1 | Out-Null; $kl = "CHUA_DAT"; $loi += "Xung đột khi gộp vào ${NhanhTH}: gộp $NhanhTH vào nhánh này (git merge $NhanhTH), giải xung đột, chạy lại lệnh kiểm, commit" }
-    else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$Canh\tac\$fid.loi.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
+    else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$Canh\tac\$fid.loi.txt", "$Canh\tac\$fid.thoat.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
   if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT" -and -not $bmTruot) -or $claudeHong)) {
