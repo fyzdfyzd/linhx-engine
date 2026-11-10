@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 19:29 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
+Cập nhật 2026-11-10 19:39 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -48,10 +48,6 @@ Cập nhật 2026-11-10 19:29 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-10 18:59 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
-- 2026-11-10 18:59 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
-- 2026-11-10 19:09 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
-- 2026-11-10 19:09 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:09 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:09 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:19 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
@@ -60,4 +56,8 @@ Cập nhật 2026-11-10 19:29 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10 19:19 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:29 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
 - 2026-11-10 19:29 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:39 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:39 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
 
