@@ -1,12 +1,12 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 17:50 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1)
+Cập nhật 2026-11-10 19:39 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | U3 | 20261110-1739-t1 từ 2026-11-10T17:39:57 | DAT · Feature N5 · commit d543347 · nhánh tu-dong/engine-t1 · 2026-11-10T17:16:34 |
-| 2 | K2a | 20261110-1739-t2 từ 2026-11-10T17:39:57 | CHUA_DAT · Feature K2 · commit 16812fd · nhánh tu-dong/engine-t2 · 2026-11-10T17:23:03 |
-| 3 | - | rảnh | CHUA_DAT · Feature U3 · commit 839d5b8 · nhánh tu-dong/engine-t3 · 2026-11-10T17:23:06 |
+| 1 | U3 | rảnh | CHUA_DAT · Feature U3 · commit 63768e2 · nhánh tu-dong/engine-t1 · 2026-11-10T18:47:28 |
+| 2 | K2b | rảnh | CHUA_DAT · Feature K2b · commit 8e799f8 · nhánh tu-dong/engine-t2 · 2026-11-10T18:43:09 |
+| 3 | T4 | rảnh | CHUA_DAT · Feature T4 · commit 90ac99d · nhánh tu-dong/engine-t3 · 2026-11-10T18:41:07 |
 | 4 | - | rảnh | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
 
 ## Chờ
@@ -43,18 +43,21 @@ Cập nhật 2026-11-10 17:50 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10T16:30:30 đối chiếu VM: - N5 HẠ VỀ chưa đạt (sai 2 lượt liền): linhx http://35.198.251.2/linhx/api/method/ping -> 500
 - 2026-11-10T17:23:03 K2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc bd6862e0, bản hỏng giữ ở nhánh cục bộ hong/K2-20261110-1722, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\K2.txt
 - 2026-11-10T17:23:06 U3 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 6585d3a1, bản hỏng giữ ở nhánh cục bộ hong/U3-20261110-1723, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\U3.txt
+- 2026-11-10T18:40:03 đối chiếu VM: - N5 HẠ VỀ chưa đạt (sai 2 lượt liền): ifagent http://35.198.251.2/ifagent/api/method/ping -> 417
+- 2026-11-10T18:42:54 agy hết hạn mức gói (429), ngưng giao tới 2026-11-10T19:42:54. Đổi tài khoản agy hoặc agy_model thì xoá D:\LINHX\ENGINE-canh\agy-het.txt
+- 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-10 17:34 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
-- 2026-11-10 17:39 t0: xoá đếm CHUA_DAT của U3 (U3@1011-cong-vm-khong-git)
-- 2026-11-10 17:39 t0: xoá đếm CHUA_DAT của G1 (G1@1011-cong-vm-khong-git)
-- 2026-11-10 17:39 t2: giao agy phiếu 20261110-1739-t2: K2a
-- 2026-11-10 17:39 t1: giao agy phiếu 20261110-1739-t1: U3
-- 2026-11-10 17:49 t4: G1 DAT, đã gộp vào main
-- 2026-11-10 17:50 t4: RAM trống 1.3 GB < 1,5 GB, chưa giao T4
-- 2026-11-10 17:50 t4: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
-- 2026-11-10 17:50 t4: RAM trống 0.8 GB < 1,5 GB, chưa giao T4
-- 2026-11-10 17:50 t3: RAM trống 1.1 GB < 1,5 GB, chưa giao T4
-- 2026-11-10 17:50 t1: dừng agy phiếu 20261110-1739-t1 (U3): 10 phút không commit, không chạy test mới
-- 2026-11-10 17:51 t1: agy xong phiếu 20261110-1739-t1 (U3) sau 10 phút
+- 2026-11-10 19:09 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:09 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:19 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:19 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:19 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:19 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:29 t4: smoke test hỏng, chưa giao N5: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:39 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 19:39 t3: smoke test hỏng, chưa giao T4: agy hết hạn mức tới 2026-11-10T19:42:54
 
