@@ -1,0 +1,16 @@
+{
+  "luc": "2026-11-10T15:10:02+07:00",
+  "may": "linhx-engine-1",
+  "ten": "sakedemy",
+  "ten_mien": "sakedemy.35-198-251-2.nip.io",
+  "giao_dien": "sakedemy",
+  "url": "http://sakedemy.35-198-251-2.nip.io/",
+  "ma": 200,
+  "phut": 0.88,
+  "goi": [],
+  "db_name": "_ee95a87a12d65236",
+  "apps_da_cai": [
+    "frappe",
+    "linhx_core"
+  ]
+}
