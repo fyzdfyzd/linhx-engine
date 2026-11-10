@@ -20,7 +20,9 @@
     "O4@1011-pytest-tmp-ngoai-vung",
     "L4@1011-dau-loi-chung",
     "L4@1011-loi-de-kien-truc",
-    "V1@1011-va-k4-canh"
+    "V1@1011-va-k4-canh",
+    "U1@1011-agy-thoat-ngay",
+    "U3@1011-agy-thoat-ngay"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",

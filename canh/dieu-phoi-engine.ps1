@@ -194,7 +194,20 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   $goc = (Get-Content "$S\goc.txt").Trim()
   $tf = TimF $dk $Wt $fid; $FF = $tf.ff; $x = $tf.f
   $loi = @(); $luuY = @(); $loiMay = $false; $claudeHong = $false; $bmTruot = $false
-  if ((git rev-parse HEAD).Trim() -eq $goc) { $loi += "agy không commit gì" }
+  $agyThoatNgay = $false
+  if ((git rev-parse HEAD).Trim() -eq $goc) {
+    $loi += "agy không commit gì"
+    # U1/U3 10/11: agy thoát sau 0-1 phút không commit là lỗi khởi động (cờ, hạn mức, PHIEU), không phải lỗi thợ: không tính trần, ghi .err vào nhật ký; 3 lần liền thì tính như thường
+    if ([int]$phut -le 2 -and $dung -eq "xong") {
+      $tepThoat = "$Canh\tac\$fid.thoat.txt"; $nT = 1 + $(if (Test-Path $tepThoat) { [int](Get-Content $tepThoat -Raw) } else { 0 }); "$nT" | Set-Content $tepThoat
+      $err = "$S\log\agy-$ten.err"; $duoi = ""
+      if (Test-Path $err) { $duoi = ((Get-Content $err -Encoding utf8 -Tail 6) -join " / ") }
+      if (-not $duoi -and (Test-Path "$LogDir\$ten.jsonl")) { $duoi = ((Get-Content "$LogDir\$ten.jsonl" -Encoding utf8 -Tail 2) -join " / ") }
+      $duoi = $duoi -replace '(sk-ant-|ghp_|github_pat_|AIza)\S+', '<khoá>'
+      Ghi "$fid agy thoát sau $phut phút lần $nT, .err: $($duoi.Substring(0, [math]::Min(300, $duoi.Length)))"
+      if ($nT -lt 3) { $agyThoatNgay = $true; $claudeHong = $true }  # chỉ claudeHong: không tính trần, vẫn bỏ qua review Claude (diff rỗng)
+    }
+  } else { Remove-Item "$Canh\tac\$fid.thoat.txt" -Force -ErrorAction SilentlyContinue }
   # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
   $camNgoai = (@($TichHop, $Canh) + @(Get-ChildItem "D:\LINHX\ENGINE-t*" -Directory -ErrorAction SilentlyContinue | Where-Object FullName -ne $Wt | ForEach-Object FullName)) -join ";"
   $rao = $null
