@@ -1,0 +1,49 @@
+{
+  "run_url": "https://github.com/fyzdfyzd/linhx-engine/actions/runs/42819658511",
+  "api_url": "https://api.github.com/repos/fyzdfyzd/linhx-engine/actions/runs/42819658511",
+  "jobs_url": "https://api.github.com/repos/fyzdfyzd/linhx-engine/actions/runs/42819658511/jobs",
+  "ket_luan": "success",
+  "conclusion": "success",
+  "status": "completed",
+  "site": [
+    "sakedemy",
+    "tuva",
+    "unikon"
+  ],
+  "run_id": 42819658511,
+  "job_id": 129841614372,
+  "workflow": ".github/workflows/giao-dien.yml",
+  "nhanh": "tu-dong/engine-t1",
+  "sha": "9e67ff659fdfc96240c349034750c3cc4ffbcb22",
+  "head_sha": "9e67ff659fdfc96240c349034750c3cc4ffbcb22",
+  "headSha": "9e67ff659fdfc96240c349034750c3cc4ffbcb22",
+  "created_at": "2026-11-10T12:53:54Z",
+  "createdAt": "2026-11-10T12:53:54Z",
+  "updated_at": "2026-11-10T12:55:37Z",
+  "chi_tiet": [
+    {
+      "site": "sakedemy",
+      "port": 8101,
+      "started_at": "2026-11-10T12:54:28.4362964Z",
+      "completed_at": "2026-11-10T12:54:51.6039546Z",
+      "ket_qua_kiem": "DAT: K1–K10 xanh, 18 trang, trang chủ ở 1280/1024/768/390/360",
+      "so_lead_may_gia_nhan": 2
+    },
+    {
+      "site": "tuva",
+      "port": 8102,
+      "started_at": "2026-11-10T12:54:51.6040506Z",
+      "completed_at": "2026-11-10T12:55:12.5201238Z",
+      "ket_qua_kiem": "DAT: K1–K10 xanh, 18 trang, trang chủ ở 1280/1024/768/390/360",
+      "so_lead_may_gia_nhan": 2
+    },
+    {
+      "site": "unikon",
+      "port": 8103,
+      "started_at": "2026-11-10T12:55:12.5201895Z",
+      "completed_at": "2026-11-10T12:55:34.7327367Z",
+      "ket_qua_kiem": "DAT: K1–K10 xanh, 18 trang, trang chủ ở 1280/1024/768/390/360",
+      "so_lead_may_gia_nhan": 2
+    }
+  ]
+}
