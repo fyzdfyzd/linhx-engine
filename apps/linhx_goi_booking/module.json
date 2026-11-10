@@ -1,0 +1,21 @@
+{
+  "ten": "linhx_goi_booking",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "booking.dat_lich": "linhx_goi_booking.dat_lich.dat_lich",
+    "booking.viec_cho": "linhx_goi_booking.dat_lich.viec_cho",
+    "booking.kiem_gio_lam_viec": "linhx_goi_booking.dat_lich.kiem_gio_lam_viec",
+    "booking.kiem_trung_gio": "linhx_goi_booking.dat_lich.kiem_trung_gio",
+    "booking.chuan_hoa_tg": "linhx_goi_booking.dat_lich.chuan_hoa_tg",
+    "booking.bay_gio": "linhx_goi_booking.dat_lich.bay_gio",
+    "booking.dat_lich_goi": "linhx_goi_booking.api_booking.dat_lich_goi",
+    "booking.viec_cho_lich_goi": "linhx_goi_booking.api_booking.viec_cho_lich_goi"
+  },
+  "giao": {
+    "lich": "linhx_goi_booking.giao.giao"
+  }
+}

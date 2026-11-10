@@ -215,8 +215,8 @@
     "module.json khai giao lich"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g3.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/G3/kiem.json"
   },
   {
    "id": "G4",

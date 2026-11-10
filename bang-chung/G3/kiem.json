@@ -1,0 +1,105 @@
+{
+  "feature": "G3",
+  "luc": "2026-11-10T15:11:16+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g3.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "....                                                                     [100%]",
+    "4 passed in 0.27s"
+  ],
+  "pytest_day_du_returncode": 0,
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t4",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 30 items",
+    "",
+    "tests/nghiem-thu/test_g3.py::test_app_va_khai_bao PASSED                 [  3%]",
+    "tests/nghiem-thu/test_g3.py::test_da_chuyen_het PASSED                   [  6%]",
+    "tests/nghiem-thu/test_g3.py::test_kien_truc PASSED                       [ 10%]",
+    "tests/nghiem-thu/test_g3.py::test_khai_giao_lich PASSED                  [ 13%]",
+    "tests/nghiem-thu/test_f2.py::test_dat_trung_gio_bi_chan PASSED           [ 16%]",
+    "tests/nghiem-thu/test_f2.py::test_ngoai_gio_lam_8_18h_gio_vn_bi_chan PASSED [ 20%]",
+    "tests/nghiem-thu/test_f2.py::test_nguoi_phu_trach_thay_lich_trong_viec_cho PASSED [ 23%]",
+    "tests/nghiem-thu/test_l1.py::test_app_hien_co_khai_bao PASSED            [ 26%]",
+    "tests/nghiem-thu/test_l1.py::test_doc_va_xep_phu_thuoc PASSED            [ 30%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[thieu_dep] PASSED [ 33%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[vong] PASSED      [ 36%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[can_loi] PASSED   [ 40%]",
+    "tests/nghiem-thu/test_l1.py::test_tu_choi_khai_bao_sai[lop_la] PASSED    [ 43%]",
+    "tests/nghiem-thu/test_l3.py::test_goi_co_loai_giao PASSED                [ 46%]",
+    "tests/nghiem-thu/test_l3.py::test_can_phat_chi_khi_chuyen_sang_da_tra PASSED [ 50%]",
+    "tests/nghiem-thu/test_l3.py::test_chon_va_goi_ham_giao PASSED            [ 53%]",
+    "tests/nghiem-thu/test_l4.py::test_api_cong_khai PASSED                   [ 56%]",
+    "tests/nghiem-thu/test_l4.py::test_luat_ba_lop PASSED                     [ 60%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_nap_thuan_python_khong_can_frappe PASSED [ 63%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_dat_lich_gio_lam_viec_va_mui_gio PASSED [ 66%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_dat_lich_trung_gio_va_viec_cho PASSED [ 70%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_giao_lich_qua_luong_giao_hang_chung PASSED [ 73%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_giao_lich_khong_nuot_loi_db_va_trang_thai_tam_tinh PASSED [ 76%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_chon_kenh_otp_cho_nguoi_chong_ghep_kenh_nan_nhan PASSED [ 80%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_dong_y_rut_dong_y_gop_trung_va_chong_doan_nguoi_dung PASSED [ 83%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_doi_chieu_ham_crm_voi_ban_loi PASSED [ 86%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_api_booking_voi_mock_frappe PASSED [ 90%]",
+    "apps/linhx_goi_booking/linhx_goi_booking/test_goi_booking.py::test_trang_bu_form_dat_lich_cau_truc PASSED [ 93%]",
+    "apps/linhx_core/linhx_core/booking/test_booking.py::test_doctype_lx_lich_goi_cau_truc PASSED [ 96%]",
+    "apps/linhx_core/linhx_core/booking/test_booking.py::test_controller_lx_lich_goi_goi_qua_dang_ky_module PASSED [100%]",
+    "",
+    "============================= 30 passed in 5.12s =============================="
+  ],
+  "tep_log": "bang-chung/G3/kiem.log",
+  "module_json": {
+    "ten": "linhx_goi_booking",
+    "ban": "0.1.0",
+    "lop": "goi",
+    "can_loi": ">=0.3.0",
+    "phu_thuoc": [],
+    "nghe": {},
+    "cung_cap": {
+      "booking.dat_lich": "linhx_goi_booking.dat_lich.dat_lich",
+      "booking.viec_cho": "linhx_goi_booking.dat_lich.viec_cho",
+      "booking.kiem_gio_lam_viec": "linhx_goi_booking.dat_lich.kiem_gio_lam_viec",
+      "booking.kiem_trung_gio": "linhx_goi_booking.dat_lich.kiem_trung_gio",
+      "booking.chuan_hoa_tg": "linhx_goi_booking.dat_lich.chuan_hoa_tg",
+      "booking.bay_gio": "linhx_goi_booking.dat_lich.bay_gio",
+      "booking.dat_lich_goi": "linhx_goi_booking.api_booking.dat_lich_goi",
+      "booking.viec_cho_lich_goi": "linhx_goi_booking.api_booking.viec_cho_lich_goi"
+    },
+    "giao": {
+      "lich": "linhx_goi_booking.giao.giao"
+    }
+  },
+  "chon_ham_giao_lich": "linhx_goi_booking.giao.giao",
+  "tra_ham_cung_cap": {
+    "booking.dat_lich": [
+      "linhx_goi_booking.dat_lich.dat_lich"
+    ],
+    "booking.viec_cho": [
+      "linhx_goi_booking.dat_lich.viec_cho"
+    ],
+    "booking.kiem_gio_lam_viec": [
+      "linhx_goi_booking.dat_lich.kiem_gio_lam_viec"
+    ],
+    "booking.kiem_trung_gio": [
+      "linhx_goi_booking.dat_lich.kiem_trung_gio"
+    ],
+    "booking.chuan_hoa_tg": [
+      "linhx_goi_booking.dat_lich.chuan_hoa_tg"
+    ],
+    "booking.bay_gio": [
+      "linhx_goi_booking.dat_lich.bay_gio"
+    ],
+    "booking.dat_lich_goi": [
+      "linhx_goi_booking.api_booking.dat_lich_goi"
+    ],
+    "booking.viec_cho_lich_goi": [
+      "linhx_goi_booking.api_booking.viec_cho_lich_goi"
+    ]
+  },
+  "da_xoa_file_cu": [
+    true,
+    true
+  ]
+}
