@@ -22,7 +22,10 @@
     "L4@1011-loi-de-kien-truc",
     "V1@1011-va-k4-canh",
     "U1@1011-agy-thoat-ngay",
-    "U3@1011-agy-thoat-ngay"
+    "U3@1011-agy-thoat-ngay",
+    "G2@1011-agy-quota",
+    "G3@1011-agy-quota",
+    "G5@1011-agy-quota"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",
