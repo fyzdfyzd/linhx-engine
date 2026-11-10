@@ -1,0 +1,17 @@
+{
+  "ten": "linhx_goi_chiemtinh",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [
+    "linhx_cts"
+  ],
+  "nghe": {},
+  "cung_cap": {
+    "chiemtinh.so_khop": "linhx_goi_chiemtinh.giao.so_khop",
+    "chiemtinh.co_cts_that": "linhx_goi_chiemtinh.giao.co_cts_that"
+  },
+  "giao": {
+    "bao_cao_cts": "linhx_goi_chiemtinh.giao.giao"
+  }
+}
