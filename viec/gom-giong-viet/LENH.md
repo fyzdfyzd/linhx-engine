@@ -71,6 +71,14 @@ Mọi mục tốt của KHO-Y (cả mục bị loại, kèm lý do) ghi vào vau
 - K5 Linh viết nháp gạch đầu dòng theo phương án thắng (luật Vân Anh: AI chỉ dùng được ý, không dùng được diễn đạt); AI làm mượt.
 - K6 Tráng giọng + biên tập: luật VA-01..08, kiem_giu_nghia (không đổi ý, mức khẳng định, số), ≤ 3 vòng. Đọc lại cuối là người thật (Linh/Vân Anh) = cổng D4.
 
+### Vừa viết vừa tăng kho (Linh 10/11) — bước THU HOẠCH cuối mỗi giai đoạn, máy làm, Linh ≤ 5 phút
+1. Hết D1: mục KHO-Y (cả mục loại + lý do) vào vault.
+2. Nháp gạch đầu dòng của Linh: cắt câu của Linh thành nugget nhãn LINH (lấp chỗ vault đang 0 nugget lời Linh, WF16).
+3. Mỗi chỗ Linh/Vân Anh sửa khi tráng giọng: hoc-tu-ban-sua ghi sổ, luật ≥ 2 bằng chứng mới vào hồ sơ giọng.
+4. Khuôn × giọng thắng: lưu kèm điểm và "dùng ở bài nào".
+5. Bài đăng xong, Linh xác nhận: thêm vào bộ bài mốc, đo lại moc-giong.
+6. Sau đăng 7 ngày: số đọc, bình luận thật về hồ sơ độc giả của kênh (cho B2 bài sau).
+
 ### Lượng ý vừa sức đọc (Linh 10/11)
 - Ngân sách ý theo độ dài: đo từ 7 bài đã đăng (số ý phụ / 1000 từ, số khái niệm mới mỗi đoạn, số liệu mỗi đoạn), đặt dải theo 7 bài, không tự bịa số.
 - Mỗi ý phụ phải có chỗ thở: một chất liệu (chuyện, ví dụ) + một câu "vậy thì sao" cho độc giả. Ý không có chỗ thở thì bỏ hoặc gộp.
