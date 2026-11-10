@@ -1,9 +1,10 @@
 {
   "feature": "U2",
-  "luc": "2026-11-10T10:10:52+07:00",
+  "luc": "2026-11-10T10:49:09+07:00",
   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u2.py -q",
   "ma_thoat_pytest": 0,
-  "ket_qua_pytest": "..                                                                       [100%]\n2 passed in 32.87s",
+  "ket_qua_pytest": "..                                                                       [100%]\n2 passed in 0.07s",
+  "tep_log": "bang-chung/U2/kiem.log",
   "kiem_thuc_te_3_bu": [
     {
       "bu": "sakedemy",
@@ -13,6 +14,10 @@
       "nguon_nhan_duoc": [
         "sakedemy"
       ],
+      "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9",
+      "ma_khi_nhu_cau_qua_1800": 400,
+      "ma_khi_url_hong": 400,
+      "ma_khi_engine_200_khong_json": 502,
       "ma_khi_engine_500": 502,
       "ma_khi_engine_mat_ket_noi": 502,
       "khong_ghi_tep_leads": true
@@ -25,6 +30,10 @@
       "nguon_nhan_duoc": [
         "tuva"
       ],
+      "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9",
+      "ma_khi_nhu_cau_qua_1800": 400,
+      "ma_khi_url_hong": 400,
+      "ma_khi_engine_200_khong_json": 502,
       "ma_khi_engine_500": 502,
       "ma_khi_engine_mat_ket_noi": 502,
       "khong_ghi_tep_leads": true
@@ -37,6 +46,10 @@
       "nguon_nhan_duoc": [
         "unikon"
       ],
+      "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9",
+      "ma_khi_nhu_cau_qua_1800": 400,
+      "ma_khi_url_hong": 400,
+      "ma_khi_engine_200_khong_json": 502,
       "ma_khi_engine_500": 502,
       "ma_khi_engine_mat_ket_noi": 502,
       "khong_ghi_tep_leads": true

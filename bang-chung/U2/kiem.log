@@ -1,0 +1,19 @@
+=== KIEM U2 (2026-11-10T10:49:09+07:00) ===
+$ python -m pytest tests/nghiem-thu/test_u2.py -v
+============================= test session starts =============================
+platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\Users\ADMIN\AppData\Local\Programs\Python\Python312\python.exe
+rootdir: D:\LINHX\ENGINE-t2
+configfile: pytest.ini
+plugins: anyio-4.15.1, platformdirs-4.14.0
+collecting ... collected 2 items
+
+tests/nghiem-thu/test_u2.py::test_form_ve_engine PASSED                  [ 50%]
+tests/nghiem-thu/test_u2.py::test_khong_viet_cung_bi_mat PASSED          [100%]
+
+============================== 2 passed in 0.08s ==============================
+$ python -m pytest tests/nghiem-thu/test_u2.py -q
+..                                                                       [100%]
+2 passed in 0.07s
+[sakedemy] OK: {"bu": "sakedemy", "trang_chu": 200, "form_playwright_k7": "passed", "so_lead_chuyen_engine": 2, "nguon_nhan_duoc": ["sakedemy"], "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9", "ma_khi_nhu_cau_qua_1800": 400, "ma_khi_url_hong": 400, "ma_khi_engine_200_khong_json": 502, "ma_khi_engine_500": 502, "ma_khi_engine_mat_ket_noi": 502, "khong_ghi_tep_leads": true}
+[tuva] OK: {"bu": "tuva", "trang_chu": 200, "form_playwright_k7": "passed", "so_lead_chuyen_engine": 2, "nguon_nhan_duoc": ["tuva"], "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9", "ma_khi_nhu_cau_qua_1800": 400, "ma_khi_url_hong": 400, "ma_khi_engine_200_khong_json": 502, "ma_khi_engine_500": 502, "ma_khi_engine_mat_ket_noi": 502, "khong_ghi_tep_leads": true}
+[unikon] OK: {"bu": "unikon", "trang_chu": 200, "form_playwright_k7": "passed", "so_lead_chuyen_engine": 2, "nguon_nhan_duoc": ["unikon"], "ip_xff_cuoi_khi_trust_proxy": "203.0.113.9", "ma_khi_nhu_cau_qua_1800": 400, "ma_khi_url_hong": 400, "ma_khi_engine_200_khong_json": 502, "ma_khi_engine_500": 502, "ma_khi_engine_mat_ket_noi": 502, "khong_ghi_tep_leads": true}

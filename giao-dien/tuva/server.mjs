@@ -12,6 +12,12 @@ import { fileURLToPath } from "node:url";
 const BU = "tuva";
 const PORT = +process.env.PORT || 8080;
 const LINHX_FORM_URL = process.env.LINHX_FORM_URL || "http://127.0.0.1/api/method/linhx_core.crm.api_form.nhan_form";
+try {
+  const u = new URL(LINHX_FORM_URL);
+  if (u.protocol === "http:" && !["127.0.0.1", "localhost", "::1", "[::1]"].includes(u.hostname)) {
+    console.warn(`[${BU}] Cảnh báo: LINHX_FORM_URL dùng HTTP ngoài loopback (${u.hostname}); nên dùng HTTPS để mã hoá dữ liệu khách.`);
+  }
+} catch {}
 const GOC = resolve(fileURLToPath(new URL("./public/", import.meta.url)));
 const GOC_TIEN_TO = GOC + sep;
 const MIME = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".svg": "image/svg+xml", ".woff2": "font/woff2", ".ttf": "font/ttf", ".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp", ".ico": "image/x-icon", ".xml": "application/xml", ".txt": "text/plain; charset=utf-8" };
@@ -31,6 +37,9 @@ const CAU = {
 function kiem(d) {
   const kenh_nguon = {};
   if (d.nguon && typeof d.nguon === "object") for (const k of ["kenh", "ref", "utm_source", "utm_medium", "utm_campaign", "utm_content"]) if (d.nguon[k]) kenh_nguon[k] = chu(String(d.nguon[k]), 80);
+  // Engine giới hạn nhu_cau tối đa 2000 ký tự; từ chối trên 1800 ký tự để không cắt bớt im lặng
+  if (typeof d.brief === "string" && d.brief.trim().length > 1800) return [null, "Brief quá dài (tối đa 1800 ký tự)"];
+  if (typeof d.nhu_cau === "string" && d.nhu_cau.trim().length > 1800) return [null, "Nhu cầu quá dài (tối đa 1800 ký tự)"];
   const x = {
     loai: LOAI.includes(d.loai) ? d.loai : "brief", ngon_ngu: d.ngon_ngu === "en" ? "en" : "vi",
     ho_ten: chu(d.ho_ten, 80), cong_ty: chu(d.cong_ty, 120), dien_thoai: chu(d.dien_thoai, 20), email: chu(d.email, 120),
@@ -49,7 +58,23 @@ function kiem(d) {
   if (!x.nhu_cau) {
     x.nhu_cau = chu(x.brief || [x.loai, x.cong_ty, x.linh_vuc, x.nha_tai_tro, x.han_nop, x.ngan_sach, x.ket_qua].filter(Boolean).join(" · "), 1800);
   }
+  if (x.loai !== "brief" && x.nhu_cau && !x.nhu_cau.startsWith(`[${x.loai}]`) && !x.nhu_cau.startsWith(`${x.loai} ·`)) {
+    x.nhu_cau = chu(`[${x.loai}] ${x.nhu_cau}`, 1900);
+  }
   return [x, null];
+}
+
+function layIp(req) {
+  if (process.env.TRUST_PROXY === "1") {
+    const xff = req.headers["x-forwarded-for"];
+    if (typeof xff === "string" && xff.trim()) {
+      const dsIp = xff.split(",").map((s) => s.trim()).filter(Boolean);
+      if (dsIp.length) return dsIp[dsIp.length - 1];
+    }
+    const xReal = req.headers["x-real-ip"];
+    if (typeof xReal === "string" && xReal.trim()) return xReal.trim();
+  }
+  return (req.socket.remoteAddress || "").trim();
 }
 
 async function guiDi(lead, ip) {
@@ -63,14 +88,19 @@ async function guiDi(lead, ip) {
   });
   let kq = null;
   try { kq = JSON.parse(await r.text()); } catch {}
-  if (!r.ok || (kq && typeof kq === "object" && (kq.ok === false || kq.exc))) {
+  const hopLe =
+    kq &&
+    typeof kq === "object" &&
+    !kq.exc &&
+    (kq.ok === true || (kq.message && typeof kq.message === "object" ? kq.message.ok !== false : "message" in kq));
+  if (!r.ok || !hopLe) {
     throw new Error(`Engine trả mã ${r.status}`);
   }
   return kq;
 }
 
 async function nhanBrief(req, res) {
-  const ip = ((process.env.TRUST_PROXY === "1" && req.headers["x-forwarded-for"]) || req.socket.remoteAddress || "").split(",")[0].trim();
+  const ip = layIp(req);
   const now = Date.now(), dsLuot = (luot.get(ip) || []).filter((t) => now - t < 600000);
   if (dsLuot.length >= (+process.env.RATE_MAX || 5)) return tra(res, 429, { loi: "Bạn gửi hơi nhiều, thử lại sau ít phút" });
   let tho = "";
@@ -111,7 +141,8 @@ async function tinh(req, res) {
 }
 
 http.createServer((req, res) => {
-  const duong = new URL(req.url, "http://x").pathname;
+  let duong;
+  try { duong = new URL(req.url, "http://x").pathname; } catch { return tra(res, 400, { loi: "Đường dẫn không hợp lệ" }); }
   if (DUONG_FORM.some((d) => duong === d || duong.startsWith(d + "/"))) {
     return req.method === "POST" ? nhanBrief(req, res).catch((e) => { console.error(e); tra(res, 500, { loi: "Máy nhận đang lỗi" }); }) : tra(res, 405, { loi: "Chỉ nhận POST" });
   }
