@@ -71,7 +71,7 @@ if ($Tho -eq 0) {
     } catch { Ghi "dọn mồ côi lỗi: $_" }
     # xoa_tac: ["ID@nhan"] xoá đếm CHUA_DAT một lần (Khổng Minh giao lại sau lỗi máy)
     foreach ($xt in @($dk.xoa_tac)) { if (-not $xt) { continue }; $id = ($xt -split "@")[0]; $dau = "$Canh\tac\da-xoa-$($xt -replace '[^A-Za-z0-9]', '_').txt"
-      if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
+      if (-not (Test-Path $dau)) { Remove-Item "$Canh\tac\$id.txt", "$Canh\tac\$id.loi.txt" -Force -ErrorAction SilentlyContinue; "1" | Set-Content $dau; Ghi "xoá đếm CHUA_DAT của $id ($xt)" } }
     # nhả giữ cũ: nhan\<ID>.txt trỏ tới thợ mà dang.txt của thợ đó không còn là ID (phiếu bị giao đè, lỗi 8/11 D1 giữ nhóm trang-bu)
     $mxG = New-Object System.Threading.Mutex($false, "Global\ENGINE-Giao"); try { [void]$mxG.WaitOne(120000) } catch [System.Threading.AbandonedMutexException] {}
     Get-ChildItem "$Canh\nhan\*.txt" -ErrorAction SilentlyContinue | ForEach-Object {
@@ -308,9 +308,9 @@ $(KemDiff "$NhanhTH...HEAD")
   } elseif ($kl -eq "CHUA_DAT") {
     $n = 1 + (SoTac $fid); "$n" | Set-Content "$Canh\tac\$fid.txt"
     Ghi "$fid CHUA_DAT lần $n (commit $sha)"
-    # A (Linh 10/11): cùng một lỗi (test FAILED + rào cứng, không kể review chữ) trượt 2 lần liền thì dừng, không chờ trần
+    # A (Linh 10/11): cùng một lỗi (test FAILED + rào cứng, không kể review chữ, không kể "chưa đặt passes"/"không commit": đó là triệu chứng, L4 10/11 chạm trần oan) trượt 2 lần liền thì dừng, không chờ trần
     $dauLoi = ((@([regex]::Matches("$ck", '(?m)^(FAILED|ERROR) (\S+)') | ForEach-Object { $_.Groups[2].Value }) +
-                @($loi | Where-Object { "$_" -notmatch '^cong_kiem trượt' } | ForEach-Object { ("$_" -split "`n")[0] })) | Sort-Object -Unique) -join "|"
+                @($loi | Where-Object { "$_" -notmatch '^cong_kiem trượt|chưa đặt passes=true|agy không commit gì' } | ForEach-Object { ("$_" -split "`n")[0] })) | Sort-Object -Unique) -join "|"
     $tepLoi = "$Canh\tac\$fid.loi.txt"
     $trungLoi = $dauLoi -and (Test-Path $tepLoi) -and ((Get-Content $tepLoi -Raw -Encoding utf8).Trim() -eq $dauLoi)
     $dauLoi | Set-Content -Encoding utf8 $tepLoi
