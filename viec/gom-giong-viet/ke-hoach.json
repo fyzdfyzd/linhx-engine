@@ -107,7 +107,8 @@
    "phu_thuoc": [],
    "trang_thai": "cho",
    "vong": 0,
-   "nhat_ky": []
+   "nhat_ky": [],
+   "can_cong": "D2"
   },
   {
    "ma": "P05",
@@ -139,7 +140,8 @@
    ],
    "trang_thai": "cho",
    "vong": 0,
-   "nhat_ky": []
+   "nhat_ky": [],
+   "can_cong": "D2"
   },
   {
    "ma": "P06",
@@ -163,7 +165,8 @@
    ],
    "trang_thai": "cho",
    "vong": 0,
-   "nhat_ky": []
+   "nhat_ky": [],
+   "can_cong": "D2"
   },
   {
    "ma": "P07",
@@ -187,7 +190,8 @@
    ],
    "trang_thai": "cho",
    "vong": 0,
-   "nhat_ky": []
+   "nhat_ky": [],
+   "can_cong": "D2"
   }
  ]
 }
