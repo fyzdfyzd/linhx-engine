@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 15:49 (giờ máy cty). Đạt: 60/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, L3, L4, P3, G2, G3, G5, U1, U2, K1)
+Cập nhật 2026-11-10 16:00 (giờ máy cty). Đạt: 60/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V2, L1, L2, L3, L4, P3, G2, G3, G5, U1, U2, K1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | V1 | 20261110-1539-t1 từ 2026-11-10T15:39:46 | DAT · Feature U1 · commit e052005 · nhánh tu-dong/engine-t1 · 2026-11-10T14:44:39 |
-| 2 | K2 | 20261110-1521-t2 từ 2026-11-10T15:21:21 | DAT · Feature G2 · commit 2cddfdf · nhánh tu-dong/engine-t2 · 2026-11-10T15:20:30 |
+| 2 | K2 | 20261110-1557-t2 từ 2026-11-10T15:57:10 | CHUA_DAT · Feature K2 · commit cc4c8bc · nhánh tu-dong/engine-t2 · 2026-11-10T15:56:47 |
 | 3 | U3 | 20261110-1539-t3 từ 2026-11-10T15:39:50 | DAT · Feature K1 · commit 2328b2f · nhánh tu-dong/engine-t3 · 2026-11-10T15:19:04 |
 | 4 | P1 | 20261110-1539-t4 từ 2026-11-10T15:39:50 | DAT · Feature G3 · commit d1c66bd · nhánh tu-dong/engine-t4 · 2026-11-10T15:15:30 |
 
@@ -39,11 +39,6 @@ Cập nhật 2026-11-10 15:49 (giờ máy cty). Đạt: 60/68 (N1, N2, N3, N4, N
 - 2026-11-10T12:56:05 G5 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc d959ce6f, bản hỏng giữ ở nhánh cục bộ hong/G5-20261110-1256, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\G5.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 15:21 t4: RAM trống 1 GB < 1,5 GB, chưa giao V1
-- 2026-11-10 15:21 t3: RAM trống 1 GB < 1,5 GB, chưa giao V1
-- 2026-11-10 15:21 t2: giao agy phiếu 20261110-1521-t2: K2
-- 2026-11-10 15:21 t1: RAM trống 1 GB < 1,5 GB, chưa giao V1
-- 2026-11-10 15:23 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-10 15:30 t1: RAM trống 1 GB < 1,5 GB, chưa giao V1
 - 2026-11-10 15:30 t3: RAM trống 1.1 GB < 1,5 GB, chưa giao V1
 - 2026-11-10 15:30 t4: RAM trống 1.1 GB < 1,5 GB, chưa giao V1
@@ -51,4 +46,9 @@ Cập nhật 2026-11-10 15:49 (giờ máy cty). Đạt: 60/68 (N1, N2, N3, N4, N
 - 2026-11-10 15:39 t1: giao agy phiếu 20261110-1539-t1: V1
 - 2026-11-10 15:39 t4: giao agy phiếu 20261110-1539-t4: P1
 - 2026-11-10 15:39 t3: giao agy phiếu 20261110-1539-t3: U3
+- 2026-11-10 15:50 t2: agy xong phiếu 20261110-1521-t2 (K2) sau 30 phút
+- 2026-11-10 15:56 t2: K2 CHUA_DAT lần 1 (commit cc4c8bc)
+- 2026-11-10 15:57 t2: giao agy phiếu 20261110-1557-t2: K2 (lượt sửa)
+- 2026-11-10 16:00 t3: dừng agy phiếu 20261110-1539-t3 (U3): 10 phút không commit, không chạy test mới
+- 2026-11-10 16:00 t3: agy xong phiếu 20261110-1539-t3 (U3) sau 21 phút
 
