@@ -1,0 +1,103 @@
+{
+ "nguoi": [
+  {
+   "ma": "linh",
+   "ten": "anh Tuấn Linh",
+   "vai": "chu",
+   "kenh": "zalo",
+   "dia_chi": "",
+   "ghi_chu": "duyệt mọi thứ gửi ra ngoài"
+  },
+  {
+   "ma": "hang",
+   "ten": "chị Nguyễn Thị Hằng (CEO)",
+   "vai": "quan_ly",
+   "kenh": "zalo",
+   "dia_chi": "",
+   "ghi_chu": "duyệt proposal, báo cáo"
+  },
+  {
+   "ma": "sales",
+   "ten": "Sales/BD ifAgent Event (Linh điền tên)",
+   "vai": "nhan_vien",
+   "kenh": "zalo",
+   "dia_chi": ""
+  }
+ ],
+ "cong_nhan": [
+  {
+   "ma": "nu",
+   "ten": "Nụ Event",
+   "vai": "trưởng: nghe nhóm, trả lời nhanh hồ sơ, nhận việc dài, chọn workflow, gộp kết quả",
+   "bao_cao_cho": "linh",
+   "chiu_trach_nhiem": "linh",
+   "tho": "claude",
+   "skills": [
+    "brand-ifagent",
+    "linhx-chuan"
+   ],
+   "workflows": [
+    "tra-ho-so",
+    "viec-chung"
+   ]
+  },
+  {
+   "ma": "nu-lead",
+   "ten": "Nụ Lead",
+   "vai": "đọc brief, soạn trả lời khách + 3 ý tưởng Idea Book",
+   "bao_cao_cho": "nu",
+   "chiu_trach_nhiem": "sales",
+   "tho": "claude",
+   "skills": [
+    "brand-ifagent",
+    "proposal-brief",
+    "proposal-ideas"
+   ],
+   "workflows": [
+    "tra-loi-lead"
+   ]
+  },
+  {
+   "ma": "nu-proposal",
+   "ten": "Nụ Proposal",
+   "vai": "soạn proposal sự kiện đúng brand",
+   "bao_cao_cho": "nu",
+   "chiu_trach_nhiem": "hang",
+   "tho": "agy",
+   "skills": [
+    "proposal-studio",
+    "brand-ifagent"
+   ],
+   "workflows": [
+    "soan-proposal"
+   ]
+  },
+  {
+   "ma": "nu-bao-cao",
+   "ten": "Nụ Báo cáo",
+   "vai": "báo cáo sau sự kiện từ số người trong nhóm đưa",
+   "bao_cao_cho": "nu",
+   "chiu_trach_nhiem": "hang",
+   "tho": "agy",
+   "skills": [
+    "bao-cao",
+    "brand-ifagent"
+   ],
+   "workflows": [
+    "bao-cao-sau-su-kien"
+   ]
+  },
+  {
+   "ma": "cham",
+   "ten": "Người chấm",
+   "vai": "chấm độc lập theo linhx-chuan, không sửa bài",
+   "bao_cao_cho": "nu",
+   "chiu_trach_nhiem": "linh",
+   "tho": "phiên mới hoặc model khác thợ",
+   "skills": [
+    "linhx-chuan"
+   ],
+   "workflows": []
+  }
+ ]
+}

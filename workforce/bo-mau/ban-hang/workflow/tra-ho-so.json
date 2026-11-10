@@ -1,0 +1,26 @@
+{
+ "ten": "tra-ho-so",
+ "mo_ta": "Trả lời câu hỏi về năng lực, case, đội; gửi credential đúng bản. Đường nhanh: trả lời ngay trong nhóm, chỉ vào bảng việc khi phải soạn file.",
+ "vi_du": [
+  "@<tên bot> có case bất động sản không",
+  "@<tên bot> CEO là ai",
+  "/hoso credential"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "truong",
+   "skill": "linhx-chuan",
+   "viec": "Tra su-that.json + INDEX, trả lời ≤ 6 câu kèm nguồn; không có thì nói chưa có trong hồ sơ",
+   "dau_ra": "tra-loi.md"
+  }
+ ],
+ "tieu_chi": [
+  "Mỗi số, giá, tên có id trong 02-wiki/su-that.json mục chot hoặc file nguồn",
+  "Không có nội dung mục noi_bo (bảng giá đối tác, hoa hồng, giá sàn, pipeline)",
+  "Câu không có trong hồ sơ thì trả 'chưa có trong hồ sơ, em hỏi lại chủ đơn vị'",
+  "Không dùng mục cu trong su-that.json (tên, người, tên miền, liên hệ cũ)"
+ ],
+ "nguoi_duyet": "nhan-vien",
+ "tran_phut": 3
+}

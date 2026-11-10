@@ -1,0 +1,76 @@
+{
+ "skill:brand-ifagent": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "le/brand-ifagent"
+ },
+ "skill:linhx-chuan": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "le/linhx-chuan"
+ },
+ "skill:proposal-studio": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "bo/proposal-studio/skills/proposal-studio"
+ },
+ "skill:proposal-brief": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "bo/proposal-studio/skills/proposal-brief"
+ },
+ "skill:proposal-ideas": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "bo/proposal-studio/skills/proposal-ideas"
+ },
+ "skill:bao-cao": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "bo/linhx-report/skills/bao-cao"
+ },
+ "workflow:viec-chung": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "he-thong": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:nu": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:nu-lead": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:nu-proposal": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:nu-bao-cao": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:cham": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:tra-ho-so": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:tra-loi-lead": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:soan-proposal": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:bao-cao-sau-su-kien": {
+  "production": "1.0.0",
+  "truoc": []
+ }
+}

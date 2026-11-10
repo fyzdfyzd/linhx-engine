@@ -1,0 +1,65 @@
+{
+ "skill:linhx-chuan": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "le/linhx-chuan"
+ },
+ "skill:linhx-4d": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "le/linhx-4d"
+ },
+ "skill:research-loop": {
+  "production": "1.0.0",
+  "truoc": [],
+  "nguon": "le/research-loop"
+ },
+ "workflow:viec-chung": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "he-thong": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:designer": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:nghien-cuu": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:tho-dung": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "cong-nhan:cham": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:onboard-don-vi": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:dung-workforce": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:chay-bong": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:cham-muc": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:hoc-chuan-cao": {
+  "production": "1.0.0",
+  "truoc": []
+ },
+ "workflow:nang-mau": {
+  "production": "1.0.0",
+  "truoc": []
+ }
+}

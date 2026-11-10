@@ -1,0 +1,24 @@
+{
+  "don_vi": "ifagent-event",
+  "cap_nhat": "2026-11-09",
+  "luat": "Bot chỉ được nói số/giá/tên có trong mục 'chot'. Mục 'mau_thuan' và 'cu' thì phải nói rõ chưa chốt và chuyển người. Nguồn gốc nằm ở 01-nguon/NGUON.md.",
+  "chot": [
+    {"id": "ten", "gia_tri": "IF Agent (IFAGENT khi viết hoa toàn bộ)", "nguon": "skills/le/brand-ifagent/SKILL.md", "hieu_luc": "2026-10-19"},
+    {"id": "ceo", "gia_tri": "Nguyễn Thị Hằng", "nguon": "Linh xác nhận 19/10/2026 (memory ifagent-thong-tin-cong-ty)", "hieu_luc": "2026-10-19"},
+    {"id": "ten_mien", "gia_tri": "event.ifagent.net cho mảng sự kiện; ifagent.net là Agent Force", "nguon": "Linh chốt 6/11/2026", "hieu_luc": "2026-11-06"},
+    {"id": "tagline", "gia_tri": "AI That Activates", "nguon": "brand-ifagent"},
+    {"id": "idea_book", "gia_tri": "30 ý tưởng AI sự kiện, 5 nhóm × 6 (B2B, Giải trí, Marketing, Triển lãm, Lễ hội)", "nguon": "LAB043 nguon-bu/IFAGENT/IDEA_BOOK + 01_IFAGENT_CREDENTIAL.md mục 4"},
+    {"id": "sla_brief", "gia_tri": "Phản hồi brief < 24 giờ ngày làm việc", "nguon": "PARTNER_KIT/01_EVENT_AGENCIES/AGENCY_SLA.md", "hieu_luc_den": "2026-12-31"},
+    {"id": "dieu_khoan_tt", "gia_tri": "Cọc 50% khi ký, 50% trước ngày sự kiện; giá chưa gồm VAT, vận chuyển, venue", "nguon": "PARTNER_KIT/DEFAULT/04_PRICING_GUIDE.md mục 5", "quyen": "nhan_vien", "can_linh_xac_nhan": true}
+  ],
+  "mau_thuan": [
+    {"id": "gia_activation", "a": "AI Event Activation 350–500 triệu/sự kiện (01_STRATEGY/IFAGENT_PRODUCTS_PRICING.md, 1-pager)", "b": "AI Photo Booth từ 50 triệu, Video Booth từ 80 triệu, combo Event Starter 120 triệu (PARTNER_KIT/DEFAULT/04_PRICING_GUIDE.md)", "bot_noi": "Giá còn hai bảng chưa thống nhất, em chuyển anh/chị phụ trách báo giá."},
+    {"id": "case_bct_thu", "a": "BCT giá trị 300 triệu", "b": "'70% doanh thu đã thu (150M)' — 150/300 là 50%, không phải 70%", "nguon": "PARTNER_KIT/DEFAULT/01_IFAGENT_CREDENTIAL.md mục 5", "bot_noi": "Không nói số thu tiền; chỉ nêu kết quả đã công bố nếu case được phép nêu tên."}
+  ],
+  "cu": [
+    {"id": "ceo_cu", "gia_tri": "Đinh Trần Tuấn Linh", "o_dau": "02_BD_DATA/IFAGENT_PROFILE_1PAGER.md", "sua_thanh": "ceo"},
+    {"id": "mien_cu", "gia_tri": "ifagent.vn, hello@ifagent.vn, partner@ifagent.vn", "o_dau": "1-pager, credential, pricing guide", "sua_thanh": "ten_mien; email chưa chốt"},
+    {"id": "ba_dong_sp", "gia_tri": "3 dòng sản phẩm gồm AI Workforce và Vibe Fusion Platform", "o_dau": "credential mục 4", "ghi_chu": "Từ 6/11 workforce thuộc Agent Force; event chỉ còn Activation (chờ Linh xác nhận)"}
+  ],
+  "noi_bo": ["bảng giá đối tác", "hoa hồng connector", "giá sàn white label", "pipeline đối tác"]
+}

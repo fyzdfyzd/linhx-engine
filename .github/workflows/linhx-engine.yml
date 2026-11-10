@@ -42,6 +42,9 @@ jobs:
         working-directory: trang-bu
         run: npm ci
 
+      - name: Lõi Agent Force (tests/workforce)
+        run: python -m pytest tests/workforce -q
+
       - name: Chạy cổng kiểm (tests/nghiem-thu)
         run: |
           loi=0

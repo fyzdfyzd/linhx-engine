@@ -1,0 +1,40 @@
+{
+ "ten": "hoc-chuan-cao",
+ "mo_ta": "Mỗi tháng mỗi bộ mẫu: tìm 3 nguồn tiêu chuẩn cao nhất (skill đọc code, người giỏi nhất ngành), so mù với bản vàng, ghi af.py hoc-ngoai, thay bản vàng khi có bản tốt hơn",
+ "vi_du": [
+  "học từ người giỏi nhất cho bộ mẫu bán hàng",
+  "tìm skill tốt nhất cho proposal"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "nghien-cuu",
+   "skill": "research-loop",
+   "viec": "Tìm và đọc 3 nguồn: tên, vì sao là chuẩn cao nhất (giải, khách, số đo), đã đọc gì",
+   "dau_ra": "nguon.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "nghien-cuu",
+   "skill": "linhx-chuan",
+   "viec": "So mù sản phẩm của mình với nguồn, liệt kê điểm thua đo được",
+   "dau_ra": "so-sanh.md"
+  },
+  {
+   "id": "b3",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Kiểm nguồn có thật, so sánh có bằng chứng",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "3 nguồn có đường dẫn và lý do là chuẩn cao nhất",
+  "Mỗi điểm thua thành 1 lệnh af.py hoc-ngoai có nguồn",
+  "Không chép nội dung có bản quyền vào bản vàng; ghi đường dẫn"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 40
+}

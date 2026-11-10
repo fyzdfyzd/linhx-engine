@@ -1,0 +1,33 @@
+{
+ "ten": "bao-cao-sau-su-kien",
+ "mo_ta": "Từ số liệu + ảnh người trong nhóm đưa ra báo cáo 1–3 trang",
+ "vi_du": [
+  "/baocao <số liệu> + ảnh",
+  "@Nụ Event làm báo cáo sự kiện hôm qua"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "nu-bao-cao",
+   "skill": "bao-cao",
+   "viec": "Dựng báo cáo chỉ từ số trong dau-vao/",
+   "dau_ra": "bao-cao.md"
+  },
+  {
+   "id": "b2",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Đối chiếu từng số với dau-vao/",
+   "dau_ra": ""
+  }
+ ],
+ "tieu_chi": [
+  "Mỗi số, giá, tên có id trong 02-wiki/su-that.json mục chot hoặc file nguồn",
+  "Không có nội dung mục noi_bo (bảng giá đối tác, hoa hồng, giá sàn, pipeline)",
+  "Không dùng CEO cũ, ifagent.vn, email @ifagent.vn",
+  "Mọi số có trong dau-vao/; số trống ghi 'chưa có', không ghi 0",
+  "1–3 trang"
+ ],
+ "nguoi_duyet": "hang",
+ "tran_phut": 60
+}

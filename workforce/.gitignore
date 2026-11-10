@@ -1,0 +1,4 @@
+# Mẫu trong repo không kèm skill: chạy `af.py nap-skill <mẫu> --kho skills` để chép theo kenh.json
+mau/*/.agents/skills/*/
+mau/*/hop-thu/
+mau/*/viec/*/

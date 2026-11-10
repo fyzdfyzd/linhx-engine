@@ -1,0 +1,25 @@
+{
+ "ten": "ban-hang",
+ "ban": "0.1.0",
+ "mo_ta": "Trợ lý bán hàng B2B trong nhóm chat: tra hồ sơ năng lực, trả lời lead/brief, soạn proposal, báo cáo sau dự án. Tách từ Nụ Event (ifAgent Event, 9/11/2026).",
+ "hop_voi": [
+  "agency, dịch vụ sự kiện, B2B có brief và proposal",
+  "đơn vị có hồ sơ năng lực + case + bảng giá"
+ ],
+ "skills": [
+  "linhx-chuan",
+  "proposal-studio",
+  "proposal-brief",
+  "proposal-ideas",
+  "bao-cao"
+ ],
+ "them_khi_dung": [
+  "skill brand-<don-vi> (thương hiệu của đơn vị)",
+  "su-that.json: tên, người đứng đầu, tên miền, liên hệ, bảng giá, case được nêu tên",
+  "bản vàng mỗi workflow"
+ ],
+ "tieu_chuan": {},
+ "don_vi_da_dung": [
+  "ifAgent Event"
+ ]
+}

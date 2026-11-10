@@ -1,0 +1,31 @@
+{
+ "ten": "Workforce Designer",
+ "don_vi": "LINHX Agent Force",
+ "phien_ban_khuon": "0.1.0",
+ "chu": "linh",
+ "tien_to": "WD",
+ "kenh_mac_dinh": "zalo",
+ "nguong_de_xuat": 2,
+ "tran_luot_nguoi_ngay": 30,
+ "nhip_hoc": "cuối ngày 18:00 và ngay khi một việc bị trả lại",
+ "tieu_chuan": {
+  "m1": {
+   "ca_thu_toi_thieu": 10,
+   "tra_loi_nhanh_giay": 60
+  },
+  "m2": {
+   "ngay": 14,
+   "viec_toi_thieu": 20,
+   "ti_le_xong": 0.65,
+   "nguoi_dung_toi_thieu": 2,
+   "nhan_cam": [
+    "bia",
+    "lo-noi-bo"
+   ]
+  },
+  "m3": {
+   "don_vi_toi_thieu": 2
+  }
+ },
+ "tao_luc": "2026-11-09T08:16:12"
+}

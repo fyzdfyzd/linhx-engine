@@ -1,0 +1,24 @@
+{
+ "ten": "cham-muc",
+ "mo_ta": "Chấm mức tiêu chuẩn: af.py muc (1 mở nhóm, 2 đạt 14 ngày), af.py muc --mau (3 thành bộ mẫu)",
+ "vi_du": [
+  "chấm mức Nụ Event",
+  "đơn vị X mở nhóm được chưa"
+ ],
+ "buoc": [
+  {
+   "id": "b1",
+   "cong_nhan": "cham",
+   "skill": "linhx-chuan",
+   "viec": "Chạy af.py muc, ghi từng điều trượt kèm cách sửa",
+   "dau_ra": "muc.md"
+  }
+ ],
+ "tieu_chi": [
+  "Mọi file nằm trong thư mục workforce của đơn vị, không chép dữ liệu đơn vị này sang đơn vị khác",
+  "Không bí mật trong repo (af.py kiem DAT)",
+  "Mỗi điều trượt có cách sửa và người làm"
+ ],
+ "nguoi_duyet": "linh",
+ "tran_phut": 20
+}

@@ -1,0 +1,72 @@
+{
+ "nguoi": [
+  {
+   "ma": "linh",
+   "ten": "anh Tuấn Linh",
+   "vai": "chu",
+   "kenh": "zalo",
+   "dia_chi": ""
+  }
+ ],
+ "cong_nhan": [
+  {
+   "ma": "designer",
+   "ten": "Designer trưởng",
+   "vai": "nhận yêu cầu dựng workforce, chọn bộ mẫu, điều phối, bàn giao",
+   "bao_cao_cho": "linh",
+   "chiu_trach_nhiem": "linh",
+   "tho": "claude",
+   "skills": [
+    "linhx-4d"
+   ],
+   "workflows": [
+    "onboard-don-vi",
+    "dung-workforce",
+    "nang-mau"
+   ]
+  },
+  {
+   "ma": "nghien-cuu",
+   "ten": "Người tìm chuẩn cao nhất",
+   "vai": "tìm skill tốt nhất (đọc code), người làm giỏi nhất ngành, chọn bản vàng",
+   "bao_cao_cho": "designer",
+   "chiu_trach_nhiem": "linh",
+   "tho": "claude|gemini",
+   "skills": [
+    "research-loop"
+   ],
+   "workflows": [
+    "hoc-chuan-cao"
+   ]
+  },
+  {
+   "ma": "tho-dung",
+   "ten": "Thợ dựng",
+   "vai": "nạp nguồn thành wiki, viết workflow, viết bộ thử từ ca thật",
+   "bao_cao_cho": "designer",
+   "chiu_trach_nhiem": "linh",
+   "tho": "agy",
+   "skills": [
+    "linhx-chuan"
+   ],
+   "workflows": [
+    "dung-workforce",
+    "chay-bong"
+   ]
+  },
+  {
+   "ma": "cham",
+   "ten": "Người chấm chuẩn",
+   "vai": "chấm mức 1/2/3, so mù với bản vàng, không sửa bài",
+   "bao_cao_cho": "designer",
+   "chiu_trach_nhiem": "linh",
+   "tho": "phiên mới hoặc model khác thợ",
+   "skills": [
+    "linhx-chuan"
+   ],
+   "workflows": [
+    "cham-muc"
+   ]
+  }
+ ]
+}
