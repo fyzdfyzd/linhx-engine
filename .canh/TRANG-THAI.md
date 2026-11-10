@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-11 05:09 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, T4, K1, K2a)
+Cập nhật 2026-11-11 05:19 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, U3, T4, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
 | 1 | - | rảnh | DAT · Feature U3 · commit 9fc90a0 · nhánh tu-dong/engine-t1 · 2026-11-10T20:07:31 |
-| 2 | K2b | rảnh | CHUA_DAT · Feature K2b · commit 4ff8d82 · nhánh tu-dong/engine-t2 · 2026-11-10T20:37:37 |
+| 2 | - | rảnh | CHUA_DAT · Feature K2b · commit 5078ed6 · nhánh tu-dong/engine-t2 · 2026-11-11T05:13:05 |
 | 3 | - | rảnh | DAT · Feature T4 · commit dba6b4c · nhánh tu-dong/engine-t3 · 2026-11-11T05:00:06 |
 | 4 | - | rảnh | CHUA_DAT · Feature N5 · commit 08a781b · nhánh tu-dong/engine-t4 · 2026-11-11T04:40:54 |
 
@@ -16,6 +16,7 @@ Cập nhật 2026-11-11 05:09 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N
 
 ## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
 - K2
+- K2b
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -47,10 +48,9 @@ Cập nhật 2026-11-11 05:09 (giờ máy cty). Đạt: 67/69 (N1, N2, N3, N4, N
 - 2026-11-10T18:40:03 đối chiếu VM: - N5 HẠ VỀ chưa đạt (sai 2 lượt liền): ifagent http://35.198.251.2/ifagent/api/method/ping -> 417
 - 2026-11-10T18:42:54 agy hết hạn mức gói (429), ngưng giao tới 2026-11-10T19:42:54. Đổi tài khoản agy hoặc agy_model thì xoá D:\LINHX\ENGINE-canh\agy-het.txt
 - 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-11T05:13:04 K2b CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc 870acc0c, bản hỏng giữ ở nhánh cục bộ hong/K2b-20261111-0513, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\K2b.txt
 
 ## Nhật ký gần nhất
-At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
-+ ... 3; $i++) { $ra = git -C $TichHop push -q origin $NhanhTH 2>&1 | Out-S ...
 +
 - 2026-11-11 04:24 t3: giao agy phiếu 20261111-0423-t3: T4 (lượt sửa)
 - 2026-11-11 04:26 t2: giao agy phiếu 20261111-0424-t2: K2b (lượt sửa)
@@ -61,4 +61,6 @@ At D:\LINHX\LINHX-ENGINE\canh\dieu-phoi-engine.ps1:35 char:40
 - 2026-11-11 04:50 t2: agy xong phiếu 20261111-0424-t2 (K2b) sau 24 phút
 - 2026-11-11 05:00 t3: T4 DAT, đã gộp vào main
 - 2026-11-11 05:02 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-11 05:13 t2: K2b CHUA_DAT lần 3 (commit 5078ed6)
+- 2026-11-11 05:13 t2: K2b chạm trần 3 lần CHUA_DAT: lùi về mốc, dừng
 
