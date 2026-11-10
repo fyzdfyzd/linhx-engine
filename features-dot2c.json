@@ -20,8 +20,8 @@
         "chạy thật một lượt trên VM linhx-engine-1"
       ],
       "lenh_kiem": "python -m pytest tests/nghiem-thu/test_v1.py -q",
-      "passes": false,
-      "bang_chung": ""
+      "passes": true,
+      "bang_chung": "bang-chung/V1/vm.json"
     },
     {
       "id": "V2",
