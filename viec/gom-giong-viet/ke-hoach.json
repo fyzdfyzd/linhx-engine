@@ -1,0 +1,190 @@
+{
+ "du_an": "Gom bộ skill viết theo giọng Linh",
+ "loai": "tu-viet",
+ "che_do": "claude-quan-tri",
+ "cong_da_mo": [],
+ "phieu": [
+  {
+   "ma": "P01",
+   "viec": "Đo lại mốc giọng từ ĐÚNG 7 bài đã đăng ở references/bai-mau, ghi đè moc-giong.json của cả hai plugin (viet-bai/du-lieu và viet-giong-viet/scripts). Không lẫn essay chưa đăng.",
+   "doc": [
+    "../../skills/bo/linhx-viet-giong-viet/references/bai-mau",
+    "../../skills/bo/linhx-viet-giong-viet/scripts/kiem_van.py",
+    "../../skills/bo/linhx-viet-bai/du-lieu/moc-giong.json"
+   ],
+   "dau_ra": [
+    "../../skills/bo/linhx-viet-bai/du-lieu/moc-giong.json",
+    "../../skills/bo/linhx-viet-giong-viet/scripts/moc-giong.json"
+   ],
+   "tieu_chi": [
+    "_so_bai = 7 ở cả 2 file",
+    "cau_trung_vi trong dải 26–29 (mốc Linh 27,4)"
+   ],
+   "lenh_kiem": "python -c \"import json;[exec('m=json.load(open(f,encoding=\\'utf-8\\'))[\\'moc\\'];assert m[\\'_so_bai\\']==7 and 26<=m[\\'cau_trung_vi\\']<=29,f') for f in ['../../skills/bo/linhx-viet-bai/du-lieu/moc-giong.json','../../skills/bo/linhx-viet-giong-viet/scripts/moc-giong.json']];print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 25,
+   "phu_thuoc": [],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P02",
+   "viec": "Viết scripts/kiem_giu_nghia.py trong linhx-viet-bai: so bản trước/sau làm mượt, báo số thêm/mất, câu khẳng định đổi mức (rào đón, quy kết, nhân quả, phủ định, điều kiện), dài > 1,25 lần, hệ số biến thiên độ dài câu < 0,35. In JSON + mã thoát 1 khi trượt. Kèm tests/test_kiem_giu_nghia.py ≥ 6 ca.",
+   "doc": [
+    "nguon/WF06.md",
+    "nguon/WF06-NGHIEN-CUU.md",
+    "../../skills/bo/linhx-viet-giong-viet/scripts/kiem_nhap.py"
+   ],
+   "dau_ra": [
+    "../../skills/bo/linhx-viet-bai/scripts/kiem_giu_nghia.py",
+    "../../skills/bo/linhx-viet-bai/tests/test_kiem_giu_nghia.py"
+   ],
+   "tieu_chi": [
+    "≥ 6 test pytest đạt",
+    "có file kiem_giu_nghia.py"
+   ],
+   "lenh_kiem": "python -m pytest -q ../../skills/bo/linhx-viet-bai/tests/test_kiem_giu_nghia.py",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 40,
+   "phu_thuoc": [],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P03",
+   "viec": "Chạy kiem_van.py và kiem_giu_nghia.py (chế độ một bản: chỉ đo nhịp) lên 7 bài đã đăng, đặt ngưỡng sao cho 0/7 bài bị gắn cờ, ghi du-lieu/nguong.json + DUONG-TINH-GIA.md (bảng 7 dòng).",
+   "doc": [
+    "../../skills/bo/linhx-viet-bai/scripts/kiem_van.py",
+    "../../skills/bo/linhx-viet-bai/scripts/kiem_giu_nghia.py",
+    "../../skills/bo/linhx-viet-giong-viet/references/bai-mau"
+   ],
+   "dau_ra": [
+    "../../skills/bo/linhx-viet-bai/du-lieu/nguong.json",
+    "DUONG-TINH-GIA.md"
+   ],
+   "tieu_chi": [
+    "DUONG-TINH-GIA.md có 7 dòng bài",
+    "0/7 bài bị cờ ở ngưỡng mới"
+   ],
+   "lenh_kiem": "python -c \"import json;json.load(open('../../skills/bo/linhx-viet-bai/du-lieu/nguong.json',encoding='utf-8'));t=open('DUONG-TINH-GIA.md',encoding='utf-8').read();assert t.count('.md')>=7;print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 30,
+   "phu_thuoc": [
+    "P01",
+    "P02"
+   ],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P04",
+   "viec": "Viết khuôn: khuon/SO-QUY-UOC.md (tên riêng, thuật ngữ, cách viết số, ai nói gì) và khuon/CONG-CAU-TRUC.md (luận đề một câu, ≤ 3 ý, mỗi ý một dòng bằng chứng) trong skill viet-giong-linh.",
+   "doc": [
+    "nguon/WF06.md",
+    "LENH.md"
+   ],
+   "dau_ra": [
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/SO-QUY-UOC.md",
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/CONG-CAU-TRUC.md"
+   ],
+   "tieu_chi": [
+    "có file SO-QUY-UOC.md",
+    "có file CONG-CAU-TRUC.md có mục 'Luận đề'"
+   ],
+   "lenh_kiem": "python -c \"t=open('../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/CONG-CAU-TRUC.md',encoding='utf-8').read();assert 'Luận đề' in t;open('../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/khuon/SO-QUY-UOC.md');print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 20,
+   "phu_thuoc": [],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P05",
+   "viec": "Viết skills/viet-giong-linh/SKILL.md theo LENH mục 'Cửa vào phải làm gì' 1–7: bảng định tuyến 4 dòng trỏ đúng skill con, hồ sơ giọng, cổng cấu trúc, sổ quy ước, lệnh kiem_giu_nghia, ngưỡng từ nguong.json. ≤ 150 dòng. Chạy skill_kiem.py --index.",
+   "doc": [
+    "LENH.md",
+    "nguon/WF06.md",
+    "nguon/WF16-NGHIEN-CUU.md",
+    "../../skills/bo/linhx-viet-bai/skills/giong-linh/SKILL.md",
+    "../../skills/bo/linhx-viet-giong-viet/skills/viet-bai-giong-viet/SKILL.md",
+    "../../skills/bo/linhx-viet-bai/skills/new-article/SKILL.md"
+   ],
+   "dau_ra": [
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/SKILL.md",
+    "../../skills/INDEX.md"
+   ],
+   "tieu_chi": [
+    "có mục 'Định tuyến' 4 dòng",
+    "≤ 150 dòng",
+    "có mục viet-giong-linh trong INDEX.md"
+   ],
+   "lenh_kiem": "python -c \"t=open('../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/SKILL.md',encoding='utf-8').read();assert 'Định tuyến' in t and len(t.splitlines())<=150 and 'kiem_giu_nghia' in t;assert 'viet-giong-linh' in open('../../skills/INDEX.md',encoding='utf-8').read();print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 40,
+   "phu_thuoc": [
+    "P03",
+    "P04"
+   ],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P06",
+   "viec": "Gắn nhãn 'Đã gộp vào viet-giong-linh' (dòng đầu thân + description) cho viet-bai, new-article, viet-bai-giong-viet, le/bm1_01..09. Không đổi chỗ khác. Chạy skill_kiem.py --index.",
+   "doc": [
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/SKILL.md"
+   ],
+   "dau_ra": [
+    "12 SKILL.md đã gắn nhãn",
+    "../../skills/INDEX.md"
+   ],
+   "tieu_chi": [
+    "12 SKILL.md có chữ 'Đã gộp vào viet-giong-linh'"
+   ],
+   "lenh_kiem": "python -c \"import glob;f=glob.glob('../../skills/le/bm1_0*/SKILL.md')+['../../skills/bo/linhx-viet-bai/skills/viet-bai/SKILL.md','../../skills/bo/linhx-viet-bai/skills/new-article/SKILL.md','../../skills/bo/linhx-viet-giong-viet/skills/viet-bai-giong-viet/SKILL.md'];n=sum('Đã gộp vào viet-giong-linh' in open(x,encoding='utf-8').read() for x in f);assert n==12,n;print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 20,
+   "phu_thuoc": [
+    "P05"
+   ],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  },
+  {
+   "ma": "P07",
+   "viec": "Chạy thử cửa vào chế độ 'bài có nháp của Linh' trên bài V1 (bản trước Vân Anh sửa) ở WF06 vang/: làm mượt theo luồng, chạy kiem_giu_nghia trước/sau, ghi CHAY-THU.md (lệnh, kết quả JSON, 3 chỗ lệch so với bản Vân Anh). Không sửa skill.",
+   "doc": [
+    "../../skills/bo/linhx-viet-bai/skills/viet-giong-linh/SKILL.md",
+    "D:\\linhx\\linhx-engine (nhánh claude/project-thread-jmaq7q) workflows/WF06-bai-viet-hay/vang/V1*"
+   ],
+   "dau_ra": [
+    "CHAY-THU.md"
+   ],
+   "tieu_chi": [
+    "CHAY-THU.md có mục 'kiem_giu_nghia' và 3 chỗ lệch"
+   ],
+   "lenh_kiem": "python -c \"t=open('CHAY-THU.md',encoding='utf-8').read();assert 'kiem_giu_nghia' in t;print('DAT')\"",
+   "tho": "agy",
+   "nguoi_cham": "agy-moi",
+   "tran_phut": 40,
+   "phu_thuoc": [
+    "P06"
+   ],
+   "trang_thai": "cho",
+   "vong": 0,
+   "nhat_ky": []
+  }
+ ]
+}
