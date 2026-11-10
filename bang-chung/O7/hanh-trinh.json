@@ -1,0 +1,55 @@
+{
+  "luc": "2026-11-10T03:26:10+00:00",
+  "may": "linhx-engine-1.asia-southeast1-b.c.linhx-engine.internal",
+  "url_linhx": "http://35.198.251.2/linhx",
+  "ket_qua": "passed",
+  "rong": [
+    390,
+    1280
+  ],
+  "so_test": 2,
+  "ma_phieu": "50bmojmn5d",
+  "trang_thai_di_qua": [
+    "nhap",
+    "duyet",
+    "giao",
+    "nop",
+    "dat"
+  ],
+  "chi_tiet": [
+    {
+      "rong": 390,
+      "ma_phieu": "4uerchparp",
+      "tho": "tho-3",
+      "commit": "19750032901967ea8d8361435c3dd24d873e087d",
+      "nhanh": "tu-dong/engine-t3",
+      "phut": 2.4,
+      "so_luong_token": 14800,
+      "ket_luan": "DAT",
+      "trang_thai_di_qua": [
+        "nhap",
+        "duyet",
+        "giao",
+        "nop",
+        "dat"
+      ]
+    },
+    {
+      "rong": 1280,
+      "ma_phieu": "50bmojmn5d",
+      "tho": "tho-3",
+      "commit": "a32129bbd83cb1624c04ecbcce3f0e2b88b239bf",
+      "nhanh": "tu-dong/engine-t3",
+      "phut": 2.4,
+      "so_luong_token": 14800,
+      "ket_luan": "DAT",
+      "trang_thai_di_qua": [
+        "nhap",
+        "duyet",
+        "giao",
+        "nop",
+        "dat"
+      ]
+    }
+  ]
+}
