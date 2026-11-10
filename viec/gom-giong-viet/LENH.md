@@ -60,6 +60,17 @@ Hiệu chuẩn: chấm thử ma trận lên 7 bài đã đăng; bài Linh không
 8. Phiếu ≤ 800 từ, đọc trong 5 phút; mục bị loại để ở phụ lục, không xoá.
 Phép thử cuối: Linh viết được nháp gạch đầu dòng từ phiếu mà không phải tìm thêm gì. Phải tìm thêm thì ghi lại thiếu gì để sửa B3.
 
+### Sau D1: lưu kho (Linh 10/11)
+Mọi mục tốt của KHO-Y (cả mục bị loại, kèm lý do) ghi vào vault của Linh, không lập kho thứ tư: thẻ chủ đề + loại + nhãn nguồn + cờ "đã kiểm nguồn" để lần sau không kiểm lại. Khuôn và giọng tìm ở D2 cũng lưu như vậy (thư mục khuon/, giong/ trong vault).
+
+### Kim cương 2 (Linh 10/11)
+- K1 Tìm khuôn: kho bài mẫu hay → bài kinh điển → sách dạy viết (kim tự tháp ngược, bánh kẹp, khuôn WSJ...). Mỗi khuôn ghi: hợp loại bài nào, độ dài nào, 1 bài thật làm ví dụ. Lọc theo mục tiêu đổi nhận thức (kim tự tháp ngược hợp tin, ít hợp bài đổi nhận thức).
+- K2 Tìm giọng: bắt đầu từ 7 bài của Linh; bài giọng kinh điển chỉ được mượn NƯỚC ĐI cụ thể (nhịp, cách mở, cách chuyển), không nhại cả giọng. Mốc đo vẫn là 7 bài của Linh.
+- K3 Chấm khuôn và giọng riêng theo độc giả chính, lấy top 2 × top 2 = tối đa 4 phương án (không ghép hết a×b).
+- K4 Mỗi phương án AI chỉ viết mẫu ngắn: đoạn mở + dàn ý theo khuôn + 1 đoạn thân (≤ 300 từ). Chấm kỹ: ma trận + kiểm nhắc lại + chấm cặp đảo trái/phải + nhóm giữ riêng. Linh chọn 1 (cổng D3).
+- K5 Linh viết nháp gạch đầu dòng theo phương án thắng (luật Vân Anh: AI chỉ dùng được ý, không dùng được diễn đạt); AI làm mượt.
+- K6 Tráng giọng + biên tập: luật VA-01..08, kiem_giu_nghia (không đổi ý, mức khẳng định, số), ≤ 3 vòng. Đọc lại cuối là người thật (Linh/Vân Anh) = cổng D4.
+
 ### Lượng ý vừa sức đọc (Linh 10/11)
 - Ngân sách ý theo độ dài: đo từ 7 bài đã đăng (số ý phụ / 1000 từ, số khái niệm mới mỗi đoạn, số liệu mỗi đoạn), đặt dải theo 7 bài, không tự bịa số.
 - Mỗi ý phụ phải có chỗ thở: một chất liệu (chuyện, ví dụ) + một câu "vậy thì sao" cho độc giả. Ý không có chỗ thở thì bỏ hoặc gộp.
