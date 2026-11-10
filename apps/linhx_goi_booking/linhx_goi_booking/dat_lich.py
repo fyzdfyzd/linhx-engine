@@ -1,4 +1,4 @@
-"""Logic thuần Python đặt lịch gọi tư vấn (F2): kiểm giờ làm 8–18h giờ VN, chặn trùng giờ cùng người phụ trách, liệt kê việc chờ."""
+"""Logic thuần Python đặt lịch gọi tư vấn (F2 / G3): kiểm giờ làm 8–18h giờ VN, chặn trùng giờ cùng người phụ trách, liệt kê việc chờ."""
 from __future__ import annotations
 
 import copy
