@@ -30,7 +30,9 @@
     "G4@1011-agy-quota-2",
     "P1@1011-agy-quota-2",
     "U3@1011-agy-quota-2",
-    "V1@1011-agy-quota-2"
+    "V1@1011-agy-quota-2",
+    "U3@1011-cong-vm-khong-git",
+    "G1@1011-cong-vm-khong-git"
   ],
   "agy_toan_quyen": true,
   "agy_model": "",
