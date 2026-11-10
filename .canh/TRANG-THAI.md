@@ -1,12 +1,12 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 18:40 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
+Cập nhật 2026-11-10 18:49 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1, K2a)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | U3 | rảnh | CHUA_DAT · Feature U3 · commit 904be5d · nhánh tu-dong/engine-t1 · 2026-11-10T17:55:02 |
-| 2 | K2b | 20261110-1815-t2 từ 2026-11-10T18:15:18 | DAT · Feature K2a · commit 98cef05 · nhánh tu-dong/engine-t2 · 2026-11-10T18:14:18 |
-| 3 | T4 | 20261110-1800-t3 từ 2026-11-10T18:00:20 | CHUA_DAT · Feature U3 · commit 839d5b8 · nhánh tu-dong/engine-t3 · 2026-11-10T17:23:06 |
+| 1 | U3 | rảnh | CHUA_DAT · Feature U3 · commit 63768e2 · nhánh tu-dong/engine-t1 · 2026-11-10T18:47:28 |
+| 2 | K2b | rảnh | CHUA_DAT · Feature K2b · commit 8e799f8 · nhánh tu-dong/engine-t2 · 2026-11-10T18:43:09 |
+| 3 | T4 | rảnh | CHUA_DAT · Feature T4 · commit 90ac99d · nhánh tu-dong/engine-t3 · 2026-11-10T18:41:07 |
 | 4 | - | rảnh | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
 
 ## Chờ
@@ -15,9 +15,6 @@ Cập nhật 2026-11-10 18:40 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N
 
 ## Chạm trần CHUA_DAT (đã lùi về mốc, ngưng giao)
 - K2
-
-## Đối chiếu VM
-- N5 HẠ VỀ chưa đạt (sai 2 lượt liền): ifagent http://35.198.251.2/ifagent/api/method/ping -> 417
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -47,18 +44,20 @@ Cập nhật 2026-11-10 18:40 (giờ máy cty). Đạt: 65/69 (N1, N2, N3, N4, N
 - 2026-11-10T17:23:03 K2 CHUA_DAT 3 lần liền (thợ 2): đã lùi tu-dong/engine-t2 về mốc bd6862e0, bản hỏng giữ ở nhánh cục bộ hong/K2-20261110-1722, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\K2.txt
 - 2026-11-10T17:23:06 U3 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 6585d3a1, bản hỏng giữ ở nhánh cục bộ hong/U3-20261110-1723, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\U3.txt
 - 2026-11-10T18:40:03 đối chiếu VM: - N5 HẠ VỀ chưa đạt (sai 2 lượt liền): ifagent http://35.198.251.2/ifagent/api/method/ping -> 417
+- 2026-11-10T18:42:54 agy hết hạn mức gói (429), ngưng giao tới 2026-11-10T19:42:54. Đổi tài khoản agy hoặc agy_model thì xoá D:\LINHX\ENGINE-canh\agy-het.txt
+- 2026-11-10T18:43:09 smoke test máy hỏng, ngưng giao: agy hết hạn mức tới 2026-11-10T19:42:54
 
 ## Nhật ký gần nhất
-- 2026-11-10 17:55 t1: U3 CHUA_DAT lần 1 (commit 904be5d)
-- 2026-11-10 17:55 t1: giao agy phiếu 20261110-1755-t1: U3 (lượt sửa)
-- 2026-11-10 17:56 t2: agy xong phiếu 20261110-1739-t2 (K2a) sau 17 phút
-- 2026-11-10 17:56 t2: K2a: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
-- 2026-11-10 17:56 t2: K2a: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
-- 2026-11-10 18:00 t3: giao agy phiếu 20261110-1800-t3: T4
-- 2026-11-10 18:14 t2: K2a DAT, đã gộp vào main
-- 2026-11-10 18:15 t2: giao agy phiếu 20261110-1815-t2: K2b
-- 2026-11-10 18:20 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
-- 2026-11-10 18:34 t1: agy xong phiếu 20261110-1755-t1 (U3) sau 39 phút
-- 2026-11-10 18:36 t1: U3: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
-- 2026-11-10 18:36 t1: U3: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 18:42 t2: K2b agy thoát sau 0 phút lần 1, .err: error: Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 43m32s. / AGY_ERROR: {"short_error":"RESOURCE_EXHAUSTED (code 429): Individual quota reached. Please upgrade your subscription to increase your limits. Resets in 43m32s.","status":"RESOURCE_EXHAUSTED
+- 2026-11-10 18:42 t2: K2b: agy hết hạn mức, không tính trần; ngưng giao tới 2026-11-10T19:42:54
+- 2026-11-10 18:43 t2: K2b: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 18:43 t2: K2b: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 18:43 t2: K2b trượt do lỗi máy (commit 8e799f8), không tính lần
+- 2026-11-10 18:43 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:43 t2: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-10 18:47 t1: U3 CHUA_DAT lần 2 (commit 63768e2)
+- 2026-11-10 18:47 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:47 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
+- 2026-11-10 18:49 t1: smoke test hỏng, chưa giao U3: agy hết hạn mức tới 2026-11-10T19:42:54
+- 2026-11-10 18:49 t2: smoke test hỏng, chưa giao K2b: agy hết hạn mức tới 2026-11-10T19:42:54
 
