@@ -1,0 +1,108 @@
+{
+  "feature": "G2",
+  "luc": "2026-11-10T14:37:18+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g2.py -q",
+  "pytest_returncode": 0,
+  "pytest_q_stdout": [
+    "....                                                                     [100%]",
+    "4 passed in 0.29s"
+  ],
+  "pytest_day_du_returncode": 0,
+  "pytest_v_stdout": [
+    "============================= test session starts =============================",
+    "platform win32 -- Python 3.12.10, pytest-9.2.0, pluggy-1.7.0 -- C:\\Users\\ADMIN\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+    "rootdir: D:\\LINHX\\ENGINE-t2",
+    "configfile: pytest.ini",
+    "plugins: anyio-4.15.1, platformdirs-4.14.0",
+    "collecting ... collected 21 items",
+    "",
+    "tests/nghiem-thu/test_g2.py::test_app_va_khai_bao PASSED                 [  4%]",
+    "tests/nghiem-thu/test_g2.py::test_da_chuyen_het PASSED                   [  9%]",
+    "tests/nghiem-thu/test_g2.py::test_kien_truc PASSED                       [ 14%]",
+    "tests/nghiem-thu/test_g2.py::test_khai_giao_bao_cao PASSED               [ 19%]",
+    "tests/nghiem-thu/test_b4.py::test_da_tra_sinh_job_vao_hang PASSED        [ 23%]",
+    "tests/nghiem-thu/test_b4.py::test_khong_sinh_khi_chua_tra_trung_hoac_khong_workflow PASSED [ 28%]",
+    "tests/nghiem-thu/test_b4.py::test_link_bao_cao PASSED                    [ 33%]",
+    "tests/nghiem-thu/test_b4.py::test_noi_hook_va_lx_job PASSED              [ 38%]",
+    "tests/nghiem-thu/test_q1.py::test_catalog_cong_khai PASSED               [ 42%]",
+    "tests/nghiem-thu/test_q1.py::test_api_ban PASSED                         [ 47%]",
+    "tests/nghiem-thu/test_q1.py::test_front_khong_viet_cung_gia PASSED       [ 52%]",
+    "tests/nghiem-thu/test_q1.py::test_tu_trang_ban_toi_qr_3_buoc PASSED      [ 57%]",
+    "tests/nghiem-thu/test_l3.py::test_goi_co_loai_giao PASSED                [ 61%]",
+    "tests/nghiem-thu/test_l3.py::test_can_phat_chi_khi_chuyen_sang_da_tra PASSED [ 66%]",
+    "tests/nghiem-thu/test_l3.py::test_chon_va_goi_ham_giao PASSED            [ 71%]",
+    "tests/nghiem-thu/test_l4.py::test_api_cong_khai PASSED                   [ 76%]",
+    "tests/nghiem-thu/test_l4.py::test_luat_ba_lop PASSED                     [ 80%]",
+    "apps/linhx_goi_baocao/linhx_goi_baocao/test_baocao.py::test_khai_bao_module_va_hook_loi PASSED [ 85%]",
+    "apps/linhx_goi_baocao/linhx_goi_baocao/test_baocao.py::test_ban_bao_cao_catalog_va_so_tien_don PASSED [ 90%]",
+    "apps/linhx_goi_baocao/linhx_goi_baocao/test_baocao.py::test_luong_su_kien_don_da_tra_giao_bao_cao_thuan_python PASSED [ 95%]",
+    "apps/linhx_goi_baocao/linhx_goi_baocao/test_baocao.py::test_giao_bao_cao_qua_frappe_db_tu_dict_don PASSED [100%]",
+    "",
+    "============================= 21 passed in 3.03s =============================="
+  ],
+  "tep_log": "bang-chung/G2/kiem.log",
+  "module_json": {
+    "ten": "linhx_goi_baocao",
+    "ban": "0.1.0",
+    "lop": "goi",
+    "can_loi": ">=0.3.0",
+    "phu_thuoc": [],
+    "nghe": {},
+    "cung_cap": {
+      "baocao.goi_cong_khai": "linhx_goi_baocao.ban_bao_cao.goi_cong_khai",
+      "baocao.so_tien_don": "linhx_goi_baocao.ban_bao_cao.so_tien_don",
+      "baocao.mot_dong": "linhx_goi_baocao.sau_tra.mot_dong",
+      "baocao.tao_dau_vao": "linhx_goi_baocao.sau_tra.tao_dau_vao",
+      "baocao.lam_sach_du_lieu_khach": "linhx_goi_baocao.sau_tra.lam_sach_du_lieu_khach",
+      "baocao.boc_du_lieu_khach": "linhx_goi_baocao.sau_tra.boc_du_lieu_khach",
+      "baocao.viec_can_tao": "linhx_goi_baocao.sau_tra.viec_can_tao",
+      "baocao.link_bao_cao": "linhx_goi_baocao.sau_tra.link_bao_cao",
+      "baocao.xu_ly_sau_tra": "linhx_goi_baocao.sau_tra.xu_ly_sau_tra",
+      "baocao.quet_don_da_tra_chua_co_job": "linhx_goi_baocao.sau_tra.quet_don_da_tra_chua_co_job"
+    },
+    "giao": {
+      "bao_cao": "linhx_goi_baocao.sau_tra.giao_bao_cao"
+    }
+  },
+  "tra_ham_giao": {
+    "bao_cao": [
+      "linhx_goi_baocao.sau_tra.giao_bao_cao"
+    ]
+  },
+  "tra_ham_cung_cap": {
+    "baocao.goi_cong_khai": [
+      "linhx_goi_baocao.ban_bao_cao.goi_cong_khai"
+    ],
+    "baocao.so_tien_don": [
+      "linhx_goi_baocao.ban_bao_cao.so_tien_don"
+    ],
+    "baocao.mot_dong": [
+      "linhx_goi_baocao.sau_tra.mot_dong"
+    ],
+    "baocao.tao_dau_vao": [
+      "linhx_goi_baocao.sau_tra.tao_dau_vao"
+    ],
+    "baocao.lam_sach_du_lieu_khach": [
+      "linhx_goi_baocao.sau_tra.lam_sach_du_lieu_khach"
+    ],
+    "baocao.boc_du_lieu_khach": [
+      "linhx_goi_baocao.sau_tra.boc_du_lieu_khach"
+    ],
+    "baocao.viec_can_tao": [
+      "linhx_goi_baocao.sau_tra.viec_can_tao"
+    ],
+    "baocao.link_bao_cao": [
+      "linhx_goi_baocao.sau_tra.link_bao_cao"
+    ],
+    "baocao.xu_ly_sau_tra": [
+      "linhx_goi_baocao.sau_tra.xu_ly_sau_tra"
+    ],
+    "baocao.quet_don_da_tra_chua_co_job": [
+      "linhx_goi_baocao.sau_tra.quet_don_da_tra_chua_co_job"
+    ]
+  },
+  "da_xoa_file_cu": [
+    true,
+    true
+  ]
+}

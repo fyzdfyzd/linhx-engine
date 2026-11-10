@@ -1,0 +1,6 @@
+app_name = "linhx_goi_baocao"
+app_title = "LINHX Goi Baocao"
+app_publisher = "LINHX"
+app_description = "Gói báo cáo cho LINHX ENGINE"
+app_email = "dev@linhx.vn"
+app_license = "mit"

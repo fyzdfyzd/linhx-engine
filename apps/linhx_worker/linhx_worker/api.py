@@ -4,14 +4,42 @@ Tho:   heartbeat -> nhan_viec -> (chay agy) -> bao_ket_qua
 Mat tien (linhx-front): bang, giao_viec, huy_viec
 """
 import hmac
+import importlib
 import json
+import pathlib
+import sys
 
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_core.pay.sau_tra import mot_dong, quet_don_da_tra_chua_co_job, tao_dau_vao
+_THU_MUC_APPS = pathlib.Path(__file__).resolve().parents[2]
+_THU_MUC_CORE = _THU_MUC_APPS / "linhx_core"
+if _THU_MUC_CORE.is_dir() and str(_THU_MUC_CORE) not in sys.path:
+    sys.path.insert(0, str(_THU_MUC_CORE))
+
+from linhx_core import su_kien
+from linhx_core.api import tim_ham
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
+
+
+def _nap_ham_cung_cap(khoa: str):
+    ds = tim_ham("cung_cap", khoa)
+    if not ds:
+        raise LookupError(f"Không tìm thấy hàm cung_cap cho {khoa}")
+    duong_ham = ds[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    thu_muc_app = _THU_MUC_APPS / ten_app
+    if thu_muc_app.is_dir() and str(thu_muc_app) not in sys.path:
+        sys.path.insert(0, str(thu_muc_app))
+    mod = importlib.import_module(ten_module)
+    return getattr(mod, ten_ham)
+
+
+mot_dong = _nap_ham_cung_cap("baocao.mot_dong")
+quet_don_da_tra_chua_co_job = _nap_ham_cung_cap("baocao.quet_don_da_tra_chua_co_job")
+tao_dau_vao = _nap_ham_cung_cap("baocao.tao_dau_vao")
 
 PHIEN_BAN_API = "0.1"
 OFFLINE_SAU_GIAY = 120
@@ -349,6 +377,10 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
+    try:
+        su_kien.chay()
+    except Exception:
+        pass
     quet_don_da_tra_chua_co_job()
     quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)

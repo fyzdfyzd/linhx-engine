@@ -82,10 +82,7 @@ doc_events = {
             **(
                 {
                     "before_save": "linhx_core.giao_hang.ghi_nhan_trang_thai_truoc_luu",
-                    "on_update": [
-                        "linhx_core.giao_hang.phat_khi_don_da_tra",
-                        "linhx_core.pay.sau_tra.xu_ly_sau_tra",
-                    ],
+                    "on_update": "linhx_core.giao_hang.phat_khi_don_da_tra",
                 }
                 if dt == "LX Don"
                 else {}

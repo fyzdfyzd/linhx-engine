@@ -7,6 +7,7 @@ ai-noi-gi-ve-brand:
 """
 import hashlib
 import hmac
+import importlib
 import json
 import os
 import platform
@@ -14,6 +15,7 @@ import re
 import shlex
 import stat
 import subprocess
+import sys
 import tempfile
 import time
 from pathlib import Path
@@ -21,8 +23,30 @@ from pathlib import Path
 import frappe
 from frappe.utils import now_datetime
 
-from linhx_core.pay.sau_tra import lam_sach_du_lieu_khach
+_THU_MUC_APPS = Path(__file__).resolve().parents[2]
+_THU_MUC_CORE = _THU_MUC_APPS / "linhx_core"
+if _THU_MUC_CORE.is_dir() and str(_THU_MUC_CORE) not in sys.path:
+    sys.path.insert(0, str(_THU_MUC_CORE))
+
+from linhx_core.api import tim_ham
 from linhx_worker import bao_cao
+
+
+def _nap_ham_cung_cap(khoa: str):
+    ds = tim_ham("cung_cap", khoa)
+    if not ds:
+        raise LookupError(f"Không tìm thấy hàm cung_cap cho {khoa}")
+    duong_ham = ds[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    thu_muc_app = _THU_MUC_APPS / ten_app
+    if thu_muc_app.is_dir() and str(thu_muc_app) not in sys.path:
+        sys.path.insert(0, str(thu_muc_app))
+    mod = importlib.import_module(ten_module)
+    return getattr(mod, ten_ham)
+
+
+lam_sach_du_lieu_khach = _nap_ham_cung_cap("baocao.lam_sach_du_lieu_khach")
 
 MANG_CHO_PHEP = (
     "https://chatgpt.com",

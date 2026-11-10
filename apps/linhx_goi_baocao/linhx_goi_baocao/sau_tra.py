@@ -8,12 +8,20 @@ from __future__ import annotations
 
 from datetime import datetime
 import os
+import pathlib
 import re
+import secrets
+import sys
 import traceback
 
-from linhx_core.pay.quyen_dung import gia_hop_le
+_THU_MUC_CORE = pathlib.Path(__file__).resolve().parents[2] / "linhx_core"
+if _THU_MUC_CORE.is_dir() and str(_THU_MUC_CORE) not in sys.path:
+	sys.path.insert(0, str(_THU_MUC_CORE))
+
+from linhx_core.api import gia_hop_le
 
 NGUON_PROTO = "nguon/03-opc-os/modules/03_flow_thanh_toan_sinh_report/module.py"
+WORKFLOW_BAO_CAO_MAC_DINH = "ai-noi-gi-ve-brand"
 # Lớp bọc trong đề (prompt instruction) khi đọc khối <du_lieu_khach>.
 # Chặn thực thi thật nằm ở `linhx_worker.api.nhan_viec` (chỉ giao việc `nguon in ('khach', 'don')`
 # cho runner đã nâng cấp gửi chữ ký HMAC `chu_ky_sandbox` hợp lệ qua `xac_thuc_sandbox_tho`)
@@ -29,6 +37,40 @@ _MAU_TIEU_DE_GIA_MAO = re.compile(
 	flags=re.IGNORECASE,
 )
 BAC_BACKOFF_PHUT: tuple[int, ...] = (1, 5, 15, 60)
+
+
+def _lay_gia_tri(nguon: object, ten: str, mac_dinh: object = None) -> object:
+	if isinstance(nguon, dict):
+		return nguon.get(ten, mac_dinh)
+	return getattr(nguon, ten, mac_dinh)
+
+
+def _gan_gia_tri(nguon: object, ten: str, gia_tri: object) -> None:
+	if isinstance(nguon, dict):
+		nguon[ten] = gia_tri
+		return
+	try:
+		setattr(nguon, ten, gia_tri)
+	except Exception:
+		pass
+
+
+def _lay_frappe():
+	try:
+		import frappe
+	except ImportError:
+		return None
+	return frappe
+
+
+def _frappe_co_db(frappe_mod=None) -> bool:
+	mod = frappe_mod if frappe_mod is not None else _lay_frappe()
+	if mod is None:
+		return False
+	try:
+		return getattr(mod, "db", None) is not None
+	except Exception:
+		return False
 
 
 def so_phut_backoff(so_lan_thu: int) -> int:
@@ -203,6 +245,8 @@ def _tim_goi_db(frappe_mod, ma_hoac_ten: str) -> dict | None:
 	if not ma_hoac_ten or not frappe_mod.db.table_exists("LX Goi"):
 		return None
 	fields = ["name", "ma", "ten", "gia", "gia_san", "workflow", "ban"]
+	if _co_cot_bang(frappe_mod.db, "LX Goi", "loai_giao"):
+		fields.append("loai_giao")
 	rows = frappe_mod.get_all(
 		"LX Goi",
 		filters={"name": ma_hoac_ten},
@@ -231,7 +275,7 @@ def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
 	Trong Frappe v15 (`frappe.core.doctype.error_log.error_log.log_error`), `frappe.log_error(title=..., message=...)`
 	lưu `title` vào cột `method` và `message` vào cột `error` của bảng `tabError Log`.
 	"""
-	da_log = getattr(doc, "_da_log_loi_sau_tra", None)
+	da_log = _lay_gia_tri(doc, "_da_log_loi_sau_tra", None)
 	if isinstance(da_log, set) and title in da_log:
 		return
 	db = getattr(frappe_mod, "db", None)
@@ -250,7 +294,7 @@ def _ghi_log_loi_don_mot_lan(frappe_mod, doc, title: str, message: str) -> None:
 	try:
 		if not isinstance(da_log, set):
 			da_log = set()
-			setattr(doc, "_da_log_loi_sau_tra", da_log)
+			_gan_gia_tri(doc, "_da_log_loi_sau_tra", da_log)
 		da_log.add(title)
 	except Exception:
 		pass
@@ -271,17 +315,21 @@ def _vi_tri_traceback_an_toan(exc: BaseException) -> str:
 	return " -> ".join(dong_an_toan)[:200]
 
 
-def _co_cot_lx_don(db, ten_cot: str) -> bool:
-	"""Kiểm tra bảng `tabLX Don` có cột `ten_cot` hay không."""
+def _co_cot_bang(db, ten_doctype: str, ten_cot: str) -> bool:
 	if db is None:
 		return False
 	has_col = getattr(db, "has_column", None)
 	if not callable(has_col):
 		return False
 	try:
-		return bool(has_col("LX Don", ten_cot))
+		return bool(has_col(ten_doctype, ten_cot))
 	except Exception:
 		return False
+
+
+def _co_cot_lx_don(db, ten_cot: str) -> bool:
+	"""Kiểm tra bảng `tabLX Don` có cột `ten_cot` hay không."""
+	return _co_cot_bang(db, "LX Don", ten_cot)
 
 
 def _gan_co_can_xu_ly(
@@ -294,13 +342,10 @@ def _gan_co_can_xu_ly(
 ) -> None:
 	"""Gắn hoặc xoá cờ `can_xu_ly` trên `LX Don` (và xoá bộ đếm thử lại khi đã tạo xong `LX Job`)."""
 	co = 1 if gia_tri else 0
-	try:
-		setattr(doc, "can_xu_ly", co)
-		if reset_bo_dem or not co:
-			setattr(doc, "so_lan_thu_job", 0)
-			setattr(doc, "lan_thu_job_cuoi", None)
-	except Exception:
-		pass
+	_gan_gia_tri(doc, "can_xu_ly", co)
+	if reset_bo_dem or not co:
+		_gan_gia_tri(doc, "so_lan_thu_job", 0)
+		_gan_gia_tri(doc, "lan_thu_job_cuoi", None)
 	if not ten_don:
 		return
 	db = getattr(frappe_mod, "db", None)
@@ -355,17 +400,22 @@ def _la_loi_trung_khoa(frappe_mod, exc: BaseException, ma_don: str) -> bool:
 	return "Duplicate entry" in thong_diep or f"Đơn {ma_don} đã có việc" in thong_diep
 
 
-def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
-	"""Hook `doc_events` (`LX Don.on_update` / `on_change`): tự tạo `LX Job` ngay khi đơn `da_tra`."""
+def xu_ly_sau_tra(
+	doc,
+	method: str | dict | None = None,
+	*,
+	goi: dict | None = None,
+) -> dict | None:
+	"""Tự tạo `LX Job` ngay khi đơn `da_tra` (hỗ trợ cả `doc` Frappe hoặc `dict` đơn từ `giao_hang`)."""
 	import frappe
 
-	if getattr(doc, "trang_thai", None) != "da_tra":
+	if _lay_gia_tri(doc, "trang_thai", None) != "da_tra":
 		return None
 	if not frappe.db.table_exists("LX Job") or not frappe.db.table_exists("LX Goi"):
 		return None
 
-	ten_don = str(getattr(doc, "name", None) or "").strip()
-	ma_don = str(getattr(doc, "ma", None) or ten_don).strip()
+	ten_don = str(_lay_gia_tri(doc, "name", None) or "").strip()
+	ma_don = str(_lay_gia_tri(doc, "ma", None) or ten_don).strip()
 	if not ma_don:
 		return None
 
@@ -376,13 +426,33 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 			(ten_don,),
 		)
 
-	goi_id = str(getattr(doc, "goi", None) or "").strip()
-	goi = _tim_goi_db(frappe, goi_id)
-	if not goi:
-		try:
-			setattr(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
-		except Exception:
-			pass
+	goi_truyen = goi if isinstance(goi, dict) else (method if isinstance(method, dict) else None)
+	goi_id = str(
+		_lay_gia_tri(doc, "goi", None)
+		or (goi_truyen.get("name") or goi_truyen.get("ma") if isinstance(goi_truyen, dict) else "")
+		or ""
+	).strip()
+	goi_db = _tim_goi_db(frappe, goi_id)
+	if goi_db and isinstance(goi_truyen, dict):
+		goi_dung: dict | None = {**goi_truyen, **goi_db}
+		for k in ("workflow", "loai_giao", "gia", "gia_san"):
+			if not goi_dung.get(k) and goi_truyen.get(k) is not None:
+				goi_dung[k] = goi_truyen[k]
+	elif goi_db:
+		goi_dung = goi_db
+	elif isinstance(goi_truyen, dict) and (
+		goi_truyen.get("workflow")
+		or goi_truyen.get("loai_giao") == "bao_cao"
+		or goi_truyen.get("gia") is not None
+		or goi_truyen.get("gia_san") is not None
+	):
+		goi_dung = dict(goi_truyen)
+		goi_dung["ma"] = goi_dung.get("ma") or goi_dung.get("name") or goi_id
+	else:
+		goi_dung = None
+
+	if not goi_dung:
+		_gan_gia_tri(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
 		_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
 		_ghi_log_loi_don_mot_lan(
 			frappe,
@@ -391,6 +461,9 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 			message=f"Đơn {ma_don} đã trả nhưng không tìm thấy bản ghi LX Goi '{goi_id}'.",
 		)
 		return None
+
+	if not str(goi_dung.get("workflow") or "").strip() and str(goi_dung.get("loai_giao") or "").strip() == "bao_cao":
+		goi_dung = {**goi_dung, "workflow": WORKFLOW_BAO_CAO_MAC_DINH}
 
 	job_da_co = frappe.db.sql(
 		"SELECT name, don, ma_xem, trang_thai FROM `tabLX Job` WHERE don = %s",
@@ -402,22 +475,19 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		"name": ten_don,
 		"ma": ma_don,
 		"goi": goi_id,
-		"so_tien": getattr(doc, "so_tien", None),
-		"trang_thai": getattr(doc, "trang_thai", None),
-		"brand": getattr(doc, "brand", None),
-		"email": getattr(doc, "email", None),
-		"nganh": getattr(doc, "nganh", None),
-		"thi_truong": getattr(doc, "thi_truong", None),
-		"doi_thu": getattr(doc, "doi_thu", None),
-		"su_that": getattr(doc, "su_that", None),
+		"so_tien": _lay_gia_tri(doc, "so_tien", None),
+		"trang_thai": _lay_gia_tri(doc, "trang_thai", None),
+		"brand": _lay_gia_tri(doc, "brand", None),
+		"email": _lay_gia_tri(doc, "email", None),
+		"nganh": _lay_gia_tri(doc, "nganh", None),
+		"thi_truong": _lay_gia_tri(doc, "thi_truong", None),
+		"doi_thu": _lay_gia_tri(doc, "doi_thu", None),
+		"su_that": _lay_gia_tri(doc, "su_that", None),
 	}
-	viec = viec_can_tao(don_dict, goi, list(job_da_co or []))
+	viec = viec_can_tao(don_dict, goi_dung, list(job_da_co or []))
 	if not viec:
 		if job_da_co:
-			try:
-				setattr(doc, "_ly_do_chua_tao_job", None)
-			except Exception:
-				pass
+			_gan_gia_tri(doc, "_ly_do_chua_tao_job", None)
 			_gan_co_can_xu_ly(frappe, doc, ten_don, 0, reset_bo_dem=True)
 			j0 = job_da_co[0]
 			return {
@@ -427,10 +497,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 				"trang_thai": j0.get("trang_thai"),
 			}
 		if don_dict.get("so_tien") is None:
-			try:
-				setattr(doc, "_ly_do_chua_tao_job", "can_nguoi_xu_ly")
-			except Exception:
-				pass
+			_gan_gia_tri(doc, "_ly_do_chua_tao_job", "can_nguoi_xu_ly")
 			_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
 			_ghi_log_loi_don_mot_lan(
 				frappe,
@@ -438,11 +505,8 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 				title=f"Đơn {ma_don} đã trả nhưng thiếu số tiền",
 				message=f"Đơn {ma_don} (gói {goi_id}) ở trạng thái da_tra nhưng thiếu so_tien; không tự sinh LX Job.",
 			)
-		elif not gia_hop_le(don_dict.get("so_tien"), goi):
-			try:
-				setattr(doc, "_ly_do_chua_tao_job", "can_nguoi_xu_ly")
-			except Exception:
-				pass
+		elif not gia_hop_le(don_dict.get("so_tien"), goi_dung):
+			_gan_gia_tri(doc, "_ly_do_chua_tao_job", "can_nguoi_xu_ly")
 			_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
 			_ghi_log_loi_don_mot_lan(
 				frappe,
@@ -450,15 +514,12 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 				title=f"Đơn {ma_don} đã trả dưới giá sàn",
 				message=(
 					f"Đơn {ma_don} (gói {goi_id}) ở trạng thái da_tra với so_tien={don_dict.get('so_tien')} "
-					f"thấp hơn giá sàn của gói (gia_san={goi.get('gia_san')}, gia={goi.get('gia')}); "
+					f"thấp hơn giá sàn của gói (gia_san={goi_dung.get('gia_san')}, gia={goi_dung.get('gia')}); "
 					"không tự sinh LX Job."
 				),
 			)
 		else:
-			try:
-				setattr(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
-			except Exception:
-				pass
+			_gan_gia_tri(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
 			_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
 		return None
 
@@ -485,10 +546,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 				as_dict=True,
 			)
 			if job_sau_loi:
-				try:
-					setattr(doc, "_ly_do_chua_tao_job", None)
-				except Exception:
-					pass
+				_gan_gia_tri(doc, "_ly_do_chua_tao_job", None)
 				_gan_co_can_xu_ly(frappe, doc, ten_don, 0, reset_bo_dem=True)
 				j0 = job_sau_loi[0]
 				return {
@@ -497,10 +555,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 					"don": ma_don,
 					"trang_thai": j0.get("trang_thai"),
 				}
-		try:
-			setattr(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
-		except Exception:
-			pass
+		_gan_gia_tri(doc, "_ly_do_chua_tao_job", "loi_tam_thoi")
 		_gan_co_can_xu_ly(frappe, doc, ten_don, 1)
 		loai_loi = type(exc).__name__
 		vi_tri = _vi_tri_traceback_an_toan(exc)
@@ -512,10 +567,7 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		)
 		return None
 
-	try:
-		setattr(doc, "_ly_do_chua_tao_job", None)
-	except Exception:
-		pass
+	_gan_gia_tri(doc, "_ly_do_chua_tao_job", None)
 	_gan_co_can_xu_ly(frappe, doc, ten_don, 0, reset_bo_dem=True)
 	return {
 		"name": job_doc.name,
@@ -523,6 +575,59 @@ def xu_ly_sau_tra(doc, method: str | None = None) -> dict | None:
 		"don": viec["don"],
 		"trang_thai": job_doc.trang_thai,
 	}
+
+
+def giao_bao_cao(don: dict | object, goi: dict | None = None) -> dict | None:
+	"""Hàm giao hàng cho `loai_giao = 'bao_cao'` (khai trong `apps/linhx_goi_baocao/module.json`)."""
+	goi_chuan: dict | None = None
+	if isinstance(goi, dict):
+		goi_chuan = dict(goi)
+		if not str(goi_chuan.get("workflow") or "").strip():
+			goi_chuan["workflow"] = WORKFLOW_BAO_CAO_MAC_DINH
+		goi_chuan.setdefault("loai_giao", "bao_cao")
+
+	frappe_mod = _lay_frappe()
+	if _frappe_co_db(frappe_mod):
+		return xu_ly_sau_tra(don, goi=goi_chuan)
+
+	don_dict = dict(don) if isinstance(don, dict) else {
+		"name": _lay_gia_tri(don, "name", None),
+		"ma": _lay_gia_tri(don, "ma", None),
+		"goi": _lay_gia_tri(don, "goi", None),
+		"so_tien": _lay_gia_tri(don, "so_tien", None),
+		"trang_thai": _lay_gia_tri(don, "trang_thai", None),
+		"brand": _lay_gia_tri(don, "brand", None),
+		"email": _lay_gia_tri(don, "email", None),
+		"nganh": _lay_gia_tri(don, "nganh", None),
+		"thi_truong": _lay_gia_tri(don, "thi_truong", None),
+		"doi_thu": _lay_gia_tri(don, "doi_thu", None),
+		"su_that": _lay_gia_tri(don, "su_that", None),
+	}
+	if not don_dict.get("trang_thai"):
+		don_dict["trang_thai"] = "da_tra"
+	goi_mem = dict(goi_chuan or {"workflow": WORKFLOW_BAO_CAO_MAC_DINH, "loai_giao": "bao_cao"})
+	if don_dict.get("so_tien") is None and goi_mem.get("gia") is not None:
+		don_dict["so_tien"] = goi_mem.get("gia")
+	elif don_dict.get("so_tien") is None and goi_mem.get("gia_san") is not None:
+		don_dict["so_tien"] = goi_mem.get("gia_san")
+
+	viec = viec_can_tao(don_dict, goi_mem, [])
+	if not viec:
+		return None
+	ten_job = str(don_dict.get("job_name") or f"VIEC-{viec['don']}").strip()
+	ma_xem = str(don_dict.get("ma_xem") or secrets.token_hex(6)).strip()
+	return {
+		"name": ten_job,
+		"ma_xem": ma_xem,
+		"don": viec["don"],
+		"trang_thai": viec["trang_thai"],
+		"workflow": viec["workflow"],
+		"dau_vao": viec["dau_vao"],
+		"link": link_bao_cao({"name": ten_job, "ma_xem": ma_xem}, ""),
+	}
+
+
+giao = giao_bao_cao
 
 
 def _trang_thai_backoff_don(

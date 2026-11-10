@@ -1,18 +1,47 @@
 """Endpoint công khai bán gói báo cáo 'AI nói gì về thương hiệu' và tạo đơn VietQR."""
 from __future__ import annotations
 
+import importlib
+import pathlib
+import sys
+
 import frappe
 from frappe.rate_limiter import rate_limit
 
+from linhx_core.api import tim_ham
 from linhx_core.pay import vietqr
-from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
-from linhx_core.pay.sau_tra import mot_dong
+
+
+def _nap_ham_cung_cap(khoa: str):
+    ds = tim_ham("cung_cap", khoa)
+    if not ds:
+        raise LookupError(f"Không tìm thấy hàm cung_cap cho {khoa}")
+    duong_ham = ds[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    thu_muc_app = pathlib.Path(__file__).resolve().parents[3] / ten_app
+    if thu_muc_app.is_dir() and str(thu_muc_app) not in sys.path:
+        sys.path.insert(0, str(thu_muc_app))
+    mod = importlib.import_module(ten_module)
+    return getattr(mod, ten_ham)
+
+
+goi_cong_khai = _nap_ham_cung_cap("baocao.goi_cong_khai")
+so_tien_don = _nap_ham_cung_cap("baocao.so_tien_don")
+mot_dong = _nap_ham_cung_cap("baocao.mot_dong")
 
 
 def _ds_goi() -> list[dict]:
+    fields = ["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban", "workflow"]
+    try:
+        if getattr(frappe, "db", None) is not None and callable(getattr(frappe.db, "has_column", None)):
+            if frappe.db.has_column("LX Goi", "loai_giao"):
+                fields.append("loai_giao")
+    except Exception:
+        pass
     rows = frappe.get_all(
         "LX Goi",
-        fields=["name", "ma", "ten", "gia", "gia_san", "mo_ta", "ban", "workflow"],
+        fields=fields,
         ignore_permissions=True,
     )
     ket_qua: list[dict] = []
@@ -75,6 +104,18 @@ def tao_don(
         frappe.throw("Gói không hợp lệ hoặc đã ngừng bán")
 
     goi_goc = next((x for x in ds if x.get("ma") == ma_goi or x.get("name") == ma_goi), None) or {"ma": ma_goi}
+    try:
+        ten_goi_db = goi_goc.get("name")
+        if (
+            ten_goi_db
+            and not goi_goc.get("loai_giao")
+            and getattr(frappe, "db", None) is not None
+            and callable(getattr(frappe.db, "has_column", None))
+            and frappe.db.has_column("LX Goi", "loai_giao")
+        ):
+            frappe.db.set_value("LX Goi", ten_goi_db, "loai_giao", "bao_cao", update_modified=False)
+    except Exception:
+        pass
     goi_hop_le = {**goi_goc, "gia": tien}
     ma_don = f"DON-{frappe.generate_hash(length=8).upper()}"
     don = vietqr.tao_don(goi_hop_le, nguoi="", ngan_hang=_ngan_hang(), ma_don=ma_don)

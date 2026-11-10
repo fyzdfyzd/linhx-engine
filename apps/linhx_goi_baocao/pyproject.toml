@@ -1,0 +1,18 @@
+[project]
+name = "linhx_goi_baocao"
+authors = [{ name = "LINHX", email = "dev@linhx.vn" }]
+description = "LINHX ENGINE: gói báo cáo (bán gói và tự sinh việc báo cáo sau trả)"
+requires-python = ">=3.10"
+readme = "README.md"
+version = "0.1.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["linhx_goi_baocao*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.html", "*.txt"]

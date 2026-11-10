@@ -1,0 +1,23 @@
+{
+  "ten": "linhx_goi_baocao",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "baocao.goi_cong_khai": "linhx_goi_baocao.ban_bao_cao.goi_cong_khai",
+    "baocao.so_tien_don": "linhx_goi_baocao.ban_bao_cao.so_tien_don",
+    "baocao.mot_dong": "linhx_goi_baocao.sau_tra.mot_dong",
+    "baocao.tao_dau_vao": "linhx_goi_baocao.sau_tra.tao_dau_vao",
+    "baocao.lam_sach_du_lieu_khach": "linhx_goi_baocao.sau_tra.lam_sach_du_lieu_khach",
+    "baocao.boc_du_lieu_khach": "linhx_goi_baocao.sau_tra.boc_du_lieu_khach",
+    "baocao.viec_can_tao": "linhx_goi_baocao.sau_tra.viec_can_tao",
+    "baocao.link_bao_cao": "linhx_goi_baocao.sau_tra.link_bao_cao",
+    "baocao.xu_ly_sau_tra": "linhx_goi_baocao.sau_tra.xu_ly_sau_tra",
+    "baocao.quet_don_da_tra_chua_co_job": "linhx_goi_baocao.sau_tra.quet_don_da_tra_chua_co_job"
+  },
+  "giao": {
+    "bao_cao": "linhx_goi_baocao.sau_tra.giao_bao_cao"
+  }
+}
