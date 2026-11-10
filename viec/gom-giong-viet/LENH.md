@@ -18,6 +18,13 @@ Hiện có 4 bộ skill viết chồng nhau: `new-article` (LinhX Write 9 bướ
 6. **Ngưỡng đặt bằng dương tính giả**: chạy máy dò lên 7 bài đã đăng; ngưỡng sao cho 7 bài đó không bị gắn cờ.
 7. Bỏ khi sang tiếng Việt: luật gạch ngang dài, ngoặc cong, viết tắt, từ ghép gạch nối.
 
+## Luồng Linh 10/11 (thay bước 1–5 của new-article cho dòng "chưa có tứ")
+- B1 Linh nạp ý loé lên + kênh đăng + MỘT câu "tôi nghĩ gì mà người khác chưa nói" (tạm, được đổi).
+- B2 Ba độc giả theo kênh, neo vào độc giả thật (bình luận, bài cũ cùng kênh, phân tầng LAB048); chọn MỘT độc giả chính; thêm "họ đã đọc gì về chủ đề này". Không dùng độc giả ảo làm giám khảo giọng.
+- B3 Kho ý, theo thứ tự rẻ tới đắt: bài cũ của Linh → kho bài tâm đắc (vault LAB070) → chuyện thật đa ngôn ngữ (có Trung, châu Á) → quote → khung lý thuyết (≤ 2) → meme, phim, nhạc, tranh, sách. Hạn mức mỗi loại ≤ 5 mục, chuyện thật ≤ 10; lọc theo độc giả chính.
+- Mỗi mục: link gốc + trích nguyên văn ngôn ngữ gốc + nhãn LINH/NGUON/GIẢ LẬP. Quote phải truy được người nói. Nhạc chỉ ghi tên + vì sao hợp, không chép lời.
+- DỪNG: ra KHO-Y.md (bảng: mục, loại, nguồn, nhãn, độ hợp 1–3) cho Linh gạch, thêm, phản biện. Chưa duyệt thì không sang dàn ý.
+
 ## Ràng buộc
 - Nguồn luật: `/mnt/project-files/BAN-GIAO-0911/WF06-bai-viet-hay.md` (bản chép sẵn ở `viec/gom-giong-viet/nguon/WF06.md`), WF06 + WF16 `NGHIEN-CUU.md` (chép ở `nguon/`).
 - Không đổi văn bộ cũ ngoài dòng `description` + một dòng "Đã gộp" đầu SKILL.md.
