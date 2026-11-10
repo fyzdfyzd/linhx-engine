@@ -1,0 +1,6 @@
+app_name = "linhx_goi_ifagent"
+app_title = "LINHX Goi ifAgent"
+app_publisher = "LINHX"
+app_description = "Gói ifAgent: T1 Khám và xác minh marketing cho LINHX ENGINE"
+app_email = "dev@linhx.vn"
+app_license = "mit"

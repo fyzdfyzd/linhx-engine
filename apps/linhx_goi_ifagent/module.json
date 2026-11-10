@@ -1,0 +1,25 @@
+{
+  "ten": "linhx_goi_ifagent",
+  "ban": "0.1.0",
+  "lop": "goi",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {},
+  "cung_cap": {
+    "t1.kiem_tra_dau_vao": "linhx_goi_ifagent.t1._kiem_tra_dau_vao",
+    "t1.da_rut_dong_y": "linhx_goi_ifagent.t1.da_rut_dong_y",
+    "t1.kiem_diem_theo_bang_muc": "linhx_goi_ifagent.t1.kiem_diem_theo_bang_muc",
+    "t1.tao_ket_qua_day_du": "linhx_goi_ifagent.t1.tao_ket_qua_day_du",
+    "t1.ghi_ket_qua": "linhx_goi_ifagent.t1.ghi_ket_qua",
+    "xac_minh_marketing.chuan_kenh": "linhx_goi_ifagent.xac_minh_marketing._chuan_kenh",
+    "xac_minh_marketing.khoa_otp": "linhx_goi_ifagent.xac_minh_marketing._khoa_otp",
+    "xac_minh_marketing.bam_ma": "linhx_goi_ifagent.xac_minh_marketing.bam_ma",
+    "xac_minh_marketing.phat_ma": "linhx_goi_ifagent.xac_minh_marketing.phat_ma",
+    "xac_minh_marketing.xac_minh": "linhx_goi_ifagent.xac_minh_marketing.xac_minh",
+    "xac_minh_marketing.tim_ban_ghi_otp": "linhx_goi_ifagent.xac_minh_marketing._tim_ban_ghi_otp",
+    "xac_minh_marketing.da_rut_dong_y_sau_otp": "linhx_goi_ifagent.xac_minh_marketing.da_rut_dong_y_sau_otp",
+    "xac_minh_marketing.tao_yeu_cau": "linhx_goi_ifagent.xac_minh_marketing.tao_yeu_cau",
+    "xac_minh_marketing.xac_nhan_marketing": "linhx_goi_ifagent.xac_minh_marketing.xac_nhan_marketing"
+  },
+  "giao": {}
+}
