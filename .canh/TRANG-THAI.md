@@ -1,11 +1,11 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 17:50 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1)
+Cập nhật 2026-11-10 17:59 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O4, O5, O6, O7, I1, I2, I3, F1, F2, F3, T3, M1, V1, V2, L1, L2, L3, L4, P1, P3, G1, G2, G3, G4, G5, U1, U2, K1)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | U3 | 20261110-1739-t1 từ 2026-11-10T17:39:57 | DAT · Feature N5 · commit d543347 · nhánh tu-dong/engine-t1 · 2026-11-10T17:16:34 |
-| 2 | K2a | 20261110-1739-t2 từ 2026-11-10T17:39:57 | CHUA_DAT · Feature K2 · commit 16812fd · nhánh tu-dong/engine-t2 · 2026-11-10T17:23:03 |
+| 1 | U3 | 20261110-1755-t1 từ 2026-11-10T17:55:06 | CHUA_DAT · Feature U3 · commit 904be5d · nhánh tu-dong/engine-t1 · 2026-11-10T17:55:02 |
+| 2 | K2a | rảnh | CHUA_DAT · Feature K2 · commit 16812fd · nhánh tu-dong/engine-t2 · 2026-11-10T17:23:03 |
 | 3 | - | rảnh | CHUA_DAT · Feature U3 · commit 839d5b8 · nhánh tu-dong/engine-t3 · 2026-11-10T17:23:06 |
 | 4 | - | rảnh | DAT · Feature G1 · commit f7f619c · nhánh tu-dong/engine-t4 · 2026-11-10T17:49:39 |
 
@@ -45,16 +45,16 @@ Cập nhật 2026-11-10 17:50 (giờ máy cty). Đạt: 64/69 (N1, N2, N3, N4, N
 - 2026-11-10T17:23:06 U3 CHUA_DAT 3 lần liền (thợ 3): đã lùi tu-dong/engine-t3 về mốc 6585d3a1, bản hỏng giữ ở nhánh cục bộ hong/U3-20261110-1723, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\U3.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 17:34 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
-- 2026-11-10 17:39 t0: xoá đếm CHUA_DAT của U3 (U3@1011-cong-vm-khong-git)
-- 2026-11-10 17:39 t0: xoá đếm CHUA_DAT của G1 (G1@1011-cong-vm-khong-git)
-- 2026-11-10 17:39 t2: giao agy phiếu 20261110-1739-t2: K2a
-- 2026-11-10 17:39 t1: giao agy phiếu 20261110-1739-t1: U3
-- 2026-11-10 17:49 t4: G1 DAT, đã gộp vào main
-- 2026-11-10 17:50 t4: RAM trống 1.3 GB < 1,5 GB, chưa giao T4
-- 2026-11-10 17:50 t4: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-10 17:50 t4: RAM trống 0.8 GB < 1,5 GB, chưa giao T4
 - 2026-11-10 17:50 t3: RAM trống 1.1 GB < 1,5 GB, chưa giao T4
 - 2026-11-10 17:50 t1: dừng agy phiếu 20261110-1739-t1 (U3): 10 phút không commit, không chạy test mới
 - 2026-11-10 17:51 t1: agy xong phiếu 20261110-1739-t1 (U3) sau 10 phút
+- 2026-11-10 17:53 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
+- 2026-11-10 17:54 t1: U3: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 17:54 t1: U3: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 17:55 t1: U3 CHUA_DAT lần 1 (commit 904be5d)
+- 2026-11-10 17:55 t1: giao agy phiếu 20261110-1755-t1: U3 (lượt sửa)
+- 2026-11-10 17:56 t2: agy xong phiếu 20261110-1739-t2 (K2a) sau 17 phút
+- 2026-11-10 17:56 t2: K2a: cổng kiểm VM không trả JSON (lần 1): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
+- 2026-11-10 17:56 t2: K2a: cổng kiểm VM không trả JSON (lần 2): gcloud compute ssh linhx-engine-1 --project=linhx-engine --zone=asia-southeast1-b --troubleshoot --tunnel-through-iap /  / ERROR: (gcloud.compute.ssh) [C:\Program Files (x86)\Google\Cloud SDK\google-cloud-sdk\bin\sdk\plink.exe] exited with return code [1].
 
