@@ -1,5 +1,6 @@
 """Endpoint Frappe cho adapter Chiêm Tinh Số (CTS): checkout và sepay_webhook.
 
+Thuần Python ở mức nạp file (không `import frappe` ở đầu file); nạp trễ `frappe` trong hàm.
 Lưu trữ đơn và giao dịch trong DocType `LX Don CTS` và `LX Giao Dich CTS` (Frappe DB),
 khoá dòng `SELECT ... FOR UPDATE` kết hợp ràng buộc `unique` trên `tx_id` để chống đua đồng thời.
 """
@@ -8,34 +9,62 @@ from __future__ import annotations
 import json
 import logging
 
-import frappe
-
-from linhx_core.cts_adapter import hop_dong
+from linhx_cts import hop_dong
 
 _logger = logging.getLogger(__name__)
 
 
+def _lay_frappe():
+    """Nạp trễ `frappe` khi chạy trong môi trường Frappe; trả `None` khi chạy thuần Python."""
+    try:
+        import frappe
+    except ImportError:
+        return None
+    return frappe
+
+
+def _yeu_cau_frappe():
+    frappe = _lay_frappe()
+    if frappe is None:
+        raise RuntimeError("Cần môi trường Frappe để gọi HTTP endpoint của linhx_cts")
+    return frappe
+
+
+def _whitelist(*, allow_guest: bool = False, methods: list[str] | None = None):
+    """Gắn `@frappe.whitelist(...)` khi có Frappe; giữ nguyên hàm khi nạp thuần Python."""
+    def _trang_tri(fn):
+        frappe = _lay_frappe()
+        if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+            return frappe.whitelist(allow_guest=allow_guest, methods=methods)(fn)
+        return fn
+
+    return _trang_tri
+
+
 def _ghi_log_canh_bao(thong_diep: str, exc: Exception) -> None:
     loai_loi = type(exc).__name__
-    try:
-        log_fn = getattr(frappe, "logger", None)
-        if callable(log_fn):
-            log_fn().warning("%s (%s)", thong_diep, loai_loi)
-            return
-    except Exception:
-        pass
+    frappe = _lay_frappe()
+    if frappe is not None:
+        try:
+            log_fn = getattr(frappe, "logger", None)
+            if callable(log_fn):
+                log_fn().warning("%s (%s)", thong_diep, loai_loi)
+                return
+        except Exception:
+            pass
     _logger.warning("%s (%s)", thong_diep, loai_loi)
 
 
 def _doc_payload(kwargs: dict) -> dict:
-    req = getattr(frappe, "request", None)
+    frappe = _lay_frappe()
+    req = getattr(frappe, "request", None) if frappe is not None else None
     if req is not None:
         try:
             du_lieu = req.get_json(silent=True)
             if isinstance(du_lieu, dict):
                 return dict(du_lieu)
         except Exception as exc:
-            _ghi_log_canh_bao("Lỗi đọc JSON từ request.get_json trong cts_adapter", exc)
+            _ghi_log_canh_bao("Lỗi đọc JSON từ request.get_json trong linhx_cts", exc)
         try:
             raw = req.get_data(as_text=True)
             if raw:
@@ -43,13 +72,16 @@ def _doc_payload(kwargs: dict) -> dict:
                 if isinstance(du_lieu, dict):
                     return dict(du_lieu)
         except Exception as exc:
-            _ghi_log_canh_bao("Lỗi giải mã JSON từ request.get_data trong cts_adapter", exc)
+            _ghi_log_canh_bao("Lỗi giải mã JSON từ request.get_data trong linhx_cts", exc)
     return {k: v for k, v in (kwargs or {}).items() if k != "cmd"}
 
 
 def _doc_cau_hinh_site() -> dict:
-    conf = getattr(frappe, "conf", None) or {}
+    frappe = _lay_frappe()
+    if frappe is None:
+        return {}
     try:
+        conf = getattr(frappe, "conf", None) or {}
         return dict(conf)
     except Exception:
         return {}
@@ -68,7 +100,8 @@ def _doc_danh_muc() -> dict:
 
 
 def _la_loi_trung_db(exc: Exception) -> bool:
-    dup_cls = getattr(frappe, "DuplicateEntryError", None)
+    frappe = _lay_frappe()
+    dup_cls = getattr(frappe, "DuplicateEntryError", None) if frappe is not None else None
     if isinstance(dup_cls, type) and isinstance(exc, dup_cls):
         return True
     ten_lop = type(exc).__name__.lower()
@@ -78,11 +111,13 @@ def _la_loi_trung_db(exc: Exception) -> bool:
         or "integrityerror" in ten_lop
         or "duplicate entry" in thong_diep
         or "unique constraint" in thong_diep
+        or "đã tồn tại" in thong_diep
     )
 
 
 def _gan_ma_http(ma_http: int) -> None:
-    local_obj = getattr(frappe, "local", None)
+    frappe = _lay_frappe()
+    local_obj = getattr(frappe, "local", None) if frappe is not None else None
     resp = getattr(local_obj, "response", None) if local_obj is not None else None
     if isinstance(resp, dict):
         resp["http_status_code"] = ma_http
@@ -90,6 +125,7 @@ def _gan_ma_http(ma_http: int) -> None:
 
 def _luu_don_cts_db(don_luu: dict) -> None:
     """Lưu đơn CTS mới vào DocType `LX Don CTS` và commit."""
+    frappe = _yeu_cau_frappe()
     ho_so_json = (
         json.dumps(don_luu.get("ho_so") or {}, ensure_ascii=False)
         if isinstance(don_luu.get("ho_so"), dict)
@@ -119,12 +155,13 @@ def _luu_don_cts_db(don_luu: dict) -> None:
     frappe.db.commit()
 
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@_whitelist(allow_guest=True, methods=["POST"])
 def checkout(**kwargs):
     """Nhận yêu cầu tạo đơn CTS (POST /v1/checkout), lưu vào DocType `LX Don CTS` và trả kết quả cùng dạng CTS.
 
     Chống trùng mã đơn dựa vào ràng buộc `unique` trên `order_id` và `noi_dung_ck` trong DB kết hợp vòng thử lại.
     """
+    frappe = _yeu_cau_frappe()
     payload = _doc_payload(kwargs)
     danh_muc = _doc_danh_muc()
     cau_hinh = _doc_cau_hinh_site()
@@ -159,7 +196,7 @@ def checkout(**kwargs):
     return {"detail": "Không thể tạo mã đơn duy nhất sau nhiều lần thử"}
 
 
-@frappe.whitelist(allow_guest=True, methods=["POST"])
+@_whitelist(allow_guest=True, methods=["POST"])
 def sepay_webhook(**kwargs):
     """Nhận webhook SePay của CTS (POST /v1/pay/sepay/webhook), khoá dòng DB (`FOR UPDATE`) và lưu giao dịch.
 
@@ -169,6 +206,7 @@ def sepay_webhook(**kwargs):
       không ghi vào `LX Giao Dich CTS`, nên nếu SePay hoặc người vận hành gửi lại sau khi đơn đã có mặt
       thì giao dịch sẽ được đối soát lại bình thường.
     """
+    frappe = _yeu_cau_frappe()
     authorization = frappe.get_request_header("Authorization")
     secret = _doc_secret_webhook()
     payload = _doc_payload(kwargs)
@@ -235,9 +273,6 @@ def sepay_webhook(**kwargs):
             _gan_ma_http(200)
             return than
 
-        # Ghi chú: chỉ lưu LX Giao Dich CTS khi khớp đơn (status == "matched").
-        # Với status == "unmatched" hoặc "ignored", không lưu tx_id vào LX Giao Dich CTS
-        # (khớp đúng hành vi handle_sepay_webhook hiện nay của CTS) để có thể xử lý lại khi gửi lại.
         if than.get("status") == "matched" and ds_don:
             don_sau = ds_don[0]
             doc_tx = frappe.get_doc(

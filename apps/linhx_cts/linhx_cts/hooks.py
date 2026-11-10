@@ -1,0 +1,6 @@
+app_name = "linhx_cts"
+app_title = "LINHX CTS"
+app_publisher = "LINHX"
+app_description = "Adapter Chiêm Tinh Số (CTS) cho LINHX ENGINE"
+app_email = "dev@linhx.vn"
+app_license = "mit"

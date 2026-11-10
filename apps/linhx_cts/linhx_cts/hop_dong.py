@@ -6,12 +6,16 @@ from __future__ import annotations
 
 import copy
 import hmac
+import json
 import re
 import uuid
 from datetime import datetime, timedelta, timezone
 
 MAU_EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 MAU_MA_CTS = re.compile(r"\b(CTS[0-9A-F]{10})\b", re.IGNORECASE)
+
+TOI_DA_DO_DAI_EMAIL = 140
+TOI_DA_DUNG_LUONG_HO_SO = 8192
 
 DANH_MUC_MAC_DINH: dict[str, dict] = {
     "SKU-CT-NATAL-FULL-STD": {
@@ -212,12 +216,18 @@ def tao_don(
 
     raw_email = payload.get("email")
     email = str(raw_email).strip().lower() if isinstance(raw_email, str) else ""
-    if not email or not MAU_EMAIL.fullmatch(email):
+    if not email or len(email) > TOI_DA_DO_DAI_EMAIL or not MAU_EMAIL.fullmatch(email):
         return 422, {"detail": "Trường 'email' không hợp lệ"}
 
     ho_so = payload.get("ho_so")
     if not isinstance(ho_so, dict) or not str(ho_so.get("ho_ten") or "").strip():
         return 422, {"detail": "Trường 'ho_so' không hợp lệ"}
+    try:
+        ho_so_encoded = json.dumps(ho_so, ensure_ascii=False).encode("utf-8")
+    except (TypeError, ValueError):
+        return 422, {"detail": "Trường 'ho_so' không hợp lệ"}
+    if len(ho_so_encoded) > TOI_DA_DUNG_LUONG_HO_SO:
+        return 422, {"detail": "Trường 'ho_so' vượt quá dung lượng cho phép"}
 
     sku = str(payload.get("sku") or "").strip()
     if not sku:
@@ -398,16 +408,8 @@ def ap_thanh_toan_cts(
     return max(0, int(don["da_nhan"]) - tong)
 
 
-def nhan_webhook(
-    payload: dict,
-    kho: dict,
-    authorization: str | None,
-    khoa: str,
-) -> tuple[int, dict]:
-    """Xử lý webhook SePay theo hợp đồng POST /v1/pay/sepay/webhook của CTS."""
-    if not xac_thuc_apikey(authorization, khoa):
-        return 401, {"detail": "Sai hoặc thiếu khoá xác thực webhook"}
-
+def xu_ly_webhook_noi_bo(payload: dict, kho: dict) -> tuple[int, dict]:
+    """Áp dụng luật đối soát webhook SePay của CTS lên `kho` (sau khi đã xác thực hoặc ở chế độ bóng)."""
     if not isinstance(payload, dict):
         return 422, {"detail": "Payload webhook không hợp lệ"}
 
@@ -464,3 +466,15 @@ def nhan_webhook(
         "da_nhan": don.get("da_nhan"),
         "chenh_lech": chenh_lech,
     }
+
+
+def nhan_webhook(
+    payload: dict,
+    kho: dict,
+    authorization: str | None,
+    khoa: str,
+) -> tuple[int, dict]:
+    """Xử lý webhook SePay theo hợp đồng POST /v1/pay/sepay/webhook của CTS."""
+    if not xac_thuc_apikey(authorization, khoa):
+        return 401, {"detail": "Sai hoặc thiếu khoá xác thực webhook"}
+    return xu_ly_webhook_noi_bo(payload, kho)
