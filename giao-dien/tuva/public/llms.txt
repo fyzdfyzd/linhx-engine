@@ -1,0 +1,20 @@
+# TUVA Communication
+
+> TUVA Communication (Tù Và) là đối tác AI và truyền thông cho NGO ở Việt Nam. TUVA giúp NGO, cơ quan Liên Hợp Quốc, nhà tài trợ và cán bộ chương trình dùng AI an toàn (chương trình Decent AI), làm truyền thông dự án theo lĩnh vực, lắng nghe dữ liệu mạng xã hội (sáng kiến Listening Vietnam, listening.vn), và viết các hạng mục này vào đề xuất tài trợ: concept note, ngân sách, logframe.
+
+Tagline: Reaching out. Lĩnh vực đã làm truyền thông: bình đẳng giới, di sản và giáo dục, y tế, di cư lao động, người cao tuổi. Liên hệ: form trên trang chủ (https://tuva.work/#brief).
+
+## Trang chính
+- [Trang chủ, tự chấm mức sẵn sàng AI, form trao đổi dự án](https://tuva.work/)
+- [English homepage](https://tuva.work/en/)
+- [Hạng mục truyền thông và AI trong đề xuất tài trợ](https://tuva.work/de-xuat-tai-tro/)
+- [Bộ quy tắc AI an toàn cho tổ chức](https://tuva.work/bo-quy-tac-ai/)
+
+## Dịch vụ
+- [AI cho NGO](https://tuva.work/giai-phap/ai-cho-ngo/)
+- [Truyền thông dự án và chiến dịch](https://tuva.work/giai-phap/truyen-thong-du-an/)
+- [Lắng nghe dữ liệu mạng xã hội](https://tuva.work/giai-phap/lang-nghe-du-lieu/)
+
+## Bài trụ
+- [AI cho NGO ở Việt Nam: bắt đầu từ đâu, tránh điều gì](https://tuva.work/cam-nang/ai-cho-ngo/)
+- [Decent AI: AI tử tế cho tổ chức phát triển](https://tuva.work/decent-ai/)

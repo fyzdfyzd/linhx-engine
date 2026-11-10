@@ -20,7 +20,7 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 import pytest
 
-from _chung import CORE, ghi_nguon_proto, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
+from _chung import ma, CORE, ghi_nguon_proto, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
 
 NH = {"bin": "970436", "so_tk": "0011000999888", "ten_tk": "CONG TY THU"}
 GOI = {"ma": "BC-AI", "ten": "Báo cáo AI nói gì", "gia": 99000, "gia_san": 5000}
@@ -76,7 +76,7 @@ def test_tao_don():
 
 
 def test_khong_viet_so_tai_khoan_va_ghi_nguon():
-    p = CORE / "linhx_core" / "pay" / "vietqr.py"
+    p = ma("pay/vietqr.py")
     khong_import_frappe_dau_file(p)
     assert not re.search(r"['\"]\d{8,}['\"]", p.read_text(encoding="utf-8")), "không viết số tài khoản trong code"
     ghi_nguon_proto(p)

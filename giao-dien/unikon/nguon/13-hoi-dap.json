@@ -1,0 +1,57 @@
+{
+ "path": "/hoi-dap/",
+ "kenh": "trang-hoi-dap",
+ "title": "Hỏi đáp về AI production cho agency · Unikon",
+ "desc": "Mười câu agency hay hỏi Unikon: pitch mẫu 48 giờ, trắng nhãn, giá sàn, thu tiền, an toàn thương hiệu, người thật trong asset AI, dữ liệu brief.",
+ "vet": [
+  [
+   "Hỏi đáp",
+   "/hoi-dap/"
+  ]
+ ],
+ "h1": "Hỏi đáp về AI production cho agency",
+ "mo": "Câu hỏi agency hay gửi trước khi giao brief đầu tiên. Không thấy câu của bạn thì ghi vào brief.",
+ "than": "",
+ "hoi_dap": [
+  [
+   "AI production cho agency là làm gì?",
+   "Là sản xuất asset sáng tạo bằng AI cho chiến dịch của agency: ảnh, video, nhân vật và giọng AI. Agency giữ khách và ý tưởng lớn, Unikon làm phần sản xuất, có người duyệt từng asset và giao dưới tên agency."
+  ],
+  [
+   "Khách của tôi có biết Unikon đứng sau không?",
+   "Không, nếu bạn không muốn. Deck và file giao không mang logo Unikon. Tên nhãn hàng của khách được ẩn trong mọi tài liệu của chúng tôi."
+  ],
+  [
+   "Pitch mẫu 48 giờ gồm những gì?",
+   "Ba hướng ý tưởng, mỗi hướng có câu ý tưởng và hình mẫu làm bằng AI, gói trong một deck trắng nhãn mang logo agency. Kèm báo giá sản xuất theo giá sàn từng loại asset."
+  ],
+  [
+   "Giá tính thế nào?",
+   "Mỗi loại asset có một giá sàn. Báo giá cộng theo số asset, số biến thể và độ khó của hướng khách chọn. Gửi brief để nhận báo giá cụ thể."
+  ],
+  [
+   "Thu tiền thế nào?",
+   "Hoá đơn theo từng job. Nhãn chạy đều hằng tháng thì có thêm phí Brand kit hằng tháng."
+  ],
+  [
+   "Asset AI có an toàn để chạy cho nhãn hàng lớn không?",
+   "Mỗi asset được người duyệt trước khi giao: bàn tay, chữ, khuôn mặt, logo, màu thương hiệu. Không dùng gương mặt hay giọng người thật khi chưa có hợp đồng."
+  ],
+  [
+   "Có dùng gương mặt hay giọng người nổi tiếng được không?",
+   "Chỉ khi có hợp đồng với chính người đó. Mặc định, nhân vật AI của Unikon là người hư cấu."
+  ],
+  [
+   "Brief của agency được giữ thế nào?",
+   "Brief chỉ dùng để làm pitch và sản xuất cho bạn. Tên agency và tên khách chỉ xuất hiện trong case khi cả hai bên cho phép bằng văn bản."
+  ],
+  [
+   "Có xem được việc Unikon đã làm không?",
+   "Có, qua deck credential trắng nhãn gửi theo yêu cầu. Tên khách chỉ nêu khi được phép."
+  ],
+  [
+   "Bộ kiểm an toàn thương hiệu là gì?",
+   "Danh sách điểm cần soát trước khi đưa asset AI cho khách duyệt. Để lại email ở trang an toàn thương hiệu, chúng tôi gửi cho bạn."
+  ]
+ ]
+}

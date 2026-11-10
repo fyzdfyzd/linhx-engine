@@ -1,0 +1,21 @@
+{
+ "path": "/lien-he/",
+ "kenh": "trang-lien-he",
+ "cta": false,
+ "form": [
+  "form-brief",
+  "form-goi-lai"
+ ],
+ "title": "Liên hệ Unikon: gửi brief pitch hoặc để lại số",
+ "desc": "Gửi brief pitch cho Unikon hoặc để lại số để chúng tôi gọi lại. Đơn vị AI production cho agency, giao trắng nhãn, báo giá theo giá sàn.",
+ "vet": [
+  [
+   "Liên hệ",
+   "/lien-he/"
+  ]
+ ],
+ "h1": "Liên hệ Unikon",
+ "mo": "Có brief thì gửi ở form đầu. Chưa có brief, để lại số ở form thứ hai, chúng tôi gọi lại trong giờ làm việc.",
+ "ghi_chu": "Số điện thoại, Zalo, email và địa chỉ đang chờ Unikon cung cấp. Trong lúc chờ, để lại thông tin, chúng tôi liên hệ.",
+ "than": "## Hai cách bắt đầu\n- **Gửi brief pitch**: nhận ba hướng ý tưởng, deck trắng nhãn, báo giá.\n- **Để lại số**: chúng tôi gọi lại hỏi thêm về pitch của bạn."
+}

@@ -1,0 +1,26 @@
+{
+ "path": "/bao-gia/",
+ "kenh": "trang-bao-gia",
+ "title": "Cách tính giá AI production theo giá sàn · Unikon",
+ "desc": "Unikon báo giá theo giá sàn từng loại asset, cộng theo số asset, số biến thể và độ khó. Thu theo hoá đơn từng job hoặc phí Brand kit hằng tháng.",
+ "vet": [
+  [
+   "Cách tính giá",
+   "/bao-gia/"
+  ]
+ ],
+ "h1": "Cách Unikon tính giá cho agency",
+ "mo": "Mỗi loại asset có một giá sàn. Báo giá cộng từ đó theo số asset, số biến thể và độ khó, để agency biết rõ phần sản xuất trước khi cộng phí của mình.",
+ "ghi_chu": "Giá sàn từng loại asset và phí Brand kit đang chờ Unikon chốt, nên trang chưa ghi số. Gửi brief để nhận báo giá cụ thể.",
+ "than": "## Giá sàn theo loại asset\n| Loại asset | Giá sàn |\n|---|---|\n| Ảnh AI, key visual | Chờ chốt, báo theo brief |\n| Video AI | Chờ chốt, báo theo brief |\n| Nhân vật và giọng AI | Chờ chốt, báo theo brief |\n\n## Giá thay đổi theo\n- Số asset và số biến thể.\n- Độ khó: sản phẩm cần giữ chi tiết bao bì, nhiều nhân vật trong một khung, chữ trong hình.\n- Số vòng sửa sau khi khách duyệt hướng.\n\n## Hai cách thu\n- **Theo job**: một báo giá, một hoá đơn cho mỗi chiến dịch.\n- **Brand kit hằng tháng**: phí tháng cố định, job phát sinh vẫn có hoá đơn riêng. Xem [Brand kit](/brand-kit/).",
+ "hoi_dap": [
+  [
+   "Giá tính thế nào?",
+   "Mỗi loại asset có một giá sàn. Báo giá cộng theo số asset, số biến thể và độ khó của hướng khách chọn. Gửi brief để nhận báo giá cụ thể."
+  ],
+  [
+   "Agency có được cộng phí trên báo giá của Unikon không?",
+   "Có. Báo giá gửi cho agency, agency tự định giá với khách hàng của mình."
+  ]
+ ]
+}

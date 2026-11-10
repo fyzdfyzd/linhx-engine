@@ -1,0 +1,18 @@
+{
+ "path": "/cam-on/",
+ "kenh": "trang-cam-on",
+ "cta": false,
+ "cam_on": true,
+ "noindex": true,
+ "title": "Đã nhận thông tin dự án · TUVA",
+ "desc": "TUVA đã nhận thông tin dự án của bạn và sẽ liên hệ trong 1 ngày làm việc qua điện thoại hoặc email bạn để lại.",
+ "vet": [
+  [
+   "Đã nhận",
+   "/cam-on/"
+  ]
+ ],
+ "h1": "Đã nhận thông tin dự án của bạn",
+ "mo": "Chúng tôi sẽ liên hệ trong 1 ngày làm việc qua điện thoại hoặc email bạn để lại.",
+ "than": "## Tiếp theo\n1. Thu Hiền hoặc Thu Hà đọc thông tin và liên hệ để hẹn một buổi trao đổi.\n2. Bạn nhận gợi ý hạng mục truyền thông và AI, khung ngân sách, chỉ số gợi ý cho logframe.\n3. Hai bên thống nhất phần TUVA viết cùng bạn trước hạn nộp.\n\n## Trong lúc chờ\n- [Tự chấm mức sẵn sàng AI của tổ chức](/tu-cham-ai/?kenh=cam-on)\n- [Tải bộ quy tắc AI an toàn](/bo-quy-tac-ai/?kenh=cam-on)\n- [Đọc về Decent AI](/decent-ai/)"
+}

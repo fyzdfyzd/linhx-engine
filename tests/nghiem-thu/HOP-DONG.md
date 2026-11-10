@@ -96,3 +96,9 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 
 ## Đợt 2c (`features-dot2c.json`, viết 10/11, việc C Linh duyệt)
 - V1 cổng kiểm trên VM (deploy/cong_kiem_vm.py), V2 CI xanh (.github/workflows/linhx-engine.yml). Hợp đồng ở đầu test_v1.py, test_v2.py.
+
+## Đợt 3 (`features-dot3.json`, Linh duyệt 10/11: lõi / adapter / gói, sửa luôn nghiệm thu cũ)
+- Bản kiến trúc: Claude Doc https://claude.ai/artifact/C24pbEpCXVdQLaYLPuWe5m.
+- Mỗi feature có trường `lop` (loi, adapter, goi, giao_dien, kiem). Feature lớp goi/adapter chỉ chạm linhx_core để gỡ code cũ và sửa hooks.py; DocType ở lại linhx_core.
+- Code đã chuyển: nghiệm thu cũ tìm chỗ mới qua `CHUYEN_CHO` trong `_chung.py` (`nap_module`, `ma()`, `tim_doctype` tìm cả apps/). Luật ba lớp ở `_dot3.py`.
+- Giao diện BU ở `giao-dien/<bu>/` (từ skill bu-frontpage), không ở sites/ (sites/ chỉ cấu hình, C4).

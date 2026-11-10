@@ -17,7 +17,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 LUC = "2026-11-09 10:30:00"
 
@@ -91,6 +91,6 @@ def test_co_nhat_ky_gop():
     with pytest.raises(ValueError):
         zo.dang_nhap_zalo({"zalo_id": "zl_thao_1"}, "st-sai", "st-ok", ds, nk, LUC)
 
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "id" / "zalo_oauth.py")
+    khong_import_frappe_dau_file(ma("id/zalo_oauth.py"))
     chu = (CORE / "linhx_core" / "id" / "api_auth.py").read_text(encoding="utf-8")
     assert "def zalo_callback(" in chu

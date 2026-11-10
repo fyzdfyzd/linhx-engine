@@ -1,0 +1,35 @@
+{
+ "path": "/chuong-trinh/ban-lanh-dao/",
+ "kenh": "ct-ban-lanh-dao",
+ "loai": "service",
+ "title": "Đào tạo AI cho ban lãnh đạo · Sakédemy",
+ "desc": "Buổi AI cho ban lãnh đạo doanh nghiệp: hiểu AI tạo sinh và AI tự hành tới đâu, chọn việc giao cho AI trước, đặt luật dùng AI trong công ty.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ],
+  [
+   "Ban lãnh đạo",
+   "/chuong-trinh/ban-lanh-dao/"
+  ]
+ ],
+ "h1": "AI ứng dụng cho ban lãnh đạo",
+ "mo": "Buổi AI cho ban lãnh đạo doanh nghiệp: hiểu AI tạo sinh và AI tự hành tới đâu, chọn việc giao cho AI trước, đặt luật dùng AI trong công ty.",
+ "ghi_chu": "Đầu việc dưới đây là ví dụ thường gặp. Giáo trình thật chốt sau buổi trao đổi và bảng khảo sát đầu vào của đội bạn.",
+ "anh": [
+  "/img/anh/anh-lop-vinhomes-2.jpg",
+  "Buổi Lãnh đạo trong kỷ nguyên AI agent tại Vinhomes"
+ ],
+ "than": "## Đầu việc thường đưa vào lớp\n- AI tạo sinh và AI tự hành: làm được gì, chưa làm được gì\n- Chọn ba đến năm việc nên giao cho AI trước trong công ty\n- Khung luật dùng AI nội bộ: dữ liệu nào được đưa vào, ai duyệt\n- Cách đo đội đã dùng AI vào việc tới đâu sau đào tạo\n\n## Học viên mang về\n- Danh sách việc ưu tiên đưa AI vào\n- Khung luật dùng AI để pháp chế và nhân sự hoàn thiện\n- Lộ trình đào tạo cho các phòng ban tiếp theo\n\n## Cách lớp chạy\nNhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Xem chi tiết ở [quy trình lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "hoi_dap": [
+  [
+   "Buổi cho lãnh đạo khác lớp nhân viên thế nào?",
+   "Ít thao tác công cụ hơn, nhiều phần ra quyết định hơn: chọn việc, đặt luật, đo kết quả."
+  ],
+  [
+   "Có làm riêng cho một nhóm nhỏ không?",
+   "Có. Buổi cho lãnh đạo thường là nhóm nhỏ, nội dung chốt sau buổi trao đổi."
+  ]
+ ]
+}

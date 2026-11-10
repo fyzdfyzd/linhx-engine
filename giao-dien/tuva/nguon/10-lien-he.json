@@ -1,0 +1,18 @@
+{
+ "path": "/lien-he/",
+ "kenh": "trang-lien-he",
+ "form": true,
+ "title": "Liên hệ TUVA, trao đổi một dự án hoặc đề xuất · TUVA",
+ "desc": "Gửi thông tin dự án hoặc đề xuất tài trợ cho TUVA: tổ chức, lĩnh vực, nhà tài trợ, hạn nộp. Chúng tôi liên hệ lại trong 1 ngày làm việc.",
+ "vet": [
+  [
+   "Liên hệ",
+   "/lien-he/"
+  ]
+ ],
+ "h1": "Trao đổi một dự án hoặc đề xuất",
+ "mo": "Điền những gì bạn đang có, chỗ nào chưa rõ cứ để trống. Thu Hiền hoặc Thu Hà sẽ liên hệ lại.",
+ "ghi_chu": "Thông tin liên hệ công khai (email, điện thoại, địa chỉ) đang chờ TUVA xác nhận. Trong lúc chờ, bạn để lại thông tin ở form, chúng tôi liên hệ lại.",
+ "than": "",
+ "cta": false
+}

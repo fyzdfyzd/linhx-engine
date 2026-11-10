@@ -1,0 +1,57 @@
+{
+ "path": "/hoi-dap/",
+ "kenh": "trang-hoi-dap",
+ "title": "Câu hỏi hay gặp về AI và truyền thông cho NGO · TUVA",
+ "desc": "Chi phí, dữ liệu người thụ hưởng, Decent AI, làm bằng tiếng Anh, hạn nộp đề xuất gần: câu trả lời cho những câu NGO hay hỏi TUVA.",
+ "vet": [
+  [
+   "Hỏi đáp",
+   "/hoi-dap/"
+  ]
+ ],
+ "h1": "Câu hỏi hay gặp",
+ "mo": "Những câu cán bộ chương trình và lãnh đạo NGO hay hỏi chúng tôi trong lần trao đổi đầu tiên.",
+ "than": "",
+ "hoi_dap": [
+  [
+   "Chi phí làm việc với TUVA tính thế nào?",
+   "Chi phí tính theo từng hạng mục trong đề xuất tài trợ, theo đơn giá và quy định của nhà tài trợ. Chúng tôi lập khung ngân sách cùng bạn trước hạn nộp, thanh toán theo các đợt giải ngân của hợp đồng tài trợ."
+  ],
+  [
+   "Decent AI là gì?",
+   "Decent AI là cách TUVA gọi việc dùng AI tử tế trong tổ chức phát triển: có quy tắc, có người chịu trách nhiệm, bảo vệ dữ liệu người thụ hưởng, ghi nhãn nội dung có AI hỗ trợ, giúp đội ngũ làm việc tốt hơn và để con người giữ quyền quyết định."
+  ],
+  [
+   "Dữ liệu của người thụ hưởng có bị đưa vào công cụ AI không?",
+   "Không. Tên, ảnh, hồ sơ và câu chuyện cá nhân của người thụ hưởng không đưa vào công cụ AI công cộng. Bộ quy tắc AI của TUVA ghi rõ dữ liệu nào được dùng, dữ liệu nào phải ẩn danh, và ai duyệt."
+  ],
+  [
+   "TUVA có làm việc và viết đề xuất bằng tiếng Anh không?",
+   "Có. Concept note, ngân sách và logframe có thể viết bằng tiếng Anh hoặc song ngữ theo yêu cầu của nhà tài trợ."
+  ],
+  [
+   "Hạn nộp đề xuất đã gần thì còn kịp không?",
+   "Bạn cứ gửi kèm hạn nộp. Chúng tôi trả lời ngay là kịp làm phần nào: chỉ viết hạng mục truyền thông và AI, hay cùng làm cả concept note."
+  ],
+  [
+   "Listening Vietnam là gì?",
+   "Listening Vietnam là sáng kiến lắng nghe dữ liệu mạng xã hội của TUVA: theo dõi người dùng mạng đang nói gì về một vấn đề xã hội, rồi biến dữ liệu đó thành báo cáo và thông điệp cho dự án."
+  ],
+  [
+   "TUVA có nêu tên các tổ chức đã làm cùng không?",
+   "Chỉ khi tổ chức đó đồng ý công bố. Khi trao đổi riêng về một dự án, chúng tôi chia sẻ kinh nghiệm theo lĩnh vực."
+  ],
+  [
+   "Bộ quy tắc AI có mất phí không?",
+   "Không. Bạn để lại email để nhận bộ quy tắc và các bản cập nhật."
+  ],
+  [
+   "Tổ chức nhỏ có làm việc với TUVA được không?",
+   "Được. Nhiều việc như tập huấn hay bộ quy tắc AI phù hợp cả với tổ chức vài người."
+  ],
+  [
+   "TUVA có làm việc ngoài Hà Nội không?",
+   "Có. Tập huấn và trao đổi có thể làm trực tuyến hoặc tại địa phương nơi dự án triển khai."
+  ]
+ ]
+}

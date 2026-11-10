@@ -1,0 +1,352 @@
+{
+ "san_pham": "LINHX ENGINE nền tảng",
+ "dot": "3",
+ "prd": "Claude Doc https://claude.ai/artifact/C24pbEpCXVdQLaYLPuWe5m (lõi / adapter / gói), Linh duyệt 10/11 09:16 VN: sửa luôn nghiệm thu cũ, không để file chuyển tiếp; thêm khối giao diện BU (Linh 09:21)",
+ "dich": "Lõi gọn có khai báo module, sự kiện, giao hàng chung; adapter VN và CTS tách; T1, báo cáo, booking, Agent Force, phiếu agy thành gói; giao diện BU trong repo tự lên site",
+ "trang_thai": "viết 10/11; feature lớp goi/adapter chỉ được sửa linhx_core ở phần gỡ code cũ và hooks.py; DocType ở lại linhx_core; P2 (OAuth Zalo/Google) để đợt 4",
+ "features": [
+  {
+   "id": "L1",
+   "lop": "loi",
+   "uu_tien": 1,
+   "phu_thuoc": [],
+   "vung": [
+    "apps/linhx_core/module.json",
+    "apps/linhx_worker/module.json",
+    "apps/linhx_core/linhx_core/dang_ky_module.py"
+   ],
+   "mo_ta": "khai báo module: mỗi app có module.json; lõi đọc, xếp thứ tự phụ thuộc, tra hàm do app cung cấp.",
+   "tieu_chi": [
+    "linhx_core và linhx_worker có module.json lớp lõi",
+    "quét module.json, xếp phụ thuộc trước, tra hàm theo loại",
+    "phụ thuộc thiếu, vòng, can_loi lệch, lớp lạ thì báo lỗi có tên app"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "L2",
+   "lop": "loi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L1"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/su_kien.py",
+    "apps/linhx_core/linhx_core/linhx_core/doctype/lx_su_kien/**",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "sự kiện qua outbox: lõi phát, gói nghe, lỗi thì chạy lại, không giao trùng.",
+   "tieu_chi": [
+    "có DocType LX Su Kien đủ trường",
+    "phát rồi chạy thì mỗi hàm nghe nhận đúng một lần",
+    "hàm lỗi được chạy lại, hàm đã xong không gọi lại, quá trần thì hong"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l2.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "L3",
+   "lop": "loi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L2"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/giao_hang.py",
+    "apps/linhx_core/linhx_core/pay/doctype/lx_goi/**",
+    "apps/linhx_core/linhx_core/hooks.py",
+    "apps/linhx_core/module.json"
+   ],
+   "mo_ta": "giao hàng chung: đơn chuyển sang da_tra -> phát don.da_tra -> gọi hàm giao của gói theo loai_giao của Gói.",
+   "tieu_chi": [
+    "LX Goi có trường loai_giao, hooks nối LX Don vào giao_hang",
+    "chỉ phát một lần khi đơn chuyển sang da_tra",
+    "gọi đúng hàm giao của gói theo loai_giao, thiếu hoặc trùng thì lỗi"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l3.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "L4",
+   "lop": "loi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L1"
+   ],
+   "vung": [
+    "apps/linhx_core/linhx_core/api.py"
+   ],
+   "mo_ta": "mặt cắt công khai linhx_core.api cho adapter/gói + luật kiến trúc ba lớp.",
+   "tieu_chi": [
+    "linhx_core.api có đủ tên công khai, gọi được",
+    "không app nào import ngược lớp"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_l4.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "P1",
+   "lop": "adapter",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L4",
+    "L3"
+   ],
+   "vung": [
+    "apps/linhx_vn/**",
+    "apps/linhx_core/linhx_core/pay/sepay.py",
+    "apps/linhx_core/linhx_core/pay/api_sepay.py",
+    "apps/linhx_core/linhx_core/pay/vietqr.py",
+    "apps/linhx_core/linhx_core/pay/so_s1a.py",
+    "apps/linhx_core/linhx_core/pay/api_thue.py",
+    "apps/linhx_core/linhx_core/pay/__init__.py",
+    "apps/linhx_core/linhx_core/hooks.py",
+    "apps/linhx_core/linhx_core/pay/api_ban.py"
+   ],
+   "mo_ta": "adapter Việt Nam linhx_vn: SePay, VietQR, sổ S1a ra khỏi lõi.",
+   "tieu_chi": [
+    "app linhx_vn đủ khung, module.json lớp adapter",
+    "code đã chuyển sang linhx_vn, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_p1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "P3",
+   "lop": "adapter",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L4"
+   ],
+   "vung": [
+    "apps/linhx_cts/**",
+    "apps/linhx_core/linhx_core/cts_adapter/**",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "adapter Chiêm Tinh Số linhx_cts ra khỏi lõi.",
+   "tieu_chi": [
+    "app linhx_cts đủ khung, module.json lớp adapter",
+    "code đã chuyển sang linhx_cts, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_p3.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "G1",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L4",
+    "L2"
+   ],
+   "vung": [
+    "apps/linhx_goi_ifagent/**",
+    "apps/linhx_core/linhx_core/crm/t1.py",
+    "apps/linhx_core/linhx_core/crm/xac_minh_marketing.py",
+    "apps/linhx_core/linhx_core/crm/api_form.py",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "gói ifAgent: T1 khám và xác minh marketing ra khỏi lõi.",
+   "tieu_chi": [
+    "app linhx_goi_ifagent đủ khung, module.json lớp goi",
+    "code đã chuyển sang linhx_goi_ifagent, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp",
+    "api_form của lõi gọi T1 qua tra hàm, không import gói"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "G2",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L3",
+    "L4"
+   ],
+   "vung": [
+    "apps/linhx_goi_baocao/**",
+    "apps/linhx_core/linhx_core/pay/sau_tra.py",
+    "apps/linhx_core/linhx_core/pay/ban_bao_cao.py",
+    "apps/linhx_core/linhx_core/pay/api_ban.py",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "gói báo cáo: phần làm báo cáo sau trả ra khỏi lõi, giao qua luồng giao hàng chung (loai_giao bao_cao).",
+   "tieu_chi": [
+    "app linhx_goi_baocao đủ khung, module.json lớp goi",
+    "code đã chuyển sang linhx_goi_baocao, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp",
+    "module.json khai giao bao_cao, hooks lõi không còn trỏ sau_tra"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g2.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "G3",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L3",
+    "L4"
+   ],
+   "vung": [
+    "apps/linhx_goi_booking/**",
+    "apps/linhx_core/linhx_core/booking/**",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "gói đặt lịch ra khỏi lõi, giao qua luồng chung (loai_giao lich).",
+   "tieu_chi": [
+    "app linhx_goi_booking đủ khung, module.json lớp goi",
+    "code đã chuyển sang linhx_goi_booking, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp",
+    "module.json khai giao lich"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g3.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "G4",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L4"
+   ],
+   "vung": [
+    "apps/linhx_goi_agentforce/**",
+    "apps/linhx_core/linhx_core/agent/**",
+    "apps/linhx_core/linhx_core/cred/**",
+    "apps/linhx_core/linhx_core/hooks.py"
+   ],
+   "mo_ta": "gói Agent Force: pilot và kho case ra khỏi lõi.",
+   "tieu_chi": [
+    "app linhx_goi_agentforce đủ khung, module.json lớp goi",
+    "code đã chuyển sang linhx_goi_agentforce, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g4.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "G5",
+   "lop": "goi",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "L4",
+    "O7"
+   ],
+   "vung": [
+    "apps/linhx_goi_ops/**",
+    "apps/linhx_core/linhx_core/ops/**",
+    "apps/linhx_core/linhx_core/hooks.py",
+    "tho/**"
+   ],
+   "mo_ta": "gói phiếu agy nội bộ ra khỏi lõi (làm sau khi O7 đạt).",
+   "tieu_chi": [
+    "app linhx_goi_ops đủ khung, module.json lớp goi",
+    "code đã chuyển sang linhx_goi_ops, file cũ trong linhx_core đã xoá",
+    "không import ngược lớp"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g5.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "U1",
+   "lop": "giao_dien",
+   "uu_tien": 1,
+   "phu_thuoc": [],
+   "vung": [
+    "deploy/giao_dien.py",
+    "deploy/len-giao-dien.sh",
+    "deploy/linhx-giao-dien.timer",
+    "deploy/linhx-giao-dien.service"
+   ],
+   "mo_ta": "giao diện BU lên site tự động: giao-dien/<bu>/ trong repo -> VM phục vụ ở <bu>.35-198-251-2.nip.io.",
+   "tieu_chi": [
+    "sinh khối Caddy cho mọi giao diện BU, cổng ổn định",
+    "mỗi site một unit node có trần RAM, tự chạy lại",
+    "ba site BU trả 200 trên VM, tự lên trong 10 phút sau merge"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u1.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "U2",
+   "lop": "giao_dien",
+   "uu_tien": 1,
+   "phu_thuoc": [],
+   "vung": [
+    "giao-dien/sakedemy/**",
+    "giao-dien/tuva/**",
+    "giao-dien/unikon/**"
+   ],
+   "mo_ta": "form lead của giao diện BU gửi về engine (một chỗ nhận lead), bỏ ghi tệp và Telegram trong server.mjs.",
+   "tieu_chi": [
+    "server.mjs của 3 BU chuyển lead về engine, bỏ lưu tệp và Telegram",
+    "giao diện không chứa IP, token, mật khẩu viết cứng"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u2.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "U3",
+   "lop": "giao_dien",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "U2"
+   ],
+   "vung": [
+    ".github/workflows/giao-dien.yml"
+   ],
+   "mo_ta": "CI giao diện: PR đổi giao-dien/* chạy cổng K1–K10 cho site bị đổi trước khi merge.",
+   "tieu_chi": [
+    "workflow chạy cổng K1–K10 khi giao diện BU đổi",
+    "một lượt CI giao diện xanh có bằng chứng"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u3.py -q",
+   "passes": false,
+   "bang_chung": ""
+  },
+  {
+   "id": "T4",
+   "lop": "kiem",
+   "uu_tien": 1,
+   "phu_thuoc": [
+    "P1",
+    "P3",
+    "G1",
+    "G2",
+    "G3",
+    "G4",
+    "U1",
+    "U2"
+   ],
+   "vung": [
+    "tests/e2e/test_hanh_trinh_lop.py"
+   ],
+   "mo_ta": "hành trình lại sau khi chuyển lớp: lead -> đơn -> trả -> giao qua gói, trên VM.",
+   "tieu_chi": [
+    "kịch bản hành trình sau chuyển lớp có, luật ba lớp xanh",
+    "hành trình xanh trên VM, sự kiện giao xong"
+   ],
+   "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t4.py -q",
+   "passes": false,
+   "bang_chung": ""
+  }
+ ]
+}

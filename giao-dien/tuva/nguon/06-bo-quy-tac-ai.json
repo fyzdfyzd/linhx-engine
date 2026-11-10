@@ -1,0 +1,18 @@
+{
+ "path": "/bo-quy-tac-ai/",
+ "kenh": "trang-bo-quy-tac",
+ "form_tai": true,
+ "title": "Bộ quy tắc AI an toàn cho tổ chức, tải miễn phí · TUVA",
+ "desc": "Bộ quy tắc AI ngắn cho NGO và tổ chức phát triển: dữ liệu không đưa vào AI, ai duyệt, kiểm chứng, ghi nhãn, công cụ được phép. Nhận qua email.",
+ "vet": [
+  [
+   "Bộ quy tắc AI",
+   "/bo-quy-tac-ai/"
+  ]
+ ],
+ "h1": "Bộ quy tắc AI an toàn cho tổ chức",
+ "mo": "Một bộ quy tắc ngắn để cả tổ chức dùng AI giống nhau. Sửa lại theo tên và quy trình của bạn là dùng được.",
+ "ghi_chu": "Bản PDF đang được hoàn thiện. Để lại email, chúng tôi gửi ngay khi có bản đầu tiên.",
+ "than": "## Bộ quy tắc gồm\n1. **Dữ liệu nào không đưa vào AI**: tên, ảnh, hồ sơ, câu chuyện cá nhân của người thụ hưởng và đối tác.\n2. **Công cụ được phép**: danh sách công cụ, dùng bằng tài khoản của tổ chức.\n3. **Ai duyệt, duyệt gì**: người chịu trách nhiệm cho từng loại nội dung có AI hỗ trợ.\n4. **Kiểm chứng**: kiểm số liệu, trích dẫn do AI đưa ra trước khi dùng.\n5. **Ghi nhãn**: câu ghi nhãn cho ảnh và bài viết có AI hỗ trợ.\n6. **Khi có sự cố**: báo cho ai, làm gì khi dữ liệu bị đưa nhầm vào công cụ AI.\n\n## Trước khi tải\n[Tự chấm mức sẵn sàng AI của tổ chức](/tu-cham-ai/) để biết nên sửa quy tắc nào trước.",
+ "cta": false
+}

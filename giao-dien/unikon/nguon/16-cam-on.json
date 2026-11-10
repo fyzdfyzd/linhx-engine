@@ -1,0 +1,18 @@
+{
+ "path": "/cam-on/",
+ "kenh": "trang-cam-on",
+ "cta": false,
+ "cam_on": true,
+ "noindex": true,
+ "title": "Cảm ơn bạn · Unikon",
+ "desc": "Unikon đã nhận thông tin của bạn. Mã ghi bên dưới, dùng khi trao đổi với chúng tôi. Bước tiếp theo và cách chuẩn bị cho pitch của bạn.",
+ "vet": [
+  [
+   "Cảm ơn",
+   "/cam-on/"
+  ]
+ ],
+ "h1": "Đã nhận, cảm ơn bạn",
+ "mo": "Thông tin của bạn đã vào hệ thống. Giữ mã bên dưới để tiện trao đổi.",
+ "than": "## Bước tiếp theo\n- Với brief pitch: chúng tôi liên hệ lại để xác nhận hạn pitch và những gì còn thiếu.\n- Với yêu cầu gọi lại: chúng tôi gọi trong giờ làm việc.\n\n## Trong lúc chờ\n- Xem [pitch mẫu 48 giờ](https://demo.unikon.vn/?kenh=trang-cam-on) để biết deck trông thế nào.\n- Đọc [cách tính giá](/bao-gia/) và [an toàn thương hiệu](/an-toan-thuong-hieu/)."
+}

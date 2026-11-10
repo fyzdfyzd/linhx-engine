@@ -19,7 +19,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, TRANG_BU, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, TRANG_BU, khong_import_frappe_dau_file, nap_module
 
 
 def _dl():
@@ -83,8 +83,8 @@ def test_nguoi_phu_trach_thay_lich_trong_viec_cho():
     assert [x["nguoi"] for x in vc_s1] == ["NG-01", "NG-02"]
     assert all(x["phu_trach"] == "sale1@vd.vn" for x in vc_s1)
 
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "booking" / "dat_lich.py")
-    api_p = CORE / "linhx_core" / "booking" / "api_booking.py"
+    khong_import_frappe_dau_file(ma("booking/dat_lich.py"))
+    api_p = ma("booking/api_booking.py")
     assert api_p.exists() and "def dat_lich_goi(" in api_p.read_text(encoding="utf-8")
     chu_tb = "\n".join(p.read_text(encoding="utf-8", errors="ignore") for p in TRANG_BU.rglob("*") if p.is_file() and p.suffix in {".js", ".jsx", ".ts", ".tsx"})
     assert "data-dat-lich" in chu_tb

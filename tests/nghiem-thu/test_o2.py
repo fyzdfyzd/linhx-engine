@@ -26,7 +26,7 @@ Hợp đồng (HOP-DONG.md):
 from concurrent.futures import ThreadPoolExecutor
 import json
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 
 def _kp():
@@ -101,8 +101,8 @@ def test_phieu_giao_qua_150_phut_ve_duyet_va_tang_so_lan_giao():
 
 def test_api_tho_keo():
     """Kiểm tra file api_tho.py và tính thuần Python của keo_phieu.py."""
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "ops" / "keo_phieu.py")
-    p = CORE / "linhx_core" / "ops" / "api_tho.py"
+    khong_import_frappe_dau_file(ma("ops/keo_phieu.py"))
+    p = ma("ops/api_tho.py")
     assert p.exists(), "thiếu apps/linhx_core/linhx_core/ops/api_tho.py"
     chu = p.read_text(encoding="utf-8")
     assert "def keo(" in chu and "401" in chu

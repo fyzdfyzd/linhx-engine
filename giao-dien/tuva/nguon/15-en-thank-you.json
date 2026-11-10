@@ -1,0 +1,19 @@
+{
+ "path": "/en/thank-you/",
+ "lang": "en",
+ "kenh": "en-thank-you",
+ "cta": false,
+ "cam_on": true,
+ "noindex": true,
+ "title": "Thank you · TUVA Communication",
+ "desc": "TUVA has received your project details and will get back to you within one working day by phone or email.",
+ "vet": [
+  [
+   "Thank you",
+   "/en/thank-you/"
+  ]
+ ],
+ "h1": "Thank you, we have your project details",
+ "mo": "We will get back to you within one working day by phone or email.",
+ "than": "## What happens next\n1. Thu Hiền or Thu Hà reads your details and contacts you to set up a conversation.\n2. You receive suggested communication and AI line items, a budget frame and indicators for the logframe.\n3. We agree on what TUVA drafts with you before the deadline.\n\n## Meanwhile\n- [Get the AI rules for your organisation](/en/#ai-rules)"
+}

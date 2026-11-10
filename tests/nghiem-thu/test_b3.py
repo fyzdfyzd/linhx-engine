@@ -20,7 +20,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import copy
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module
 
 KHOA = "khoa-thu-b3"
 AUTH = f"Apikey {KHOA}"
@@ -82,9 +82,9 @@ def test_noi_dung_co_dau_cach_va_tien_ra():
 
 
 def test_api():
-    p = CORE / "linhx_core" / "pay" / "api_sepay.py"
+    p = ma("pay/api_sepay.py")
     chu = p.read_text(encoding="utf-8")
     assert "allow_guest=True" in chu and "def webhook(" in chu and "Authorization" in chu
     assert "sepay_khoa" in chu, "khoá SePay đọc từ site_config tên sepay_khoa"
     assert "for_update" in chu or "for update" in chu.lower(), "khoá dòng đơn khi chuyển da_tra"
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "pay" / "sepay.py")
+    khong_import_frappe_dau_file(ma("pay/sepay.py"))

@@ -14,7 +14,7 @@ Hợp đồng (HOP-DONG.md):
 - linhx_core/pay/api_thue.py: @frappe.whitelist() `canh_bao_thue` (chỉ người điều hành) trả canh_bao năm hiện tại.
 - so_s1a.py ghi chuyển từ file nào trong nguon/03-opc-os/ (đường dẫn có thật)
 """
-from _chung import CORE, ghi_nguon_proto, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
+from _chung import ma, CORE, ghi_nguon_proto, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
 
 
 def _s():
@@ -59,8 +59,8 @@ def test_canh_bao_nguong():
 
 
 def test_api_va_nguon():
-    chu = (CORE / "linhx_core" / "pay" / "api_thue.py").read_text(encoding="utf-8")
+    chu = (ma("pay/api_thue.py")).read_text(encoding="utf-8")
     assert "def canh_bao_thue(" in chu and "allow_guest" not in chu
-    p = CORE / "linhx_core" / "pay" / "so_s1a.py"
+    p = ma("pay/so_s1a.py")
     khong_import_frappe_dau_file(p)
     ghi_nguon_proto(p)

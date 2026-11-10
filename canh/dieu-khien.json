@@ -31,7 +31,8 @@
     "features-dot1b.json",
     "features-dot2.json",
     "features-dot2b.json",
-    "features-dot2c.json"
+    "features-dot2c.json",
+    "features-dot3.json"
   ],
   "giao": [
     "N1",
@@ -83,7 +84,22 @@
     "F1",
     "F2",
     "F3",
-    "T3"
+    "T3",
+    "L1",
+    "L4",
+    "L2",
+    "L3",
+    "U2",
+    "U1",
+    "U3",
+    "P3",
+    "P1",
+    "G4",
+    "G1",
+    "G2",
+    "G3",
+    "G5",
+    "T4"
   ],
   "cho": {
     "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG"
@@ -138,7 +154,22 @@
     "C2B": "trang-bu",
     "M1": "ban-do",
     "V1": "vm-kiem",
-    "V2": "ci"
+    "V2": "ci",
+    "L1": "loi",
+    "L2": "loi",
+    "L3": "loi",
+    "L4": "loi-api",
+    "P1": "pay",
+    "P3": "cts",
+    "G1": "crm",
+    "G2": "pay",
+    "G3": "booking",
+    "G4": "agentforce",
+    "G5": "tho",
+    "U1": "deploy",
+    "U2": "giao-dien",
+    "U3": "ci",
+    "T4": "e2e"
   },
   "bao_mat": [
     "B2",
@@ -160,7 +191,12 @@
     "I2",
     "I3",
     "C2B",
-    "V1"
+    "V1",
+    "L3",
+    "P1",
+    "G1",
+    "G2",
+    "U2"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {

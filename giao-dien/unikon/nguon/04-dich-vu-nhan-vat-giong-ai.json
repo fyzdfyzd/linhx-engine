@@ -1,0 +1,30 @@
+{
+ "path": "/dich-vu/nhan-vat-giong-ai/",
+ "kenh": "trang-nhan-vat",
+ "loai": "service",
+ "title": "Nhân vật AI và giọng AI cho nhãn hàng · Unikon",
+ "desc": "Đại sứ ảo, giọng đọc, nhạc nền làm bằng AI cho chiến dịch của agency. Nhân vật là người hư cấu; người thật chỉ khi có hợp đồng. Giao trắng nhãn.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/dich-vu/"
+  ],
+  [
+   "Nhân vật và giọng AI",
+   "/dich-vu/nhan-vat-giong-ai/"
+  ]
+ ],
+ "h1": "Nhân vật AI và giọng AI cho nhãn hàng",
+ "mo": "Một gương mặt và một giọng nói riêng cho nhãn hàng, dùng được trên ảnh, video và nội dung mạng xã hội trong suốt chiến dịch.",
+ "than": "## Làm được gì\n- Đại sứ ảo của nhãn hàng: ngoại hình, phong cách, tính cách theo brief.\n- Bộ ảnh và video của nhân vật cho nhiều kênh.\n- Giọng đọc quảng cáo, nhạc nền cho video.\n\n## Luật với người thật\nNhân vật AI của Unikon mặc định là người hư cấu. Mô phỏng gương mặt hay giọng của người thật, kể cả KOL đang hợp tác với nhãn, chỉ làm khi có hợp đồng với chính người đó.\n\n## Giữ nhân vật nhất quán\nNhân vật dùng lâu dài nên nằm trong [Brand kit hằng tháng](/brand-kit/): ngoại hình, trang phục, giọng, những điều nhân vật không làm, để mọi job sau giữ đúng một người.",
+ "hoi_dap": [
+  [
+   "Có dùng gương mặt hay giọng người nổi tiếng được không?",
+   "Chỉ khi có hợp đồng với chính người đó. Mặc định, nhân vật AI của Unikon là người hư cấu."
+  ],
+  [
+   "Nhân vật thuộc về ai?",
+   "Quyền với nhân vật ghi trong hợp đồng của từng job. Bạn nêu nhu cầu trong brief để chúng tôi đưa vào báo giá."
+  ]
+ ]
+}

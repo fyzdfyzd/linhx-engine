@@ -1,0 +1,34 @@
+{
+ "path": "/giai-phap/ai-cho-ngo/",
+ "kenh": "trang-ai-cho-ngo",
+ "loai": "service",
+ "title": "AI cho NGO: tập huấn, quy tắc và quy trình · TUVA",
+ "desc": "Chương trình Decent AI của TUVA giúp NGO ở Việt Nam dùng AI an toàn: tập huấn theo vai trò, bộ quy tắc AI, quy trình duyệt nội dung, câu lệnh mẫu.",
+ "vet": [
+  [
+   "Dịch vụ",
+   "/giai-phap/"
+  ],
+  [
+   "AI cho NGO",
+   "/giai-phap/ai-cho-ngo/"
+  ]
+ ],
+ "h1": "AI cho NGO, dùng an toàn từ tuần đầu tiên",
+ "mo": "Nhiều cán bộ dự án đã tự dùng AI để viết báo cáo hay dịch tài liệu. Việc của tổ chức là biến thói quen lẻ tẻ đó thành cách làm chung, an toàn với dữ liệu người thụ hưởng và đúng yêu cầu của nhà tài trợ.",
+ "than": "## Chương trình gồm những gì\n### Tập huấn theo vai trò\nLãnh đạo học cách đặt quy tắc và quản rủi ro. Cán bộ chương trình học dùng AI để tóm tắt, viết, dịch, chuẩn bị đề xuất. Người làm truyền thông học lên ý tưởng và kiểm chứng. Người làm MEL học phân tích phản hồi cộng đồng đã ẩn danh. Bài tập làm trên tài liệu của chính dự án, đã bỏ thông tin cá nhân.\n\n### Bộ quy tắc AI và quy trình duyệt\nMột bộ quy tắc ngắn, sửa theo tên và quy trình của tổ chức: dữ liệu nào không đưa vào AI, công cụ nào được dùng, ai duyệt nội dung nào, ghi nhãn ra sao. [Xem bộ quy tắc AI an toàn](/bo-quy-tac-ai/).\n\n### Câu lệnh mẫu cho việc của NGO\nBộ câu lệnh cho những việc lặp lại: tóm tắt báo cáo, viết bản tin dự án, soạn khung concept note, dịch tài liệu chuyên ngành, phân nhóm phản hồi khảo sát.\n\n## Decent AI nghĩa là gì\nChúng tôi gọi cách làm này là [Decent AI](/decent-ai/): AI tử tế, có quy tắc, có người chịu trách nhiệm, bảo vệ người yếu thế, và để con người giữ quyền quyết định.\n\n## Đưa vào đề xuất tài trợ\nHợp phần năng lực AI có thể thành một đầu ra riêng trong logframe, với chỉ số như số nhân viên được tập huấn, tỉ lệ làm theo quy tắc, số quy trình có AI hỗ trợ. [Xem cách viết](/de-xuat-tai-tro/).",
+ "hoi_dap": [
+  [
+   "Tổ chức nhỏ, chưa ai biết dùng AI thì bắt đầu từ đâu?",
+   "Bắt đầu từ bộ quy tắc và một buổi tập huấn ngắn cho cả tổ chức. Làm bài tự chấm mức sẵn sàng AI trên trang này để biết nên ưu tiên việc gì trước."
+  ],
+  [
+   "Có phải mua phần mềm đắt tiền không?",
+   "Không bắt buộc. Phần lớn việc dùng được với công cụ phổ biến, miễn là dùng bằng tài khoản của tổ chức và theo đúng quy tắc dữ liệu."
+  ],
+  [
+   "Tập huấn bằng tiếng Việt hay tiếng Anh?",
+   "Tiếng Việt là chính. Tài liệu và câu lệnh mẫu có thể song ngữ cho tổ chức làm việc với nhà tài trợ nước ngoài."
+  ]
+ ]
+}

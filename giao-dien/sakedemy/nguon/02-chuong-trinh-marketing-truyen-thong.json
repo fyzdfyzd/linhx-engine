@@ -1,0 +1,35 @@
+{
+ "path": "/chuong-trinh/marketing-truyen-thong/",
+ "kenh": "ct-marketing-truyen-thong",
+ "loai": "service",
+ "title": "Đào tạo AI cho marketing và truyền thông · Sakédemy",
+ "desc": "Khoá AI ứng dụng cho đội marketing và truyền thông: lên ý tưởng, viết theo giọng thương hiệu, làm ảnh và video ngắn, có bước người duyệt.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ],
+  [
+   "Marketing và truyền thông",
+   "/chuong-trinh/marketing-truyen-thong/"
+  ]
+ ],
+ "h1": "AI ứng dụng cho marketing và truyền thông",
+ "mo": "Khoá AI ứng dụng cho đội marketing và truyền thông: lên ý tưởng, viết theo giọng thương hiệu, làm ảnh và video ngắn, có bước người duyệt.",
+ "ghi_chu": "Đầu việc dưới đây là ví dụ thường gặp. Giáo trình thật chốt sau buổi trao đổi và bảng khảo sát đầu vào của đội bạn.",
+ "anh": [
+  "/img/anh/anh-giang-vien-rox.jpg",
+  "Lớp AI ứng dụng tại Tập đoàn ROX"
+ ],
+ "than": "## Đầu việc thường đưa vào lớp\n- Lên ý tưởng chiến dịch và lịch nội dung từ một bản brief\n- Viết bài mạng xã hội, email, thông cáo theo giọng thương hiệu\n- Tạo ảnh, nhạc, video ngắn bằng AI cho kênh xã hội\n- Quy trình nháp, sửa, duyệt khi nhiều người cùng làm với AI\n\n## Học viên mang về\n- Bộ câu lệnh theo giọng thương hiệu của công ty\n- Một quy trình nội dung có bước người duyệt trước khi đăng\n- Danh sách việc nên và không nên giao cho AI trong truyền thông\n\n## Cách lớp chạy\nNhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Xem chi tiết ở [quy trình lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "hoi_dap": [
+  [
+   "Đội marketing đã dùng ChatGPT rồi, học thêm gì?",
+   "Lớp đi từ kết quả khảo sát đầu vào. Đội đã dùng thường học sâu hơn về giữ giọng thương hiệu, quy trình nhiều bước và làm ảnh, video."
+  ],
+  [
+   "Có dạy công cụ trả phí không?",
+   "Giáo trình chọn công cụ theo những gì công ty đang có hoặc sẵn sàng mua. Điều này được hỏi trong buổi trao đổi đầu tiên."
+  ]
+ ]
+}

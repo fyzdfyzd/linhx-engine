@@ -1,0 +1,18 @@
+{
+ "path": "/lien-he/",
+ "kenh": "trang-lien-he",
+ "title": "Liên hệ Sakédemy · Đăng ký tư vấn lớp doanh nghiệp",
+ "desc": "Đăng ký tư vấn lớp đào tạo AI ứng dụng cho doanh nghiệp. Để lại thông tin, Sakédemy liên hệ để hẹn buổi trao đổi về đề bài của đội bạn.",
+ "vet": [
+  [
+   "Liên hệ",
+   "/lien-he/"
+  ]
+ ],
+ "h1": "Liên hệ Sakédemy",
+ "mo": "Để lại thông tin ở form dưới, chúng tôi liên hệ để hẹn buổi trao đổi.",
+ "ghi_chu": "Số điện thoại, Zalo, email và địa chỉ đang cập nhật.",
+ "than": "",
+ "form": true,
+ "cta": false
+}

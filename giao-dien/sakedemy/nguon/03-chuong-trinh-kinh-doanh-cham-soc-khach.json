@@ -1,0 +1,35 @@
+{
+ "path": "/chuong-trinh/kinh-doanh-cham-soc-khach/",
+ "kenh": "ct-kinh-doanh-cham-soc-khach",
+ "loai": "service",
+ "title": "Đào tạo AI cho kinh doanh và chăm sóc khách · Sakédemy",
+ "desc": "Khoá AI ứng dụng cho đội kinh doanh và chăm sóc khách: soạn email, báo giá, kịch bản trả lời khách nhất quán, luôn có người kiểm trước khi gửi.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ],
+  [
+   "Kinh doanh và chăm sóc khách",
+   "/chuong-trinh/kinh-doanh-cham-soc-khach/"
+  ]
+ ],
+ "h1": "AI ứng dụng cho kinh doanh và chăm sóc khách",
+ "mo": "Khoá AI ứng dụng cho đội kinh doanh và chăm sóc khách: soạn email, báo giá, kịch bản trả lời khách nhất quán, luôn có người kiểm trước khi gửi.",
+ "ghi_chu": "Đầu việc dưới đây là ví dụ thường gặp. Giáo trình thật chốt sau buổi trao đổi và bảng khảo sát đầu vào của đội bạn.",
+ "anh": [
+  "/img/anh/anh-thuc-hanh-taseco.jpg",
+  "Học viên thực hành AI trong lớp tại Taseco"
+ ],
+ "than": "## Đầu việc thường đưa vào lớp\n- Soạn email chào hàng, email theo dõi khách theo mẫu của công ty\n- Soạn nhanh báo giá và đề xuất từ thông tin khách\n- Bộ câu trả lời câu hỏi sản phẩm hay gặp\n- Tóm tắt cuộc gọi và cập nhật ghi chú khách\n\n## Học viên mang về\n- Bộ câu lệnh cho email, báo giá, trả lời khách\n- Quy tắc kiểm trước khi gửi cho khách\n- Cách che dữ liệu khách khi làm việc với AI\n\n## Cách lớp chạy\nNhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Xem chi tiết ở [quy trình lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "hoi_dap": [
+  [
+   "AI có trả lời khách thay nhân viên không?",
+   "Lớp dạy AI soạn nháp, nhân viên kiểm và gửi. Việc để AI tự trả lời khách là quyết định riêng của công ty, cần quy trình và công cụ khác."
+  ],
+  [
+   "Dữ liệu khách có bị đưa lên AI không?",
+   "Lớp có phần riêng về việc che thông tin khách trước khi dùng AI, theo quy định dữ liệu của công ty bạn."
+  ]
+ ]
+}

@@ -25,7 +25,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
 
 
 def _pl():
@@ -85,4 +85,4 @@ def test_doctype_lx_pilot():
     assert tr.get("co_hoi", {}).get("options") == "LX Co Hoi"
     assert "han_hoan_thanh" in tr and "trang_thai" in tr and "cac_buoc" in tr
     assert p.with_suffix(".py").exists()
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "agent" / "pilot.py")
+    khong_import_frappe_dau_file(ma("agent/pilot.py"))

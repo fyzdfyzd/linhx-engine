@@ -1,0 +1,35 @@
+{
+ "path": "/chuong-trinh/chi-nhanh-ngan-hang/",
+ "kenh": "ct-chi-nhanh-ngan-hang",
+ "loai": "service",
+ "title": "Đào tạo AI cho chi nhánh ngân hàng · Sakédemy",
+ "desc": "Khoá AI thực chiến cho chi nhánh ngân hàng: tờ trình, email khách, báo cáo tuần theo khuôn của ngân hàng bạn và quy định dữ liệu khách hàng.",
+ "vet": [
+  [
+   "Chương trình",
+   "/chuong-trinh/"
+  ],
+  [
+   "Chi nhánh ngân hàng",
+   "/chuong-trinh/chi-nhanh-ngan-hang/"
+  ]
+ ],
+ "h1": "AI ứng dụng cho chi nhánh ngân hàng",
+ "mo": "Khoá AI thực chiến cho chi nhánh ngân hàng: tờ trình, email khách, báo cáo tuần theo khuôn của ngân hàng bạn và quy định dữ liệu khách hàng.",
+ "ghi_chu": "Đầu việc dưới đây là ví dụ thường gặp. Giáo trình thật chốt sau buổi trao đổi và bảng khảo sát đầu vào của đội bạn.",
+ "anh": [
+  "/img/anh/anh-lop-vinhomes.jpg",
+  "Lớp đào tạo AI của Sakédemy tại doanh nghiệp"
+ ],
+ "than": "## Đầu việc thường đưa vào lớp\n- Soạn tờ trình, email khách, biên bản theo khuôn của ngân hàng\n- Bộ câu trả lời sản phẩm nhất quán, luôn có bước người kiểm\n- Tổng hợp báo cáo tuần từ số liệu thô thành bản tóm tắt cho giám đốc\n- Che thông tin khách hàng trước khi dùng AI\n\n## Học viên mang về\n- Bộ câu lệnh theo mẫu biểu của chi nhánh\n- Quy tắc dữ liệu khách hàng khi dùng AI\n- Cách học tiếp sau lớp\n\n## Cách lớp chạy\nNhận đề bài, khảo sát đầu vào, may giáo trình, dạy và khảo sát lại sau khoá. Xem chi tiết ở [quy trình lớp doanh nghiệp](/lop-doanh-nghiep/).",
+ "hoi_dap": [
+  [
+   "Quy định dữ liệu của ngân hàng rất chặt, lớp xử lý thế nào?",
+   "Giáo trình may theo quy định dữ liệu của chính ngân hàng bạn, hỏi ngay trong bảng khảo sát đầu vào. Bài thực hành dùng mẫu đã che thông tin khách."
+  ],
+  [
+   "Học tại chi nhánh được không?",
+   "Được. Lớp doanh nghiệp thường học tại văn phòng của đối tác."
+  ]
+ ]
+}

@@ -33,7 +33,7 @@ Hợp đồng (HOP-DONG.md):
 """
 import pytest
 
-from _chung import CORE, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
+from _chung import ma, CORE, khong_import_frappe_dau_file, nap_module, ten_truong, tim_doctype
 
 
 def _pa():
@@ -51,7 +51,7 @@ def test_doctype_lx_phieu_agy():
     assert {"nhap", "duyet", "giao", "nop", "dat", "tra"} <= tt_opts
     ctl = p.with_suffix(".py")
     assert ctl.exists() and "phieu_agy" in ctl.read_text(encoding="utf-8")
-    khong_import_frappe_dau_file(CORE / "linhx_core" / "ops" / "phieu_agy.py")
+    khong_import_frappe_dau_file(ma("ops/phieu_agy.py"))
 
 
 def test_loai_phieu_ngoai_danh_sach_thi_loi():
