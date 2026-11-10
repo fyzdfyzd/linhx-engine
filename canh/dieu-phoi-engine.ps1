@@ -205,7 +205,19 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
       if (-not $duoi -and (Test-Path "$LogDir\$ten.jsonl")) { $duoi = ((Get-Content "$LogDir\$ten.jsonl" -Encoding utf8 -Tail 2) -join " / ") }
       $duoi = $duoi -replace '(sk-ant-|ghp_|github_pat_|AIza)\S+', '<khoá>'
       Ghi "$fid agy thoát sau $phut phút lần $nT, .err: $($duoi.Substring(0, [math]::Min(300, $duoi.Length)))"
-      if ($nT -lt 3) { $agyThoatNgay = $true; $claudeHong = $true }  # chỉ claudeHong: không tính trần, vẫn bỏ qua review Claude (diff rỗng)
+      if ($nT -lt 3) { $agyThoatNgay = $true; $claudeHong = $true }
+      # 10/11 12:50: agy hết hạn mức gói (429 RESOURCE_EXHAUSTED) là lỗi máy MỌI lần, và ngưng giao cả 4 thợ tới giờ mở lại (smoke test đọc agy-het.txt)
+      $toan = (@($err, "$LogDir\$ten.jsonl") | Where-Object { Test-Path $_ } | ForEach-Object { Get-Content $_ -Raw -Encoding utf8 }) -join "`n"
+      if ($toan -match 'RESOURCE_EXHAUSTED|quota reached|exceeded your current quota|Quota exceeded') {
+        $agyThoatNgay = $true; $claudeHong = $true
+        $mo = (Get-Date).AddMinutes(60)
+        if ($toan -match 'Resets in (\d+)h(\d+)m') { $mo = (Get-Date).AddHours([int]$Matches[1]).AddMinutes([int]$Matches[2] + 5) }
+        $tepHet = "$Canh\agy-het.txt"
+        if (-not (Test-Path $tepHet)) { Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) agy hết hạn mức gói (429), ngưng giao tới $(Get-Date $mo -Format s). Đổi tài khoản agy hoặc agy_model thì xoá D:\LINHX\ENGINE-canh\agy-het.txt" }
+        (Get-Date $mo -Format s) | Set-Content $tepHet
+        Remove-Item $tepThoat -Force -ErrorAction SilentlyContinue
+        Ghi "${fid}: agy hết hạn mức, không tính trần; ngưng giao tới $(Get-Date $mo -Format s)"
+      }  # chỉ claudeHong: không tính trần, vẫn bỏ qua review Claude (diff rỗng)
     }
   } else { Remove-Item "$Canh\tac\$fid.thoat.txt" -Force -ErrorAction SilentlyContinue }
   # K1 + K3: canh/rao.py bản của main (thợ không sửa được)
@@ -388,6 +400,8 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
     $hongMay = @()
     $ch = "$Canh\claude-het.txt"
     if ((Test-Path $ch) -and ((Get-Date) - (Get-Item $ch).LastWriteTime).TotalMinutes -lt 60) { $hongMay += "Claude chấm vừa hết hạn mức lúc $((Get-Content $ch -Raw).Trim())" }
+    $ah = "$Canh\agy-het.txt"
+    if (Test-Path $ah) { $moLai = [datetime](Get-Content $ah -Raw).Trim(); if ((Get-Date) -lt $moLai) { $hongMay += "agy hết hạn mức tới $(Get-Date $moLai -Format s)" } else { Remove-Item $ah -Force } }
     $bb = (& wsl.exe -d Ubuntu -u root -e systemctl is-active linhx-bench 2>&1 | Out-String).Trim()
     if ($bb -notmatch '^active') { $hongMay += "bench WSL không chạy ($bb)" }
     $sm = "$Canh\smoke.txt"
