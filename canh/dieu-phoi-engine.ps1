@@ -239,6 +239,9 @@ if (-not $ThuChon -and -not $dangChay -and (Test-Path "$S\can-cham.txt")) {
   git checkout -q -- $FF 2>&1 | Out-Null
   Remove-Item "$Wt\KIEM-*.json" -Force -ErrorAction SilentlyContinue
   $tieuChi = ($x.tieu_chi | ForEach-Object { "  - $_" }) -join "`n"
+  # Linh 10/11 tiết kiệm token: đề chấm kèm sẵn diff (≤ 40k ký tự, quá thì để Claude tự git diff) và chỉ phần cuối đầu ra cổng kiểm
+  function KemDiff($khoang) { $d = (git diff $khoang 2>$null | Out-String); if ($d.Length -gt 0 -and $d.Length -le 40000) { "Diff đã kèm dưới đây, không cần chạy lại git diff; chỉ mở file khi cần thêm ngữ cảnh:`n``````diff`n$d`n``````" } else { "Diff dài $($d.Length) ký tự, tự xem bằng git diff $khoang (chỉ file cần)." } }
+  $ckNgan = if ($ck.Length -gt 3000) { "...(cắt phần đầu)`n" + $ck.Substring($ck.Length - 3000) } else { $ck }
   $de = @"
 Bạn là Bàng Thống, người canh LINHX ENGINE. Review phần agy làm cho feature $fid trên nhánh ${Nhanh}: git diff $goc..HEAD (chỉ phần này).
 Feature $fid`: $($x.mo_ta)
@@ -246,11 +249,12 @@ Tiêu chí:
 $tieuChi
 Vùng được sửa: $(@($x.vung) -join ', ') (cổng vùng đã chạy bằng máy).
 Hợp đồng: tests/nghiem-thu/HOP-DONG.md và tests/nghiem-thu/test_$($fid.ToLower()).py.
-Kết quả cổng kiểm (đã chạy ngoài tay thợ, không cần tự chạy lại): $ck
+Kết quả cổng kiểm (đã chạy ngoài tay thợ, không cần tự chạy lại): $ckNgan
 Chấm theo rủi ro: dữ liệu khách, quyền, tiền, bí mật là mức cao, lỗi là CHUA_DAT. Phần còn lại chỉ CHUA_DAT khi luồng chính sai hoặc làm cho qua test mà không làm thật
 (ví dụ bằng chứng VM bịa: log/JSON không giống đầu ra thật, thời điểm vô lý; hàm trả cứng theo đúng dữ liệu test).
 Lỗi nhỏ ghi mục "## Lưu ý" (file:dòng + việc), không chặn. Ý tưởng ngoài phạm vi để mục "## Ý tưởng".
 Trả lời: dòng 1 chỉ là DAT hoặc CHUA_DAT. Sau đó tối đa 10 gạch đầu dòng, mỗi dòng file:dòng và việc phải sửa. Không sửa file nào, đọc ít file nhất có thể.
+$(KemDiff "$goc..HEAD")
 "@
   # Linh 9/11 tiết kiệm token: rào cứng/cổng kiểm đã trượt (không do máy) thì không gọi Claude chấm
   if ($loi.Count -gt 0 -and -not $loiMay) { $c = @{ kl = "CHUA_DAT"; review = "(Không gọi Claude chấm vì rào cứng/cổng kiểm đã trượt; sửa các điểm ở mục Rào cứng trước.)" } }
@@ -267,6 +271,7 @@ Chỉ tìm lỗi bảo mật thật, có đường khai thác cụ thể: thiế
 chống trùng giao dịch sai, lộ dữ liệu khách (email, SĐT, hồ sơ) ra API công khai hoặc log, SQL/lệnh ghép chuỗi từ dữ liệu ngoài,
 bí mật viết trong code, so khoá không hằng thời gian, đổi trạng thái tiền không trong giao dịch.
 Trả lời: dòng 1 chỉ là DAT (không có lỗi mức cao) hoặc CHUA_DAT. Sau đó tối đa 8 gạch đầu dòng: file:dòng, cách khai thác, cách sửa. Không sửa file nào.
+$(KemDiff "$NhanhTH...HEAD")
 "@
     $bm = ChamClaude $deBM "$tamTho\de-bao-mat.txt" "baomat-$ten"
     $review += "`n`n## Bảo mật (K4): $($bm.kl)`n$($bm.review)"
