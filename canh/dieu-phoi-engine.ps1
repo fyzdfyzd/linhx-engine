@@ -154,6 +154,9 @@ if (-not $coTho) { exit 0 }
 $dk = DocJson "$TichHop\canh\dieu-khien.json"
 $PhutToiDa = if ($dk.phut_toi_da) { [int]$dk.phut_toi_da } else { 40 }
 $Tran = if ($dk.tran_chua_dat) { [int]$dk.tran_chua_dat } else { 3 }
+# A (Linh 10/11): dừng agy khi N phút không commit mới và không chạy test mới (pytest/cong_kiem trong nhật ký agy)
+$PhutKhongTien = if ($dk.phut_khong_tien) { [int]$dk.phut_khong_tien } else { 10 }
+function DauTien($log) { $nt = 0; if (Test-Path $log) { $nt = @(Select-String -Path $log -Pattern 'pytest|cong_kiem' -AllMatches -ErrorAction SilentlyContinue | ForEach-Object { $_.Matches.Count } | Measure-Object -Sum).Sum }; "$((git rev-parse HEAD).Trim());$([int]$nt)" }
 if (-not (Test-Path $Wt)) {
   git -C $TichHop worktree add -B $Nhanh $Wt $NhanhTH 2>&1 | Out-Null
   Ghi "tạo worktree $Wt nhánh $Nhanh"
@@ -169,14 +172,14 @@ if (-not $ThuChon -and (Test-Path "$S\phieu.txt")) {
   $p = Get-Process -Id $pid0 -ErrorAction SilentlyContinue
   if ($p -and $p.ProcessName -notmatch 'agy') { $p = $null }
   $phut = [int]((Get-Date) - [datetime]$bd).TotalMinutes
-  $dau = (git status --porcelain | Out-String) + (git rev-parse HEAD) + ((Get-Item "$LogDir\$ten.jsonl", "$S\log\agy-$ten.err" -ErrorAction SilentlyContinue | ForEach-Object { $_.Length }) -join ",")
+  $dau = DauTien "$LogDir\$ten.jsonl"
   $nhip = "$S\nhip.txt"; $dauCu = if (Test-Path $nhip) { Get-Content $nhip -Raw -Encoding utf8 } else { "" }
   if ($dau -ne $dauCu) { $dau | Set-Content -Encoding utf8 -NoNewline $nhip }
-  $ngu = $p -and ($dau -eq $dauCu) -and (((Get-Date) - (Get-Item $nhip).LastWriteTime).TotalMinutes -ge 15)
+  $ngu = $p -and ($dau -eq $dauCu) -and (((Get-Date) - (Get-Item $nhip).LastWriteTime).TotalMinutes -ge $PhutKhongTien)
   if ($p -and $phut -lt $PhutToiDa -and -not $ngu) { $dangChay = $true }
   else {
     $dung = "xong"
-    if ($p) { Stop-Process -Id $pid0 -Force; $dung = if ($ngu) { "ngu" } else { "gio" }; Ghi "dừng agy phiếu $ten ($fid): $(if ($ngu) { '15 phút không đổi gì' } else { "quá $PhutToiDa phút" })" }
+    if ($p) { Stop-Process -Id $pid0 -Force; $dung = if ($ngu) { "ngu" } else { "gio" }; Ghi "dừng agy phiếu $ten ($fid): $(if ($ngu) { "$PhutKhongTien phút không commit, không chạy test mới" } else { "quá $PhutToiDa phút" })" }
     # Phần dở không cất stash (bài học Z01): commit lại để phiếu sau làm tiếp
     if (git status --porcelain) { git add -A 2>&1 | Out-Null; git commit -q -m "${fid}: phần dở cuối phiếu $ten" 2>&1 | Out-Null; Ghi "commit phần dở của $fid" }
     "$fid;$ten;$loai;$dung;$bd;$phut" | Set-Content -Encoding utf8 "$S\can-cham.txt"
@@ -261,7 +264,7 @@ $(KemDiff "$goc..HEAD")
   if ($loi.Count -gt 0 -and -not $loiMay) { $c = @{ kl = "CHUA_DAT"; review = "(Không gọi Claude chấm vì rào cứng/cổng kiểm đã trượt; sửa các điểm ở mục Rào cứng trước.)" } }
   else { $c = ChamClaude $de "$tamTho\de-review.txt" "cham-$ten" $(if (@($dk.bao_mat) -contains $fid) { "opus" } else { "sonnet" }) }
   # Claude hết hạn mức (9/11 13:49 "You've hit your weekly limit" bị chấm CHUA_DAT, C2 chạm trần oan): lỗi máy, không tính lần
-  if ($c.review -match "hit your (weekly |daily |usage )?limit|usage limit|rate.?limit|overloaded_error") { $loiMay = $true; $claudeHong = $true }
+  if ($c.review -match "hit your (weekly |daily |usage )?limit|usage limit|rate.?limit|overloaded_error") { $loiMay = $true; $claudeHong = $true; "$(Get-Date -Format s)" | Set-Content "$Canh\claude-het.txt" }
   $review = $c.review
   $kl = if ($loi.Count -gt 0 -or $c.kl -ne "DAT") { "CHUA_DAT" } else { "DAT" }
   # K4: feature nhạy cảm qua thêm lượt chấm bảo mật trước khi gộp
@@ -295,7 +298,7 @@ $(KemDiff "$NhanhTH...HEAD")
     KeoTH
     git -C $TichHop merge -q --no-ff -m "canh: gộp $fid từ $Nhanh (DAT, commit $sha)" $Nhanh 2>&1 | Out-Null
     if ($LASTEXITCODE -ne 0) { git -C $TichHop merge --abort 2>&1 | Out-Null; $kl = "CHUA_DAT"; $loi += "Xung đột khi gộp vào ${NhanhTH}: gộp $NhanhTH vào nhánh này (git merge $NhanhTH), giải xung đột, chạy lại lệnh kiểm, commit" }
-    else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
+    else { DayTH; Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$Canh\tac\$fid.txt", "$Canh\tac\$fid.loi.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue; Ghi "$fid DAT, đã gộp vào $NhanhTH" }
     $mx.ReleaseMutex()
   }
   if ($kl -eq "CHUA_DAT" -and (($loiMay -and $c.kl -eq "DAT" -and -not $bmTruot) -or $claudeHong)) {
@@ -305,6 +308,13 @@ $(KemDiff "$NhanhTH...HEAD")
   } elseif ($kl -eq "CHUA_DAT") {
     $n = 1 + (SoTac $fid); "$n" | Set-Content "$Canh\tac\$fid.txt"
     Ghi "$fid CHUA_DAT lần $n (commit $sha)"
+    # A (Linh 10/11): cùng một lỗi (test FAILED + rào cứng, không kể review chữ) trượt 2 lần liền thì dừng, không chờ trần
+    $dauLoi = ((@([regex]::Matches("$ck", '(?m)^(FAILED|ERROR) (\S+)') | ForEach-Object { $_.Groups[2].Value }) +
+                @($loi | Where-Object { "$_" -notmatch '^cong_kiem trượt' } | ForEach-Object { ("$_" -split "`n")[0] })) | Sort-Object -Unique) -join "|"
+    $tepLoi = "$Canh\tac\$fid.loi.txt"
+    $trungLoi = $dauLoi -and (Test-Path $tepLoi) -and ((Get-Content $tepLoi -Raw -Encoding utf8).Trim() -eq $dauLoi)
+    $dauLoi | Set-Content -Encoding utf8 $tepLoi
+    if ($trungLoi -and $n -lt $Tran) { $n = $Tran; "$n" | Set-Content "$Canh\tac\$fid.txt"; Ghi "$fid trượt cùng lỗi 2 lần liền: dừng như chạm trần, cần chia nhỏ" }
     if ($n -ge $Tran) {
       # K2: lùi về mốc (giữ bản hỏng ở nhánh cục bộ), ngưng giao, báo Linh
       $moc = if (Test-Path "$S\moc-$fid.txt") { (Get-Content "$S\moc-$fid.txt").Trim() } else { $goc }
@@ -312,7 +322,8 @@ $(KemDiff "$NhanhTH...HEAD")
       git branch -f $hong HEAD 2>&1 | Out-Null
       git reset -q --hard $moc 2>&1 | Out-Null
       Remove-Item "$Canh\nhan\$fid.txt", "$S\dang.txt", "$S\moc-$fid.txt" -Force -ErrorAction SilentlyContinue
-      Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) $fid CHUA_DAT $n lần liền (thợ $Tho): đã lùi $Nhanh về mốc $($moc.Substring(0, [math]::Min(8, $moc.Length))), bản hỏng giữ ở nhánh cục bộ $hong, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\$fid.txt"
+      $vi = if ($trungLoi) { "cùng lỗi 2 lần liền ($($dauLoi.Substring(0, [math]::Min(200, $dauLoi.Length))))" } else { "CHUA_DAT $n lần liền" }
+      Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) $fid $vi (thợ $Tho): đã lùi $Nhanh về mốc $($moc.Substring(0, [math]::Min(8, $moc.Length))), bản hỏng giữ ở nhánh cục bộ $hong, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\$fid.txt"
       Ghi "$fid chạm trần $n lần CHUA_DAT: lùi về mốc, dừng"
     }
   }
@@ -356,6 +367,19 @@ if (-not $dangChay -and ($dk.trang_thai -eq "chay" -or $ThuChon)) {
   $ram = [math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory / 1MB, 1)
   if ($ThuChon) { $mxGiao.ReleaseMutex(); Write-Output "tho $Tho se nhan: $(if ($chon) { $chon } else { '(khong co)' }); cho: $($cho -join ','); nhom ban: $($nhomBan -join ',')"; $mxTho.ReleaseMutex(); exit 0 }
   if ($chon -and $ram -lt 1.5) { Ghi "RAM trống $ram GB < 1,5 GB, chưa giao $chon"; $chon = $null }
+  # A (Linh 10/11) smoke test máy trước khi giao (0 token): bench WSL sống, Claude chấm không vừa báo hết hạn mức (60 phút)
+  if ($chon) {
+    $hongMay = @()
+    $ch = "$Canh\claude-het.txt"
+    if ((Test-Path $ch) -and ((Get-Date) - (Get-Item $ch).LastWriteTime).TotalMinutes -lt 60) { $hongMay += "Claude chấm vừa hết hạn mức lúc $((Get-Content $ch -Raw).Trim())" }
+    $bb = (& wsl.exe -d Ubuntu -u root -e systemctl is-active linhx-bench 2>&1 | Out-String).Trim()
+    if ($bb -notmatch '^active') { $hongMay += "bench WSL không chạy ($bb)" }
+    $sm = "$Canh\smoke.txt"
+    if ($hongMay.Count) {
+      Ghi "smoke test hỏng, chưa giao ${chon}: $($hongMay -join '; ')"; $chon = $null
+      if (-not (Test-Path $sm)) { Add-Content -Encoding utf8 "$Canh\CAN-LINH.md" "- $(Get-Date -Format s) smoke test máy hỏng, ngưng giao: $($hongMay -join '; ')"; "$(Get-Date -Format s)" | Set-Content $sm }
+    } else { Remove-Item $sm -Force -ErrorAction SilentlyContinue }
+  }
   if ($chon) { "$Tho" | Set-Content "$Canh\nhan\$chon.txt"; $chon | Set-Content "$S\dang.txt" }
   $mxGiao.ReleaseMutex()
   if (-not $chon) { if (-not (Test-Path "$S\rong.txt")) { Ghi "không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)"; "" | Set-Content "$S\rong.txt" } }
@@ -412,7 +436,7 @@ Thêm vào cuối .canh-tho/CAI-TIEN-AGY.md, dưới tiêu đề ``### $ten``, �
     $p = Start-Process -FilePath $LenhAgy -WorkingDirectory $Wt -NoNewWindow -PassThru -ArgumentList $ts `
           -RedirectStandardOutput "$LogDir\$ten.jsonl" -RedirectStandardError "$S\log\agy-$ten.err"
     "$($p.Id);$(Get-Date -Format s);$ten;$chon;$loaiMoi" | Set-Content -Encoding utf8 "$S\phieu.txt"
-    Remove-Item "$S\nhip.txt" -Force -ErrorAction SilentlyContinue
+    "$((git rev-parse HEAD).Trim());0" | Set-Content -Encoding utf8 -NoNewline "$S\nhip.txt"
     # agy thoát là chấm ngay (lịch 10 phút vẫn là lưới an toàn)
     Start-Process powershell -WindowStyle Hidden -ArgumentList @("-NoProfile", "-NonInteractive", "-ExecutionPolicy", "Bypass", "-Command",
       "Wait-Process -Id $($p.Id) -ErrorAction SilentlyContinue; Start-Sleep 5; & '$PSCommandPath' -Tho $Tho")

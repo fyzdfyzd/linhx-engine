@@ -24,6 +24,14 @@ def bam(obj):
     return hashlib.sha256(json.dumps(obj, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
 
 def khoa(path):
+    # A (Linh 10/11): đề sai vùng/tiêu chí/phụ thuộc thì không khoá (canh/kiem_de.py, 0 token)
+    if not os.environ.get("BO_KIEM_DE"):
+        sys.path.insert(0, str(pathlib.Path(__file__).parent))
+        import kiem_de
+        loi, _ = kiem_de.kiem(path)
+        if loi:
+            print("\n".join(["kiem_de chặn khoá:"] + [" - " + x for x in loi]))
+            return 1
     data = doc(path)
     moc = {"meta": bam({k: v for k, v in data.items() if k != "features"}),
            "features": {f["id"]: bam(phan_khoa(f)) for f in data["features"]}}

@@ -90,3 +90,6 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 | F3 | DocType `LX Case`; `cred/kho_case.py` thuần Python: `case_cong_khai` (ẩn case chưa duyệt), `noi_dung_trang_bu`; `cred/api_cred.py`; `sites/ifagent/site.json`; commit `F3:` không đụng `trang-bu/**` | – |
 | T3 | `tests/e2e/test_hanh_trinh_ifagent.py` (URL, mật khẩu từ biến môi trường, chạy 390 + 1280: lead → đặt lịch → pilot → case) | `bang-chung/T3/hanh-trinh.json` + `e2e.log` từ VM |
 
+
+## Đợt 2b (`features-dot2b.json`, viết 10/11, việc B Linh duyệt)
+- M1 bản đồ repo: hợp đồng ở đầu tests/nghiem-thu/test_m1.py (scripts/ban_do.py: tom_tat_file, ban_do, CLI --goc --vung --gioi-han). Canh dùng bản đồ này để đưa vào phiếu thay cho việc thợ tự đọc cả repo.
