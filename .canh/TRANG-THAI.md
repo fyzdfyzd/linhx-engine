@@ -1,6 +1,6 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 09:30 (giờ máy cty). Đạt: 45/65 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
+Cập nhật 2026-11-10 09:39 (giờ máy cty). Đạt: 45/68 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
@@ -11,6 +11,7 @@ Cập nhật 2026-11-10 09:30 (giờ máy cty). Đạt: 45/65 (N1, N2, N3, N4, N
 
 ## Chờ
 - N2: bộ điều phối tự mở khi thấy D:\LINHX\PROTO\03_OPC_OS và 01_MAY_TAO_NOI_DUNG
+- K3: chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)
 
 ## Cần Linh
 - 2026-11-08T07:58:24 N3 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 937ca67f, bản hỏng giữ ở nhánh cục bộ hong/N3-20261108-0758, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\N3.txt
@@ -26,7 +27,6 @@ Cập nhật 2026-11-10 09:30 (giờ máy cty). Đạt: 45/65 (N1, N2, N3, N4, N
 - 2026-11-10T08:01:48 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6ae646f7, bản hỏng giữ ở nhánh cục bộ hong/O4-20261110-0801, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 08:47 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
 - 2026-11-10 08:50 t0: xoá đếm CHUA_DAT của O4 (O4@1011-pytest-tmp-ngoai-vung)
 - 2026-11-10 08:52 t3: giao agy phiếu 20261110-0852-t3: O4
 - 2026-11-10 08:55 t0: scp bảng thợ lên VM quá 90 giây, bỏ qua
@@ -38,4 +38,5 @@ Cập nhật 2026-11-10 09:30 (giờ máy cty). Đạt: 45/65 (N1, N2, N3, N4, N
 - 2026-11-10 09:24 t3: cổng kiểm chạy toàn bộ (12 giờ một lần)
 - 2026-11-10 09:25 t3: O4 CHUA_DAT lần 1 (commit c0e428a)
 - 2026-11-10 09:25 t3: giao agy phiếu 20261110-0925-t3: O4 (lượt sửa)
+- 2026-11-10 09:39 t4: agy xong phiếu 20261110-0919-t4 (M1) sau 20 phút
 
