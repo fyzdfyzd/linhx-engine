@@ -104,5 +104,5 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 - Giao diện BU ở `giao-dien/<bu>/` (từ skill bu-frontpage), không ở sites/ (sites/ chỉ cấu hình, C4).
 
 ## Đợt 4 (`features-dot4.json`, Linh duyệt 10/11 09:28 VN)
-- K1 tạo bản cài một lệnh, K2 CTS chạy thật song song (cờ cts_that tắt mặc định; bật cắt hệ cũ là quyết định của Linh), K3 DNS ifagent (chờ Linh đổi bản ghi A). Hợp đồng ở đầu test_k1–k3.
+- K1 tạo bản cài một lệnh, K2 tách 10/11: K2a gói + so khớp (trường thiếu là lệch, không xoá cứng), K2b đơn thật từ bản sao DB CTS chỉ đọc (cờ cts_that tắt mặc định; bật cắt hệ cũ là quyết định của Linh), K3 DNS ifagent (chờ Linh đổi bản ghi A). Hợp đồng ở đầu test_k1–k3.
 - Giao diện 3 BU lên tạm (U1) với chữ an toàn đang có trong cau-hinh.json; liên hệ, giá điền sau.

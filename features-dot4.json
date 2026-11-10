@@ -29,7 +29,7 @@
       "bang_chung": "bang-chung/K1/ban-cai.json"
     },
     {
-      "id": "K2",
+      "id": "K2a",
       "lop": "goi",
       "uu_tien": 1,
       "phu_thuoc": [
@@ -40,13 +40,35 @@
       "vung": [
         "apps/linhx_goi_chiemtinh/**"
       ],
-      "mo_ta": "Chiêm Tinh Số chạy thật trên engine: gói linhx_goi_chiemtinh giao báo cáo qua luồng chung, song song với hệ cũ.",
+      "mo_ta": "Gói linhx_goi_chiemtinh đủ khung và so khớp đơn engine với đơn CTS (tách từ K2).",
       "tieu_chi": [
         "gói chiemtinh đủ khung, khai giao bao_cao_cts",
         "so khớp đơn engine với đơn CTS chỉ ra trường lệch",
-        "ít nhất 3 đơn thật chạy song song không lệch"
+        "trường thiếu ở một bên tính là lệch, không lấp số tiền bằng giá",
+        "gói không xoá cứng bản ghi"
       ],
-      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k2.py -q",
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k2a.py -q",
+      "passes": false,
+      "bang_chung": ""
+    },
+    {
+      "id": "K2b",
+      "lop": "goi",
+      "uu_tien": 1,
+      "phu_thuoc": [
+        "K2a"
+      ],
+      "vung": [
+        "apps/linhx_goi_chiemtinh/linhx_goi_chiemtinh/doi_chieu_ban_sao.py",
+        "deploy/cts-ban-sao.sh"
+      ],
+      "mo_ta": "Chiêm Tinh Số chạy song song trên engine với đơn thật đọc từ bản sao DB của CTS (chỉ đọc), cờ cts_that tắt.",
+      "tieu_chi": [
+        "đổi hàng order_orders của CTS sang đơn engine, tiền lấy từ da_nhan",
+        "chỉ đọc bản sao DB, không ghi, không chạy trên DB gốc",
+        "ít nhất 3 đơn thật từ bản sao DB chạy song song không lệch"
+      ],
+      "lenh_kiem": "python -m pytest tests/nghiem-thu/test_k2b.py -q",
       "passes": false,
       "bang_chung": ""
     },
