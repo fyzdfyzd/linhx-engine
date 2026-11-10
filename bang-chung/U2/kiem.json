@@ -1,0 +1,45 @@
+{
+  "feature": "U2",
+  "luc": "2026-11-10T10:10:52+07:00",
+  "lenh_kiem": "python -m pytest tests/nghiem-thu/test_u2.py -q",
+  "ma_thoat_pytest": 0,
+  "ket_qua_pytest": "..                                                                       [100%]\n2 passed in 32.87s",
+  "kiem_thuc_te_3_bu": [
+    {
+      "bu": "sakedemy",
+      "trang_chu": 200,
+      "form_playwright_k7": "passed",
+      "so_lead_chuyen_engine": 2,
+      "nguon_nhan_duoc": [
+        "sakedemy"
+      ],
+      "ma_khi_engine_500": 502,
+      "ma_khi_engine_mat_ket_noi": 502,
+      "khong_ghi_tep_leads": true
+    },
+    {
+      "bu": "tuva",
+      "trang_chu": 200,
+      "form_playwright_k7": "passed",
+      "so_lead_chuyen_engine": 2,
+      "nguon_nhan_duoc": [
+        "tuva"
+      ],
+      "ma_khi_engine_500": 502,
+      "ma_khi_engine_mat_ket_noi": 502,
+      "khong_ghi_tep_leads": true
+    },
+    {
+      "bu": "unikon",
+      "trang_chu": 200,
+      "form_playwright_k7": "passed",
+      "so_lead_chuyen_engine": 2,
+      "nguon_nhan_duoc": [
+        "unikon"
+      ],
+      "ma_khi_engine_500": 502,
+      "ma_khi_engine_mat_ket_noi": 502,
+      "khong_ghi_tep_leads": true
+    }
+  ]
+}
