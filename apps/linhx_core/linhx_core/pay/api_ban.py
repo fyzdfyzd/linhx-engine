@@ -1,12 +1,38 @@
 """Endpoint công khai bán gói báo cáo 'AI nói gì về thương hiệu' và tạo đơn VietQR."""
 from __future__ import annotations
 
+import importlib
+
 import frappe
 from frappe.rate_limiter import rate_limit
 
+from linhx_core.api import tim_ham
 from linhx_core.pay import vietqr
-from linhx_core.pay.ban_bao_cao import goi_cong_khai, so_tien_don
-from linhx_core.pay.sau_tra import mot_dong
+
+
+def _nap_ham_cung_cap(khoa: str):
+    ds = tim_ham("cung_cap", khoa)
+    if not ds:
+        thong_diep = f"Chưa cài gói cung cấp '{khoa}'"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep)
+    duong_ham = ds[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    try:
+        mod = importlib.import_module(ten_module)
+    except ImportError as exc:
+        thong_diep = f"Không nạp được gói cung cấp '{khoa}' ({ten_module})"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep) from exc
+    ham = getattr(mod, ten_ham, None)
+    if not callable(ham):
+        thong_diep = f"Hàm cung cấp '{duong_ham}' cho '{khoa}' không hợp lệ"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep)
+    return ham
 
 
 def _ds_goi() -> list[dict]:
@@ -39,12 +65,14 @@ def _ngan_hang() -> dict:
 @frappe.whitelist(allow_guest=True)
 def goi() -> list[dict]:
     """Trả danh mục gói báo cáo đang bán cho trang công khai."""
+    goi_cong_khai = _nap_ham_cung_cap("baocao.goi_cong_khai")
     return goi_cong_khai(_ds_goi())
 
 
-def _truong_tuy_chon(gt: object, toi_da: int) -> str | None:
+def _truong_tuy_chon(gt: object, toi_da: int, mot_dong_fn=None) -> str | None:
     if gt is None:
         return None
+    mot_dong = mot_dong_fn or _nap_ham_cung_cap("baocao.mot_dong")
     return mot_dong(gt, toi_da) or None
 
 
@@ -60,6 +88,8 @@ def tao_don(
     su_that=None,
 ) -> dict:
     """Tạo đơn báo cáo theo gói trong catalog (không nhận giá từ client) và trả thông tin VietQR."""
+    mot_dong = _nap_ham_cung_cap("baocao.mot_dong")
+    so_tien_don = _nap_ham_cung_cap("baocao.so_tien_don")
     ten_brand = mot_dong(brand, 90)
     ma_goi = mot_dong(goi, 80)
     if not ten_brand:
@@ -89,11 +119,11 @@ def tao_don(
             "noi_dung_ck": don["noi_dung_ck"],
             "qr_url": don["qr_url"],
             "brand": ten_brand,
-            "email": _truong_tuy_chon(email, 120),
-            "nganh": _truong_tuy_chon(nganh, 80),
-            "thi_truong": _truong_tuy_chon(thi_truong, 60),
-            "doi_thu": _truong_tuy_chon(doi_thu, 120),
-            "su_that": _truong_tuy_chon(su_that, 600),
+            "email": _truong_tuy_chon(email, 120, mot_dong),
+            "nganh": _truong_tuy_chon(nganh, 80, mot_dong),
+            "thi_truong": _truong_tuy_chon(thi_truong, 60, mot_dong),
+            "doi_thu": _truong_tuy_chon(doi_thu, 120, mot_dong),
+            "su_that": _truong_tuy_chon(su_that, 600, mot_dong),
         }
     )
     doc.insert(ignore_permissions=True)

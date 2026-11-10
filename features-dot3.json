@@ -191,8 +191,8 @@
     "module.json khai giao bao_cao, hooks lõi không còn trỏ sau_tra"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_g2.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/G2/kiem.json"
   },
   {
    "id": "G3",

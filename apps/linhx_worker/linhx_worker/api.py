@@ -9,9 +9,27 @@ import json
 import frappe
 from frappe.rate_limiter import rate_limit
 
-from linhx_core.pay.sau_tra import mot_dong, quet_don_da_tra_chua_co_job, tao_dau_vao
+from linhx_core import su_kien
+from linhx_core.api import tim_ham
 from linhx_worker import bao_cao, quy_trinh, so_lieu
 from frappe.utils import add_to_date, now_datetime, time_diff_in_seconds
+
+
+def mot_dong(gt: object, toi_da: int, mac_dinh: str = "") -> str:
+    return quy_trinh._nap_ham_cung_cap("baocao.mot_dong")(gt, toi_da, mac_dinh=mac_dinh)
+
+
+def tao_dau_vao(don: dict) -> str:
+    return quy_trinh._nap_ham_cung_cap("baocao.tao_dau_vao")(don)
+
+
+def quet_don_da_tra_chua_co_job(gioi_han: int = 50, hien_tai: object = None) -> list[str]:
+    if not tim_ham("cung_cap", "baocao.quet_don_da_tra_chua_co_job"):
+        return []
+    return quy_trinh._nap_ham_cung_cap("baocao.quet_don_da_tra_chua_co_job")(
+        gioi_han=gioi_han,
+        hien_tai=hien_tai,
+    )
 
 PHIEN_BAN_API = "0.1"
 OFFLINE_SAU_GIAY = 120
@@ -349,6 +367,10 @@ def xem_bao_cao(viec, ma_xem):
 # ---------- don dep moi phut ----------
 
 def don_dep():
+    try:
+        su_kien.chay()
+    except Exception:
+        frappe.log_error(title="Lỗi chạy sự kiện trong don_dep")
     quet_don_da_tra_chua_co_job()
     quy_trinh.chia_viec_gop_cho()
     moc = add_to_date(now_datetime(), seconds=-OFFLINE_SAU_GIAY)

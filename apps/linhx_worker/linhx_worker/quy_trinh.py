@@ -7,6 +7,7 @@ ai-noi-gi-ve-brand:
 """
 import hashlib
 import hmac
+import importlib
 import json
 import os
 import platform
@@ -21,8 +22,37 @@ from pathlib import Path
 import frappe
 from frappe.utils import now_datetime
 
-from linhx_core.pay.sau_tra import lam_sach_du_lieu_khach
+from linhx_core.api import tim_ham
 from linhx_worker import bao_cao
+
+
+def _nap_ham_cung_cap(khoa: str):
+    ds = tim_ham("cung_cap", khoa)
+    if not ds:
+        thong_diep = f"Chưa cài gói cung cấp '{khoa}'"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep)
+    duong_ham = ds[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    try:
+        mod = importlib.import_module(ten_module)
+    except ImportError as exc:
+        thong_diep = f"Không nạp được gói cung cấp '{khoa}' ({ten_module})"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep) from exc
+    ham = getattr(mod, ten_ham, None)
+    if not callable(ham):
+        thong_diep = f"Hàm cung cấp '{duong_ham}' cho '{khoa}' không hợp lệ"
+        if callable(getattr(frappe, "throw", None)):
+            frappe.throw(thong_diep)
+        raise LookupError(thong_diep)
+    return ham
+
+
+def lam_sach_du_lieu_khach(dau_vao: object) -> str:
+    return _nap_ham_cung_cap("baocao.lam_sach_du_lieu_khach")(dau_vao)
 
 MANG_CHO_PHEP = (
     "https://chatgpt.com",
