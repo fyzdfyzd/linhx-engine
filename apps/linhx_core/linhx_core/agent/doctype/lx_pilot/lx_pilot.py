@@ -13,12 +13,15 @@ Cơ chế phân quyền đọc/ghi theo Đơn vị ngay trong vùng agent/**:
 """
 from __future__ import annotations
 
+import importlib
 import json
 import logging
+import pathlib
+import sys
 
 from frappe.model.document import Document
 
-from linhx_core.agent import pilot
+from linhx_core import dang_ky_module
 from linhx_core.crm.quyen_don_vi import (
     co_quyen,
     dieu_kien,
@@ -29,6 +32,27 @@ from linhx_core.crm.quyen_don_vi import (
 )
 
 logger = logging.getLogger(__name__)
+
+_THU_MUC_APPS = pathlib.Path(__file__).resolve().parents[5]
+
+
+def _tra_ham_pilot(khoa: str):
+    """Tra hàm cung_cap của gói Agent Force qua dang_ky_module (không import trực tiếp gói ở tầng lõi)."""
+    ds_module = dang_ky_module.quet(_THU_MUC_APPS)
+    ds_duong = dang_ky_module.tim_ham(ds_module, "cung_cap", khoa)
+    if not ds_duong:
+        raise RuntimeError(f"Không tìm thấy hàm cung_cap cho khoá {khoa!r}")
+    duong_ham = ds_duong[0]
+    ten_module, ten_ham = duong_ham.rsplit(".", 1)
+    ten_app = ten_module.split(".", 1)[0]
+    duong_app = str(_THU_MUC_APPS / ten_app)
+    if duong_app not in sys.path and (_THU_MUC_APPS / ten_app).is_dir():
+        sys.path.insert(0, duong_app)
+    mod = importlib.import_module(ten_module)
+    ham = getattr(mod, ten_ham, None)
+    if not callable(ham):
+        raise AttributeError(f"Hàm cung_cap không gọi được: {duong_ham!r}")
+    return ham
 
 
 class LoiQuyenPilot(PermissionError, ValueError):
@@ -62,24 +86,27 @@ def _nem_loi_quyen(thong_bao: str) -> None:
 
 
 def _lay_bay_gio() -> str:
+    chuan_hoa_tg = _tra_ham_pilot("agent.pilot.chuan_hoa_tg")
+    bay_gio = _tra_ham_pilot("agent.pilot.bay_gio")
     try:
         import frappe
 
         now_dt = getattr(getattr(frappe, "utils", None), "now_datetime", None)
         if callable(now_dt):
-            return pilot.chuan_hoa_tg(now_dt())
+            return chuan_hoa_tg(now_dt())
     except (ImportError, AttributeError):
         pass
-    return pilot.bay_gio()
+    return bay_gio()
 
 
 def _lay_bat_dau_luc(doc) -> str:
+    chuan_hoa_tg = _tra_ham_pilot("agent.pilot.chuan_hoa_tg")
     bd = getattr(doc, "bat_dau_luc", None)
     if bd:
-        return pilot.chuan_hoa_tg(bd)
+        return chuan_hoa_tg(bd)
     tao_luc = getattr(doc, "creation", None)
     if tao_luc:
-        return pilot.chuan_hoa_tg(tao_luc)
+        return chuan_hoa_tg(tao_luc)
     return _lay_bay_gio()
 
 
@@ -333,7 +360,8 @@ class LXPilot(Document):
         kiem_tra_quyen_pilot_doc(self, "onload")
         if isinstance(getattr(self, "cac_buoc", None), str) and str(self.cac_buoc).strip():
             try:
-                self.cac_buoc = pilot.doc_cac_buoc(self.cac_buoc)
+                doc_cac_buoc = _tra_ham_pilot("agent.pilot.doc_cac_buoc")
+                self.cac_buoc = doc_cac_buoc(self.cac_buoc)
             except ValueError:
                 pass
 
@@ -422,9 +450,11 @@ class LXPilot(Document):
     def before_insert(self) -> None:
         self._gan_thong_tin_tu_co_hoi()
         kiem_tra_quyen_pilot_doc(self, "before_insert")
+        tao_pilot = _tra_ham_pilot("agent.pilot.tao_pilot")
+        chuan_hoa_tg = _tra_ham_pilot("agent.pilot.chuan_hoa_tg")
         try:
             bat_dau = _lay_bat_dau_luc(self)
-            mau = pilot.tao_pilot(
+            mau = tao_pilot(
                 co_hoi=str(getattr(self, "co_hoi", "") or ""),
                 bat_dau_luc=bat_dau,
                 phu_trach=str(getattr(self, "phu_trach", "") or ""),
@@ -444,13 +474,11 @@ class LXPilot(Document):
             self.han_hoan_thanh = mau["han_hoan_thanh"]
         else:
             try:
-                dt_hien_tai = pilot._parse_tg(self.han_hoan_thanh)
-                dt_toi_da = pilot._parse_tg(mau["han_hoan_thanh"])
-                dt_bat_dau = pilot._parse_tg(mau["bat_dau_luc"])
-                if dt_hien_tai > dt_toi_da or dt_hien_tai < dt_bat_dau:
+                han_chuan = chuan_hoa_tg(self.han_hoan_thanh)
+                if han_chuan > mau["han_hoan_thanh"] or han_chuan < mau["bat_dau_luc"]:
                     self.han_hoan_thanh = mau["han_hoan_thanh"]
                 else:
-                    self.han_hoan_thanh = dt_hien_tai.strftime(pilot.DINH_DANG_TG)
+                    self.han_hoan_thanh = han_chuan
             except ValueError:
                 self.han_hoan_thanh = mau["han_hoan_thanh"]
 
@@ -467,28 +495,32 @@ class LXPilot(Document):
         self._gan_thong_tin_tu_co_hoi()
         kiem_tra_quyen_pilot_doc(self, "validate")
 
+        tao_cac_buoc_mac_dinh = _tra_ham_pilot("agent.pilot.tao_cac_buoc_mac_dinh")
+        chuan_hoa_tg = _tra_ham_pilot("agent.pilot.chuan_hoa_tg")
+        doc_cac_buoc = _tra_ham_pilot("agent.pilot.doc_cac_buoc")
+        kiem_pilot = _tra_ham_pilot("agent.pilot.kiem_pilot")
         try:
             if not getattr(self, "bat_dau_luc", None):
                 self.bat_dau_luc = _lay_bat_dau_luc(self)
             if not getattr(self, "cac_buoc", None):
-                self.cac_buoc = pilot.tao_cac_buoc_mac_dinh()
+                self.cac_buoc = tao_cac_buoc_mac_dinh()
 
             if isinstance(cu, dict):
                 tt_cu = cu.get("trang_thai")
                 if tt_cu in ("xong", "huy") and getattr(self, "trang_thai", None) != tt_cu:
                     _nem_loi_hop_le(f"Pilot đã ở trạng thái {tt_cu!r}, không được chuyển ngược")
                 if cu.get("bat_dau_luc"):
-                    self.bat_dau_luc = pilot.chuan_hoa_tg(cu["bat_dau_luc"])
+                    self.bat_dau_luc = chuan_hoa_tg(cu["bat_dau_luc"])
                 if cu.get("cac_buoc"):
-                    buoc_cu = pilot.doc_cac_buoc(cu["cac_buoc"])
-                    buoc_moi = pilot.doc_cac_buoc(self.cac_buoc)
+                    buoc_cu = doc_cac_buoc(cu["cac_buoc"])
+                    buoc_moi = doc_cac_buoc(self.cac_buoc)
                     for b_cu, b_moi in zip(buoc_cu, buoc_moi):
                         if b_cu["trang_thai"] == "xong" and b_moi["trang_thai"] != "xong":
                             _nem_loi_hop_le(
                                 f"Bước {b_cu['so']} đã hoàn thành, không được lùi về {b_moi['trang_thai']!r}"
                             )
 
-            chuan = pilot.kiem_pilot(self._to_dict())
+            chuan = kiem_pilot(self._to_dict())
         except ValueError as exc:
             _nem_loi_hop_le(str(exc))
             return
@@ -508,8 +540,9 @@ class LXPilot(Document):
 
     def hoan_thanh_buoc(self, so_buoc: int, luc: str | None = None) -> dict:
         """Đánh dấu hoàn thành bước so_buoc trên tài liệu LX Pilot."""
+        hoan_thanh = _tra_ham_pilot("agent.pilot.hoan_thanh_buoc")
         try:
-            kq = pilot.hoan_thanh_buoc(self._to_dict(), int(so_buoc), luc or _lay_bay_gio())
+            kq = hoan_thanh(self._to_dict(), int(so_buoc), luc or _lay_bay_gio())
         except ValueError as exc:
             _nem_loi_hop_le(str(exc))
             return {}

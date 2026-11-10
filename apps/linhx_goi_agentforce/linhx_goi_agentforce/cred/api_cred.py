@@ -1,14 +1,15 @@
-"""API công khai cho Kho case có số (cred) và nội dung Trang BU ifagent."""
+"""API công khai cho Kho case có số (cred) và nội dung Trang BU ifagent.
+
+Thuần Python ở mức nạp file (không `import frappe` ở đầu file); nạp trễ `frappe` trong hàm.
+"""
 from __future__ import annotations
 
 import json
 import logging
 import pathlib
 
-import frappe
-
-from linhx_core.cred import kho_case
-from linhx_core.cred.kho_case import case_cong_khai, noi_dung_trang_bu
+from linhx_goi_agentforce.cred import kho_case
+from linhx_goi_agentforce.cred.kho_case import case_cong_khai, noi_dung_trang_bu
 
 logger = logging.getLogger(__name__)
 
@@ -22,6 +23,25 @@ TRUONG_CASE_CONG_KHAI = [
     "da_duyet",
 ]
 GIOI_HAN_CASE = 100
+
+
+def _lay_frappe():
+    try:
+        import frappe
+    except ImportError:
+        return None
+    return frappe
+
+
+def _whitelist(allow_guest: bool = False):
+    def _trang_tri(fn):
+        frappe = _lay_frappe()
+        if frappe is not None and callable(getattr(frappe, "whitelist", None)):
+            fn = frappe.whitelist(allow_guest=allow_guest)(fn)
+        setattr(fn, "_allow_guest", bool(allow_guest))
+        return fn
+
+    return _trang_tri
 
 
 def _duong_site_ifagent() -> pathlib.Path:
@@ -50,6 +70,9 @@ def _doc_site_ifagent() -> dict:
 
 
 def _doc_ds_case_tu_db() -> list[dict]:
+    frappe = _lay_frappe()
+    if frappe is None:
+        return []
     get_all_fn = getattr(frappe, "get_all", None)
     if not callable(get_all_fn):
         db = getattr(frappe, "db", None)
@@ -74,14 +97,14 @@ def _doc_ds_case_tu_db() -> list[dict]:
     return [dict(r) for r in rows if isinstance(r, dict)]
 
 
-@frappe.whitelist(allow_guest=True)
+@_whitelist(allow_guest=True)
 def danh_sach_case() -> list[dict]:
     """Trả danh sách các case đã duyệt có chỉ số kết quả; ẩn tuyệt đối case chưa duyệt."""
     ds_db = _doc_ds_case_tu_db()
     return case_cong_khai(ds_db)
 
 
-@frappe.whitelist(allow_guest=True)
+@_whitelist(allow_guest=True)
 def noi_dung_ifagent() -> dict:
     """Trả nội dung Trang BU ifagent chỉ ghép các case công khai đã duyệt từ DB."""
     site_cfg = _doc_site_ifagent()
