@@ -12,6 +12,7 @@ import copy
 import hashlib
 import inspect
 import json
+import math
 import pathlib
 import re
 import secrets
@@ -25,6 +26,7 @@ from linhx_core.pay import quyen_dung as _quyen_dung
 API_CONG_KHAI: list[str] = [
     "phat",
     "tim_ham",
+    "tim_ham_trong_danh_sach",
     "tao_nguoi",
     "ghi_dong_y",
     "tao_don",
@@ -52,6 +54,17 @@ _CO_MAC_DINH: dict[str, int] = {
     "bat_bong": 0,
 }
 
+_TU_CAM_CAU_HINH: tuple[str, ...] = (
+    "key",
+    "secret",
+    "token",
+    "password",
+    "passwd",
+    "pwd",
+    "mat_khau",
+    "bi_mat",
+)
+
 _KHOA_CAM_CAU_HINH: frozenset[str] = frozenset(
     {
         "db_password",
@@ -62,6 +75,27 @@ _KHOA_CAM_CAU_HINH: frozenset[str] = frozenset(
         "secret_key",
         "api_secret",
         "jwt_secret",
+        "sepay_khoa",
+        "cts_sepay_khoa",
+        "webhook_khoa",
+        "chuyen_lead_dich",
+        "chuyen_lead_user",
+    }
+)
+
+_KHOA_CHO_PHEP_CONF: frozenset[str] = frozenset(
+    {
+        "bat_crm",
+        "bat_pay",
+        "bat_bong",
+        "cts_that",
+        "nguong_doanh_thu",
+        "cts_danh_muc",
+        "ngan_hang",
+        "vietqr",
+        "vietqr_bin",
+        "vietqr_so_tk",
+        "vietqr_ten_tk",
     }
 )
 
@@ -201,35 +235,36 @@ def hieu_luc_dong_y(so: list[dict], nguoi: str | dict, muc_dich: str) -> bool:
     return _dong_y.hieu_luc(so, nguoi, muc_dich)
 
 
+def tim_ham_trong_danh_sach(danh_sach: list[dict], loai: str, khoa: str) -> list[str]:
+    """Tra danh sách đường hàm `module.ham` trên `danh_sach` module đã quét sẵn."""
+    if not isinstance(danh_sach, list):
+        raise ValueError("danh_sach module phải là list")
+    if not isinstance(loai, str):
+        raise ValueError("loai tra hàm phải là chuỗi")
+    return dang_ky_module.tim_ham(danh_sach, loai, "" if khoa is None else khoa)
+
+
 def tim_ham(
-    loai: str | list[dict],
-    khoa: str | None = None,
-    danh_sach: list[dict] | None = None,
+    loai: str,
+    khoa: str = "",
     *,
+    danh_sach: list[dict] | None = None,
     thu_muc_apps: str | pathlib.Path | None = None,
     ban_loi: str | None = None,
 ) -> list[str]:
     """Tra danh sách đường hàm `module.ham` theo `loai` (`nghe` | `cung_cap` | `giao`) và `khoa`.
 
-    Hỗ trợ cả hai cách gọi:
-    - `tim_ham(loai, khoa, danh_sach=None)`: tự động quét `apps/*/module.json` khi `danh_sach` để trống.
-    - `tim_ham(danh_sach, loai, khoa)`: tương thích trực tiếp chữ ký `dang_ky_module.tim_ham`.
+    Tự động quét `apps/*/module.json` khi `danh_sach` để trống. Nếu đã có sẵn danh sách module,
+    có thể truyền qua tham số từ khoá `danh_sach` hoặc gọi `tim_ham_trong_danh_sach`.
     """
-    if isinstance(loai, list) and isinstance(khoa, str) and isinstance(danh_sach, str):
-        ds_dung = loai
-        loai_dung = khoa
-        khoa_dung = danh_sach
-    elif isinstance(loai, str):
-        loai_dung = loai
-        khoa_dung = "" if khoa is None else khoa
-        if danh_sach is not None:
-            ds_dung = danh_sach
-        else:
-            goc_apps = pathlib.Path(thu_muc_apps) if thu_muc_apps is not None else _THU_MUC_APPS
-            ds_dung = dang_ky_module.quet(goc_apps, ban_loi=ban_loi)
+    if not isinstance(loai, str):
+        raise ValueError("loai tra hàm phải là chuỗi")
+    if danh_sach is not None:
+        ds_dung = danh_sach
     else:
-        raise ValueError("Tham số gọi tim_ham không hợp lệ")
-    return dang_ky_module.tim_ham(ds_dung, loai_dung, khoa_dung)
+        goc_apps = pathlib.Path(thu_muc_apps) if thu_muc_apps is not None else _THU_MUC_APPS
+        ds_dung = dang_ky_module.quet(goc_apps, ban_loi=ban_loi)
+    return tim_ham_trong_danh_sach(ds_dung, loai, khoa)
 
 
 def phat(
@@ -348,9 +383,7 @@ def _chuan_du_lieu_nguoi(du_lieu: dict) -> dict:
 def _khop_cung_pham_vi_don_vi(cu: dict, moi: dict) -> bool:
     dv_moi = str(moi.get("don_vi") or "").strip()
     dv_cu = str(cu.get("don_vi") or "").strip()
-    if dv_moi:
-        return dv_cu == dv_moi
-    return True
+    return dv_cu == dv_moi
 
 
 def _doc_nguoi_sang_dict(doc) -> dict:
@@ -362,10 +395,28 @@ def _doc_nguoi_sang_dict(doc) -> dict:
     return kq
 
 
-def _tim_nguoi_trung_frappe(frappe_mod, ban_moi: dict) -> list[dict]:
+def _tim_nguoi_trung_frappe(
+    frappe_mod,
+    ban_moi: dict,
+    *,
+    ignore_permissions: bool = False,
+) -> list[dict]:
     khoa_moi = _gop_trung.khoa_gop(ban_moi)
-    if not khoa_moi or not callable(getattr(frappe_mod, "get_all", None)):
+    if not khoa_moi:
         return []
+    ham_truy_van = None
+    if ignore_permissions:
+        ham_truy_van = getattr(frappe_mod, "get_all", None)
+    else:
+        ham_truy_van = getattr(frappe_mod, "get_list", None)
+        if not callable(ham_truy_van):
+            kiem_quyen = getattr(frappe_mod, "has_permission", None)
+            if callable(kiem_quyen) and not kiem_quyen("LX Nguoi", "read"):
+                raise PermissionError("Không có quyền đọc LX Nguoi")
+            ham_truy_van = getattr(frappe_mod, "get_all", None)
+    if not callable(ham_truy_van):
+        return []
+
     or_filters: list = []
     dt_raw = str(ban_moi.get("dien_thoai") or "").strip()
     dt_chuan = _gop_trung.chuan_hoa_dien_thoai(dt_raw)
@@ -386,8 +437,8 @@ def _tim_nguoi_trung_frappe(frappe_mod, ban_moi: dict) -> list[dict]:
         return []
 
     dv_moi = str(ban_moi.get("don_vi") or "").strip()
-    bo_loc = {"don_vi": dv_moi} if dv_moi else None
-    ds_ung_vien = frappe_mod.get_all(
+    bo_loc: dict = {"don_vi": dv_moi} if dv_moi else {"don_vi": ["in", ["", None]]}
+    ds_ung_vien = ham_truy_van(
         "LX Nguoi",
         filters=bo_loc,
         or_filters=or_filters,
@@ -407,7 +458,7 @@ def tao_nguoi(
     kho: list[dict] | None = None,
     *,
     ds_nguoi: list[dict] | None = None,
-    ignore_permissions: bool = True,
+    ignore_permissions: bool = False,
 ) -> dict:
     """Tạo hoặc gộp trùng hồ sơ `LX Nguoi` (giữ nguyên trường cũ đã có, chỉ bù trường còn trống)."""
     ban_moi = _chuan_du_lieu_nguoi(du_lieu)
@@ -439,14 +490,18 @@ def tao_nguoi(
 
     frappe = _lay_frappe()
     if not _frappe_co_db(frappe):
-        muc_le = dict(ban_moi)
-        muc_le.setdefault("name", "NGUOI-1")
-        return muc_le
+        raise RuntimeError("Cần truyền kho (list) hoặc chạy trong môi trường Frappe có kết nối DB")
 
-    ds_trung = _tim_nguoi_trung_frappe(frappe, ban_moi)
-    if ds_trung and ds_trung[0].get("name"):
-        ten_cu = str(ds_trung[0]["name"]).strip()
+    ds_trung = _tim_nguoi_trung_frappe(frappe, ban_moi, ignore_permissions=ignore_permissions)
+    for muc_trung in ds_trung:
+        ten_cu = str(muc_trung.get("name") or "").strip()
+        if not ten_cu:
+            continue
         doc_cu = frappe.get_doc("LX Nguoi", ten_cu)
+        if not _khop_cung_pham_vi_don_vi(_doc_nguoi_sang_dict(doc_cu), ban_moi):
+            continue
+        if not ignore_permissions and callable(getattr(doc_cu, "check_permission", None)):
+            doc_cu.check_permission("read")
         co_cap_nhat = False
         for truong in _TRUONG_NGUOI:
             if truong == "don_vi" or truong not in ban_moi:
@@ -459,6 +514,8 @@ def tao_nguoi(
                 setattr(doc_cu, truong, gt_moi)
                 co_cap_nhat = True
         if co_cap_nhat:
+            if not ignore_permissions and callable(getattr(doc_cu, "check_permission", None)):
+                doc_cu.check_permission("write")
             if ignore_permissions and hasattr(doc_cu, "flags"):
                 doc_cu.flags.ignore_permissions = True
             doc_cu.save(ignore_permissions=ignore_permissions)
@@ -481,60 +538,48 @@ def tao_nguoi(
         doc_moi.insert(ignore_permissions=ignore_permissions)
         return _doc_nguoi_sang_dict(doc_moi)
     except loai_trung:
-        ds_lai = _tim_nguoi_trung_frappe(frappe, ban_moi)
-        if ds_lai and ds_lai[0].get("name"):
-            return dict(ds_lai[0])
+        ds_lai = _tim_nguoi_trung_frappe(frappe, ban_moi, ignore_permissions=ignore_permissions)
+        for muc_lai in ds_lai:
+            ten_lai = str(muc_lai.get("name") or "").strip()
+            if not ten_lai:
+                continue
+            doc_lai = frappe.get_doc("LX Nguoi", ten_lai)
+            if not _khop_cung_pham_vi_don_vi(_doc_nguoi_sang_dict(doc_lai), ban_moi):
+                continue
+            if not ignore_permissions and callable(getattr(doc_lai, "check_permission", None)):
+                doc_lai.check_permission("read")
+            return _doc_nguoi_sang_dict(doc_lai)
         raise
 
 
-_CHUA_TRUYEN = object()
-
-
 def ghi_dong_y(
-    nguoi: str | dict | list[dict],
-    muc_dich: str | dict | None = None,
-    dong_y: object = True,
-    luc: object = None,
-    nguon: object = _CHUA_TRUYEN,
-    nguon_khi_truyen_so: str | None = None,
+    nguoi: str | dict,
+    muc_dich: str,
+    dong_y: bool = True,
+    luc: str | None = None,
+    nguon: str = "api",
     *,
     trang_thai: str | None = None,
     kho: list[dict] | None = None,
     so_dong_y: list[dict] | None = None,
 ) -> dict:
-    """Ghi một dòng nhật ký đồng ý dữ liệu cá nhân (`LX Dong Y`) bất biến.
-
-    Hỗ trợ cả hai dạng gọi:
-    - `ghi_dong_y(nguoi, muc_dich, dong_y=True, luc=None, nguon="api", trang_thai=None, kho=None)`
-    - `ghi_dong_y(so, nguoi, muc_dich, dong_y=True, luc=None, nguon="api", trang_thai=None)`
-    """
+    """Ghi một dòng nhật ký đồng ý dữ liệu cá nhân (`LX Dong Y`) bất biến."""
     if isinstance(nguoi, list):
-        so_muc_tieu: list[dict] | None = nguoi
-        nguoi_dung = muc_dich
-        muc_dich_dung = str(dong_y or "").strip()
-        dong_y_dung: object = True if luc is None else luc
-        if nguon is _CHUA_TRUYEN:
-            luc_dung: object = None
-            nguon_dung: object = "api" if nguon_khi_truyen_so is None else nguon_khi_truyen_so
-        else:
-            luc_dung = nguon
-            nguon_dung = "api" if nguon_khi_truyen_so is None else nguon_khi_truyen_so
-    else:
-        so_muc_tieu = kho if kho is not None else so_dong_y
-        nguoi_dung = nguoi
-        muc_dich_dung = str(muc_dich or "").strip()
-        dong_y_dung = dong_y
-        luc_dung = luc
-        nguon_dung = "api" if nguon is _CHUA_TRUYEN else nguon
+        raise ValueError("nguoi phải là mã chuỗi hoặc dict hồ sơ Người; sổ bộ nhớ truyền qua kho=")
 
-    thoi_diem = str(luc_dung or "").strip() or _dong_y.bay_gio()
-    nguon_sach = str(nguon_dung or "").strip() or "api"
+    so_muc_tieu = kho if kho is not None else so_dong_y
+    if so_muc_tieu is not None and not isinstance(so_muc_tieu, list):
+        raise ValueError("kho đồng ý phải là list")
+
+    muc_dich_dung = str(muc_dich or "").strip()
+    thoi_diem = str(luc or "").strip() or _dong_y.bay_gio()
+    nguon_sach = str(nguon or "").strip() or "api"
     so_goc = so_muc_tieu if isinstance(so_muc_tieu, list) else []
     so_moi = _dong_y.ghi(
         so_goc,
-        nguoi_dung,
+        nguoi,
         muc_dich_dung,
-        bool(_dong_y._chuan_dong_y(dong_y_dung)),
+        bool(_dong_y._chuan_dong_y(dong_y)),
         thoi_diem,
         nguon_sach,
         trang_thai=trang_thai,
@@ -542,14 +587,12 @@ def ghi_dong_y(
     dong_moi = dict(so_moi[-1])
 
     if so_muc_tieu is not None:
-        if not isinstance(so_muc_tieu, list):
-            raise ValueError("kho đồng ý phải là list")
         so_muc_tieu[:] = so_moi
         return dong_moi
 
     frappe = _lay_frappe()
     if not _frappe_co_db(frappe):
-        return dong_moi
+        raise RuntimeError("Cần truyền kho (list) hoặc chạy trong môi trường Frappe có kết nối DB")
 
     du_lieu_doc: dict = {
         "doctype": "LX Dong Y",
@@ -625,59 +668,58 @@ def _lam_sach_thong_tin_don(thong_tin: dict | None, them: dict) -> dict:
 def tao_don(
     goi: dict | str,
     nguoi: str | dict = "",
-    kho_hoac_ngan_hang: list[dict] | dict | None = None,
+    ngan_hang: dict | None = None,
     ma_don: str | None = None,
     *,
     so_tien: int | float | None = None,
     noi_dung_ck: str | None = None,
     qr_url: str | None = None,
-    ngan_hang: dict | None = None,
     thong_tin: dict | None = None,
     kho: list[dict] | None = None,
     **them,
 ) -> dict:
     """Tạo đơn hàng `LX Don` ở trạng thái `cho_tra`, kiểm tra bắt buộc ngưỡng `gia_san` của `LX Goi`."""
-    kho_dung = kho
-    nh_dung = ngan_hang
-    if isinstance(kho_hoac_ngan_hang, list) and kho_dung is None:
-        kho_dung = kho_hoac_ngan_hang
-    elif isinstance(kho_hoac_ngan_hang, dict) and nh_dung is None:
-        nh_dung = kho_hoac_ngan_hang
-    elif kho_hoac_ngan_hang is not None:
-        raise ValueError("Tham số thứ ba của tao_don phải là kho (list) hoặc ngan_hang (dict)")
+    if ngan_hang is not None and not isinstance(ngan_hang, dict):
+        raise ValueError("ngan_hang phải là dict cấu hình ngân hàng")
+    if kho is not None and not isinstance(kho, list):
+        raise ValueError("kho đơn phải là list")
 
     frappe = _lay_frappe()
-    co_db = _frappe_co_db(frappe) and kho_dung is None
+    co_db = kho is None and _frappe_co_db(frappe)
 
-    if isinstance(goi, str):
-        ma_goi_tim = goi.strip()
-        if not ma_goi_tim:
-            raise ValueError("Mã gói không được để trống")
-        if co_db:
-            goi_db = _tim_goi_frappe(frappe, ma_goi_tim)
-            if goi_db is None:
-                raise ValueError(f"Không tìm thấy gói: {ma_goi_tim}")
-            if "ban" in goi_db and goi_db["ban"] is not None and not bool(int(goi_db["ban"]) if isinstance(goi_db["ban"], (int, float)) else goi_db["ban"]):
-                raise ValueError(f"Gói đã ngừng bán: {ma_goi_tim}")
-            goi_dict = goi_db
+    if kho is None and not co_db:
+        raise RuntimeError("Cần truyền kho (list) hoặc chạy trong môi trường Frappe có kết nối DB")
+
+    if co_db:
+        if isinstance(goi, str):
+            ma_goi_tim = goi.strip()
+        elif isinstance(goi, dict):
+            ma_goi_tim = str(goi.get("name") or goi.get("ma") or "").strip()
         else:
-            if so_tien is None:
-                raise ValueError("Khi truyền mã gói dạng chuỗi ngoài Frappe cần truyền thêm so_tien")
-            goi_dict = {"ma": ma_goi_tim, "name": ma_goi_tim, "gia": so_tien, "gia_san": 0}
-    elif isinstance(goi, dict):
-        goi_dict = dict(goi)
-        if co_db:
-            ten_goi_db = str(goi_dict.get("name") or goi_dict.get("ma") or "").strip()
-            if ten_goi_db:
-                goi_db = _tim_goi_frappe(frappe, ten_goi_db)
-                if goi_db is not None:
-                    gia_san_db = float(goi_db.get("gia_san") or 0)
-                    gia_san_in = float(goi_dict.get("gia_san") or 0)
-                    goi_dict["gia_san"] = max(gia_san_db, gia_san_in)
-                    if goi_dict.get("gia") is None and goi_db.get("gia") is not None:
-                        goi_dict["gia"] = goi_db["gia"]
+            raise ValueError("goi phải là dict hoặc mã gói dạng chuỗi")
+        if not ma_goi_tim:
+            raise ValueError("Gói thiếu định danh name/ma")
+        goi_db = _tim_goi_frappe(frappe, ma_goi_tim)
+        if goi_db is None:
+            raise ValueError(f"Không tìm thấy gói trong LX Goi: {ma_goi_tim}")
+        co_ban = goi_db["ban"] if "ban" in goi_db else 1
+        if not co_module._co_bat(co_ban):
+            raise ValueError(f"Gói đã ngừng bán: {ma_goi_tim}")
+        goi_dict = dict(goi_db)
     else:
-        raise ValueError("goi phải là dict hoặc mã gói dạng chuỗi")
+        if isinstance(goi, dict):
+            goi_dict = dict(goi)
+            if "ban" in goi_dict and not co_module._co_bat(goi_dict["ban"]):
+                raise ValueError("Gói đã ngừng bán")
+        elif isinstance(goi, str):
+            ma_goi_tim = goi.strip()
+            if not ma_goi_tim:
+                raise ValueError("Mã gói không được để trống")
+            if so_tien is None:
+                raise ValueError("Khi truyền mã gói dạng chuỗi vào kho bộ nhớ cần truyền thêm so_tien")
+            goi_dict = {"ma": ma_goi_tim, "name": ma_goi_tim, "gia": so_tien, "gia_san": 0}
+        else:
+            raise ValueError("goi phải là dict hoặc mã gói dạng chuỗi")
 
     raw_tien = (
         so_tien
@@ -699,8 +741,8 @@ def tao_don(
     ma_sach = str(ma_don or "").strip() or f"DON-{secrets.token_hex(4).upper()}"
     nd_sach = str(noi_dung_ck or "").strip() or _sinh_noi_dung_ck(ma_sach)
     url_sach = str(qr_url or "").strip()
-    if not url_sach and isinstance(nh_dung, dict):
-        url_sach = _sinh_qr_vietqr(tien_int, nd_sach, nh_dung)
+    if not url_sach and isinstance(ngan_hang, dict):
+        url_sach = _sinh_qr_vietqr(tien_int, nd_sach, ngan_hang)
 
     ma_goi_luu = str(goi_dict.get("name") or goi_dict.get("ma") or "").strip()
     if not ma_goi_luu:
@@ -721,11 +763,8 @@ def tao_don(
         **phu_sach,
     }
 
-    if kho_dung is not None:
-        kho_dung.append(ban_ghi_don)
-        return dict(ban_ghi_don)
-
-    if not co_db:
+    if kho is not None:
+        kho.append(ban_ghi_don)
         return dict(ban_ghi_don)
 
     du_lieu_doc: dict = {
@@ -769,12 +808,19 @@ def _doc_don_sang_dict(doc) -> dict:
     return kq
 
 
-def _tim_ten_don_frappe(frappe_mod, ma_tim: str) -> str | None:
+def _tim_ten_don_frappe(
+    frappe_mod,
+    ma_tim: str,
+    *,
+    cho_phep_noi_dung_ck: bool = True,
+) -> str | None:
     ma = str(ma_tim or "").strip()
     if not ma:
         return None
     db = getattr(frappe_mod, "db", None)
+    co_ham_tim = False
     if db is not None and callable(getattr(db, "exists", None)):
+        co_ham_tim = True
         try:
             ten = db.exists("LX Don", ma)
             if isinstance(ten, str) and ten:
@@ -784,7 +830,9 @@ def _tim_ten_don_frappe(frappe_mod, ma_tim: str) -> str | None:
         except Exception:
             pass
     if callable(getattr(frappe_mod, "get_all", None)):
-        for truong in ("name", "ma", "noi_dung_ck"):
+        co_ham_tim = True
+        cac_truong = ("name", "ma", "noi_dung_ck") if cho_phep_noi_dung_ck else ("name", "ma")
+        for truong in cac_truong:
             try:
                 ds = frappe_mod.get_all(
                     "LX Don",
@@ -796,6 +844,8 @@ def _tim_ten_don_frappe(frappe_mod, ma_tim: str) -> str | None:
                     return str(ds[0]["name"]).strip()
             except Exception:
                 continue
+    if not co_ham_tim and callable(getattr(frappe_mod, "get_doc", None)):
+        return ma
     return None
 
 
@@ -843,18 +893,44 @@ def _dam_bao_phat_don_da_tra_db(frappe_mod, ten_don: str, tx_id: str | None = No
     phat("don.da_tra", goi_dl)
 
 
+def _kiem_so_tien_thanh_toan(so_tien: object, so_tien_don: object) -> float:
+    if so_tien is None or isinstance(so_tien, bool):
+        raise ValueError("Bắt buộc truyền so_tien hợp lệ khi chuyển đơn sang da_tra")
+    if isinstance(so_tien_don, bool):
+        raise ValueError("Số tiền đơn gốc không hợp lệ")
+    try:
+        tien_tra = float(so_tien)
+        tien_don = float(so_tien_don or 0)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("so_tien không hợp lệ") from exc
+    if not math.isfinite(tien_tra) or not math.isfinite(tien_don):
+        raise ValueError("so_tien không hợp lệ")
+    if tien_don <= 0:
+        raise ValueError("Số tiền đơn gốc phải lớn hơn 0")
+    if tien_tra <= 0 or tien_tra < tien_don:
+        raise ValueError("Số tiền thanh toán thấp hơn số tiền đơn")
+    return tien_tra
+
+
 def danh_dau_da_tra(
     don: str | dict | object,
     tx_id: str | None = None,
-    *,
     so_tien: int | float | None = None,
+    *,
     kho: list[dict] | None = None,
     kho_su_kien: list[dict] | None = None,
 ) -> dict:
-    """Chuyển đơn `LX Don` sang `da_tra` (chống phát trùng) và phát sự kiện `don.da_tra`."""
+    """Chuyển đơn `LX Don` sang `da_tra` (bắt buộc kiểm `so_tien`, chống phát trùng) và phát `don.da_tra`."""
     tx_sach = str(tx_id).strip() if isinstance(tx_id, str) and tx_id.strip() else None
-    if so_tien is not None and isinstance(so_tien, bool):
-        raise ValueError("so_tien không hợp lệ")
+    if so_tien is not None:
+        if isinstance(so_tien, bool):
+            raise ValueError("so_tien không hợp lệ")
+        try:
+            tien_kiem_truoc = float(so_tien)
+        except (TypeError, ValueError) as exc:
+            raise ValueError("so_tien không hợp lệ") from exc
+        if not math.isfinite(tien_kiem_truoc) or tien_kiem_truoc <= 0:
+            raise ValueError("so_tien phải lớn hơn 0")
 
     if kho is not None:
         if not isinstance(kho, list):
@@ -884,9 +960,10 @@ def danh_dau_da_tra(
         if tt_cu == "huy":
             raise ValueError("Đơn đã huỷ, không thể đánh dấu đã trả")
         if tt_cu == "da_tra":
+            if so_tien is not None:
+                _kiem_so_tien_thanh_toan(so_tien, muc_khop.get("so_tien"))
             return dict(muc_khop)
-        if so_tien is not None and float(so_tien) < float(muc_khop.get("so_tien") or 0):
-            raise ValueError("Số tiền thanh toán thấp hơn số tiền đơn")
+        _kiem_so_tien_thanh_toan(so_tien, muc_khop.get("so_tien"))
 
         muc_khop["trang_thai"] = "da_tra"
         if tx_sach:
@@ -900,63 +977,50 @@ def danh_dau_da_tra(
         return dict(muc_khop)
 
     frappe = _lay_frappe()
-    la_doc_frappe = not isinstance(don, (str, dict)) and callable(getattr(don, "save", None))
-    if la_doc_frappe or _frappe_co_db(frappe):
-        if la_doc_frappe:
-            doc_don = don
-        else:
-            ma_tim_db = (
-                str(don.get("name") or don.get("ma") or don.get("noi_dung_ck") or "").strip()
-                if isinstance(don, dict)
-                else str(don or "").strip()
-            )
-            if not ma_tim_db:
-                raise ValueError("Thiếu mã đơn cần đánh dấu đã trả")
-            ten_doc = _tim_ten_don_frappe(frappe, ma_tim_db) or ma_tim_db
-            doc_don = frappe.get_doc("LX Don", ten_doc, for_update=True)
-
-        tt_cu_db = str(getattr(doc_don, "trang_thai", "") or "").strip()
-        if tt_cu_db == "huy":
-            raise ValueError("Đơn đã huỷ, không thể đánh dấu đã trả")
-        if tt_cu_db == "da_tra":
-            return _doc_don_sang_dict(doc_don)
-        if so_tien is not None and float(so_tien) < float(getattr(doc_don, "so_tien", 0) or 0):
-            raise ValueError("Số tiền thanh toán thấp hơn số tiền đơn")
-
-        doc_don.trang_thai = "da_tra"
-        if tx_sach:
-            doc_don.tx_id = tx_sach
-        if hasattr(doc_don, "flags"):
-            doc_don.flags.ignore_permissions = True
-        doc_don.save(ignore_permissions=True)
-
-        ten_chinh = str(getattr(doc_don, "name", None) or getattr(doc_don, "ma", "") or "").strip()
-        if kho_su_kien is not None:
-            goi_sk_mem: dict = {"don": ten_chinh}
-            if getattr(doc_don, "tx_id", None):
-                goi_sk_mem["tx_id"] = doc_don.tx_id
-            phat("don.da_tra", goi_sk_mem, kho=kho_su_kien)
-        elif frappe is not None and ten_chinh:
-            _dam_bao_phat_don_da_tra_db(frappe, ten_chinh, getattr(doc_don, "tx_id", None))
-        return _doc_don_sang_dict(doc_don)
+    if not _frappe_co_db(frappe):
+        raise RuntimeError("Cần truyền kho (list) hoặc chạy trong môi trường Frappe có kết nối DB")
 
     if isinstance(don, dict):
-        tt_cu_dict = str(don.get("trang_thai") or "").strip()
-        if tt_cu_dict == "huy":
-            raise ValueError("Đơn đã huỷ, không thể đánh dấu đã trả")
-        if tt_cu_dict == "da_tra":
-            return dict(don)
-        if so_tien is not None and float(so_tien) < float(don.get("so_tien") or 0):
-            raise ValueError("Số tiền thanh toán thấp hơn số tiền đơn")
-        don["trang_thai"] = "da_tra"
-        if tx_sach:
-            don["tx_id"] = tx_sach
-        if kho_su_kien is not None:
-            ten_don_le = str(don.get("name") or don.get("ma") or "").strip()
-            phat("don.da_tra", {"don": ten_don_le}, kho=kho_su_kien)
-        return dict(don)
+        ma_tim_db = str(don.get("name") or don.get("ma") or don.get("noi_dung_ck") or "").strip()
+    elif isinstance(don, str):
+        ma_tim_db = don.strip()
+    elif not isinstance(don, (bool, int, float)) and hasattr(don, "name"):
+        ma_tim_db = str(getattr(don, "name", "") or getattr(don, "ma", "") or "").strip()
+    else:
+        ma_tim_db = ""
+    if not ma_tim_db:
+        raise ValueError("Thiếu mã đơn cần đánh dấu đã trả")
 
-    raise RuntimeError("Cần truyền kho (list), dict đơn hoặc chạy trong môi trường Frappe có kết nối DB")
+    ten_doc = _tim_ten_don_frappe(frappe, ma_tim_db)
+    if not ten_doc:
+        raise ValueError(f"Không tìm thấy đơn: {ma_tim_db}")
+    doc_don = frappe.get_doc("LX Don", ten_doc, for_update=True)
+
+    tt_cu_db = str(getattr(doc_don, "trang_thai", "") or "").strip()
+    if tt_cu_db == "huy":
+        raise ValueError("Đơn đã huỷ, không thể đánh dấu đã trả")
+    if tt_cu_db == "da_tra":
+        if so_tien is not None:
+            _kiem_so_tien_thanh_toan(so_tien, getattr(doc_don, "so_tien", 0))
+        return _doc_don_sang_dict(doc_don)
+    _kiem_so_tien_thanh_toan(so_tien, getattr(doc_don, "so_tien", 0))
+
+    doc_don.trang_thai = "da_tra"
+    if tx_sach:
+        doc_don.tx_id = tx_sach
+    if hasattr(doc_don, "flags"):
+        doc_don.flags.ignore_permissions = True
+    doc_don.save(ignore_permissions=True)
+
+    ten_chinh = str(getattr(doc_don, "name", None) or getattr(doc_don, "ma", "") or "").strip()
+    if kho_su_kien is not None:
+        goi_sk_mem: dict = {"don": ten_chinh}
+        if getattr(doc_don, "tx_id", None):
+            goi_sk_mem["tx_id"] = doc_don.tx_id
+        phat("don.da_tra", goi_sk_mem, kho=kho_su_kien)
+    elif frappe is not None and ten_chinh:
+        _dam_bao_phat_don_da_tra_db(frappe, ten_chinh, getattr(doc_don, "tx_id", None))
+    return _doc_don_sang_dict(doc_don)
 
 
 def cap_quyen_dung(
@@ -966,55 +1030,91 @@ def cap_quyen_dung(
     kho: list[dict] | None = None,
 ) -> dict | None:
     """Cấp `LX Quyen Dung` khi đơn đã `da_tra` và đạt ngưỡng `gia_san` của `LX Goi` (chống cấp trùng theo đơn)."""
-    frappe = _lay_frappe()
-    co_db = _frappe_co_db(frappe)
-
-    if isinstance(don, dict):
-        don_dict = dict(don)
-    elif isinstance(don, str) and co_db:
-        ten_doc = _tim_ten_don_frappe(frappe, don)
-        if not ten_doc:
-            raise ValueError(f"Không tìm thấy đơn: {don}")
-        don_dict = _doc_don_sang_dict(frappe.get_doc("LX Don", ten_doc))
-    else:
-        return None
-
-    if isinstance(goi, dict):
-        goi_dict = dict(goi)
-    else:
-        ma_goi_tim = str(goi if isinstance(goi, str) and goi.strip() else (don_dict.get("goi") or "")).strip()
-        if not ma_goi_tim or not co_db:
-            return None
-        goi_db = _tim_goi_frappe(frappe, ma_goi_tim)
-        if goi_db is None:
-            return None
-        goi_dict = goi_db
-
-    quyen = _quyen_dung.cap_quyen(don_dict, goi_dict)
-    if quyen is None:
-        return None
-
     if kho is not None:
         if not isinstance(kho, list):
             raise ValueError("kho quyền dùng phải là list")
-        ma_don_q = str(quyen.get("don") or "").strip()
+        if not isinstance(don, dict) or not isinstance(goi, dict):
+            return None
+        quyen_kho = _quyen_dung.cap_quyen(dict(don), dict(goi))
+        if quyen_kho is None:
+            return None
+        ma_don_q = str(quyen_kho.get("don") or "").strip()
         if ma_don_q:
             for hien_co in kho:
                 if isinstance(hien_co, dict) and str(hien_co.get("don") or "").strip() == ma_don_q:
                     return dict(hien_co)
-        ban_ghi = dict(quyen)
+        ban_ghi = dict(quyen_kho)
         kho.append(ban_ghi)
         return dict(ban_ghi)
 
-    if not co_db:
-        return dict(quyen)
+    frappe = _lay_frappe()
+    if not _frappe_co_db(frappe):
+        raise RuntimeError("Cần truyền kho (list) hoặc chạy trong môi trường Frappe có kết nối DB")
 
-    ma_don_db = str(quyen.get("don") or "").strip()
-    if ma_don_db and callable(getattr(frappe, "get_all", None)):
+    ten_yeu_cau = ""
+    if isinstance(don, dict):
+        ten_yeu_cau = str(don.get("name") or "").strip()
+        ma_tim = ten_yeu_cau or str(don.get("ma") or "").strip()
+    elif isinstance(don, str):
+        ma_tim = don.strip()
+    elif not isinstance(don, (bool, int, float)) and hasattr(don, "name"):
+        ten_yeu_cau = str(getattr(don, "name", "") or "").strip()
+        ma_tim = ten_yeu_cau
+    else:
+        return None
+
+    if not ma_tim:
+        raise ValueError("Thiếu name của đơn cần cấp quyền dùng")
+
+    ten_doc = _tim_ten_don_frappe(frappe, ma_tim, cho_phep_noi_dung_ck=False)
+    if not ten_doc or (ten_yeu_cau and ten_doc != ten_yeu_cau):
+        raise ValueError(f"Không tìm thấy đơn trong LX Don: {ma_tim}")
+
+    doc_don = frappe.get_doc("LX Don", ten_doc)
+    don_dict = _doc_don_sang_dict(doc_don)
+    if don_dict.get("trang_thai") != "da_tra":
+        return None
+
+    ma_goi_don = str(don_dict.get("goi") or "").strip()
+    if isinstance(goi, dict):
+        ma_goi_tham_so = str(goi.get("name") or goi.get("ma") or "").strip()
+    elif isinstance(goi, str):
+        ma_goi_tham_so = goi.strip()
+    elif goi is None:
+        ma_goi_tham_so = ""
+    else:
+        return None
+
+    ma_goi_tim = ma_goi_don or ma_goi_tham_so
+    if not ma_goi_tim:
+        return None
+    goi_db = _tim_goi_frappe(frappe, ma_goi_tim)
+    if goi_db is None:
+        return None
+
+    ten_goi_db = str(goi_db.get("name") or "").strip()
+    ma_goi_db = str(goi_db.get("ma") or "").strip()
+    tap_dinh_danh_goi = {x for x in (ten_goi_db, ma_goi_db) if x}
+    if ma_goi_tham_so and tap_dinh_danh_goi and ma_goi_tham_so not in tap_dinh_danh_goi:
+        return None
+
+    goi_kiem = dict(goi_db)
+    if ma_goi_don and ma_goi_don == ten_goi_db:
+        goi_kiem["ma"] = ten_goi_db
+
+    quyen = _quyen_dung.cap_quyen(don_dict, goi_kiem)
+    if quyen is None:
+        return None
+
+    quyen["goi"] = ten_goi_db or ma_goi_db or quyen.get("goi")
+    quyen["don"] = ten_doc
+
+    cac_ma_don_db = sorted({x for x in (ten_doc, str(don_dict.get("ma") or "").strip()) if x})
+    if cac_ma_don_db and callable(getattr(frappe, "get_all", None)):
         try:
             da_cap = frappe.get_all(
                 "LX Quyen Dung",
-                filters={"don": ma_don_db},
+                filters={"don": ["in", cac_ma_don_db]},
                 fields=["name", "goi", "nguoi", "don", "so_tien", "trang_thai"],
                 limit=1,
             )
@@ -1072,44 +1172,67 @@ def _doc_co_single_frappe(frappe_mod) -> dict[str, int]:
     return kq
 
 
+def _la_khoa_bi_mat(ten_khoa: object) -> bool:
+    if not isinstance(ten_khoa, str):
+        return False
+    thuong = ten_khoa.strip().lower()
+    if not thuong:
+        return False
+    if thuong in _KHOA_CAM_CAU_HINH:
+        return True
+    if any(tu in thuong for tu in _TU_CAM_CAU_HINH):
+        return True
+    if thuong == "khoa" or thuong.endswith("_khoa") or thuong.startswith("khoa_") or "_khoa_" in thuong:
+        return True
+    return False
+
+
+def _loc_bo_bi_mat(gia_tri: object) -> object:
+    if isinstance(gia_tri, dict):
+        return {k: _loc_bo_bi_mat(v) for k, v in gia_tri.items() if not _la_khoa_bi_mat(k)}
+    if isinstance(gia_tri, list):
+        return [_loc_bo_bi_mat(x) for x in gia_tri]
+    return copy.deepcopy(gia_tri)
+
+
 def doc_cau_hinh(
     khoa: str | None = None,
     mac_dinh: object = None,
     *,
     cau_hinh: dict | None = None,
 ) -> object:
-    """Đọc cờ bật module (`LX Cau Hinh`) và cấu hình site được phép dùng cho `adapter`/`goi`."""
+    """Đọc cờ bật module (`LX Cau Hinh`) và cấu hình site trong danh sách cho phép cho `adapter`/`goi`."""
     if khoa is not None:
         if not isinstance(khoa, str) or not khoa.strip():
             raise ValueError("khoa cấu hình phải là chuỗi khác rỗng hoặc None")
-        khoa_sach = khoa.strip()
-        if khoa_sach in _KHOA_CAM_CAU_HINH:
-            raise PermissionError(f"Không được đọc khoá bí mật hệ thống qua linhx_core.api: {khoa_sach}")
+        ten_khoa = khoa.strip()
+        if _la_khoa_bi_mat(ten_khoa):
+            raise PermissionError(f"Không được đọc khoá bí mật hệ thống qua linhx_core.api: {ten_khoa}")
     else:
-        khoa_sach = None
+        ten_khoa = None
 
     if cau_hinh is not None:
         if not isinstance(cau_hinh, dict):
             raise ValueError("cau_hinh truyền vào phải là dict")
-        if khoa_sach is None:
-            return {k: copy.deepcopy(v) for k, v in cau_hinh.items() if k not in _KHOA_CAM_CAU_HINH}
-        return copy.deepcopy(cau_hinh[khoa_sach]) if khoa_sach in cau_hinh else mac_dinh
+        if ten_khoa is None:
+            return _loc_bo_bi_mat(cau_hinh)
+        return _loc_bo_bi_mat(cau_hinh[ten_khoa]) if ten_khoa in cau_hinh else mac_dinh
 
     frappe = _lay_frappe()
     co_db = _frappe_co_db(frappe)
 
-    if khoa_sach is None:
+    if ten_khoa is None:
         if co_db:
             return _doc_co_single_frappe(frappe)
         return dict(_CO_MAC_DINH)
 
-    if khoa_sach in _CO_MAC_DINH:
+    if ten_khoa in _CO_MAC_DINH:
         if co_db:
             bang_co = _doc_co_single_frappe(frappe)
-            return bang_co.get(khoa_sach, 0 if mac_dinh is None else mac_dinh)
+            return bang_co.get(ten_khoa, 0 if mac_dinh is None else mac_dinh)
         return 0 if mac_dinh is None else mac_dinh
 
-    if co_db and khoa_sach == "nguong_doanh_thu":
+    if co_db and ten_khoa == "nguong_doanh_thu":
         db = getattr(frappe, "db", None)
         if db is not None and callable(getattr(db, "get_single_value", None)):
             try:
@@ -1119,13 +1242,13 @@ def doc_cau_hinh(
             except Exception:
                 pass
 
-    if frappe is not None:
+    if frappe is not None and ten_khoa in _KHOA_CHO_PHEP_CONF:
         try:
             conf = getattr(frappe, "conf", None)
             if conf is not None and callable(getattr(conf, "get", None)):
-                gt_conf = conf.get(khoa_sach)
+                gt_conf = conf.get(ten_khoa)
                 if gt_conf is not None:
-                    return copy.deepcopy(gt_conf)
+                    return _loc_bo_bi_mat(gt_conf)
         except Exception:
             pass
 
