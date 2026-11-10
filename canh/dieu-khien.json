@@ -30,7 +30,8 @@
     "features-dot1.json",
     "features-dot1b.json",
     "features-dot2.json",
-    "features-dot2b.json"
+    "features-dot2b.json",
+    "features-dot2c.json"
   ],
   "giao": [
     "N1",
@@ -76,6 +77,8 @@
     "O6",
     "O4",
     "O7",
+    "V1",
+    "V2",
     "M1",
     "F1",
     "F2",
@@ -133,7 +136,9 @@
     "F2": "trang-bu",
     "F3": "sites",
     "C2B": "trang-bu",
-    "M1": "ban-do"
+    "M1": "ban-do",
+    "V1": "vm-kiem",
+    "V2": "ci"
   },
   "bao_mat": [
     "B2",
@@ -154,7 +159,8 @@
     "I1",
     "I2",
     "I3",
-    "C2B"
+    "C2B",
+    "V1"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {

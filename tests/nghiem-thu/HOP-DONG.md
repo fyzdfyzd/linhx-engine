@@ -93,3 +93,6 @@ cũng được so: agy đã ghi file ngoài vùng rồi xoá trước commit v�
 
 ## Đợt 2b (`features-dot2b.json`, viết 10/11, việc B Linh duyệt)
 - M1 bản đồ repo: hợp đồng ở đầu tests/nghiem-thu/test_m1.py (scripts/ban_do.py: tom_tat_file, ban_do, CLI --goc --vung --gioi-han). Canh dùng bản đồ này để đưa vào phiếu thay cho việc thợ tự đọc cả repo.
+
+## Đợt 2c (`features-dot2c.json`, viết 10/11, việc C Linh duyệt)
+- V1 cổng kiểm trên VM (deploy/cong_kiem_vm.py), V2 CI xanh (.github/workflows/linhx-engine.yml). Hợp đồng ở đầu test_v1.py, test_v2.py.
