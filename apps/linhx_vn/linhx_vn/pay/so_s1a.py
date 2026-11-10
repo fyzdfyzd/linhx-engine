@@ -7,6 +7,7 @@ chống ghi trùng ma_don, tính luỹ kế doanh thu và bật cảnh báo khi 
 from __future__ import annotations
 
 from datetime import date
+import json
 import re
 
 NGUON_PROTO = "nguon/03-opc-os/modules/07_chi_phi_loi_nhuan/module.py"
@@ -150,7 +151,7 @@ def canh_bao(so: list, nam: int, nguong: int | float | None = None) -> dict | No
 	return None
 
 
-def ghi_so_s1a_tu_don(doc_don) -> object | None:
+def ghi_so_s1a_tu_don(doc_don, method: str | None = None) -> object | None:
 	"""Tự động ghi một dòng `LX So S1a` trong Frappe khi `LX Don` ở trạng thái `da_tra`."""
 	import frappe
 	from frappe.utils import nowdate
@@ -196,3 +197,30 @@ def ghi_so_s1a_tu_don(doc_don) -> object | None:
 		return ban_ghi
 	except frappe.DuplicateEntryError:
 		return None
+
+
+def nghe_don_da_tra(ban_ghi_su_kien: dict) -> object | None:
+	"""Hàm nghe sự kiện `don.da_tra`: ghi dòng sổ `LX So S1a` cho đơn đã trả."""
+	if not isinstance(ban_ghi_su_kien, dict):
+		return None
+	du_lieu = ban_ghi_su_kien.get("du_lieu")
+	if isinstance(du_lieu, str):
+		try:
+			du_lieu = json.loads(du_lieu)
+		except ValueError:
+			return None
+	if not isinstance(du_lieu, dict):
+		return None
+	ma_don = str(du_lieu.get("don") or "").strip()
+	if not ma_don:
+		return None
+	try:
+		import frappe
+	except ImportError:
+		return None
+	if getattr(frappe, "db", None) is None:
+		return None
+	if not frappe.db.exists("LX Don", ma_don):
+		return None
+	doc_don = frappe.get_doc("LX Don", ma_don)
+	return ghi_so_s1a_tu_don(doc_don)

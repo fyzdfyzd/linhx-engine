@@ -1,0 +1,21 @@
+{
+  "ten": "linhx_vn",
+  "ban": "0.1.0",
+  "lop": "adapter",
+  "can_loi": ">=0.3.0",
+  "phu_thuoc": [],
+  "nghe": {
+    "don.da_tra": "linhx_vn.pay.so_s1a.nghe_don_da_tra"
+  },
+  "cung_cap": {
+    "vn.noi_dung_ck": "linhx_vn.pay.vietqr.noi_dung_ck",
+    "vn.qr_url": "linhx_vn.pay.vietqr.qr_url",
+    "vn.tao_don": "linhx_vn.pay.vietqr.tao_don",
+    "vn.xu_ly_sepay": "linhx_vn.pay.sepay.xu_ly",
+    "vn.webhook_sepay": "linhx_vn.pay.api_sepay.webhook",
+    "vn.xac_thuc_sepay_hook": "linhx_vn.pay.api_sepay.xac_thuc_sepay_hook",
+    "vn.ghi_so_s1a_tu_don": "linhx_vn.pay.so_s1a.ghi_so_s1a_tu_don",
+    "vn.canh_bao_thue": "linhx_vn.pay.api_thue.canh_bao_thue"
+  },
+  "giao": {}
+}

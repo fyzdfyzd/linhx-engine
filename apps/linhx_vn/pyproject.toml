@@ -1,0 +1,18 @@
+[project]
+name = "linhx_vn"
+authors = [{ name = "LINHX", email = "dev@linhx.vn" }]
+description = "LINHX ENGINE: adapter Việt Nam (SePay, VietQR, sổ S1a)"
+requires-python = ">=3.10"
+readme = "README.md"
+version = "0.1.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["linhx_vn*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.html", "*.txt"]
