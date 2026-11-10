@@ -49,7 +49,10 @@ def test_nguon_chi_doc_khong_bi_import():
     loi = []
     for p in (GOC / "apps").rglob("*.py"):
         chu = p.read_text(encoding="utf-8", errors="ignore")
-        if re.search(r"^\s*(from|import)\s+nguon\b", chu, re.M) or "sys.path" in chu and "nguon" in chu:
+        # "nguon" còn là tên trường (nguồn lead), nên chỉ bắt import thật, sys.path hoặc nạp file từ nguon/ trên cùng dòng; chuỗi ghi gốc "Chuyển từ: nguon/..." vẫn được.
+        if (re.search(r"^\s*(from|import)\s+nguon\b", chu, re.M)
+                or re.search(r"sys\.path.*nguon", chu)
+                or re.search(r"(spec_from_file_location|SourceFileLoader|runpy|exec\(open)\(?.*nguon", chu)):
             loi.append(str(p))
     assert not loi, "code chạy không được import từ nguon/ (chỉ chép logic sang): " + ", ".join(loi)
 

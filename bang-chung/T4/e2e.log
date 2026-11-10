@@ -1,0 +1,24 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.2.0, pluggy-1.7.0 -- /home/ADMIN/venv-e2e/bin/python
+cachedir: .pytest_cache
+rootdir: /home/ADMIN/linhx-engine
+collecting ... collected 2 items
+
+tests/e2e/test_hanh_trinh_lop.py::test_hanh_trinh_lead_don_tra_giao_qua_goi[390] 
+-------------------------------- live log call ---------------------------------
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:00.129499+00:00] [rong=390] bat dau hanh trinh url_bu=http://sakedemy.35-198-251-2.nip.io email=e2e-t4-1794346980129-390@example.com
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:07.669928+00:00] [rong=390] da tao LX Nguoi=7pja86fpe0 tu form BU
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:08.584149+00:00] [rong=390] da tao LX Don=DON-FCE2D996 goi=BC-AI-SAU
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:49.213427+00:00] [rong=390] LX Su Kien=7pud27hcak trang_thai=xong da_giao=['linhx_core.giao_hang.nghe', 'linhx_vn.pay.so_s1a.nghe_don_da_tra']
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:49.275153+00:00] [rong=390] hoan tat xem bao cao LX Job=VIEC-00071
+PASSED                                                                   [ 50%]
+tests/e2e/test_hanh_trinh_lop.py::test_hanh_trinh_lead_don_tra_giao_qua_goi[1280] 
+-------------------------------- live log call ---------------------------------
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:49.540073+00:00] [rong=1280] bat dau hanh trinh url_bu=http://sakedemy.35-198-251-2.nip.io email=e2e-t4-1794347029540-1280@example.com
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:52.636518+00:00] [rong=1280] da tao LX Nguoi=87ldrgshcb tu form BU
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:43:53.596195+00:00] [rong=1280] da tao LX Don=DON-237C0791 goi=BC-AI-SAU
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:44:49.416515+00:00] [rong=1280] LX Su Kien=880veq0cns trang_thai=xong da_giao=['linhx_core.giao_hang.nghe', 'linhx_vn.pay.so_s1a.nghe_don_da_tra']
+INFO     e2e.t4:test_hanh_trinh_lop.py:35 [2026-11-10T21:44:49.502456+00:00] [rong=1280] hoan tat xem bao cao LX Job=VIEC-00081
+PASSED                                                                   [100%]
+
+======================== 2 passed in 109.78s (0:01:49) =========================

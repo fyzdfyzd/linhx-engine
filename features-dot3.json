@@ -347,8 +347,8 @@
     "hành trình xanh trên VM, sự kiện giao xong"
    ],
    "lenh_kiem": "python -m pytest tests/nghiem-thu/test_t4.py -q",
-   "passes": false,
-   "bang_chung": ""
+   "passes": true,
+   "bang_chung": "bang-chung/T4/hanh-trinh.json"
   }
  ]
 }
