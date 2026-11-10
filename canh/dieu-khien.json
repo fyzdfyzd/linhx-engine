@@ -32,7 +32,8 @@
     "features-dot2.json",
     "features-dot2b.json",
     "features-dot2c.json",
-    "features-dot3.json"
+    "features-dot3.json",
+    "features-dot4.json"
   ],
   "giao": [
     "N1",
@@ -99,10 +100,14 @@
     "G2",
     "G3",
     "G5",
-    "T4"
+    "T4",
+    "K1",
+    "K2",
+    "K3"
   ],
   "cho": {
-    "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG"
+    "N2": "bộ điều phối tự mở khi thấy D:\\LINHX\\PROTO\\03_OPC_OS và 01_MAY_TAO_NOI_DUNG",
+    "K3": "chờ Linh đổi bản ghi A ifagent.net, www về 35.198.251.2 (xoá dòng này khi đã đổi)"
   },
   "nhom": {
     "N1": "ci",
@@ -169,7 +174,10 @@
     "U1": "deploy",
     "U2": "giao-dien",
     "U3": "ci",
-    "T4": "e2e"
+    "T4": "e2e",
+    "K1": "cli",
+    "K2": "cts",
+    "K3": "deploy"
   },
   "bao_mat": [
     "B2",
@@ -196,7 +204,8 @@
     "P1",
     "G1",
     "G2",
-    "U2"
+    "U2",
+    "K2"
   ],
   "ghi_chu_cho_agy": "",
   "tich_hop": {
