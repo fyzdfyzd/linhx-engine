@@ -1,10 +1,10 @@
 ﻿# LINHX ENGINE: trạng thái thợ
 
-Cập nhật 2026-11-10 07:40 (giờ máy cty). Đạt: 45/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
+Cập nhật 2026-11-10 07:49 (giờ máy cty). Đạt: 45/47 (N1, N2, N3, N4, N5, N6, A1, A2, A3, A4, A5, B1, B2, B3, B4, B5, C1, C2, C3, D1, D2, D3, E1, E2, T1, T2, A4B, W1, Q1, C4, R1, R2, C2B, O1, O2, O3, O5, O6, I1, I2, I3, F1, F2, F3, T3)
 
 | Thợ | Đang làm | Phiếu | Kết luận lượt chấm gần nhất |
 |---|---|---|---|
-| 1 | O4 | rảnh | CHUA_DAT · Feature O4 · commit cdb1dde · nhánh tu-dong/engine-t1 · 2026-11-10T07:20:54 |
+| 1 | O4 | 20261110-0741-t1 từ 2026-11-10T07:41:52 | CHUA_DAT · Feature O4 · commit 2ba2657 · nhánh tu-dong/engine-t1 · 2026-11-10T07:41:51 |
 | 2 | - | rảnh | DAT · Feature F2 · commit dca7d30 · nhánh tu-dong/engine-t2 · 2026-11-09T23:58:38 |
 
 ## Chờ
@@ -23,8 +23,6 @@ Cập nhật 2026-11-10 07:40 (giờ máy cty). Đạt: 45/47 (N1, N2, N3, N4, N
 - 2026-11-09T23:29:57 O4 CHUA_DAT 3 lần liền (thợ 1): đã lùi tu-dong/engine-t1 về mốc 6464e48d, bản hỏng giữ ở nhánh cục bộ hong/O4-20261109-2329, ngưng giao. Cần Khổng Minh chia nhỏ hoặc Linh quyết; giao lại thì xoá D:\LINHX\ENGINE-canh\tac\O4.txt
 
 ## Nhật ký gần nhất
-- 2026-11-10 00:05 t1: giao agy phiếu 20261110-0005-t1: T3
-- 2026-11-10 00:34 t1: agy xong phiếu 20261110-0005-t1 (T3) sau 30 phút
 - 2026-11-10 00:40 t1: T3 DAT, đã gộp vào main
 - 2026-11-10 00:40 t1: không có feature giao được lúc này (chờ phụ thuộc, nhóm, trần, hoặc danh sách cho)
 - 2026-11-10 06:49 t0: xoá đếm CHUA_DAT của O4 (O4@1011-pytest-temp-2-lan-loi-may)
@@ -35,4 +33,6 @@ Cập nhật 2026-11-10 07:40 (giờ máy cty). Đạt: 45/47 (N1, N2, N3, N4, N
 - 2026-11-10 07:20 t1: O4 CHUA_DAT lần 1 (commit cdb1dde)
 - 2026-11-10 07:20 t1: giao agy phiếu 20261110-0720-t1: O4 (lượt sửa)
 - 2026-11-10 07:28 t1: agy xong phiếu 20261110-0720-t1 (O4) sau 8 phút
+- 2026-11-10 07:41 t1: O4 CHUA_DAT lần 2 (commit 2ba2657)
+- 2026-11-10 07:41 t1: giao agy phiếu 20261110-0741-t1: O4 (lượt sửa)
 
