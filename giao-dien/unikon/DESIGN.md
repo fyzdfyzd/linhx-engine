@@ -3,27 +3,27 @@ name: Unikon · unikon.vn
 version: 1.0 (khoá 9/11/2026, phương án A "Bảng pitch 48 giờ", Claude khoá theo khuyến nghị, chờ Linh duyệt)
 nguon: LAB043 brands/unikon (brand.json v0.1, LUAT-ONBRAND.md, guideline 2026 trang 36 "Website, LinkedIn")
 colors:
-  dem-tim: "#120D17"        # nền tối chủ đạo
-  dem-tim-nhat: "#1C1622"   # thẻ trên nền tối
-  vien-toi: "#2E2636"
+  dem-tim: "#160B2A"        # nền tối chủ đạo
+  dem-tim-nhat: "#21143A"   # thẻ trên nền tối
+  vien-toi: "#35264F"
   trang: "#FFFFFF"
   xam-chu-phu-nen-toi: "#BBBDBF"
-  suong-tim: "#F7F4F8"      # nền sáng, trang con, khối xen
-  muc-tim: "#1C1720"        # chữ trên nền sáng
+  suong-tim: "#FAF7F4"      # nền sáng, trang con, khối xen
+  muc-tim: "#160B2A"        # chữ trên nền sáng
   xam-wordmark: "#58595B"   # chữ phụ nền sáng
-  vien-sang: "#E6E0EA"
+  vien-sang: "#E9E2EC"
   hong-phan: "#FDE8EF"      # nền ghi chú
-  magenta: "#ED145B"        # mảng, gạch đầu dòng; không làm nền chữ trắng nhỏ
-  magenta-dam: "#CC1150"    # nút chính chữ trắng, nhấn trên nền sáng
+  magenta: "#E6155F"        # mảng, gạch đầu dòng; không làm nền chữ trắng nhỏ
+  magenta-dam: "#C8124F"    # nút chính chữ trắng, nhấn trên nền sáng
   magenta-sang: "#FF5C8F"   # link, pill trên nền tối
-  tim: "#5216A6"
+  tim: "#5113A4"
   man: "#A02487"            # hover nút chính
   cam: "#F7941D"            # chỉ trong gradient, ≤ 10%
   # phụ, không thuộc brand.json: trạng thái lỗi form và chữ gợi ý
   loi-sang: "#FF8A80"
   loi-dam: "#B3261E"
   goi-y: "#8A8590"
-  gradient: "linear-gradient(135deg, #F7941D 0%, #ED145B 50%, #5216A6 100%)"
+  gradient: "linear-gradient(135deg, #F7941D 0%, #E6155F 50%, #5113A4 100%)"
 typography:
   tieu-de: { fontFamily: "Montserrat", fontWeight: 700, fontSize: "clamp(36px, 4.4vw, 56px)", lineHeight: 1.08 }
   h2: { fontFamily: "Montserrat", fontWeight: 700, fontSize: "clamp(28px, 3.4vw, 44px)", lineHeight: 1.12 }
@@ -59,3 +59,7 @@ Tối (hero) → tối (pitch 48 giờ + ba câu) → sáng (dịch vụ) → t�
 - Đánh số 01/02/03 khi không phải trình tự; lưới thẻ giống hệt nhau.
 - Logo Unikon trên ảnh minh hoạ deck giao cho agency; logo khách, tên khách, giải thưởng khi chưa được phép.
 - Raleway, Avenir, Inter, Poppins.
+
+## Brand ID mới (11/11/2026)
+Màu, logo, hoạ tiết theo D:\linhx\BRAND\UNIKON (guideline v1, điểm chờ chốt đi theo ★ A). Bảng lệch: D:\linhx\BRAND\UNIKON\ADAPT-WEB.md.
+Mã màu brand: #160B2A #E6155F #5113A4 #F7941D #58595B #FAF7F4 #FBA916 #EF2951 #A02487 #255FB0 #21143A #35264F #E9E2EC #C8124F

@@ -16,10 +16,10 @@ DAU = """<!doctype html>
 <meta property="og:description" content="{desc}">
 <meta property="og:type" content="{ogtype}">
 <meta property="og:image" content="{site}/img/og.png">
-<meta name="theme-color" content="#120D17">
+<meta name="theme-color" content="#160B2A">
 <link rel="canonical" href="{site}{path}">{robots}
 <link rel="icon" href="/img/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/site.css?v=1">
+<link rel="stylesheet" href="/site.css?v=2">
 <script type="application/ld+json">{ld}</script>
 </head>
 <body class="trang-con">
@@ -43,7 +43,7 @@ CHAN = """</main>
 <footer class="foot">
   <div class="wrap">
     <div class="foot-cot">
-      <div><img src="/img/logo.svg" alt="Unikon" width="97" height="40"><p>AI production cho agency.</p><p data-cfg="lien_he_chan">Để lại thông tin, chúng tôi liên hệ.</p></div>
+      <div><img src="/img/logo.svg" alt="Unikon" width="97" height="40"><p>Agentic content at mass scale.</p><p data-cfg="lien_he_chan">Để lại thông tin, chúng tôi liên hệ.</p></div>
       <nav aria-label="Dịch vụ"><b>Dịch vụ</b><a href="/dich-vu/anh-ai/">Ảnh AI, key visual</a><a href="/dich-vu/video-ai/">Video AI</a><a href="/dich-vu/nhan-vat-giong-ai/">Nhân vật và giọng AI</a><a href="/bao-gia/">Cách tính giá</a><a href="/brand-kit/">Brand kit hằng tháng</a></nav>
       <nav aria-label="Cho agency"><b>Cho agency</b><a href="/pitch-48-gio/">Pitch 48 giờ</a><a href="/cho-agency/">Làm việc cùng agency</a><a href="/an-toan-thuong-hieu/">An toàn thương hiệu</a><a href="/du-an/">Dự án</a></nav>
       <nav aria-label="Unikon"><b>Unikon</b><a href="/gioi-thieu/">Giới thiệu</a><a href="/cam-nang/">Cẩm nang</a><a href="/hoi-dap/">Hỏi đáp</a><a href="/lien-he/">Liên hệ</a></nav>

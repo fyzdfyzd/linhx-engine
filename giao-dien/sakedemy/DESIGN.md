@@ -3,7 +3,7 @@ name: Sakédemy · mặt tiền lớp doanh nghiệp
 version: 1.0 (khoá 9/11/2026, phương án A: trung thành landing v1.0 Linh duyệt 20/10)
 nguon: LAB058-WEB-DESIGN-FLOW/sakedemy/v1 (index.html, tokens.css, GHI-CHU.md); LAB043 brands/sakedemy (brand.json, LUAT-ONBRAND.md, guideline 2026 tr.34 mục 3.5 Website)
 colors:
-  la: "#6EB264"        # Xanh Lá Sakédemy: một mảng lớn có gân lá, chữ trên nó là Rêu Đậm
+  la: "#66BC66"        # Xanh Lá Sakédemy: một mảng lớn có gân lá, chữ trên nó là Rêu Đậm
   reu: "#02403B"       # Xanh Rêu Đậm: tiêu đề, nút chính, khối lá lớn
   chu: "#414141"       # Xám Chữ: chữ thân
   nen: "#FFFFFF"
@@ -12,13 +12,13 @@ colors:
   sau: "#118056"       # Xanh Lá Sâu: chữ xanh nhỏ, nhãn, link
   dam: "#1CA571"       # Xanh Lá Đậm: chỉ ở cuối gradient chữ tiêu đề (chữ lớn)
   non: "#A3D34F"       # Lá Non: nhấn trên nền Rêu Đậm
-  ngoc: "#26CABE"      # Xanh Ngọc: cuối gradient thương hiệu
+  ngoc: "#23B7AC"      # Xanh Ngọc: cuối gradient thương hiệu
   # sắc độ phụ (giữ từ v1 hoặc cần cho form)
   phu: "#5F6B66"       # chữ phụ, tên khách (v1)
   vien2: "#CFD8D3"     # viền ô nhập (v1)
   chu-toi: "#C8DAD4"   # chữ phụ trên Rêu Đậm (v1)
-  loi: "#A3361F"       # báo lỗi form (nâu đỏ, không hồng)
-  grad: "linear-gradient(210deg, #A3D34F, #26CABE)"
+  loi: "#8A5300"       # báo lỗi form (nâu đỏ, không hồng)
+  grad: "linear-gradient(210deg, #A3D34F, #23B7AC)"
   grad-chu: "linear-gradient(90deg, #118056, #1CA571)"
 typography:
   font: "Be Vietnam Pro (Light 300, Regular 400, Bold 700), OFL, từ LAB043 03-chu"
@@ -48,7 +48,11 @@ Hero nền trắng, tiêu đề trái chiếm khoảng một nửa, cụm từ k
 
 ## Không nên
 - Màu hồng, navy #051D40, neon, gradient phủ cả nền.
-- Chữ trắng trên Xanh Lá #6EB264 (2,56:1).
+- Chữ trắng trên Xanh Lá #66BC66 (2,56:1).
 - Hình bo đều bốn góc, khung tròn, viền dày, đổ bóng chữ.
 - Robot, não phát sáng, ảnh stock văn phòng phương Tây.
 - Bịa giá, phần trăm năng suất, lời khen, tên khách.
+
+## Brand ID mới (11/11/2026)
+Màu, logo, hoạ tiết theo D:\linhx\BRAND\SAKEDEMY (guideline v1, điểm chờ chốt đi theo ★ A). Bảng lệch: D:\linhx\BRAND\SAKEDEMY\ADAPT-WEB.md.
+Mã màu brand: #1CA571 #23B7AC #66BC66 #A3D34F #02403B #414141 #F5F8F2 #8A5300

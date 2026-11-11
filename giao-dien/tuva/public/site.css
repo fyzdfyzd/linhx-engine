@@ -2,8 +2,8 @@
 @font-face{font-family:"BVP";src:url(/f/BeVietnamPro-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
 @font-face{font-family:"BVP";src:url(/f/BeVietnamPro-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
 :root{
-  --nau:#2A1E1A;--cam:#F9A61B;--trang:#FFFFFF;--be:#E4DCD5;--kem:#FEF6E8;
-  --nau-xam:#584E4C;--xam-sang:#EFEFEF;--ho-phach:#8A5300;--cam-do:#FD6703;--xam-be:#C9C3BD;
+  --nau:#2A1F1B;--cam:#FAA71B;--trang:#FFFFFF;--be:#E4DCD5;--kem:#F4EFE8;
+  --nau-xam:#6B5B4F;--xam-sang:#EFEFEF;--ho-phach:#8A5300;--chu-nau:#4A3F39;--cam-do:#FD6703;--xam-be:#C9C3BD;
   --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;--s6:104px;
   --r:24px;
 }
@@ -48,7 +48,11 @@ h3{font-size:21px;line-height:1.3}
 
 /* màn đầu: nền nâu, xoắn ốc tù và tràn mép phải */
 .hero{background:var(--nau);color:var(--xam-sang);position:relative;overflow:hidden;padding:56px 0 72px}
-.hero-xoan{position:absolute;width:820px;height:820px;right:-250px;bottom:-330px;opacity:.95;pointer-events:none}
+/* sóng dữ liệu một bên (pattern T5B2): chỉ dải dưới, nửa trên để trống */
+.hero{padding-bottom:150px}
+.hero-xoan{position:absolute;left:0;right:0;bottom:8px;width:100%;height:150px;background:url(/img/song-du-lieu.svg) left bottom/600px 150px repeat-x;opacity:.9;pointer-events:none}
+.nhan-hero{font:600 14px/1.4 "MS",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--cam);margin-bottom:var(--s2)}
+.cau-tu-va{font:600 18px/1.4 "MS",sans-serif;color:var(--cam);margin-top:var(--s2)}
 .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:56px;align-items:start}
 .hero h1{color:var(--trang)}
 .sub{font-size:19px;margin:var(--s3) 0 var(--s4);max-width:50ch;color:var(--xam-sang)}
@@ -145,7 +149,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--cam)}
 input[aria-invalid=true]{border-color:var(--cam-do)}
 ::placeholder{color:var(--nau-xam);opacity:.75}
 .consent{grid-template-columns:24px 1fr!important;align-items:start;font:15px/1.5 "BVP",sans-serif!important}
-.consent input{width:20px;height:20px;min-height:0;margin-top:3px;accent-color:#2A1E1A}
+.consent input{width:20px;height:20px;min-height:0;margin-top:3px;accent-color:#2A1F1B}
 .hint{font-size:14px;color:var(--nau-xam);margin-top:-6px}
 .hint.loi,.form-msg.loi{color:var(--nau);font-weight:700;border-left:4px solid var(--cam-do);padding-left:10px}
 .form-msg{min-height:1.4em;font-size:15px}
@@ -188,7 +192,6 @@ input[aria-invalid=true]{border-color:var(--cam-do)}
   .nav nav{display:none}
   .nav-cta{margin-left:auto}
   .hero-grid,.brief-grid,.bq,.dv{grid-template-columns:1fr;gap:var(--s4)}
-  .hero-xoan{width:620px;height:620px;right:-280px;top:auto;bottom:-260px;opacity:1}
   .steps{grid-template-columns:1fr 1fr;row-gap:var(--s4)}
   .steps li:nth-child(3){padding-left:0}
   .dx{grid-template-columns:1fr}
@@ -203,7 +206,8 @@ input[aria-invalid=true]{border-color:var(--cam-do)}
   .logo img{height:26px}
   .nav-cta{padding:0 12px;font-size:13px}
   .hero{padding:36px 0 48px}
-  .hero-xoan{width:520px;height:520px;right:-250px;top:auto;bottom:-230px;opacity:1}
+  .hero{padding-bottom:120px}
+  .hero-xoan{height:120px;background-size:480px 120px}
   .sub{font-size:17px;margin:var(--s2) 0 var(--s3)}
   .cta-row .btn{width:100%}
   .facts{grid-template-columns:1fr;gap:14px}
