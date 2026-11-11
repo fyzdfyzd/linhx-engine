@@ -4,10 +4,10 @@
 @font-face{font-family:"BVP";src:url(/f/BeVietnamPro-Regular.ttf) format("truetype");font-weight:400;font-display:swap}
 @font-face{font-family:"BVP";src:url(/f/BeVietnamPro-Bold.ttf) format("truetype");font-weight:700;font-display:swap}
 :root{
-  --la:#6EB264;--reu:#02403B;--chu:#414141;--nen:#FFFFFF;--nhat:#E9F6D3;--vien:#F0F0F0;
-  --sau:#118056;--dam:#1CA571;--non:#A3D34F;--ngoc:#26CABE;
-  --phu:#5F6B66;--vien2:#CFD8D3;--chu-toi:#C8DAD4;--loi:#A3361F;
-  --grad:linear-gradient(210deg,#A3D34F,#26CABE);
+  --la:#66BC66;--reu:#02403B;--chu:#414141;--nen:#F5F8F2;--nhat:#E9F6D3;--vien:#F0F0F0;
+  --sau:#118056;--dam:#1CA571;--non:#A3D34F;--ngoc:#23B7AC;
+  --phu:#5F6B66;--vien2:#CFD8D3;--chu-toi:#C8DAD4;--loi:#8A5300;
+  --grad:linear-gradient(210deg,#A3D34F,#1CA571 55%,#23B7AC);
   --grad-chu:linear-gradient(90deg,#118056,#1CA571);
   --bong:0 20px 50px rgba(2,64,59,.14);
   --s1:8px;--s2:16px;--s3:24px;--s4:40px;--s5:64px;--s6:112px;
@@ -54,7 +54,10 @@ h3{font-size:22px;line-height:1.28}
 .nav-cta{min-height:44px;padding:0 20px}
 
 /* hero (PA A, trung thành v1) */
-.hero{padding:var(--s4) 0 88px}
+.hero{padding:var(--s4) 0 88px;position:relative;overflow:hidden}
+/* gân chính – gân phụ (pattern S5A2), góc phải dưới sau ảnh, phần còn lại để trống */
+.hero::before{content:"";position:absolute;right:-60px;bottom:-40px;width:400px;height:300px;background:url(/img/gan-la.svg) center/contain no-repeat;opacity:.55;pointer-events:none}
+.hero-grid{position:relative;z-index:1}
 .hero-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:64px;align-items:center}
 .hero h1{max-width:14ch}
 .mo-dau{font-size:clamp(17px,1.4vw,20px);margin:28px 0 36px;max-width:31em}
@@ -122,7 +125,7 @@ h3{font-size:22px;line-height:1.28}
 
 /* khối Rêu Đậm lá lớn: giảng viên + câu dạy */
 .toi{position:relative;overflow:hidden;background:var(--reu);color:var(--nen);--bo:clamp(60px,8vw,120px)}
-.toi::after{content:"";position:absolute;right:-90px;top:-90px;width:clamp(180px,22vw,280px);aspect-ratio:1;background:url(/img/hoa-tiet-la-lon-trang.svg) center/contain no-repeat;opacity:.16;pointer-events:none}
+.toi::after{content:"";position:absolute;right:-90px;top:-90px;width:clamp(180px,22vw,280px);aspect-ratio:1;background:url(/img/gan-la-toi.svg) center/contain no-repeat;opacity:.5;pointer-events:none}
 .toi .noi{position:relative;padding:clamp(120px,12vw,150px) clamp(24px,6vw,96px) clamp(48px,7vw,96px);display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:end}
 .ngoac{font-size:72px;line-height:.6;color:var(--non);font-weight:700}
 .toi blockquote{font-size:clamp(30px,4vw,54px);font-weight:700;line-height:1.15;margin:20px 0 28px;max-width:14em}
@@ -219,7 +222,7 @@ legend{font-size:15px;font-weight:700;color:var(--reu);margin-bottom:8px}
 .doc .faq{margin-top:var(--s5)}
 .doc .faq h2{margin-top:0}
 .cta-cuoi{position:relative;overflow:hidden;margin-top:var(--s5);padding:var(--s4);background:var(--reu);color:var(--nen);border-radius:60px 0 60px 0}
-.cta-cuoi::after{content:"";position:absolute;right:-70px;top:-70px;width:170px;aspect-ratio:1;background:url(/img/hoa-tiet-la-lon-trang.svg) center/contain no-repeat;opacity:.14;pointer-events:none}
+.cta-cuoi::after{content:"";position:absolute;right:-70px;top:-70px;width:170px;aspect-ratio:1;background:url(/img/gan-la-toi.svg) center/contain no-repeat;opacity:.45;pointer-events:none}
 .cta-cuoi h2{margin-top:0;color:var(--nen)}
 .cta-cuoi p{margin:var(--s2) 0 var(--s3);color:var(--chu-toi)}
 .cta-cuoi .btn-main{background:var(--nen);color:var(--reu)}

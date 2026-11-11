@@ -3,12 +3,12 @@ name: TUVA Communication · tuva.work
 version: 1.0 (khoá 9/11/2026, phương án B "Tự chấm ngay màn đầu", Claude khuyến nghị, chờ Linh xác nhận)
 nguon_brand: LAB043-DESIGN-ONBRAND/brands/tuva (brand.json, LUAT-ONBRAND.md, guideline 3.5 Website)
 colors:
-  nau: "#2A1E1A"        # Nâu đen: đầu trang, màn đầu, khối đề xuất, chân trang, chữ chính
-  cam: "#F9A61B"        # Cam hổ phách: nút chính, tiêu đề trên nền nâu, xoắn ốc, vạch nhấn
+  nau: "#2A1F1B"        # Nâu đen: đầu trang, màn đầu, khối đề xuất, chân trang, chữ chính
+  cam: "#FAA71B"        # Cam hổ phách: nút chính, tiêu đề trên nền nâu, xoắn ốc, vạch nhấn
   trang: "#FFFFFF"
   be: "#E4DCD5"         # Be ấm: khối dịch vụ chính, vùng form
-  kem: "#FEF6E8"        # Kem sóng: thẻ tự chấm, khối bộ quy tắc
-  nau-xam: "#584E4C"    # chữ phụ trên nền sáng
+  kem: "#F4EFE8"        # Kem sóng: thẻ tự chấm, khối bộ quy tắc
+  nau-xam: "#6B5B4F"    # chữ phụ trên nền sáng
   xam-sang: "#EFEFEF"   # chữ trên nền nâu
   ho-phach: "#8A5300"   # liên kết, chữ nhấn nhỏ trên nền sáng (cam chỉ 2.0:1 trên trắng)
   cam-do: "#FD6703"     # chỉ cho viền lỗi và vòng focus, ≤ 10% diện tích
@@ -47,3 +47,7 @@ Tiếng tù và gọi từ xa: nền nâu đen ấm, cam hổ phách là tiếng
 - Chữ cam cỡ nhỏ trên nền trắng.
 - Tên, logo đối tác (UN Women, WWF, British Council...) khi chưa có đồng ý bằng văn bản; ảnh có logo đối tác.
 - Lưới thẻ giống hệt nhau, nhãn nhỏ IN HOA trên mọi tiêu đề.
+
+## Brand ID mới (11/11/2026)
+Màu, logo, hoạ tiết theo D:\linhx\BRAND\TUVA (guideline v1, điểm chờ chốt đi theo ★ A). Bảng lệch: D:\linhx\BRAND\TUVA\ADAPT-WEB.md.
+Mã màu brand: #2A1F1B #FAA71B #F4EFE8 #6B5B4F #E4DCD5 #4A3F39 #8A5300
