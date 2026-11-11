@@ -3,6 +3,9 @@
 Shop báo cáo chạy bằng agy. Khách đặt báo cáo trên mặt tiền → Linh duyệt → thợ agy rảnh (trên cloud hoặc máy riêng) kéo việc về chạy → khách mở link đọc báo cáo.
 Báo cáo đầu tiên: **AI nói gì về thương hiệu của bạn** (8 câu × ChatGPT, Gemini, Claude; 4 chỉ số Có mặt, Độ đúng, Được đề xuất, Độ nhất quán, khớp bài CSMO Topic 07). AI chỉ gán nhãn, code tính điểm (`bao_cao.py`).
 
+## Wiki chung
+`wiki/` là bộ nhớ chung LINHX (kiểu LLM Wiki của Karpathy): đích cuối, kiến trúc, lộ trình, 63 hệ thống, dự án, quyết định, việc chờ. Bắt đầu ở `wiki/INDEX.md`. Rà: `python scripts/ra_wiki.py`.
+
 ## Thành phần
 | Thư mục | Là gì |
 |---|---|

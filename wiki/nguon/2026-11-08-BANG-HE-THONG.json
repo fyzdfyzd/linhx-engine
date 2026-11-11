@@ -1,0 +1,3402 @@
+{
+ "nguon": "https://claude.ai/artifact/Wyeq3HaoB6pfgoeC11P2qY",
+ "chup_luc": "2026-11-07T23:15Z",
+ "he_thong": {
+  "h01": {
+   "ban": [],
+   "cach_thu": "Chạy bước 1 trên lớp corp thật kế tiếp",
+   "cap": "workflow",
+   "cap_goi_y": "workflow",
+   "cap_nhat_boi": "Claude 6/11 theo ý Linh",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "70 giờ soạn cho 55 giờ quỹ; mỗi khách soạn lại; tư liệu rải Zalo/Drive; HR không thấy hiệu quả sau lớp",
+   "de_xuat": "Không viết lại. Bọc 9 module Course OS bản 2 thành workflow agy; Frappe app linhx_course chỉ giữ Khoá, Đề, Phiên bản, Quan điểm, Template, Phản hồi và nút duyệt. Mỗi khoá một kho git EDU/<mã>. 18 mảng, 5 bước. Chi tiết: https://claude.ai/artifact/QKjuCFhZzXGtA8dsej8pTy",
+   "dung_chung": "Decent AI (TUVA), đào tạo bàn giao agent (Unikon, ifAgent), Sakedemy mặt tiền bán, Industry sharing, lớp teen, CLB Agentic; kho quan điểm dùng chung với Personal Brand",
+   "ghi_chu": "Linh 6/11: Course OS xác nhận, khoá hình thái. 11:09: giảng viên là trợ giảng của Linh, hiện 6 người → Course OS có vai trợ giảng. Đề xuất (chờ Linh): chu trình video e-learning là mảng 22 của Course OS, cấp LINHX Workflow dùng chung Xưởng video AI URAH (h43) và dịch vụ Việt hoá theo phút (LAB074). 3 nhánh: A record Linh + cắt ậm ừ tự động (LAB059 v0.2) làm trước; B slide + giọng (HyperFrames); C giảng viên AI (LAB017 PA2, pilot L01 đã chạy MSI) để sau. Bài 3–5 phút, dọc cho Zalo. Ngưỡng: 1 bài 5 phút ≤30 phút công Linh, ≥60% xem hết.",
+   "gia_thuyet": "Bọc Course OS 2 thành workflow agy thì Linh soạn một lớp corp trong ≤4 giờ mà chất lượng giữ top",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Module 01–09 Course OS 2, Máy tạo nội dung/LinhX Write, vòng lặp slide LAB099, deck proposal LAB027 (nang-luc.json), phiếu chẩn đoán AIX, brand LAB043, research-loop LAB085, Report engine, Khâu kiểm chất lượng",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh và giảng viên LINHX; HR/L&D doanh nghiệp mua khoá; học viên",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Nạp đề → máy soạn → Linh duyệt → xuất; cổng khách DN duyệt đề cương, tải tài liệu, xem báo cáo hiệu quả",
+   "mo_ta": "Xưởng khoá học top tier, quản trị được: nạp đề và nhu cầu, nghiên cứu nền, kho quan điểm và template, học liệu đủ bộ, slide chất lượng cao, QC, phiên bản theo khách, xuất final, phản hồi, reflect; bản chào và đề xuất, profile giảng viên, credential tự cập nhật sau mỗi lớp",
+   "module": [
+    "Sinh nội dung AI",
+    "Thợ agy / hàng việc",
+    "Khoá học (LMS)",
+    "Báo cáo tự động",
+    "CRM / lead"
+   ],
+   "muc_tieu": "V1 xong khi 6 job chạy thật trên 2 lớp corp liên tiếp: J1 soạn ≤4h công Linh; J2 bản chào ≤2h; J3 báo cáo HR D+30 tự sinh; J4 học viên ≥4,5/5, ≥60% còn dùng sau 30 ngày; J5 reflect ≤15 phút; J6 bàn sáng ≤10 phút",
+   "nguon": "PROTO\\06_COURSE_OS",
+   "nguong": "≤4 giờ Linh từ đề tới bộ duyệt; học viên ≥4,5/5; ≥60% còn dùng 1 workflow sau 30 ngày",
+   "nhan_nhi": "Đo top tier bằng việc học viên làm được sau 30 ngày, và HR có báo cáo để mua tiếp. Số file sinh ra không phải thước đo.",
+   "nhom": "LINHX EDU",
+   "phan_bien": "\"360 course\" dễ phình: hiện chỉ 3 đầu ra bán được (giáo trình+slide corp, workbook, e-learning). Không làm server thứ ba. Tài liệu ngân hàng không trộn vào kho chung khi chưa ẩn danh. Không dùng Frappe LMS (AGPL) cho phần soạn.",
+   "quyet": "ngay",
+   "ten": "Course OS",
+   "thu_tu": 1,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 1,
+   "viec": "Khi nhận đề lớp mới, tôi muốn có bộ khoá đúng nhu cầu khách trong một ngày, để dạy chất lượng top mà không thức đêm"
+  },
+  "h02": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "Dùng cho 2 lớp corp kế tiếp, gửi báo cáo D+30",
+   "cap_goi_y": "solution",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Khó tìm giảng viên AI hiểu nghiệp vụ ngành, sợ khoá chung chung",
+   "de_xuat": "Gộp làm phần vận hành của cùng app linhx_course (Lớp, Học viên, Lịch, Hoá đơn, Báo cáo sau lớp) — Course OS là xưởng soạn, đây là quầy bán. Mặt tiền chuyển sang sakedemy.com/doanh-nghiep vì khách ngân hàng đã biết Sakédemy (deck chào VCB).",
+   "dung_chung": "Unikon, ifAgent bán kèm đào tạo bàn giao agent dùng chung bảng Lớp và báo cáo hiệu quả.",
+   "ghi_chu": "Linh chốt 6/11: khoá chỉ bán trên Sakedemy (cửa chính) và linhx.info (kênh thêm, personal brand). Profile + credential trên linhx.info sinh từ Course OS.",
+   "gia_thuyet": "Một chỗ quản lớp + báo cáo sau lớp giúp HR mua lại",
+   "giai_doan": "Đang chạy",
+   "gop_vao": "Cùng khuôn Khoá học với cungai, Sakedemy, CLB.",
+   "kenh": [
+    "Web",
+    "Email"
+   ],
+   "khach": "Phòng L&D ngân hàng, DN",
+   "loai": "Khoá học",
+   "lop": 1,
+   "mat_tien": "sakedemy.com/doanh-nghiep",
+   "mo_ta": "Lớp, giáo trình, học viên, hoá đơn cho khoá doanh nghiệp (VCB, MSB, Vinhomes…)",
+   "module": [
+    "CRM / lead",
+    "Khoá học (LMS)",
+    "Đặt lịch",
+    "Báo cáo tự động"
+   ],
+   "nguon": "EDU\\EDU001–020",
+   "nguong": "≥1 khách mua lại hoặc giới thiệu sau báo cáo",
+   "nhan_nhi": "HR cần một tờ báo cáo: bao nhiêu người làm được việc sau 30 ngày. Có tờ đó thì bán lại được.",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Ba cửa EDU (linhx.info, Sakedemy, cungai) là quá nhiều cho một người bán. Corp nên một cửa. Học viên corp không tự đăng nhập: cần quản trị nội bộ + báo cáo cho HR, chưa cần cổng học viên.",
+   "quyet": "",
+   "ten": "Quản lý lớp corp",
+   "thu_tu": 2,
+   "trang_thai": "Đang chạy tay",
+   "uu_tien": 0,
+   "viec": "Khi DN cần nhân viên dùng AI, tôi muốn một khoá đúng nghiệp vụ, để có kết quả báo cáo sếp"
+  },
+  "h03": {
+   "ban": [
+    "Thuê bao",
+    "Miễn phí lấy lead",
+    "Bán lẻ"
+   ],
+   "cach_thu": "Mời học viên 30–40 lớp đã dạy + CLB 100 người vào Zalo OA/Mini App, tặng quyền lợi alumni miễn phí (kho freebie, bản tin tuần, 1 buổi hỏi đáp/tháng). Mời qua nhóm Zalo cũ của từng lớp, mỗi lớp 1 mã QR riêng để đo. Chạy thử 5 lớp trước, đạt thì mời hết.",
+   "cap_goi_y": "solution",
+   "claude_doan": true,
+   "dang": "Zalo Mini App + web",
+   "dau": "Học xong khoá thì không ai chăm, kiến thức AI cũ đi mỗi tuần. Người mới thì gặp khoá AI tiếng Việt ở khắp nơi, chất lượng lẫn lộn, tin tức chưa kiểm chứng, Luật AI 2026 khó hiểu",
+   "de_xuat": "cungai phục vụ 2 mục đích. (A) Content hub: tin AI và trào lưu Sống cùng AI, AI ở Việt Nam, đạo đức và pháp lý AI, kho freebie gồm prompt, skill và template. (B) E-learning và cộng đồng freemium: khoá miễn phí cùng chủ đề với đối thủ để lấy các từ khoá khoá AI top ở VN, tiền thu ở tầng premium. Thứ tự làm: (1) Chăm CLB 100 người trước: bản tin tuần + freebie cho học viên cũ. (2) Mở freebie cho thành viên mới, đổi bằng email hoặc Zalo. (3) Làm khoá miễn phí lấy từ khoá, chọn đề bằng quét nhu cầu: Udemy (khoá AI bán chạy, số học viên, đánh giá, câu hỏi trong Q&A, chủ đề mới nổi), Gitiho, Unica, Google Trends VN; Máy quét chạy hằng tháng, kết quả nạp vào Course OS làm đề. (4) Bán premium. (5) Vận hành CLB AI để đào tạo AI champion cho các tổ chức (B2B). Nội dung lấy từ Course OS (bài và freebie cắt ra từ các khoá), Máy quét và radar LAB035; kết hợp Spiderum để phân phối.",
+   "dung_chung": "Freebie và bài viết là đầu ra của Course OS, nên không soạn riêng. Pipeline nội dung là LINHX Workflow dùng chung với linhx.info. CLB AI champion bán qua Course OS mẫu khoá doanh nghiệp.",
+   "ghi_chu": "Linh 6/11 11:09 CHỐT vai: cungai là lớp user (tài khoản, sổ khách chung của EDU); cộng đồng duy nhất CLB Cùng AI; Sakedemy cung cấp khoá e-learning cho cungai; e-learning (LMS) là lõi dùng chung; cungai học miễn phí + cộng đồng, Sakedemy bán, linhx.info tiếng nói Linh. Domain cungai.vn. Còn chờ: Spiderum, số nhóm Zalo còn giữ.",
+   "gia_thuyet": "Người đi làm VN đổi email/Zalo lấy bản tin AI kiểm chứng + checklist Luật AI, và một phần bấm sang khoá",
+   "giai_doan": "Khảo sát",
+   "gop_vao": "Course OS (h01) cắt freebie và bài từ khoá; Máy quét (h47); radar LAB035; Máy tạo nội dung (h16); Channel OS (h17); plugin linhx-nuoi-cong-dong LAB041; Zalo Mini App mở khoá LAB075; vn-law-check LAB107 cho mục pháp lý; Spiderum",
+   "kenh": [
+    "Zalo",
+    "Zalo Mini App",
+    "Web"
+   ],
+   "khach": "(1) Học viên cũ của Linh, trong đó có CLB 100 người; (2) người đi làm VN tìm khoá AI miễn phí; (3) về sau: tổ chức cần đào tạo AI champion",
+   "loai": "Nền tảng",
+   "lop": 1,
+   "mat_tien": "Zalo OA + Zalo Mini App là cửa chính (bản tin, freebie, khoá free, cộng đồng, mở khoá premium bằng QR). Web cungai.vn hiện có giữ làm lớp SEO và kho lưu trữ, cùng một nguồn nội dung.",
+   "mo_ta": "Hub học AI freemium, web + Zalo Mini App, membership",
+   "module": [
+    "Chat bot / Zalo",
+    "CRM / lead",
+    "Nội dung / SEO",
+    "Crawler / dữ liệu",
+    "Sinh nội dung AI",
+    "Khoá học (LMS)",
+    "Thanh toán QR",
+    "Cộng đồng"
+   ],
+   "muc_tieu": "v1: ≥300 học viên cũ vào OA, ≥40% hoạt động tuần; ≥1.000 thành viên mới; ≥5% mua premium/Sakedemy; Linh ≤2 giờ/tuần; sau v1: 2 tổ chức đặt AI champion. 8 job J1–J8, 10 module. Chi tiết: https://claude.ai/artifact/KZqSmrNTxJRdZiEWkQGHWA",
+   "nguon": "LAB075, LAB076, Linh 6/11",
+   "nguong": "5 lớp đầu: ≥30% học viên nhận lời mời, ≥50% mở bản tin, ≥30% dùng ít nhất 1 freebie trong 4 tuần. Đạt thì mời cả 30–40 lớp, rồi mở cho người mới; sau đó ≥5% bấm sang premium",
+   "nhan_nhi": "1.000+ học viên cũ đã tin Linh là tài sản lớn nhất, rẻ hơn kéo người lạ rất nhiều. Họ không cần thêm tin, họ cần mỗi tuần một việc làm thử được ngay cho nghề mình.",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Làm cả 5 bước cùng lúc là phình ra. Chỉ có bước 1 có khách thật đang đau: 100 học viên CLB. Hai bước 3–4 vào thẳng chỗ Gitiho và Unica đã free sẵn (LAB075), nên khoá miễn phí chỉ là vé vào cửa. Premium bán ở đâu? Linh đã chốt chỉ bán trên Sakedemy và linhx.info, nên cungai không có giỏ hàng, chỉ dẫn sang. Bước 5 (AI champion) thực chất là khoá doanh nghiệp, chạy trên Course OS. Hub tin tức ăn công: máy phải chạy 80%, Linh ≤2 giờ/tuần.",
+   "quyet": "",
+   "ten": "cungai.vn · content hub + e-learning cộng đồng freemium",
+   "thu_tu": 3,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi học xong một khoá AI, tôi muốn có một chỗ cập nhật cái mới mỗi tuần, nhận prompt, skill và template dùng được ngay, để không bị tụt lại và không phải tự lọc tin"
+  },
+  "h04": {
+   "ban": [
+    "Miễn phí lấy lead"
+   ],
+   "cach_thu": "Đăng 1 bộ 20 prompt ngân hàng, đo lead",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Không biết bắt đầu từ prompt nào cho việc của mình",
+   "de_xuat": "Không phải unit riêng: là module 3 Kho freebie của cungai. Bộ prompt, skill, template cắt từ Course OS.",
+   "ghi_chu": "6/11 11:02 Linh: domain là cungai.vn. Chuyển kho học liệu từ sakedemy.com/tai-nguyen sang cungai.vn.",
+   "gia_thuyet": "Bộ template/prompt miễn phí kéo lead cho khoá corp",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Gộp vào cungai (h03), module Kho freebie.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "Nhân viên văn phòng, học viên cũ",
+   "loai": "Trang giới thiệu",
+   "lop": 1,
+   "mat_tien": "cungai.vn (kho freebie, module 3 của cungai) + trong Zalo Mini App",
+   "mo_ta": "Template, prompt, học liệu làm mồi lấy lead",
+   "module": [
+    "Nội dung / SEO",
+    "CRM / lead"
+   ],
+   "nguon": "Định hướng LINHX 3.5",
+   "nguong": "≥50 lead có email trong 7 ngày",
+   "nhan_nhi": "Mẫu prompt ai cũng phát. Khách chỉ để lại email nếu mẫu giải đúng việc của họ hôm nay.",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Kho mồi chỉ có giá khi đo được lead; cần LEAD-MAGNET chung mọi BU.",
+   "quyet": "khong",
+   "ten": "Kho học liệu miễn phí",
+   "thu_tu": 4,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi gặp việc lặp lại, tôi muốn mẫu dùng ngay, để đỡ mày mò"
+  },
+  "h05": {
+   "ban": [
+    "Thuê bao",
+    "Chia doanh thu"
+   ],
+   "cach_thu": "Hỏi 30 học viên cũ qua Zalo",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Học xong không có chỗ hỏi tiếp, quên nhanh",
+   "de_xuat": "Gom CLB Agentic, CLB 100 người, CLB AI Edge và nhóm Zalo cungai thành MỘT cộng đồng: CLB Cùng AI, sống trong cungai (Zalo OA + Mini App). Có tầng miễn phí và tầng trả phí.",
+   "dung_chung": "Tầng trả phí của cộng đồng cungai: nhóm Zalo miễn phí → CLB Agentic trên Sakedemy.",
+   "ghi_chu": "Linh 6/11 11:09: chỉ có 1 cộng đồng duy nhất là CLB Cùng AI, gom hết.",
+   "gia_thuyet": "Học viên corp muốn học tiếp ở CLB trả phí",
+   "giai_doan": "Khảo sát",
+   "gop_vao": "Gộp vào cungai (h03), module Cộng đồng.",
+   "kenh": [
+    "Zalo",
+    "Sự kiện"
+   ],
+   "khach": "Học viên corp đã học xong",
+   "loai": "Khoá học",
+   "lop": 1,
+   "mat_tien": "sakedemy.com/clb-agentic",
+   "mo_ta": "Đăng ký, thu phí, cộng đồng học viên học tiếp",
+   "module": [
+    "Khoá học (LMS)",
+    "Thanh toán QR",
+    "CRM / lead"
+   ],
+   "nguon": "Định hướng LINHX 3.2",
+   "nguong": "≥10 người đặt cọc",
+   "nhan_nhi": "Học viên không thiếu nhóm Zalo. Họ bỏ vì không có ai trả lời đúng lúc. Ai trả lời, trong bao lâu?",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Sau 2 khoá chưa đạt; đừng dựng hạ tầng trước khi có 20 học viên trả tiền.",
+   "quyet": "",
+   "ten": "CLB Cùng AI (cộng đồng duy nhất)",
+   "thu_tu": 5,
+   "trang_thai": "Đang chạy tay",
+   "uu_tien": 0,
+   "viec": "Khi áp dụng thật gặp khó, tôi muốn nhóm hỏi đáp có người giỏi, để không bỏ cuộc"
+  },
+  "h06": {
+   "ban": [
+    "Miễn phí lấy lead",
+    "B2B"
+   ],
+   "cach_thu": "Chào 5 nhà tài trợ ngành ngân hàng",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Không biết ngành mình đang dùng AI ra sao, sợ tụt lại",
+   "de_xuat": "Chiến dịch, không phải hệ thống: dùng trang sự kiện ifAgent + CRM chung; nội dung case ngành do Course OS (mảng nghiên cứu nền) soạn một lần dùng cho 6 ngành.",
+   "dung_chung": "Lead chia cho Sakedemy (đào tạo), Unikon/ifAgent (agent), TUVA (radar).",
+   "ghi_chu": "",
+   "gia_thuyet": "Nhà tài trợ trả chi phí sharing theo ngành để có lead",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Dùng khuôn sự kiện của ifAgent.",
+   "kenh": [
+    "Sự kiện",
+    "Web"
+   ],
+   "khach": "Lãnh đạo DN theo ngành",
+   "loai": "Dịch vụ / đặt lịch",
+   "lop": 1,
+   "mat_tien": "linhx.info/sharing (trang sự kiện)",
+   "mo_ta": "Hội thảo theo ngành: đăng ký, lead cho các BU",
+   "module": [
+    "CRM / lead",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "EDU013",
+   "nguong": "≥1 nhà tài trợ ký trước 30/11",
+   "nhan_nhi": "Lãnh đạo không đi nghe chia sẻ chung chung. Có case cùng ngành, có số, họ mới đến.",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Chi phí sự kiện cao; chỉ làm khi có nhà tài trợ.",
+   "quyet": "",
+   "ten": "Industry sharing",
+   "thu_tu": 6,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi lập kế hoạch năm, tôi muốn nghe case cùng ngành, để quyết đầu tư AI"
+  },
+  "h07": {
+   "ban": [
+    "Bán lẻ"
+   ],
+   "cach_thu": "Hai trang K1, K2 trên sakedemy.com 09–22/11",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Con dùng AI làm bài hộ, bố mẹ lo nhưng không biết dạy",
+   "de_xuat": "Hai trang thử khói trên Sakedemy; giáo trình soạn bằng Course OS. Kiểm luật dữ liệu trẻ em trước khi mở form.",
+   "ghi_chu": "",
+   "gia_thuyet": "Phụ huynh trả tiền cho khoá AI đúng cách, không dạy code (H22)",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Sakedemy (mặt tiền), Course OS (soạn), Thanh toán QR chung.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "Phụ huynh có con 13–17",
+   "loai": "Khoá học",
+   "lop": 1,
+   "mat_tien": "sakedemy.com/teen",
+   "mo_ta": "Trang đăng ký thử khói K1, K2 (bán qua Sakedemy)",
+   "module": [
+    "Khoá học (LMS)",
+    "Thanh toán QR",
+    "CRM / lead"
+   ],
+   "nguon": "EDU014, kế hoạch tổng mục 3",
+   "nguong": "≥10 đặt chỗ có cọc",
+   "nhan_nhi": "Phụ huynh trả tiền khi thấy con thay đổi, không phải khi thấy giáo án. Đầu ra con làm được gì sau 4 buổi?",
+   "nhom": "LINHX EDU",
+   "phan_bien": "Phụ huynh mua cần niềm tin; kiểm luật trẻ em trước khi thu dữ liệu.",
+   "quyet": "",
+   "ten": "Lớp teen + digital literacy",
+   "thu_tu": 7,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi thấy con dùng AI, tôi muốn con học dùng đúng cách và an toàn, để yên tâm"
+  },
+  "h08": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "LAB ifAgent (Linh 6/11 11:25, Claude quy hoạch): 5 tool agentic làm mồi FDE. Luật chung: chạy trên việc/dữ liệu của chính khách, ≤10 phút, ra kết quả 1 trang, chỉ rõ chỗ hở mà chỉ FDE lấp được; bản rút gọn free, bản đủ để lại Zalo/email, bản sâu có phí; không nhận dữ liệu thật lên server. T1 KHÁM: agent phỏng vấn 10 phút qua chat/Zalo (Mom Test, m1–m3) → 3 việc nên agent hoá + giờ tiết kiệm. T2 DỮ LIỆU SẴN SÀNG AI: thả file Excel, chấm trong trình duyệt (linhx-du-lieu LAB033) → điểm + 5 lỗi. T3 LÀM THỬ 1 VIỆC: dán 1 việc lặp (email, hồ sơ, báo cáo mẫu đã ẩn danh), agent làm ngay trước mắt + tính giờ/tháng; chạy thật trên hệ thống = FDE. T4 AI NÓI GÌ VỀ BẠN: brand check thời đại agent (app brand-health ifAgent + LAB036), mồi cho giám đốc marketing. T5 PHÒNG THỬ AGENT THEO NGÀNH: chat với agent mẫu dựng từ case thật (bán lẻ vàng BTMH, dược, nghỉ dưỡng, agency), dựng bằng Generator h21. Thứ tự: T1 + T2 (đã có nền) → T4 (app có sẵn, vá nhỏ) → T3 (thuyết phục nhất, tốn token, cần trần chi phí/lead) → T5 sau khi có case được phép nêu tên. Đo mỗi tool: % làm xong, % để lại liên hệ (≥20%), % đặt lịch 30 phút chuyên gia (≥5%); tool nào 4 tuần không ra lịch hẹn thì bỏ.",
+   "cap": "workflow",
+   "cap_goi_y": "workflow",
+   "cap_nhat_boi": "Claude 6/11 (thread Agent Force), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Chủ DN nghe AI nhiều, không biết bắt đầu từ việc gì, sợ tốn tiền và mất mặt khi thất bại (5 case cũ VOV GT, Báo Công Thương, VTV3, Tasco, Tri Ân đều chết ở khâu này)",
+   "de_bai": "Đề bài tham vọng tới 30/6/2027: https://claude.ai/artifact/CobvAsZHQCW7RxRxfTCRgv",
+   "de_xuat": "Mỗi bước có một công cụ freemium làm mồi lead (cần LAB): 1 Khám = Quick Scan 12 câu ra phiếu 1 trang (free, m1 + phiếu AIX); 2 Tư vấn = top 3 cơ hội (free 1 trang; chẩn đoán 1 phòng ban có phí); 3 Đào tạo = bài e-learning cungai free → khoá corp Course OS; 4 Chiến lược = bản đồ agent + 90 ngày (m4–m5, có phí); 5 Triển khai = pilot 2 tuần, hợp đồng 40/40/20, demo bằng Generator h21; 6 Dọn dữ liệu = chấm nhanh độ sạch 1 file Excel (free, plugin linhx-du-lieu LAB033 đã có v0.1) → dọn có phí; 7 Coaching = CLB Cùng AI + retainer, đo lại D+30 (m7). Freebie: bộ 4 case study 1 trang (vấn đề → việc làm → số trước/sau), tải bằng email/Zalo → CRM h23. Lead chuyển chéo: học viên Course OS ↔ Agent Force.",
+   "dung_chung": "Một lõi chẩn đoán, nhiều mặt tiền: ifAgent (FDE xuất hoá đơn theo K5), Unikon (ký chính khi khách đòi NCC ≥3 năm), Bespoke, TUVA (NGO). Lớp corp (h01) là phễu; báo cáo dùng h22.",
+   "ghi_chu": "BỘ PHẬN unit (Linh 6/11 11:23 + Claude bổ sung). Linh nêu: (1) Own media OS lấy lead = ifagent.net, dùng chung h23 + h25; (2) workflow/server mỏng BespokeAI = gộp h10 Agent Shell (PROTO 02 server mỏng); (3) content hub ifAgent chiếm từ khoá agentic, dùng chung máy nội dung với cungai, khác người đọc (chủ DN, giám đốc khối), đo hiển thị trên Google + câu trả lời AI bằng LAB036/LAB086; (4) deck credential + dịch vụ + gói, lấy LAB027 (nang-luc.json), credential tự cập nhật sau mỗi dự án như Course OS; (5) tool đo: 2 loại, đo cho khách (trước/sau, giờ tiết kiệm, m7) và đo phễu của mình (lead → gọi → pilot → ký). Claude thêm: (6) bảng giá 3 gói + hợp đồng mẫu (pilot 40/40/20, NDA, thỏa thuận xử lý dữ liệu theo Luật BVDLCN; thầu phụ Unikon↔ifAgent); (7) playbook 7 bước + checklist bàn giao (từ AIX_FULL_PLAYBOOK); (8) quy trình xin case: điều khoản được nêu tên trong mọi hợp đồng + phiếu xin số sau D+30; (9) phân vai + sức chứa: ai làm bước nào, tối đa mấy khách song song; (10) kịch bản gọi lại lead trong 24 giờ. Thứ tự vì đích ≥2 pilot trước 31/12: trước hết deck + gói giá + hợp đồng + case; sau đó site + 2 mồi (LAB); content hub và server BespokeAI sau khi có pilot. Nhóm chia 2: Bán ra (h08, h48, h10) / Đội máy của Linh (h11–h13). Còn hỏi: giá pilot; case đã xin phép chưa.",
+   "gia_thuyet": "Học viên corp vừa học xong + 1 trang 'việc nên làm thử' → chủ DN đồng ý pilot trả phí trong 2 tuần",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "h09 Phễu 20 khách → CRM chung h23. Phiếu chẩn đoán AIX dùng chung với Course OS. Báo cáo dùng Report engine h22. Demo dùng Generator h21.",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Chủ DN, giám đốc khối",
+   "loai": "B2B / dự án",
+   "lop": 1,
+   "mat_tien": "Linh 6/11 11:24: 'ifAgent' = OWN CHANNEL OS, không chỉ website. Gồm: site ifagent.net (showcase + công cụ miễn phí + form), content hub agentic, LinkedIn/Facebook page, YouTube/video ngắn, Zalo OA, bản tin email, sự kiện/webinar; tất cả đổ lead về một CRM + đo phễu. Đây chính là Hệ kênh lấy lead h23 (channel OS dùng chung mọi BU): ifAgent là BU chạy thật đầu tiên, BU khác dùng lại. Mục tiêu duy nhất: showcase + lead. event xuống event.ifagent.net; linhx.info là tiếng nói Linh, dẫn sang ifAgent.",
+   "mo_ta": "Agent Force của ifAgent: chu trình 7 bước theo AIX: (1) Khám (2) Tư vấn (3) Đào tạo (4) Đề xuất chiến lược (5) Triển khai cùng (6) Dọn sạch dữ liệu (7) Coaching tiếp. Hai hình thái: ifAgent = cùng làm với DN (FDE); BespokeAI = chìa khoá trao tay (làm hết rồi giao). Chuyên gia: Linh, chị Quỳnh Hương, Châu Đỗ, Thanh Long, thêm anh Vũ Anh Dũng khi cần. Case: Bảo Tín Mạnh Hải, AstraZeneca, Sun Group (sắp), 1 agency SG.",
+   "module": [
+    "CRM / lead",
+    "Báo cáo tự động",
+    "Sinh nội dung AI"
+   ],
+   "muc_tieu": "CUỐI ĐƯỜNG (Claude đề xuất 6/11, chờ Linh đặt số): Agent Force không dừng ở tư vấn theo dự án, mà thành 4 thứ: (1) tiền lặp lại: khách thuê agent vận hành + bảo trì + coaching theo tháng, không chỉ trả một lần; (2) thư viện agent theo ngành: mỗi pilot đóng gói thành 1 agent mẫu, khách thứ hai cùng ngành làm nhanh hơn và rẻ hơn (cũng là tool T5); (3) đội FDE chạy không cần Linh: playbook + khoá đào tạo FDE (Course OS) cho 6 trợ giảng/chuyên gia, đối tác bán lại (Unikon, AIX); đội máy h11–h13 làm phần lớn việc dựng; (4) vị thế: kho case có số, ifAgent đứng đầu từ khoá agentic DN ở VN, lead tự tới. Mốc gợi ý: 31/12/2026 ≥2 pilot ký; giữa 2027 ~10 khách thuê tháng, ≥50% doanh thu lặp lại, giờ Linh ≤20% việc triển khai, ≥3 agent mẫu theo ngành.",
+   "nguon": "PROTO\\05_AGENT_FORCE_OS",
+   "nguong": "≥2 pilot ký trước 31/12; site: ≥30 lead DN/tháng sau 4 tuần; ≥20% người làm Quick Scan để lại liên hệ",
+   "nhan_nhi": "KILLING FEATURE (Linh chốt 6/11 11:30; Agent Shell là vũ khí bên trong, không đem ra bán): 'Sau 14 ngày, một agent chạy thật trên việc thật, ngay trong Zalo nhân viên đang dùng, và nhân viên dùng thật. Không đạt chỉ số đã thống nhất thì không trả phần còn lại.' Đánh đúng 3 nỗi sợ của chủ DN: tốn tiền, lâu, nhân viên không dùng. Khó chép vì ghép 3 thứ đối thủ chỉ có 1: Linh đào tạo top (nhân viên chịu dùng), đội máy agy (dựng nhanh, rẻ), dọn dữ liệu (agent không chết vì dữ liệu bẩn). Hãng tư vấn giao báo cáo, hãng phần mềm giao công cụ không ai dùng, người dạy AI không dựng. Rào: chỉ cam kết cho 1 việc, chỉ số đo trước khi ký, khách phải giao dữ liệu đúng hạn.",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Case AstraZeneca và Sun Group phải xin phép nêu tên và số trước khi đăng; chưa xin được thì đăng ẩn danh ('tập đoàn dược đa quốc gia'). Bước 6 Dọn dữ liệu là mồi mạnh nhất vì khách tự thử được trên file của mình và thấy ngay vấn đề, nhưng tuyệt đối không cho tải dữ liệu thật lên server khi chưa có cam kết bảo mật: chạy trên trình duyệt hoặc mẫu. 7 công cụ một lúc là phình: làm 2 mồi trước (Khám + Dọn dữ liệu) và bộ case study.",
+   "quyet": "ngay",
+   "ten": "Agent Force OS",
+   "thu_tu": 8,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 1,
+   "viec": "Khi muốn đưa AI vào công ty, tôi muốn biết chỗ nào lợi nhất và làm thử nhỏ, để không phí tiền"
+  },
+  "h09": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Lead rải nhiều nơi, quên chăm",
+   "de_xuat": "Là dữ liệu trong CRM chung, không phải hệ thống riêng.",
+   "ghi_chu": "Linh CHỐT 6/11 11:53: gộp vào CRM chung h23, không dựng riêng.",
+   "gop_vao": "Gộp vào CRM / lead.",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh, người bán",
+   "loai": "B2B / dự án",
+   "lop": 1,
+   "mat_tien": "Thêm khách → chào → demo → đề xuất → ký",
+   "mo_ta": "Theo dõi chào, demo, đề xuất, ký pilot",
+   "module": [
+    "CRM / lead"
+   ],
+   "nguon": "C BOARD tab Bàn việc",
+   "nhan_nhi": "Đây là việc của Linh, không phải của khách. Khách chỉ thấy: có người gọi lại nhanh không.",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Một bảng CRM chung cho mọi BU dễ lẫn quyền; cần phân quyền theo BU.",
+   "quyet": "khong",
+   "ten": "Phễu 20 khách FDE",
+   "thu_tu": 9,
+   "trang_thai": "Đang chạy tay",
+   "uu_tien": 0,
+   "viec": "Khi có khách quan tâm, tôi muốn biết ai đang ở bước nào, để không sót khách"
+  },
+  "h10": {
+   "ban": [
+    "B2B",
+    "Thuê bao"
+   ],
+   "cach_thu": "Demo cho 3 khách đang có (VCB, BTMH)",
+   "cap": "solution",
+   "cap_goi_y": "solution",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Việc giấy tờ lặp lại chiếm nửa ngày",
+   "de_xuat": "Đây là sản phẩm bán ra cho doanh nghiệp; để sau, khi có 2 pilot.",
+   "dung_chung": "Cấu hình cho ngân hàng (Talentpool), NGO (TUVA), toà soạn (CafeBiz).",
+   "ghi_chu": "Linh CHỐT 6/11 11:53: gộp vào h48 BespokeAI, là vũ khí bên trong, không bán riêng.",
+   "gia_thuyet": "DN thuê trợ lý nhận lệnh theo tháng",
+   "giai_doan": "Khảo sát",
+   "gop_vao": "Gộp vào h48 BespokeAI (Linh hỏi 6/11 11:26). BespokeAI = sản phẩm bán (chìa khoá trao tay); Agent Shell = máy bên trong (server mỏng + trợ lý nhận lệnh qua Zalo + bản đồ quy trình). ifAgent bước 5 Triển khai cùng cũng dùng máy này.",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web",
+    "Zalo",
+    "Messenger"
+   ],
+   "khach": "Nhân viên DN, RM ngân hàng",
+   "loai": "Nền tảng",
+   "lop": 1,
+   "mat_tien": "trang sản phẩm trên linhx.info hoặc ifagent.net",
+   "mo_ta": "Trợ lý nhận lệnh + server mỏng + bản đồ quy trình, giao cho khách",
+   "module": [
+    "Tài khoản khách",
+    "Chat bot / Zalo",
+    "Thợ agy / hàng việc"
+   ],
+   "nguon": "PROTO\\02_SERVER_MONG, M27",
+   "nguong": "≥1 khách trả phí thử",
+   "nhan_nhi": "Nhân viên không muốn học công cụ mới. Nếu không ở ngay trong Zalo họ đang dùng thì không ai mở.",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Chồng lấn với Frappe MCP và agent mặt tiền (M3); không tự viết lõi agent.",
+   "quyet": "",
+   "ten": "Agent Shell",
+   "thu_tu": 10,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có việc lặp lại, tôi muốn giao cho trợ lý qua Zalo, để tập trung vào khách"
+  },
+  "h11": {
+   "ban": [],
+   "cap": "solution",
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Một người không thể làm hết việc dev",
+   "de_xuat": "Lõi ENGINE dưới tên linhx_worker: Frappe giữ phiếu, máy kéo việc 30 giây một lần, cổng kiểm ngoài tay thợ, Claude chấm. Đây là lý do Agent Force dám hứa 14 ngày: mỗi pilot là một loạt phiếu cho thợ.",
+   "dung_chung": "Linh 6/11 11:38: clone cho công ty/dự án khác bằng cách đăng ký thợ và máy; khách muốn on-premise. Claude: được, 2 cách. (A) Thuê trên server mình: mỗi công ty một site Frappe riêng (multi-site, dữ liệu tách), máy của họ đăng ký bằng mã máy. (B) On-premise: cài bench + app linhx_worker lên server của khách, máy của họ đăng ký vào đó. Kiểu máy kéo việc không mở cổng vào nên hợp ngân hàng, dược. Điều kiện: khách tự có tài khoản AI (không dùng chung gói Ultra của Linh); thợ phải cắm được nhiều loại (agy, Claude Code, model chạy nội bộ khi khách cấm ra internet); bộ cài on-prem chỉ gồm app MIT, không kèm Frappe LMS/Helpdesk (AGPL); cập nhật lõi bằng bản ghim phiên bản. Đây chính là sản phẩm 'xưởng agent tại chỗ' của BespokeAI (h48) và bước Triển khai cùng của ifAgent (h08).",
+   "ghi_chu": "Linh CHỐT 6/11 11:39: một xưởng chung (Frappe quản trị mỏng + máy agy kéo việc), clone được cho công ty khác theo 2 cách thuê hoặc on-premise; bán ra dưới tên 'xưởng agent tại chỗ' của BespokeAI.",
+   "gop_vao": "Lõi điều hành (site ops).",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh, Claude",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Tạo phiếu → thợ nhận → cổng kiểm → Claude chấm → gộp",
+   "mo_ta": "Giao phiếu, canh, cổng kiểm, nhiều thợ chạy song song",
+   "module": [
+    "Thợ agy / hàng việc"
+   ],
+   "nguon": "chiemtinhso, mayquet (dieu-phoi)",
+   "nguong": "Lỗi lọt tới khách = 0 mỗi pilot; ≥80% phiếu đạt cổng kiểm lần đầu; ≥4 thợ chạy song song",
+   "nhan_nhi": "Khách không thấy thợ agy. Khách chỉ thấy lỗi lọt ra. Đo bằng lỗi khách gặp, không bằng số phiếu đạt.",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Việc mới đi qua linhx_worker ngay; CTS và mayquet giữ script cũ tới khi linhx_worker chạy ổn 2 tuần, không chuyển vội.",
+   "quyet": "ngay",
+   "ten": "Xưởng thợ agy",
+   "thu_tu": 11,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 1,
+   "viec": "Khi có việc code, tôi muốn giao cho thợ và có cổng kiểm, để việc chạy cả đêm mà không hỏng"
+  },
+  "h12": {
+   "ban": [],
+   "cap": "loi",
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Quá nhiều thứ, không biết việc nào đang chờ mình",
+   "de_xuat": "Lõi điều hành (site ops), một màn hình trên điện thoại, 3 câu: việc gì chờ Linh, tiền về tuần này, thợ đang chạy gì. Gộp OPC Live vào đây, không dựng màn thứ hai. Mỗi BU một trang con cùng 3 câu.",
+   "dung_chung": "Mỗi BU một trang điều hành con, cùng 3 câu hỏi.",
+   "ghi_chu": "Linh CHỐT 6/11 11:53.",
+   "gop_vao": "Lõi điều hành (site ops).",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Mở bảng → xem 3 việc chờ Linh → duyệt",
+   "mo_ta": "C-suite ảo, việc chờ Linh, dòng tiền, OPC Live",
+   "module": [
+    "Báo cáo tự động",
+    "Thợ agy / hàng việc"
+   ],
+   "nguon": "PLAN\\00_SYSTEM, OPC-LIVE",
+   "nguong": "Linh mở ≥5 sáng/tuần, quyết xong việc chờ ≤10 phút",
+   "nhan_nhi": "Người dùng duy nhất là Linh. Nếu Linh không mở mỗi sáng thì bảng này vô nghĩa.",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Bản dữ liệu giả của bàn này là case sống để bán Agent Force ('tôi tự chạy công ty bằng agent'), nhưng không bao giờ demo bằng số thật của các BU.",
+   "quyet": "ngay",
+   "ten": "Bàn điều hành C-board",
+   "thu_tu": 12,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 1,
+   "viec": "Khi mở điện thoại, tôi muốn thấy ngay 3 việc chờ tôi, để quyết trong 5 phút"
+  },
+  "h13": {
+   "ban": [],
+   "cap": "workflow",
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Mỗi người làm một kiểu, chất lượng lệch",
+   "de_xuat": "Skill vẫn sống trong repo và máy. ENGINE chỉ giữ danh mục skill (tên, phiên bản, test tự kiểm) để phiếu thợ gọi đúng skill. Skill dùng trong pilot là nền của agent mẫu theo ngành và của playbook FDE.",
+   "ghi_chu": "Linh CHỐT 6/11 11:53.",
+   "gop_vao": "Không.",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Claude, agy, nhân viên",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Chọn skill → chạy → ghi bài học",
+   "mo_ta": "Bộ skill linhx, luật chất lượng, giao việc 4D",
+   "module": [],
+   "nguon": "SKILLS, LAB105, LAB106",
+   "nguong": "100% skill trong danh mục có test tự kiểm; ≥5 skill dùng lại ở ≥2 BU",
+   "nhom": "LINHX Agent Force",
+   "phan_bien": "Không dựng trình sửa skill trên web. Skill không có test tự kiểm thì không vào danh mục.",
+   "quyet": "ngay",
+   "ten": "Thư viện skill + quy chuẩn 4D",
+   "thu_tu": 13,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 2,
+   "viec": "Khi làm việc lặp, tôi muốn có skill chuẩn, để ra đúng chuẩn Linh"
+  },
+  "h14": {
+   "ban": [
+    "Miễn phí lấy lead"
+   ],
+   "cach_thu": "1 phiếu agy ≤40 phút: sửa trang đầu thành 3 cửa + nối form vào h23. Chữ trên trang lấy từ hồ sơ thương hiệu LAB108 R1.",
+   "cap_goi_y": "rieng",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Không có một chỗ xem Linh làm gì, mời thế nào",
+   "de_xuat": "Giữ site tĩnh Astro, một định vị (Linh chốt 23/10): AI ứng dụng cho doanh nghiệp Việt Nam. Trang đầu chỉ 3 cửa theo việc người mời: Mời dạy corp → Course OS (h01); Mời nói, báo chí → Sổ quan hệ (h19); Đưa agent vào công ty → ifagent.net (h08). Form chung đổ về CRM của hệ kênh lead (h23), nguồn ghi 'linhx.info'. Lê Bích, chiêm tinh, triết học không lên trang này, chỉ một dòng 'Sách đã viết'.",
+   "ghi_chu": "Claude 6/11 12:0x: đề xuất ưu tiên 2, làm ngay sau khi h23 có CRM.",
+   "gop_vao": "Site tĩnh LINHX-WEB (h25) + form CRM chung (h23).",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Đối tác, khách, báo chí tìm Linh",
+   "loai": "Trang giới thiệu",
+   "lop": 1,
+   "mat_tien": "linhx.info",
+   "mo_ta": "Trang cá nhân Linh",
+   "module": [
+    "Nội dung / SEO",
+    "CRM / lead"
+   ],
+   "nguon": "LINHX-WEB :4310",
+   "nguong": "Mỗi tháng ≥3 lời mời dạy/nói đến từ form; người mời hiểu Linh giải việc gì sau 10 giây (thử 5 người).",
+   "nhan_nhi": "Người mời Linh cần biết Linh giải được vấn đề gì của họ, không cần biết Linh làm bao nhiêu dự án.",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Công Báo: thêm tính năng cho linhx.info không ra thêm lời mời; chỗ nghẽn là định vị đang 9 biến thể chức danh (Brand Truth 39,7/100). Sửa chữ và bằng chứng trước, kỹ thuật chỉ là một form.",
+   "quyet": "",
+   "ten": "linhx.info",
+   "thu_tu": 14,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi muốn mời Linh dạy/nói, tôi muốn xem hồ sơ và liên hệ nhanh, để chốt lịch"
+  },
+  "h15": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "Bắt đầu với 6 trợ giảng hiện có (Linh 11:09), thử 3 người × 4 tuần, mỗi người 3 bài/tuần; mục tiêu 20–30 cây viết về sau",
+   "cap": "solution",
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Giảng viên giỏi nghề nhưng không có thời gian viết, kênh cá nhân im lìm nên ít được mời dạy; viết bằng AI thì ra văn máy, mất uy tín",
+   "de_xuat": "Linh 6/11 12:13: Personal Brand = 5 việc của Linh (social presence, show/podcast h63, sách tới hết 2027 h61, nghiên cứu h60, vault riêng h18); Own Media + tool phục vụ 5 việc đó; tốt thì bán ra. Claude đề xuất 3 nấc trên CÙNG một máy (vault → viết → chấm → đăng): Nấc 1 Linh là khách số 0 (đến khi 8 tập show + 12 tuần đăng đều). Nấc 2 Ambassador: 3 trợ giảng thật, rồi gói 'giám đốc sáng tạo một người' (LAB108 R5) bán cho chuyên gia/CEO. Nấc 3 tác giả/influencer ảo (LAB040, LAB066): chỉ mở khi nấc 2 có người trả tiền, gắn nhãn người ảo (Luật AI 134/2025), không dùng tên/giọng Linh, không trộn với kênh B2B.",
+   "dung_chung": "Nuôi kênh own media cho cả 5 BU; Unikon bán lại cho brand.",
+   "ghi_chu": "Linh 6/11 12:18 CHỐT tên Expert OS (linhx_expert). Đề bài: https://claude.ai/artifact/3jwytyn5Q7NffotbWFJMKv. Quy hoạch, chưa làm.",
+   "gia_thuyet": "Một hệ own media nuôi được kênh 5 BU",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Gộp h16 (module viết) và h17 (đăng, đo → h23). Nguồn: Course OS, LAB049, LAB040, LAB068, LAB083.",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web",
+    "Zalo",
+    "Messenger",
+    "Live"
+   ],
+   "khach": "Giảng viên, trainer trong CLB (20–30 người); sau đó Linh, BU, nhân viên",
+   "loai": "Nền tảng",
+   "lop": 1,
+   "mat_tien": "trang dịch vụ Own Media trên urah.vn",
+   "mo_ta": "Nuôi kênh, bút danh, nhân vật ảo, clone nhân viên; từ 6/11: đăng thay 20–30 giảng viên, trainer của CLB",
+   "module": [
+    "Nhân vật ảo",
+    "Đăng đa kênh",
+    "Sinh nội dung AI",
+    "Lịch nội dung"
+   ],
+   "nguon": "PROTO\\04_AMBASSADOR_OS, LAB040",
+   "nguong": "Linh: ≤10 phút/tuần, 3 bài/tuần đều 4 tuần, Hương Trà duyệt ≤15 phút/bài. Trợ giảng: như cũ (≤15 phút/tuần, ≥80% bài duyệt sửa nhỏ).",
+   "nhan_nhi": "Khán giả không theo dõi một kênh vì nó đăng đều. Họ theo vì nó nói đúng điều họ đang lo.",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Cao Minh: người thật có uy tín thật là thứ khách mời dạy/FDE tin; người ảo không mang lại lời mời. Công Báo: mở cả 3 nấc cùng lúc sẽ lặp lại lỗi 4 định vị 23/10. LAB067 đã kết luận người ảo tự nuôi = KHÔNG, chỉ làm phễu = CÓ THỂ. Facebook cá nhân không API: giữ 'Chép và mở Facebook'.",
+   "quyet": "",
+   "ten": "Own Media OS · máy nuôi tiếng nói (Linh → Ambassador → tác giả ảo)",
+   "thu_tu": 15,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có một ý hay sau buổi dạy, tôi muốn chỉ nói 3 phút qua Zalo là có bài đúng giọng mình để bấm đăng, để kênh mình sống và được mời dạy nhiều hơn"
+  },
+  "h16": {
+   "ban": [],
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Viết bằng AI ra văn máy, bị chê",
+   "de_xuat": "Workflow cho Linh dùng đúng quy trình gốc: LinhX Write 9 bước (LAB025, lệnh new-article) nạp tư liệu từ vault thay vì tìm lại từ đầu, cộng luồng Vân Anh (LAB049: Linh gạch ý ≥ nửa bài, máy chỉ làm mượt) và biên tập 6 lượt (linhx-bien-tap). Lệnh: 'viết: <ý gốc>'. Phần máy là module lõi linhx_content, Own Media (h15) và các BU dùng lại.",
+   "dung_chung": "Mọi BU viết bài SEO/GEO; Sakedemy bán dịch vụ viết thuê bằng chính máy này.",
+   "ghi_chu": "",
+   "gop_vao": "Module lõi linhx_content; workflow chạy ở h15.",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Người viết trong các BU",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Nhập đề → máy viết → người biên → duyệt",
+   "mo_ta": "Bước 2 của Xưởng tri thức Linh: từ ý gốc + nugget trong vault ra bài đăng báo được; cũng là module viết dùng chung",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "PROTO\\01, LAB025, LAB049",
+   "nhan_nhi": "Người đọc nhận ra văn máy sau 2 câu. Máy viết nhanh mà người đọc bỏ đi thì vô ích.",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Bài học LAB049/LAB080: máy viết từ đầu ra văn máy. Luật module: không có ý gốc của người thì không viết; người duyệt là bắt buộc, không tắt được.",
+   "quyet": "",
+   "ten": "Viết bài chỉn chu từ vault",
+   "thu_tu": 16,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi cần bài, tôi muốn bản nháp đúng giọng người, để chỉ phải biên ít"
+  },
+  "h17": {
+   "ban": [],
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Đăng tay từng nền tảng mất thời gian",
+   "de_xuat": "Gộp vào Own Channel OS (h23): lịch kênh, đăng qua Postiz, đo bằng link riêng mỗi bài đều nằm ở h23, dùng chung mọi BU. Không giữ dòng riêng.",
+   "dung_chung": "Lịch kênh chung cho 5 BU, mỗi BU một thương hiệu.",
+   "ghi_chu": "",
+   "gop_vao": "h23 Hệ kênh lấy lead (Own Channel OS).",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web",
+    "Zalo",
+    "Messenger"
+   ],
+   "khach": "Người chạy kênh",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Lên lịch → duyệt bài → đăng → đo",
+   "mo_ta": "Lịch kênh, đăng đa kênh qua Postiz, đo",
+   "module": [
+    "Đăng đa kênh",
+    "Lịch nội dung"
+   ],
+   "nguon": "PROTO\\07_CHANNEL_OS, LAB068",
+   "nhan_nhi": "Đăng mọi kênh cùng một bài là cách nhanh nhất để không ai đọc. Mỗi kênh một khán giả.",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Trùng gần hết với h23 sau khi chốt ifAgent = Own Channel OS. Giữ hai nơi lên lịch là hai sự thật.",
+   "quyet": "",
+   "ten": "Channel OS",
+   "thu_tu": 17,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có bài, tôi muốn đăng một lần ra mọi kênh, để có thời gian làm nội dung"
+  },
+  "h18": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Ý tưởng và tài liệu rải khắp nơi, không tìm lại được",
+   "de_xuat": "Ghép 2 thứ đã có: máy quét repo mayquet (lấy bài 0 token, máy cty) + quy trình digest Content Vault (_DIGEST: thẻ DG → nugget NG bằng lời Linh → TIL). Gộp 2 bản vault (D:\\@WF\\TOOL\\CONTENT_VAULT 49 entry, D:\\LINHX\\IDEA\\CONTENT_VAULT 19 entry) thành một. Mỗi nugget gắn thẻ chủ đề theo đuổi (h60). Lệnh: 'digest: <link hoặc chủ đề>'. Vault vẫn ở máy cty, engine chỉ giữ hàng việc cho thợ agy.",
+   "ghi_chu": "",
+   "gop_vao": "mayquet, Content Vault PROTO_34, LAB070, LAB094",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Thả ý → gắn thẻ → tìm lại",
+   "mo_ta": "Bước 1 của Xưởng tri thức Linh: máy quét lấy bài theo chủ đề (Medium, báo, Zhihu, báo cáo) → digest thành nugget bằng lời Linh → nạp vault",
+   "module": [
+    "Crawler / dữ liệu"
+   ],
+   "nguon": "mayquet, IDEA\\CONTENT_VAULT, LAB070",
+   "nguong": "≥70% nugget Linh đọc thấy 'đúng ý tôi'; mỗi bài viết dùng ≥3 nugget từ vault",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Công Báo: digest 100 bài tốn ~511k token mà Linh không đọc lại thì vô ích. Chỉ digest bài thuộc 4 chủ đề đang theo đuổi; nugget nào 60 ngày không được bài nào dùng thì xếp kho lạnh.",
+   "quyet": "",
+   "ten": "Quét + digest quan điểm vào vault (giọng Linh)",
+   "thu_tu": 18,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi đọc thấy một quan điểm hay, tôi muốn nó thành ghi chú bằng giọng tôi trong vault, để lúc viết có sẵn ý của chính mình"
+  },
+  "h19": {
+   "ban": [],
+   "cach_thu": "Nhập tay 20–30 đầu mối báo (Dân Trí, CafeBiz, VOV…) vào CRM, 1 phiếu agy cho loại đầu mối + nhắc 90 ngày.",
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Quên ai đã từng làm cùng, nhuận bút chưa thu",
+   "de_xuat": "Mở rộng thành sổ social capital của Linh, là một loại đầu mối trong CRM chung (h23), không dựng bảng riêng. Mỗi đầu mối: ai, từng hợp tác gì, lần cuối liên lạc. Máy nhắc Hương Trà khi đầu mối quan trọng quá 90 ngày chưa chạm; lời mời từ linhx.info tự vào đây. Nhuận bút, tiền sự kiện ghi sang Sổ tài chính (h26).",
+   "ghi_chu": "",
+   "gop_vao": "Gộp CRM / lead.",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh, Hương Trà",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Thêm đầu mối → ghi lần hợp tác",
+   "mo_ta": "Bút danh trên báo, VOV, lịch nói, nhuận bút",
+   "module": [
+    "CRM / lead"
+   ],
+   "nguon": "Định hướng LINHX mục 2",
+   "nguong": "Hương Trà cập nhật ≥1 lần/tuần; ≥20 đầu mối báo chí/sự kiện có lịch sử sau 4 tuần.",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Social capital là 1 trong 4 trụ của LINHX (định hướng 23/10) mà chưa có chỗ nào giữ. Người dùng thật là Hương Trà, không phải Linh: nếu Hương Trà không mở mỗi tuần thì vô ích.",
+   "quyet": "",
+   "ten": "Sổ quan hệ (báo chí, sự kiện, đối tác)",
+   "thu_tu": 19,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi có lời mời báo/sự kiện, tôi muốn biết lịch sử với đầu mối, để trả lời đúng"
+  },
+  "h20": {
+   "ban": [],
+   "cap_goi_y": "loi",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Chuyển khoản tay phải chờ xác nhận, kế toán đối soát mệt",
+   "de_xuat": "Lên ngay thành app linhx_vn: mọi site bán đều cần.",
+   "dung_chung": "Mỗi pháp nhân một tài khoản SePay, dùng chung một module.",
+   "ghi_chu": "",
+   "gop_vao": "Module Thanh toán QR.",
+   "kenh": [],
+   "khach": "Khách mua mọi site + kế toán",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Tạo đơn → hiện QR → SePay báo → giao hàng",
+   "mo_ta": "SePay, VietQR, đơn, hoá đơn cho mọi bên",
+   "module": [
+    "Thanh toán QR"
+   ],
+   "nguon": "LAB060, chiemtinhso",
+   "nhan_nhi": "Khách chỉ quan tâm: quét xong có hàng ngay không. Một đơn trả tiền không ra hàng (CTS 4/11) giết niềm tin hơn mọi tính năng.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "Mỗi BU một pháp nhân, một tài khoản SePay; module phải nhiều tài khoản.",
+   "quyet": "",
+   "ten": "Kit thu tiền QR + hoá đơn",
+   "thu_tu": 20,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi trả tiền, tôi muốn quét QR là xong và nhận hàng ngay, để khỏi chờ"
+  },
+  "h21": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Làm demo cho khách mất nhiều ngày, mất khách",
+   "de_xuat": "Thành khuôn tạo site demo từ brief trên engine.",
+   "dung_chung": "Unikon làm proposal, ifAgent làm demo sự kiện, URAH làm site khách.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp với Campaign generator Unikon.",
+   "kenh": [],
+   "khach": "Sale BU",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Dán brief → chọn khuôn → sinh demo → gửi khách",
+   "mo_ta": "Brief → demo tương tác nhanh",
+   "module": [
+    "Sinh nội dung AI",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "PROTO\\09_GENERATOR",
+   "nhan_nhi": "Khách không cần demo nhanh. Họ cần demo giống vấn đề của họ. Demo chung chung nhanh vẫn thua.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "Đừng sinh code mỗi lần; sinh cấu hình trên khuôn có sẵn.",
+   "quyet": "",
+   "ten": "Generator",
+   "thu_tu": 21,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi khách hỏi, tôi muốn có demo trong vài giờ, để chốt khi khách còn nóng"
+  },
+  "h22": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Báo cáo làm tay lâu và đắt",
+   "de_xuat": "Module Báo cáo tự động dùng chung.",
+   "dung_chung": "TUVA báo cáo NGO, Listening báo cáo ngành, Agent Force báo cáo chẩn đoán.",
+   "ghi_chu": "",
+   "gop_vao": "Module Báo cáo tự động.",
+   "kenh": [],
+   "khach": "Khách mua báo cáo, NGO, brand",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Chọn mẫu → nạp dữ liệu → xuất PDF",
+   "mo_ta": "Báo cáo PDF tự động theo mẫu",
+   "module": [
+    "Báo cáo tự động"
+   ],
+   "nguon": "LAB046, report-core",
+   "nhan_nhi": "Khách đọc báo cáo để quyết một việc. Báo cáo không nói phải làm gì thì đẹp mấy cũng xếp xó.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "CTS đang chạy FastAPI; tách lõi báo cáo khỏi chiêm tinh trước.",
+   "quyet": "",
+   "ten": "Report engine",
+   "thu_tu": 22,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi cần báo cáo, tôi muốn nhận bản đẹp đúng số, để dùng ngay"
+  },
+  "h23": {
+   "ban": [],
+   "cap_goi_y": "loi",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Lead về rồi nguội vì không ai nhận",
+   "de_xuat": "Đây là CRM + mồi lead chung, làm ngay sau Thanh toán.",
+   "dung_chung": "Một phễu lead cho mọi BU, gắn nhãn BU, chuyển lead chéo (ví dụ TUVA ↔ Listening).",
+   "ghi_chu": "6/11: đây là Own Channel OS dùng chung (site, content hub, mạng xã hội, Zalo OA, bản tin, sự kiện → một CRM + đo phễu). BU chạy thật đầu tiên là ifAgent (h08), Linh 11:24: nói 'ifAgent' là hiểu own channel OS. BU khác (TUVA, Unikon, Saké, cungai) cắm vào sau.\nLinh 6/11 12:44: mở rộng thành BU OS cho mọi BU B2B, 13 việc: giới thiệu, SEO/GEO, chiếm từ mới (vd ifAgent Event chiếm 'event technology'), cập nhật hoạt động, social, freebie, quét lead; vận hành: quản lý lead, hồ sơ năng lực/credential, quét nhu cầu + đề bài, viết proposal, tìm idea cho brief, Agent Shell vận hành BU. Mỗi BU = một hồ sơ cấu hình. OPC OS = bản B2C bán thẳng cùng máy (đầu ra là đơn). Chi tiết: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom. Quy hoạch, chưa làm.",
+   "gop_vao": "Module CRM / lead.",
+   "kenh": [],
+   "khach": "Sale mọi BU",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Lead về → gắn BU → giao người → theo dõi",
+   "mo_ta": "Showcase, form, onboard, theo dõi lead mọi BU",
+   "module": [
+    "CRM / lead",
+    "Nội dung / SEO"
+   ],
+   "nguon": "Kế hoạch 0.1 ngày 3/11",
+   "nhan_nhi": "Lead nguội vì không ai gọi trong 1 giờ. Hệ thống không thay được người gọi.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "Lead về Google Sheet vẫn đủ cho tới khi có 3 BU dùng.",
+   "quyet": "",
+   "ten": "Hệ kênh lấy lead",
+   "thu_tu": 23,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi có lead, tôi muốn được giao ngay kèm thông tin, để gọi trong ngày"
+  },
+  "h24": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Lọt sai thương hiệu, sai số, sai luật quảng cáo",
+   "de_xuat": "Một bước kiểm trong quy trình xuất bản, không phải site.",
+   "dung_chung": "Unikon bán brand check cho khách; TUVA kiểm thông điệp nhạy cảm giới.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp Sinh nội dung AI.",
+   "kenh": [],
+   "khach": "Người duyệt nội dung",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Gửi bài → kiểm brand, số, luật → đạt/sửa",
+   "mo_ta": "Kiểm thương hiệu, số liệu, luật quảng cáo, pháp chế",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "LAB036, LAB107",
+   "nhan_nhi": "Khách không thấy cổng kiểm, chỉ thấy lỗi. Kiểm luật xong vẫn phải đọc bằng mắt khách.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Khâu kiểm chất lượng",
+   "thu_tu": 24,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi sắp đăng/gửi khách, tôi muốn máy soát trước, để không bị phạt hay mất uy tín"
+  },
+  "h25": {
+   "ban": [],
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Site cũ chậm, lỗi thời, không lên Google",
+   "de_xuat": "Giữ Astro làm mặt tiền; Frappe làm phần sau.",
+   "ghi_chu": "",
+   "gop_vao": "Khuôn Trang giới thiệu.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Khách tìm các thương hiệu",
+   "loai": "Trang giới thiệu",
+   "lop": 1,
+   "mat_tien": "Mặt tiền chung cho 15 thương hiệu",
+   "mo_ta": "Khung web chung cho mọi thương hiệu",
+   "module": [
+    "Nội dung / SEO"
+   ],
+   "nguon": "GV001 (Astro)",
+   "nhan_nhi": "Khách vào site để biết: làm được gì cho tôi, giá bao nhiêu, ai đã dùng. Thiếu một trong ba là đi.",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "Chuyển 15 site sang Frappe Website là lùi về SEO; không nên.",
+   "quyet": "",
+   "ten": "15 website LINHX-WEB",
+   "thu_tu": 25,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi tìm dịch vụ, tôi muốn site nhanh rõ có ví dụ thật, để tin và liên hệ"
+  },
+  "h26": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Không biết tiền về đâu, nợ bao nhiêu",
+   "de_xuat": "Để sau: Frappe có sẵn kế toán (ERPNext) nếu cần.",
+   "ghi_chu": "",
+   "gop_vao": "Lõi điều hành.",
+   "kenh": [],
+   "khach": "Linh, Hoa kế toán",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mat_tien": "Nhập thu chi → xem dòng tiền tuần",
+   "mo_ta": "Phải thu, nợ, lương theo BU",
+   "module": [
+    "Báo cáo tự động"
+   ],
+   "nguon": "Sheet Hoa, C BOARD",
+   "nhom": "Nền dùng chung",
+   "phan_bien": "Kế toán thật cần kế toán viên; đừng tự dựng.",
+   "quyet": "",
+   "ten": "Sổ tài chính + dòng tiền",
+   "thu_tu": 26,
+   "trang_thai": "Đang chạy tay",
+   "uu_tien": 0,
+   "viec": "Khi đầu tuần, tôi muốn thấy dòng tiền 4 tuần tới, để quyết chi"
+  },
+  "h27": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Không biết Unikon làm được gì cụ thể",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Thêm demo.unikon.vn dùng chung khuôn demo của ifAgent.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: unikon.vn + demo.unikon.vn dựng từ khuôn demo ifAgent, demo là case có số để agency đưa khách. Unikon = xưởng AI production trắng nhãn cho agency. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn demo ifAgent.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Agency, brand",
+   "loai": "Trang giới thiệu",
+   "lop": 2,
+   "mat_tien": "unikon.vn + demo.unikon.vn",
+   "mo_ta": "Site + trang demo để bán cho agency",
+   "module": [
+    "Nội dung / SEO",
+    "CRM / lead",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "LINHX-WEB :4303",
+   "nhan_nhi": "Agency không bấm demo. Họ cần một case có số để đưa cho khách của họ.",
+   "nhom": "Unikon",
+   "phan_bien": "Unikon có lead từ quan hệ, không từ web; site là phụ.",
+   "quyet": "",
+   "ten": "unikon.vn + demo.unikon.vn",
+   "thu_tu": 27,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi tìm đối tác AI marketing, tôi muốn xem demo bấm thử được, để giới thiệu cho sếp"
+  },
+  "h28": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Lên chiến dịch, đề xuất mất nhiều ngày",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Gộp với Generator thành một công cụ tạo chiến dịch.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: gộp Generator h21; bán pitch 48 giờ như dịch vụ trắng nhãn, không bán công cụ. Quy hoạch, chưa làm.",
+   "gop_vao": "Gộp Generator.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Agency",
+   "loai": "B2B / dự án",
+   "lop": 2,
+   "mat_tien": "demo.unikon.vn/campaign",
+   "mo_ta": "Tạo chiến dịch, đề xuất nhanh cho agency",
+   "module": [
+    "Sinh nội dung AI",
+    "Sự kiện / minigame",
+    "CRM / lead"
+   ],
+   "nguon": "M02, M03",
+   "nhan_nhi": "Agency sợ công cụ làm lộ họ trước khách. Bán dịch vụ trắng nhãn, không bán công cụ.",
+   "nhom": "Unikon",
+   "phan_bien": "Agency muốn tốc độ, không muốn học công cụ mới; bán dịch vụ trước.",
+   "quyet": "",
+   "ten": "Campaign + proposal generator",
+   "thu_tu": 28,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có brief, tôi muốn có khung chiến dịch + đề xuất trong ngày, để kịp pitch"
+  },
+  "h29": {
+   "ban": [
+    "B2B",
+    "Thuê bao"
+   ],
+   "cach_thu": "Chào 5 brand bán lẻ",
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Sản phẩm vật lý không kể được chuyện, không biết ai mua",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Đóng gói thành sản phẩm có tên, bán qua Bespoke và Unikon.",
+   "dung_chung": "ifAgent dùng cho sự kiện; Chiêm Tinh Số dùng QR quà tặng; Sakedemy dùng chứng nhận QR.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: QR phygital là sản phẩm có tên trên module sự kiện, có lý do quét lần hai; đích bán cho khách thứ hai ngoài BTMH. Quy hoạch, chưa làm.",
+   "gia_thuyet": "Brand ngoài BTMH mua QR phygital",
+   "giai_doan": "Đang chạy",
+   "gop_vao": "Dùng chung Sự kiện / minigame.",
+   "kenh": [
+    "Web",
+    "Sự kiện"
+   ],
+   "khach": "Brand bán lẻ, khách cuối",
+   "loai": "Nền tảng",
+   "lop": 2,
+   "mat_tien": "trang sản phẩm QR trên unikon.vn",
+   "mo_ta": "QR cho mọi sản phẩm, case BTMH",
+   "module": [
+    "Tài khoản khách",
+    "Báo cáo tự động",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "Case BTMH",
+   "nguong": "≥1 hợp đồng mới trước 31/12",
+   "nhan_nhi": "Khách cuối quét QR một lần rồi thôi. Họ quét lần hai vì được gì?",
+   "nhom": "Unikon",
+   "phan_bien": "Phụ thuộc một khách lớn (BTMH); chưa chứng minh bán lặp lại.",
+   "quyet": "",
+   "ten": "QR phygital platform",
+   "thu_tu": 29,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi khách cầm sản phẩm, tôi muốn họ quét ra câu chuyện và để lại thông tin, để bán tiếp"
+  },
+  "h30": {
+   "ban": [
+    "Thuê bao",
+    "Bán lẻ"
+   ],
+   "cach_thu": "Trang chờ + 1 công cụ thử",
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "ChatGPT khó dùng cho việc tiếng Việt cụ thể",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Để sau.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Không làm sản phẩm B2C; giữ tên miền để nộp gói startup. Quy hoạch, chưa làm.",
+   "gia_thuyet": "B2C trả tiền cho công cụ AI tự phục vụ tiếng Việt",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Khuôn Nền tảng.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Người dùng phổ thông",
+   "loai": "Nền tảng",
+   "lop": 2,
+   "mat_tien": "aicontent.vn",
+   "mo_ta": "Công cụ AI tự phục vụ B2C",
+   "module": [
+    "Tài khoản khách",
+    "Thanh toán QR",
+    "Sinh nội dung AI"
+   ],
+   "nguon": "Input Linh 24/10",
+   "nguong": "≥200 người đăng ký chờ trong 14 ngày",
+   "nhan_nhi": "Người dùng phổ thông đã có ChatGPT miễn phí. Công cụ này làm được gì mà ChatGPT không làm?",
+   "nhom": "Unikon",
+   "phan_bien": "Tự phục vụ B2C cạnh tranh với ChatGPT trực tiếp; khó thắng.",
+   "quyet": "",
+   "ten": "aicontent.vn",
+   "thu_tu": 30,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi cần làm nhanh một việc, tôi muốn công cụ bấm là ra, để khỏi viết prompt"
+  },
+  "h31": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Sự kiện tương tác AI đắt và dựng lâu",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Lên ngay: đã có lead thật từ GEO, đang chạy.",
+   "ghi_chu": "Linh 6/11 11:20: ifagent.net gốc chuyển về Agent Force (showcase + lead), event xuống event.ifagent.net. Xem h08.\nClaude 6/11 12:5x (thread BU): Event dùng event.ifagent.net: trang trả lời giá, thời gian dựng, case trong 10 giây; form về CRM chung. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn demo dùng cho Unikon.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Bên tổ chức sự kiện, brand",
+   "loai": "B2B / dự án",
+   "lop": 2,
+   "mat_tien": "ifagent.net + demo.ifagent.net",
+   "mo_ta": "Site, showcase, form lead",
+   "module": [
+    "Nội dung / SEO",
+    "CRM / lead",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "PRJ\\IFAGENT",
+   "nhan_nhi": "Bên tổ chức hỏi ba câu: giá, thời gian dựng, case gần nhất. Trang phải trả lời trong 10 giây.",
+   "nhom": "ifAgent",
+   "phan_bien": "Đang chạy trên VM riêng; đừng di chuyển trước CSMO 18/11.",
+   "quyet": "",
+   "ten": "ifagent.net + demo.ifagent.net",
+   "thu_tu": 31,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi chuẩn bị sự kiện, tôi muốn chọn gói có sẵn và xem demo, để chốt nhanh trong ngân sách"
+  },
+  "h32": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Mỗi sự kiện dựng lại từ đầu, không đo được hiệu quả",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Là module Sự kiện dùng chung cho mọi BU; chuyển sau CSMO.",
+   "dung_chung": "Unikon chạy minigame chiến dịch; Sakedemy làm workshop tương tác; TUVA làm sự kiện NGO.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: module sự kiện linhx_event dùng chung (CLB, lớp corp, Unikon, TUVA); preset là phễu, may đo là tiền; báo cáo số đo trong 24 giờ bằng report engine. Chuyển sau CSMO 18/11. Quy hoạch, chưa làm.",
+   "gop_vao": "Module Sự kiện / minigame.",
+   "kenh": [
+    "Sự kiện",
+    "Web"
+   ],
+   "khach": "Bên tổ chức sự kiện",
+   "loai": "Nền tảng",
+   "lop": 2,
+   "mat_tien": "ifagent.net/event",
+   "mo_ta": "Photobooth, nhân vật, game, theo dõi, gói preset giá rẻ",
+   "module": [
+    "Sự kiện / minigame",
+    "Nhân vật ảo",
+    "Báo cáo tự động"
+   ],
+   "nguon": "PRJ\\IFAGENT\\apps\\event",
+   "nhan_nhi": "Khách sự kiện cần số đo để báo cáo sếp. Module đẹp không có số thì không ký lần hai.",
+   "nhom": "ifAgent",
+   "phan_bien": "Code đang ở monorepo Next.js; lên Frappe chỉ phần quản trị + theo dõi.",
+   "quyet": "",
+   "ten": "Event platform quick deploy",
+   "thu_tu": 32,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi có sự kiện, tôi muốn bật module sẵn và có số đo, để báo cáo cho khách"
+  },
+  "h33": {
+   "ban": [],
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Gian hàng nhàm, người đi qua không dừng",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Module Nhân vật ảo dùng chung với Own Media.",
+   "dung_chung": "Đại sứ ảo cho mọi BU; nhân vật Luna của Chiêm Tinh Số chạy cùng lõi.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: module nhân vật ảo, dịch vụ realtime riêng, dùng chung với nấc tác giả ảo của Expert OS. Quy hoạch, chưa làm.",
+   "gop_vao": "Module Nhân vật ảo.",
+   "kenh": [
+    "Live",
+    "Sự kiện"
+   ],
+   "khach": "Khách tại sự kiện, brand",
+   "loai": "Công cụ nội bộ",
+   "lop": 2,
+   "mat_tien": "Chọn nhân vật → nạp kịch bản → chạy",
+   "mo_ta": "Nhân vật AI tương tác tại sự kiện",
+   "module": [
+    "Nhân vật ảo",
+    "Chat bot / Zalo"
+   ],
+   "nguon": "LIVE CHARACTER, LAB038",
+   "nhan_nhi": "Người đi qua gian hàng dừng 7 giây. Nhân vật không gây cười hay ngạc nhiên trong 7 giây thì không ai đứng lại.",
+   "nhom": "ifAgent",
+   "phan_bien": "Realtime khó chạy trên Frappe; giữ dịch vụ riêng.",
+   "quyet": "",
+   "ten": "Live character",
+   "thu_tu": 33,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi đi qua gian hàng, tôi muốn được trò chuyện với nhân vật vui, để nhớ thương hiệu"
+  },
+  "h34": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Khó tìm đơn vị truyền thông hiểu ngành phát triển",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Giữ khuôn Trang giới thiệu.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khuôn Trang giới thiệu, case theo lĩnh vực NGO; cửa Decent AI. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn Trang giới thiệu.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "NGO, nhà tài trợ",
+   "loai": "Trang giới thiệu",
+   "lop": 2,
+   "mat_tien": "tuva.work",
+   "mo_ta": "Site TUVA",
+   "module": [
+    "Nội dung / SEO",
+    "CRM / lead"
+   ],
+   "nguon": "LINHX-WEB :4301",
+   "nhom": "TUVA",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "tuva.work",
+   "thu_tu": 34,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi cần chiến dịch NGO, tôi muốn xem case cùng lĩnh vực, để mời thầu"
+  },
+  "h35": {
+   "ban": [
+    "B2B",
+    "Thuê bao"
+   ],
+   "cach_thu": "Chào 10 tổ chức",
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Bỏ lỡ call tài trợ, viết hồ sơ mất tuần",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Lên ngay: công cụ đã có hiệu quả, có thể bán cho tổ chức ngoài.",
+   "dung_chung": "Unikon quét brief/tender agency; ifAgent quét sự kiện sắp diễn ra; Agent Force quét DN cần AI.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: LINHX Solution (máy quét + Generator), đo bằng hồ sơ đậu; mở cho NGO khác và các BU xin giải/gói startup khi có tỉ lệ đậu. Quy hoạch, chưa làm.",
+   "gia_thuyet": "Tổ chức ngoài trả tiền cho radar call (H23)",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Crawler + Sinh nội dung AI.",
+   "kenh": [
+    "Web",
+    "Email"
+   ],
+   "khach": "Nhân viên TUVA, NGO khác",
+   "loai": "B2B / dự án",
+   "lop": 2,
+   "mat_tien": "tuva.work/radar",
+   "mo_ta": "Quét call, tự soạn hồ sơ apply",
+   "module": [
+    "Crawler / dữ liệu",
+    "Sinh nội dung AI",
+    "CRM / lead"
+   ],
+   "nguon": "LAB013, LAB018",
+   "nguong": "≥2 tổ chức trả tiền thử",
+   "nhan_nhi": "NGO không cần thêm call, họ cần call đúng và hồ sơ thắng. Đo bằng hồ sơ đậu, không bằng call tìm được.",
+   "nhom": "TUVA",
+   "phan_bien": "Giả thuyết bán ra ngoài (H23) chưa kiểm; dùng nội bộ trước.",
+   "quyet": "",
+   "ten": "Radar call tài trợ + viết hồ sơ",
+   "thu_tu": 35,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi có call phù hợp, tôi muốn được báo sớm kèm bản nháp hồ sơ, để kịp nộp"
+  },
+  "h36": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "Lớp Decent AI 23–28/11",
+   "cap_goi_y": "workflow",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Muốn dùng AI nhưng thiếu người và lo đạo đức dữ liệu",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Là chương trình, chạy trên khuôn Khoá học + CRM.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: hạng mục AI trong đề xuất tài trợ; khoá là mẫu Course OS, gói 3–6 tháng theo hành trình Agent Force bản NGO; agent mẫu ngành NGO. Quy hoạch, chưa làm.",
+   "gia_thuyet": "NGO trả tiền cho đào tạo + triển khai AI",
+   "giai_doan": "Khảo sát",
+   "gop_vao": "Khuôn Khoá học.",
+   "kenh": [
+    "Sự kiện"
+   ],
+   "khach": "NGO",
+   "loai": "Khoá học",
+   "lop": 2,
+   "mat_tien": "tuva.work/decent-ai",
+   "mo_ta": "Đào tạo + triển khai AI cho NGO",
+   "module": [
+    "Khoá học (LMS)",
+    "CRM / lead"
+   ],
+   "nguon": "P2_PRJ-DECENT",
+   "nguong": "≥1 đề xuất có Decent AI sau lớp",
+   "nhan_nhi": "NGO sợ AI làm sai thông điệp nhạy cảm. Bắt đầu bằng nỗi sợ đó, không bằng công cụ.",
+   "nhom": "TUVA",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Decent AI",
+   "thu_tu": 36,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi bắt đầu dùng AI, tôi muốn được đào tạo và đi cùng, để dùng an toàn"
+  },
+  "h37": {
+   "ban": [],
+   "cach_thu": "Thử 4 sinh viên 2 trường",
+   "cap_goi_y": "loi",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Sinh viên thiếu việc thật; BU thiếu người giá rẻ",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Dùng CRM + giao việc chung để quản lý thực tập sinh.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: lớp người của cả hệ; sinh viên nhận việc người qua Bàn điều hành, hồ sơ trong CRM chung có quyền riêng; 3 trường trước. Quy hoạch, chưa làm.",
+   "gia_thuyet": "CLB sinh viên giải được nhân sự giá rẻ cho BU",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Gộp CRM.",
+   "kenh": [
+    "Zalo"
+   ],
+   "khach": "Sinh viên, các BU",
+   "loai": "Dịch vụ / đặt lịch",
+   "lop": 2,
+   "mat_tien": "tuva.work/internship",
+   "mo_ta": "CLB sinh viên, tuyển, giao việc cho các BU",
+   "module": [
+    "CRM / lead",
+    "Thợ agy / hàng việc"
+   ],
+   "nguon": "P3_PRJ-INTERN",
+   "nguong": "≥3 việc thật hoàn thành/tháng",
+   "nhan_nhi": "Sinh viên cần việc có tên trong CV. BU cần người không phải kèm từng bước. Hai nhu cầu này có khớp không?",
+   "nhom": "TUVA",
+   "phan_bien": "Quản người khác quản khách; cần quyền riêng.",
+   "quyet": "",
+   "ten": "Internship 20 trường",
+   "thu_tu": 37,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi cần người làm việc nhỏ, tôi muốn có sinh viên được hướng dẫn, để việc chạy"
+  },
+  "h38": {
+   "ban": [
+    "Bán lẻ",
+    "B2B"
+   ],
+   "cach_thu": "Ra báo cáo AI ứng dụng ~10/12",
+   "cap_goi_y": "solution",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Thiếu số liệu thật về người Việt trên mạng",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Bán báo cáo theo khuôn Bán sản phẩm số, như CTS.",
+   "dung_chung": "Bán báo cáo ngành cho Unikon (khách brand) và làm mồi lead cho Agent Force.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: báo cáo trên report engine + máy quét, khuôn bán báo cáo như CTS; nhận nghiên cứu cá nhân của Linh từ Expert OS. Chờ Linh: dưới TUVA hay thương hiệu riêng. Quy hoạch, chưa làm.",
+   "gia_thuyet": "Brand trả tiền cho báo cáo social listening",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Cùng khuôn với Chiêm Tinh Số.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Brand, tổ chức, báo chí",
+   "loai": "Bán sản phẩm số",
+   "lop": 2,
+   "mat_tien": "listening.vn",
+   "mo_ta": "listening.vn + báo cáo social listening",
+   "module": [
+    "Crawler / dữ liệu",
+    "Báo cáo tự động",
+    "Thanh toán QR"
+   ],
+   "nguon": "P1_PRJ-LISTEN, LAB053",
+   "nguong": "≥3 brand mua hoặc tài trợ",
+   "nhan_nhi": "Brand mua báo cáo khi có câu trả lời cho quyết định quý tới. Người cao tuổi hay AI ứng dụng: ai đang cần quyết?",
+   "nhom": "TUVA",
+   "phan_bien": "Rủi ro NĐ 13 với dữ liệu mạng xã hội; soát trước khi bán.",
+   "quyet": "",
+   "ten": "Listening Vietnam",
+   "thu_tu": 38,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi lập kế hoạch, tôi muốn báo cáo người Việt đang nói gì, để quyết có cơ sở"
+  },
+  "h39": {
+   "ban": [
+    "Bán lẻ",
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Không biết khoá AI nào đáng tiền",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Lên ngay: site Khoá học đầu tiên, làm mẫu cho cungai.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khi đủ: cửa bán khoá + hoá đơn đào tạo của EDU (cungai học free, Sake bán). Nhánh học đường có cổng 5 cuộc gọi, chờ Linh. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn Khoá học.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "Người học sáng tạo, phụ huynh, DN",
+   "loai": "Khoá học",
+   "lop": 2,
+   "mat_tien": "sakedemy.com",
+   "mo_ta": "Bán khoá, cửa lead B2C, xuất hoá đơn EDU",
+   "module": [
+    "Khoá học (LMS)",
+    "Thanh toán QR",
+    "CRM / lead",
+    "Nội dung / SEO"
+   ],
+   "nguon": "LINHX-WEB :4305",
+   "nhan_nhi": "Người tìm khoá AI so 5 khoá trong 2 phút. Sakedemy nói gì khác ngay dòng đầu?",
+   "nhom": "Sakedemy",
+   "phan_bien": "Sakedemy cần pháp nhân xuất hoá đơn trước khi bán online.",
+   "quyet": "",
+   "ten": "sakedemy.com",
+   "thu_tu": 39,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi tìm khoá AI, tôi muốn thấy khoá rõ kết quả và đăng ký nhanh, để học"
+  },
+  "h40": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "Chào 10 khách cũ Sakedemy",
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Tự viết không có thời gian, thuê đắt",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Là dịch vụ, dùng chung Sinh nội dung AI.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Gộp Expert OS: viết thuê, sách, kịch bản là gói dịch vụ trên cùng máy, Vân Anh biên tập. Quy hoạch, chưa làm.",
+   "gia_thuyet": "Còn khách trả cho viết thuê có AI",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Gộp Own Media.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Người cần sách, kịch bản",
+   "loai": "Dịch vụ / đặt lịch",
+   "lop": 2,
+   "mat_tien": "sakedemy.com/viet-thue",
+   "mo_ta": "Toà soạn nhỏ, sách, kịch bản",
+   "module": [
+    "Sinh nội dung AI",
+    "Nội dung / SEO"
+   ],
+   "nguon": "Input Linh 24/10",
+   "nguong": "≥2 job",
+   "nhan_nhi": "Người thuê viết sợ ra văn AI. Bán bằng mẫu đã viết, không bằng lời hứa.",
+   "nhom": "Sakedemy",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Content hub + viết thuê",
+   "thu_tu": 40,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi cần một cuốn sách hay kịch bản, tôi muốn có đội viết nhanh đúng giọng, để ra đúng hạn"
+  },
+  "h41": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Thiếu hạ tầng và xưởng sản xuất chung",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Giữ khuôn Trang giới thiệu.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Khuôn Trang giới thiệu; trang dịch vụ hạ tầng, sản xuất, cửa Own Media. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn Trang giới thiệu.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Các công ty trong hệ thống",
+   "loai": "Trang giới thiệu",
+   "lop": 2,
+   "mat_tien": "urah.vn",
+   "mo_ta": "Site URAH Network",
+   "module": [
+    "Nội dung / SEO"
+   ],
+   "nguon": "LINHX-WEB :4304",
+   "nhom": "URAH",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "urah.vn",
+   "thu_tu": 41,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi cần web/video, tôi muốn đặt nội bộ giá rõ, để khỏi thuê ngoài"
+  },
+  "h42": {
+   "ban": [],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Làm landing mất nhiều ngày",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Đây chính là Generator; gộp.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Gộp Generator h21. Quy hoạch, chưa làm.",
+   "gop_vao": "Gộp Generator.",
+   "kenh": [],
+   "khach": "Nhân viên URAH",
+   "loai": "Công cụ nội bộ",
+   "lop": 2,
+   "mat_tien": "Dán brief → chọn khuôn → sinh site → duyệt",
+   "mo_ta": "Landing/app theo quy trình 7 bước",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "LAB058",
+   "nhom": "URAH",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Website generator",
+   "thu_tu": 42,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có brief web, tôi muốn sinh bản đầu từ khuôn, để chỉ chỉnh"
+  },
+  "h43": {
+   "ban": [
+    "B2B"
+   ],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Video quay tốn kém, chậm",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Xưởng chạy ngoài engine; engine chỉ nhận đơn và theo dõi.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Chạy ngoài engine, engine nhận đơn + theo dõi; bán theo quy trình và chuyển đổi; ≥2 job/tháng hoặc đóng nhánh từ 31/3/2027. URAH = phần người của Xưởng thợ h11. Quy hoạch, chưa làm.",
+   "gop_vao": "Không.",
+   "kenh": [],
+   "khach": "Brand cần video",
+   "loai": "Dịch vụ / đặt lịch",
+   "lop": 2,
+   "mat_tien": "urah.vn/video",
+   "mo_ta": "Phim bằng code, UGC, hoạt hình",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "LAB059, ai-ugc-video",
+   "nhan_nhi": "Brand không cần video AI. Họ cần video bán được hàng. Đo bằng chuyển đổi, không bằng số video.",
+   "nhom": "URAH",
+   "phan_bien": "Render video nặng, không chạy trên server web.",
+   "quyet": "",
+   "ten": "Xưởng video AI",
+   "thu_tu": 43,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi cần video ngắn, tôi muốn có bản AI nhanh rẻ, để chạy chiến dịch"
+  },
+  "h44": {
+   "ban": [],
+   "cap_goi_y": "rieng",
+   "cap_nhat_boi": "Claude 6/11 (thread BU), chờ Linh khoá",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Khó tìm nội dung chuyên ngách tin được",
+   "de_bai": "Các BU khi đủ: https://claude.ai/artifact/4ZVAqsor1zbiKGnuRBVhom",
+   "de_xuat": "Giữ tĩnh; gom sau.",
+   "ghi_chu": "Claude 6/11 12:5x (thread BU): Giữ tĩnh trên khuôn 15 website, không đầu tư; 6 tháng không ra lead thì đóng. Quy hoạch, chưa làm.",
+   "gop_vao": "Khuôn Trang giới thiệu.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Độc giả các site nội dung",
+   "loai": "Trang giới thiệu",
+   "lop": 2,
+   "mat_tien": "site riêng từng thương hiệu",
+   "mo_ta": "Các site nội dung còn lại trong 15 site",
+   "module": [
+    "Nội dung / SEO"
+   ],
+   "nguon": "LINHX-WEB :4307–4315",
+   "nhom": "Thương hiệu khác",
+   "phan_bien": "11 site nội dung không ra tiền; cân nhắc đóng bớt.",
+   "quyet": "",
+   "ten": "Genderation, Edventures, Goodvertisings…",
+   "thu_tu": 44,
+   "trang_thai": "Có site",
+   "uu_tien": 0,
+   "viec": "Khi tìm một chủ đề, tôi muốn bài sâu đáng tin, để học"
+  },
+  "h45": {
+   "ban": [
+    "Bán lẻ",
+    "Quà tặng",
+    "Thuê bao"
+   ],
+   "cap_goi_y": "solution",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Xem tử vi/chiêm tinh trên mạng chung chung, khó tin",
+   "de_xuat": "Giữ FastAPI, đang có khách; lấy làm mẫu suy ngược module Bán.",
+   "dung_chung": "Khuôn bán báo cáo số dùng lại cho Listening, Sakedemy (e-book), quà Tết B2B.",
+   "ghi_chu": "",
+   "gop_vao": "Mẫu cho khuôn Bán sản phẩm số.",
+   "kenh": [
+    "Web",
+    "Zalo",
+    "Messenger"
+   ],
+   "khach": "Người tò mò về bản thân, người muốn tặng quà",
+   "loai": "Bán sản phẩm số",
+   "lop": 3,
+   "mat_tien": "chiemtinh.vn",
+   "mo_ta": "chiemtinh.vn, đang có khách, bán report qua QR",
+   "module": [
+    "Tài khoản khách",
+    "Thanh toán QR",
+    "Báo cáo tự động",
+    "Affiliate / giới thiệu",
+    "Chat bot / Zalo"
+   ],
+   "nguon": "fyzdfyzd/chiemtinhso",
+   "nhan_nhi": "Khách tin khi đọc thấy mình trong đó. Báo cáo ghép đoạn có lời viết cho trẻ em (1/11) là mất khách ngay.",
+   "nhom": "Dự án",
+   "phan_bien": "Chuyển lên Frappe lúc này rủi ro mất đơn; mở mã calc-service trước 20/11.",
+   "quyet": "",
+   "ten": "Chiêm Tinh Số (OPC001)",
+   "thu_tu": 45,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi muốn hiểu mình hay tặng quà, tôi muốn báo cáo riêng đẹp, mua 2 bước, để đọc ngay"
+  },
+  "h46": {
+   "ban": [
+    "Bán lẻ"
+   ],
+   "cach_thu": "Thử khói OPC002 01/12",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Chưa rõ: tìm từ radar",
+   "de_xuat": "OPC mới dựng thẳng trên engine, khuôn Bán sản phẩm số.",
+   "ghi_chu": "",
+   "gia_thuyet": "Có sản phẩm số thứ hai bán được trên khuôn CTS",
+   "giai_doan": "Ý tưởng",
+   "gop_vao": "Khuôn Bán sản phẩm số.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "Khách của từng ngách",
+   "loai": "Bán sản phẩm số",
+   "lop": 3,
+   "mat_tien": "tên miền riêng mỗi OPC",
+   "mo_ta": "Khuôn OPC: nhân bản sản phẩm số thắng",
+   "module": [
+    "Thanh toán QR",
+    "Báo cáo tự động",
+    "Tài khoản khách"
+   ],
+   "nguon": "PROTO\\03_OPC_OS",
+   "nguong": "≥20 đơn trong 14 ngày",
+   "nhan_nhi": "Chưa có khách, chưa có nỗi đau. Đừng dựng khuôn trước khi biết ai sẽ mua.",
+   "nhom": "Dự án",
+   "phan_bien": "Chưa có OPC thứ hai thắng; đừng dựng khuôn trước sản phẩm.",
+   "quyet": "",
+   "ten": "OPC tiếp theo",
+   "thu_tu": 46,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi … tôi muốn … để … (chưa có, phải tìm trước khi dựng)"
+  },
+  "h47": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Đọc tay hàng trăm nguồn mỗi ngày",
+   "de_xuat": "Giữ riêng; engine đọc kết quả qua API.",
+   "dung_chung": "Nguồn dữ liệu cho Radar TUVA, Listening, CafeBiz, nghiên cứu khoá học.",
+   "ghi_chu": "",
+   "gop_vao": "Module Crawler (chỉ đầu ra).",
+   "kenh": [],
+   "khach": "Linh, các BU, toà soạn",
+   "loai": "Công cụ nội bộ",
+   "lop": 3,
+   "mat_tien": "Đặt nguồn → quét đêm → kho → digest",
+   "mo_ta": "Crawler, Medium, CafeBiz, vault, extension",
+   "module": [
+    "Crawler / dữ liệu"
+   ],
+   "nguon": "fyzdfyzd/mayquet",
+   "nhan_nhi": "Người dùng là các BU. Kho đầy mà không ai đọc thì chỉ là chi phí lưu trữ.",
+   "nhom": "Dự án",
+   "phan_bien": "Chạy ở máy cty, cần Chrome đăng nhập; không đưa lên server.",
+   "quyet": "",
+   "ten": "Máy quét",
+   "thu_tu": 47,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi cần tin hay bài, tôi muốn có sẵn kho đã lọc, để chỉ chọn"
+  },
+  "h48": {
+   "ban": [
+    "B2B",
+    "Chia doanh thu"
+   ],
+   "cach_thu": "Chốt 1 gói với chị Hương, chào 3 khách",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Agency không hiểu chiến lược, AI vendor không hiểu brand",
+   "de_xuat": "Là tập khách dùng 3 gói (QR, minigame, CX) trên engine.",
+   "ghi_chu": "Linh 6/11 11:20: BespokeAI là một hình thái của Agent Force: chìa khoá trao tay cho DN. Dùng chung chu trình 7 bước + công cụ của h08, khác ở chỗ làm hết rồi giao.",
+   "gia_thuyet": "Khách của chị Hương mua 1 gói chuẩn",
+   "giai_doan": "Khảo sát",
+   "gop_vao": "Dùng QR phygital + Sự kiện.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "Brand lớn của chị Hương",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "trang Bespoke (tên miền riêng hoặc unikon.vn/bespoke)",
+   "mo_ta": "Cùng chị Hương: QR, minigame, CX gom chat",
+   "module": [
+    "Sự kiện / minigame",
+    "Chat bot / Zalo",
+    "CRM / lead"
+   ],
+   "nguon": "P6_PRJ-BESPOKE",
+   "nguong": "≥1 khách trả gói Check-up",
+   "nhan_nhi": "Khách chị Hương mua vì tin chị. Sản phẩm phải làm chị yên tâm gửi tên mình vào.",
+   "nhom": "Dự án",
+   "phan_bien": "Sản phẩm chưa cụ thể, tiêu chuẩn chị Hương rất cao; chốt một gói trước.",
+   "quyet": "",
+   "ten": "BespokeAI",
+   "thu_tu": 48,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi muốn AI cho marketing, tôi muốn người hiểu brand làm trọn gói, để ra kết quả thấy được"
+  },
+  "h49": {
+   "ban": [
+    "B2B"
+   ],
+   "cach_thu": "Demo tại event Talentpool cuối T11",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Chỉ tiêu cao, thời gian chăm khách ít",
+   "de_xuat": "Là cấu hình Agent Shell cho ngân hàng, cần cho event cuối T11.",
+   "ghi_chu": "",
+   "gia_thuyet": "Manager ngân hàng muốn agent cho RM",
+   "giai_doan": "Thử nhỏ",
+   "gop_vao": "Dùng Agent Shell.",
+   "kenh": [
+    "Web",
+    "Zalo"
+   ],
+   "khach": "RM, quản lý chi nhánh ngân hàng",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "trang giới thiệu cho event Talentpool",
+   "mo_ta": "Cùng chị Thuỷ, ra mắt event cuối T11",
+   "module": [
+    "Chat bot / Zalo",
+    "CRM / lead"
+   ],
+   "nguon": "Input Linh dự án 2",
+   "nguong": "≥5 đăng ký coaching/pilot",
+   "nhan_nhi": "RM không có thời gian học. Trợ lý phải ở trong luồng việc sẵn có, chạy ngay ngày đầu.",
+   "nhom": "Dự án",
+   "phan_bien": "Hạn gấp; làm demo, đừng đợi engine.",
+   "quyet": "",
+   "ten": "Agent cho RM ngân hàng",
+   "thu_tu": 49,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi chuẩn bị gặp khách, tôi muốn trợ lý soạn sẵn hồ sơ và gợi ý, để chốt nhiều hơn"
+  },
+  "h50": {
+   "ban": [
+    "B2B"
+   ],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Đọc tài liệu và viết mất nhiều tháng",
+   "de_xuat": "Dùng chung Crawler + Sinh nội dung; mặt tiền là trang con.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp Listening Vietnam.",
+   "kenh": [],
+   "khach": "Nhà nghiên cứu, anh Dũng",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "listening.vn/research",
+   "mo_ta": "Cùng anh Dũng, research loop + viết bài",
+   "module": [
+    "Crawler / dữ liệu",
+    "Sinh nội dung AI"
+   ],
+   "nguon": "P7_PRJ-RESEARCH, LAB085",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Research agent",
+   "thu_tu": 50,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có đề tài, tôi muốn máy gom và nháp, để tập trung phân tích"
+  },
+  "h51": {
+   "ban": [
+    "B2B"
+   ],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Chọn tin mỗi sáng mất nhiều giờ",
+   "de_xuat": "Khách của Máy quét + Sinh nội dung; chạy ngoài engine.",
+   "ghi_chu": "",
+   "gop_vao": "Máy quét.",
+   "kenh": [
+    "Email"
+   ],
+   "khach": "Toà soạn CafeBiz",
+   "loai": "Dịch vụ / đặt lịch",
+   "lop": 3,
+   "mat_tien": "trang dịch vụ trên urah.vn",
+   "mo_ta": "Bot Telegram 20 tin, bài tương tác",
+   "module": [
+    "Crawler / dữ liệu",
+    "Sinh nội dung AI"
+   ],
+   "nguon": "LAB090, LAB091",
+   "nhan_nhi": "Biên tập viên chọn tin bằng cảm giác bạn đọc. Máy chọn 20 tin mà sai gu thì họ vẫn đọc lại từ đầu.",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "CafeBiz toà soạn",
+   "thu_tu": 51,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi 7h sáng, tôi muốn 20 tin đã chọn sẵn, để viết ngay"
+  },
+  "h52": {
+   "ban": [],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Không biết đi đâu, xem gì trong lễ hội",
+   "de_xuat": "Chỉ nghiệm thu; không đưa lên engine.",
+   "ghi_chu": "",
+   "gop_vao": "Không.",
+   "kenh": [
+    "Web",
+    "Mobile"
+   ],
+   "khach": "Khách du lịch lễ hội",
+   "loai": "Nền tảng",
+   "lop": 3,
+   "mat_tien": "site lễ hội đang có",
+   "mo_ta": "Du lịch ngách, lễ hội 20/11–10/12",
+   "module": [
+    "Nội dung / SEO",
+    "Sự kiện / minigame"
+   ],
+   "nguon": "P4_PRJ-TTTT, LAB052",
+   "nhan_nhi": "Khách lễ hội cần biết bây giờ đi đâu. Nền tảng chạy suốt năm không có khách ngoài mùa.",
+   "nhom": "Dự án",
+   "phan_bien": "Mùa lễ hội ngắn; dựng nền lâu dài không đáng.",
+   "quyet": "",
+   "ten": "Tung ta tung tăng",
+   "thu_tu": 52,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi tới lễ hội, tôi muốn gợi ý đường đi hay, để không bỏ lỡ"
+  },
+  "h53": {
+   "ban": [
+    "B2B"
+   ],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Chiến dịch cần tương tác người dùng",
+   "de_xuat": "Là khách; dùng khuôn demo chung.",
+   "ghi_chu": "",
+   "gop_vao": "Khuôn demo ifAgent.",
+   "kenh": [],
+   "khach": "Brand Bia 333",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "trang case trên unikon.vn",
+   "mo_ta": "Demo + tư vấn cho TS. Alex-Thái",
+   "module": [
+    "Sự kiện / minigame"
+   ],
+   "nguon": "P8_PRJ-VWAI",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "VWAI",
+   "thu_tu": 53,
+   "trang_thai": "Đang chạy",
+   "uu_tien": 0,
+   "viec": "Khi chạy chiến dịch, tôi muốn trò chơi kéo người tham gia, để có data"
+  },
+  "h54": {
+   "ban": [
+    "B2B"
+   ],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Trả lời tin nhắn khách tốn thời gian",
+   "de_xuat": "Dùng module Chat bot / Zalo.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp Chat bot.",
+   "kenh": [
+    "Zalo"
+   ],
+   "khach": "Chị Hương",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "trang case trên unikon.vn",
+   "mo_ta": "Chat 1-1 OA Unikon",
+   "module": [
+    "Chat bot / Zalo"
+   ],
+   "nguon": "LAB083",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Trợ lý Zalo chị Hương",
+   "thu_tu": 54,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi khách nhắn OA, tôi muốn trợ lý trả lời đúng ý, để tôi chỉ duyệt"
+  },
+  "h55": {
+   "ban": [
+    "B2B"
+   ],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Cần demo AI nhanh cho khách tư vấn",
+   "de_xuat": "Là khách; dùng khuôn Sự kiện.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp Sự kiện.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "TS. Alex-Thái",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "trang case trên linhx.info",
+   "mo_ta": "Web app chiến dịch Bia 333",
+   "module": [
+    "Sự kiện / minigame"
+   ],
+   "nguon": "D:\\LINHX\\platform-333",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Platform 333",
+   "thu_tu": 55,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có buổi tư vấn, tôi muốn demo chạy được, để thuyết phục"
+  },
+  "h56": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Khảo sát thật lâu và đắt",
+   "de_xuat": "Để sau; công cụ nghiên cứu nội bộ.",
+   "ghi_chu": "",
+   "gop_vao": "Gộp Sinh nội dung AI.",
+   "kenh": [],
+   "khach": "Người làm thông điệp",
+   "loai": "Công cụ nội bộ",
+   "lop": 3,
+   "mat_tien": "Nhập câu hỏi → chạy persona → đọc kết quả",
+   "mo_ta": "Khảo sát ảo người Việt",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "LAB048, persona-engine",
+   "nhan_nhi": "Persona giả lập nói điều mình muốn nghe. Dùng để loại ý tồi, không dùng để xác nhận ý hay.",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Persona khảo sát giả lập",
+   "thu_tu": 56,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi cần thử thông điệp, tôi muốn phản hồi giả lập nhanh, để chọn bản tốt trước khi chi tiền"
+  },
+  "h57": {
+   "ban": [],
+   "cach_thu": "—",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Chưa rõ",
+   "de_xuat": "Băng.",
+   "ghi_chu": "",
+   "gia_thuyet": "Live không người kiếm quà đủ tiền",
+   "giai_doan": "No-go",
+   "gop_vao": "Module Nhân vật ảo.",
+   "kenh": [
+    "Live"
+   ],
+   "khach": "Người xem live",
+   "loai": "Nền tảng",
+   "lop": 3,
+   "mat_tien": "",
+   "mo_ta": "Người ảo, live không người",
+   "module": [
+    "Nhân vật ảo"
+   ],
+   "nguon": "LAB038, LAB103",
+   "nguong": "Băng vì rủi ro luật TikTok + tôn giáo",
+   "nhom": "Dự án",
+   "phan_bien": "Rủi ro luật TikTok và tôn giáo.",
+   "quyet": "",
+   "ten": "Sân khấu 3D + Đi Chùa Online",
+   "thu_tu": 57,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "(băng)"
+  },
+  "h58": {
+   "ban": [],
+   "cach_thu": "—",
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "Chưa rõ",
+   "de_xuat": "Băng tới khi BTMH ký.",
+   "ghi_chu": "",
+   "gia_thuyet": "Content hub vàng có khách",
+   "giai_doan": "No-go",
+   "gop_vao": "Không.",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Người mua vàng",
+   "loai": "Trang giới thiệu",
+   "lop": 3,
+   "mat_tien": "",
+   "mo_ta": "Content hub ngành vàng",
+   "module": [
+    "Crawler / dữ liệu",
+    "Nội dung / SEO"
+   ],
+   "nguon": "PRT012",
+   "nguong": "Băng tới khi BTMH ký QR",
+   "nhom": "Dự án",
+   "phan_bien": "",
+   "quyet": "",
+   "ten": "Gold radar",
+   "thu_tu": 58,
+   "trang_thai": "Băng",
+   "uu_tien": 0,
+   "viec": "(băng)"
+  },
+  "h59": {
+   "ban": [],
+   "claude_doan": true,
+   "dang": "Dự án",
+   "dau": "—",
+   "de_xuat": "Không lên engine.",
+   "ghi_chu": "",
+   "gop_vao": "Không.",
+   "kenh": [],
+   "khach": "—",
+   "loai": "B2B / dự án",
+   "lop": 3,
+   "mat_tien": "",
+   "mo_ta": "Cùng anh Dũng, anh Phong",
+   "module": [],
+   "nguon": "P5_PRJ-AIX",
+   "nhom": "Dự án",
+   "phan_bien": "Đang tạm hoãn.",
+   "quyet": "",
+   "ten": "AIX viện AI ứng dụng",
+   "thu_tu": 59,
+   "trang_thai": "Tạm hoãn",
+   "uu_tien": 0,
+   "viec": "(tạm hoãn)"
+  },
+  "h60": {
+   "ban": [],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Tư liệu mỗi chủ đề rải nhiều ổ, mốc trễ hết (PU09 trễ mọi mốc 2026)",
+   "de_xuat": "Mỗi chủ đề một thư mục theo khuôn Thư viện báo cáo (D:\\LINHX\\THU-VIEN-BAO-CAO: TV01 AI 139 báo cáo, TV03 Người cao tuổi 16, thêm TV04 Ngoại tình từ PU09, TV05 100 năm tiếng cười). Mỗi tuần máy quét theo từ khoá chủ đề → digest vào vault (h18) → bản tin 1 trang. Câu hỏi lớn chạy research-loop (LAB085), đầu ra báo cáo qua Report engine (h22). Lệnh: 'theo dõi: <chủ đề>', 'gom báo cáo: <chủ đề>'.",
+   "ghi_chu": "Linh 6/11 12:04 bổ sung.",
+   "gop_vao": "Thư viện báo cáo, LAB085 research-loop, LAB046/h22 Report engine, mayquet",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mo_ta": "Mỗi chủ đề Linh theo đuổi có một hồ sơ sống: Ngoại tình, 100 năm tiếng cười (cần Linh xác nhận tên), AI, Người cao tuổi",
+   "module": [
+    "Crawler / dữ liệu",
+    "Báo cáo tự động"
+   ],
+   "nguon": "THU-VIEN-BAO-CAO, PU09, LAB085",
+   "nguong": "Linh đọc bản tin tuần ≥3/4 tuần; mỗi chủ đề ra ≥1 bài hoặc báo cáo/quý",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Cao Minh: mỗi chủ đề phải có người đọc và kênh ra: AI → linhx.info + content hub ifAgent; Ngoại tình → sách + nội dung Chiêm Tinh Số (quan hệ); Người cao tuổi → nghiên cứu cá nhân của Linh, báo cáo ra cho TUVA (Linh chốt 6/11 12:07; dùng làm hồ sơ xin tài trợ qua radar LAB013/LAB018); 100 năm tiếng cười → Lê Bích? Chủ đề không có người đọc thì chỉ theo dõi, không viết.",
+   "quyet": "",
+   "ten": "Theo đuổi chủ đề + nghiên cứu cá nhân",
+   "thu_tu": 19.1,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi theo đuổi một chủ đề nhiều năm, tôi muốn mỗi tuần có bản tin điều mới và mỗi quý có một báo cáo, để giữ vị thế người hiểu nhất chủ đề đó"
+  },
+  "h61": {
+   "ban": [
+    "Nhuận bút"
+   ],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Sách Ngoại Tình tạm dừng từ 13/10, chỉ có 1 bài nháp",
+   "de_xuat": "Viết sách theo kiểu đăng trước: dàn ý sách = 10 chương, mỗi chương ra đời trước dưới dạng 1–3 bài (h16) đăng báo hoặc kênh, phản hồi người đọc quay lại vault, cuối cùng biên lại thành chương. Một cuốn một lúc. Mở lại PU09 Ngoại tình Phần 1 (dàn ý 10 bài đã có) làm cuốn đầu.",
+   "ghi_chu": "Linh 6/11 12:04 bổ sung.",
+   "gop_vao": "h60 hồ sơ chủ đề, h16 viết bài, PU09",
+   "hinh_thai": "ok",
+   "kenh": [],
+   "khach": "Linh, rồi nhà xuất bản và người đọc",
+   "loai": "Công cụ nội bộ",
+   "lop": 1,
+   "mo_ta": "Bước 3 của Xưởng tri thức: chủ đề → chuỗi bài → sách",
+   "module": [
+    "Sinh nội dung AI"
+   ],
+   "nguon": "PU09-SACH-NGOAI-TINH",
+   "nguong": "1 chương/2 tuần; mỗi chương có ≥1 bài đã đăng làm phiên bản đầu",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Công Báo: Linh chỉ có 2 việc tự tay (dạy, chào FDE). Sách cần giờ của Linh để gạch ý từng chương; nếu không có 2 giờ/tuần thì đừng mở. Không bịa số liệu, không giả lập giai thoại trong sách.",
+   "quyet": "",
+   "ten": "Viết sách",
+   "thu_tu": 19.2,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi đã theo đuổi một chủ đề đủ lâu, tôi muốn gom thành sách mà không phải viết lại từ đầu, để có thêm một cuốn sách đứng tên"
+  },
+  "h62": {
+   "ban": [
+    "Miễn phí lấy lead",
+    "B2B"
+   ],
+   "cap_goi_y": "solution",
+   "claude_doan": true,
+   "dang": "Hệ thống web",
+   "dau": "Brand Truth của Linh 39,7/100, 9 biến thể chức danh, Gemini bịa ra một cuốn sách; không ai biết cho tới khi đối tác nhắc",
+   "de_xuat": "Không dựng mới: ghép LAB015 Brand Truth (bts.py hỏi nhiều LLM, chấm với brand.json) + LAB036/LAB086 GEO/AEO + LAB082 linhx-audit (social audit). Thêm loại hồ sơ 'person.json' (chức danh chuẩn, sách, chương trình, case). Cùng một máy với tool T4 'AI nói gì về bạn' của ifAgent (h08): bản brand cho giám đốc marketing, bản cá nhân cho giảng viên/chuyên gia/CEO. Chạy cho Linh trước làm case, rồi làm mồi cho Ambassador OS (h15) và Own Media. Lệnh: 'chấm: [tên người hoặc brand]'. Đầu ra: điểm 1 trang + 5 lỗi + việc sửa; chạy lại mỗi tháng để thấy điểm lên.",
+   "ghi_chu": "Linh 6/11 12:08 bổ sung.",
+   "gop_vao": "LAB015, LAB036, LAB082, LAB086; dùng chung máy với T4 ifAgent (h08)",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web"
+   ],
+   "khach": "Linh trước; rồi giảng viên, chuyên gia, CEO (người cá nhân) và brand",
+   "loai": "Công cụ",
+   "lop": 1,
+   "mo_ta": "Một máy chấm chung cho người và thương hiệu: Google/mạng xã hội nói gì, các AI (ChatGPT, Gemini, Claude, Perplexity) nói gì, sai/nhầm/bịa ở đâu, so với hồ sơ sự thật",
+   "module": [
+    "Crawler / dữ liệu",
+    "Báo cáo tự động"
+   ],
+   "nguon": "LAB015-BRAND-TRUTH, D:\\LINHX\\BRAND 02_BRAND_TRUTH_BASELINE",
+   "nguong": "Điểm Brand Truth của Linh từ 39,7 lên ≥60 sau 8 tuần sửa; bản free cho người ngoài ≥20% để lại liên hệ",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Công Báo: chấm xong mà không sửa thì chỉ là con số buồn. Mỗi lỗi phải kèm việc sửa cụ thể (trang nào, bài nào, schema nào). Na Tra: kết quả AI dao động giữa các lần hỏi, phải hỏi ≥2 lượt và ghi ngày, không hứa 'xoá lỗi trong AI'.",
+   "quyet": "",
+   "ten": "Chấm thương hiệu cá nhân trên digital + AI",
+   "thu_tu": 19.3,
+   "trang_thai": "Có bản thử",
+   "uu_tien": 0,
+   "viec": "Khi có người tìm tôi trên Google hay hỏi AI về tôi, tôi muốn biết họ thấy gì và sai ở đâu, để sửa trước khi mất lời mời"
+  },
+  "h63": {
+   "ban": [
+    "Miễn phí lấy lead",
+    "Tài trợ"
+   ],
+   "cap_goi_y": "workflow",
+   "claude_doan": true,
+   "dang": "Quy trình nội bộ",
+   "dau": "Viết tay mỗi tuần không kịp; VOV 'Sống cùng AI' đã từng chạy, có khán giả cũ",
+   "de_xuat": "Ghi 1 buổi/2 tuần, 45 phút, khách mời từ Sổ quan hệ (h19) và học viên corp. Máy (LAB059 nhánh dựng từ file record, cắt ậm ờ) ra: 1 tập dài lên cungai, 5 clip ngắn cho social, 1 bài CafeBiz qua luồng viết h16, nugget vào vault h18. Chủ đề xoay theo 4 chủ đề h60. Đây là bánh đà của cả nhóm Personal Brand.",
+   "ghi_chu": "Linh 6/11 12:13 bổ sung.",
+   "gop_vao": "LAB059 linhx-phim-code, h16, h18, h19, h23, cungai h03, CafeBiz LAB090",
+   "hinh_thai": "ok",
+   "kenh": [
+    "Web",
+    "Live"
+   ],
+   "khach": "Học viên corp, cộng đồng CLB Cùng AI, độc giả CafeBiz",
+   "loai": "Nội dung",
+   "lop": 1,
+   "mo_ta": "Một buổi ghi hình là nguồn cho mọi thứ: tập show, clip ngắn, bài CafeBiz, nugget vault, tư liệu chương sách",
+   "module": [
+    "Sinh nội dung AI",
+    "Đăng đa kênh"
+   ],
+   "nguon": "VOV Sống cùng AI, LAB059",
+   "nguong": "8 tập liên tục không trễ; mỗi tập ra ≥5 clip + 1 bài; ≥1 lời mời dạy/FDE từ show mỗi tháng",
+   "nhom": "LINHX Personal Brand",
+   "phan_bien": "Cao Minh: người xem không cần thêm podcast AI chung chung; mỗi tập phải giải 1 việc cụ thể của dân văn phòng/doanh nghiệp. Công Báo: show là việc tốn giờ Linh nhất, nên chỉ 1 buổi/2 tuần và mọi khâu sau buổi ghi là của máy + Hương Trà.",
+   "quyet": "",
+   "ten": "Show/podcast của Linh trên cungai + CafeBiz",
+   "thu_tu": 14.5,
+   "trang_thai": "Ý tưởng",
+   "uu_tien": 0,
+   "viec": "Khi muốn giữ tiếng nói đều đặn mà không có thời gian viết, tôi muốn nói chuyện 1 buổi với khách mời rồi máy làm ra mọi thứ, để kênh sống và có tư liệu sách"
+  }
+ },
+ "tong": {
+  "buc_tranh": {
+   "cap_nhat": "6/11/2026 13:5x (giờ quốc tế) · Claude · thêm vision và thứ tự đọc",
+   "chot": [
+    {
+     "de_xuat": "ĐÃ CHỐT (anh 13:53–13:55 ngày 6/11). BU về bản chất giống WordPress multisite, nhưng giai đoạn này vẫn tách để học. Lúc đầu nhiều bản cài chung một server (Frappe multi-site, mỗi site một DB), lớn thì dời server, không sửa code. Nối nhau bằng cổng danh tính linhx_id (đăng nhập một lần + đồng ý dữ liệu) và API chuyển lead có ghi công. Sau này nếu các BU chia nhau quá nhiều khách thì cân nhắc gộp các BU thành một bản cài nhiều đơn vị.",
+     "hoi": "Tách tất cả đúng chuẩn ngay từ đầu theo cơ chế WordPress: cùng code lõi, mỗi đơn vị một bản cài riêng (DB riêng): LINHX nội bộ, từng BU, từng OPC, Content hub?"
+    },
+    {
+     "de_xuat": "Có, bắt đầu từ Làn A và B vì mọi thứ khác ghi vào đó.",
+     "hoi": "Đêm nay mở Chặng 0 với 5 làn A–E?"
+    },
+    {
+     "de_xuat": "Có. Tên module theo bảng trên.",
+     "hoi": "Gom module vào app linhx_core, module dọc là app riêng?"
+    },
+    {
+     "de_xuat": "Có. Anh tạo repo trống, em chuyển code 0.1 sang.",
+     "hoi": "Repo mới fyzdfyzd/linhx-engine?"
+    }
+   ],
+   "dem_nay": {
+    "dieu_kien": [
+     "VM linhx-engine-1 đang chạy (0.1)",
+     "Thợ máy cty đã đăng ký lịch (dang-ky-lich.ps1)",
+     "agy cloud đã đăng nhập nếu muốn chạy hơn 1 thợ",
+     "Có repo để đẩy code (hiện code nằm trong chiemtinhso, thư mục linhx-engine)"
+    ],
+    "lan": [
+     {
+      "phieu": "1 phiên",
+      "ten": "Làn 0 · Claude (trước khi thợ chạy)",
+      "viec": [
+       "Phiếu đầu (máy cty): chép code PROTO 03 OPC OS + 01 Máy tạo nội dung từ D:\\LINHX\\PROTO lên repo",
+       "Viết features-dot1.json (mỗi feature ≤ 40 phút, ghi phụ thuộc) + bộ nghiệm thu, anh duyệt rồi khoá",
+       "Chia phiếu theo 5 làn dưới, mở hàng việc"
+      ]
+     },
+     {
+      "phieu": "~8",
+      "ten": "Làn A · Sổ khách",
+      "viec": [
+       "DocType Đơn vị, Tổ chức, Người, Quan hệ, Cơ hội",
+       "Đồng ý theo mục đích; khoá gộp trùng (điện thoại, email, Zalo)",
+       "Quyền theo Đơn vị",
+       "Chuyển từ 03 OPC OS module 04 (khách + đồng ý), không viết mới"
+      ]
+     },
+     {
+      "phieu": "~6",
+      "ten": "Làn B · Tiền",
+      "viec": [
+       "Webhook SePay + VietQR cho đơn báo cáo, bỏ duyệt tay đơn đã trả",
+       "DocType Gói, Giá, Quyền dùng",
+       "Chuyển từ 03 OPC OS module 02, 03, 07 (gói giá, thanh toán, sổ S1a-HKD)"
+      ]
+     },
+     {
+      "phieu": "~6",
+      "ten": "Làn C · Trang BU",
+      "viec": [
+       "Khuôn Next.js Trang BU từ demo ifAgent, form về CRM",
+       "Dựng ifagent.net bản mới trên khuôn (chạy trên IP, chưa đổi DNS)"
+      ]
+     },
+     {
+      "phieu": "~5",
+      "ten": "Làn D · Mồi và phễu",
+      "viec": [
+       "Đưa T1 Khám (LAB113) thành freebie, kết quả đổi bằng Zalo/email",
+       "Bảng phễu 6 tầng bản 1"
+      ]
+     },
+     {
+      "phieu": "~4",
+      "ten": "Làn E · Bàn điều hành",
+      "viec": [
+       "Mở rộng /#/engine: việc chờ anh, lead mới, thợ, token mỗi job"
+      ]
+     }
+    ],
+    "linh_lam": [
+     "Duyệt 4 câu chốt dưới đây",
+     "Tạo repo fyzdfyzd/linhx-engine (hoặc cho em tiếp tục trong chiemtinhso)",
+     "Bấm duyệt chạy trên MÁY CÔNG TY (không phải MSI)"
+    ],
+    "muc_tieu": "Sáng 7/11 anh mở bảng thấy một lead thật đi trọn đường trên engine, và features đợt 1 đã khoá."
+   },
+   "dich": [
+    {
+     "ds": [
+      {
+       "dich": [
+        "Mọi lớp corp đi qua Course OS: nhận đề tới bộ đã duyệt ≤ 4 giờ công của anh",
+        "Điểm học viên ≥ 4,5/5; ≥ 60% còn dùng một workflow sau 30 ngày",
+        "Báo cáo HR sau 30 ngày tự sinh, anh chỉ duyệt; 6 trợ giảng dạy được bằng bộ có sẵn"
+       ],
+       "ten": "Course OS (lớp corp)"
+      },
+      {
+       "dich": [
+        "≥ 300 học viên cũ vào Zalo OA, ≥ 40% hoạt động mỗi tuần",
+        "≥ 1.000 thành viên mới qua freebie và khoá miễn phí; ≥ 5% mua premium hoặc khoá",
+        "2 tổ chức đặt chương trình AI champion; máy chạy ≥ 80% nội dung, anh ≤ 2 giờ/tuần"
+       ],
+       "ten": "cungai + CLB Cùng AI"
+      },
+      {
+       "dich": [
+        "Một mã số thuế xuất mọi hoá đơn đào tạo EDU",
+        "≥ 3 khoá e-learning đang bán; ≥ 10% người học thử ở cungai sang mua",
+        "Nợ Sake có lộ trình về 0; nhánh học đường chỉ mở nếu qua cổng 5 cuộc gọi"
+       ],
+       "ten": "Sakedemy"
+      },
+      {
+       "dich": [
+        "30 doanh nghiệp có agent chạy thật, 15 trả theo tháng, tiền lặp lại ≥ 50%",
+        "6 agent mẫu theo ngành, khách thứ hai cùng ngành chạy trong 7 ngày",
+        "6 FDE tự dẫn dự án, anh ≤ 20% giờ triển khai; 200 lead doanh nghiệp/tháng; 15 case có số"
+       ],
+       "ten": "Agent Force (ifAgent)"
+      },
+      {
+       "dich": [
+        "(giả thuyết) ≥ 3 hợp đồng trao tay có phí bảo trì tháng",
+        "(giả thuyết) ≥ 1 khách thuê hoặc cài xưởng agent tại chỗ"
+       ],
+       "ten": "BespokeAI và xưởng agent tại chỗ"
+      },
+      {
+       "dich": [
+        "Brand Truth từ 39,7 lên ≥ 75; một chức danh thống nhất",
+        "Show 12–16 tập; bản thảo sách 1 đã gửi nhà xuất bản; 4 chủ đề có hồ sơ sống",
+        "5–10 hồ sơ chuyên gia chạy, ≥ 3 khách trả gói tháng; ≥ 5 lời mời/tháng; anh ≤ 3 giờ/tuần"
+       ],
+       "ten": "Expert OS (anh và mạng chuyên gia)"
+      },
+      {
+       "dich": [
+        "(giả thuyết) mọi việc lặp lại đi qua hàng việc, có mã job và người duyệt",
+        "(giả thuyết) anh duyệt ≤ 30 phút/ngày trên một bàn; mỗi đêm ≥ 4 thợ chạy song song"
+       ],
+       "ten": "Đội máy của anh (xưởng thợ, bàn điều hành, sổ tay skill)"
+      }
+     ],
+     "nhom": "LINHX (vòng trong)"
+    },
+    {
+     "ds": [
+      {
+       "dich": [
+        "Mỗi BU có site + 1 freebie đang chạy; AI nhắc tên ở ≥ 1/3 câu hỏi của cụm từ mình",
+        "≥ 20% lead đến từ kênh của mình; từ đề bài tới bản nháp proposal ≤ 1 ngày; 100% job ra case trong 7 ngày"
+       ],
+       "ten": "Chung cho 4 BU B2B (BU OS)"
+      },
+      {
+       "dich": [
+        "≥ 15 agency từng gửi brief, 4 job/tháng",
+        "≥ 3 brand trả Brand kit theo tháng, ≥ 20% doanh thu; BTMH ≤ 30% doanh thu",
+        "QR phygital bán được cho khách thứ hai; mọi job có giá sàn và biên lãi"
+       ],
+       "ten": "Unikon"
+      },
+      {
+       "dich": [
+        "≥ 2 job may đo và ≥ 4 sự kiện preset mỗi tháng",
+        "100% sự kiện có báo cáo số đo trong 24 giờ; ≥ 20% lead từ SEO/GEO",
+        "≥ 2 BU khác đã dùng module sự kiện trong việc thật"
+       ],
+       "ten": "ifAgent Event"
+      },
+      {
+       "dich": [
+        "≥ 2 đề xuất tài trợ có hạng mục Decent AI được duyệt; ≥ 2 lớp Decent AI",
+        "Radar: ≥ 2 hồ sơ nộp/tháng, ≥ 1 hồ sơ đậu",
+        "Internship 3 trường, ≥ 15 sinh viên"
+       ],
+       "ten": "TUVA"
+      },
+      {
+       "dich": [
+        "2 báo cáo phát hành (AI ứng dụng, Người cao tuổi), ≥ 1 bên trả tiền"
+       ],
+       "ten": "Listening Vietnam"
+      },
+      {
+       "dich": [
+        "Phí nội bộ bù ≥ 70% chi; ≥ 90% giờ sản xuất gắn mã job",
+        "Video AI ≥ 2 job/tháng, không đạt thì đóng nhánh từ 31/3/2027"
+       ],
+       "ten": "URAH"
+      },
+      {
+       "dich": [
+        "Giữ tĩnh trên khuôn chung; site nào 6 tháng không ra lead thì đóng"
+       ],
+       "ten": "15 site thương hiệu khác"
+      }
+     ],
+     "nhom": "BU (vòng giữa)"
+    },
+    {
+     "ds": [
+      {
+       "dich": [
+        "(giả thuyết) thanh toán và đơn đã chạy trên engine; calc-service mở mã đúng hạn AGPL",
+        "(giả thuyết) đơn quà Tết doanh nghiệp chuyển sang Radar; là mẫu số 0 của template Báo cáo"
+       ],
+       "ten": "Chiêm Tinh Số"
+      },
+      {
+       "dich": [
+        "(giả thuyết) ≥ 1 OPC thứ hai lên từ template Báo cáo hoặc Công cụ trong ≤ 30 phiếu, đo được thời gian golive"
+       ],
+       "ten": "OPC tiếp theo"
+      },
+      {
+       "dich": [
+        "Mùa lễ hội 20/11–10/12 chạy thử Hà Nội",
+        "(giả thuyết) tới 6/2027 có thành phố thứ hai, đủ điều kiện đóng template Theo nơi"
+       ],
+       "ten": "Tung ta tung tăng"
+      },
+      {
+       "dich": [
+        "Chờ anh: giữ tên miền để nộp gói startup, hay mở lại thành công cụ tự phục vụ"
+       ],
+       "ten": "aicontent.vn"
+      },
+      {
+       "dich": [
+        "Mỗi job đi qua template Job dựng: mã job, nghiệm thu, bàn giao, case trong 7 ngày",
+        "(giả thuyết) ≥ 1 job thành agent mẫu hoặc sản phẩm bán lại"
+       ],
+       "ten": "VWAI, Platform 333, CafeBiz, trợ lý Zalo chị Hương"
+      },
+      {
+       "dich": [
+        "Ra mắt ở event cuối tháng 11, rồi thành agent mẫu ngành ngân hàng của Agent Force"
+       ],
+       "ten": "Agent RM ngân hàng (chị Thuỷ)"
+      },
+      {
+       "dich": [
+        "Trở thành máy Research dùng chung của cả hệ, bán qua AIX"
+       ],
+       "ten": "Research agent (anh Dũng)"
+      },
+      {
+       "dich": [
+        "Thành sản phẩm khảo sát ảo bán trên template Báo cáo"
+       ],
+       "ten": "Persona khảo sát giả lập"
+      },
+      {
+       "dich": [
+        "Giữ thử nhỏ trên module nhân vật ảo; chỉ lớn khi có số"
+       ],
+       "ten": "Sân khấu 3D, Đi Chùa Online"
+      },
+      {
+       "dich": [
+        "Đề xuất đổi: báo cáo ngành vàng + agent mẫu bán lẻ vàng (case BTMH), không làm hub thứ ba"
+       ],
+       "ten": "Gold radar"
+      },
+      {
+       "dich": [
+        "Kênh đối tác bán lại Agent Force và khoá học, có ghi công"
+       ],
+       "ten": "AIX viện AI ứng dụng"
+      }
+     ],
+     "nhom": "Dự án (vòng ngoài)"
+    }
+   ],
+   "doc_thu_tu": [
+    {
+     "buoc": "1 · Vision và tác động (mục này)",
+     "doc": "Câu vision, 5 thay đổi, bảng từng đơn vị, phần tổng, phản biện",
+     "tra_loi": "Đây có đúng cái đích anh muốn và đúng cách đo không?"
+    },
+    {
+     "buoc": "2 · Cuối đường từng mảng",
+     "doc": "Mục 1 bên dưới",
+     "tra_loi": "Số nào là cam kết, số nào chỉ là trần lý thuyết?"
+    },
+    {
+     "buoc": "3 · Còn thiếu mảng gì, điểm vênh",
+     "doc": "Hai mục 'Còn thiếu' và 'Điểm vênh'",
+     "tra_loi": "Mảng thiếu nào là thật, mảng nào bỏ được?"
+    },
+    {
+     "buoc": "4 · Hệ thống cần xây",
+     "doc": "Mục 2, 2a–2d: 6 tầng, module, máy nền, template, 9 PROTO dùng lại",
+     "tra_loi": "Một site lõi chung, app linhx_core, template theo hình dáng: anh đồng ý không?"
+    },
+    {
+     "buoc": "5 · Lộ trình",
+     "doc": "Mục 3 và 4 (việc build, chỉ đọc sau khi chốt bước 1–4)",
+     "tra_loi": "Chặng 0 có phục vụ một khoản tiền đang về không?"
+    }
+   ],
+   "lo_trinh": [
+    {
+     "cong": "Một lead đi trọn: tải T1 → hồ sơ + đồng ý → cơ hội → giao người → thấy trên bàn; một đơn báo cáo trả QR tự giao.",
+     "den": "đêm 6/11 → 18/11 (CSMO)",
+     "lam": [
+      "App linhx_core trên ENGINE 0.1: Đơn vị, Tổ chức, Người, Quan hệ, Cơ hội, Đồng ý, gộp trùng",
+      "Tiền: SePay + VietQR cho báo cáo (việc 1 của 0.1), Gói và Giá",
+      "Template Trang BU từ khuôn demo ifAgent, form về CRM; ifagent.net bản mới",
+      "Freebie T1 Khám nối phễu; bảng phễu 6 tầng bản 1",
+      "Bàn điều hành bản 1: việc chờ anh, thợ, job, token",
+      "CSMO 18/11: báo cáo + QR chạy trên engine; CTS mở mã calc-service trước 20/11"
+     ],
+     "phieu": "~35 phiếu",
+     "ten": "Chặng 0 · Xương sống"
+    },
+    {
+     "cong": "2 pilot ký và đạt chỉ số sau 14 ngày; lớp corp chạy Course OS ≤ 4 giờ công; cungai qua ngưỡng thử 5 lớp.",
+     "den": "→ 31/12/2026",
+     "lam": [
+      "Agent Force chặng 1: deck và credential tự cập nhật, bảng gói, mẫu hợp đồng pilot, tool T2, 4 case",
+      "Course OS v1: bọc 9 module thành workflow, thử trên lớp corp kế tiếp",
+      "cungai: Zalo OA + Mini App, bản tin tuần, kho freebie, thử 5 lớp cũ",
+      "Expert nấc 0–1: hồ sơ giọng, vault, viết, show → clip",
+      "Template Báo cáo: CTS chuyển pay + order; Listening VN báo cáo 1",
+      "linhx_event sau CSMO; Tung ta tung tăng chạy mùa lễ hội; agent RM ngân hàng ra mắt cuối T11"
+     ],
+     "phieu": "~150 phiếu",
+     "ten": "Chặng 1 · Bán được"
+    },
+    {
+     "cong": "Khách thứ hai cùng ngành chạy trong 10 ngày do FDE dẫn; một BU mới lên chỉ bằng cấu hình.",
+     "den": "→ 31/3/2027",
+     "lam": [
+      "BU OS cho Unikon, TUVA, Event: chỉ điền hồ sơ cấu hình",
+      "3 agent mẫu, Agent Shell bản 1, khoá FDE đợt 1",
+      "linhx_finance, people, partner, legal đủ dùng; phí nội bộ URAH",
+      "Sakedemy + LMS bán 3 khoá; Expert thêm 2 người trong hệ",
+      "Template Công cụ: T3–T5; quyết aicontent.vn"
+     ],
+     "phieu": "~200 phiếu",
+     "ten": "Chặng 2 · Đóng gói, cắm thêm BU"
+    },
+    {
+     "cong": "15 khách thuê tháng, tiền lặp ≥ 50%, anh ≤ 20% giờ triển khai; các đích ở mục 1.",
+     "den": "→ 30/6/2027",
+     "lam": [
+      "6 agent mẫu, 6 FDE, xưởng agent tại chỗ cho khách",
+      "Expert bán gói; danh bạ chuyên gia",
+      "Listening VN 2 báo cáo; TUVA radar có tỉ lệ đậu",
+      "Hỗ trợ sau bán, đồng ý dữ liệu đủ, bản tiếng Anh",
+      "CTS chuyển hết (đợt riêng ~300 phiếu, chạy song song bản cũ)"
+     ],
+     "phieu": "~200 phiếu",
+     "ten": "Chặng 3 · Nhân rộng"
+    }
+   ],
+   "may_nen": [
+    {
+     "dung": "repo mayquet",
+     "ten": "Crawler",
+     "tt": "co",
+     "viec": "Quét web, mạng xã hội, đề bài; nguồn dữ liệu của Báo cáo"
+    },
+    {
+     "dung": "LAB040, LAB068 Postiz",
+     "ten": "Social Seeder",
+     "tt": "co",
+     "viec": "Gieo bài bằng người thật hoặc người ảo có nhãn, không nuôi tài khoản ảo"
+    },
+    {
+     "dung": "LAB085, h50, h56",
+     "ten": "Research",
+     "tt": "moi",
+     "viec": "Nghiên cứu nền: research loop, Deep Research, khảo sát persona"
+    },
+    {
+     "dung": "h16, LAB025, LAB049",
+     "ten": "Write",
+     "tt": "co",
+     "viec": "Viết giọng thật, biên tập chống văn AI"
+    },
+    {
+     "dung": "h22, LAB046, LAB028, ENGINE 0.1",
+     "ten": "Report",
+     "tt": "co",
+     "viec": "Báo cáo web + PDF theo mẫu"
+    },
+    {
+     "dung": "LAB099, LAB027",
+     "ten": "Slide",
+     "tt": "co",
+     "viec": "Vòng lặp slide + deck 15 bước"
+    },
+    {
+     "dung": "LAB059, LAB095",
+     "ten": "Video Flow",
+     "tt": "co",
+     "viec": "Phim bằng code, cắt record, giọng Việt"
+    },
+    {
+     "dung": "h21, h28, h42, LAB058",
+     "ten": "Build",
+     "tt": "moi",
+     "viec": "Dựng demo, landing, tool từ brief"
+    },
+    {
+     "dung": "máy cty, VM cloud",
+     "ten": "Thợ agy",
+     "tt": "co",
+     "viec": "Thợ chính, gói Ultra"
+    },
+    {
+     "dung": "",
+     "ten": "Thợ Claude",
+     "tt": "co",
+     "viec": "Chấm, canh cổng kiểm"
+    },
+    {
+     "dung": "LAB112",
+     "ten": "Thợ Gemini Task, Colab",
+     "tt": "y",
+     "viec": "Việc dài, GPU, chạy lô"
+    }
+   ],
+   "module": [
+    {
+     "ds": [
+      {
+       "dung": "cungai, Sakedemy, CTS, lớp corp",
+       "ten": "linhx_id",
+       "tt": "moi",
+       "viec": "Đăng nhập Zalo, Google, OTP; một người một hồ sơ xuyên mọi site, gộp trùng"
+      },
+      {
+       "dung": "mọi nơi có khách cá nhân; chuyển lead chéo",
+       "ten": "linhx_consent",
+       "tt": "moi",
+       "viec": "Đồng ý theo từng mục đích, rút đồng ý, yêu cầu xoá, nhật ký xử lý"
+      },
+      {
+       "dung": "mọi BU, Expert (sổ quan hệ)",
+       "ten": "linhx_crm",
+       "tt": "co",
+       "viec": "Tổ chức, người, quan hệ, cơ hội; giao người trong 1 giờ; chuyển chéo"
+      },
+      {
+       "dung": "mọi đơn vị",
+       "ten": "linhx_funnel",
+       "tt": "co",
+       "viec": "Một bảng 6 tầng cho mọi đơn vị, mọi kênh; ghi công khi chuyển chéo"
+      },
+      {
+       "dung": "BespokeAI (chị Hương), AIX, Unikon bán lại, KOC của Magnet",
+       "ten": "linhx_partner",
+       "tt": "moi",
+       "viec": "Người giới thiệu, đại lý, bán lại, KOC; mã giới thiệu, hoa hồng"
+      },
+      {
+       "dung": "Agent Force, Expert, Course OS",
+       "ten": "linhx_booking",
+       "tt": "moi",
+       "viec": "Đặt lịch: gọi trong 1 giờ, lịch dạy và nói, coaching tháng, lịch lớp, lịch ghi show"
+      }
+     ],
+     "nhom": "Khách"
+    },
+    {
+     "ds": [
+      {
+       "dung": "mọi nơi bán; là linhx_quyen của bản 5/11, bị rớt khỏi bảng 10 lõi",
+       "ten": "linhx_catalog",
+       "tt": "y",
+       "viec": "Sản phẩm, gói, giá, giá sàn, quyền dùng (free, hạn mức, ghế, membership, tín dụng)"
+      },
+      {
+       "dung": "mọi nơi thu tiền",
+       "ten": "linhx_pay",
+       "tt": "co",
+       "viec": "QR SePay/VietQR, đối soát, hoàn tiền, hoá đơn điện tử, nhiều mã số thuế, ngoại tệ"
+      },
+      {
+       "dung": "URAH, mọi BU (h26 chưa quy hoạch)",
+       "ten": "linhx_finance",
+       "tt": "y",
+       "viec": "Sổ theo pháp nhân và đơn vị, phí nội bộ theo mã job, giá vốn job (token + giờ người), phải thu, thù lao"
+      },
+      {
+       "dung": "Agent Force, BespokeAI, Unikon, Expert",
+       "ten": "linhx_legal",
+       "tt": "moi",
+       "viec": "Mẫu hợp đồng (pilot 40/40/20, NDA, thoả thuận xử lý dữ liệu, thầu phụ, chuyên gia, tác giả), điều khoản xin case, hạn"
+      }
+     ],
+     "nhom": "Tiền"
+    },
+    {
+     "ds": [
+      {
+       "dung": "mọi đơn vị; 2 hub thật",
+       "ten": "linhx_content",
+       "tt": "co",
+       "viec": "Máy nội dung: cụm bài trụ, lịch đăng, người duyệt, bản dịch"
+      },
+      {
+       "dung": "Unikon Brand kit, mọi site, Slide",
+       "ten": "linhx_brand",
+       "tt": "moi",
+       "viec": "Hồ sơ nhận diện mỗi đơn vị và mỗi khách: màu, font, giọng, nhân vật, luật; theme web và slide đọc từ đây"
+      },
+      {
+       "dung": "mọi đơn vị (đang chạy ở 0.1)",
+       "ten": "linhx_watch",
+       "tt": "co",
+       "viec": "Đo AI nói gì, SEO, Brand Truth; lưu lịch sử theo tháng"
+      },
+      {
+       "dung": "mọi đơn vị",
+       "ten": "linhx_freebie",
+       "tt": "co",
+       "viec": "Thư viện mồi: tool, tài liệu, bản miễn phí; hạn mức"
+      },
+      {
+       "dung": "mọi BU, cungai, CTS",
+       "ten": "linhx_scan",
+       "tt": "co",
+       "viec": "Quét lead, đề bài, xu hướng, call tài trợ"
+      },
+      {
+       "dung": "mọi đơn vị",
+       "ten": "linhx_ads",
+       "tt": "co",
+       "viec": "Paid media: chỉ đẩy mồi đã chứng minh, xét CAC sau 14 ngày"
+      },
+      {
+       "dung": "cungai, CTS, Agent Shell; là linhx_kenh của bản 5/11",
+       "ten": "linhx_chat",
+       "tt": "y",
+       "viec": "Zalo OA, Messenger, Telegram, email, bản tin; hộp thư chung"
+      }
+     ],
+     "nhom": "Tiếng nói"
+    },
+    {
+     "ds": [
+      {
+       "dung": "đang chạy ở ENGINE 0.1",
+       "ten": "linhx_worker",
+       "tt": "co",
+       "viec": "Hàng việc, thợ kéo việc, trần phút, nhãn thợ"
+      },
+      {
+       "dung": "CTS, Listening, Event, Agent Force D+30, HR",
+       "ten": "linhx_report",
+       "tt": "co",
+       "viec": "Mẫu báo cáo, giao báo cáo web + PDF cho khách"
+      },
+      {
+       "dung": "mọi đầu ra (h24 chưa thành module)",
+       "ten": "linhx_qc",
+       "tt": "y",
+       "viec": "Cổng duyệt chung mọi đầu ra: luật, chấm mù, người duyệt, điểm, lý do trả"
+      },
+      {
+       "dung": "Course OS, Unikon, Expert",
+       "ten": "linhx_asset",
+       "tt": "moi",
+       "viec": "Kho file có quyền và phiên bản: học liệu, asset Unikon, ảnh lớp, video; cờ công khai"
+      }
+     ],
+     "nhom": "Làm"
+    },
+    {
+     "ds": [
+      {
+       "dung": "anh, mọi đơn vị",
+       "ten": "linhx_ops",
+       "tt": "co",
+       "viec": "Bàn điều hành: việc chờ anh, ý tưởng, đề, nhật ký token, giám sát thợ và webhook"
+      },
+      {
+       "dung": "URAH, TUVA internship, Agent Force",
+       "ten": "linhx_people",
+       "tt": "moi",
+       "viec": "Nhân sự, CTV, trợ giảng, FDE, thực tập sinh: vai, chứng chỉ, quyền theo đơn vị và theo khách, thù lao"
+      },
+      {
+       "dung": "CTS, Sakedemy, BespokeAI",
+       "ten": "linhx_support",
+       "tt": "moi",
+       "viec": "Hỗ trợ sau bán: phiếu, SLA, bảo trì tháng, hoàn tiền, đánh giá; bot tầng 1"
+      },
+      {
+       "dung": "mọi đơn vị",
+       "ten": "linhx_shell",
+       "tt": "co",
+       "viec": "Agent trong Zalo cho người vận hành; quyền theo vai, nhật ký lệnh"
+      }
+     ],
+     "nhom": "Điều hành"
+    },
+    {
+     "ds": [
+      {
+       "dung": "Radar, Expert (nhẹ)",
+       "ten": "linhx_bid",
+       "tt": "co",
+       "viec": "Đề bài → idea → đề xuất → báo giá; lưu thắng thua có lý do"
+      },
+      {
+       "dung": "Radar, Expert, Course OS",
+       "ten": "linhx_cred",
+       "tt": "co",
+       "viec": "Một kho bằng chứng: case, số, năng lực, hồ sơ chuyên gia, cờ khách cho công khai"
+      },
+      {
+       "dung": "Magnet",
+       "ten": "linhx_shop",
+       "tt": "co",
+       "viec": "Trang bán, sản phẩm số, giao tự động, quà tặng, hoàn tiền"
+      },
+      {
+       "dung": "Expert",
+       "ten": "linhx_expert",
+       "tt": "co",
+       "viec": "Vault, giọng, show, sách, danh bạ chuyên gia"
+      }
+     ],
+     "nhom": "Công thức"
+    },
+    {
+     "ds": [
+      {
+       "dung": "EDU, TUVA, Agent Force (khoá FDE)",
+       "ten": "linhx_course",
+       "tt": "co",
+       "viec": "Course OS: đề, khoá, phiên bản, duyệt, phản hồi, reflect"
+      },
+      {
+       "dung": "cungai, Sakedemy",
+       "ten": "linhx_lms",
+       "tt": "y",
+       "viec": "Học trực tuyến, chứng nhận, ghế lớp corp"
+      },
+      {
+       "dung": "cungai, Expert",
+       "ten": "linhx_community",
+       "tt": "moi",
+       "viec": "CLB Cùng AI: nhóm theo nghề, thử thách, AI champion, Ambassador"
+      },
+      {
+       "dung": "Event, lớp corp, CLB, show, Platform 333",
+       "ten": "linhx_event",
+       "tt": "co",
+       "viec": "Sự kiện online và offline: đăng ký, vé, check-in QR, QR phygital, báo cáo 24 giờ"
+      },
+      {
+       "dung": "Agent Force, BespokeAI, các BU khách số 0",
+       "ten": "linhx_agent",
+       "tt": "moi",
+       "viec": "Agent Force: playbook 7 bước, pilot 14 ngày, chấm dữ liệu, agent mẫu, đo trước sau, giám sát agent ở khách"
+      },
+      {
+       "dung": "Event, Expert nấc 4, Đi Chùa Online",
+       "ten": "linhx_avatar",
+       "tt": "moi",
+       "viec": "Nhân vật ảo: live character, tác giả ảo gắn nhãn, sân khấu 3D"
+      }
+     ],
+     "nhom": "Dọc"
+    }
+   ],
+   "tai_dung": {
+    "doi_lo_trinh": "Chặng 0 thêm 1 phiếu đầu: chép code 03 + 01 từ máy cty lên repo. Làn A, B đổi từ viết mới sang chuyển từ 03, em đoán bớt khoảng 1/3 số phiếu hai làn này (chưa đo).",
+    "ds": [
+     {
+      "dem": "Làn B Tiền + Làn A Sổ khách chép từ đây, không viết mới",
+      "lay": "code tiền tất định (VietQR, webhook SePay, chống trùng tx_id, sổ S1a-HKD, báo đỏ 400tr), cổng pháp lý, 3 opc.json",
+      "ma": "03 OPC OS",
+      "muc": "cao nhất",
+      "vao": "lõi: catalog, pay, id+consent, content, support, finance, funnel, legal, ops, report + công thức Magnet"
+     },
+     {
+      "dem": "Dùng làm cổng QC chung, gọi qua thợ",
+      "lay": "9 bước, bộ chấm chống văn AI LAB049, Onbrand LAB043, 25 hạng mục kiểm",
+      "ma": "01 Máy tạo nội dung",
+      "muc": "cao",
+      "vao": "máy nền Write + module qc"
+     },
+     {
+      "dem": "Chưa, sau Chặng 0",
+      "lay": "9 module, một lõi nội dung cắt ra nhiều dạng, xuất SCORM 1.2, cổng CHO_GIANG_VIEN_DUYET",
+      "ma": "06 Course OS",
+      "muc": "cao",
+      "vao": "dọc course (Course OS đã khoá)"
+     },
+     {
+      "dem": "Chưa",
+      "lay": "7 bước m1–m7 thành 7 LX Workflow, bộ 12+6 câu đo mức, hợp đồng 40/40/20",
+      "ma": "05 Agent Force OS",
+      "muc": "cao",
+      "vao": "dọc agent, đúng chuỗi workflow h08"
+     },
+     {
+      "dem": "Chưa",
+      "lay": "sổ kênh kenh.json, lịch Hub/Hygiene/Hero, 10 bước",
+      "ma": "07 Channel OS",
+      "muc": "vừa",
+      "vao": "content, watch, ads + Own Media h15"
+     },
+     {
+      "dem": "Chưa",
+      "lay": "nhan_vat.json, inbox 3 tầng, nhãn AI Luật 134/2025, công tắc dừng khẩn",
+      "ma": "04 Ambassador OS",
+      "muc": "vừa",
+      "vao": "dọc avatar + crm quan hệ (Sổ quan hệ h19) + chat"
+     },
+     {
+      "dem": "Chưa, Frappe chỉ gọi",
+      "lay": "nguon.json 326 nguồn, quet.json cắm bằng cấu hình",
+      "ma": "08 Crawler OS",
+      "muc": "vừa",
+      "vao": "máy nền Crawler, đứng ngoài Frappe (gộp với repo mayquet)"
+     },
+     {
+      "dem": "Chưa, giữ Node trên IFAGENT",
+      "lay": "5 bước brief→demo, gói template Unikon",
+      "ma": "09 Generator",
+      "muc": "vừa",
+      "vao": "máy nền Build + template Job dựng"
+     },
+     {
+      "dem": "Lấy 2 mảnh đó vào module shell",
+      "lay": "bộ định tuyến 4 nhánh chặn câu bẫy, quét .agents/workflows/*.md tự thành quy trình",
+      "ma": "02 Server mỏng",
+      "muc": "thấp",
+      "vao": "ENGINE 0.1 (linhx_worker) đã thay"
+     }
+    ],
+    "ket_luan": "Dùng được phần ruột, bỏ phần vỏ. Giữ: logic tính, giao kèo JSON, bộ verify, file cấu hình. Bỏ: server, dashboard, event bus, SQLite riêng của từng bản, vì Frappe thay hết. Frappe cũng là Python nên module.py chép sang khá thẳng.",
+    "luu_y": "Cả 9 bản mới ở Mức 1, dữ liệu phần lớn GIẢ LẬP, em chưa chạy lại. Code nằm ở máy cty D:\\LINHX\\PROTO, cloud chỉ có README. Bản thứ 10 em đoán là Chiêm Tinh Số (đã tính riêng ~300 phiếu)."
+   },
+   "tang": [
+    {
+     "dem": "~20 tên miền",
+     "noi": "ifagent.net, event.ifagent.net, unikon.vn, tuva.work, listening.vn, sakedemy.com, cungai.vn + Zalo Mini App, chiemtinh.vn, linhx.info, urah.vn… Chỉ hiển thị và nhận thao tác; giá, đơn, quyền dùng nằm ở site lõi.",
+     "ten": "6 · Site"
+    },
+    {
+     "dem": "6 + 1 chờ",
+     "noi": "Trang BU, Hub, Báo cáo, Công cụ tự phục vụ, Job dựng, Trang chuyên gia; Theo nơi chờ dự án thứ hai.",
+     "ten": "5 · Template"
+    },
+    {
+     "dem": "3 + 6",
+     "noi": "Radar (săn B2B), Magnet (bán thẳng), Expert (một người). Dọc: course, lms, community, event, agent, avatar.",
+     "ten": "4 · Công thức + dọc"
+    },
+    {
+     "dem": "25",
+     "noi": "5 nhóm: Khách, Tiền, Tiếng nói, Làm, Điều hành. Nằm trong một site lõi chung, quyền theo đơn vị.",
+     "ten": "3 · Module lõi"
+    },
+    {
+     "dem": "11",
+     "noi": "Dữ liệu: Crawler, Social Seeder. Sản xuất: Research, Write, Report, Slide, Video Flow, Build. Thợ: agy, Claude, Gemini Task/Colab. Chạy ngoài web server, nhận việc qua linhx_worker.",
+     "ten": "2 · Máy nền"
+    },
+    {
+     "dem": "1 bench",
+     "noi": "Frappe Framework (MIT, không sửa lõi). Bench Docker trên GCP (VM linhx-engine-1 đang chạy 0.1), Cloudflare, MariaDB, Redis; máy cty chạy thợ ẩn.",
+     "ten": "1 · Frappe + hạ tầng"
+    }
+   ],
+   "template": [
+    {
+     "du": "đủ",
+     "du_an": "ifagent.net, event.ifagent.net, unikon.vn, tuva.work, urah.vn, sakedemy.com",
+     "hinh": "Showcase trả lời trong 10 giây + cụm bài trụ + 1 mồi + form về CRM",
+     "ten": "Trang BU"
+    },
+    {
+     "du": "đủ, và chỉ 2 hub",
+     "du_an": "cungai.vn, hub agentic của ifAgent",
+     "hinh": "Bản tin, bài, kho mồi, cộng đồng, membership",
+     "ten": "Hub nội dung + cộng đồng"
+    },
+    {
+     "du": "đủ",
+     "du_an": "CTS, Listening VN, AI nói gì, khảo sát persona, báo cáo ngành vàng",
+     "hinh": "Thu dữ liệu → report → bản free + bản trả tiền",
+     "ten": "Báo cáo"
+    },
+    {
+     "du": "đủ",
+     "du_an": "tool T1–T5, chấm thương hiệu cá nhân, tool tính gói sự kiện, aicontent.vn (nếu mở)",
+     "hinh": "Bấm là ra, hạn mức free, trả khi dùng nhiều",
+     "ten": "Công cụ tự phục vụ"
+    },
+    {
+     "du": "đủ",
+     "du_an": "VWAI, Platform 333, CafeBiz, trợ lý chị Hương, agent RM, research agent",
+     "hinh": "Mã job, hợp đồng, dựng bằng xưởng thợ, nghiệm thu, bàn giao, bảo trì",
+     "ten": "Job dựng cho khách"
+    },
+    {
+     "du": "đủ",
+     "du_an": "linhx.info, mỗi hồ sơ Expert OS",
+     "hinh": "Hồ sơ, show, sách, nút đặt lịch; danh bạ",
+     "ten": "Trang chuyên gia"
+    },
+    {
+     "du": "chưa: làm như dự án, đóng template khi có dự án thứ hai",
+     "du_an": "Tung ta tung tăng",
+     "hinh": "Gói dữ liệu theo thành phố + agent gợi ý + sự kiện",
+     "ten": "Theo nơi"
+    }
+   ],
+   "thieu": [
+    {
+     "dat": "linhx_id + site lõi chung",
+     "mang": "Một người một hồ sơ",
+     "vi_sao": "Cùng một người là khách CTS, học viên lớp corp VCB và người mời anh đi nói; không nhận ra thì không chuyển chéo được"
+    },
+    {
+     "dat": "linhx_consent",
+     "mang": "Đồng ý dữ liệu",
+     "vi_sao": "Lead CTS chuyển sang Unikon cần đồng ý mới. Căn cứ nay là Luật Bảo vệ dữ liệu cá nhân 2025 (hiệu lực 1/1/2026), không chỉ NĐ 13; em cần kiểm lại văn bản hướng dẫn"
+    },
+    {
+     "dat": "linhx_catalog",
+     "mang": "Gói và quyền dùng",
+     "vi_sao": "Freemium cungai, ghế lớp corp, tín dụng tool T1–T5, membership CLB đang mỗi nơi tự ghi"
+    },
+    {
+     "dat": "linhx_legal + linhx_qc",
+     "mang": "Hợp đồng, pháp lý",
+     "vi_sao": "Pilot 'không đạt không trả' cần điều khoản đo; Unikon và ifAgent là bên có liên quan; case AstraZeneca chưa xin phép; người ảo phải gắn nhãn theo Luật AI"
+    },
+    {
+     "dat": "linhx_finance",
+     "mang": "Tiền nhiều pháp nhân",
+     "vi_sao": "ifAgent, Unikon, TUVA, Sakedemy, URAH và cá nhân anh; phí nội bộ URAH; không biết job nào lãi khi chưa tính token và giờ người"
+    },
+    {
+     "dat": "linhx_people + quyền theo đơn vị",
+     "mang": "Nhân sự và quyền",
+     "vi_sao": "6 trợ giảng, FDE, Ambassador, sinh viên, người vận hành 6 đơn vị; tài liệu ngân hàng chỉ người lớp đó được xem"
+    },
+    {
+     "dat": "linhx_support",
+     "mang": "Hỗ trợ sau bán",
+     "vi_sao": "BespokeAI thu bảo trì tháng nhưng chưa có chỗ nhận lỗi; CTS cần hoàn tiền"
+    },
+    {
+     "dat": "linhx_qc",
+     "mang": "QC chung",
+     "vi_sao": "Mỗi đơn vị tự kiểm; Dương Tiễn mới chỉ ở trang"
+    },
+    {
+     "dat": "site riêng khi cần, thợ cách ly theo việc, bí mật ngoài repo",
+     "mang": "Bảo mật dữ liệu khách",
+     "vi_sao": "Dược, ngân hàng ngại đưa dữ liệu; thợ chạy trên máy cty; tài khoản AI của khách"
+    },
+    {
+     "dat": "linhx_partner",
+     "mang": "Đối tác, giới thiệu",
+     "vi_sao": "Chị Hương, AIX, Unikon bán lại, Spiderum, KOC đều chưa có chỗ ghi công"
+    },
+    {
+     "dat": "linhx_booking + linhx_event dùng chung",
+     "mang": "Lịch, sự kiện offline",
+     "vi_sao": "Lớp corp, industry sharing, show ghi hình, lịch nói của anh, coaching tháng"
+    },
+    {
+     "dat": "trường dịch trong content, catalog, report",
+     "mang": "Đa ngôn ngữ",
+     "vi_sao": "TUVA viết cho nhà tài trợ bằng tiếng Anh; Listening bán cho brand ngoại; Việt hoá theo phút cho FDI (LAB074)"
+    },
+    {
+     "dat": "linhx_asset + linhx_brand",
+     "mang": "Kho tài sản, nhận diện",
+     "vi_sao": "Học liệu 252 MB rải rác; Brand kit Unikon; slide phải đúng brand"
+    },
+    {
+     "dat": "linhx_agent",
+     "mang": "Agent sau khi giao",
+     "vi_sao": "15 khách thuê tháng cần giám sát agent sống, chi phí, lỗi"
+    }
+   ],
+   "tieu_de": "LINHX ENGINE khi đủ: đích, hệ thống, lộ trình",
+   "tom_tat": [
+    "Đích 30/6/2027, giả định đủ người và tiền: 27 đơn vị (EDU, Agent Force, Expert, 6 BU, 14 dự án) chạy trên một engine. Đơn vị chỉ là cấu hình, không ai tự dựng hệ thống riêng.",
+    "Hệ thống: 6 tầng trên Frappe. Mỗi đơn vị một bản cài riêng theo cơ chế WordPress (LINHX nội bộ, từng BU, từng OPC, Content hub), chung code lõi và cổng danh tính linhx_id; lõi gồm 25 module lõi, 3 công thức (Radar, Magnet, Expert), 6 module dọc; dưới là 11 máy nền chạy qua hàng việc; trên là 6 template và các tên miền.",
+    "So với những gì anh đã đặt tên, còn thiếu 14 mảng. Năm mảng chặn vòng quay giữa các nhánh: một người một hồ sơ, đồng ý dữ liệu, gói và quyền dùng, hợp đồng, sổ tiền nhiều pháp nhân.",
+    "Lộ trình 4 chặng theo các mốc đã có (18/11 CSMO, 31/12, 31/3, 30/6). Chưa build: anh chốt giải pháp trước (anh dặn 13:15 ngày 6/11)."
+   ],
+   "vench": [
+    "Bản 13:00 6/11 đề xuất một site lõi chung. Anh chốt (13:55): tách tất cả từ đầu theo cơ chế WordPress, mỗi đơn vị một bản cài, chung code lõi + cổng danh tính linhx_id. Khớp lại hướng 5/11.",
+    "Gold radar là content hub ngành vàng, trái luật chỉ 2 hub. Đề xuất đổi thành báo cáo ngành vàng + agent mẫu bán lẻ vàng.",
+    "Agent RM ngân hàng, trợ lý chị Hương, research agent đang là dự án rời; nên vào thư viện agent mẫu của Agent Force.",
+    "Live character, tác giả ảo, sân khấu 3D, Luna Mai là bốn chỗ của một module nhân vật ảo.",
+    "CafeBiz toà soạn và show của anh trên CafeBiz là cùng một khách, cần một tài khoản tổ chức.",
+    "linhx_quyen và linhx_kenh có trong bản 5/11 nhưng rớt khỏi bảng 10 lõi: em đưa lại thành linhx_catalog, linhx_chat.",
+    "Giấy phép: Frappe MIT, nhưng Frappe CRM, Helpdesk, LMS là AGPL, ERPNext là GPL. Bán bản cài tại chỗ là phân phối, nên app LINHX tự viết; app AGPL chỉ dùng nguyên bản hoặc bỏ.",
+    "Trong Frappe, một app chứa nhiều module. Không làm 35 app: gom 25 lõi + 3 công thức vào app linhx_core; mỗi module dọc là một app riêng để bán hoặc bật riêng.",
+    "aicontent.vn: doc BU ghi không làm B2C, phần dự án ghi nếu mở lại. Chờ anh.",
+    "BespokeAI ký bằng pháp nhân nào (Unikon 23/10 hay Agent Force 6/11). Listening VN dưới TUVA hay riêng. Chờ anh."
+   ],
+   "vision": {
+    "cau": "LINHX ENGINE là bộ máy để mở một sản phẩm hay dịch vụ mới nhanh nhất: cài một bản mới từ code lõi chung, bật module cần dùng, điền cấu hình, chọn template, rồi chạy. Máy làm phần lặp lại, người chỉ bán, dạy, nói và duyệt; mỗi việc làm xong thành tài sản cho đơn vị khác.",
+    "cau_hoi": [
+     "Vision một câu ở trên có đúng điều anh muốn không?",
+     "Số đo chính là thời gian từ ý tới đơn đầu tiên, số đo phụ là giờ/tuần của anh (đề xuất ≤ 40 giờ). Anh đồng ý không?",
+     "Mỗi đơn vị có cần hai cột 'khi đủ' và 'cam kết' không, để khỏi build quá tay?",
+     "Đơn vị nào anh không muốn đưa vào engine?"
+    ],
+    "doi": [
+     {
+      "thanh": "Một lõi chung. BU chỉ còn là cửa bán: thương hiệu, ngách, người bán, kho case.",
+      "tu": "Mỗi BU tự lo hệ thống"
+     },
+     {
+      "thanh": "Thợ máy làm, người của từng đơn vị duyệt, anh chỉ duyệt điểm chốt.",
+      "tu": "Người làm, anh kiểm"
+     },
+     {
+      "thanh": "Một sổ khách, mỗi người một hồ sơ. Lead chuyển chéo giữa các BU có đồng ý và có ghi công.",
+      "tu": "Lead nằm rời trong đầu từng người"
+     },
+     {
+      "thanh": "Mỗi job ra case có số trong 7 ngày. Việc lặp lại lần thứ ba thì đóng thành sản phẩm hoặc gói preset.",
+      "tu": "Mỗi job làm một lần rồi thôi"
+     },
+     {
+      "thanh": "Sản phẩm mới là một bộ cấu hình trên template sẵn có, lên trong vài chục phiếu.",
+      "tu": "Sản phẩm mới phải dựng từ đầu"
+     }
+    ],
+    "don_vi": [
+     {
+      "do": "Giờ/tuần của anh và tỉ lệ giờ dành cho việc chỉ anh làm được. Em đề xuất ≤ 40 giờ, ≥ 60% là bán/dạy/nói (em đoán, chờ anh chỉnh).",
+      "khi_du": "Một bàn điều hành duy nhất: việc chờ anh, tiền về, lead mới. Anh duyệt ≤ 30 phút/ngày, giờ còn lại dồn cho bán, dạy, nói, viết.",
+      "nay": "80–100 giờ/tuần, ôm bán, dạy, duyệt, vận hành mọi BU (anh nói 24/10).",
+      "ten": "Anh (người điều hành)"
+     },
+     {
+      "do": "Giờ công của anh mỗi lớp ≤ 4 giờ. Điểm học viên ≥ 4,5/5. Tỉ lệ lớp sinh ra lead Agent Force. Số lớp do trợ giảng dạy.",
+      "khi_du": "Mọi lớp đi qua Course OS, một lõi nội dung cắt ra nhiều dạng. 6 trợ giảng dạy được bằng bộ có sẵn. Học viên cũ về CLB Cùng AI, cuối lớp có cửa vào Agent Force.",
+      "nay": "25 khoá 2024–2026, 13 khách corp năm 2025, ngân hàng lớn nhất. Nguồn khách phụ thuộc Talentpool và Unikon (Định hướng 23/10). Mỗi lớp soạn gần như từ đầu.",
+      "ten": "LINHX EDU (lớp corp, cungai, Sakedemy)"
+     },
+     {
+      "do": "Số DN có agent chạy thật và trả theo tháng. Kế hoạch 24/10 cam kết 4 DN vào 30/6/2027, 8 DN vào 31/12/2027. Bản 'khi đủ' ghi 30 DN là trần lý thuyết.",
+      "khi_du": "Một cửa bán agent cho doanh nghiệp. Agent mẫu theo ngành, khách thứ hai cùng ngành lên trong 7 ngày. Mỗi BU là khách số 0 rồi thành case.",
+      "nay": "Các dự án agent cũ đã thất bại: VTV3, VOV giao thông, Tasco (Input 24/10). Có ENGINE 0.1 chạy báo cáo 'AI nói gì về thương hiệu', chưa thu tiền.",
+      "ten": "Agent Force (ifagent.net)"
+     },
+     {
+      "do": "Brand Truth ≥ 75, ≥ 5 lời mời/tháng, giờ của anh ≤ 3 giờ/tuần, số hồ sơ chuyên gia trả tiền.",
+      "khi_du": "Vault giọng anh nuôi bài, show, sách. Tool chấm thương hiệu cá nhân làm mồi. Sổ quan hệ nằm chung sổ khách. Sau anh thì cắm thêm chuyên gia trong hệ.",
+      "nay": "Brand Truth 39,7. Thương hiệu tản ra 4 hướng: AI, sáng tạo/Lê Bích, chiêm tinh, công nghệ và triết học (Định hướng 23/10).",
+      "ten": "Expert OS (anh và mạng chuyên gia)"
+     },
+     {
+      "do": "Độ phủ phễu ≥ 3 lần, 4 job/tháng, ≥ 30% doanh thu từ gói tháng (Kế hoạch 24/10), BTMH ≤ 30% doanh thu.",
+      "khi_du": "Xưởng AI production trắng nhãn cho agency. Máy làm phần sản xuất nên năng lực tăng mà không thêm người. Có trang demo, mồi cho agency, gói Brand kit thu theo tháng.",
+      "nay": "2–3 lead/tháng, nhận tối đa 2–3 job, gần như mọi lead đều thành job. Đó là dấu hiệu thiếu phễu: độ phủ chỉ khoảng 1 lần (Top việc 24/10). Own media yếu. Minh Hiền nghỉ từ cuối T01.",
+      "ten": "Unikon"
+     },
+     {
+      "do": "≥ 2 job may đo/tháng (mức hoà vốn), ≥ 20% lead từ SEO/GEO (Top việc 24/10).",
+      "khi_du": "Gói preset giá rẻ chạy quảng cáo, gói may đo giá cao. Mọi sự kiện có báo cáo số đo trong 24 giờ, lead sự kiện vào sổ khách chung.",
+      "nay": "Đã tái định vị sang event dùng AI, nền tảng làm lại bằng agent. VEV ra 5–7 lead, có 2 khách tự tìm tới qua GEO. CSMO 18/11 kỳ vọng 30–50 lead (Input + Kế hoạch 24/10).",
+      "ten": "ifAgent Event"
+     },
+     {
+      "do": "≥ 4 đề xuất có hạng mục Decent AI, thu Decent AI ≥ 300 triệu năm 2027 (Kế hoạch 24/10), số hồ sơ nộp và đậu mỗi tháng.",
+      "khi_du": "Decent AI: đối tác AI an toàn cho NGO. Radar tự săn call và soạn hồ sơ. Listening dùng chung máy quét và máy báo cáo, mỗi báo cáo là một sản phẩm.",
+      "nay": "Comm cho NGO khoảng 1 job/2 tháng. Viện trợ Mỹ giảm từ 68 xuống 32 tỷ USD. Đã thử radar call, có vẻ hiệu quả (Input + Top việc 24/10).",
+      "ten": "TUVA + Listening Vietnam"
+     },
+     {
+      "do": "Có 1 khoá chạy hằng tháng hoặc đóng (Kế hoạch 24/10). Nợ Sake có lộ trình về 0.",
+      "khi_du": "Cửa bán khoá và xuất hoá đơn của EDU. Khoá e-learning bán qua QR, dùng chung LMS và Course OS.",
+      "nay": "Cả 3 nhánh (khoá sáng tạo, sách, gia công content) về 0. Còn khán giả cũ, đã lâu không hoạt động (Input 24/10).",
+      "ten": "Sakedemy"
+     },
+     {
+      "do": "Phí nội bộ bù ≥ 70% chi, ≥ 90% giờ gắn mã job. Video AI ≥ 2 job/tháng, không đạt thì đóng nhánh từ 31/3 (Kế hoạch 24/10).",
+      "khi_du": "Xưởng người của cả hệ. Mọi giờ sản xuất đều gắn mã job và tính phí nội bộ.",
+      "nay": "Video production không còn hiệu quả, không có sản phẩm riêng, đang lo hạ tầng và sản xuất cho các bên trong hệ (Input 24/10).",
+      "ten": "URAH"
+     },
+     {
+      "do": "Số phiếu từ ý tới ngày bán (đề xuất ≤ 30 phiếu). Doanh thu/ngày, CAC. Kế hoạch 24/10 đặt OPC khoảng 1.700 triệu năm 2027, ngoài cam kết.",
+      "khi_du": "Thanh toán, khách, sổ tiền chạy trên lõi chung. Sản phẩm mới lên từ template Báo cáo hoặc Công cụ.",
+      "nay": "Chiêm Tinh Số có engine riêng. OPC OS mới ở Mức 1, dữ liệu giả lập.",
+      "ten": "OPC (Chiêm Tinh Số và các sản phẩm sau)"
+     },
+     {
+      "do": "Biên lãi từng job, tỉ lệ job thành agent mẫu hoặc sản phẩm bán lại.",
+      "khi_du": "Đi chung template Job dựng: mã job, nghiệm thu, bàn giao, case trong 7 ngày.",
+      "nay": "Mỗi dự án đi một kiểu, khó tính giờ và khó dùng lại.",
+      "ten": "Dự án dựng cho khách (VWAI, Platform 333, CafeBiz...)"
+     }
+    ],
+    "khong_lam": [
+     "Engine không tự trả được nợ. Tiền vẫn đến từ bán và đòi tiền; kế hoạch 24/10 dành 30 giờ/tuần của anh riêng cho việc này.",
+     "Engine không thay người bán. Hằng, Châu Đỗ, Thu Hiền, Vân Anh vẫn phải bán. Engine chỉ làm họ bán nhanh hơn và không bị rơi lead.",
+     "Engine chưa phải sản phẩm để bán ra ngoài. Chỉ bán phần đã chạy thật trong hệ."
+    ],
+    "muc_tieu_linh": "Mục tiêu số 1 của engine (anh chốt 13:54 ngày 6/11): deploy một sản phẩm/dịch vụ mới nhanh nhất. Vì vậy tách từ đầu: sản phẩm mới = cài một bản mới từ code lõi + bật plugin + điền cấu hình + chọn template.",
+    "phan_bien": [
+     {
+      "ai": "Công Báo (cãi ngược)",
+      "y": "Bản 'khi đủ' ghi 30 DN có agent, còn kế hoạch 24/10 chỉ cam kết 4 DN vào 30/6/2027. Nếu đọc nhầm trần lý thuyết thành cam kết thì sẽ build quá tay. Đề xuất: mỗi đơn vị giữ hai cột, 'khi đủ' và 'cam kết'."
+     },
+     {
+      "ai": "Công Báo (cãi ngược)",
+      "y": "Dựng nền trước khi có tiền là rủi ro kinh điển: Gartner dự báo hơn 40% dự án agentic bị huỷ trước 2027 (nguồn trong Định hướng 23/10). Engine chỉ đáng làm khi mỗi chặng đều phục vụ một khoản tiền đang về, ví dụ CSMO 18/11, đơn báo cáo, lớp corp."
+     },
+     {
+      "ai": "Dương Tiễn (QC)",
+      "y": "Một site lõi chung nghĩa là một điểm hỏng chung. Cần sao lưu hằng ngày, phân quyền theo đơn vị và nhật ký truy cập ngay từ đầu, vì dữ liệu cá nhân của mọi BU nằm chung một chỗ."
+     },
+     {
+      "ai": "Dương Tiễn (QC)",
+      "y": "Rủi ro người lớn hơn rủi ro máy: Minh Hiền nghỉ từ T01, Hằng đang quá tải (Kế hoạch 24/10). Máy chạy mà không có người bán thì Unikon và Event vẫn đứng."
+     },
+     {
+      "ai": "Khương Tử Nha (chốt)",
+      "y": "Hướng đúng. Đo engine bằng giờ của anh và tiền về, không đo bằng số module. Chặng nào không làm giảm giờ anh hoặc tăng tiền về thì dời lại."
+     }
+    ],
+    "tong": {
+     "hieu_qua": [
+      "Số đo chính của engine: thời gian từ ý tới sản phẩm/dịch vụ nhận đơn đầu tiên (đo bằng số phiếu và giờ người). Mỗi bản cài mới phải nhanh hơn bản trước.",
+      "Giờ công của anh: từ 80–100 giờ xuống mức em đề xuất ≤ 40 giờ/tuần. Đây là số đo quan trọng nhất, vì anh là nút cổ chai.",
+      "Chi phí làm thêm một sản phẩm: từ dựng mới thành điền cấu hình. Đo bằng số phiếu tới ngày bán. Mẫu đo đầu tiên là OPC thứ hai.",
+      "Chi phí làm thêm một BU: điền hồ sơ BU OS thay vì dựng site, CRM, quy trình riêng.",
+      "Thời gian từ đề bài tới proposal ≤ 1 ngày, báo cáo sự kiện trong 24 giờ, mỗi job ra case trong 7 ngày."
+     ],
+     "kinh_doanh": [
+      "Cam kết đang có (Kế hoạch 24/10, triệu đồng): lõi LINHX thu lũy kế ≥ 1.000 tới 30/6/2027, cả năm 2027 là 2.550 (sàn 1.300); OPC khoảng 1.700 nằm ngoài cam kết. Engine phải giúp đạt các số này, không đặt số mới.",
+      "Doanh thu chéo: lead đi giữa EDU, Agent Force, Expert và các BU qua một sổ khách. Đo bằng % doanh thu đến từ lead của đơn vị khác. Hôm nay gần như 0 vì chưa đo được. Em đoán đích là ≥ 20%.",
+      "Tiền lặp lại: gói tháng của Unikon, bảo trì agent, thuê bao OPC (Kế hoạch 24/10, H2/2027). Đo bằng tỉ lệ doanh thu lặp lại trên tổng.",
+      "Tài sản chung có giá: mỗi job của BU trả phí tài sản chung và phí workforce 5% (Kế hoạch 24/10, luật 2). Engine biến chi phí R&D thành thứ các BU trả tiền dùng."
+     ],
+     "tac_dong": [
+      "Tài sản dữ liệu: một sổ khách xuyên mọi đơn vị, kho case có số, 326 nguồn quét, bộ 114.731 bài của Listening. Mỗi tháng chạy thì tài sản này dày thêm, đối thủ khó chép.",
+      "Cùng một bộ máy phục vụ ba loại người bán: công ty (Radar), sản phẩm (Magnet), con người (Expert). Vì vậy cùng một khoản đầu tư được dùng nhiều lần.",
+      "Ra ngoài: những gì LINHX tự chạy trở thành case thật để bán Agent Force. Bán cái mình đã dùng, không bán slide.",
+      "Người: đội nhỏ, mỗi người một vai rõ, việc lặp lại do máy làm. Phần tiền thì vẫn chạy bằng code tất định, AI không đụng vào."
+     ]
+    },
+    "vi_sao": [
+     "Hôm nay hệ thống của anh có 4 nguồn lực: các BU, đội agent LINHX, thương hiệu và quan hệ của anh, sản phẩm nhân rộng được (Định hướng 23/10).",
+     "Phần lớn BU đang lỗ và nợ lương. Gốc là mô hình cũ và quản lý vận hành, tài chính yếu (Định hướng 23/10). Sheet Hoa 23/10: nợ 3.009 triệu, trong đó nợ lương 609, BHXH 302.",
+     "Anh đang làm 80–100 giờ/tuần (anh nói 24/10). Nhiều việc ở các BU phải chờ anh, nên anh thành nút cổ chai của cả hệ.",
+     "Mỗi BU tự làm lại cùng một việc: site, tìm lead, đề xuất, giao việc, thu tiền, báo cáo. Lead của bên này không sang được bên kia vì không có sổ khách chung."
+    ]
+   }
+  },
+  "claude": {
+   "dich": [
+    "59 dòng đều có quyết: lên ngay, để sau hoặc không",
+    "Chốt danh sách app tự viết (linhx_pay, linhx_chat, linhx_worker, linhx_ops, linhx_content, linhx_event, linhx_bridge, linhx-front) và thứ tự làm",
+    "Chốt cái nào vào lõi, cái nào là LINHX Solution",
+    "Mỗi hệ thống web và dự án có mặt tiền; mỗi quy trình nội bộ có luồng cho nhân viên",
+    "Em ra bản quy hoạch cuối + đợt phiếu agy đầu tiên"
+   ],
+   "phan_bien": [
+    "Ba OS chồng nhau (Máy tạo nội dung, Ambassador, Channel): gộp làm một Own Media.",
+    "Generator (Nền dùng chung) và Website generator (URAH) là một workflow, gộp làm một.",
+    "Chiêm Tinh Số, Máy quét, xưởng agy đang chạy: giữ nguyên, chỉ nối API; chuyển vội là mất đơn.",
+    "15 site Astro tốt cho SEO: giữ làm mặt tiền, Frappe làm phần sau (đơn, lead, khách).",
+    "Agent Force, cungai, aicontent chưa có khách trả tiền: lên engine để đo, chưa để scale."
+   ],
+   "tieu_de": "Một hệ thống lớn, khoảng 16 module, mỗi sản phẩm là một mặt tiền",
+   "y": [
+    "59 dòng nhưng chỉ khoảng 20 là hệ thống web thật. Phần còn lại là dự án chạy trên khuôn có sẵn, hoặc quy trình nội bộ cho nhân viên.",
+    "Thang dùng chung có hai nhánh. LINHX Solution là sản phẩm, dịch vụ bán ra cho khách, dùng từ 2 BU. LINHX Workflow là bộ quy trình tự động hoá và quản trị, các BU dùng lại lẫn nhau. Cả hai đủ chín thì vào lõi.",
+    "Em gợi ý 4 thứ vào lõi (Thanh toán QR, CRM / lead, Thợ agy, Bàn điều hành), 15 bộ thành LINHX Workflow (soạn khoá, nội dung, kênh, báo cáo, kiểm chất lượng, tài chính, máy quét…), phần còn lại là Solution hoặc riêng.",
+    "Suy ngược: mọi thứ quy về 7 khuôn site và 16 module. Làm trước 4 module dùng nhiều nhất.",
+    "Mọi sản phẩm, dịch vụ có mặt tiền; nhiều dự án chỉ cần trang con trên site BU. Workflow nội bộ chỉ cần luồng tối giản cho nhân viên, không cần mặt tiền."
+   ]
+  },
+  "launch": {
+   "cong": [
+    {
+     "dat": "Linh duyệt 1 trang đề; mọi tình huống có mã TH; sau khoá, ý mới sang đợt sau",
+     "lam": "Chọn 1 trong 7 khuôn site, viết job khách, kho tình huống, sơ đồ trang, mặt tiền. Khoá features.json.",
+     "sua": "thiết kế ẩu",
+     "ten": "C1 Chốt đề"
+    },
+    {
+     "dat": "Linh duyệt ảnh chụp màn hình mẫu TRƯỚC khi viết code; đổi hình chỉ ở phiên bản sau",
+     "lam": "Chọn hệ thiết kế từ thư viện có sẵn, DESIGN.md + brand.json, bộ ảnh tài sản khoá phong cách, dựng màn hình mẫu 390 và 1280.",
+     "sua": "đồ hoạ đổi giữa đường",
+     "ten": "C2 Chốt hình"
+    },
+    {
+     "dat": "cong_kiem xanh; không phiếu nào chờ gộp quá 1 vòng",
+     "lam": "site-<tên> chỉ chứa cấu hình + động cơ riêng; module lấy từ linhx_*; mỗi phiếu khai file đụng, hai thợ không đụng chung file; gộp ngay khi đạt, không giữ nhánh dài.",
+     "sua": "tốn thời gian gộp code",
+     "ten": "C3 Dựng trên khuôn"
+    },
+    {
+     "dat": "mọi hành trình xanh trên staging; ảnh lệch quá ngưỡng là trượt",
+     "lam": "Bộ Playwright chung sinh từ kho tình huống: mua đủ mọi SKU, giải mã QR, mở PDF, đọc thư thật, chụp 390/1280 so ảnh chuẩn.",
+     "sua": "thiếu test đầu cuối, lỗi hiển thị",
+     "ten": "C4 Test hành trình"
+    },
+    {
+     "dat": "không lỗi CHẶN; điểm QC đạt ngưỡng; Linh xem 1 vòng trên điện thoại",
+     "lam": "Đọc như khách: persona giả lập chạy thử, cổng brand + pháp chế, phiếu QC theo khuôn (nội dung, giá, chính sách, email), 5 người thật alpha có sheet lỗi.",
+     "sua": "QC sản phẩm yếu",
+     "ten": "C5 QC sản phẩm"
+    },
+    {
+     "dat": "kiểm khói xanh trên tên miền thật; bài học ghi vào HOC-HOI và khuôn",
+     "lam": "Deploy bằng một lệnh, staging giống production, kiểm khói sau deploy, có lệnh lùi bản; lỗi mới thành luật trong khuôn.",
+     "sua": "",
+     "ten": "C6 Lên và giữ"
+    }
+   ],
+   "phan_bien": [
+    "Sáu cổng làm chậm lần đầu; bù lại khi khuôn đã có, mỗi sản phẩm mới chủ yếu là C1, C2, C5.",
+    "Chốt hình sớm cần Linh duyệt ảnh thật, không duyệt mô tả: lần CTS đổi vì duyệt bằng chữ.",
+    "Test ảnh chụp dễ báo động giả khi chữ đổi; chỉ so vùng bố cục, không so nội dung."
+   ],
+   "tai_dung": [
+    "features.json khoá + cong_kiem.py (LAB098, CTS)",
+    "Bộ skill chất lượng linhx-chuan 14 luật (LAB106)",
+    "OPC-KIT bản vá 03/11: tự cất phần dở, deploy-demo, chạy ẩn",
+    "14 luật HOC-HOI rút từ lỗi thật của CTS",
+    "166 test e2e CTS: giữ, nhưng đổi từ kiểm testid sang kiểm thứ khách nhận",
+    "Persona giả lập (LAB048), rà pháp chế (LAB107), brand check (LAB036)"
+   ],
+   "ten_goi": "linhx-launch (repo khuôn + bộ test chung + phiếu QC) là một LINHX Solution, đưa vào lõi khi 2 sản phẩm đã dùng",
+   "tieu_de": "LINHX Launch: một dây chuyền, sáu cổng, lần sau nhanh hơn lần trước",
+   "van_de": [
+    "Làm kỹ nhưng gộp code, merge tốn thời gian",
+    "Thiết kế phần mềm ẩu, phải sửa nhiều",
+    "Đồ hoạ đổi giữa đường",
+    "Thiếu test người dùng từ đầu đến cuối, lỗi hiển thị nhiều",
+    "QC sản phẩm (không phải code) chưa đủ tốt"
+   ]
+  }
+ }
+}

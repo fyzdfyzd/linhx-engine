@@ -1,0 +1,326 @@
+---
+tieu_de: Kiến trúc LINHX ENGINE khi đủ
+loai: loi
+trang_thai: cho-linh
+cap_nhat: 2026-11-07
+nguon: [nguon/2026-11-08-BANG-HE-THONG.json, https://claude.ai/artifact/Wyeq3HaoB6pfgoeC11P2qY]
+sinh_tu_dong: scripts/wiki_tu_bang.py (sửa ở bảng rồi chạy lại, đừng sửa tay)
+---
+# Kiến trúc LINHX ENGINE khi đủ
+
+Bản kỹ thuật đang chạy: [[loi-engine]]. Trang này là bản quy hoạch đầy đủ.
+
+## Sáu tầng
+
+- **6 · Site**
+  - Đợt đầu: ~20 tên miền
+  - Gồm: ifagent.net, event.ifagent.net, unikon.vn, tuva.work, listening.vn, sakedemy.com, cungai.vn + Zalo Mini App, chiemtinh.vn, linhx.info, urah.vn… Chỉ hiển thị và nhận thao tác; giá, đơn, quyền dùng nằm ở site lõi.
+- **5 · Template**
+  - Đợt đầu: 6 + 1 chờ
+  - Gồm: Trang BU, Hub, Báo cáo, Công cụ tự phục vụ, Job dựng, Trang chuyên gia; Theo nơi chờ dự án thứ hai.
+- **4 · Công thức + dọc**
+  - Đợt đầu: 3 + 6
+  - Gồm: Radar (săn B2B), Magnet (bán thẳng), Expert (một người). Dọc: course, lms, community, event, agent, avatar.
+- **3 · Module lõi**
+  - Đợt đầu: 25
+  - Gồm: 5 nhóm: Khách, Tiền, Tiếng nói, Làm, Điều hành. Nằm trong một site lõi chung, quyền theo đơn vị.
+- **2 · Máy nền**
+  - Đợt đầu: 11
+  - Gồm: Dữ liệu: Crawler, Social Seeder. Sản xuất: Research, Write, Report, Slide, Video Flow, Build. Thợ: agy, Claude, Gemini Task/Colab. Chạy ngoài web server, nhận việc qua linhx_worker.
+- **1 · Frappe + hạ tầng**
+  - Đợt đầu: 1 bench
+  - Gồm: Frappe Framework (MIT, không sửa lõi). Bench Docker trên GCP (VM linhx-engine-1 đang chạy 0.1), Cloudflare, MariaDB, Redis; máy cty chạy thợ ẩn.
+
+## Module lõi theo nhóm
+
+-
+  - ds:
+    - **linhx_id**
+      - Dùng ở: cungai, Sakedemy, CTS, lớp corp
+      - Tình trạng: mới
+      - Việc: Đăng nhập Zalo, Google, OTP; một người một hồ sơ xuyên mọi site, gộp trùng
+    - **linhx_consent**
+      - Dùng ở: mọi nơi có khách cá nhân; chuyển lead chéo
+      - Tình trạng: mới
+      - Việc: Đồng ý theo từng mục đích, rút đồng ý, yêu cầu xoá, nhật ký xử lý
+    - **linhx_crm**
+      - Dùng ở: mọi BU, Expert (sổ quan hệ)
+      - Tình trạng: đã có
+      - Việc: Tổ chức, người, quan hệ, cơ hội; giao người trong 1 giờ; chuyển chéo
+    - **linhx_funnel**
+      - Dùng ở: mọi đơn vị
+      - Tình trạng: đã có
+      - Việc: Một bảng 6 tầng cho mọi đơn vị, mọi kênh; ghi công khi chuyển chéo
+    - **linhx_partner**
+      - Dùng ở: BespokeAI (chị Hương), AIX, Unikon bán lại, KOC của Magnet
+      - Tình trạng: mới
+      - Việc: Người giới thiệu, đại lý, bán lại, KOC; mã giới thiệu, hoa hồng
+    - **linhx_booking**
+      - Dùng ở: Agent Force, Expert, Course OS
+      - Tình trạng: mới
+      - Việc: Đặt lịch: gọi trong 1 giờ, lịch dạy và nói, coaching tháng, lịch lớp, lịch ghi show
+  - Nhóm: Khách
+-
+  - ds:
+    - **linhx_catalog**
+      - Dùng ở: mọi nơi bán; là linhx_quyen của bản 5/11, bị rớt khỏi bảng 10 lõi
+      - Tình trạng: mới là ý
+      - Việc: Sản phẩm, gói, giá, giá sàn, quyền dùng (free, hạn mức, ghế, membership, tín dụng)
+    - **linhx_pay**
+      - Dùng ở: mọi nơi thu tiền
+      - Tình trạng: đã có
+      - Việc: QR SePay/VietQR, đối soát, hoàn tiền, hoá đơn điện tử, nhiều mã số thuế, ngoại tệ
+    - **linhx_finance**
+      - Dùng ở: URAH, mọi BU (h26 chưa quy hoạch)
+      - Tình trạng: mới là ý
+      - Việc: Sổ theo pháp nhân và đơn vị, phí nội bộ theo mã job, giá vốn job (token + giờ người), phải thu, thù lao
+    - **linhx_legal**
+      - Dùng ở: Agent Force, BespokeAI, Unikon, Expert
+      - Tình trạng: mới
+      - Việc: Mẫu hợp đồng (pilot 40/40/20, NDA, thoả thuận xử lý dữ liệu, thầu phụ, chuyên gia, tác giả), điều khoản xin case, hạn
+  - Nhóm: Tiền
+-
+  - ds:
+    - **linhx_content**
+      - Dùng ở: mọi đơn vị; 2 hub thật
+      - Tình trạng: đã có
+      - Việc: Máy nội dung: cụm bài trụ, lịch đăng, người duyệt, bản dịch
+    - **linhx_brand**
+      - Dùng ở: Unikon Brand kit, mọi site, Slide
+      - Tình trạng: mới
+      - Việc: Hồ sơ nhận diện mỗi đơn vị và mỗi khách: màu, font, giọng, nhân vật, luật; theme web và slide đọc từ đây
+    - **linhx_watch**
+      - Dùng ở: mọi đơn vị (đang chạy ở 0.1)
+      - Tình trạng: đã có
+      - Việc: Đo AI nói gì, SEO, Brand Truth; lưu lịch sử theo tháng
+    - **linhx_freebie**
+      - Dùng ở: mọi đơn vị
+      - Tình trạng: đã có
+      - Việc: Thư viện mồi: tool, tài liệu, bản miễn phí; hạn mức
+    - **linhx_scan**
+      - Dùng ở: mọi BU, cungai, CTS
+      - Tình trạng: đã có
+      - Việc: Quét lead, đề bài, xu hướng, call tài trợ
+    - **linhx_ads**
+      - Dùng ở: mọi đơn vị
+      - Tình trạng: đã có
+      - Việc: Paid media: chỉ đẩy mồi đã chứng minh, xét CAC sau 14 ngày
+    - **linhx_chat**
+      - Dùng ở: cungai, CTS, Agent Shell; là linhx_kenh của bản 5/11
+      - Tình trạng: mới là ý
+      - Việc: Zalo OA, Messenger, Telegram, email, bản tin; hộp thư chung
+  - Nhóm: Tiếng nói
+-
+  - ds:
+    - **linhx_worker**
+      - Dùng ở: đang chạy ở ENGINE 0.1
+      - Tình trạng: đã có
+      - Việc: Hàng việc, thợ kéo việc, trần phút, nhãn thợ
+    - **linhx_report**
+      - Dùng ở: CTS, Listening, Event, Agent Force D+30, HR
+      - Tình trạng: đã có
+      - Việc: Mẫu báo cáo, giao báo cáo web + PDF cho khách
+    - **linhx_qc**
+      - Dùng ở: mọi đầu ra (h24 chưa thành module)
+      - Tình trạng: mới là ý
+      - Việc: Cổng duyệt chung mọi đầu ra: luật, chấm mù, người duyệt, điểm, lý do trả
+    - **linhx_asset**
+      - Dùng ở: Course OS, Unikon, Expert
+      - Tình trạng: mới
+      - Việc: Kho file có quyền và phiên bản: học liệu, asset Unikon, ảnh lớp, video; cờ công khai
+  - Nhóm: Làm
+-
+  - ds:
+    - **linhx_ops**
+      - Dùng ở: anh, mọi đơn vị
+      - Tình trạng: đã có
+      - Việc: Bàn điều hành: việc chờ anh, ý tưởng, đề, nhật ký token, giám sát thợ và webhook
+    - **linhx_people**
+      - Dùng ở: URAH, TUVA internship, Agent Force
+      - Tình trạng: mới
+      - Việc: Nhân sự, CTV, trợ giảng, FDE, thực tập sinh: vai, chứng chỉ, quyền theo đơn vị và theo khách, thù lao
+    - **linhx_support**
+      - Dùng ở: CTS, Sakedemy, BespokeAI
+      - Tình trạng: mới
+      - Việc: Hỗ trợ sau bán: phiếu, SLA, bảo trì tháng, hoàn tiền, đánh giá; bot tầng 1
+    - **linhx_shell**
+      - Dùng ở: mọi đơn vị
+      - Tình trạng: đã có
+      - Việc: Agent trong Zalo cho người vận hành; quyền theo vai, nhật ký lệnh
+  - Nhóm: Điều hành
+-
+  - ds:
+    - **linhx_bid**
+      - Dùng ở: Radar, Expert (nhẹ)
+      - Tình trạng: đã có
+      - Việc: Đề bài → idea → đề xuất → báo giá; lưu thắng thua có lý do
+    - **linhx_cred**
+      - Dùng ở: Radar, Expert, Course OS
+      - Tình trạng: đã có
+      - Việc: Một kho bằng chứng: case, số, năng lực, hồ sơ chuyên gia, cờ khách cho công khai
+    - **linhx_shop**
+      - Dùng ở: Magnet
+      - Tình trạng: đã có
+      - Việc: Trang bán, sản phẩm số, giao tự động, quà tặng, hoàn tiền
+    - **linhx_expert**
+      - Dùng ở: Expert
+      - Tình trạng: đã có
+      - Việc: Vault, giọng, show, sách, danh bạ chuyên gia
+  - Nhóm: Công thức
+-
+  - ds:
+    - **linhx_course**
+      - Dùng ở: EDU, TUVA, Agent Force (khoá FDE)
+      - Tình trạng: đã có
+      - Việc: Course OS: đề, khoá, phiên bản, duyệt, phản hồi, reflect
+    - **linhx_lms**
+      - Dùng ở: cungai, Sakedemy
+      - Tình trạng: mới là ý
+      - Việc: Học trực tuyến, chứng nhận, ghế lớp corp
+    - **linhx_community**
+      - Dùng ở: cungai, Expert
+      - Tình trạng: mới
+      - Việc: CLB Cùng AI: nhóm theo nghề, thử thách, AI champion, Ambassador
+    - **linhx_event**
+      - Dùng ở: Event, lớp corp, CLB, show, Platform 333
+      - Tình trạng: đã có
+      - Việc: Sự kiện online và offline: đăng ký, vé, check-in QR, QR phygital, báo cáo 24 giờ
+    - **linhx_agent**
+      - Dùng ở: Agent Force, BespokeAI, các BU khách số 0
+      - Tình trạng: mới
+      - Việc: Agent Force: playbook 7 bước, pilot 14 ngày, chấm dữ liệu, agent mẫu, đo trước sau, giám sát agent ở khách
+    - **linhx_avatar**
+      - Dùng ở: Event, Expert nấc 4, Đi Chùa Online
+      - Tình trạng: mới
+      - Việc: Nhân vật ảo: live character, tác giả ảo gắn nhãn, sân khấu 3D
+  - Nhóm: Dọc
+
+## Máy nền (chạy qua hàng việc)
+
+- **Crawler**
+  - Dùng ở: repo mayquet
+  - Tình trạng: đã có
+  - Việc: Quét web, mạng xã hội, đề bài; nguồn dữ liệu của Báo cáo
+- **Social Seeder**
+  - Dùng ở: LAB040, LAB068 Postiz
+  - Tình trạng: đã có
+  - Việc: Gieo bài bằng người thật hoặc người ảo có nhãn, không nuôi tài khoản ảo
+- **Research**
+  - Dùng ở: LAB085, h50, h56
+  - Tình trạng: mới
+  - Việc: Nghiên cứu nền: research loop, Deep Research, khảo sát persona
+- **Write**
+  - Dùng ở: h16, LAB025, LAB049
+  - Tình trạng: đã có
+  - Việc: Viết giọng thật, biên tập chống văn AI
+- **Report**
+  - Dùng ở: h22, LAB046, LAB028, ENGINE 0.1
+  - Tình trạng: đã có
+  - Việc: Báo cáo web + PDF theo mẫu
+- **Slide**
+  - Dùng ở: LAB099, LAB027
+  - Tình trạng: đã có
+  - Việc: Vòng lặp slide + deck 15 bước
+- **Video Flow**
+  - Dùng ở: LAB059, LAB095
+  - Tình trạng: đã có
+  - Việc: Phim bằng code, cắt record, giọng Việt
+- **Build**
+  - Dùng ở: h21, h28, h42, LAB058
+  - Tình trạng: mới
+  - Việc: Dựng demo, landing, tool từ brief
+- **Thợ agy**
+  - Dùng ở: máy cty, VM cloud
+  - Tình trạng: đã có
+  - Việc: Thợ chính, gói Ultra
+- **Thợ Claude**
+  - Dùng ở: 
+  - Tình trạng: đã có
+  - Việc: Chấm, canh cổng kiểm
+- **Thợ Gemini Task, Colab**
+  - Dùng ở: LAB112
+  - Tình trạng: mới là ý
+  - Việc: Việc dài, GPU, chạy lô
+
+## Template
+
+- **Trang BU**
+  - Đủ chưa: đủ
+  - Dự án: ifagent.net, event.ifagent.net, unikon.vn, tuva.work, urah.vn, sakedemy.com
+  - Hình: Showcase trả lời trong 10 giây + cụm bài trụ + 1 mồi + form về CRM
+- **Hub nội dung + cộng đồng**
+  - Đủ chưa: đủ, và chỉ 2 hub
+  - Dự án: cungai.vn, hub agentic của ifAgent
+  - Hình: Bản tin, bài, kho mồi, cộng đồng, membership
+- **Báo cáo**
+  - Đủ chưa: đủ
+  - Dự án: CTS, Listening VN, AI nói gì, khảo sát persona, báo cáo ngành vàng
+  - Hình: Thu dữ liệu → report → bản free + bản trả tiền
+- **Công cụ tự phục vụ**
+  - Đủ chưa: đủ
+  - Dự án: tool T1–T5, chấm thương hiệu cá nhân, tool tính gói sự kiện, aicontent.vn (nếu mở)
+  - Hình: Bấm là ra, hạn mức free, trả khi dùng nhiều
+- **Job dựng cho khách**
+  - Đủ chưa: đủ
+  - Dự án: VWAI, Platform 333, CafeBiz, trợ lý chị Hương, agent RM, research agent
+  - Hình: Mã job, hợp đồng, dựng bằng xưởng thợ, nghiệm thu, bàn giao, bảo trì
+- **Trang chuyên gia**
+  - Đủ chưa: đủ
+  - Dự án: linhx.info, mỗi hồ sơ Expert OS
+  - Hình: Hồ sơ, show, sách, nút đặt lịch; danh bạ
+- **Theo nơi**
+  - Đủ chưa: chưa: làm như dự án, đóng template khi có dự án thứ hai
+  - Dự án: Tung ta tung tăng
+  - Hình: Gói dữ liệu theo thành phố + agent gợi ý + sự kiện
+
+## Tái dùng 9 PROTO
+
+Chặng 0 thêm 1 phiếu đầu: chép code 03 + 01 từ máy cty lên repo. Làn A, B đổi từ viết mới sang chuyển từ 03, em đoán bớt khoảng 1/3 số phiếu hai làn này (chưa đo).
+
+- **03 OPC OS**
+  - Đợt đầu: Làn B Tiền + Làn A Sổ khách chép từ đây, không viết mới
+  - Lấy gì: code tiền tất định (VietQR, webhook SePay, chống trùng tx_id, sổ S1a-HKD, báo đỏ 400tr), cổng pháp lý, 3 opc.json
+  - Mức tái dùng: cao nhất
+  - Vào đâu: lõi: catalog, pay, id+consent, content, support, finance, funnel, legal, ops, report + công thức Magnet
+- **01 Máy tạo nội dung**
+  - Đợt đầu: Dùng làm cổng QC chung, gọi qua thợ
+  - Lấy gì: 9 bước, bộ chấm chống văn AI LAB049, Onbrand LAB043, 25 hạng mục kiểm
+  - Mức tái dùng: cao
+  - Vào đâu: máy nền Write + module qc
+- **06 Course OS**
+  - Đợt đầu: Chưa, sau Chặng 0
+  - Lấy gì: 9 module, một lõi nội dung cắt ra nhiều dạng, xuất SCORM 1.2, cổng CHO_GIANG_VIEN_DUYET
+  - Mức tái dùng: cao
+  - Vào đâu: dọc course (Course OS đã khoá)
+- **05 Agent Force OS**
+  - Đợt đầu: Chưa
+  - Lấy gì: 7 bước m1–m7 thành 7 LX Workflow, bộ 12+6 câu đo mức, hợp đồng 40/40/20
+  - Mức tái dùng: cao
+  - Vào đâu: dọc agent, đúng chuỗi workflow h08
+- **07 Channel OS**
+  - Đợt đầu: Chưa
+  - Lấy gì: sổ kênh kenh.json, lịch Hub/Hygiene/Hero, 10 bước
+  - Mức tái dùng: vừa
+  - Vào đâu: content, watch, ads + Own Media h15
+- **04 Ambassador OS**
+  - Đợt đầu: Chưa
+  - Lấy gì: nhan_vat.json, inbox 3 tầng, nhãn AI Luật 134/2025, công tắc dừng khẩn
+  - Mức tái dùng: vừa
+  - Vào đâu: dọc avatar + crm quan hệ (Sổ quan hệ h19) + chat
+- **08 Crawler OS**
+  - Đợt đầu: Chưa, Frappe chỉ gọi
+  - Lấy gì: nguon.json 326 nguồn, quet.json cắm bằng cấu hình
+  - Mức tái dùng: vừa
+  - Vào đâu: máy nền Crawler, đứng ngoài Frappe (gộp với repo mayquet)
+- **09 Generator**
+  - Đợt đầu: Chưa, giữ Node trên IFAGENT
+  - Lấy gì: 5 bước brief→demo, gói template Unikon
+  - Mức tái dùng: vừa
+  - Vào đâu: máy nền Build + template Job dựng
+- **02 Server mỏng**
+  - Đợt đầu: Lấy 2 mảnh đó vào module shell
+  - Lấy gì: bộ định tuyến 4 nhánh chặn câu bẫy, quét .agents/workflows/*.md tự thành quy trình
+  - Mức tái dùng: thấp
+  - Vào đâu: ENGINE 0.1 (linhx_worker) đã thay
+
+Liên quan: [[dich-cuoi]] [[lo-trinh]] [[hop-nhat]] [[loi-engine]]
