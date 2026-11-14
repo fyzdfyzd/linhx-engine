@@ -142,7 +142,7 @@ def tao_noi_dung_tho_env(
     agy_cmd: str = "agy",
 ) -> str:
     agy_args = (
-        f"--output-format json --mode auto --sandbox "
+        f"--output-format json --mode auto --dangerously-skip-permissions "
         f"--add-dir {_bao_tham_so(str(goc_gioi_han))} "
         f"--settings {_bao_tham_so(str(tep_settings))} "
         f"--print-timeout 2400s"

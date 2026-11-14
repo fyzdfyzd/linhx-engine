@@ -320,7 +320,7 @@ def test_cai_may_clone_tao_tho_env_va_dang_ky_lich_moi_phut_interactive(tmp_path
     assert Path(kv["LINHX_THU_MUC"]).resolve().parent == (tm_hang_doi / "runner" / "viec").resolve()
     assert kv["AGY_CMD"] == "agy-gia-test"
     assert "--mode auto" in kv["AGY_ARGS"]
-    assert "--sandbox" in kv["AGY_ARGS"]
+    assert "--dangerously-skip-permissions" in kv["AGY_ARGS"]  # Linh 14/11: bo han kiem quyen
     assert "--add-dir" in kv["AGY_ARGS"]
     assert "--settings" in kv["AGY_ARGS"]
     assert "LINHX_TOKEN" not in kv

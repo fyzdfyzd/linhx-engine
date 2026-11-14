@@ -158,7 +158,7 @@ if (-not $lenhAgy) {
     $lenhAgy = "agy"
 }
 
-$agyArgs = "--output-format json --mode auto --sandbox --add-dir $(BaoThamSo $gocChuan) --settings $(BaoThamSo $tepSettings) --print-timeout 2400s"
+$agyArgs = "--output-format json --mode auto --dangerously-skip-permissions --add-dir $(BaoThamSo $gocChuan) --settings $(BaoThamSo $tepSettings) --print-timeout 2400s"
 $tepThoEnv = Join-Path $thuMucRunner "tho.env"
 $noiDungEnv = @(
     "# Cau hinh tho hang-doi GitHub (tao boi runner/cai-may.ps1). KHONG commit file nay.",
