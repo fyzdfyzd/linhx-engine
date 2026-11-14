@@ -1,6 +1,7 @@
 may: may-2
 loai: code
 tran_phut: 40
+nhan: may-2 2026-11-14T22:45:31+0700
 
 Dựng landing Listening Vietnam.
 1. Repo: `C:\linhx\wt-lvn` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-lvn`; có rồi: `git pull`).
