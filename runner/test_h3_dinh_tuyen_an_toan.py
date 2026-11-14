@@ -16,6 +16,7 @@ from pathlib import Path
 import pytest
 
 from runner import hang_doi_git, linhx_runner
+from runner._gia_moi_truong import _gia_ram_va_moi_truong_h3  # noqa: F401  (fixture autouse, thay conftest)
 
 
 def _xoa_thu_muc(duong_dan: Path):
