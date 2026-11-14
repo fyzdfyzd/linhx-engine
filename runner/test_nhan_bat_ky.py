@@ -327,3 +327,19 @@ def test_cai_may_co_chi_dich_danh_va_chay_hang_doi_git(tmp_path, monkeypatch):
     # 2 phiếu bat-ky vẫn còn nguyên trong hang-doi/moi/ để may-2 (mặc định = 1) nhận tiếp
     linhx_runner.vong(cfg_m2, mot_lan=True)
     assert [v for m, v in da_chay if m == "may-2"] == ["01-chung", "03-khong-ghi-may"]
+
+
+def test_theo_doi_thu_muc_ngoai_tinh_la_tien(tmp_path):
+    """Phieu ghi theo_doi: thay doi o thu muc ngoai (repo clone rieng) lam doi dau nhip tien do."""
+    from runner import linhx_runner as lr
+    ngoai = tmp_path / "repo"
+    ngoai.mkdir()
+    tm = tmp_path / "lam-viec"
+    tm.mkdir()
+    td = lr._thu_muc_theo_doi({"theo_doi": f"{ngoai}; {tmp_path / 'khong-co'}"})
+    assert td == (str(ngoai),)
+    dem = [0, 0]
+    a = lr._dau_nhip_tien_do(tm, dem, None, td)
+    (ngoai / "index.html").write_text("x", encoding="utf-8")
+    b = lr._dau_nhip_tien_do(tm, dem, None, td)
+    assert a != b

@@ -482,7 +482,7 @@ def _dau_thu_muc_nhanh(thu_muc: Path, gioi_han_tep: int = 5000):
     return (so_tep, tong_co, max_mtime, dau_xor)
 
 
-def _dau_nhip_tien_do(thu_muc: Path, dem_byte, tep_log=None):
+def _dau_nhip_tien_do(thu_muc: Path, dem_byte, tep_log=None, them_thu_muc=()):
     dau_log = None
     if tep_log:
         try:
@@ -496,7 +496,15 @@ def _dau_nhip_tien_do(thu_muc: Path, dem_byte, tep_log=None):
         _dau_thu_muc_nhanh(thu_muc),
         _dau_git_head(thu_muc),
         dau_log,
+        tuple((_dau_thu_muc_nhanh(Path(t)), _dau_git_head(Path(t))) for t in them_thu_muc),
     )
+
+
+def _thu_muc_theo_doi(meta_viec: dict) -> tuple:
+    """Phieu ghi `theo_doi: C:\\a; D:\\b` khi agy lam viec ngoai thu muc phieu (vd repo clone rieng).
+    Thay doi trong cac thu muc nay cung tinh la tien (tranh dung oan khi agy chay orchestration)."""
+    gia_tri = (meta_viec or {}).get("theo_doi") or ""
+    return tuple(t.strip() for t in str(gia_tri).split(";") if t.strip() and Path(t.strip()).is_dir())
 
 
 def _phan_tich_ket_qua_agy(returncode: int, giay_chay: float, stdout: str, stderr: str):
@@ -638,7 +646,8 @@ def chay_agy(cfg, viec):
     luong_out.start()
     luong_err.start()
 
-    dau_cu = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw)
+    theo_doi = _thu_muc_theo_doi(meta_viec)
+    dau_cu = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
     moc_tien_cuoi = t0
     ly_do_dung = None
     buoc_nghi = min(1.0, max(0.01, min(tran_giay, khong_tien_giay) / 20.0))
@@ -648,7 +657,7 @@ def chay_agy(cfg, viec):
             if proc.poll() is not None:
                 break
             bay_gio = _gio()
-            dau_moi = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw)
+            dau_moi = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
             if dau_moi != dau_cu:
                 dau_cu = dau_moi
                 moc_tien_cuoi = bay_gio
