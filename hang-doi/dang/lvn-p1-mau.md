@@ -1,6 +1,7 @@
 may: may-1
 loai: trinh-duyet
 tran_phut: 25
+nhan: may-1 2026-11-14T22:33:40+0700
 
 Tìm mẫu cho landing Listening Vietnam (dịch vụ social listening tiếng Việt cho doanh nghiệp).
 1. Repo linhx-engine nhánh `claude/project-thread-jowxv1`, làm trong worktree `D:\linhx\wt-ba-may` (git fetch + checkout + pull). Đọc `giao-dien/listening-vietnam/DE-BAI.md`.
