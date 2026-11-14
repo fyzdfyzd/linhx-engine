@@ -944,6 +944,22 @@
   "ban_goc": "D:/LINHX/LAB/LAB035-RADAR-CONG-DONG/src/linhx-radar"
  },
  {
+  "ten": "rea",
+  "mo_ta": "Cửa vào họ skill phân tích ngược linhx-rea cho 5 loại đầu vào (video, sách, báo cáo, bài, ảnh). Dùng khi người dùng muốn mổ xẻ cấu trúc, thẩm mỹ, thủ pháp hoặc tái tạo một tác phẩm tham chiếu.",
+  "duong_dan": "bo/linhx-rea/skills/rea",
+  "bo": "linhx-rea",
+  "nhom": "khac",
+  "ban_goc": ""
+ },
+ {
+  "ten": "rea-anh",
+  "mo_ta": "Phân tích ngược ảnh tĩnh, keyframe và poster/KV theo 7 bước cố định (đo định lượng, tạo việc đọc, điền đáp án có mốc, áp đáp án, vẽ ngược, rút thẻ thủ pháp, tóm tắt).",
+  "duong_dan": "bo/linhx-rea/skills/rea-anh",
+  "bo": "linhx-rea",
+  "nhom": "khac",
+  "ban_goc": ""
+ },
+ {
   "ten": "bao-cao",
   "mo_ta": "Quy trình 13 bước ra báo cáo PDF cao cấp kiểu McKinsey, Kantar, Nielsen (sách trắng, báo cáo ngành, báo cáo khảo sát, báo cáo xu hướng) cho LINHX và các BU. Dùng khi Linh nói \"làm báo cáo\", \"viết report\", \"sách trắng\", \"whitepaper\", \"báo cáo thị trường\", \"báo cáo khảo sát\", \"PDF đẹp như McKinsey\", hoặc muốn biến một bộ nghiên cứu thành báo cáo dàn trang tạp chí.",
   "duong_dan": "bo/linhx-report/skills/bao-cao",
