@@ -1,11 +1,10 @@
 # Kế hoạch cài 3 máy công ty
 
-## Hôm nay: agy dựng runner (máy công ty DESKTOP-PVHR2CD)
-1. Linh merge PR #35.
-2. Claude mở Remote Control trên máy công ty và giao agy H1, sau đó H2, H3, H4 chạy song song. Mất khoảng 2 giờ.
-3. Claude chấm, mở PR runner. Linh merge trước khi đi ngủ.
+## Sáng 14/11: agy dựng runner (máy công ty DESKTOP-PVHR2CD)
+1. Claude mở Remote Control trên máy công ty và giao agy H1, sau đó H2, H3, H4 chạy song song. Mất khoảng 2 giờ.
+2. Claude chấm rồi mở PR runner. Linh merge trước tối nay.
 
-## Ngày mai: Linh cài, khoảng 15 phút mỗi máy
+## Tối 14/11: Linh cài, khoảng 15 phút mỗi máy
 Làm máy công ty hiện tại trước, chạy thử ổn rồi mới làm 2 máy kia.
 
 **0. Chuẩn bị máy** (computer use cần màn hình luôn mở)
