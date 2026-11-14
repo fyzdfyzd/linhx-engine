@@ -1,1 +1,28 @@
-{"permissions": {"allow": ["mcp(browsentic/*)"]}}
+{
+  "agentMode": "auto",
+  "permissions": {
+    "allow": [
+      "command(*)",
+      "read_file(D:/linhx)",
+      "write_file(D:/linhx)",
+      "edit_file(D:/linhx)",
+      "read_file(D:\\linhx)",
+      "write_file(D:\\linhx)",
+      "edit_file(D:\\linhx)",
+      "mcp(browsentic/*)",
+      "mcp(*)"
+    ],
+    "deny": [
+      "read_file(D:/linhx/hang-doi/runner/tho.env)",
+      "write_file(D:/linhx/hang-doi/runner/tho.env)",
+      "edit_file(D:/linhx/hang-doi/runner/tho.env)",
+      "read_file(D:\\linhx\\hang-doi\\runner\\tho.env)",
+      "write_file(D:\\linhx\\hang-doi\\runner\\tho.env)",
+      "edit_file(D:\\linhx\\hang-doi\\runner\\tho.env)",
+      "write_file(D:/LINHX/LINHX-ENGINE)",
+      "edit_file(D:/LINHX/LINHX-ENGINE)",
+      "write_file(D:\\LINHX\\LINHX-ENGINE)",
+      "edit_file(D:\\LINHX\\LINHX-ENGINE)"
+    ]
+  }
+}
