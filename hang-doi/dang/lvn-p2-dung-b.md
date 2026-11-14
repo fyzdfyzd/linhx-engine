@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-lvn
+nhan: may-2 2026-11-14T23:13:27+0700
 
 Dựng landing Listening Vietnam (lần 2: lần 1 bị dừng oan; nếu C:\linhx\wt-lvn còn việc dở thì xem `git status` và làm tiếp).
 1. Repo: `C:\linhx\wt-lvn` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-lvn`; có rồi: `git pull`).
