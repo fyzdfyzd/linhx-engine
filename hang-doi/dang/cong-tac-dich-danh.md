@@ -1,6 +1,7 @@
 may: may-1
 loai: code
 tran_phut: 30
+nhan: may-1 2026-11-14T22:23:12+0700
 
 Sửa runner hàng đợi trong repo fyzdfyzd/linhx-engine, nhánh `claude/project-thread-jowxv1`.
 Làm trong worktree riêng `D:\linhx\wt-ba-may` (có sẵn thì `git fetch` + `git checkout claude/project-thread-jowxv1` + `git pull`; chưa có thì `git worktree add` từ D:\LINHX\LINHX-ENGINE). KHÔNG sửa D:\linhx\hang-doi (runner đang chạy) và thư mục làm việc chính của D:\LINHX\LINHX-ENGINE.
