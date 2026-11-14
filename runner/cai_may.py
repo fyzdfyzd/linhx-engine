@@ -140,6 +140,7 @@ def tao_noi_dung_tho_env(
     thu_muc_log: str | Path = THU_MUC_LOG_MAC_DINH,
     so_phieu: int = 1,
     agy_cmd: str = "agy",
+    chi_dich_danh: bool = False,
 ) -> str:
     agy_args = (
         f"--output-format json --mode auto --dangerously-skip-permissions "
@@ -147,6 +148,8 @@ def tao_noi_dung_tho_env(
         f"--settings {_bao_tham_so(str(tep_settings))} "
         f"--print-timeout 2400s"
     )
+    # Khi bật chi_dich_danh thì đặt LINHX_NHAN_BAT_KY=0 để chỉ nhận phiếu đúng tên máy
+    nhan_bat_ky = 0 if chi_dich_danh else 1
     cac_dong = [
         "# Cau hinh tho hang-doi GitHub (tao boi runner/cai-may.ps1). KHONG commit file nay.",
         "LINHX_NGUON=github",
@@ -159,6 +162,7 @@ def tao_noi_dung_tho_env(
         f"LINHX_DRIVE={thu_muc_drive}",
         f"LINHX_LOG_DIR={thu_muc_log}",
         f"LINHX_SO_PHIEU={int(so_phieu)}",
+        f"LINHX_NHAN_BAT_KY={nhan_bat_ky}",
         "LINHX_TRAN_PHUT=40",
         "LINHX_KHONG_TIEN_PHUT=10",
         "LINHX_RAM_TOI_THIEU_GB=1.5",
@@ -186,6 +190,7 @@ def cai_may_python(
     so_phieu: int = 1,
     khong_chay_ngay: bool = False,
     dang_ky_lich_fn=None,
+    chi_dich_danh: bool = False,
 ) -> dict:
     """Cai dat may tuong duong runner/cai-may.ps1 (dung cho moi truong khong co PowerShell hoac test Python)."""
     may_chuan, tm_str, gh_str = kiem_tra_tham_so_cai(may, thu_muc, goc_gioi_han, so_phieu=so_phieu)
@@ -257,6 +262,7 @@ def cai_may_python(
             thu_muc_log=thu_muc_log,
             so_phieu=so_phieu,
             agy_cmd=lenh_agy,
+            chi_dich_danh=chi_dich_danh,
         ),
         encoding="utf-8",
     )

@@ -16,7 +16,8 @@ param(
     [string]$TenLich = "LINHX-HangDoi",
     [string]$AgyCmd = "",
     [int]$SoPhieu = 1,
-    [switch]$KhongChayNgay
+    [switch]$KhongChayNgay,
+    [switch]$ChiDichDanh
 )
 
 $ErrorActionPreference = "Stop"
@@ -158,6 +159,7 @@ if (-not $lenhAgy) {
     $lenhAgy = "agy"
 }
 
+$nhanBatKy = if ($ChiDichDanh) { 0 } else { 1 }
 $agyArgs = "--output-format json --mode auto --dangerously-skip-permissions --add-dir $(BaoThamSo $gocChuan) --settings $(BaoThamSo $tepSettings) --print-timeout 2400s"
 $tepThoEnv = Join-Path $thuMucRunner "tho.env"
 $noiDungEnv = @(
@@ -172,6 +174,7 @@ $noiDungEnv = @(
     "LINHX_DRIVE=$ThuMucDrive",
     "LINHX_LOG_DIR=$ThuMucLog",
     "LINHX_SO_PHIEU=$SoPhieu",
+    "LINHX_NHAN_BAT_KY=$nhanBatKy",
     "LINHX_TRAN_PHUT=40",
     "LINHX_KHONG_TIEN_PHUT=10",
     "LINHX_RAM_TOI_THIEU_GB=1.5",

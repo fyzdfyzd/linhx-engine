@@ -35,6 +35,7 @@ DUONG_DAN_PHIEU_PING_MAU = linhx_runner.GOC / "phieu-mau" / "ping.md"
 SO_LAN_THU_PUSH = 8
 SO_PHIEU_TRINH_DUYET_TOI_DA = 1
 SO_PHIEU_CODE_MAC_DINH = linhx_runner.SO_PHIEU_CODE_MAC_DINH
+NHAN_BAT_KY_MAC_DINH = linhx_runner.NHAN_BAT_KY_MAC_DINH
 NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
 
@@ -67,6 +68,17 @@ def lay_so_phieu_toi_da(cfg: dict | None = None) -> int:
     if cfg and "so_phieu" in cfg and cfg["so_phieu"] is not None:
         return linhx_runner._ep_so_nguyen_khong_am(cfg["so_phieu"], SO_PHIEU_CODE_MAC_DINH)
     return linhx_runner._ep_so_nguyen_khong_am(os.environ.get("LINHX_SO_PHIEU"), SO_PHIEU_CODE_MAC_DINH)
+
+
+def co_nhan_bat_ky(cfg: dict | None = None) -> bool:
+    # Kiểm tra máy có nhận phiếu bat-ky hay chỉ nhận phiếu đích danh tên máy (mặc định: có nhận)
+    mac_dinh = bool(NHAN_BAT_KY_MAC_DINH)
+    if cfg:
+        if "nhan_bat_ky" in cfg and cfg["nhan_bat_ky"] is not None:
+            return linhx_runner._ep_cong_tac(cfg["nhan_bat_ky"], mac_dinh)
+        if "LINHX_NHAN_BAT_KY" in cfg and cfg["LINHX_NHAN_BAT_KY"] is not None:
+            return linhx_runner._ep_cong_tac(cfg["LINHX_NHAN_BAT_KY"], mac_dinh)
+    return linhx_runner._ep_cong_tac(os.environ.get("LINHX_NHAN_BAT_KY"), mac_dinh)
 
 
 def chay_git(args, cwd, check=True, timeout=120):
@@ -531,6 +543,7 @@ def chon_ung_vien(
     tho: str,
     so_phieu_code: int | None = None,
     cfg: dict | None = None,
+    nhan_bat_ky: bool | None = None,
 ) -> list[tuple[Path, dict]]:
     goc_hd = thu_muc_hang_doi(wt)
     tm_moi = goc_hd / "moi"
@@ -538,6 +551,7 @@ def chon_ung_vien(
         return []
     tho_chuan = tho.strip().lower()
     so_phieu = lay_so_phieu_toi_da(cfg) if so_phieu_code is None else max(0, int(so_phieu_code))
+    cho_bat_ky = co_nhan_bat_ky(cfg) if nhan_bat_ky is None else linhx_runner._ep_cong_tac(nhan_bat_ky, bool(NHAN_BAT_KY_MAC_DINH))
     dem_dang = dem_phieu_dang_chay(wt, tho_chuan)
     rieng, chung = [], []
     for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
@@ -547,7 +561,7 @@ def chon_ung_vien(
             continue
         if viec["may"] == tho_chuan:
             rieng.append((tep, viec))
-        elif viec["may"] == "bat-ky":
+        elif cho_bat_ky and viec["may"] == "bat-ky":
             chung.append((tep, viec))
     return rieng + chung
 

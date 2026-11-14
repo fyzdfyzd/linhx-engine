@@ -13,6 +13,7 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
   LINHX_THU_MUC thu muc lam viec cua agy (mac dinh: ./viec)
   LINHX_NGHI    giay giua 2 lan hoi (mac dinh 15)
   LINHX_SO_PHIEU        so phieu code chay song song toi da tren moi may (mac dinh 1)
+  LINHX_NHAN_BAT_KY     1 (mac dinh, nhan ca phieu bat-ky) hoac 0 (chi nhan phieu dich danh may)
   LINHX_TRAN_PHUT       tran phut toi da moi phieu truoc khi dung agy (mac dinh 40)
   LINHX_KHONG_TIEN_PHUT so phut khong tien truoc khi dung agy (mac dinh 10)
   LINHX_RAM_TOI_THIEU_GB nguong RAM trong toi thieu de nhan phieu (mac dinh 1.5)
@@ -42,6 +43,7 @@ PHUT_TOI_DA_MAC_DINH = 40
 PHUT_KHONG_TIEN_MAC_DINH = 10
 NGUONG_RAM_TRONG_GB = 1.5
 SO_PHIEU_CODE_MAC_DINH = 1
+NHAN_BAT_KY_MAC_DINH = 1
 THU_MUC_ENGINE_CAM = "d:/linhx/linhx-engine"
 GOC = Path(__file__).resolve().parent
 
@@ -86,6 +88,27 @@ def _ep_so_nguyen_khong_am(gia_tri, mac_dinh: int = SO_PHIEU_CODE_MAC_DINH) -> i
         return max(0, int(s))
     except (ValueError, TypeError):
         return int(mac_dinh)
+
+
+def _ep_cong_tac(gia_tri, mac_dinh: bool = True) -> bool:
+    # Chuyển đổi công tắc cấu hình (0/1, true/false) sang kiểu bool
+    if gia_tri is None:
+        return bool(mac_dinh)
+    if isinstance(gia_tri, bool):
+        return gia_tri
+    if isinstance(gia_tri, (int, float)):
+        return gia_tri != 0
+    s = str(gia_tri).strip().lower()
+    if not s:
+        return bool(mac_dinh)
+    if s in ("0", "false", "no", "off", "khong"):
+        return False
+    if s in ("1", "true", "yes", "on", "co"):
+        return True
+    try:
+        return int(s) != 0
+    except ValueError:
+        return bool(mac_dinh)
 
 
 def _dinh_dang_phut(phut: float) -> str:
@@ -287,6 +310,7 @@ def doc_env(tep_env=None):
         "thu_muc_drive": Path(os.environ["LINHX_DRIVE"]) if os.environ.get("LINHX_DRIVE", "").strip() else None,
         "thu_muc_log": Path(os.environ["LINHX_LOG_DIR"]) if os.environ.get("LINHX_LOG_DIR", "").strip() else None,
         "so_phieu": _ep_so_nguyen_khong_am(os.environ.get("LINHX_SO_PHIEU"), SO_PHIEU_CODE_MAC_DINH),
+        "nhan_bat_ky": _ep_cong_tac(os.environ.get("LINHX_NHAN_BAT_KY"), bool(NHAN_BAT_KY_MAC_DINH)),
         "tran_phut": _ep_so_duong(os.environ.get("LINHX_TRAN_PHUT"), PHUT_TOI_DA_MAC_DINH),
         "khong_tien_phut": _ep_so_duong(os.environ.get("LINHX_KHONG_TIEN_PHUT"), PHUT_KHONG_TIEN_MAC_DINH),
         "nguong_ram_gb": _ep_so_duong(os.environ.get("LINHX_RAM_TOI_THIEU_GB"), NGUONG_RAM_TRONG_GB),
