@@ -4,9 +4,10 @@ Chay o bat cu dau (may cty Windows, MSI, container tren cloud). Chi KEO viec qua
 khong mo cong. Server chi gui DE (chu), khong bao gio gui lenh shell.
 
 Cau hinh bang bien moi truong hoac file tho.env canh script:
+  LINHX_NGUON   engine (mac dinh) hoac github (nhanh hang-doi)
   LINHX_URL     vd https://engine.linhx.vn
   LINHX_TOKEN   key:secret (bench execute linhx_worker.setup.tao_tho)
-  LINHX_THO     ma tho, vd may-cty
+  LINHX_THO     ma tho, vd may-cty / may-1
   AGY_CMD       duong dan agy (mac dinh: agy)
   AGY_ARGS      them co cho agy (mac dinh: --output-format json)
   LINHX_THU_MUC thu muc lam viec cua agy (mac dinh: ./viec)
@@ -31,8 +32,8 @@ DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
 GOC = Path(__file__).resolve().parent
 
 
-def doc_env():
-    f = GOC / "tho.env"
+def doc_env(tep_env=None):
+    f = Path(tep_env) if tep_env else (GOC / "tho.env")
     if f.exists():
         for dong in f.read_text(encoding="utf-8").splitlines():
             dong = dong.strip()
@@ -40,6 +41,7 @@ def doc_env():
                 k, v = dong.split("=", 1)
                 os.environ.setdefault(k.strip(), v.strip())
     cfg = {
+        "nguon": os.environ.get("LINHX_NGUON", "engine").strip().lower(),
         "url": os.environ.get("LINHX_URL", "http://localhost:8080").rstrip("/"),
         "token": os.environ.get("LINHX_TOKEN", ""),
         "tho": os.environ.get("LINHX_THO", platform.node().lower()),
@@ -48,6 +50,10 @@ def doc_env():
         "thu_muc": Path(os.environ.get("LINHX_THU_MUC", str(GOC / "viec"))),
         "nghi": float(os.environ.get("LINHX_NGHI", "15")),
         "host": os.environ.get("LINHX_HOST", ""),
+        "repo_hang_doi": Path(os.environ.get("LINHX_REPO_HANG_DOI", str(GOC.parent))),
+        "nhanh_hang_doi": os.environ.get("LINHX_NHANH_HANG_DOI", "hang-doi"),
+        "remote_hang_doi": os.environ.get("LINHX_REMOTE_HANG_DOI", "origin"),
+        "wt_hang_doi": os.environ.get("LINHX_WT_HANG_DOI", ""),
     }
     cfg["thu_muc"].mkdir(parents=True, exist_ok=True)
     return cfg
@@ -116,6 +122,12 @@ def chay_agy(cfg, viec):
 
 
 def vong(cfg, mot_lan=False, mot_viec=False):
+    if str(cfg.get("nguon") or "engine").strip().lower() == "github":
+        try:
+            from runner import hang_doi_git
+        except ImportError:
+            import hang_doi_git
+        return hang_doi_git.vong_git(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
     log(f"linhx-runner {PHIEN_BAN} tho={cfg['tho']} url={cfg['url']}")
     while True:
         try:
