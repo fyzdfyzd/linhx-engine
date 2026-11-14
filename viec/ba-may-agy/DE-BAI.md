@@ -24,15 +24,14 @@ Giữ phiếu = commit đổi tên `moi/` → `dang/` rồi push; push bị từ
 |---|---|---|
 | H1 | `runner/hang_doi_git.py`: kéo nhánh `hang-doi`, chọn phiếu của máy mình hoặc `bat-ky`, giữ phiếu bằng push, gọi `chay_agy`, ghi `KET-QUA.md`, push. Thêm `LINHX_NGUON=github` trong `tho.env` để `linhx_runner.py` chọn nguồn. Test bằng repo bare cục bộ, không gọi mạng. | |
 | H2 | Rút gọn kết quả: cắt `KET-QUA.md` ≤ 2000 ký tự, chép file > 1 MB sang thư mục Drive, ghi log đủ vào `D:\linhx\linhx-runner\log\<id>.jsonl`. Test. | H1 |
-| H3 | Định tuyến và an toàn: `loai: trinh-duyet` chỉ máy có `LINHX_TRINH_DUYET=1`; mỗi máy 1 phiếu một lúc; quá 40 phút hoặc 10 phút không tiến thì dừng agy (học cách dừng trong `canh/dieu-phoi-engine.ps1`); RAM trống < 1,5 GB thì không nhận. Test. | H1 |
-| H4 | `runner/cai-may.ps1 -May may-N [-TrinhDuyet]`: clone repo vào `D:\linhx\linhx-engine`, tạo `tho.env`, đăng ký Task Scheduler chạy MỖI PHÚT, CHỈ KHI USER ĐÃ ĐĂNG NHẬP (cần màn hình cho computer use), chạy ẩn qua `chay-an-tho.vbs`; agy để tự chạy lệnh, giới hạn trong `D:\linhx`. Kèm phiếu mẫu `ping` để thử. | H1 |
+| H3 | Định tuyến và an toàn: máy nào cũng nhận cả `code` lẫn `trinh-duyet`; mỗi máy tối đa 1 phiếu `trinh-duyet` một lúc (computer use chiếm chuột, bàn phím, màn hình) và tối đa `LINHX_SO_PHIEU` phiếu `code` chạy song song (mặc định 1); quá 40 phút hoặc 10 phút không tiến thì dừng agy (học cách dừng trong `canh/dieu-phoi-engine.ps1`); RAM trống < 1,5 GB thì không nhận. Test. | H1 |
+| H4 | `runner/cai-may.ps1 -May may-N`: clone repo vào `D:\linhx\linhx-engine`, tạo `tho.env`, đăng ký Task Scheduler chạy MỖI PHÚT, CHỈ KHI USER ĐÃ ĐĂNG NHẬP (cần màn hình cho computer use), chạy ẩn qua `chay-an-tho.vbs`; agy để tự chạy lệnh, giới hạn trong `D:\linhx`. Kèm phiếu mẫu `ping` để thử. | H1 |
 
 ## Định nghĩa xong
 - `pytest runner` xanh, không test skip, không gọi mạng thật.
 - Hai runner giả cùng lúc tranh một phiếu `bat-ky`: đúng một bên nhận.
 - Phiếu `ping` gửi từ cloud tới mỗi máy có `KET-QUA.md` trong ≤ 3 phút.
 
-## Phân vai máy (Linh điền tên máy thật)
-- may-1 = DESKTOP-PVHR2CD: điều phối + cổng kiểm, agy code.
-- may-2 = ?: agy code.
-- may-3 = ?: agy trình duyệt, computer use (`-TrinhDuyet`).
+## Máy
+Cả 3 máy (may-1 = DESKTOP-PVHR2CD, may-2, may-3) làm được cả code lẫn trình duyệt. Phiếu `bat-ky` thì máy rảnh nhận.
+Chỉ chia khi cần tài khoản riêng: phiếu ghi `may:` nếu việc cần Chrome profile hoặc tài khoản chỉ đăng nhập trên một máy.
