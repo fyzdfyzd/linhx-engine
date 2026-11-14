@@ -117,6 +117,8 @@ def _clone_may(bare: Path, tmp_path: Path, ten_may: str, nhanh: str | None = Non
         "nhanh_hang_doi": "hang-doi",
         "remote_hang_doi": "origin",
         "wt_hang_doi": "",
+        "thu_muc_drive": tmp_path / f"drive-{ten_may}",
+        "thu_muc_log": tmp_path / f"log-{ten_may}",
     }
 
 
@@ -327,6 +329,8 @@ def test_linhx_runner_chon_nguon_github_tu_tho_env(tmp_path, monkeypatch):
                 "LINHX_THO=may-3",
                 f"LINHX_REPO_HANG_DOI={cfg_mau['repo_hang_doi']}",
                 f"LINHX_THU_MUC={cfg_mau['thu_muc']}",
+                f"LINHX_DRIVE={cfg_mau['thu_muc_drive']}",
+                f"LINHX_LOG_DIR={cfg_mau['thu_muc_log']}",
                 "LINHX_NGHI=0.01",
             ]
         )
@@ -338,6 +342,8 @@ def test_linhx_runner_chon_nguon_github_tu_tho_env(tmp_path, monkeypatch):
         "LINHX_THO",
         "LINHX_REPO_HANG_DOI",
         "LINHX_THU_MUC",
+        "LINHX_DRIVE",
+        "LINHX_LOG_DIR",
         "LINHX_NGHI",
         "LINHX_NHANH_HANG_DOI",
         "LINHX_REMOTE_HANG_DOI",

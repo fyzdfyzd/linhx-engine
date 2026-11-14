@@ -54,6 +54,8 @@ def doc_env(tep_env=None):
         "nhanh_hang_doi": os.environ.get("LINHX_NHANH_HANG_DOI", "hang-doi"),
         "remote_hang_doi": os.environ.get("LINHX_REMOTE_HANG_DOI", "origin"),
         "wt_hang_doi": os.environ.get("LINHX_WT_HANG_DOI", ""),
+        "thu_muc_drive": Path(os.environ["LINHX_DRIVE"]) if os.environ.get("LINHX_DRIVE", "").strip() else None,
+        "thu_muc_log": Path(os.environ["LINHX_LOG_DIR"]) if os.environ.get("LINHX_LOG_DIR", "").strip() else None,
     }
     cfg["thu_muc"].mkdir(parents=True, exist_ok=True)
     return cfg
@@ -61,6 +63,27 @@ def doc_env(tep_env=None):
 
 def log(*a):
     print(time.strftime("%H:%M:%S"), *a, flush=True)
+
+
+def _ghi_agy_raw(tep_log, phieu_id, returncode, giay, stdout, stderr, ghi_chu=""):
+    try:
+        p = Path(tep_log)
+        p.parent.mkdir(parents=True, exist_ok=True)
+        ban_ghi = {
+            "luc": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "su_kien": "agy_raw",
+            "viec": phieu_id,
+            "returncode": returncode,
+            "giay": round(giay, 2),
+            "stdout": stdout,
+            "stderr": stderr,
+        }
+        if ghi_chu:
+            ban_ghi["ghi_chu"] = ghi_chu
+        with p.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(ban_ghi, ensure_ascii=False) + "\n")
+    except OSError:
+        pass
 
 
 def goi(cfg, method, **data):
@@ -92,10 +115,13 @@ def chay_agy(cfg, viec):
     if os.name == "nt":
         kw["creationflags"] = 0x08000000  # CREATE_NO_WINDOW: chay an, khong bat console
     t0 = time.time()
+    tep_log_raw = cfg.get("_tep_log_phieu")
     try:
         p = subprocess.run(cmd, cwd=str(cfg["thu_muc"]), capture_output=True, text=True,
                            encoding="utf-8", errors="replace", timeout=tran, **kw)
     except subprocess.TimeoutExpired as e:
+        if tep_log_raw:
+            _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, time.time() - t0, e.stdout or "", e.stderr or "", "timeout")
         return "loi", None, f"quá trần {tran // 60} phút\n{(e.stdout or '')[-4000:]}", 0, 0
     except FileNotFoundError:
         return "loi", None, f"không thấy agy ở '{cfg['agy']}' (đặt AGY_CMD)", 0, 0
@@ -103,7 +129,10 @@ def chay_agy(cfg, viec):
         if getattr(e, "winerror", None) == 206:
             return "loi", None, f"dòng lệnh quá dài ({len(de)} ký tự)", 0, 0
         return "loi", None, f"không chạy được agy: {e}", 0, 0
-    nhat_ky = f"exit={p.returncode} giay={time.time() - t0:.0f}\n--- stderr ---\n{p.stderr[-8000:]}"
+    giay_chay = time.time() - t0
+    if tep_log_raw:
+        _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr)
+    nhat_ky = f"exit={p.returncode} giay={giay_chay:.0f}\n--- stderr ---\n{p.stderr[-8000:]}"
     out = p.stdout.strip()
     ket_qua, tv, tr = out, 0, 0
     try:

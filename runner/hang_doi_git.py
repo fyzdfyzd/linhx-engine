@@ -8,6 +8,7 @@ Cau truc tren nhanh `hang-doi`:
 from __future__ import annotations
 
 from contextlib import contextmanager
+import json
 import os
 import re
 import shutil
@@ -25,6 +26,9 @@ except ImportError:
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
+NGUONG_TEP_NANG = 1024 * 1024  # 1 MB
+THU_MUC_DRIVE_MAC_DINH = Path(r"G:\My Drive\LINHX-VIEC")
+THU_MUC_LOG_MAC_DINH = Path(r"D:\linhx\linhx-runner\log")
 SO_LAN_THU_PUSH = 5
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
 
@@ -198,6 +202,35 @@ def chen_dong_nhan(noi_dung: str, tho: str, thoi_gian: str = "") -> str:
     return ket_qua
 
 
+def _cat_mot_dong(gia_tri: str, gioi_han_dong: int = 320) -> str:
+    s = " ".join(str(gia_tri or "").splitlines()).strip()
+    if len(s) <= gioi_han_dong:
+        return s
+    return s[: max(0, gioi_han_dong - 3)] + "..."
+
+
+def rut_gon_van_ban(van_ban: str, gioi_han: int) -> str:
+    """Cat van ban khong vuot qua `gioi_han` ky tu, giu ca phan dau va phan cuoi."""
+    if gioi_han <= 0:
+        return ""
+    s = str(van_ban or "").replace("\r\n", "\n").replace("\r", "\n").strip()
+    if not s:
+        return ""
+    co_xuong_dong = s + "\n"
+    if len(co_xuong_dong) <= gioi_han:
+        return co_xuong_dong
+    dau_cat = "\n...[cat bot]...\n"
+    ngan_sach = gioi_han - len(dau_cat) - 1
+    if ngan_sach >= 80:
+        dau_phan = (ngan_sach * 7) // 10
+        duoi_phan = ngan_sach - dau_phan
+        return s[:dau_phan] + dau_cat + s[-duoi_phan:] + "\n"
+    duoi_don = "\n...[cat bot]\n"
+    if gioi_han > len(duoi_don):
+        return s[: gioi_han - len(duoi_don)] + duoi_don
+    return s[:gioi_han]
+
+
 def tao_ket_qua_md(
     phieu_id: str,
     tho: str,
@@ -211,25 +244,140 @@ def tao_ket_qua_md(
     drive: str = "",
     gioi_han: int = GIOI_HAN_KET_QUA,
 ) -> str:
+    if gioi_han <= 0:
+        return ""
     tt = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
-    ds_tep = ", ".join(tep_doi) if tep_doi else "(khong)"
-    duong_drive = drive.strip() if drive else "(khong)"
+    ds_tep = _cat_mot_dong(", ".join(tep_doi), 300) if tep_doi else "(khong)"
+    duong_drive = _cat_mot_dong(drive, 350) if drive and str(drive).strip() else "(khong)"
     dau = (
-        f"phieu: {phieu_id}\n"
-        f"may: {tho}\n"
+        f"phieu: {_cat_mot_dong(phieu_id, 120)}\n"
+        f"may: {_cat_mot_dong(tho, 80)}\n"
         f"trang_thai: {tt}\n"
         f"tep_doi: {ds_tep}\n"
         f"drive: {duong_drive}\n"
         f"phut: {phut:.2f}\n"
-        f"token: vao={int(token_vao)} ra={int(token_ra)}\n\n"
+        f"token: vao={int(token_vao or 0)} ra={int(token_ra or 0)}\n\n"
     )
-    than = (ket_qua if ket_qua is not None and str(ket_qua).strip() else nhat_ky or "").strip()
-    toan_bo = dau + than + ("\n" if than else "")
+    nguon_than = ket_qua if ket_qua is not None and str(ket_qua).strip() else (nhat_ky or "")
+    than = str(nguon_than).replace("\r\n", "\n").replace("\r", "\n").strip()
+    toan_bo = dau + (than + "\n" if than else "")
     if len(toan_bo) <= gioi_han:
         return toan_bo
-    duoi_cat = "\n...[cat bot]\n"
-    con_lai = max(0, gioi_han - len(dau) - len(duoi_cat))
-    return dau + than[:con_lai] + duoi_cat
+    if len(dau) >= gioi_han:
+        return dau[:gioi_han]
+    return dau + rut_gon_van_ban(than, gioi_han - len(dau))
+
+
+def _ten_phieu_an_toan(phieu_id: str) -> str:
+    ten = re.sub(r'[<>:"/\\|?*\x00-\x1f]+', "_", str(phieu_id or "").strip())
+    while ".." in ten:
+        ten = ten.replace("..", "_")
+    ten = ten.strip(". ")
+    return ten or "phieu"
+
+
+def _thu_muc_drive(cfg: dict | None = None) -> Path:
+    if cfg and cfg.get("thu_muc_drive"):
+        return Path(cfg["thu_muc_drive"])
+    env_val = os.environ.get("LINHX_DRIVE", "").strip()
+    if env_val:
+        return Path(env_val)
+    return Path(THU_MUC_DRIVE_MAC_DINH)
+
+
+def _thu_muc_log(cfg: dict | None = None) -> Path:
+    if cfg and cfg.get("thu_muc_log"):
+        return Path(cfg["thu_muc_log"])
+    env_val = os.environ.get("LINHX_LOG_DIR", "").strip()
+    if env_val:
+        return Path(env_val)
+    return Path(THU_MUC_LOG_MAC_DINH)
+
+
+def duong_dan_log_phieu(phieu_id: str, cfg: dict | None = None, thu_muc_log: Path | str | None = None) -> Path:
+    goc_log = Path(thu_muc_log) if thu_muc_log is not None else _thu_muc_log(cfg)
+    return goc_log / f"{_ten_phieu_an_toan(phieu_id)}.jsonl"
+
+
+def ghi_log_phieu(tep_log: Path, su_kien: str, **truong) -> Path:
+    """Ghi 1 dong JSONL day du vao file log cua phieu tren may."""
+    tep_log = Path(tep_log)
+    tep_log.parent.mkdir(parents=True, exist_ok=True)
+    ban_ghi = {
+        "luc": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "su_kien": su_kien,
+    }
+    ban_ghi.update(truong)
+    with tep_log.open("a", encoding="utf-8") as f:
+        f.write(json.dumps(ban_ghi, ensure_ascii=False) + "\n")
+    return tep_log
+
+
+def chep_tep_nang_sang_drive(
+    thu_muc_nguon: Path,
+    phieu_id: str,
+    thu_muc_drive: Path | str | None = None,
+    chi_cac_tep: list[str] | None = None,
+    nguong_byte: int | None = None,
+    bo_qua: set[str] | None = None,
+) -> list[Path]:
+    """Chep cac file > 1 MB trong `thu_muc_nguon` sang `<thu_muc_drive>/<id>/`."""
+    goc_nguon = Path(thu_muc_nguon)
+    if not goc_nguon.is_dir():
+        return []
+    nguong = NGUONG_TEP_NANG if nguong_byte is None else int(nguong_byte)
+    ds_bo_qua = set(bo_qua or ())
+    goc_nguon_chuan = goc_nguon.resolve()
+
+    if chi_cac_tep is not None:
+        ung_vien_rel = [r for r in chi_cac_tep if r not in ds_bo_qua and not r.endswith(" (xoa)")]
+    else:
+        ung_vien_rel = []
+        for p in sorted(goc_nguon.rglob("*")):
+            if p.is_symlink() or not p.is_file():
+                continue
+            rel = p.relative_to(goc_nguon).as_posix()
+            if rel == ".git" or rel.startswith(".git/") or rel in ds_bo_qua:
+                continue
+            ung_vien_rel.append(rel)
+
+    can_chep: list[tuple[Path, str]] = []
+    for rel in ung_vien_rel:
+        nguon = goc_nguon / rel
+        if nguon.is_symlink() or not nguon.is_file():
+            continue
+        try:
+            nguon_chuan = nguon.resolve()
+            nguon_chuan.relative_to(goc_nguon_chuan)
+            if nguon.stat().st_size > nguong:
+                can_chep.append((nguon, Path(rel).as_posix()))
+        except (OSError, ValueError):
+            continue
+
+    if not can_chep:
+        return []
+
+    goc_drive = Path(thu_muc_drive) if thu_muc_drive is not None else _thu_muc_drive()
+    tm_dich_phieu = goc_drive / _ten_phieu_an_toan(phieu_id)
+    da_chep: list[Path] = []
+    for nguon, rel_posix in can_chep:
+        dich = tm_dich_phieu.joinpath(*rel_posix.split("/"))
+        dich.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(nguon, dich)
+        da_chep.append(dich)
+    return da_chep
+
+
+def dinh_dang_duong_dan_drive(da_chep: list[Path]) -> str:
+    if not da_chep:
+        return ""
+    if len(da_chep) == 1:
+        return str(da_chep[0])
+    noi = ", ".join(str(p) for p in da_chep)
+    if len(noi) <= 320:
+        return noi
+    ten_tep = ", ".join(p.name for p in da_chep)
+    return _cat_mot_dong(f"{da_chep[0].parent} ({len(da_chep)} tep: {ten_tep})", 320)
 
 
 def _duong_dan_wt(cfg: dict) -> tuple[Path, Path, str, str]:
@@ -411,21 +559,27 @@ def _chup_trang_thai_thu_muc(thu_muc: Path) -> dict[str, tuple[int, int]]:
     return ket_qua
 
 
-def _tim_tep_doi(truoc: dict, sau: dict, bo_qua: set[str]) -> list[str]:
-    doi = []
-    for k, v in sorted(sau.items()):
-        if k in bo_qua:
-            continue
-        if truoc.get(k) != v:
-            doi.append(k)
+def _tim_tep_moi_hoac_sua(truoc: dict, sau: dict, bo_qua: set[str]) -> list[str]:
+    return [k for k, v in sorted(sau.items()) if k not in bo_qua and truoc.get(k) != v]
+
+
+def _tim_tep_doi(truoc: dict, sau: dict, bo_qua: set[str], gioi_han_tep: int | None = 20) -> list[str]:
+    doi = _tim_tep_moi_hoac_sua(truoc, sau, bo_qua)
     for k in sorted(truoc.keys()):
         if k not in bo_qua and k not in sau:
             doi.append(f"{k} (xoa)")
-    return doi[:20]
+    return doi[:gioi_han_tep] if gioi_han_tep is not None else doi
+
+
+def _ghi_log_an_toan(tep_log: Path, su_kien: str, **truong):
+    try:
+        ghi_log_phieu(tep_log, su_kien, **truong)
+    except OSError as e:
+        linhx_runner.log("canh bao log", tep_log, e)
 
 
 def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
-    """Nhan toi da 1 phieu, chay agy va ghi KET-QUA.md len nhanh hang-doi."""
+    """Nhan toi da 1 phieu, chay agy, chep file nang sang Drive, ghi log jsonl va push KET-QUA.md."""
     viec = nhan_phieu_git(cfg)
     if not viec:
         return None
@@ -433,18 +587,73 @@ def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
     linhx_runner.log("nhan", phieu_id, viec["loai"], viec["may"])
     thu_muc = Path(cfg["thu_muc"])
     thu_muc.mkdir(parents=True, exist_ok=True)
+    tep_log = duong_dan_log_phieu(phieu_id, cfg)
+
+    bo_qua = {f"de-{phieu_id}.md"}
+    try:
+        bo_qua.add(tep_log.resolve().relative_to(thu_muc.resolve()).as_posix())
+    except (OSError, ValueError):
+        pass
+
     truoc = _chup_trang_thai_thu_muc(thu_muc)
+    _ghi_log_an_toan(
+        tep_log,
+        "nhan",
+        viec=phieu_id,
+        may=cfg["tho"],
+        loai=viec["loai"],
+        che_do=viec["che_do"],
+        tran_phut=viec["tran_phut"],
+        de=viec["de"],
+    )
+
     ham_agy = _lay_ham_chay_agy(chay_agy_fn)
+    cfg_agy = {**cfg, "_tep_log_phieu": tep_log} if ham_agy is linhx_runner.chay_agy else cfg
     t0 = time.monotonic()
     try:
-        tt, kq, nk, tv, tr = ham_agy(cfg, viec)
+        tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
     except Exception:
-        tt, kq, nk, tv, tr = "loi", None, traceback.format_exc()[-4000:], 0, 0
+        tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
     phut = (time.monotonic() - t0) / 60.0
-    sau = _chup_trang_thai_thu_muc(thu_muc)
-    tep_doi = _tim_tep_doi(truoc, sau, {f"de-{phieu_id}.md"})
 
-    bao_ket_qua_git(
+    sau = _chup_trang_thai_thu_muc(thu_muc)
+    tep_moi_sua = _tim_tep_moi_hoac_sua(truoc, sau, bo_qua)
+    tat_ca_tep_doi = _tim_tep_doi(truoc, sau, bo_qua, gioi_han_tep=None)
+    tep_doi = tat_ca_tep_doi[:20]
+
+    tep_da_chep: list[Path] = []
+    drive_str = ""
+    try:
+        tep_da_chep = chep_tep_nang_sang_drive(
+            thu_muc,
+            phieu_id,
+            thu_muc_drive=_thu_muc_drive(cfg),
+            chi_cac_tep=tep_moi_sua,
+            nguong_byte=cfg.get("nguong_tep_nang"),
+            bo_qua=bo_qua,
+        )
+        drive_str = dinh_dang_duong_dan_drive(tep_da_chep)
+    except OSError as e:
+        linhx_runner.log("loi chep Drive", phieu_id, e)
+        drive_str = f"(loi chep Drive: {e})"
+
+    _ghi_log_an_toan(
+        tep_log,
+        "ket_qua",
+        viec=phieu_id,
+        may=cfg["tho"],
+        trang_thai=tt,
+        phut=round(phut, 4),
+        token_vao=int(tv or 0),
+        token_ra=int(tr or 0),
+        tep_doi=tat_ca_tep_doi,
+        tep_drive=[str(p) for p in tep_da_chep],
+        drive=drive_str,
+        ket_qua=kq,
+        nhat_ky=nk,
+    )
+
+    tep_kq = bao_ket_qua_git(
         cfg,
         viec,
         trang_thai=tt,
@@ -454,6 +663,15 @@ def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
         token_ra=tr,
         phut=phut,
         tep_doi=tep_doi,
+        drive=drive_str,
+    )
+    _ghi_log_an_toan(
+        tep_log,
+        "bao_ket_qua",
+        viec=phieu_id,
+        may=cfg["tho"],
+        trang_thai=tt,
+        tep_ket_qua=str(tep_kq),
     )
     linhx_runner.log("xong", phieu_id, tt)
     return {
@@ -465,6 +683,9 @@ def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
         "token_ra": tr,
         "phut": phut,
         "tep_doi": tep_doi,
+        "drive": drive_str,
+        "tep_drive": [str(p) for p in tep_da_chep],
+        "tep_log": str(tep_log),
     }
 
 
