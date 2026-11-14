@@ -1,5 +1,5 @@
 """Nghiệm thu landing Listening Vietnam. KHÓA: thợ không được sửa file này.
-Chạy: python -m pytest giao-dien/listening-vietnam/nghiem-thu -q  (cần: pip install pytest playwright; python -m playwright install chromium)
+Chạy: python -m pytest viec/lvn-landing/nghiem-thu -q  (cần: pip install pytest playwright; python -m playwright install chromium)
 """
 import pathlib
 import pytest
