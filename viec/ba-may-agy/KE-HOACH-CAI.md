@@ -19,8 +19,9 @@ cd D:\linhx\hang-doi
 powershell -ExecutionPolicy Bypass -File runner\cai-may.ps1 -May may-1
 ```
 Lần đầu git sẽ hỏi đăng nhập GitHub, chọn đăng nhập qua trình duyệt. Máy 2 và máy 3 dùng `-May may-2`, `-May may-3`.
+(`cai-may.ps1` tự clone vào `D:\linhx\hang-doi` nếu thư mục chưa có, chặn nhầm sang `D:\LINHX\LINHX-ENGINE`, tạo `runner\tho.env`, giới hạn `agy` trong `D:\linhx` và đăng ký lịch `LINHX-HangDoi` chạy mỗi phút khi user đã đăng nhập qua `chay-an-tho.vbs`.)
 
-**2. Thử**: nhắn Claude "ping may-1". Trong 3 phút sẽ có kết quả trả về.
+**2. Thử**: nhắn Claude "ping may-1" (mẫu tại `runner/phieu-mau/ping.md`, đẩy lên `hang-doi/moi/ping-may-1.md`). Trong 3 phút sẽ có `hang-doi/xong/ping-may-1/KET-QUA.md` trả về.
 
 ## Cần chốt trước khi cài
 - Tên Windows của 2 máy mới.

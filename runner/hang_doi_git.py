@@ -10,6 +10,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 import json
 import os
+import random
 import re
 import shutil
 import stat
@@ -30,7 +31,8 @@ GIOI_HAN_KET_QUA = 2000
 NGUONG_TEP_NANG = 1024 * 1024  # 1 MB
 THU_MUC_DRIVE_MAC_DINH = Path(r"G:\My Drive\LINHX-VIEC")
 THU_MUC_LOG_MAC_DINH = Path(r"D:\linhx\linhx-runner\log")
-SO_LAN_THU_PUSH = 5
+DUONG_DAN_PHIEU_PING_MAU = linhx_runner.GOC / "phieu-mau" / "ping.md"
+SO_LAN_THU_PUSH = 8
 SO_PHIEU_TRINH_DUYET_TOI_DA = 1
 SO_PHIEU_CODE_MAC_DINH = linhx_runner.SO_PHIEU_CODE_MAC_DINH
 NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
@@ -204,6 +206,29 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "de": de,
         "meta": meta,
     }
+
+
+def tao_phieu_ping(may: str = "bat-ky", che_do: str | None = None, tran_phut: int = 3) -> str:
+    """Doc phieu mau ping.md va tuy bien may dich / che_do de gui thu duong ong."""
+    may_chuan = (may or "bat-ky").strip().lower()
+    if DUONG_DAN_PHIEU_PING_MAU.is_file():
+        mau = DUONG_DAN_PHIEU_PING_MAU.read_text(encoding="utf-8")
+        p = phan_tich_phieu(mau, "ping")
+        than = p["de"]
+    else:
+        than = (
+            "Phiếu thử đường ống hàng đợi GitHub (ping).\n"
+            "Trả lời ngắn gọn 1 dòng theo mẫu: `PONG <tên-máy-windows> <thư-mục-hiện-tại>` rồi kết thúc ngay.\n"
+            "Không tạo, sửa hay xoá bất kỳ file nào."
+        )
+    dau = [
+        f"may: {may_chuan}",
+        "loai: code",
+        f"tran_phut: {int(tran_phut)}",
+    ]
+    if che_do and str(che_do).strip().lower() not in ("", "thuc"):
+        dau.append(f"che_do: {str(che_do).strip().lower()}")
+    return "\n".join(dau) + "\n\n" + than.strip() + "\n"
 
 
 def chen_dong_nhan(noi_dung: str, tho: str, thoi_gian: str = "") -> str:
@@ -550,7 +575,7 @@ def nhan_phieu_git(cfg: dict):
     _, _, remote, nhanh = _duong_dan_wt(cfg)
     tho = cfg["tho"]
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
-        for _ in range(SO_LAN_THU_PUSH):
+        for lan in range(SO_LAN_THU_PUSH):
             ok_ram, ram_gb = du_ram_nhan_viec(cfg)
             if not ok_ram:
                 return None
@@ -575,6 +600,7 @@ def nhan_phieu_git(cfg: dict):
             if push.returncode == 0:
                 return viec
             linhx_runner.log("tranh phieu", viec["viec"], "push bi tu choi, keo lai")
+            time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
     return None
 
 

@@ -1,4 +1,4 @@
-"""linhx-runner: tho nhan viec cua LINHX ENGINE.
+r"""linhx-runner: tho nhan viec cua LINHX ENGINE.
 
 Chay o bat cu dau (may cty Windows, MSI, container tren cloud). Chi KEO viec qua HTTPS,
 khong mo cong. Server chi gui DE (chu), khong bao gio gui lenh shell.
@@ -16,8 +16,10 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
   LINHX_TRAN_PHUT       tran phut toi da moi phieu truoc khi dung agy (mac dinh 40)
   LINHX_KHONG_TIEN_PHUT so phut khong tien truoc khi dung agy (mac dinh 10)
   LINHX_RAM_TOI_THIEU_GB nguong RAM trong toi thieu de nhan phieu (mac dinh 1.5)
+  LINHX_GIOI_HAN_THU_MUC thu muc goc cho phep agy lam viec, vd D:\linhx
 Chi stdlib, Python >= 3.9.
 """
+from contextlib import contextmanager
 import ctypes
 import json
 import os
@@ -40,6 +42,7 @@ PHUT_TOI_DA_MAC_DINH = 40
 PHUT_KHONG_TIEN_MAC_DINH = 10
 NGUONG_RAM_TRONG_GB = 1.5
 SO_PHIEU_CODE_MAC_DINH = 1
+THU_MUC_ENGINE_CAM = "d:/linhx/linhx-engine"
 GOC = Path(__file__).resolve().parent
 
 _SUBPROCESS_RUN_GOC = subprocess.run
@@ -90,6 +93,89 @@ def _dinh_dang_phut(phut: float) -> str:
     if abs(n - round(n)) < 1e-6:
         return str(int(round(n)))
     return f"{n:g}"
+
+
+def _chuan_hoa_duong_dan_so_sanh(duong_dan) -> str:
+    s = str(duong_dan or "").strip().replace("\\", "/")
+    while "//" in s:
+        s = s.replace("//", "/")
+    if len(s) > 3:
+        s = s.rstrip("/")
+    return s.lower()
+
+
+def _la_duong_dan_win_tuyet_doi(s: str) -> bool:
+    return len(s) >= 2 and s[0].isalpha() and s[1] == ":"
+
+
+def kiem_tra_thu_muc_lam_viec(thu_muc, gioi_han=None) -> tuple[bool, str]:
+    """Kiem tra thu_muc lam viec cua agy:
+    - Cam D:\\LINHX\\LINHX-ENGINE (khong phan biet hoa thuong, trung repo tho ENGINE).
+    - Khi co gioi_han (vd D:\\linhx), bat buoc thu_muc (sau khi resolve symlink) nam trong gioi_han.
+    """
+    if thu_muc is None or not str(thu_muc).strip():
+        return False, "thiếu thư mục làm việc của agy"
+
+    p_raw = Path(thu_muc)
+    ung_vien_kiem = [_chuan_hoa_duong_dan_so_sanh(p_raw)]
+    try:
+        p_thuc = p_raw.resolve()
+        ung_vien_kiem.append(_chuan_hoa_duong_dan_so_sanh(p_thuc))
+    except OSError:
+        p_thuc = p_raw
+
+    for chuan in ung_vien_kiem:
+        if chuan == THU_MUC_ENGINE_CAM or chuan.startswith(THU_MUC_ENGINE_CAM + "/"):
+            return (
+                False,
+                r"không được dùng D:\LINHX\LINHX-ENGINE (trùng repo đang chạy thợ ENGINE)",
+            )
+
+    if gioi_han is not None and str(gioi_han).strip():
+        raw_gh = str(gioi_han).strip()
+        raw_tm = str(thu_muc).strip()
+        if os.name != "nt" and (_la_duong_dan_win_tuyet_doi(raw_gh) or _la_duong_dan_win_tuyet_doi(raw_tm)):
+            gh_cmp = _chuan_hoa_duong_dan_so_sanh(raw_gh).rstrip("/")
+            tm_cmp = _chuan_hoa_duong_dan_so_sanh(raw_tm)
+            # Chan '..' leo ra ngoai tren duong dan kieu Windows khi test tren POSIX
+            phan_tm = []
+            for phan in tm_cmp.split("/"):
+                if phan in ("", "."):
+                    continue
+                if phan == "..":
+                    if phan_tm and not _la_duong_dan_win_tuyet_doi(phan_tm[-1]):
+                        phan_tm.pop()
+                else:
+                    phan_tm.append(phan)
+            tm_sach = "/".join(phan_tm)
+            if tm_sach != gh_cmp and not tm_sach.startswith(gh_cmp + "/"):
+                return False, f"thư mục làm việc '{thu_muc}' nằm ngoài giới hạn '{gioi_han}'"
+            return True, ""
+
+        try:
+            gh_thuc = Path(gioi_han).resolve()
+            tm_thuc = p_raw.resolve()
+            gh_nc = os.path.normcase(str(gh_thuc))
+            tm_nc = os.path.normcase(str(tm_thuc))
+            chung = os.path.commonpath([gh_nc, tm_nc])
+        except (OSError, ValueError):
+            return False, f"thư mục làm việc '{thu_muc}' nằm ngoài giới hạn '{gioi_han}'"
+        if chung != gh_nc:
+            return False, f"thư mục làm việc '{thu_muc}' nằm ngoài giới hạn '{gioi_han}'"
+
+    return True, ""
+
+
+def _tach_agy_args(chuoi_args: str) -> list[str]:
+    ds = shlex.split(chuoi_args or "", posix=os.name != "nt")
+    if os.name == "nt":
+        sach = []
+        for muc in ds:
+            if len(muc) >= 2 and muc[0] == muc[-1] and muc[0] in ('"', "'"):
+                muc = muc[1:-1]
+            sach.append(muc)
+        return sach
+    return ds
 
 
 class _MemoryStatusEx(ctypes.Structure):
@@ -177,11 +263,12 @@ def du_ram_nhan_viec(cfg=None, lay_ram_fn=None):
 def doc_env(tep_env=None):
     f = Path(tep_env) if tep_env else (GOC / "tho.env")
     if f.exists():
-        for dong in f.read_text(encoding="utf-8").splitlines():
+        for dong in f.read_text(encoding="utf-8-sig").splitlines():
             dong = dong.strip()
             if dong and not dong.startswith("#") and "=" in dong:
                 k, v = dong.split("=", 1)
                 os.environ.setdefault(k.strip(), v.strip())
+    gioi_han_env = os.environ.get("LINHX_GIOI_HAN_THU_MUC", "").strip()
     cfg = {
         "nguon": os.environ.get("LINHX_NGUON", "engine").strip().lower(),
         "url": os.environ.get("LINHX_URL", "http://localhost:8080").rstrip("/"),
@@ -190,6 +277,7 @@ def doc_env(tep_env=None):
         "agy": os.environ.get("AGY_CMD", "agy"),
         "agy_args": os.environ.get("AGY_ARGS", "--output-format json"),
         "thu_muc": Path(os.environ.get("LINHX_THU_MUC", str(GOC / "viec"))),
+        "gioi_han_thu_muc": Path(gioi_han_env) if gioi_han_env else None,
         "nghi": float(os.environ.get("LINHX_NGHI", "15")),
         "host": os.environ.get("LINHX_HOST", ""),
         "repo_hang_doi": Path(os.environ.get("LINHX_REPO_HANG_DOI", str(GOC.parent))),
@@ -203,7 +291,9 @@ def doc_env(tep_env=None):
         "khong_tien_phut": _ep_so_duong(os.environ.get("LINHX_KHONG_TIEN_PHUT"), PHUT_KHONG_TIEN_MAC_DINH),
         "nguong_ram_gb": _ep_so_duong(os.environ.get("LINHX_RAM_TOI_THIEU_GB"), NGUONG_RAM_TRONG_GB),
     }
-    cfg["thu_muc"].mkdir(parents=True, exist_ok=True)
+    ok_tm, _ = kiem_tra_thu_muc_lam_viec(cfg["thu_muc"], cfg["gioi_han_thu_muc"])
+    if ok_tm:
+        cfg["thu_muc"].mkdir(parents=True, exist_ok=True)
     return cfg
 
 
@@ -432,6 +522,12 @@ def chay_agy(cfg, viec):
     khong_tien_giay = khong_tien_phut * 60.0
 
     thu_muc = Path(cfg["thu_muc"])
+    gioi_han = cfg.get("gioi_han_thu_muc")
+    if gioi_han is None and os.environ.get("LINHX_GIOI_HAN_THU_MUC", "").strip():
+        gioi_han = Path(os.environ["LINHX_GIOI_HAN_THU_MUC"].strip())
+    ok_tm, ly_do_tm = kiem_tra_thu_muc_lam_viec(thu_muc, gioi_han)
+    if not ok_tm:
+        return "loi", None, ly_do_tm, 0, 0
     thu_muc.mkdir(parents=True, exist_ok=True)
     de = viec["de"]
     if len(de) > DE_DAI:
@@ -440,7 +536,7 @@ def chay_agy(cfg, viec):
         f.write_text(de, encoding="utf-8")
         de = (f"Đọc toàn bộ file {f.name} trong thư mục hiện tại (chỉ đọc, không chạy lệnh shell) "
               f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.")
-    cmd = [cfg["agy"], "-p", de] + shlex.split(cfg.get("agy_args", "--output-format json"), posix=os.name != "nt")
+    cmd = [cfg["agy"], "-p", de] + _tach_agy_args(cfg.get("agy_args", "--output-format json"))
     tep_log_raw = cfg.get("_tep_log_phieu")
 
     # Tuong thich nguoc khi test monkeypatch truc tiep subprocess.run
@@ -603,6 +699,99 @@ def vong(cfg, mot_lan=False, mot_viec=False):
         time.sleep(cfg["nghi"])
 
 
+@contextmanager
+def khoa_mot_tien_trinh(tep_khoa: Path):
+    """Khoa cap he dieu hanh khong chan (non-blocking) de 1 may khong chay chong nhieu runner."""
+    tep_khoa = Path(tep_khoa)
+    tep_khoa.parent.mkdir(parents=True, exist_ok=True)
+    fh = open(tep_khoa, "a+b")
+    da_khoa = False
+    try:
+        fh.seek(0)
+        if fh.read(1) == b"":
+            fh.write(b"0")
+            fh.flush()
+        fh.seek(0)
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(fh.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        da_khoa = True
+    except OSError:
+        fh.close()
+        yield False
+        return
+
+    try:
+        yield True
+    finally:
+        if da_khoa:
+            try:
+                fh.seek(0)
+                if os.name == "nt":
+                    import msvcrt
+
+                    msvcrt.locking(fh.fileno(), msvcrt.LK_UNLCK, 1)
+                else:
+                    import fcntl
+
+                    fcntl.flock(fh.fileno(), fcntl.LOCK_UN)
+            except OSError:
+                pass
+        fh.close()
+
+
+def _duong_dan_khoa_runner(cfg: dict) -> Path:
+    tho_an_toan = "".join(c if (c.isalnum() or c in "-_") else "_" for c in str(cfg.get("tho") or "tho"))
+    if str(cfg.get("nguon") or "engine").strip().lower() == "github":
+        repo = Path(cfg.get("repo_hang_doi") or GOC.parent).resolve()
+        return repo.parent / f".{repo.name}-{tho_an_toan}-runner.lock"
+    return GOC / "viec" / f"tho-{tho_an_toan}.lock"
+
+
+def chay_cli(argv=None, tep_env=None) -> int:
+    ds_arg = list(sys.argv[1:] if argv is None else argv)
+    mot_viec = "--mot-viec" in ds_arg
+    mot_lan = "--mot-lan" in ds_arg or mot_viec
+    tep_log_cli = None
+    tep_khoa_cli = None
+    i = 0
+    while i < len(ds_arg):
+        if ds_arg[i] == "--log" and i + 1 < len(ds_arg):
+            tep_log_cli = Path(ds_arg[i + 1])
+            i += 2
+            continue
+        if ds_arg[i] == "--tep-khoa" and i + 1 < len(ds_arg):
+            tep_khoa_cli = Path(ds_arg[i + 1])
+            i += 2
+            continue
+        i += 1
+
+    cfg = doc_env(tep_env)
+    tep_khoa = tep_khoa_cli or _duong_dan_khoa_runner(cfg)
+    with khoa_mot_tien_trinh(tep_khoa) as co_khoa:
+        if not co_khoa:
+            return 0
+        if tep_log_cli is None:
+            vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
+            return 0
+        tep_log_cli.parent.mkdir(parents=True, exist_ok=True)
+        out_cu, err_cu = sys.stdout, sys.stderr
+        with tep_log_cli.open("a", encoding="utf-8", buffering=1) as fh_log:
+            try:
+                sys.stdout = fh_log
+                sys.stderr = fh_log
+                vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
+            finally:
+                sys.stdout = out_cu
+                sys.stderr = err_cu
+    return 0
+
+
 if __name__ == "__main__":
-    # --mot-lan: het viec thi thoat; --mot-viec: lam toi da 1 viec roi thoat
-    vong(doc_env(), mot_lan="--mot-lan" in sys.argv or "--mot-viec" in sys.argv, mot_viec="--mot-viec" in sys.argv)
+    # --mot-lan: het viec thi thoat; --mot-viec: lam toi da 1 viec roi thoat; --log <tep>: ghi log chia se
+    raise SystemExit(chay_cli())
