@@ -1,6 +1,7 @@
 may: may-1
 loai: code
 tran_phut: 3
+nhan: may-1 2026-11-14T21:59:15+0700
 
 Phiếu thử đường ống hàng đợi GitHub (ping).
 Trả lời ngắn gọn 1 dòng theo mẫu: `PONG <tên-máy-windows> <thư-mục-hiện-tại>` rồi kết thúc ngay.
