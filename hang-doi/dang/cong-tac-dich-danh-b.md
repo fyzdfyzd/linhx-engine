@@ -1,6 +1,7 @@
 may: may-2
 loai: code
 tran_phut: 30
+nhan: may-2 2026-11-14T22:45:27+0700
 
 Sửa runner trong repo `C:\linhx\wt-runner` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-runner`; có rồi: `git pull`; trước khi push: `git pull --rebase`). KHÔNG sửa C:\linhx\hang-doi (runner đang chạy).
 Thêm công tắc `LINHX_NHAN_BAT_KY` (mặc định 1). Đặt 0 thì máy CHỈ nhận phiếu có `may:` đúng tên máy, bỏ qua phiếu `bat-ky`.
