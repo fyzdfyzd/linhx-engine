@@ -14,6 +14,7 @@ import re
 import shutil
 import stat
 import subprocess
+import threading
 import time
 import traceback
 from pathlib import Path
@@ -30,10 +31,16 @@ NGUONG_TEP_NANG = 1024 * 1024  # 1 MB
 THU_MUC_DRIVE_MAC_DINH = Path(r"G:\My Drive\LINHX-VIEC")
 THU_MUC_LOG_MAC_DINH = Path(r"D:\linhx\linhx-runner\log")
 SO_LAN_THU_PUSH = 5
+SO_PHIEU_TRINH_DUYET_TOI_DA = 1
+SO_PHIEU_CODE_MAC_DINH = linhx_runner.SO_PHIEU_CODE_MAC_DINH
+NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
 
 _CHAY_AGY_GOC = linhx_runner.chay_agy
 chay_agy = _CHAY_AGY_GOC
+
+_LAY_RAM_GOC = linhx_runner.lay_ram_trong_gb
+lay_ram_trong_gb = _LAY_RAM_GOC
 
 
 def _lay_ham_chay_agy(chay_agy_fn=None):
@@ -42,6 +49,22 @@ def _lay_ham_chay_agy(chay_agy_fn=None):
     if chay_agy is not _CHAY_AGY_GOC:
         return chay_agy
     return linhx_runner.chay_agy
+
+
+def _goi_lay_ram_trong_gb():
+    if lay_ram_trong_gb is not _LAY_RAM_GOC:
+        return lay_ram_trong_gb()
+    return linhx_runner.lay_ram_trong_gb()
+
+
+def du_ram_nhan_viec(cfg: dict | None = None) -> tuple[bool, float | None]:
+    return linhx_runner.du_ram_nhan_viec(cfg, lay_ram_fn=_goi_lay_ram_trong_gb)
+
+
+def lay_so_phieu_toi_da(cfg: dict | None = None) -> int:
+    if cfg and "so_phieu" in cfg and cfg["so_phieu"] is not None:
+        return linhx_runner._ep_so_nguyen_khong_am(cfg["so_phieu"], SO_PHIEU_CODE_MAC_DINH)
+    return linhx_runner._ep_so_nguyen_khong_am(os.environ.get("LINHX_SO_PHIEU"), SO_PHIEU_CODE_MAC_DINH)
 
 
 def chay_git(args, cwd, check=True, timeout=120):
@@ -159,11 +182,17 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     if may in ("*", "all", "tat-ca"):
         may = "bat-ky"
     loai = (meta.get("loai") or "code").strip().lower()
+    if loai in ("trinh_duyet", "browser"):
+        loai = "trinh-duyet"
     che_do = (meta.get("che_do") or "thuc").strip().lower()
     tran_raw = str(meta.get("tran_phut") or "").strip()
-    try:
-        tran_phut = int(tran_raw) if tran_raw else 40
-    except ValueError:
+    if tran_raw:
+        try:
+            tran_f = float(tran_raw)
+            tran_phut = int(tran_f) if tran_f.is_integer() else tran_f
+        except ValueError:
+            tran_phut = 40
+    else:
         tran_phut = 40
 
     return {
@@ -430,16 +459,67 @@ def thu_muc_hang_doi(wt: Path) -> Path:
     return wt
 
 
-def chon_ung_vien(wt: Path, tho: str) -> list[tuple[Path, dict]]:
+def dem_phieu_dang_chay(wt: Path, tho: str) -> dict[str, int]:
+    """Dem so phieu dang nam trong hang-doi/dang/ cua may `tho` theo tung loai."""
+    goc_hd = thu_muc_hang_doi(wt)
+    tm_dang = goc_hd / "dang"
+    dem: dict[str, int] = {}
+    if not tm_dang.is_dir():
+        return dem
+    tho_chuan = tho.strip().lower()
+    for tep in sorted(tm_dang.glob("*.md"), key=lambda p: p.name):
+        try:
+            noi_dung = tep.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        viec = phan_tich_phieu(noi_dung, tep.stem)
+        nhan_raw = str(viec["meta"].get("nhan") or "").strip()
+        if nhan_raw:
+            may_giu = nhan_raw.split()[0].strip().lower()
+        elif viec["may"] != "bat-ky":
+            may_giu = viec["may"]
+        else:
+            may_giu = ""
+        if may_giu == tho_chuan:
+            loai = viec["loai"]
+            dem[loai] = dem.get(loai, 0) + 1
+    return dem
+
+
+def co_the_nhan_loai(loai: str, dem_dang_chay: dict[str, int], so_phieu_code: int = SO_PHIEU_CODE_MAC_DINH) -> bool:
+    """Kiem tra gioi han song song tren 1 may:
+    - Moi may toi da 1 phieu `trinh-duyet` mot luc (computer use chiem chuot, ban phim, man hinh).
+    - Moi may toi da `LINHX_SO_PHIEU` phieu `code` chay song song (mac dinh 1).
+    """
+    loai_chuan = (loai or "code").strip().lower()
+    if loai_chuan in ("trinh_duyet", "browser"):
+        loai_chuan = "trinh-duyet"
+    if loai_chuan == "trinh-duyet":
+        return dem_dang_chay.get("trinh-duyet", 0) < SO_PHIEU_TRINH_DUYET_TOI_DA
+    if loai_chuan == "code":
+        return dem_dang_chay.get("code", 0) < max(0, int(so_phieu_code))
+    return dem_dang_chay.get(loai_chuan, 0) < max(1, int(so_phieu_code))
+
+
+def chon_ung_vien(
+    wt: Path,
+    tho: str,
+    so_phieu_code: int | None = None,
+    cfg: dict | None = None,
+) -> list[tuple[Path, dict]]:
     goc_hd = thu_muc_hang_doi(wt)
     tm_moi = goc_hd / "moi"
     if not tm_moi.is_dir():
         return []
     tho_chuan = tho.strip().lower()
+    so_phieu = lay_so_phieu_toi_da(cfg) if so_phieu_code is None else max(0, int(so_phieu_code))
+    dem_dang = dem_phieu_dang_chay(wt, tho_chuan)
     rieng, chung = [], []
     for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
         noi_dung = tep.read_text(encoding="utf-8", errors="replace")
         viec = phan_tich_phieu(noi_dung, tep.stem)
+        if not co_the_nhan_loai(viec["loai"], dem_dang, so_phieu):
+            continue
         if viec["may"] == tho_chuan:
             rieng.append((tep, viec))
         elif viec["may"] == "bat-ky":
@@ -462,14 +542,22 @@ def _commit_git(wt: Path, tho: str, thong_diep: str):
 
 def nhan_phieu_git(cfg: dict):
     """Keo nhanh hang-doi, chon phieu phu hop va giu phieu bang commit + push."""
+    ok_ram, ram_gb = du_ram_nhan_viec(cfg)
+    if not ok_ram:
+        nguong = cfg.get("nguong_ram_gb", NGUONG_RAM_TRONG_GB)
+        linhx_runner.log(f"RAM trong {ram_gb:.2f} GB < {nguong} GB, khong nhan phieu")
+        return None
     _, _, remote, nhanh = _duong_dan_wt(cfg)
     tho = cfg["tho"]
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
         for _ in range(SO_LAN_THU_PUSH):
+            ok_ram, ram_gb = du_ram_nhan_viec(cfg)
+            if not ok_ram:
+                return None
             wt = dam_bao_worktree(cfg)
             if wt is None:
                 return None
-            ung_vien = chon_ung_vien(wt, tho)
+            ung_vien = chon_ung_vien(wt, tho, cfg=cfg)
             if not ung_vien:
                 return None
             tep_moi, viec = ung_vien[0]
@@ -545,13 +633,17 @@ def _chup_trang_thai_thu_muc(thu_muc: Path) -> dict[str, tuple[int, int]]:
     ket_qua = {}
     if not thu_muc.is_dir():
         return ket_qua
-    for p in thu_muc.rglob("*"):
-        if not p.is_file():
-            continue
-        rel = p.relative_to(thu_muc).as_posix()
-        if rel.startswith(".git/") or rel == ".git":
-            continue
+    try:
+         cac_muc = list(thu_muc.rglob("*"))
+    except OSError:
+        return ket_qua
+    for p in cac_muc:
         try:
+            if not p.is_file():
+                continue
+            rel = p.relative_to(thu_muc).as_posix()
+            if rel.startswith(".git/") or rel == ".git":
+                continue
             st = p.stat()
             ket_qua[rel] = (st.st_mtime_ns, st.st_size)
         except OSError:
@@ -559,14 +651,20 @@ def _chup_trang_thai_thu_muc(thu_muc: Path) -> dict[str, tuple[int, int]]:
     return ket_qua
 
 
+def _la_tep_tam_de(rel: str, bo_qua: set[str]) -> bool:
+    if rel in bo_qua:
+        return True
+    return "/" not in rel and rel.startswith("de-") and rel.endswith(".md")
+
+
 def _tim_tep_moi_hoac_sua(truoc: dict, sau: dict, bo_qua: set[str]) -> list[str]:
-    return [k for k, v in sorted(sau.items()) if k not in bo_qua and truoc.get(k) != v]
+    return [k for k, v in sorted(sau.items()) if not _la_tep_tam_de(k, bo_qua) and truoc.get(k) != v]
 
 
 def _tim_tep_doi(truoc: dict, sau: dict, bo_qua: set[str], gioi_han_tep: int | None = 20) -> list[str]:
     doi = _tim_tep_moi_hoac_sua(truoc, sau, bo_qua)
     for k in sorted(truoc.keys()):
-        if k not in bo_qua and k not in sau:
+        if not _la_tep_tam_de(k, bo_qua) and k not in sau:
             doi.append(f"{k} (xoa)")
     return doi[:gioi_han_tep] if gioi_han_tep is not None else doi
 
@@ -578,11 +676,8 @@ def _ghi_log_an_toan(tep_log: Path, su_kien: str, **truong):
         linhx_runner.log("canh bao log", tep_log, e)
 
 
-def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
-    """Nhan toi da 1 phieu, chay agy, chep file nang sang Drive, ghi log jsonl va push KET-QUA.md."""
-    viec = nhan_phieu_git(cfg)
-    if not viec:
-        return None
+def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
+    """Chay agy cho 1 phieu da giu trong dang/, chep Drive, ghi log jsonl va push KET-QUA.md."""
     phieu_id = viec["viec"]
     linhx_runner.log("nhan", phieu_id, viec["loai"], viec["may"])
     thu_muc = Path(cfg["thu_muc"])
@@ -689,20 +784,67 @@ def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
     }
 
 
+def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
+    """Nhan toi da 1 phieu, chay agy, chep file nang sang Drive, ghi log jsonl va push KET-QUA.md."""
+    viec = nhan_phieu_git(cfg)
+    if not viec:
+        return None
+    return thuc_thi_phieu_da_nhan(cfg, viec, chay_agy_fn=chay_agy_fn)
+
+
 def vong_git(cfg: dict, mot_lan: bool = False, mot_viec: bool = False, chay_agy_fn=None):
     linhx_runner.log(
         f"linhx-runner {linhx_runner.PHIEN_BAN} tho={cfg['tho']} nguon=github "
-        f"nhanh={cfg.get('nhanh_hang_doi', NHANH_MAC_DINH)}"
+        f"nhanh={cfg.get('nhanh_hang_doi', NHANH_MAC_DINH)} so_phieu={lay_so_phieu_toi_da(cfg)}"
     )
-    while True:
-        try:
-            kq = xu_ly_mot_phieu(cfg, chay_agy_fn=chay_agy_fn)
-            if kq is not None:
-                if mot_viec:
+    if mot_viec:
+        while True:
+            try:
+                kq = xu_ly_mot_phieu(cfg, chay_agy_fn=chay_agy_fn)
+                if kq is not None:
                     return kq
-                continue
+            except Exception:
+                linhx_runner.log("loi", traceback.format_exc()[-800:])
+            if mot_lan:
+                return None
+            time.sleep(cfg["nghi"])
+
+    dang_chay: list[threading.Thread] = []
+    su_kien_xong = threading.Event()
+
+    while True:
+        dang_chay = [t for t in dang_chay if t.is_alive()]
+        su_kien_xong.clear()
+        viec = None
+        try:
+            viec = nhan_phieu_git(cfg)
         except Exception:
             linhx_runner.log("loi", traceback.format_exc()[-800:])
+
+        if viec is not None:
+            def _chay_cong_viec(v=viec):
+                try:
+                    thuc_thi_phieu_da_nhan(cfg, v, chay_agy_fn=chay_agy_fn)
+                except Exception:
+                    linhx_runner.log("loi", traceback.format_exc()[-800:])
+                finally:
+                    su_kien_xong.set()
+
+            luong = threading.Thread(target=_chay_cong_viec, name=f"phieu-{viec['viec']}", daemon=True)
+            luong.start()
+            dang_chay.append(luong)
+            continue
+
+        dang_chay = [t for t in dang_chay if t.is_alive()]
+        if dang_chay:
+            if not su_kien_xong.is_set():
+                thoi_gian_cho = 5.0 if mot_lan else max(0.01, float(cfg.get("nghi", 15)))
+                su_kien_xong.wait(timeout=thoi_gian_cho)
+            continue
+
+        if su_kien_xong.is_set():
+            continue
+
         if mot_lan:
             return None
         time.sleep(cfg["nghi"])
