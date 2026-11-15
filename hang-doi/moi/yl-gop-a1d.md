@@ -4,7 +4,7 @@ tran_phut: 40
 model: gemini-4-argon-high
 khong_tien_phut: 30
 tu_sua: 1
-phu_thuoc: hd-code-model-b; va-5-cham-doc-lap
+phu_thuoc: va-5-cham-doc-lap
 theo_doi: C:\linhx\ifagent-wt\A1b
 
 Phiếu A1 Yên Lam (lần 4). Lần 2, 3 bị dừng vì chạy test ở nền và ghi log ra ngoài thư mục theo dõi. Lần này: KHÔNG dùng background task, KHÔNG chờ thợ con; mọi lệnh chạy tiền cảnh; log ghi TRONG C:\linhx\ifagent-wt\A1b\_bang-chung\ (không commit thư mục này).
