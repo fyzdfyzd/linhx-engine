@@ -37,6 +37,11 @@ try:
 except ImportError:
     import rao_phieu
 
+try:
+    from runner import so_tai_khoan
+except ImportError:
+    import so_tai_khoan
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -1909,7 +1914,7 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         cfg_agy = cfg
     t0 = time.monotonic()
     try:
-        tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
+        tt, kq, nk, tv, tr = so_tai_khoan.chay_voi_tai_khoan(cfg_agy, viec, ham_agy)
     except Exception:
         tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
 
