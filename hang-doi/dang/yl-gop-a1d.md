@@ -5,6 +5,7 @@ model: gemini-4-argon-high
 khong_tien_phut: 30
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\A1b
+nhan: may-2 2026-11-15T10:48:28+0700
 
 Phiếu A1 Yên Lam (lần 4). Lần 2, 3 bị dừng vì chạy test ở nền và ghi log ra ngoài thư mục theo dõi. Lần này: KHÔNG dùng background task, KHÔNG chờ thợ con; mọi lệnh chạy tiền cảnh; log ghi TRONG C:\linhx\ifagent-wt\A1b\_bang-chung\ (không commit thư mục này).
 0. Nếu worktree C:\linhx\ifagent-wt\A1b và nhánh agy/yl-a1-gop-b đã có từ lần 2: dùng lại, kiểm `git log --oneline 075e80a5..HEAD`, bỏ qua bước đã xong.
