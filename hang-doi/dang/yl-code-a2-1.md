@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl-code-a2-1
 phu_thuoc: yl-khoa-t1
+nhan: may-2 2026-11-15T12:03:19+0700
 
 Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý a,b. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-test-t1 chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-a2-1 -b agy/yl-code-a2-1 origin/agy/yl-test-t1`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (chỉ đọc).
