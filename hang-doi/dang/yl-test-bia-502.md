@@ -5,6 +5,7 @@ tran_phut: 30
 khong_tien_phut: 20
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl-test-bia-502
+nhan: may-2 2026-11-15T13:36:40+0700
 
 LUẬT CHẠY: KHÔNG chạy `npm run dev`/server riêng; test tự dựng createApp trong tiến trình; mọi lệnh tiền cảnh, bọc timeout ≤ 300 s; mỗi 5 phút có file mới/commit trong theo_doi.
 
