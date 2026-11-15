@@ -23,6 +23,7 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
 Chi stdlib, Python >= 3.9.
 """
 from contextlib import contextmanager
+import codecs
 import ctypes
 import json
 import os
@@ -35,10 +36,16 @@ import sys
 import threading
 import time
 import traceback
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
+
+try:
+    from runner import nhat_ky_agy
+except ImportError:
+    import nhat_ky_agy
 
 PHIEN_BAN = "0.1.1"
 DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
@@ -84,6 +91,14 @@ CAU_NHAC_CAN_LINH = (
     "DỪNG việc đó và ghi khối `CAN-LINH: <việc>; LENH: <lệnh dán được nếu có>` trong câu trả lời."
 )
 CAU_NHAC_TIEN_CANH = "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
+LY_DO_CHO_TAC_VU_NEN = "cho-tac-vu-nen"
+CAU_DAU_DE_SUA_CHO_NEN = (
+    "Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. "
+    "Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh."
+)
+# Rà agy --help và mọi lệnh con (15/11/2026): không có cờ/thiết lập tắt background task hay subagent.
+# Giữ tuple móc cấu hình nếu phiên bản agy sau này bổ sung cờ tắt chạy nền.
+AGY_CO_TAT_NEN: tuple[str, ...] = ()
 GOC = Path(__file__).resolve().parent
 TEP_MODEL_THEO_LOAI = GOC / "model-theo-loai.json"
 
@@ -1124,13 +1139,133 @@ def _thu_muc_theo_doi(meta_viec: dict, viec: dict | None = None) -> tuple:
     return tuple(t.strip() for t in sach.split(";") if t.strip() and Path(t.strip()).is_dir())
 
 
-def ghep_de_gui_agy(de_goc: str) -> str:
+_MAU_WAITING_BG_RE = re.compile(r"waiting\s+up\s+to\b.*\bbackground\s+task", re.IGNORECASE)
+_MAU_ROOT_IDLE_RE = re.compile(r"\broot\s+agent\s+idle\b", re.IGNORECASE)
+_MAU_STATUS_ERROR_RE = re.compile(r'(?:"status"\s*:\s*"error"|\bstatus\s*[:=]\s*error\b)', re.IGNORECASE)
+_MAU_STATUS_SUCCESS_RE = re.compile(r'"status"\s*:\s*"(?:success|ok|done)"', re.IGNORECASE)
+_MAU_UNICODE_ESCAPE_RE = re.compile(r"\\u([0-9a-fA-F]{4})")
+_CUM_CHO_LENH_HOAN_TAT = unicodedata.normalize("NFC", "chờ lệnh hoàn tất").casefold()
+
+
+def cho_phep_chay_nen(viec: dict | None) -> bool:
+    """Cho biet phieu co header `cho_nen: co` (cho phep chay nen) hay khong."""
+    if not isinstance(viec, dict):
+        return False
+    gia_tri = viec.get("cho_nen")
+    if gia_tri in (None, "") and isinstance(viec.get("meta"), dict):
+        gia_tri = viec["meta"].get("cho_nen")
+    if isinstance(gia_tri, bool):
+        return gia_tri
+    sach = unicodedata.normalize("NFC", str(gia_tri or "").split("#", 1)[0].strip()).casefold()
+    return sach in {"co", "có", "1", "true", "yes", "bat", "bật"}
+
+
+def _giai_ma_unicode_don_gian(van_ban: str) -> str:
+    if "\\u" not in van_ban:
+        return van_ban
+    return _MAU_UNICODE_ESCAPE_RE.sub(lambda m: chr(int(m.group(1), 16)), van_ban)
+
+
+def _chuan_hoa_nfc_lower(van_ban: str | None) -> str:
+    if not van_ban:
+        return ""
+    giai = _giai_ma_unicode_don_gian(str(van_ban))
+    return unicodedata.normalize("NFC", giai).casefold()
+
+
+def _la_json_ket_qua_thanh_cong(dong_hoac_chuoi: str) -> bool:
+    sach = dong_hoac_chuoi.strip()
+    if not sach.startswith("{"):
+        return False
+    try:
+        obj = json.loads(sach)
+    except (ValueError, TypeError):
+        # Chi bo qua khi day la 1 JSON ket qua dang stream do dang co "status": "SUCCESS" + "response", khong phai NDJSON nhieu dong
+        if "\n{" not in sach and '"response"' in sach[:700] and _MAU_STATUS_SUCCESS_RE.search(sach[:400]):
+            return not _MAU_STATUS_ERROR_RE.search(sach[:400])
+        return False
+    if isinstance(obj, dict) and "status" in obj:
+        return str(obj.get("status") or "").strip().upper() in ("SUCCESS", "OK", "DONE")
+    return False
+
+
+def _co_status_error_cho_lenh(van_ban: str) -> bool:
+    chuan = _chuan_hoa_nfc_lower(van_ban)
+    if _CUM_CHO_LENH_HOAN_TAT not in chuan:
+        return False
+    sach = van_ban.strip()
+    if sach.startswith("{"):
+        try:
+            obj = json.loads(sach)
+            if isinstance(obj, dict):
+                if str(obj.get("status") or "").strip().upper() != "ERROR":
+                    return False
+                than_err = _chuan_hoa_nfc_lower(f"{obj.get('response') or ''} {obj.get('error') or ''}")
+                return _CUM_CHO_LENH_HOAN_TAT in than_err
+        except (ValueError, TypeError):
+            pass
+    if _MAU_STATUS_SUCCESS_RE.search(van_ban) and not _MAU_STATUS_ERROR_RE.search(van_ban):
+        return False
+    return bool(_MAU_STATUS_ERROR_RE.search(van_ban))
+
+
+def phat_hien_dong_cho_tac_vu_nen(dong: str | None, la_stderr: bool = False) -> str:
+    """Tra ve ten mau neu mot dong dau ra bao hieu agy cho tac vu nen / root agent idle; rong neu khong."""
+    if not dong:
+        return ""
+    sach = str(dong).strip()
+    if not sach:
+        return ""
+    if not la_stderr and _la_json_ket_qua_thanh_cong(sach):
+        return ""
+    if _co_status_error_cho_lenh(sach):
+        return 'status ERROR ("chờ lệnh hoàn tất")'
+    # Tranh bat nham van ban thong thuong ben trong truong `response` cua JSON ket qua
+    if not la_stderr and sach.startswith("{"):
+        try:
+            obj = json.loads(sach)
+            if isinstance(obj, dict):
+                err_txt = str(obj.get("error") or obj.get("message") or "")
+                if _MAU_WAITING_BG_RE.search(err_txt):
+                    return "waiting up to ... background task"
+                if _MAU_ROOT_IDLE_RE.search(err_txt):
+                    return "root agent idle"
+                return ""
+        except (ValueError, TypeError):
+            if '"response"' in sach[:600]:
+                return ""
+    if _MAU_WAITING_BG_RE.search(sach):
+        return "waiting up to ... background task"
+    if _MAU_ROOT_IDLE_RE.search(sach):
+        return "root agent idle"
+    return ""
+
+
+def phat_hien_luong_cho_tac_vu_nen(van_ban: str | None, la_stderr: bool = False) -> str:
+    """Quet toan bo hoac doan duoi luong ra agy (ho tro ca JSON nhieu dong va dong don)."""
+    if not van_ban:
+        return ""
+    toan_bo = str(van_ban).strip()
+    if not toan_bo:
+        return ""
+    if not la_stderr and _la_json_ket_qua_thanh_cong(toan_bo):
+        return ""
+    if _co_status_error_cho_lenh(toan_bo):
+        return 'status ERROR ("chờ lệnh hoàn tất")'
+    for dong in toan_bo.splitlines():
+        khop = phat_hien_dong_cho_tac_vu_nen(dong, la_stderr=la_stderr)
+        if khop:
+            return khop
+    return phat_hien_dong_cho_tac_vu_nen(toan_bo, la_stderr=la_stderr)
+
+
+def ghep_de_gui_agy(de_goc: str, cho_nen: bool = False) -> str:
     """Thêm hướng dẫn CAN-LINH và câu cấm background task / thợ con vào cuối mọi đề gửi agy."""
     goc = str(de_goc or "").rstrip()
     cac_phan = [goc] if goc else []
     if CAU_NHAC_CAN_LINH not in goc:
         cac_phan.append(CAU_NHAC_CAN_LINH)
-    if CAU_NHAC_TIEN_CANH not in goc:
+    if not cho_nen and CAU_NHAC_TIEN_CANH not in goc:
         cac_phan.append(CAU_NHAC_TIEN_CANH)
     return "\n\n".join(cac_phan)
 
@@ -1174,6 +1309,58 @@ def _ghep_canh_bao_nhat_ky(nhat_ky: str, canh_bao: str) -> str:
     if not nhat_ky:
         return canh_bao
     return f"{canh_bao}\n{nhat_ky}"
+
+
+def _trich_token_json(stdout: str | None) -> tuple[int, int]:
+    out = str(stdout or "").strip()
+    if not out:
+        return 0, 0
+    try:
+        j = json.loads(out)
+        u = j.get("usage") or j.get("stats") or {}
+        tv = int(u.get("input_tokens") or u.get("prompt_tokens") or 0)
+        tr = int(u.get("output_tokens") or u.get("completion_tokens") or 0)
+        return tv, tr
+    except (ValueError, AttributeError, TypeError):
+        return 0, 0
+
+
+def _duoi_log_dung(stdout: str, stderr: str) -> str:
+    return f"\n{stdout[-4000:]}" if stdout else (f"\n{stderr[-2000:]}" if stderr else "")
+
+
+def _ghi_nhat_ky_debug_vao_viec(
+    cfg: dict | None,
+    viec,
+    trang_thai: str,
+    stdout: str = "",
+    stderr: str = "",
+    ly_do: str = "",
+    de_da_gui: str = "",
+    moc_epoch_bat_dau: float | None = None,
+    la_mock: bool = False,
+) -> None:
+    if not isinstance(viec, dict):
+        return
+    if ly_do:
+        viec["_ly_do_dung"] = ly_do
+    cho_phep_hoi_thoai = (not la_mock) or bool(
+        (cfg and cfg.get("thu_muc_agy_cli")) or os.environ.get("LINHX_AGY_CLI_DIR", "").strip()
+    )
+    try:
+        viec["_nhat_ky_debug"] = nhat_ky_agy.tao_nhat_ky_debug_tu_phien(
+            cfg=cfg,
+            viec=viec,
+            trang_thai=trang_thai,
+            stdout=stdout,
+            stderr=stderr,
+            ly_do=ly_do,
+            de_da_gui=de_da_gui,
+            moc_epoch_bat_dau=moc_epoch_bat_dau,
+            cho_phep_doc_hoi_thoai=cho_phep_hoi_thoai,
+        )
+    except Exception:
+        pass
 
 
 _MAU_TEN_LENH = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
@@ -1264,22 +1451,29 @@ def chay_agy(cfg, viec):
     if not ok_tm:
         return "loi", None, ly_do_tm, 0, 0
     thu_muc.mkdir(parents=True, exist_ok=True)
-    de = ghep_de_gui_agy(viec["de"])
+    cho_nen = cho_phep_chay_nen(viec)
+    de = ghep_de_gui_agy(viec["de"], cho_nen=cho_nen)
     if len(de) > DE_DAI:
         # Windows gioi han dong lenh 32.767 ky tu: de dai thi ghi ra file, -p chi tro toi file
         f = thu_muc / f"de-{viec['viec']}.md"
         f.write_text(de, encoding="utf-8")
+        duoi_nhac = "" if cho_nen else f"\n\n{CAU_NHAC_TIEN_CANH}"
         de = (
             f"Đọc toàn bộ file {f.name} trong thư mục hiện tại (chỉ đọc, không chạy lệnh shell) "
-            f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.\n\n{CAU_NHAC_TIEN_CANH}"
+            f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.{duoi_nhac}"
         )
     ds_agy_args = _tach_agy_args(cfg.get("agy_args", "--output-format json"))
     if thong_tin_model["xoa_co_model"]:
         ds_agy_args = _xoa_co_model_agy_args(ds_agy_args)
     elif ten_model:
         ds_agy_args = _thay_co_model_agy_args(ds_agy_args, ten_model)
+    if not cho_nen and AGY_CO_TAT_NEN:
+        for co in AGY_CO_TAT_NEN:
+            if co not in ds_agy_args:
+                ds_agy_args.append(co)
     cmd = [cfg["agy"], "-p", de] + ds_agy_args
     tep_log_raw = cfg.get("_tep_log_phieu")
+    moc_epoch_bat_dau = time.time()
 
     # Tuong thich nguoc khi test monkeypatch truc tiep subprocess.run
     if subprocess.run is not _SUBPROCESS_RUN_GOC:
@@ -1291,6 +1485,10 @@ def chay_agy(cfg, viec):
         except subprocess.TimeoutExpired as e:
             if tep_log_raw:
                 _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, _gio() - t0_run, e.stdout or "", e.stderr or "", "qua_gio")
+            _ghi_nhat_ky_debug_vao_viec(
+                cfg, viec, "dung", stdout=e.stdout or "", stderr=e.stderr or "",
+                ly_do="qua_gio", de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=True,
+            )
             nk_q = _ghep_canh_bao_nhat_ky(
                 f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút\n{(e.stdout or '')[-4000:]}",
                 canh_bao_model,
@@ -1303,9 +1501,36 @@ def chay_agy(cfg, viec):
                 return "loi", None, f"dòng lệnh quá dài ({len(de)} ký tự)", 0, 0
             return "loi", None, f"không chạy được agy: {e}", 0, 0
         giay_chay = _gio() - t0_run
+        if cho_nen:
+            mau_cho_run = (
+                ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stderr or "") else "")
+                or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stdout or "") else "")
+            )
+        else:
+            mau_cho_run = (
+                phat_hien_luong_cho_tac_vu_nen(p.stderr, la_stderr=True)
+                or phat_hien_luong_cho_tac_vu_nen(p.stdout, la_stderr=False)
+            )
+        if mau_cho_run:
+            if tep_log_raw:
+                _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr, LY_DO_CHO_TAC_VU_NEN)
+            tv_nen, tr_nen = _trich_token_json(p.stdout)
+            _ghi_nhat_ky_debug_vao_viec(
+                cfg, viec, "dung", stdout=p.stdout or "", stderr=p.stderr or "",
+                ly_do=LY_DO_CHO_TAC_VU_NEN, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=True,
+            )
+            nk_nen = _ghep_canh_bao_nhat_ky(
+                f"dừng agy ({LY_DO_CHO_TAC_VU_NEN}): {mau_cho_run}{_duoi_log_dung(p.stdout or '', p.stderr or '')}",
+                canh_bao_model,
+            )
+            return "dung", None, nk_nen, tv_nen, tr_nen
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr)
         tt_r, kq_r, nk_r, tv_r, tr_r = _phan_tich_ket_qua_agy(p.returncode, giay_chay, p.stdout, p.stderr)
+        _ghi_nhat_ky_debug_vao_viec(
+            cfg, viec, tt_r, stdout=p.stdout or "", stderr=p.stderr or "",
+            de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=True,
+        )
         return tt_r, kq_r, _ghep_canh_bao_nhat_ky(nk_r, canh_bao_model), tv_r, tr_r
 
     kw = {}
@@ -1314,7 +1539,8 @@ def chay_agy(cfg, viec):
     else:
         kw["start_new_session"] = True
 
-    ham_popen = _tao_tien_trinh_agy if _tao_tien_trinh_agy is not None else subprocess.Popen
+    la_mock_popen = _tao_tien_trinh_agy is not None
+    ham_popen = _tao_tien_trinh_agy if la_mock_popen else subprocess.Popen
     t0 = _gio()
     try:
         proc = ham_popen(
@@ -1335,6 +1561,42 @@ def chay_agy(cfg, viec):
     buf_out: list[bytes] = []
     buf_err: list[bytes] = []
     dem_byte = [0, 0]
+    su_kien_cho_nen = threading.Event()
+    khoa_cho_nen = threading.Lock()
+    mau_cho_nen_tim_thay = ""
+    bo_giai_ma = [
+        codecs.getincrementaldecoder("utf-8")(errors="replace"),
+        codecs.getincrementaldecoder("utf-8")(errors="replace"),
+    ]
+    duoi_van_ban = ["", ""]
+
+    def _ghi_nhan_cho_nen(mau: str) -> None:
+        nonlocal mau_cho_nen_tim_thay
+        if not mau:
+            return
+        with khoa_cho_nen:
+            if not mau_cho_nen_tim_thay:
+                mau_cho_nen_tim_thay = mau
+        su_kien_cho_nen.set()
+
+    def _quet_chu_cho_nen(doan: str, idx: int) -> None:
+        if not doan:
+            return
+        la_err = idx == 1
+        duoi_moi = (duoi_van_ban[idx] + doan)[-16384:]
+        duoi_van_ban[idx] = duoi_moi
+        if cho_nen:
+            if _co_status_error_cho_lenh(duoi_moi):
+                _ghi_nhan_cho_nen('status ERROR ("chờ lệnh hoàn tất")')
+            return
+        for dong in duoi_moi[-2048:].splitlines():
+            khop = phat_hien_dong_cho_tac_vu_nen(dong, la_stderr=la_err)
+            if khop:
+                _ghi_nhan_cho_nen(khop)
+                return
+        khop_duoi = phat_hien_luong_cho_tac_vu_nen(duoi_moi, la_stderr=la_err)
+        if khop_duoi:
+            _ghi_nhan_cho_nen(khop_duoi)
 
     def _doc_pipe(pipe, ds: list[bytes], idx: int):
         if pipe is None:
@@ -1345,9 +1607,17 @@ def chay_agy(cfg, viec):
                 if not khuc:
                     break
                 if isinstance(khuc, str):
-                    khuc = khuc.encode("utf-8", errors="replace")
-                ds.append(khuc)
-                dem_byte[idx] += len(khuc)
+                    doan = khuc
+                    khuc_bytes = khuc.encode("utf-8", errors="replace")
+                else:
+                    khuc_bytes = khuc
+                    doan = bo_giai_ma[idx].decode(khuc_bytes, final=False)
+                ds.append(khuc_bytes)
+                dem_byte[idx] += len(khuc_bytes)
+                _quet_chu_cho_nen(doan, idx)
+            duoi_cuoi = bo_giai_ma[idx].decode(b"", final=True)
+            if duoi_cuoi:
+                _quet_chu_cho_nen(duoi_cuoi, idx)
         except Exception:
             pass
         finally:
@@ -1389,6 +1659,10 @@ def chay_agy(cfg, viec):
 
     try:
         while True:
+            if su_kien_cho_nen.is_set():
+                ly_do_dung = LY_DO_CHO_TAC_VU_NEN
+                dung_tien_trinh_agy(proc)
+                break
             if proc.poll() is not None:
                 break
             bay_gio = _gio()
@@ -1423,7 +1697,11 @@ def chay_agy(cfg, viec):
                 ly_do_dung = "khong_tien"
                 dung_tien_trinh_agy(proc)
                 break
-            _tam_nghi(buoc_nghi)
+            if _ngu is not None:
+                _tam_nghi(buoc_nghi)
+            else:
+                if su_kien_cho_nen.wait(buoc_nghi):
+                    continue
     finally:
         if proc.poll() is None:
             dung_tien_trinh_agy(proc)
@@ -1434,12 +1712,41 @@ def chay_agy(cfg, viec):
     stdout = b"".join(buf_out).decode("utf-8", errors="replace")
     stderr = b"".join(buf_err).decode("utf-8", errors="replace")
 
+    if cho_nen:
+        mau_cho_cuoi = (
+            mau_cho_nen_tim_thay
+            or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stderr) else "")
+            or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stdout) else "")
+        )
+    else:
+        mau_cho_cuoi = (
+            mau_cho_nen_tim_thay
+            or phat_hien_luong_cho_tac_vu_nen(stderr, la_stderr=True)
+            or phat_hien_luong_cho_tac_vu_nen(stdout, la_stderr=False)
+        )
+    if ly_do_dung == LY_DO_CHO_TAC_VU_NEN or (ly_do_dung is None and mau_cho_cuoi):
+        if tep_log_raw:
+            _ghi_agy_raw(tep_log_raw, viec.get("viec"), proc.returncode if proc.returncode is not None else -1, giay_chay, stdout, stderr, LY_DO_CHO_TAC_VU_NEN)
+        tv_nen, tr_nen = _trich_token_json(stdout)
+        _ghi_nhat_ky_debug_vao_viec(
+            cfg, viec, "dung", stdout=stdout, stderr=stderr,
+            ly_do=LY_DO_CHO_TAC_VU_NEN, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
+        )
+        nk_cho_nen = _ghep_canh_bao_nhat_ky(
+            f"dừng agy ({LY_DO_CHO_TAC_VU_NEN}): {mau_cho_cuoi}{_duoi_log_dung(stdout, stderr)}",
+            canh_bao_model,
+        )
+        return "dung", None, nk_cho_nen, tv_nen, tr_nen
+
     if ly_do_dung == "qua_gio":
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, giay_chay, stdout, stderr, "qua_gio")
-        duoi = f"\n{stdout[-4000:]}" if stdout else (f"\n{stderr[-2000:]}" if stderr else "")
+        _ghi_nhat_ky_debug_vao_viec(
+            cfg, viec, "dung", stdout=stdout, stderr=stderr,
+            ly_do="qua_gio", de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
+        )
         nk_qua_gio = _ghep_canh_bao_nhat_ky(
-            f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút{duoi}",
+            f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút{_duoi_log_dung(stdout, stderr)}",
             canh_bao_model,
         )
         return "dung", None, nk_qua_gio, 0, 0
@@ -1447,9 +1754,12 @@ def chay_agy(cfg, viec):
     if ly_do_dung == "khong_tien":
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, giay_chay, stdout, stderr, "khong_tien")
-        duoi = f"\n{stdout[-4000:]}" if stdout else (f"\n{stderr[-2000:]}" if stderr else "")
+        _ghi_nhat_ky_debug_vao_viec(
+            cfg, viec, "dung", stdout=stdout, stderr=stderr,
+            ly_do="khong_tien", de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
+        )
         nk_khong_tien = _ghep_canh_bao_nhat_ky(
-            f"dừng agy: quá {_dinh_dang_phut(khong_tien_phut)} phút không tiến{duoi}",
+            f"dừng agy: quá {_dinh_dang_phut(khong_tien_phut)} phút không tiến{_duoi_log_dung(stdout, stderr)}",
             canh_bao_model,
         )
         return "dung", None, nk_khong_tien, 0, 0
@@ -1458,6 +1768,10 @@ def chay_agy(cfg, viec):
     if tep_log_raw:
         _ghi_agy_raw(tep_log_raw, viec.get("viec"), returncode, giay_chay, stdout, stderr)
     tt_cuoi, kq_cuoi, nk_cuoi, tv_cuoi, tr_cuoi = _phan_tich_ket_qua_agy(returncode, giay_chay, stdout, stderr)
+    _ghi_nhat_ky_debug_vao_viec(
+        cfg, viec, tt_cuoi, stdout=stdout, stderr=stderr,
+        de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
+    )
     return tt_cuoi, kq_cuoi, _ghep_canh_bao_nhat_ky(nk_cuoi, canh_bao_model), tv_cuoi, tr_cuoi
 
 
