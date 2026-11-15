@@ -23,6 +23,8 @@ may: may-2            # hoặc bat-ky
 loai: code            # code | trinh-duyet | khac
 tran_phut: 40         # trần, tối đa 40
 theo_doi: C:\linhx\wt-du-an   # BẮT BUỘC khi agy làm ngoài thư mục phiếu (repo clone riêng)
+phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong (trang_thai: xong); loi/dung thì bỏ qua
+tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-sua-<k>.md khi loi/dung (trừ lỗi máy)
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```

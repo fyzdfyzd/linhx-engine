@@ -37,7 +37,37 @@ SO_PHIEU_TRINH_DUYET_TOI_DA = 1
 SO_PHIEU_CODE_MAC_DINH = linhx_runner.SO_PHIEU_CODE_MAC_DINH
 NHAN_BAT_KY_MAC_DINH = linhx_runner.NHAN_BAT_KY_MAC_DINH
 NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
+MAX_SELF_REPAIR = 3
+SELF_REPAIR_EXCERPT_LIMIT = 1500
+SELF_REPAIR_SECTION_TITLE = "Lần trước trượt vì:"
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
+_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi"})
+_SELF_REPAIR_SUFFIX_RE = re.compile(r"^(.*)-sua-(\d+)$")
+_SELF_REPAIR_SECTION_SPLIT_RE = re.compile(r"\n+(?:##\s*)?Lần trước trượt vì:\s*\n", re.UNICODE)
+_HTTP_429_RE = re.compile(r"(?<!\d)429(?!\d)")
+_NON_HTTP_429_CONTEXT_RE = re.compile(
+    r"(?:\bgiay=429\b|\bline\s+429\b|[A-Za-z0-9_./\\-]+:429(?::|\b))",
+    re.IGNORECASE,
+)
+_MACHINE_ERROR_PATTERNS = (
+    "không thấy agy",
+    "khong thay agy",
+    "không chạy được agy",
+    "khong chay duoc agy",
+    "thiếu agy",
+    "thieu agy",
+    "filenotfounderror",
+    "command not found",
+    "is not recognized as an internal or external command",
+    "too many requests",
+    "rate limit",
+    "rate_limit",
+    "ratelimit",
+    "resource_exhausted",
+    "quota exceeded",
+    "exhausted your capacity",
+    "out of quota",
+)
 
 _CHAY_AGY_GOC = linhx_runner.chay_agy
 chay_agy = _CHAY_AGY_GOC
@@ -142,14 +172,53 @@ def _tach_cap_khoa_gia_tri(dong: str):
     m = _KHOA_DAU_DONG.match(dong.strip())
     if not m:
         return None
+    first_key = m.group(1).lower()
+    if first_key in _SEMI_LIST_HEADERS:
+        return [(first_key, m.group(2).strip())]
     phan = [p.strip() for p in dong.split(";") if p.strip()]
     ket_qua = []
     for p in phan:
         mp = _KHOA_DAU_DONG.match(p)
         if not mp:
-            return [(m.group(1).lower(), m.group(2).strip())]
+            return [(first_key, m.group(2).strip())]
         ket_qua.append((mp.group(1).lower(), mp.group(2).strip()))
     return ket_qua
+
+
+def parse_dependencies(raw_value) -> list[str]:
+    # Phân tích danh sách mã phiếu phụ thuộc từ header `phu_thuoc: id1; id2`
+    if raw_value is None:
+        return []
+    if isinstance(raw_value, (list, tuple)):
+        items = [str(item).strip() for item in raw_value]
+    else:
+        cleaned = str(raw_value).split("#", 1)[0].strip()
+        if not cleaned:
+            return []
+        items = [part.strip() for part in cleaned.split(";")]
+    result: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        if item and item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+
+
+def parse_self_repair_count(raw_value) -> int:
+    # Phân tích số lượt tự sửa từ header `tu_sua: N` (mặc định 0 = tắt, tối đa 3)
+    if raw_value is None:
+        return 0
+    if isinstance(raw_value, bool):
+        return int(raw_value)
+    cleaned = str(raw_value).split("#", 1)[0].strip()
+    if not cleaned:
+        return 0
+    try:
+        count = int(cleaned)
+    except ValueError:
+        return 0
+    return min(MAX_SELF_REPAIR, max(0, count))
 
 
 def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
@@ -192,14 +261,14 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     if not de:
         de = van_ban.strip() or ma_phieu
 
-    may = (meta.get("may") or "bat-ky").strip().lower()
+    may = (meta.get("may") or "bat-ky").split("#", 1)[0].strip().lower() or "bat-ky"
     if may in ("*", "all", "tat-ca"):
         may = "bat-ky"
-    loai = (meta.get("loai") or "code").strip().lower()
+    loai = (meta.get("loai") or "code").split("#", 1)[0].strip().lower() or "code"
     if loai in ("trinh_duyet", "browser"):
         loai = "trinh-duyet"
-    che_do = (meta.get("che_do") or "thuc").strip().lower()
-    tran_raw = str(meta.get("tran_phut") or "").strip()
+    che_do = (meta.get("che_do") or "thuc").split("#", 1)[0].strip().lower() or "thuc"
+    tran_raw = str(meta.get("tran_phut") or "").split("#", 1)[0].strip()
     if tran_raw:
         try:
             tran_f = float(tran_raw)
@@ -209,12 +278,17 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     else:
         tran_phut = 40
 
+    phu_thuoc = parse_dependencies(meta.get("phu_thuoc"))
+    tu_sua = parse_self_repair_count(meta.get("tu_sua"))
+
     return {
         "viec": ma_phieu,
         "may": may,
         "loai": loai,
         "che_do": che_do,
         "tran_phut": tran_phut,
+        "phu_thuoc": phu_thuoc,
+        "tu_sua": tu_sua,
         "de": de,
         "meta": meta,
     }
@@ -538,6 +612,126 @@ def co_the_nhan_loai(loai: str, dem_dang_chay: dict[str, int], so_phieu_code: in
     return dem_dang_chay.get(loai_chuan, 0) < max(1, int(so_phieu_code))
 
 
+def read_result_status(wt: Path, dep_id: str) -> str | None:
+    # Đọc `trang_thai` từ `hang-doi/xong/<id>/KET-QUA.md`; trả về None nếu chưa có hoặc id không hợp lệ
+    clean_id = str(dep_id or "").strip()
+    if not clean_id or "/" in clean_id or "\\" in clean_id or ".." in clean_id:
+        return None
+    goc_hd = thu_muc_hang_doi(wt)
+    result_file = goc_hd / "xong" / clean_id / "KET-QUA.md"
+    if not result_file.is_file():
+        return None
+    try:
+        content = result_file.read_text(encoding="utf-8", errors="replace").lstrip("\ufeff")
+    except OSError:
+        return None
+    lines = content.splitlines()
+    header_lines: list[str] = []
+    if lines and lines[0].strip() == "---":
+        for idx in range(1, len(lines)):
+            if lines[idx].strip() == "---":
+                header_lines = lines[1:idx]
+                break
+    else:
+        for line in lines:
+            if not line.strip():
+                break
+            if not _KHOA_DAU_DONG.match(line.strip()):
+                break
+            header_lines.append(line)
+    for line in header_lines:
+        m = _KHOA_DAU_DONG.match(line.strip())
+        if m and m.group(1).lower() == "trang_thai":
+            return m.group(2).split("#", 1)[0].strip().lower()
+    return ""
+
+
+def are_dependencies_met(wt: Path, dependencies: list[str] | tuple[str, ...]) -> bool:
+    # Mọi id trong `phu_thuoc` đều phải có `xong/<id>/KET-QUA.md` với `trang_thai: xong`.
+    # Nếu chưa xong hoặc kết thúc `loi`/`dung` thì bỏ qua (không nhận phiếu, không ghi KET-QUA).
+    if not dependencies:
+        return True
+    for dep_id in dependencies:
+        if read_result_status(wt, dep_id) != "xong":
+            return False
+    return True
+
+
+def is_machine_error(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
+    # Nhận diện lỗi máy (thiếu agy, HTTP 429 / hết hạn mức) để không sinh phiếu tự sửa vô ích
+    if trang_thai not in ("loi", "dung"):
+        return False
+    combined = f"{ket_qua or ''}\n{nhat_ky or ''}"
+    lowered = combined.lower()
+    for pattern in _MACHINE_ERROR_PATTERNS:
+        if pattern in lowered:
+            return True
+    scrubbed = _NON_HTTP_429_CONTEXT_RE.sub("", combined)
+    if _HTTP_429_RE.search(scrubbed):
+        return True
+    return False
+
+
+def extract_original_prompt(prompt_text: str) -> str:
+    # Tách lấy phần đề gốc (bỏ mục "Lần trước trượt vì:" của lượt sửa trước nếu có)
+    parts = _SELF_REPAIR_SECTION_SPLIT_RE.split(str(prompt_text or "").strip(), maxsplit=1)
+    return parts[0].strip()
+
+
+def next_self_repair_id(wt: Path, ticket_id: str) -> str:
+    # Tính mã phiếu tự sửa kế tiếp `<id>-sua-<k>` (k tăng dần 1, 2, 3...)
+    match = _SELF_REPAIR_SUFFIX_RE.match(ticket_id)
+    if match:
+        base_id = match.group(1)
+        next_index = int(match.group(2)) + 1
+    else:
+        base_id = ticket_id
+        next_index = 1
+    goc_hd = thu_muc_hang_doi(wt)
+    while (
+        (goc_hd / "moi" / f"{base_id}-sua-{next_index}.md").exists()
+        or (goc_hd / "dang" / f"{base_id}-sua-{next_index}.md").exists()
+        or (goc_hd / "xong" / f"{base_id}-sua-{next_index}").exists()
+    ):
+        next_index += 1
+    return f"{base_id}-sua-{next_index}"
+
+
+def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
+    # Tạo nội dung phiếu `hang-doi/moi/<id>-sua-<k>.md`: giữ nguyên header (giảm `tu_sua` đi 1),
+    # thân = đề gốc + mục "Lần trước trượt vì:" chép 1500 ký tự cuối KET-QUA.
+    raw_tu_sua = viec.get("tu_sua") if "tu_sua" in viec else (viec.get("meta") or {}).get("tu_sua")
+    current_retries = parse_self_repair_count(raw_tu_sua)
+    if current_retries <= 0:
+        return None
+    remaining = current_retries - 1
+
+    meta = dict(viec.get("meta") or {})
+    meta.pop("nhan", None)
+    header_lines: list[str] = []
+    has_may = False
+    has_tu_sua = False
+    for key, val in meta.items():
+        if key == "tu_sua":
+            header_lines.append(f"tu_sua: {remaining}")
+            has_tu_sua = True
+        else:
+            if key == "may":
+                has_may = True
+            header_lines.append(f"{key}: {val}")
+    if not has_may and viec.get("may"):
+        header_lines.insert(0, f"may: {viec['may']}")
+    if not has_tu_sua:
+        header_lines.append(f"tu_sua: {remaining}")
+
+    original_body = extract_original_prompt(viec.get("de") or viec.get("viec") or "")
+    excerpt = str(ket_qua_md or "")[-SELF_REPAIR_EXCERPT_LIMIT:]
+    if excerpt and not excerpt.endswith("\n"):
+        excerpt += "\n"
+    body = f"{original_body}\n\n## {SELF_REPAIR_SECTION_TITLE}\n{excerpt}"
+    return "\n".join(header_lines) + "\n\n" + body
+
+
 def chon_ung_vien(
     wt: Path,
     tho: str,
@@ -558,6 +752,8 @@ def chon_ung_vien(
         noi_dung = tep.read_text(encoding="utf-8", errors="replace")
         viec = phan_tich_phieu(noi_dung, tep.stem)
         if not co_the_nhan_loai(viec["loai"], dem_dang, so_phieu):
+            continue
+        if not are_dependencies_met(wt, viec.get("phu_thuoc") or ()):
             continue
         if viec["may"] == tho_chuan:
             rieng.append((tep, viec))
@@ -634,10 +830,11 @@ def bao_ket_qua_git(
     _, _, remote, nhanh = _duong_dan_wt(cfg)
     tho = cfg["tho"]
     phieu_id = viec["viec"]
+    tt_chuan = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
     noi_dung_kq = tao_ket_qua_md(
         phieu_id=phieu_id,
         tho=tho,
-        trang_thai=trang_thai,
+        trang_thai=tt_chuan,
         ket_qua=ket_qua,
         nhat_ky=nhat_ky,
         phut=phut,
@@ -646,6 +843,7 @@ def bao_ket_qua_git(
         tep_doi=tep_doi,
         drive=drive,
     )
+    can_sua = tt_chuan in ("loi", "dung") and not is_machine_error(tt_chuan, ket_qua, nhat_ky)
     loi_cuoi = ""
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
         for lan in range(SO_LAN_THU_PUSH):
@@ -654,13 +852,26 @@ def bao_ket_qua_git(
                 raise RuntimeError(f"Khong tim thay nhanh {nhanh} khi bao ket qua {phieu_id}")
             goc_hd = thu_muc_hang_doi(wt)
             tep_dang = goc_hd / "dang" / f"{phieu_id}.md"
+            viec_nguon = viec
+            if tep_dang.is_file() and "tu_sua" not in viec and "meta" not in viec:
+                viec_nguon = phan_tich_phieu(tep_dang.read_text(encoding="utf-8", errors="replace"), phieu_id)
             if tep_dang.exists():
                 tep_dang.unlink()
             tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
             tep_kq.parent.mkdir(parents=True, exist_ok=True)
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
 
-            _commit_git(wt, tho, f"xong: {phieu_id} ({trang_thai})")
+            thong_diep = f"xong: {phieu_id} ({tt_chuan})"
+            if can_sua:
+                noi_dung_sua = build_self_repair_ticket(viec_nguon, noi_dung_kq)
+                if noi_dung_sua is not None:
+                    ma_phieu_sua = next_self_repair_id(wt, phieu_id)
+                    tm_moi = goc_hd / "moi"
+                    tm_moi.mkdir(parents=True, exist_ok=True)
+                    (tm_moi / f"{ma_phieu_sua}.md").write_text(noi_dung_sua, encoding="utf-8")
+                    thong_diep = f"{thong_diep} -> {ma_phieu_sua}"
+
+            _commit_git(wt, tho, thong_diep)
             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
             if push.returncode == 0:
                 return tep_kq
