@@ -15,4 +15,4 @@ Phiếu nối tiếp lx-code-chan-cho-nen. Linh 15/11: CHO PHÉP chạy nền n�
 5. Sửa test runner/test_chan_cho_nen.py: có log tăng → không dừng; im 5 phút → dừng đúng lý do. `python -m pytest runner -q` + `python -m pytest tests/nghiem-thu -q`. Push `agy/chan-cho-nen`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail.
 
-nhip: 13:36 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:39 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
