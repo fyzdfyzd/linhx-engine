@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 theo_doi: C:\linhx\ifagent-wt\A3
 phu_thuoc: yl-a1-gop
+nhan: may-2 2026-11-15T08:40:17+0700
 
 Phiếu A3 Yên Lam: test cách ly dữ liệu khách. Chạy mọi lệnh ở tiền cảnh. Được dùng thợ con nhưng tất cả làm trong C:\linhx\ifagent-wt\A3.
 1. `git -C C:\linhx\ifagent fetch --all`, `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\A3 -b agy/yl-a3-cach-ly origin/agy/yl-a1-gop`.
