@@ -3,10 +3,9 @@ loai: code
 model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-test-a6-c
 phu_thuoc: yl-khoa-t1
-nhan: may-2 2026-11-15T13:24:55+0700
 
 LUẬT CHẠY (bắt buộc, lượt trước mất 80 phút vì treo chờ tác vụ nền): KHÔNG chạy `npm run dev`, `npm start` hay server lab riêng. Test khoá tự dựng server trong tiến trình (createApp), cứ chạy `node --test --test-timeout=120000 <file>` tiền cảnh. Chụp ảnh/quay video: viết 1 script node tự dựng createApp trong tiến trình, chụp xong tự đóng server và thoát (process.exit), chạy tiền cảnh. Mọi lệnh bọc timeout ≤ 300 s. Nếu buộc phải chạy nền: ghi log vào thư mục theo_doi và tự tắt khi xong.
 
@@ -22,4 +21,16 @@ Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG s�
 CẤM: sửa code sản phẩm, sửa 01/02, sửa TIEU-CHUAN/CHUAN/KHUNG/CHU-TREN-MAN, deploy, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA đỉnh; bảng 7 mục A6 đỏ/xanh; bảng A6-07 theo khối; danh sách màn CHU_DUYET_VUOT; kết quả hiệu chuẩn bước 4.
 
-nhip: 14:04 39p root agent idle; waiting up to 40m0s for 1 background task(s)
+## Lần trước trượt vì:
+model: gemini-4-argon-high
+phieu: yl-test-a6-c
+may: may-2
+trang_thai: dung
+tep_doi: KET-QUA.md
+drive: (khong)
+phut: 40.02
+token: vao=0 ra=0
+
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
