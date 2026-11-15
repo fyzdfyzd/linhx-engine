@@ -37,9 +37,15 @@ Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối �
 2. **Tiêu chuẩn + test khoá** (Claude): `viec/<du-an>/nghiem-thu/test_*.py` đo được (Playwright cho web: màn đầu, không tràn 360, form, console sạch, dung lượng). Thử test trên một trang giả trước khi khoá (đề phải khớp test). Ghi sha256 vào `.khoa`.
 3. **Điều phối**: một phiếu `loai: dieu-phoi` cho may-2 (xem dưới), hoặc Claude tự viết vài phiếu nhỏ có thứ tự (tìm mẫu → dựng → chấm).
 4. **Thợ** (agy): làm, tự chạy test khoá tới khi đạt, push nhánh việc.
-5. **Chấm vòng 1** (máy): test khoá + Lighthouse + ảnh 360/1280 trong `bang-chung/`.
+5. **Chấm vòng 1** (máy): test khoá + Lighthouse + bộ `bang-chung/` thu bằng `runner/bang_chung.py` trên HTTP thật.
 6. **Chấm vòng 2** (Claude): so sha256 test, chạy lại test trên cloud, xem 2 ảnh màn đầu, đối chiếu brand. Trượt thì phiếu sửa, tối đa 3 vòng.
 7. **Giao Linh**: bản một file (nhúng css/js/svg) đính kèm, hoặc link demo.
+
+## Bằng chứng
+- Mọi phiếu giao diện/web bắt buộc chạy trên `http://` hoặc `https://` thật (cấm `file://`) và nộp thư mục bằng chứng sinh từ:
+  `python runner/bang_chung.py --url <http://...> --kho iphone,kiosk,desktop --video --ra <thư mục>`
+- Khổ chuẩn: `iphone` (390×844, dpr 3), `kiosk` (1080×1920), `desktop` (1440×900). Công cụ chụp toàn trang mỗi khổ, quay video `.webm` 1 lượt cuộn và ghi `bang-chung.json` (`url`, `kho`, `sha256` từng file, `so_anh_trung = 0`, `loi_console`).
+- File lớn (> 1 MB như video/ảnh khổ lớn) chép lên Drive (`<LINHX_DRIVE_DIR>/<id>/`), không đẩy vào nhánh `hang-doi`; trong `KET-QUA.md` chỉ ghi đường dẫn Drive và tóm tắt `bang-chung.json`.
 
 ## agy tự điều phối (orchestration)
 Phiếu `loai: dieu-phoi` cho máy chính:
@@ -74,6 +80,7 @@ Học từ luật deploy thực chiến của `ifagent`: mọi dự án có serv
 - Không chạy subagent hay background task rồi ngồi chờ (dễ kẹt 10 phút không đổi thư mục); dặn agy làm tuần tự và chạy mọi lệnh ở tiền cảnh.
 - Khi gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), agy dừng ngay và trả `CAN-LINH: ...; LENH: ...` thay vì thử mù.
 - Phát hành qua phiếu chỉ được chạm staging trong khung 07:00–22:00 giờ VN, chạy `runner/cong_phat_hanh.py` trước/sau để khoá `GET /healthz == BUILD_SHA` kèm lệnh rollback; lên prod luôn dừng ở `CAN-LINH`.
+- Giao diện không mở `file://` tĩnh (dễ lọt lỗi CORS/CSP/đường dẫn và lặp ảnh); luôn dựng HTTP server cục bộ hoặc URL staging rồi chạy `runner/bang_chung.py`.
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):
