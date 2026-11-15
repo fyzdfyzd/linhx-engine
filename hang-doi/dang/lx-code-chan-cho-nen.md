@@ -15,4 +15,4 @@ GẤP. Vá runner: 3 phiếu vừa mất trọn 40 phút vì agy chạy tác v�
 6. Push `agy/chan-cho-nen` (KHÔNG push vào claude/project-thread-jowxv1; Claude rà rồi gộp).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; cờ agy tắt nền (có/không, nguyên văn); test pass/fail.
 
-nhip: 13:23 30p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 13:26 33p root agent idle; waiting up to 40m0s for 1 background task(s)
