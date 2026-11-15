@@ -14,4 +14,4 @@ Vá 5, chấm độc lập và ngắt dây chuyền: (a) header `cham: 1`: khi p
 Test trong runner/ (không conftest, không mạng). `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cập nhật `skills/le/hang-doi-may/SKILL.md` (mục Phiếu hoặc Bài học, ngắn). `git pull --rebase`, push nhánh. Trả lời ≤1200 ký tự: làm gì, số test, hash.
 Trước khi push chạy cả `python -m pytest tests/nghiem-thu -q` (CI chặn chuỗi giống bí mật, kể cả token giả trong test: ghép chuỗi lúc chạy).
 
-nhip: 11:59 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:02 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
