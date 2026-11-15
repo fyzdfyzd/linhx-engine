@@ -5,6 +5,7 @@ theo_doi: C:\linhx\wt-va1
 khong_tien_phut: 25
 tu_sua: 0
 phu_thuoc: hd-code-model-b
+nhan: may-2 2026-11-15T10:32:17+0700
 
 KHÔNG chạy lệnh nền hay subagent nền: mọi lệnh tiền cảnh, làm tuần tự.
 Repo: `C:\linhx\wt-va1` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-va1`; có rồi: `git pull`). KHÔNG sửa C:\linhx\hang-doi. Đọc trước `viec/ra-quy-trinh/SO-SANH.md` (khâu liên quan).
