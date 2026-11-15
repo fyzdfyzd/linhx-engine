@@ -719,3 +719,144 @@ $json = $global:__KetQuaMock | ConvertTo-Json -Depth 6
     assert "--cong 8090" in task["Action"]["Argument"]
     assert task["Principal"]["LogonType"] == "Interactive"
     assert mock_res["StartedTasks"] == ["LINHX-Bang"]
+
+
+def test_ui_200_va_cac_khoi_chinh_giao_dien_moi(tmp_path: Path):
+    """Kiểm tra trang trả 200 và có đủ các khối chính của giao diện mới (không dùng CDN)."""
+    tz_vn = timezone(timedelta(hours=7))
+    fixed_now = datetime(2026, 11, 15, 10, 30, 0, tzinfo=tz_vn)
+
+    clone_dir = tmp_path / "bang-ui-moi"
+    qroot = clone_dir / "hang-doi"
+    for sub in ("moi", "dang", "xong", "can-linh", "may"):
+        (qroot / sub).mkdir(parents=True, exist_ok=True)
+
+    # 3 máy chạy (may-1, may-2, may-3) để câu đầu trang là "3 máy chạy, 1 cần anh"
+    for idx, may_id in enumerate(("may-1", "may-2", "may-3"), start=1):
+        t_claim = (fixed_now - timedelta(minutes=idx * 5)).strftime("%Y-%m-%dT%H:%M:%S%z")
+        (qroot / "dang" / f"chay-{idx}.md").write_text(
+            f"may: {may_id}\nloai: code\ntran_phut: 40\nnhan: {may_id} {t_claim}\n\n"
+            f"Làm việc {idx}\n\nnhip: 10:28 {idx * 5}p Bước kiểm tra {idx}\n",
+            encoding="utf-8",
+        )
+
+    # may-4 rảnh, may-5 kẹt, may-6 im lặng > 30 phút
+    _write_done_ticket(
+        qroot,
+        ticket_id="xong-ranh",
+        machine="may-4",
+        status="xong",
+        minutes=2.0,
+        tok_in=300,
+        tok_out=80,
+        body="Hoàn thành êm",
+        mtime_epoch=(fixed_now - timedelta(minutes=6)).timestamp(),
+    )
+    _write_done_ticket(
+        qroot,
+        ticket_id="xong-ket",
+        machine="may-5",
+        status="dung",
+        minutes=12.0,
+        tok_in=500,
+        tok_out=40,
+        body="Cần đăng nhập lại Chrome",
+        mtime_epoch=(fixed_now - timedelta(minutes=9)).timestamp(),
+    )
+    _write_done_ticket(
+        qroot,
+        ticket_id="xong-im-lang",
+        machine="may-6",
+        status="xong",
+        minutes=1.5,
+        tok_in=100,
+        tok_out=20,
+        body="Xong từ lâu",
+        mtime_epoch=(fixed_now - timedelta(minutes=50)).timestamp(),
+    )
+
+    (qroot / "moi" / "cho-ui.md").write_text(
+        "may: may-2\nloai: code\ntran_phut: 20\n\nPhiếu chờ kiểm tra lọc máy\n",
+        encoding="utf-8",
+    )
+
+    (qroot / "can-linh" / "xong-ket.md").write_text(
+        "may: may-5\nphieu: xong-ket\nviec: Mở Chrome xác thực tài khoản\n"
+        "lenh: start chrome https://example.local\ngio: 2026-11-15T10:22:00+07:00\n",
+        encoding="utf-8",
+    )
+
+    (qroot / "may" / "may-1.json").write_text(
+        json.dumps(
+            {
+                "ma_may": "may-1",
+                "ten_windows": "WIN-MAY-1",
+                "vai_tro": "Máy giao diện",
+                "cpu": {"ten": "Core i5", "nhan": 6, "luong": 12},
+                "ram": {"tong_gb": 16.0, "trong_gb": 6.0},
+                "gpu": [],
+                "o_dia": [{"o": "C:", "tong_gb": 256.0, "trong_gb": 120.0}],
+                "agy": {"co": True, "duong_dan": "agy", "phien_ban": "2.1.0"},
+                "python": "3.12.0",
+                "chrome": {"co": True, "profiles": ["Default"]},
+                "nhan_phieu": {"so_phieu": 2, "nhan_bat_ky": True},
+                "thong_ke_24h": {"xong": 4, "loi": 0},
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(
+        clone_dir=clone_dir,
+        repo_url="",
+        enable_git_sync=False,
+        clock_fn=lambda: fixed_now,
+    )
+    server = bang.create_http_server(monitor, host="127.0.0.1", port=0)
+    port = server.server_address[1]
+    base_url = f"http://127.0.0.1:{port}"
+    srv_thread = threading.Thread(target=server.serve_forever, daemon=True)
+    srv_thread.start()
+    try:
+        for route in ("/", "/phieu", "/may"):
+            with urllib.request.urlopen(f"{base_url}{route}", timeout=5) as resp:
+                assert resp.status == 200
+                body = resp.read().decode("utf-8")
+                assert "text/html" in resp.headers.get("Content-Type", "")
+                if route == "/":
+                    home_html = body
+
+        # 1. Câu trạng thái lớn + khối Cần anh làm đỏ + nút Chép lệnh
+        assert 'id="hero-headline"' in home_html
+        assert "3 máy chạy, " in home_html and "1 cần anh" in home_html
+        assert '<section class="can-linh-box">' in home_html
+        assert "btn-copy" in home_html and "Chép lệnh" in home_html
+        assert "start chrome https://example.local" in home_html
+
+        # 2. Thẻ máy: tên + vai trò, đủ 4 chấm trạng thái, thanh phút/trần, dòng nhịp, nút mở chi tiết
+        assert "Máy giao diện" in home_html
+        for dot_cls in ("dot-chay", "dot-ranh", "dot-ket", "dot-im-lang"):
+            assert dot_cls in home_html
+        assert "progress-track" in home_html and "progress-fill" in home_html
+        assert "Bước kiểm tra 1" in home_html
+        assert 'data-toggle-may="may-1"' in home_html and 'data-detail-may="may-1"' in home_html
+
+        # 3. Ba tab: Tổng quan · Phiếu (đang/chờ/xong 24h, lọc theo máy) · Máy (hồ sơ năng lực, thanh RAM/ổ)
+        assert 'data-tab="tong-quan"' in home_html and "Tổng quan" in home_html
+        assert 'data-tab="phieu"' in home_html and "Xong 24h (" in home_html
+        assert 'data-filter-may="may-1"' in home_html
+        assert 'data-tab="may"' in home_html and "bar-track" in home_html
+
+        # 4. Chuẩn hệ thống, sáng/tối tự động, tự làm mới 15s qua fetch, không CDN ngoài
+        assert "-apple-system" in home_html
+        assert "prefers-color-scheme: dark" in home_html
+        assert "--radius: 16px" in home_html
+        assert 'fetch("/api/trang-thai"' in home_html and "15000" in home_html
+        assert "cdn." not in home_html.lower()
+        assert "googleapis.com" not in home_html.lower()
+    finally:
+        server.shutdown()
+        server.server_close()
+        srv_thread.join(timeout=3)
+
