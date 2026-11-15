@@ -15,4 +15,4 @@ Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn 
 5. Chụp lại ảnh du-an-*.png (390×844, 1440×900, sáng/tối), commit, push `agy/bang-du-an`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; đường dẫn ảnh.
 
-nhip: 13:00 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:03 18p root agent idle; waiting up to 40m0s for 1 background task(s)
