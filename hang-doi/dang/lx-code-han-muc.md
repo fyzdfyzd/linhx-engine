@@ -17,3 +17,5 @@ Phiếu nối tiếp sổ tài khoản: HẠN MỨC từng tài khoản + TAB "C
 5c. Cùng tab, khối "Zalo": tìm bộ nghe Zalo đang chạy trên máy (tiến trình/lịch có chữ zalo, Zalo PC CDP của LAB124 ai-goi-hop, WF20 đội agent nhóm Zalo, LAB083 trợ lý; thư mục D:\linhx, C:\linhx). Lệnh runner/lenh/zalo.ps1 ghi hang-doi/may/<ma_may>-zalo.json: mỗi bộ nghe: đang chạy hay không, nghe NHÓM nào (chỉ tên nhóm), tin cuối nhận lúc mấy giờ, lỗi gần nhất. KHÔNG chép nội dung tin, số điện thoại, tên thành viên. Không tìm thấy thì ghi đường dẫn đã thử.
 6. Test runner/test_so_tai_khoan.py thêm ca: cộng token đúng, đọc giờ reset từ mẫu 429, "chua_ro" khi thiếu. Chạy `python -m pytest runner -q` + `python -m pytest tests/nghiem-thu -q`. Push `agy/so-tai-khoan`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test; bảng tài khoản máy 2 (email che) | đã dùng 24h | còn lại | reset | nguồn.
+
+nhip: 12:51 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
