@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 30
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\wt\bang-du-an
 phu_thuoc: lx-code-bang-du-an
-nhan: may-2 2026-11-15T12:45:35+0700
 
 Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn theo giờ. Việc PHỤ, ưu tiên thấp, cùng luật cấm như phiếu trước (không khởi động lại bảng đang chạy, không đụng runner, tiền cảnh, KHÔNG background task, mỗi 5 phút có file mới/commit).
 1. Làm tiếp trên nhánh `agy/bang-du-an` trong C:\linhx\wt\bang-du-an (`git pull`).
@@ -15,4 +14,16 @@ Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn 
 5. Chụp lại ảnh du-an-*.png (390×844, 1440×900, sáng/tối), commit, push `agy/bang-du-an`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; đường dẫn ảnh.
 
-nhip: 13:12 27p root agent idle; waiting up to 40m0s for 1 background task(s)
+## Lần trước trượt vì:
+model: gemini-pro-orchestrator
+phieu: lx-code-bang-gantt
+may: may-2
+trang_thai: dung
+tep_doi: (khong)
+drive: (khong)
+phut: 30.02
+token: vao=0 ra=0
+
+dừng agy: quá trần 30 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
