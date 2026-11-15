@@ -169,6 +169,7 @@ def test_verify_lock_formats_single_multi_crlf_and_features_json(tmp_path):
     src_ba = b"def test_ba():\n    assert len([1, 2]) == 2\n"
     (nt_dir / "test_hai.py").write_bytes(src_hai)
     (nt_dir / "test_ba.py").write_bytes(src_ba)
+    (proj / "test_ba.py").write_bytes(b"# file cung ten o goc nhung khong phai file trong bo.khoa\n")
     multi_khoa = (
         f"{_sha256_bytes(src_hai)}  viec/demo/nghiem-thu/test_hai.py\n"
         f"{_sha256_bytes(src_ba)} *test_ba.py\n"
@@ -273,7 +274,7 @@ def test_end_to_end_gate_legacy_tamper_fail_timeout_and_pass(tmp_path):
     }
 
     # Tạo script kiểm in > 2200 ký tự khi hàm `cong(2, 3) != 5` để kiểm đúng 1500 ký tự cuối log
-    tail_expected = ("DONG_LOI_CHI_TIET_" * 100 + "CUOI_LOG_1500_CHUAN")[-1500:]
+    tail_expected = ("FileNotFoundError_429_DONG_LOI_" * 60 + "CUOI_LOG_1500_CHUAN")[-1500:]
     assert len(tail_expected) == 1500
     (tracked_first / "runner_check.py").write_text(
         "import os, pathlib, sys\n"
@@ -327,7 +328,12 @@ def test_end_to_end_gate_legacy_tamper_fail_timeout_and_pass(tmp_path):
     lock_file.write_text(_sha256_bytes(test_code) + "\n", encoding="utf-8")
 
     # --- (4a) Thợ báo xong nhưng chưa sửa đúng code -> `lenh_kiem` exit=1 -> `loi` + 1500 ký tự cuối log ---
-    res_4 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=lambda _c, _v: ("xong", "Tưởng đã xong.", "exit=0", 12, 15))
+    def _agy_code_sai(c, _v):
+        for idx in range(12):
+            (Path(c["thu_muc"]) / f"tep_phu_dai_kiem_tra_{idx:02d}.txt").write_text("x\n", encoding="utf-8")
+        return "xong", "Tưởng đã xong.", "exit=0", 12, 15
+
+    res_4 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_agy_code_sai)
     assert res_4["viec"] == "04-code-sai-tu-sua"
     assert res_4["trang_thai"] == "loi"
     kq_4 = _read_ket_qua_from_bare(bare_repo, "04-code-sai-tu-sua")

@@ -100,6 +100,7 @@ Học từ luật deploy thực chiến của `ifagent`: mọi dự án có serv
 - Khi gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), agy dừng ngay và trả `CAN-LINH: ...; LENH: ...` thay vì thử mù.
 - Phát hành qua phiếu chỉ được chạm staging trong khung 07:00–22:00 giờ VN, chạy `runner/cong_phat_hanh.py` trước/sau để khoá `GET /healthz == BUILD_SHA` kèm lệnh rollback; lên prod luôn dừng ở `CAN-LINH`.
 - Giao diện không mở `file://` tĩnh (dễ lọt lỗi CORS/CSP/đường dẫn và lặp ảnh); luôn dựng HTTP server cục bộ hoặc URL staging rồi chạy `runner/bang_chung.py`.
+- Gắn `khoa:` + `lenh_kiem:` vào header phiếu để runner tự đối chiếu sha256 test khoá và chạy lệnh kiểm (trần 15 phút) ngoài tay agy trước khi công nhận `xong`.
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):

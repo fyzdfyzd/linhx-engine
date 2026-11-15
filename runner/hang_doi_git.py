@@ -1099,6 +1099,12 @@ def bao_ket_qua_git(
     model_tu_viec, canh_bao_tu_viec = _xac_dinh_model_cho_ket_qua(cfg, viec)
     model_ghi = model if model and str(model).strip() else model_tu_viec
     canh_bao_ghi = canh_bao if canh_bao and str(canh_bao).strip() else canh_bao_tu_viec
+    loi_cong_kiem = bool(isinstance(viec, dict) and viec.get("_loi_cong_kiem"))
+    gioi_han_kq = (
+        max(GIOI_HAN_KET_QUA, len(str(ket_qua or "")) + 900)
+        if loi_cong_kiem
+        else GIOI_HAN_KET_QUA
+    )
     noi_dung_kq = tao_ket_qua_md(
         phieu_id=phieu_id,
         tho=tho,
@@ -1110,6 +1116,7 @@ def bao_ket_qua_git(
         token_ra=token_ra,
         tep_doi=tep_doi,
         drive=drive,
+        gioi_han=gioi_han_kq,
         model=model_ghi,
         canh_bao=canh_bao_ghi,
     )
@@ -1122,7 +1129,7 @@ def bao_ket_qua_git(
     can_sua = (
         tt_chuan in ("loi", "dung")
         and noi_dung_can_linh is None
-        and not is_machine_error(tt_chuan, ket_qua, nhat_ky)
+        and (loi_cong_kiem or not is_machine_error(tt_chuan, ket_qua, nhat_ky))
     )
     loi_cuoi = ""
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
@@ -1245,8 +1252,13 @@ def resolve_first_tracked_dir(cfg: dict | None, viec: dict | None) -> tuple[Path
     cleaned = _strip_unquoted_comment(str(raw_tracked))
     tracked_items = [item.strip() for item in cleaned.split(";") if item.strip()]
     limit_dir = (cfg or {}).get("gioi_han_thu_muc")
+    if limit_dir is None and os.environ.get("LINHX_GIOI_HAN_THU_MUC", "").strip():
+        limit_dir = Path(os.environ["LINHX_GIOI_HAN_THU_MUC"].strip())
     if tracked_items:
-        target = Path(tracked_items[0])
+        first_item = tracked_items[0]
+        if len(first_item) >= 2 and first_item[0] == first_item[-1] and first_item[0] in ("'", '"'):
+            first_item = first_item[1:-1].strip()
+        target = Path(first_item)
         ok_dir, reason = linhx_runner.kiem_tra_thu_muc_lam_viec(target, limit_dir)
         if not ok_dir:
             return None, reason
@@ -1331,15 +1343,14 @@ def _was_lock_file_tampered(
             current_bytes = lock_path.read_bytes()
         except OSError:
             return True
-        if current_bytes == snapshot_before[rel_khoa]:
-            return False
-        return not _is_clean_upstream_lock(root_dir, lock_path)
+        if current_bytes != snapshot_before[rel_khoa] and not _is_clean_upstream_lock(root_dir, lock_path):
+            return True
     if linhx_runner._tim_git_dir(root_dir) is None:
         return False
     st = chay_git(["status", "--porcelain", "--", str(lock_path)], cwd=root_dir, check=False, timeout=15)
     if st.returncode == 0:
         for line in st.stdout.splitlines():
-            if line.strip() and not line.startswith("??"):
+            if line.strip() and not line.startswith("??") and not line.startswith("!!"):
                 return True
     up = chay_git(["rev-parse", "--verify", "-q", "@{u}"], cwd=root_dir, check=False, timeout=15)
     if up.returncode == 0:
@@ -1350,12 +1361,14 @@ def _was_lock_file_tampered(
 
 
 def _sha256_matches_file(target_file: Path, expected_hex: str) -> bool:
-    # Kiểm sha256 của file (chấp nhận cả bản chuẩn hoá CRLF->LF khi `.khoa` sinh trên Linux)
+    # Kiểm sha256 của file (chấp nhận cả chuẩn hoá hai chiều CRLF<->LF giữa Windows và Linux)
     expected = expected_hex.strip().lower()
     raw = target_file.read_bytes()
     if hashlib.sha256(raw).hexdigest() == expected:
         return True
     if b"\r\n" in raw and hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest() == expected:
+        return True
+    if b"\r\n" not in raw and b"\n" in raw and hashlib.sha256(raw.replace(b"\n", b"\r\n")).hexdigest() == expected:
         return True
     return False
 
@@ -1458,24 +1471,22 @@ def _verify_single_locked_entry(
     if not clean_rel or clean_rel.startswith("/") or ":" in clean_rel or ".." in clean_rel.split("/"):
         return False, f"{LOCK_TAMPER_MESSAGE}: đường dẫn khoá không hợp lệ ({rel_target})", set()
 
-    candidates: list[Path] = [root_dir / clean_rel]
+    cand: Path | None = None
     if lock_path.parent != root_dir:
         local_cand = lock_path.parent / clean_rel
-        if local_cand != candidates[0]:
-            candidates.append(local_cand)
-
-    existing = [c for c in candidates if c.exists() or c.is_symlink()]
-    if not existing:
+        if local_cand.exists() or local_cand.is_symlink():
+            cand = local_cand
+    if cand is None:
+        root_cand = root_dir / clean_rel
+        if root_cand.exists() or root_cand.is_symlink():
+            cand = root_cand
+    if cand is None:
         return False, f"{LOCK_TAMPER_MESSAGE}: thiếu file test {clean_rel}", set()
-
-    verified: set[Path] = set()
-    for cand in existing:
-        if not _is_safe_relative_subpath(root_dir, cand) or not cand.is_file():
-            return False, f"{LOCK_TAMPER_MESSAGE}: file test không hợp lệ ({clean_rel})", set()
-        if not _sha256_matches_file(cand, expected_hex):
-            return False, f"{LOCK_TAMPER_MESSAGE}: {clean_rel} lệch sha256", set()
-        verified.add(cand.resolve())
-    return True, "", verified
+    if not _is_safe_relative_subpath(root_dir, cand) or not cand.is_file():
+        return False, f"{LOCK_TAMPER_MESSAGE}: file test không hợp lệ ({clean_rel})", set()
+    if not _sha256_matches_file(cand, expected_hex):
+        return False, f"{LOCK_TAMPER_MESSAGE}: {clean_rel} lệch sha256", set()
+    return True, "", {cand.resolve()}
 
 
 def _find_unauthorized_hooks(root_dir: Path, locked_files: set[Path], check_dirs: set[Path]) -> list[str]:
@@ -1681,6 +1692,8 @@ def run_post_agy_verification(
     tep_log: Path | None = None,
 ) -> tuple[str, str | None, str]:
     # Cổng tự chấm của runner sau khi agy báo xong: kiểm `.khoa` rồi chạy `lenh_kiem` (trần 15 phút)
+    if isinstance(viec, dict):
+        viec.pop("_loi_cong_kiem", None)
     khoa_paths = get_ticket_khoa_paths(viec)
     lenh_kiem = get_ticket_lenh_kiem(viec)
     if not khoa_paths and not lenh_kiem:
@@ -1688,6 +1701,8 @@ def run_post_agy_verification(
 
     root_dir, dir_err = resolve_first_tracked_dir(cfg, viec)
     if root_dir is None:
+        if isinstance(viec, dict):
+            viec["_loi_cong_kiem"] = True
         prefix = LOCK_TAMPER_MESSAGE if khoa_paths else "lệnh kiểm lỗi"
         err_msg = f"{prefix}: {dir_err}"
         if tep_log is not None:
@@ -1697,6 +1712,8 @@ def run_post_agy_verification(
     if khoa_paths:
         ok_lock, lock_err = verify_lock_files(root_dir, khoa_paths, snapshot_before=snapshot_before)
         if not ok_lock:
+            if isinstance(viec, dict):
+                viec["_loi_cong_kiem"] = True
             if tep_log is not None:
                 _ghi_log_an_toan(tep_log, "cong_kiem", viec=viec.get("viec"), dat=False, ly_do=lock_err)
             return "loi", lock_err, _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy, lock_err)
@@ -1721,7 +1738,9 @@ def run_post_agy_verification(
                 duoi_log=tail_log,
             )
         if timed_out or rc != 0:
-            cmd_short = _cat_mot_dong(lenh_kiem, 120)
+            if isinstance(viec, dict):
+                viec["_loi_cong_kiem"] = True
+            cmd_short = _cat_mot_dong(lenh_kiem, 80)
             if timed_out:
                 head = f"lệnh kiểm quá trần {linhx_runner._dinh_dang_phut(timeout_minutes)} phút: {cmd_short}"
             else:
