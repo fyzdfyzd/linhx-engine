@@ -5,6 +5,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\cham-yl
+nhan: may-1 2026-11-15T11:13:12+0700
 
 Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải thợ đã làm). Chỉ đọc, không sửa code, không deploy. Mọi lệnh tiền cảnh. Không dùng background task.
 1. Clone thưa (ổ C máy 1 gần đầy, dùng D:): `git clone --filter=blob:none --no-checkout https://github.com/fyzdfyzd/ifagent D:\linhx\cham-yl`, rồi `git -C D:\linhx\cham-yl sparse-checkout set .handoff/yen-lam-dong-hanh/NOP ops/staging-rc5` và `git -C D:\linhx\cham-yl checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` + `git -C D:\linhx\cham-yl checkout origin/claude/project-thread-4abpu3 -- ops/staging-rc5`.
