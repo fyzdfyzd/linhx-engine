@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 20
 tu_sua: 0
 theo_doi: C:\linhx\wt\gop-bang
+nhan: may-2 2026-11-15T14:34:59+0700
 
 Phiếu GỘP 3 nhánh runner/bảng vào một nhánh cho Claude duyệt. Chạy mọi lệnh tiền cảnh trong cùng một lượt gọi công cụ, KHÔNG background task, KHÔNG chạy bảng/server lâu dài (test tự dựng server trong tiến trình rồi tắt).
 1. `git clone --filter=blob:none https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\gop-bang` (có rồi thì fetch). `git checkout -b agy/gop-bang origin/claude/project-thread-jowxv1`.
