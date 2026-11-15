@@ -55,6 +55,15 @@ Không tự làm phiếu con. Trả lời: danh sách phiếu con + thứ tự.
 ``` Thợ con nền hay làm agy gốc ngồi chờ, thư mục không đổi → bị dừng oan: dặn "không chạy nền" hoặc nâng `khong_tien_phut`.
 Claude duyệt danh sách phiếu con (đọc 1 file), xoá phiếu sai, rồi để máy chạy. Bên trong một phiếu, agy được tự sinh thợ con (background task): khi đó bắt buộc có `theo_doi:`.
 
+## Phát hành
+Học từ luật deploy thực chiến của `ifagent`: mọi dự án có server đi qua hàng đợi phải tách cứng Staging → Prod, không chạm dữ liệu sống và có đường lùi một lệnh.
+- **Phiếu deploy chỉ được lên staging** (khuôn `runner/phieu-mau/deploy-staging.md`): chỉ chạy khi `verify` + `e2e` local đã xanh, cây git sạch, không rơi vào giờ sự kiện/lịch khoá, chỉ đẩy đúng app bị ảnh hưởng, giữ nguyên `data/` và lưu bản `:prev` (`.prev`).
+- **Chạy cổng phát hành trước và sau** (chỉ dùng `GET`, chặn `--base` trùng `--prod`, chặn giờ VN `> 22h` hoặc `< 7h`):
+  - Trước deploy (ghi nhận `BUILD_SHA` đang chạy làm mốc lùi): `python runner/cong_phat_hanh.py --base <url-staging> --truoc --prod <ds-ten-mien-prod>`
+  - Sau deploy (bắt buộc `GET /healthz` trả `200` và khớp `<sha-moi>`): `python runner/cong_phat_hanh.py --base <url-staging> --sha <sha-moi> --prod <ds-ten-mien-prod>` — nếu lệch hoặc quá hạn phải chạy rollback ngay về `:prev`.
+- **Ghi rõ lệnh rollback**: kết quả phiếu bắt buộc ghi lệnh rollback 1 dòng đã sẵn sàng (vd khôi phục image `:prev` / `rollback-app.sh <app>`).
+- **Prod luôn là `CAN-LINH`** (cùng các việc xoá dữ liệu/lead, đổi DNS, tạo/sửa tài nguyên đám mây/khoá, đổi bí mật `.env`): agy tuyệt đối không tự deploy prod mà dừng và trả `CAN-LINH: Duyệt và chạy deploy prod <app> (<sha-moi>); LENH: <lệnh deploy prod> # Rollback: <lệnh rollback>` để Linh duyệt và tự chạy.
+
 ## Bài học (14/11)
 - agy chia thợ con làm ở thư mục khác → bộ canh không thấy tiến, dừng oan sau 10 phút. Sửa: dòng `theo_doi:`.
 - Không chạy test ở chế độ nền rồi ngồi chờ; dặn "chạy ở tiền cảnh".
@@ -64,6 +73,7 @@ Claude duyệt danh sách phiếu con (đọc 1 file), xoá phiếu sai, rồi �
 - Máy thiếu agy dòng lệnh hoặc không có ổ D: → truyền `-AgyCmd`, `-ThuMuc`.
 - Không chạy subagent hay background task rồi ngồi chờ (dễ kẹt 10 phút không đổi thư mục); dặn agy làm tuần tự và chạy mọi lệnh ở tiền cảnh.
 - Khi gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), agy dừng ngay và trả `CAN-LINH: ...; LENH: ...` thay vì thử mù.
+- Phát hành qua phiếu chỉ được chạm staging trong khung 07:00–22:00 giờ VN, chạy `runner/cong_phat_hanh.py` trước/sau để khoá `GET /healthz == BUILD_SHA` kèm lệnh rollback; lên prod luôn dừng ở `CAN-LINH`.
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):
