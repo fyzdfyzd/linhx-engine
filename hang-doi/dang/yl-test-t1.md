@@ -21,4 +21,4 @@ Phiếu T1 Yên Lam: CHỈ viết test mới, KHÔNG sửa code sản phẩm. Ch
 CẤM: sửa code sản phẩm, sửa test cũ, sửa TIEU-CHUAN/CHUAN/KHUNG, deploy, in khoá/mật khẩu. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): SHA đỉnh; bảng file test | số test | đỏ/xanh trên code hiện tại | tiêu chí trích; ngưỡng chuẩn 9 lấy từ file nào.
 
-nhip: 11:13 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 11:16 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
