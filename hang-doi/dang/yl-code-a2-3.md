@@ -5,6 +5,8 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl-code-a2-3
 phu_thuoc: yl-code-a2-2; yl-duyet-a2-2
+nhan: may-2 2026-11-15T20:54:45+0700
+moc: b8a28fffe8a35b67b80451eb2d0155a86cb90b3e
 
 Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý d. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-code-a2-2 chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-a2-3 -b agy/yl-code-a2-3 origin/agy/yl-code-a2-2`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (chỉ đọc).
