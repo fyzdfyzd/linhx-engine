@@ -15,4 +15,4 @@ GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner 
 6. Push `agy/bao-claude` (KHÔNG push vào claude/project-thread-jowxv1).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; máy 2 gửi được bằng gh hay token hay chưa được.
 
-nhip: 13:42 24p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 13:45 27p root agent idle; waiting up to 40m0s for 1 background task(s)
