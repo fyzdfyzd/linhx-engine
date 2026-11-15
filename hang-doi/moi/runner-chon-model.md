@@ -2,7 +2,7 @@ may: may-2
 loai: code
 tran_phut: 30
 theo_doi: C:\linhx\wt-model
-phu_thuoc: nhip-can-linh
+phu_thuoc: nhip-can-linh-b
 
 KHÔNG chạy lệnh nền (background): mọi lệnh chạy tiền cảnh và chờ xong.
 Repo: `C:\linhx\wt-model` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-model`; có rồi: `git pull`). KHÔNG sửa C:\linhx\hang-doi.
