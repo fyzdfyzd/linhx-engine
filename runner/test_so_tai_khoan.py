@@ -358,16 +358,30 @@ def test_429_danh_dau_het_han_muc_va_chuyen_tai_khoan_qua_hang_doi(tmp_path):
     assert res["trang_thai"] == "xong"
     assert seen_profiles == ["Profile 10", "Profile 11"]
 
-    # Runner không được sửa file hang-doi/tai-khoan.json (Claude/Linh giữ)
+    # Runner cập nhật 5 trường hạn mức / token vào hang-doi/tai-khoan.json mà không thêm field nhạy cảm
     ledger_after = json.loads((wt_dir / "hang-doi" / "tai-khoan.json").read_text(encoding="utf-8"))
-    assert ledger_after == ledger
+    by_id = {x["ma"]: x for x in ledger_after}
+    assert by_id["tk-flow-1"]["trang_thai"] == "het_han_muc"
+    assert by_id["tk-flow-1"]["reset_luc"] not in ("", "chua_ro")
+    assert by_id["tk-flow-1"]["nguon"] == "uoc"
+    assert by_id["tk-flow-1"]["con_lai"] == "chua_ro"
+    assert by_id["tk-flow-1"]["token_da_dung_24h"] == 0
+
+    assert by_id["tk-flow-2"]["trang_thai"] == "dung"
+    assert by_id["tk-flow-2"]["token_da_dung_24h"] == 30
+    assert by_id["tk-flow-2"]["token_da_dung_7n"] == 30
+    assert by_id["tk-flow-2"]["con_lai"] == "chua_ro"
+    assert by_id["tk-flow-2"]["reset_luc"] == "chua_ro"
+    assert by_id["tk-flow-2"]["nguon"] == "uoc"
 
     # Tài khoản 1 đã được đánh dấu het_han_muc trong runtime state (+5h vì lỗi không nêu giờ)
     rt_state = json.loads(tt_path.read_text(encoding="utf-8"))
     assert rt_state["trang_thai"]["tk-flow-1"]["trang_thai"] == "het_han_muc"
     assert rt_state["trang_thai"]["tk-flow-1"]["mo_lai_luc"] != ""
     assert "tk-flow-2" not in rt_state["trang_thai"]
-    assert (wt_dir / "hang-doi" / "xong" / "p-tk-001" / "KET-QUA.md").is_file()
+    kq_path = wt_dir / "hang-doi" / "xong" / "p-tk-001" / "KET-QUA.md"
+    assert kq_path.is_file()
+    assert "tai_khoan: tk-flow-2" in kq_path.read_text(encoding="utf-8")
 
 
 def test_tai_khoan_ps1_ghi_json_an_toan_khong_cookie_token(tmp_path):
@@ -516,15 +530,70 @@ def test_bang_8090_the_tai_khoan_o_tab_may(tmp_path):
                     "cong_cu": ["agy"],
                     "trang_thai": "dung",
                     "mo_lai_luc": "",
+                    "token_da_dung_24h": 4500,
+                    "token_da_dung_7n": 9000,
+                    "con_lai": "chua_ro",
+                    "reset_luc": "chua_ro",
+                    "nguon": "uoc",
                 },
             ],
             ensure_ascii=False,
         ),
         encoding="utf-8",
     )
+    (qdir / "may" / "may-2-crawler.json").write_text(
+        json.dumps(
+            {
+                "ma_may": "may-2",
+                "tim_thay": True,
+                "nguon": [
+                    {
+                        "nguon": "cafebiz",
+                        "lan_chay_cuoi": "2026-11-15T10:30:00+07:00",
+                        "so_trang": 18,
+                        "loi_gan_nhat": "",
+                        "thu_muc_du_lieu": r"C:\tmp\cafebiz",
+                        "trang_thai": "ok",
+                    },
+                    {
+                        "nguon": "substack",
+                        "lan_chay_cuoi": "2026-11-15T09:10:00+07:00",
+                        "so_trang": 3,
+                        "loi_gan_nhat": "HTTP 403 Forbidden",
+                        "thu_muc_du_lieu": r"C:\tmp\substack",
+                        "trang_thai": "bi_chan",
+                    },
+                ],
+                "duong_dan_da_thu": [r"D:\LINHX\CRAWLER"],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    (qdir / "may" / "may-2-zalo.json").write_text(
+        json.dumps(
+            {
+                "ma_may": "may-2",
+                "tim_thay": True,
+                "bo_nghe": [
+                    {
+                        "ten": "LAB124 ai-goi-hop",
+                        "duong_dan": r"C:\linhx\LAB124",
+                        "dang_chay": True,
+                        "nhom": ["Nhom San Xuat", "Nhom Ky Thuat"],
+                        "tin_cuoi_luc": "2026-11-15T10:55:00+07:00",
+                        "loi_gan_nhat": "",
+                    }
+                ],
+                "duong_dan_da_thu": [r"D:\linhx\LAB124"],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
 
     snapshot = bang.read_queue_snapshot(tmp_path / "clone", now=now_dt, commit_times={})
-    # Không để may-2-tai-khoan.json ghi đè cấu hình CPU/RAM của may-2
+    # Không để *-tai-khoan.json, *-crawler.json, *-zalo.json ghi đè cấu hình CPU/RAM của may-2
     assert len(snapshot["ho_so_may"]) == 1
     assert snapshot["ho_so_may"][0]["cpu"]["ten"] == "Ryzen 9"
 
@@ -534,12 +603,332 @@ def test_bang_8090_the_tai_khoan_o_tab_may(tmp_path):
     assert by_may["may-2"]["can_dang_nhap"] == 1
     assert by_may["may-1"]["dung_duoc"] == 1
 
-    html_may = bang.render_app_html(snapshot, active_tab="may")
-    assert "Tài khoản" in html_may
-    assert "1 dùng được" in html_may
-    assert "1 hết hạn mức" in html_may
-    assert "1 cần đăng nhập" in html_may
+    # Sổ công cụ sắp công cụ có tài khoản cần đăng nhập / hết hạn mức lên đầu
+    tool_order = [g["cong_cu"] for g in snapshot["so_cong_cu"]]
+    assert tool_order.index("chatgpt") < tool_order.index("agy")
+    assert tool_order.index("flow") < tool_order.index("agy")
 
-    all_text = json.dumps(snapshot, ensure_ascii=False) + "\n" + html_may
+    # Thẻ Tài khoản đã chuyển khỏi panel Máy sang tab Công cụ
+    may_section_html = bang._render_profiles_section(snapshot)
+    assert "<h2>Tài khoản</h2>" not in may_section_html
+    tools_section_html = bang._render_tools_section(snapshot)
+    assert "<h2>Tài khoản</h2>" in tools_section_html
+    assert "1 dùng được" in tools_section_html
+    assert "1 hết hạn mức" in tools_section_html
+    assert "1 cần đăng nhập" in tools_section_html
+    assert "cafebiz" in tools_section_html
+    assert "substack" in tools_section_html
+    assert "Nhom San Xuat" in tools_section_html
+
+    html_cong_cu = bang.render_tools_html(snapshot)
+    assert 'data-initial-tab="cong-cu"' in html_cong_cu
+
+    all_text = json.dumps(snapshot, ensure_ascii=False) + "\n" + html_cong_cu
     assert "secret.alpha@gmail.com" not in all_text
     assert "need.login@gmail.com" not in all_text
+
+
+def test_cong_token_24h_va_7n_tu_ket_qua_md(tmp_path):
+    now_dt = datetime(2026, 11, 15, 12, 0, 0, tzinfo=TZ_VN)
+    qdir = tmp_path / "hang-doi"
+    (qdir / "xong" / "p1").mkdir(parents=True)
+    (qdir / "xong" / "p2").mkdir(parents=True)
+    (qdir / "xong" / "p3").mkdir(parents=True)
+    (qdir / "xong" / "p4").mkdir(parents=True)
+    (qdir / "xong" / "p5").mkdir(parents=True)
+
+    # p1: 2 giờ trước -> tính cả 24h và 7n cho acc-m2 ở may-2
+    (qdir / "xong" / "p1" / "KET-QUA.md").write_text(
+        f"model: gemini\nphieu: p1\nmay: may-2\ntai_khoan: acc-m2\nxong_luc: {(now_dt - timedelta(hours=2)).isoformat()}\ntoken: vao=1000 ra=500\n",
+        encoding="utf-8",
+    )
+    # p2: 3 ngày trước -> chỉ tính 7n cho acc-m2 ở may-2
+    (qdir / "xong" / "p2" / "KET-QUA.md").write_text(
+        f"model: gemini\nphieu: p2\nmay: may-2\ntai_khoan: acc-m2\nxong_luc: {(now_dt - timedelta(days=3)).isoformat()}\ntoken: vao=2000 ra=300\n",
+        encoding="utf-8",
+    )
+    # p3: 9 ngày trước -> ngoài 7n, không cộng
+    (qdir / "xong" / "p3" / "KET-QUA.md").write_text(
+        f"model: gemini\nphieu: p3\nmay: may-2\ntai_khoan: acc-m2\nxong_luc: {(now_dt - timedelta(days=9)).isoformat()}\ntoken: vao=9000 ra=9000\n",
+        encoding="utf-8",
+    )
+    # p4: 1 giờ trước -> thuộc acc-m1 ở may-1 (tách theo máy)
+    (qdir / "xong" / "p4" / "KET-QUA.md").write_text(
+        f"model: gemini\nphieu: p4\nmay: may-1\ntai_khoan: acc-m1\nxong_luc: {(now_dt - timedelta(hours=1)).isoformat()}\ntoken: vao=400 ra=100\n",
+        encoding="utf-8",
+    )
+    # p5: 30 phút trước, không ghi header tai_khoan -> gán về agy duy nhất trên may-2
+    (qdir / "xong" / "p5" / "KET-QUA.md").write_text(
+        f"model: gemini\nphieu: p5\nmay: may-2\nxong_luc: {(now_dt - timedelta(minutes=30)).isoformat()}\ntoken: vao=700 ra=300\n",
+        encoding="utf-8",
+    )
+
+    (qdir / "tai-khoan.json").write_text(
+        json.dumps(
+            [
+                {"ma": "acc-m2", "email_che": "m2***@gmail.com", "may": "may-2", "cong_cu": ["agy"]},
+                {"ma": "acc-m1", "email_che": "m1***@gmail.com", "may": "may-1", "cong_cu": ["agy"]},
+            ],
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    changed, _, rows = so_tai_khoan.dong_bo_va_ghi_so_tai_khoan(qdir, bay_gio=now_dt)
+    assert changed is True
+    by_ma = {r["ma"]: r for r in rows}
+
+    assert by_ma["acc-m2"]["token_da_dung_24h"] == 2500
+    assert by_ma["acc-m2"]["token_da_dung_7n"] == 4800
+    assert by_ma["acc-m2"]["con_lai"] == "chua_ro"
+    assert by_ma["acc-m2"]["reset_luc"] == "chua_ro"
+    assert by_ma["acc-m2"]["nguon"] == "uoc"
+
+    assert by_ma["acc-m1"]["token_da_dung_24h"] == 500
+    assert by_ma["acc-m1"]["token_da_dung_7n"] == 500
+
+
+def test_doc_gio_reset_429_va_han_muc_agy(tmp_path):
+    base_dt = datetime(2026, 11, 15, 10, 0, 0, tzinfo=TZ_VN)
+
+    dt1, ng1 = so_tai_khoan.trich_gio_reset_429("HTTP 429 Too Many Requests: resets 3h", bay_gio=base_dt)
+    assert dt1 == base_dt + timedelta(hours=3)
+    assert ng1 == "loi-429"
+
+    dt2, ng2 = so_tai_khoan.trich_gio_reset_429("Resource exhausted, resets in 2h 30m", bay_gio=base_dt)
+    assert dt2 == base_dt + timedelta(hours=2, minutes=30)
+    assert ng2 == "loi-429"
+
+    dt3, ng3 = so_tai_khoan.trich_gio_reset_429("API error: quota reached", bay_gio=base_dt)
+    assert dt3 == base_dt + timedelta(hours=5)
+    assert ng3 == "uoc"
+
+    dt4, ng4 = so_tai_khoan.trich_gio_reset_429("connection reset by peer", bay_gio=base_dt)
+    assert dt4 is None
+    assert ng4 == "uoc"
+
+    # Khi CLI không có lệnh quota -> trả None, không bịa con_lai
+    def fake_no_quota(_args, **_kwargs):
+        class Proc:
+            returncode = 2
+            stdout = ""
+            stderr = "unknown command"
+
+        return Proc()
+
+    assert so_tai_khoan.doc_han_muc_agy(run_fn=fake_no_quota, bay_gio=base_dt) is None
+
+    # Khi CLI có lệnh trả JSON hạn mức -> trích xuất nguon='lenh' và ghi vào sổ sau phiếu
+    def fake_has_quota(args, **_kwargs):
+        class Proc:
+            returncode = 0
+            stdout = json.dumps({"remaining_tokens": 4200, "resets_in": "4h"})
+            stderr = ""
+
+        return Proc()
+
+    hm = so_tai_khoan.doc_han_muc_agy(run_fn=fake_has_quota, bay_gio=base_dt)
+    assert hm == {
+        "con_lai": 4200,
+        "reset_luc": (base_dt + timedelta(hours=4)).isoformat(timespec="seconds"),
+        "nguon": "lenh",
+    }
+
+    so_tai_khoan.dat_lai_bo_nho_xoay_vong()
+    so_path = tmp_path / "tai-khoan.json"
+    tt_path = tmp_path / "tt.json"
+    so_path.write_text(
+        json.dumps([{"ma": "agy-m2", "email_che": "ag***@gmail.com", "may": "may-2", "cong_cu": ["agy"]}]),
+        encoding="utf-8",
+    )
+    cfg = {
+        "tho": "may-2",
+        "tep_so_tai_khoan": str(so_path),
+        "tep_trang_thai_tai_khoan": str(tt_path),
+        "_doc_han_muc_agy_fn": lambda: hm,
+    }
+    viec = {"viec": "p-agy", "meta": {"cong_cu": "agy"}, "cong_cu": "agy"}
+    tt, kq, _nk, tv, tr = so_tai_khoan.chay_voi_tai_khoan(
+        cfg,
+        viec,
+        lambda _c, _v: ("xong", "ok", "", 100, 50),
+        bay_gio=base_dt,
+    )
+    assert (tt, kq, tv, tr) == ("xong", "ok", 100, 50)
+    rows_after = json.loads(so_path.read_text(encoding="utf-8"))
+    assert rows_after[0]["con_lai"] == 4200
+    assert rows_after[0]["nguon"] == "lenh"
+    assert rows_after[0]["reset_luc"] == (base_dt + timedelta(hours=4)).isoformat(timespec="seconds")
+
+
+def test_crawler_ps1_ghi_json_an_toan_khong_du_lieu_quet_va_cookie(tmp_path):
+    ps_bin = shutil.which("pwsh") or shutil.which("powershell")
+    if not ps_bin:
+        pytest.skip("Khong tim thay PowerShell tren may")
+
+    _, repo_work = _init_local_queue_repo(tmp_path)
+    wt_dir = tmp_path / "wt-crawler"
+    env = dict(os.environ)
+    env["LINHX_WT_HANG_DOI"] = str(wt_dir)
+
+    script_ps1 = RUNNER_DIR / "lenh" / "crawler.ps1"
+
+    # Trường hợp 1: đường dẫn không tồn tại -> ghi nhận duong_dan_da_thu
+    missing_dir = tmp_path / "khong-ton-tai-crawler"
+    out_missing = tmp_path / "crawler-missing.json"
+    proc_missing = subprocess.run(
+        [
+            ps_bin,
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(script_ps1),
+            "-May",
+            "may-2",
+            "-RepoHangDoi",
+            str(repo_work),
+            "-ThuMucThu",
+            str(missing_dir),
+            "-XuatJson",
+            str(out_missing),
+            "-EpGhi",
+        ],
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=30,
+    )
+    assert proc_missing.returncode == 0, proc_missing.stderr or proc_missing.stdout
+    parsed_missing = json.loads(out_missing.read_text(encoding="utf-8"))
+    assert parsed_missing["tim_thay"] is False
+    assert str(missing_dir) in parsed_missing["duong_dan_da_thu"]
+
+    # Trường hợp 2: có thư mục crawler kèm bài đã quét + cookie -> KHÔNG chép bài và cookie
+    crawler_dir = tmp_path / "fake-crawler"
+    (crawler_dir / "data" / "cafebiz").mkdir(parents=True)
+    (crawler_dir / "data" / "cafebiz" / "b1.md").write_text("Noi dung bai bao khong duoc chep", encoding="utf-8")
+    (crawler_dir / "data" / "cafebiz" / "b2.md").write_text("Noi dung bai 2", encoding="utf-8")
+    (crawler_dir / "status.json").write_text(
+        json.dumps(
+            {
+                "cookies": "secret-crawler-cookie",
+                "sources": [
+                    {
+                        "nguon": "substack",
+                        "lan_chay_cuoi": "2026-11-15T09:00:00+07:00",
+                        "so_trang": 12,
+                        "loi_gan_nhat": "HTTP 403 Cloudflare block for user@example.com",
+                        "articles": ["Full scraped body must never appear"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    out_found = tmp_path / "crawler-found.json"
+    proc_found = subprocess.run(
+        [
+            ps_bin,
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(script_ps1),
+            "-May",
+            "may-2",
+            "-RepoHangDoi",
+            str(repo_work),
+            "-ThuMucThu",
+            str(crawler_dir),
+            "-XuatJson",
+            str(out_found),
+            "-EpGhi",
+        ],
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=30,
+    )
+    assert proc_found.returncode == 0, proc_found.stderr or proc_found.stdout
+    raw_git = (wt_dir / "hang-doi" / "may" / "may-2-crawler.json").read_text(encoding="utf-8")
+    parsed_found = json.loads(raw_git)
+    assert parsed_found["tim_thay"] is True
+    by_src = {x["nguon"]: x for x in parsed_found["nguon"]}
+    assert by_src["cafebiz"]["so_trang"] == 2
+    assert by_src["substack"]["trang_thai"] == "bi_chan"
+    assert "user@example.com" not in raw_git
+    for banned in ("Noi dung bai bao", "Full scraped body", "secret-crawler-cookie", '"cookies"'):
+        assert banned not in raw_git
+
+
+def test_zalo_ps1_ghi_json_an_toan_khong_tin_nhan_va_sdt(tmp_path):
+    ps_bin = shutil.which("pwsh") or shutil.which("powershell")
+    if not ps_bin:
+        pytest.skip("Khong tim thay PowerShell tren may")
+
+    _, repo_work = _init_local_queue_repo(tmp_path)
+    wt_dir = tmp_path / "wt-zalo"
+    env = dict(os.environ)
+    env["LINHX_WT_HANG_DOI"] = str(wt_dir)
+
+    script_ps1 = RUNNER_DIR / "lenh" / "zalo.ps1"
+
+    zalo_dir = tmp_path / "LAB124-ai-goi-hop"
+    zalo_dir.mkdir(parents=True)
+    (zalo_dir / "status.json").write_text(
+        json.dumps(
+            {
+                "dang_chay": True,
+                "nhom": ["Nhom Du An", "Nhom San Xuat"],
+                "tin_cuoi_luc": "2026-11-15T10:45:00+07:00",
+                "loi_gan_nhat": "Timeout khi goi 0912345678",
+                "noi_dung": "Tin nhan rieng tu khong duoc phep chep",
+                "so_dien_thoai": "0987654321",
+                "thanh_vien": ["Nguyen Van Secret"],
+                "cookie": "zalo-secret-cookie",
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    out_zalo = tmp_path / "zalo-found.json"
+    proc = subprocess.run(
+        [
+            ps_bin,
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            str(script_ps1),
+            "-May",
+            "may-2",
+            "-RepoHangDoi",
+            str(repo_work),
+            "-ThuMucThu",
+            str(zalo_dir),
+            "-XuatJson",
+            str(out_zalo),
+            "-EpGhi",
+        ],
+        env=env,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        timeout=30,
+    )
+    assert proc.returncode == 0, proc.stderr or proc.stdout
+    raw_git = (wt_dir / "hang-doi" / "may" / "may-2-zalo.json").read_text(encoding="utf-8")
+    parsed = json.loads(raw_git)
+    assert parsed["tim_thay"] is True
+    assert any(bn["ten"] == "LAB124-ai-goi-hop" and bn["nhom"] == ["Nhom Du An", "Nhom San Xuat"] for bn in parsed["bo_nghe"])
+
+    for banned in ("Tin nhan rieng tu", "0912345678", "0987654321", "Nguyen Van Secret", "zalo-secret-cookie", '"cookie"'):
+        assert banned not in raw_git
