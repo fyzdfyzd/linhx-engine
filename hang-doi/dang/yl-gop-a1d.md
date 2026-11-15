@@ -19,4 +19,4 @@ Phiếu A1 Yên Lam (lần 4). Lần 2, 3 bị dừng vì chạy test ở nền 
 CẤM: deploy, gửi mail, in khoá/mật khẩu, xoá dữ liệu, sửa test, sửa code ngoài cherry-pick. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn, không kể lể suy nghĩ): 2 danh sách log, commit đã lấy, xung đột + cách gỡ, SHA đỉnh, pass/fail/skip, tên test fail; tiêu chí (1) không xung đột hoặc gỡ an toàn, (2) test xanh trừ ≤ 7 lỗi môi trường: ĐẠT/KHÔNG.
 
-nhip: 11:00 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 11:03 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
