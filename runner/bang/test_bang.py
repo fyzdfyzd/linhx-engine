@@ -860,3 +860,61 @@ def test_ui_200_va_cac_khoi_chinh_giao_dien_moi(tmp_path: Path):
         server.server_close()
         srv_thread.join(timeout=3)
 
+
+def test_hien_thi_nhan_canh_nen_tren_bang_8090(tmp_path: Path):
+    """Phiếu đang ở chế độ canh nền hiện nhãn `đang chờ nền · log cuối N phút trước` trên API, HTML và trang phiếu."""
+    tz_vn = timezone(timedelta(hours=7))
+    fixed_now = datetime(2026, 11, 15, 13, 50, 0, tzinfo=tz_vn)
+    log_3p_iso = (fixed_now - timedelta(minutes=3)).strftime("%Y-%m-%dT%H:%M:%S%z")
+    claim_iso = (fixed_now - timedelta(minutes=11)).strftime("%Y-%m-%dT%H:%M:%S%z")
+
+    clone_dir = tmp_path / "bang-canh-nen"
+    qroot = clone_dir / "hang-doi"
+    (qroot / "moi").mkdir(parents=True)
+    (qroot / "dang").mkdir(parents=True)
+    (qroot / "xong").mkdir(parents=True)
+
+    (qroot / "dang" / "yl-nen-01.md").write_text(
+        f"may: may-2\nloai: code\ntran_phut: 30\nnhan: may-2 {claim_iso}\n\n"
+        "Chạy build và chờ tác vụ nền có log.\n\n"
+        f"nhip: 13:47 8p đang chờ nền · log cuối 0 phút trước [log_cuoi={log_3p_iso}] · pytest running\n",
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(
+        clone_dir=clone_dir,
+        repo_url="",
+        enable_git_sync=False,
+        clock_fn=lambda: fixed_now,
+    )
+    snap = monitor.get_status()
+    assert len(snap["dang_chay"]) == 1
+    run0 = snap["dang_chay"][0]
+    assert run0["canh_nen"] is True
+    assert run0["log_cuoi_phut"] == 3
+    assert run0["nhan_canh_nen"] == "đang chờ nền · log cuối 3 phút trước"
+    assert "[log_cuoi=" not in run0["nhip"]
+
+    may2 = {m["may"]: m for m in snap["may"]}["may-2"]
+    assert may2["canh_nen"] is True
+    assert may2["nhan_canh_nen"] == "đang chờ nền · log cuối 3 phút trước"
+
+    server = bang.create_http_server(monitor, host="127.0.0.1", port=0)
+    port = server.server_address[1]
+    base_url = f"http://127.0.0.1:{port}"
+    srv_thread = threading.Thread(target=server.serve_forever, daemon=True)
+    srv_thread.start()
+    try:
+        for route in ("/", "/phieu", "/phieu/yl-nen-01"):
+            with urllib.request.urlopen(f"{base_url}{route}", timeout=5) as resp:
+                assert resp.status == 200
+                body = resp.read().decode("utf-8")
+                assert "đang chờ nền · log cuối 3 phút trước" in body
+        with urllib.request.urlopen(f"{base_url}/api/trang-thai", timeout=5) as resp_api:
+            api_data = json.loads(resp_api.read().decode("utf-8"))
+        assert api_data["dang_chay"][0]["nhan_canh_nen"] == "đang chờ nền · log cuối 3 phút trước"
+    finally:
+        server.shutdown()
+        server.server_close()
+        srv_thread.join(timeout=3)
+

@@ -485,8 +485,11 @@ def test_model_la_khong_co_trong_agy_models_canh_bao_va_chay_mac_dinh(tmp_path, 
 
 
 def test_cau_chen_cam_background_task_co_trong_moi_de(tmp_path, monkeypatch):
-    # 7. Runner tự chèn cuối mọi đề câu "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
-    cau_bat_buoc = "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
+    # 7. Runner tự chèn cuối mọi đề câu nhắc cho phép chạy nền có timeout + ghi log vào theo_doi + tắt server chạy mãi
+    cau_bat_buoc = (
+        "Được chạy tác vụ nền nếu mỗi tác vụ có timeout, ghi log vào thư mục theo_doi, "
+        "và bạn tự kiểm/tắt nó; server chạy mãi phải tắt trước khi kết thúc."
+    )
     assert linhx_runner.CAU_NHAC_TIEN_CANH == cau_bat_buoc
 
     ds_cmd: list[list[str]] = []

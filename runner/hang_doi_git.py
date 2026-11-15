@@ -64,7 +64,8 @@ NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 MAX_SELF_REPAIR = 3
 SELF_REPAIR_EXCERPT_LIMIT = 1500
 SELF_REPAIR_SECTION_TITLE = "Lần trước trượt vì:"
-SELF_REPAIR_BG_WAIT_REASON = linhx_runner.LY_DO_CHO_TAC_VU_NEN
+SELF_REPAIR_BG_WAIT_REASON = linhx_runner.LY_DO_CHO_NEN_IM_LANG
+SELF_REPAIR_BG_WAIT_LEGACY_REASONS = frozenset({linhx_runner.LY_DO_CHO_NEN_IM_LANG, "cho-tac-vu-nen"})
 SELF_REPAIR_BG_WAIT_PREFIX = linhx_runner.CAU_DAU_DE_SUA_CHO_NEN
 QUOTA_PAUSE_MINUTES = 30.0
 DEPENDENCY_FAILED_REASON = "phụ thuộc trượt"
@@ -1224,8 +1225,9 @@ def extract_original_prompt(prompt_text: str) -> str:
     # Tách lấy phần đề gốc (bỏ mục "Lần trước trượt vì:" và câu đầu nhắc chạy nền của lượt sửa trước nếu có)
     parts = _SELF_REPAIR_SECTION_SPLIT_RE.split(str(prompt_text or "").strip(), maxsplit=1)
     goc = parts[0].strip()
-    if goc.startswith(SELF_REPAIR_BG_WAIT_PREFIX):
-        goc = goc[len(SELF_REPAIR_BG_WAIT_PREFIX) :].lstrip()
+    for prefix in (SELF_REPAIR_BG_WAIT_PREFIX, getattr(linhx_runner, "CAU_DAU_DE_SUA_CHO_NEN_CU", "")):
+        if prefix and goc.startswith(prefix):
+            goc = goc[len(prefix) :].lstrip()
     return goc
 
 
@@ -1290,11 +1292,12 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str, ly_do: str = "") -> st
         header_lines.append(f"tu_sua: {remaining}")
 
     original_body = extract_original_prompt(viec.get("de") or viec.get("viec") or "")
+    kq_str = str(ket_qua_md or "")
+    viec_ly_do = str((viec.get("_ly_do_dung") if isinstance(viec, dict) else "") or "").strip()
     la_cho_nen = (
-        str(ly_do or "").strip() == SELF_REPAIR_BG_WAIT_REASON
-        or (isinstance(viec, dict) and viec.get("_ly_do_dung") == SELF_REPAIR_BG_WAIT_REASON)
-        or (f"ly_do: {SELF_REPAIR_BG_WAIT_REASON}" in str(ket_qua_md or ""))
-        or (SELF_REPAIR_BG_WAIT_REASON in str(ket_qua_md or ""))
+        str(ly_do or "").strip() in SELF_REPAIR_BG_WAIT_LEGACY_REASONS
+        or viec_ly_do in SELF_REPAIR_BG_WAIT_LEGACY_REASONS
+        or any(f"ly_do: {r}" in kq_str or r in kq_str for r in SELF_REPAIR_BG_WAIT_LEGACY_REASONS)
     )
     if la_cho_nen:
         original_body = (

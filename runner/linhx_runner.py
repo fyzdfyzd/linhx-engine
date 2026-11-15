@@ -25,6 +25,7 @@ Chi stdlib, Python >= 3.9.
 from contextlib import contextmanager
 import codecs
 import ctypes
+from datetime import datetime
 import json
 import os
 import platform
@@ -51,6 +52,7 @@ PHIEN_BAN = "0.1.1"
 DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
 PHUT_TOI_DA_MAC_DINH = 40
 PHUT_KHONG_TIEN_MAC_DINH = 20
+PHUT_CANH_NEN_IM_LANG = 5.0
 CUA_SO_CPU_GIAY = 120.0
 NGUONG_CPU_TANG_GIAY = 0.02
 NHIP_PHUT_MAC_DINH = 3.0
@@ -90,9 +92,17 @@ CAU_NHAC_CAN_LINH = (
     "Nếu gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), "
     "DỪNG việc đó và ghi khối `CAN-LINH: <việc>; LENH: <lệnh dán được nếu có>` trong câu trả lời."
 )
-CAU_NHAC_TIEN_CANH = "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
-LY_DO_CHO_TAC_VU_NEN = "cho-tac-vu-nen"
+CAU_NHAC_TIEN_CANH = (
+    "Được chạy tác vụ nền nếu mỗi tác vụ có timeout, ghi log vào thư mục theo_doi, "
+    "và bạn tự kiểm/tắt nó; server chạy mãi phải tắt trước khi kết thúc."
+)
+LY_DO_CHO_NEN_IM_LANG = "cho-nen-im-lang"
+LY_DO_CHO_TAC_VU_NEN = LY_DO_CHO_NEN_IM_LANG  # giữ bí danh tương thích ngược
 CAU_DAU_DE_SUA_CHO_NEN = (
+    "Lượt trước chạy tác vụ nền không ghi log rồi chờ. "
+    "Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong."
+)
+CAU_DAU_DE_SUA_CHO_NEN_CU = (
     "Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. "
     "Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh."
 )
@@ -1139,6 +1149,264 @@ def _thu_muc_theo_doi(meta_viec: dict, viec: dict | None = None) -> tuple:
     return tuple(t.strip() for t in sach.split(";") if t.strip() and Path(t.strip()).is_dir())
 
 
+_DUOI_TEP_LOG_NEN = frozenset({".log", ".txt", ".out", ".err", ".jsonl"})
+
+
+def _danh_sach_duong_dan_theo_doi(meta_viec: dict, viec: dict | None = None) -> tuple[Path, ...]:
+    """Lấy danh sách mọi đường dẫn `theo_doi` từ phiếu (kể cả khi thư mục sắp được tạo mới)."""
+    gia_tri = (meta_viec or {}).get("theo_doi") or ((viec or {}).get("theo_doi") if isinstance(viec, dict) else "") or ""
+    sach = str(gia_tri).split("#", 1)[0]
+    ket_qua: list[Path] = []
+    da_thay: set[str] = set()
+    for muc in sach.split(";"):
+        s = muc.strip()
+        if len(s) >= 2 and s[0] == s[-1] and s[0] in ("'", '"'):
+            s = s[1:-1].strip()
+        if not s:
+            continue
+        k = os.path.normcase(s)
+        if k not in da_thay:
+            da_thay.add(k)
+            ket_qua.append(Path(s))
+    return tuple(ket_qua)
+
+
+def _dem_dong_tep_nhanh(duong_dan: Path, gioi_han_byte: int = 32 * 1024 * 1024) -> int:
+    """Đếm số dòng hiện có của 1 tệp log/văn bản để phát hiện tác vụ nền đang ghi thêm log."""
+    try:
+        st = duong_dan.stat()
+    except OSError:
+        return 0
+    if st.st_size <= 0 or st.st_size > gioi_han_byte:
+        return 0
+    try:
+        du_lieu = duong_dan.read_bytes()
+    except OSError:
+        return 0
+    if not du_lieu:
+        return 0
+    return du_lieu.count(b"\n") + (0 if du_lieu.endswith(b"\n") else 1)
+
+
+def _dem_dong_tep_co_cache(
+    duong_dan: Path,
+    st: os.stat_result | None = None,
+    bo_nho_dong: dict[tuple[str, int, int], int] | None = None,
+) -> int:
+    """Đếm số dòng có bộ nhớ đệm theo (đường dẫn chuẩn, kích thước, mtime_ns) để tránh đọc lại file không đổi."""
+    if bo_nho_dong is None or st is None:
+        return _dem_dong_tep_nhanh(duong_dan)
+    if len(bo_nho_dong) > 20000:
+        bo_nho_dong.clear()
+    khoa = (os.path.normcase(os.path.abspath(str(duong_dan))), st.st_size, st.st_mtime_ns)
+    da_co = bo_nho_dong.get(khoa)
+    if da_co is not None:
+        return da_co
+    so_dong = _dem_dong_tep_nhanh(duong_dan)
+    bo_nho_dong[khoa] = so_dong
+    return so_dong
+
+
+def _dau_thu_muc_canh_nen(
+    thu_muc: Path,
+    bo_qua_tuyet_doi: set[str] | None = None,
+    bo_qua_de_tam: bool = False,
+    gioi_han_tep: int = 50000,
+    bo_nho_dong: dict[tuple[str, int, int], int] | None = None,
+) -> tuple[tuple[int, int, int, int], int]:
+    """Chụp dấu file đổi (tạo/sửa/xoá) và tổng số dòng trong các file log của 1 thư mục."""
+    if not thu_muc.is_dir():
+        return (0, 0, 0, 0), 0
+    so_tep = 0
+    tong_co = 0
+    max_mtime = 0
+    dau_xor = 0
+    tong_dong_log = 0
+    bo_qua_tm = {".git", "node_modules", ".venv", "venv"}
+    goc_str = os.path.abspath(str(thu_muc))
+    try:
+        for goc_con, ds_tm, ds_tep in os.walk(str(thu_muc)):
+            ds_tm[:] = [d for d in ds_tm if d not in bo_qua_tm]
+            la_goc = os.path.normcase(os.path.abspath(goc_con)) == os.path.normcase(goc_str)
+            for ten in ds_tep:
+                if bo_qua_de_tam and la_goc and ten.startswith("de-") and ten.endswith(".md"):
+                    continue
+                duong = os.path.join(goc_con, ten)
+                if bo_qua_tuyet_doi and os.path.normcase(os.path.abspath(duong)) in bo_qua_tuyet_doi:
+                    continue
+                if so_tep >= gioi_han_tep:
+                    return (so_tep, tong_co, max_mtime, dau_xor), tong_dong_log
+                try:
+                    st = os.stat(duong)
+                except OSError:
+                    continue
+                so_tep += 1
+                tong_co += st.st_size
+                if st.st_mtime_ns > max_mtime:
+                    max_mtime = st.st_mtime_ns
+                dau_xor ^= hash((duong, st.st_size, st.st_mtime_ns))
+                duoi = os.path.splitext(ten)[1].lower()
+                if duoi in _DUOI_TEP_LOG_NEN:
+                    tong_dong_log += _dem_dong_tep_co_cache(Path(duong), st=st, bo_nho_dong=bo_nho_dong)
+    except OSError:
+        pass
+    return (so_tep, tong_co, max_mtime, dau_xor), tong_dong_log
+
+
+def _dem_dong_log_tac_vu_nen_agy_cli(
+    cfg: dict | None,
+    viec: dict | None,
+    de_da_gui: str,
+    stdout_text: str,
+    stderr_text: str,
+    moc_epoch_bat_dau: float,
+    la_mock: bool,
+    bo_nho_dong: dict[tuple[str, int, int], int] | None = None,
+    bo_nho_conv: list | None = None,
+    bay_gio: float | None = None,
+) -> int:
+    """Đếm tổng số dòng log trong `.system_generated/tasks/*.log` của agy (chỉ đọc)."""
+    cho_phep = (not la_mock) or bool(
+        (cfg and cfg.get("thu_muc_agy_cli")) or os.environ.get("LINHX_AGY_CLI_DIR", "").strip()
+    )
+    if not cho_phep:
+        return 0
+    cli_dir = nhat_ky_agy.thu_muc_agy_cli(cfg)
+    if cli_dir is None:
+        return 0
+    brain_root = cli_dir / "brain"
+    if not brain_root.is_dir():
+        return 0
+
+    conv_id = nhat_ky_agy.trich_conversation_id(stdout_text, stderr_text)
+    if conv_id and bo_nho_conv is not None:
+        bo_nho_conv[0] = conv_id
+    elif not conv_id and bo_nho_conv is not None and bo_nho_conv[0]:
+        conv_id = bo_nho_conv[0]
+    if not conv_id and isinstance(viec, dict):
+        moc_now = _gio() if bay_gio is None else float(bay_gio)
+        can_tim = bo_nho_conv is None or (moc_now - float(bo_nho_conv[1])) >= 5.0
+        if can_tim:
+            conv_id, _ = nhat_ky_agy._tim_conv_id_theo_de(
+                cli_dir=cli_dir,
+                de_da_gui=de_da_gui,
+                de_goc=str(viec.get("de") or ""),
+                phieu_id=str(viec.get("viec") or ""),
+                moc_epoch_bat_dau=moc_epoch_bat_dau,
+            )
+            if bo_nho_conv is not None:
+                bo_nho_conv[1] = moc_now
+                if conv_id:
+                    bo_nho_conv[0] = conv_id
+
+    cac_tasks_dir: list[Path] = []
+    if conv_id and not any(ch in conv_id for ch in ("/", "\\", "..")):
+        td = brain_root / conv_id / ".system_generated" / "tasks"
+        if td.is_dir():
+            cac_tasks_dir.append(td)
+    else:
+        nguong = float(moc_epoch_bat_dau) - 5.0
+        ung_vien: list[tuple[float, Path]] = []
+        try:
+            for muc in brain_root.iterdir():
+                if not muc.is_dir():
+                    continue
+                td = muc / ".system_generated" / "tasks"
+                if not td.is_dir():
+                    continue
+                try:
+                    mtime = td.stat().st_mtime
+                except OSError:
+                    continue
+                if mtime >= nguong:
+                    ung_vien.append((mtime, td))
+        except OSError:
+            pass
+        ung_vien.sort(key=lambda x: x[0], reverse=True)
+        cac_tasks_dir = [p for _, p in ung_vien[:20]]
+
+    tong_dong = 0
+    nguong_tep = float(moc_epoch_bat_dau) - 5.0
+    for td in cac_tasks_dir:
+        try:
+            for p_log in td.glob("*.log"):
+                if not p_log.is_file():
+                    continue
+                try:
+                    st_log = p_log.stat()
+                except OSError:
+                    continue
+                if not conv_id and st_log.st_mtime < nguong_tep:
+                    continue
+                tong_dong += _dem_dong_tep_co_cache(p_log, st=st_log, bo_nho_dong=bo_nho_dong)
+        except OSError:
+            continue
+    return tong_dong
+
+
+def _chup_dau_canh_nen(
+    thu_muc: Path,
+    ds_theo_doi: tuple[Path, ...],
+    bo_qua_tuyet_doi: set[str],
+    cfg: dict | None,
+    viec: dict | None,
+    de_da_gui: str,
+    duoi_van_ban: list[str],
+    moc_epoch_bat_dau: float,
+    la_mock: bool,
+    bo_nho_dong: dict[tuple[str, int, int], int] | None = None,
+    bo_nho_conv: list | None = None,
+    bay_gio: float | None = None,
+) -> tuple[tuple, int]:
+    """Chụp đồng thời dấu thay đổi tệp/git trong theo_doi + thu_muc và tổng số dòng log tác vụ nền."""
+    dau_tm, dong_tm = _dau_thu_muc_canh_nen(
+        thu_muc,
+        bo_qua_tuyet_doi=bo_qua_tuyet_doi,
+        bo_qua_de_tam=True,
+        bo_nho_dong=bo_nho_dong,
+    )
+    tong_dong = dong_tm
+    cac_muc_td = []
+    tm_norm = os.path.normcase(os.path.abspath(str(thu_muc)))
+    for p_td in ds_theo_doi:
+        if os.path.normcase(os.path.abspath(str(p_td))) == tm_norm:
+            cac_muc_td.append((dau_tm, _dau_git_head(p_td)))
+            continue
+        d_td, dong_td = _dau_thu_muc_canh_nen(
+            p_td,
+            bo_qua_tuyet_doi=bo_qua_tuyet_doi,
+            bo_qua_de_tam=False,
+            bo_nho_dong=bo_nho_dong,
+        )
+        tong_dong += dong_td
+        cac_muc_td.append((d_td, _dau_git_head(p_td)))
+    tong_dong += _dem_dong_log_tac_vu_nen_agy_cli(
+        cfg=cfg,
+        viec=viec,
+        de_da_gui=de_da_gui,
+        stdout_text=duoi_van_ban[0],
+        stderr_text=duoi_van_ban[1],
+        moc_epoch_bat_dau=moc_epoch_bat_dau,
+        la_mock=la_mock,
+        bo_nho_dong=bo_nho_dong,
+        bo_nho_conv=bo_nho_conv,
+        bay_gio=bay_gio,
+    )
+    dau_tong_the = (dau_tm, _dau_git_head(thu_muc), tuple(cac_muc_td))
+    return dau_tong_the, tong_dong
+
+
+def _dinh_dang_dong_nhip_canh_nen(phut_im: int, epoch_log_cuoi: float, dong_cuoi_goc: str) -> str:
+    """Định dạng dòng nhịp báo trạng thái CANH NỀN (giữ nguyên mốc ISO trong 120 ký tự)."""
+    iso_log = datetime.fromtimestamp(float(epoch_log_cuoi)).astimezone().strftime("%Y-%m-%dT%H:%M:%S%z")
+    phan_dau = f"đang chờ nền · log cuối {max(0, int(phut_im))} phút trước [log_cuoi={iso_log}]"
+    con_lai = GIOI_HAN_DONG_NHIP - len(phan_dau) - 3
+    dong_sach = " ".join(str(dong_cuoi_goc or "").splitlines()).strip()
+    if dong_sach and con_lai > 4:
+        return f"{phan_dau} · {dong_sach[:con_lai]}"
+    return phan_dau[:GIOI_HAN_DONG_NHIP]
+
+
 _MAU_WAITING_BG_RE = re.compile(r"waiting\s+up\s+to\b.*\bbackground\s+task", re.IGNORECASE)
 _MAU_ROOT_IDLE_RE = re.compile(r"\broot\s+agent\s+idle\b", re.IGNORECASE)
 _MAU_STATUS_ERROR_RE = re.compile(r'(?:"status"\s*:\s*"error"|\bstatus\s*[:=]\s*error\b)', re.IGNORECASE)
@@ -1501,26 +1769,20 @@ def chay_agy(cfg, viec):
                 return "loi", None, f"dòng lệnh quá dài ({len(de)} ký tự)", 0, 0
             return "loi", None, f"không chạy được agy: {e}", 0, 0
         giay_chay = _gio() - t0_run
-        if cho_nen:
-            mau_cho_run = (
-                ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stderr or "") else "")
-                or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stdout or "") else "")
-            )
-        else:
-            mau_cho_run = (
-                phat_hien_luong_cho_tac_vu_nen(p.stderr, la_stderr=True)
-                or phat_hien_luong_cho_tac_vu_nen(p.stdout, la_stderr=False)
-            )
+        mau_cho_run = (
+            ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stderr or "") else "")
+            or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(p.stdout or "") else "")
+        )
         if mau_cho_run:
             if tep_log_raw:
-                _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr, LY_DO_CHO_TAC_VU_NEN)
+                _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr, LY_DO_CHO_NEN_IM_LANG)
             tv_nen, tr_nen = _trich_token_json(p.stdout)
             _ghi_nhat_ky_debug_vao_viec(
                 cfg, viec, "dung", stdout=p.stdout or "", stderr=p.stderr or "",
-                ly_do=LY_DO_CHO_TAC_VU_NEN, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=True,
+                ly_do=LY_DO_CHO_NEN_IM_LANG, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=True,
             )
             nk_nen = _ghep_canh_bao_nhat_ky(
-                f"dừng agy ({LY_DO_CHO_TAC_VU_NEN}): {mau_cho_run}{_duoi_log_dung(p.stdout or '', p.stderr or '')}",
+                f"dừng agy ({LY_DO_CHO_NEN_IM_LANG}): {mau_cho_run}{_duoi_log_dung(p.stdout or '', p.stderr or '')}",
                 canh_bao_model,
             )
             return "dung", None, nk_nen, tv_nen, tr_nen
@@ -1561,9 +1823,14 @@ def chay_agy(cfg, viec):
     buf_out: list[bytes] = []
     buf_err: list[bytes] = []
     dem_byte = [0, 0]
-    su_kien_cho_nen = threading.Event()
+    su_kien_vao_canh_nen = threading.Event()
+    su_kien_loi_cho_lenh = threading.Event()
+    su_kien_danh_thuc = threading.Event()
     khoa_cho_nen = threading.Lock()
     mau_cho_nen_tim_thay = ""
+    mau_loi_cho_lenh = ""
+    so_dong_agy_co_ich = [0]
+    bo_dem_dong_pipe = ["", ""]
     bo_giai_ma = [
         codecs.getincrementaldecoder("utf-8")(errors="replace"),
         codecs.getincrementaldecoder("utf-8")(errors="replace"),
@@ -1577,26 +1844,62 @@ def chay_agy(cfg, viec):
         with khoa_cho_nen:
             if not mau_cho_nen_tim_thay:
                 mau_cho_nen_tim_thay = mau
-        su_kien_cho_nen.set()
+        su_kien_vao_canh_nen.set()
+        su_kien_danh_thuc.set()
 
-    def _quet_chu_cho_nen(doan: str, idx: int) -> None:
-        if not doan:
+    def _ghi_nhan_loi_cho_lenh(mau: str) -> None:
+        nonlocal mau_loi_cho_lenh
+        if not mau:
             return
-        la_err = idx == 1
-        duoi_moi = (duoi_van_ban[idx] + doan)[-16384:]
-        duoi_van_ban[idx] = duoi_moi
-        if cho_nen:
-            if _co_status_error_cho_lenh(duoi_moi):
-                _ghi_nhan_cho_nen('status ERROR ("chờ lệnh hoàn tất")')
+        with khoa_cho_nen:
+            if not mau_loi_cho_lenh:
+                mau_loi_cho_lenh = mau
+        su_kien_loi_cho_lenh.set()
+        su_kien_danh_thuc.set()
+
+    def _xu_ly_dong_pipe(dong: str, la_err: bool) -> None:
+        sach = dong.strip()
+        if not sach:
             return
-        for dong in duoi_moi[-2048:].splitlines():
-            khop = phat_hien_dong_cho_tac_vu_nen(dong, la_stderr=la_err)
-            if khop:
+        if _co_status_error_cho_lenh(sach):
+            _ghi_nhan_loi_cho_lenh('status ERROR ("chờ lệnh hoàn tất")')
+            return
+        khop = phat_hien_dong_cho_tac_vu_nen(sach, la_stderr=la_err)
+        if khop:
+            if not cho_nen:
                 _ghi_nhan_cho_nen(khop)
+            return
+        with khoa_cho_nen:
+            so_dong_agy_co_ich[0] += 1
+
+    def _quet_chu_cho_nen(doan: str, idx: int, ket_thuc: bool = False) -> None:
+        la_err = idx == 1
+        if doan:
+            duoi_moi = (duoi_van_ban[idx] + doan)[-16384:]
+            duoi_van_ban[idx] = duoi_moi
+            van_ban_dong = bo_dem_dong_pipe[idx] + doan
+            cac_phan = van_ban_dong.splitlines(keepends=False)
+            if van_ban_dong.endswith(("\n", "\r")):
+                bo_dem_dong_pipe[idx] = ""
+                ds_dong = cac_phan
+            else:
+                bo_dem_dong_pipe[idx] = cac_phan[-1] if cac_phan else ""
+                ds_dong = cac_phan[:-1]
+            for dong in ds_dong:
+                _xu_ly_dong_pipe(dong, la_err)
+            if _co_status_error_cho_lenh(duoi_moi):
+                _ghi_nhan_loi_cho_lenh('status ERROR ("chờ lệnh hoàn tất")')
                 return
-        khop_duoi = phat_hien_luong_cho_tac_vu_nen(duoi_moi, la_stderr=la_err)
-        if khop_duoi:
-            _ghi_nhan_cho_nen(khop_duoi)
+            if not cho_nen:
+                khop_duoi = phat_hien_luong_cho_tac_vu_nen(duoi_moi, la_stderr=la_err)
+                if khop_duoi:
+                    if khop_duoi.startswith("status ERROR"):
+                        _ghi_nhan_loi_cho_lenh(khop_duoi)
+                    else:
+                        _ghi_nhan_cho_nen(khop_duoi)
+        if ket_thuc and bo_dem_dong_pipe[idx]:
+            _xu_ly_dong_pipe(bo_dem_dong_pipe[idx], la_err)
+            bo_dem_dong_pipe[idx] = ""
 
     def _doc_pipe(pipe, ds: list[bytes], idx: int):
         if pipe is None:
@@ -1616,8 +1919,7 @@ def chay_agy(cfg, viec):
                 dem_byte[idx] += len(khuc_bytes)
                 _quet_chu_cho_nen(doan, idx)
             duoi_cuoi = bo_giai_ma[idx].decode(b"", final=True)
-            if duoi_cuoi:
-                _quet_chu_cho_nen(duoi_cuoi, idx)
+            _quet_chu_cho_nen(duoi_cuoi, idx, ket_thuc=True)
         except Exception:
             pass
         finally:
@@ -1641,7 +1943,20 @@ def chay_agy(cfg, viec):
             return doc_cpu_cay_tien_trinh(int(pid_p), bo_nho_cay=bo_nho_cpu_cay)
         return 0.0
 
+    im_nen_phut = _ep_so_duong(
+        cfg.get("canh_nen_im_phut"),
+        _ep_so_duong(os.environ.get("LINHX_CANH_NEN_IM_PHUT"), PHUT_CANH_NEN_IM_LANG),
+    )
+    im_nen_giay = im_nen_phut * 60.0
+
+    bo_qua_tep_canh_nen: set[str] = set()
+    if tep_log_raw:
+        bo_qua_tep_canh_nen.add(os.path.normcase(os.path.abspath(str(tep_log_raw))))
+    if cfg.get("thu_muc_log"):
+        bo_qua_tep_canh_nen.add(os.path.normcase(os.path.abspath(str(Path(cfg["thu_muc_log"]) / "runner.jsonl"))))
+
     theo_doi = _thu_muc_theo_doi(meta_viec, viec=viec)
+    ds_theo_doi_tat_ca = _danh_sach_duong_dan_theo_doi(meta_viec, viec=viec)
     dau_cu = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
     cpu_ban_dau = _lay_cpu_cay()
     lich_su_cpu: list[tuple[float, float]] = [(t0, cpu_ban_dau)]
@@ -1655,18 +1970,59 @@ def chay_agy(cfg, viec):
     nhip_giay = nhip_phut * 60.0
     moc_nhip_cuoi = t0
     ly_do_dung = None
-    buoc_nghi = min(1.0, max(0.01, min(tran_giay, khong_tien_giay) / 20.0))
+    dang_canh_nen = False
+    moc_hoat_dong_nen_cuoi = t0
+    dau_tep_nen_cu = None
+    dong_log_nen_cu = 0
+    dong_agy_nen_cu = 0
+    bo_nho_dong_canh_nen: dict[tuple[str, int, int], int] = {}
+    bo_nho_conv_canh_nen: list = ["", -9999.0]
+    buoc_nghi = min(1.0, max(0.01, min(tran_giay, khong_tien_giay, im_nen_giay) / 20.0))
 
     try:
         while True:
-            if su_kien_cho_nen.is_set():
-                ly_do_dung = LY_DO_CHO_TAC_VU_NEN
+            if su_kien_loi_cho_lenh.is_set():
+                ly_do_dung = LY_DO_CHO_NEN_IM_LANG
                 dung_tien_trinh_agy(proc)
                 break
             if proc.poll() is not None:
                 break
             bay_gio = _gio()
             theo_doi = _thu_muc_theo_doi(meta_viec, viec=viec)
+            ds_theo_doi_tat_ca = _danh_sach_duong_dan_theo_doi(meta_viec, viec=viec)
+
+            if not cho_nen and su_kien_vao_canh_nen.is_set() and not dang_canh_nen:
+                dang_canh_nen = True
+                moc_hoat_dong_nen_cuoi = bay_gio
+                dau_tep_nen_cu, dong_log_nen_cu = _chup_dau_canh_nen(
+                    thu_muc=thu_muc,
+                    ds_theo_doi=ds_theo_doi_tat_ca,
+                    bo_qua_tuyet_doi=bo_qua_tep_canh_nen,
+                    cfg=cfg,
+                    viec=viec,
+                    de_da_gui=de,
+                    duoi_van_ban=duoi_van_ban,
+                    moc_epoch_bat_dau=moc_epoch_bat_dau,
+                    la_mock=la_mock_popen,
+                    bo_nho_dong=bo_nho_dong_canh_nen,
+                    bo_nho_conv=bo_nho_conv_canh_nen,
+                    bay_gio=bay_gio,
+                )
+                with khoa_cho_nen:
+                    dong_agy_nen_cu = so_dong_agy_co_ich[0]
+                if ham_ghi_nhip is not None:
+                    moc_nhip_cuoi = bay_gio
+                    try:
+                        phut_da_chay = (bay_gio - t0) / 60.0
+                        epoch_log_cuoi = moc_epoch_bat_dau + max(0.0, moc_hoat_dong_nen_cuoi - t0)
+                        dong_cuoi_goc = trich_dong_cuoi_agy(buf_out, buf_err, GIOI_HAN_DONG_NHIP)
+                        ham_ghi_nhip(
+                            phut_da_chay,
+                            _dinh_dang_dong_nhip_canh_nen(0, epoch_log_cuoi, dong_cuoi_goc),
+                        )
+                    except Exception:
+                        pass
+
             dau_moi = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
             co_tien_tep = dau_moi != dau_cu
             if co_tien_tep:
@@ -1681,26 +2037,72 @@ def chay_agy(cfg, viec):
             )
             if co_tien_tep or co_tien_cpu:
                 moc_tien_cuoi = bay_gio
+
+            if dang_canh_nen:
+                dau_tep_nen_moi, dong_log_nen_moi = _chup_dau_canh_nen(
+                    thu_muc=thu_muc,
+                    ds_theo_doi=ds_theo_doi_tat_ca,
+                    bo_qua_tuyet_doi=bo_qua_tep_canh_nen,
+                    cfg=cfg,
+                    viec=viec,
+                    de_da_gui=de,
+                    duoi_van_ban=duoi_van_ban,
+                    moc_epoch_bat_dau=moc_epoch_bat_dau,
+                    la_mock=la_mock_popen,
+                    bo_nho_dong=bo_nho_dong_canh_nen,
+                    bo_nho_conv=bo_nho_conv_canh_nen,
+                    bay_gio=bay_gio,
+                )
+                with khoa_cho_nen:
+                    dong_agy_nen_moi = so_dong_agy_co_ich[0]
+                co_nhip_nen = (
+                    dau_tep_nen_moi != dau_tep_nen_cu
+                    or dong_log_nen_moi > dong_log_nen_cu
+                    or dong_agy_nen_moi > dong_agy_nen_cu
+                )
+                if co_nhip_nen:
+                    dau_tep_nen_cu = dau_tep_nen_moi
+                    dong_log_nen_cu = dong_log_nen_moi
+                    dong_agy_nen_cu = dong_agy_nen_moi
+                    moc_hoat_dong_nen_cuoi = bay_gio
+                    moc_tien_cuoi = bay_gio
+                elif dong_log_nen_moi < dong_log_nen_cu:
+                    # Nếu file log bị cắt bớt rồi ghi lại thì hạ mốc để lần tăng dòng kế tiếp vẫn được nhận ra
+                    dong_log_nen_cu = dong_log_nen_moi
+
             if ham_ghi_nhip is not None and (bay_gio - moc_nhip_cuoi) >= nhip_giay:
                 moc_nhip_cuoi = bay_gio
                 try:
                     phut_da_chay = (bay_gio - t0) / 60.0
                     dong_cuoi = trich_dong_cuoi_agy(buf_out, buf_err, GIOI_HAN_DONG_NHIP)
+                    if dang_canh_nen:
+                        phut_im = max(0, int((bay_gio - moc_hoat_dong_nen_cuoi) // 60))
+                        epoch_log_cuoi = moc_epoch_bat_dau + max(0.0, moc_hoat_dong_nen_cuoi - t0)
+                        dong_cuoi = _dinh_dang_dong_nhip_canh_nen(phut_im, epoch_log_cuoi, dong_cuoi)
                     ham_ghi_nhip(phut_da_chay, dong_cuoi)
                 except Exception:
                     pass
+
             if (bay_gio - t0) >= tran_giay:
                 ly_do_dung = "qua_gio"
+                dung_tien_trinh_agy(proc)
+                break
+            if dang_canh_nen and (bay_gio - moc_hoat_dong_nen_cuoi) >= im_nen_giay:
+                ly_do_dung = LY_DO_CHO_NEN_IM_LANG
                 dung_tien_trinh_agy(proc)
                 break
             if (bay_gio - moc_tien_cuoi) >= khong_tien_giay:
                 ly_do_dung = "khong_tien"
                 dung_tien_trinh_agy(proc)
                 break
+
             if _ngu is not None:
                 _tam_nghi(buoc_nghi)
+            elif dang_canh_nen or cho_nen:
+                if su_kien_loi_cho_lenh.wait(buoc_nghi):
+                    continue
             else:
-                if su_kien_cho_nen.wait(buoc_nghi):
+                if su_kien_danh_thuc.wait(buoc_nghi):
                     continue
     finally:
         if proc.poll() is None:
@@ -1712,28 +2114,22 @@ def chay_agy(cfg, viec):
     stdout = b"".join(buf_out).decode("utf-8", errors="replace")
     stderr = b"".join(buf_err).decode("utf-8", errors="replace")
 
-    if cho_nen:
-        mau_cho_cuoi = (
-            mau_cho_nen_tim_thay
-            or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stderr) else "")
-            or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stdout) else "")
-        )
-    else:
-        mau_cho_cuoi = (
-            mau_cho_nen_tim_thay
-            or phat_hien_luong_cho_tac_vu_nen(stderr, la_stderr=True)
-            or phat_hien_luong_cho_tac_vu_nen(stdout, la_stderr=False)
-        )
-    if ly_do_dung == LY_DO_CHO_TAC_VU_NEN or (ly_do_dung is None and mau_cho_cuoi):
+    mau_loi_cuoi = (
+        mau_loi_cho_lenh
+        or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stderr) else "")
+        or ('status ERROR ("chờ lệnh hoàn tất")' if _co_status_error_cho_lenh(stdout) else "")
+    )
+    if ly_do_dung == LY_DO_CHO_NEN_IM_LANG or (ly_do_dung is None and mau_loi_cuoi):
+        mau_cho_cuoi = mau_loi_cuoi or mau_cho_nen_tim_thay or "im lặng quá 5 phút khi chờ nền"
         if tep_log_raw:
-            _ghi_agy_raw(tep_log_raw, viec.get("viec"), proc.returncode if proc.returncode is not None else -1, giay_chay, stdout, stderr, LY_DO_CHO_TAC_VU_NEN)
+            _ghi_agy_raw(tep_log_raw, viec.get("viec"), proc.returncode if proc.returncode is not None else -1, giay_chay, stdout, stderr, LY_DO_CHO_NEN_IM_LANG)
         tv_nen, tr_nen = _trich_token_json(stdout)
         _ghi_nhat_ky_debug_vao_viec(
             cfg, viec, "dung", stdout=stdout, stderr=stderr,
-            ly_do=LY_DO_CHO_TAC_VU_NEN, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
+            ly_do=LY_DO_CHO_NEN_IM_LANG, de_da_gui=de, moc_epoch_bat_dau=moc_epoch_bat_dau, la_mock=la_mock_popen,
         )
         nk_cho_nen = _ghep_canh_bao_nhat_ky(
-            f"dừng agy ({LY_DO_CHO_TAC_VU_NEN}): {mau_cho_cuoi}{_duoi_log_dung(stdout, stderr)}",
+            f"dừng agy ({LY_DO_CHO_NEN_IM_LANG}): {mau_cho_cuoi}{_duoi_log_dung(stdout, stderr)}",
             canh_bao_model,
         )
         return "dung", None, nk_cho_nen, tv_nen, tr_nen
