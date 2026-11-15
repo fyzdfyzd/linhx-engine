@@ -3198,27 +3198,29 @@ pre.ket-qua {
 }
 .gantt-axis {
   position: relative;
-  height: 28px;
+  height: 30px;
   border-bottom: 1px solid var(--border);
   min-width: 0;
 }
 .gantt-tick {
   position: absolute;
-  bottom: 5px;
+  top: 1px;
   transform: translateX(-50%);
   font-size: 11px;
+  line-height: 14px;
   font-weight: 600;
   color: var(--muted);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  z-index: 2;
 }
 .gantt-tick::after {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -5px;
+  top: 23px;
   width: 1px;
-  height: 4px;
+  height: 6px;
   background: var(--border);
 }
 .gantt-tick.is-left {
@@ -3237,8 +3239,8 @@ pre.ket-qua {
 .gantt-axis-now,
 .gantt-axis-han {
   position: absolute;
-  top: 0;
   bottom: 0;
+  height: 9px;
   width: 2px;
   transform: translateX(-1px);
   pointer-events: none;
@@ -3250,7 +3252,7 @@ pre.ket-qua {
 .gantt-axis-now::after {
   content: "";
   position: absolute;
-  top: 1px;
+  top: -3px;
   left: -2px;
   width: 6px;
   height: 6px;
@@ -3264,7 +3266,7 @@ pre.ket-qua {
 .gantt-axis-han::after {
   content: "";
   position: absolute;
-  top: 1px;
+  top: -3px;
   left: -2px;
   width: 6px;
   height: 6px;
