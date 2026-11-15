@@ -4,6 +4,7 @@ tran_phut: 40
 theo_doi: D:\linhx\wt-va4
 khong_tien_phut: 25
 tu_sua: 1
+nhan: may-4 2026-11-15T09:20:44+0700
 
 KHÔNG chạy lệnh nền hay subagent nền: mọi lệnh tiền cảnh, làm tuần tự.
 Repo: `D:\linhx\wt-va4` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine D:\linhx\wt-va4`; có rồi: `git pull`). KHÔNG sửa C:\linhx\hang-doi. Đọc trước `viec/ra-quy-trinh/SO-SANH.md` (khâu liên quan).
