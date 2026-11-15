@@ -15,4 +15,4 @@ GẤP. Vá runner: 3 phiếu vừa mất trọn 40 phút vì agy chạy tác v�
 6. Push `agy/chan-cho-nen` (KHÔNG push vào claude/project-thread-jowxv1; Claude rà rồi gộp).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; cờ agy tắt nền (có/không, nguyên văn); test pass/fail.
 
-nhip: 12:56 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:59 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
