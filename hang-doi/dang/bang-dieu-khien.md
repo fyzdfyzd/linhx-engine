@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-bang
+nhan: may-2 2026-11-15T07:30:27+0700
 
 Dựng bảng theo dõi web cho hàng đợi, chạy thường trực trên máy này (may-2).
 Repo: `C:\linhx\wt-bang` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-bang`; có rồi: `git pull`).
