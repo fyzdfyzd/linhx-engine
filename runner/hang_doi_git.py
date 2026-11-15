@@ -8,6 +8,7 @@ Cau truc tren nhanh `hang-doi`:
 from __future__ import annotations
 
 from contextlib import contextmanager
+import hashlib
 import json
 import os
 import random
@@ -15,6 +16,7 @@ import re
 import shutil
 import stat
 import subprocess
+import sys
 import threading
 import time
 import traceback
@@ -52,8 +54,16 @@ NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 MAX_SELF_REPAIR = 3
 SELF_REPAIR_EXCERPT_LIMIT = 1500
 SELF_REPAIR_SECTION_TITLE = "Lần trước trượt vì:"
+VERIFY_TIMEOUT_MINUTES = 15.0
+VERIFY_LOG_TAIL_LIMIT = 1500
+LOCK_TAMPER_MESSAGE = "sửa test khoá"
+_AUTOLOAD_HOOK_NAMES = frozenset({"conftest.py", "pytest.py", "sitecustomize.py", "usercustomize.py", "_pytest"})
+_FEATURE_LOCK_MUTABLE_KEYS = frozenset({"passes", "bang_chung"})
+_SHA256_ONLY_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+_SHA256_LINE_RE = re.compile(r"^([0-9a-fA-F]{64})\s+\*?(.+?)\s*$")
+_SHA256_BSD_RE = re.compile(r"^SHA256\s*\((.+?)\)\s*=\s*([0-9a-fA-F]{64})\s*$")
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
-_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi"})
+_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi", "lenh_kiem", "khoa"})
 _SELF_REPAIR_SUFFIX_RE = re.compile(r"^(.*)-sua-(\d+)$")
 _SELF_REPAIR_SECTION_SPLIT_RE = re.compile(r"\n+(?:##\s*)?Lần trước trượt vì:\s*\n", re.UNICODE)
 _HTTP_429_RE = re.compile(r"(?<!\d)429(?!\d)")
@@ -237,6 +247,57 @@ def parse_self_repair_count(raw_value) -> int:
     return min(MAX_SELF_REPAIR, max(0, count))
 
 
+def _strip_unquoted_comment(raw_text: str) -> str:
+    # Cắt chú thích `# ...` cuối dòng khi `#` nằm ngoài dấu nháy và đứng đầu hoặc ngay sau khoảng trắng
+    quote_char: str | None = None
+    escaped = False
+    for idx, ch in enumerate(raw_text):
+        if escaped:
+            escaped = False
+            continue
+        if quote_char is not None:
+            if ch == "\\" and idx + 1 < len(raw_text) and raw_text[idx + 1] == quote_char:
+                escaped = True
+                continue
+            if ch == quote_char:
+                quote_char = None
+            continue
+        if ch in ("'", '"'):
+            quote_char = ch
+            continue
+        if ch == "#" and (idx == 0 or raw_text[idx - 1].isspace()):
+            return raw_text[:idx]
+    return raw_text
+
+
+def parse_khoa_paths(raw_value) -> list[str]:
+    # Phân tích danh sách đường dẫn tương đối tới file `.khoa` từ header `khoa:`
+    if raw_value is None:
+        return []
+    if isinstance(raw_value, (list, tuple)):
+        items = [str(item).strip() for item in raw_value]
+    else:
+        cleaned = _strip_unquoted_comment(str(raw_value)).strip()
+        if not cleaned:
+            return []
+        items = [part.strip() for part in cleaned.split(";")]
+    result: list[str] = []
+    seen: set[str] = set()
+    for item in items:
+        unquoted = item[1:-1].strip() if len(item) >= 2 and item[0] == item[-1] and item[0] in ("'", '"') else item
+        if unquoted and unquoted not in seen:
+            seen.add(unquoted)
+            result.append(unquoted)
+    return result
+
+
+def parse_lenh_kiem(raw_value) -> str:
+    # Phân tích lệnh kiểm từ header `lenh_kiem: <lệnh>`
+    if raw_value is None:
+        return ""
+    return _strip_unquoted_comment(str(raw_value)).strip()
+
+
 def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     van_ban = noi_dung.lstrip("\ufeff")
     cac_dong = van_ban.splitlines()
@@ -296,6 +357,9 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
 
     phu_thuoc = parse_dependencies(meta.get("phu_thuoc"))
     tu_sua = parse_self_repair_count(meta.get("tu_sua"))
+    lenh_kiem = parse_lenh_kiem(meta.get("lenh_kiem"))
+    khoa_list = parse_khoa_paths(meta.get("khoa"))
+    khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
 
     return {
         "viec": ma_phieu,
@@ -305,6 +369,8 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "tran_phut": tran_phut,
         "phu_thuoc": phu_thuoc,
         "tu_sua": tu_sua,
+        "lenh_kiem": lenh_kiem,
+        "khoa": khoa,
         "de": de,
         "meta": meta,
     }
@@ -904,6 +970,12 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
             header_lines.append(f"{key}: {val}")
     if not has_may and viec.get("may"):
         header_lines.insert(0, f"may: {viec['may']}")
+    if "khoa" not in meta and viec.get("khoa"):
+        khoa_joined = "; ".join(parse_khoa_paths(viec.get("khoa")))
+        if khoa_joined:
+            header_lines.append(f"khoa: {khoa_joined}")
+    if "lenh_kiem" not in meta and parse_lenh_kiem(viec.get("lenh_kiem")):
+        header_lines.append(f"lenh_kiem: {parse_lenh_kiem(viec.get('lenh_kiem'))}")
     if not has_tu_sua:
         header_lines.append(f"tu_sua: {remaining}")
 
@@ -1143,6 +1215,525 @@ def _ghi_log_an_toan(tep_log: Path, su_kien: str, **truong):
         linhx_runner.log("canh bao log", tep_log, e)
 
 
+def get_ticket_khoa_paths(viec: dict | None) -> list[str]:
+    # Đọc danh sách đường dẫn `.khoa` từ phiếu (hỗ trợ cả top-level và `meta`)
+    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    raw = (viec or {}).get("khoa") if (viec and "khoa" in viec and viec.get("khoa") is not None) else meta.get("khoa")
+    return parse_khoa_paths(raw)
+
+
+def get_ticket_lenh_kiem(viec: dict | None) -> str:
+    # Đọc lệnh kiểm `lenh_kiem:` từ phiếu (hỗ trợ cả top-level và `meta`)
+    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    raw = (
+        (viec or {}).get("lenh_kiem")
+        if (viec and "lenh_kiem" in viec and viec.get("lenh_kiem") is not None)
+        else meta.get("lenh_kiem")
+    )
+    return parse_lenh_kiem(raw)
+
+
+def has_verification_gate(viec: dict | None) -> bool:
+    # Kiểm tra phiếu có bật tự chấm bằng `khoa:` hoặc `lenh_kiem:` không
+    return bool(get_ticket_khoa_paths(viec) or get_ticket_lenh_kiem(viec))
+
+
+def resolve_first_tracked_dir(cfg: dict | None, viec: dict | None) -> tuple[Path | None, str]:
+    # Xác định thư mục `theo_doi` đầu tiên (nếu phiếu không ghi `theo_doi` thì dùng `thu_muc`)
+    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    raw_tracked = meta.get("theo_doi") or ((viec or {}).get("theo_doi") if isinstance(viec, dict) else "") or ""
+    cleaned = _strip_unquoted_comment(str(raw_tracked))
+    tracked_items = [item.strip() for item in cleaned.split(";") if item.strip()]
+    limit_dir = (cfg or {}).get("gioi_han_thu_muc")
+    if tracked_items:
+        target = Path(tracked_items[0])
+        ok_dir, reason = linhx_runner.kiem_tra_thu_muc_lam_viec(target, limit_dir)
+        if not ok_dir:
+            return None, reason
+        if not target.is_dir():
+            return None, f"không tìm thấy thư mục theo_doi đầu tiên: {target}"
+        return target, ""
+    fallback = (cfg or {}).get("thu_muc")
+    if fallback:
+        fallback_path = Path(fallback)
+        ok_dir, reason = linhx_runner.kiem_tra_thu_muc_lam_viec(fallback_path, limit_dir)
+        if not ok_dir:
+            return None, reason
+        if fallback_path.is_dir():
+            return fallback_path, ""
+    return None, "thiếu thư mục theo_doi để chạy kiểm"
+
+
+def _is_safe_relative_subpath(root_dir: Path, candidate: Path, relative_raw: str | None = None) -> bool:
+    # Chặn đường dẫn tuyệt đối, `..` leo ra ngoài gốc kiểm, hoặc symlink (tham khảo canh/cong_kiem.py)
+    if relative_raw is not None:
+        norm_rel = str(relative_raw).strip().replace("\\", "/")
+        if not norm_rel or norm_rel.startswith("/") or ":" in norm_rel or ".." in norm_rel.split("/"):
+            return False
+    try:
+        root_resolved = root_dir.resolve(strict=True)
+        if candidate.is_symlink():
+            return False
+        for parent in candidate.parents:
+            if parent == root_dir or parent == root_resolved:
+                break
+            if parent.is_symlink():
+                return False
+        cand_resolved = candidate.resolve(strict=True)
+        cand_resolved.relative_to(root_resolved)
+        return True
+    except (OSError, ValueError):
+        return False
+
+
+def snapshot_lock_files(cfg: dict | None, viec: dict | None) -> dict[str, bytes]:
+    # Chụp nội dung các file `.khoa` sẵn có trên đĩa trước khi agy chạy để chống thợ tự sửa `.khoa`
+    khoa_paths = get_ticket_khoa_paths(viec)
+    if not khoa_paths:
+        return {}
+    root_dir, _ = resolve_first_tracked_dir(cfg, viec)
+    if root_dir is None:
+        return {}
+    snapshots: dict[str, bytes] = {}
+    for rel_khoa in khoa_paths:
+        cand = root_dir / rel_khoa
+        if _is_safe_relative_subpath(root_dir, cand, rel_khoa) and cand.is_file():
+            try:
+                snapshots[rel_khoa] = cand.read_bytes()
+            except OSError:
+                pass
+    return snapshots
+
+
+def _is_clean_upstream_lock(root_dir: Path, lock_path: Path) -> bool:
+    # Chỉ chấp nhận `.khoa` thay đổi trong lúc chạy nếu khớp đúng nhánh upstream từ git pull
+    if linhx_runner._tim_git_dir(root_dir) is None:
+        return False
+    st = chay_git(["status", "--porcelain", "--", str(lock_path)], cwd=root_dir, check=False, timeout=15)
+    if st.returncode != 0 or st.stdout.strip():
+        return False
+    up = chay_git(["rev-parse", "--verify", "-q", "@{u}"], cwd=root_dir, check=False, timeout=15)
+    if up.returncode != 0:
+        return False
+    diff_up = chay_git(["diff", "--name-only", "@{u}..HEAD", "--", str(lock_path)], cwd=root_dir, check=False, timeout=15)
+    return diff_up.returncode == 0 and not diff_up.stdout.strip()
+
+
+def _was_lock_file_tampered(
+    root_dir: Path,
+    rel_khoa: str,
+    lock_path: Path,
+    snapshot_before: dict[str, bytes] | None,
+) -> bool:
+    # Phát hiện thợ sửa đè file `.khoa` trên đĩa hoặc tự commit sửa `.khoa` trên nhánh cục bộ
+    if snapshot_before and rel_khoa in snapshot_before:
+        try:
+            current_bytes = lock_path.read_bytes()
+        except OSError:
+            return True
+        if current_bytes == snapshot_before[rel_khoa]:
+            return False
+        return not _is_clean_upstream_lock(root_dir, lock_path)
+    if linhx_runner._tim_git_dir(root_dir) is None:
+        return False
+    st = chay_git(["status", "--porcelain", "--", str(lock_path)], cwd=root_dir, check=False, timeout=15)
+    if st.returncode == 0:
+        for line in st.stdout.splitlines():
+            if line.strip() and not line.startswith("??"):
+                return True
+    up = chay_git(["rev-parse", "--verify", "-q", "@{u}"], cwd=root_dir, check=False, timeout=15)
+    if up.returncode == 0:
+        diff_up = chay_git(["diff", "--name-only", "@{u}..HEAD", "--", str(lock_path)], cwd=root_dir, check=False, timeout=15)
+        if diff_up.returncode == 0 and diff_up.stdout.strip():
+            return True
+    return False
+
+
+def _sha256_matches_file(target_file: Path, expected_hex: str) -> bool:
+    # Kiểm sha256 của file (chấp nhận cả bản chuẩn hoá CRLF->LF khi `.khoa` sinh trên Linux)
+    expected = expected_hex.strip().lower()
+    raw = target_file.read_bytes()
+    if hashlib.sha256(raw).hexdigest() == expected:
+        return True
+    if b"\r\n" in raw and hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest() == expected:
+        return True
+    return False
+
+
+def _hash_json_canonical(obj) -> str:
+    # Băm JSON chuẩn theo quy ước của `canh/cong_kiem.py`
+    return hashlib.sha256(json.dumps(obj, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def _verify_features_json_lock(root_dir: Path, lock_path: Path, lock_obj: dict) -> tuple[bool, str, set[Path]]:
+    # Hỗ trợ định dạng `<features>.json.khoa` của `canh/cong_kiem.py`
+    if not lock_path.name.lower().endswith(".khoa") or len(lock_path.name) <= 5:
+        return False, f"{LOCK_TAMPER_MESSAGE}: tên file khoá không hợp lệ {lock_path.name}", set()
+    features_file = lock_path.with_suffix("")
+    if not _is_safe_relative_subpath(root_dir, features_file) or not features_file.is_file():
+        return False, f"{LOCK_TAMPER_MESSAGE}: thiếu file gốc {features_file.name}", set()
+    try:
+        data = json.loads(features_file.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return False, f"{LOCK_TAMPER_MESSAGE}: hỏng JSON {features_file.name}", set()
+    if not isinstance(data, dict) or not isinstance(data.get("features"), list):
+        return False, f"{LOCK_TAMPER_MESSAGE}: sai cấu trúc {features_file.name}", set()
+    meta_part = {k: v for k, v in data.items() if k != "features"}
+    if _hash_json_canonical(meta_part) != lock_obj.get("meta"):
+        return False, f"{LOCK_TAMPER_MESSAGE}: sửa phần đầu {features_file.name}", set()
+    locked_map = lock_obj.get("features") if isinstance(lock_obj.get("features"), dict) else {}
+    current_ids = {f.get("id") for f in data["features"] if isinstance(f, dict)}
+    if current_ids != set(locked_map.keys()):
+        return False, f"{LOCK_TAMPER_MESSAGE}: thêm/xoá mục trong {features_file.name}", set()
+    for item in data["features"]:
+        fid = item.get("id")
+        locked_part = {k: v for k, v in item.items() if k not in _FEATURE_LOCK_MUTABLE_KEYS}
+        if _hash_json_canonical(locked_part) != locked_map.get(fid):
+            return False, f"{LOCK_TAMPER_MESSAGE}: sửa tiêu chí {fid}", set()
+    return True, "", {features_file.resolve()}
+
+
+def _parse_lock_entries(lock_path: Path, text: str) -> tuple[list[tuple[str | None, str]] | None, str]:
+    # Trích danh sách `(rel_target | None, sha256_hex)` từ nội dung file `.khoa`
+    stripped = text.strip()
+    if not stripped:
+        return None, f"{LOCK_TAMPER_MESSAGE}: file khoá rỗng ({lock_path.name})"
+    if stripped.startswith("{"):
+        try:
+            parsed = json.loads(stripped)
+        except ValueError:
+            return None, f"{LOCK_TAMPER_MESSAGE}: JSON khoá hỏng ({lock_path.name})"
+        file_map = parsed.get("files") if isinstance(parsed, dict) and isinstance(parsed.get("files"), dict) else parsed
+        if not isinstance(file_map, dict) or not file_map:
+            return None, f"{LOCK_TAMPER_MESSAGE}: JSON khoá rỗng ({lock_path.name})"
+        entries: list[tuple[str | None, str]] = []
+        for rel_p, hex_h in file_map.items():
+            if not isinstance(rel_p, str) or not isinstance(hex_h, str) or not _SHA256_ONLY_RE.match(hex_h.strip()):
+                return None, f"{LOCK_TAMPER_MESSAGE}: mục JSON khoá không hợp lệ ({lock_path.name})"
+            entries.append((rel_p.strip(), hex_h.strip().lower()))
+        return entries, ""
+
+    entries = []
+    for raw_line in stripped.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if _SHA256_ONLY_RE.match(line):
+            entries.append((None, line.lower()))
+            continue
+        m_std = _SHA256_LINE_RE.match(line)
+        if m_std:
+            entries.append((m_std.group(2).strip(), m_std.group(1).lower()))
+            continue
+        m_bsd = _SHA256_BSD_RE.match(line)
+        if m_bsd:
+            entries.append((m_bsd.group(1).strip(), m_bsd.group(2).lower()))
+            continue
+        return None, f"{LOCK_TAMPER_MESSAGE}: dòng khoá sai định dạng ({lock_path.name})"
+    if not entries:
+        return None, f"{LOCK_TAMPER_MESSAGE}: không có mục khoá ({lock_path.name})"
+    return entries, ""
+
+
+def _verify_single_locked_entry(
+    root_dir: Path,
+    lock_path: Path,
+    rel_target: str | None,
+    expected_hex: str,
+) -> tuple[bool, str, set[Path]]:
+    # Đối chiếu sha256 của 1 mục trong `.khoa` với file test thực tế trên đĩa
+    if rel_target is None:
+        if not lock_path.name.lower().endswith(".khoa") or len(lock_path.name) <= 5:
+            return False, f"{LOCK_TAMPER_MESSAGE}: {lock_path.name} thiếu tên file test gốc", set()
+        target = lock_path.with_suffix("")
+        if not _is_safe_relative_subpath(root_dir, target) or not target.is_file():
+            return False, f"{LOCK_TAMPER_MESSAGE}: thiếu file test {target.name}", set()
+        if not _sha256_matches_file(target, expected_hex):
+            return False, f"{LOCK_TAMPER_MESSAGE}: {target.name} lệch sha256", set()
+        return True, "", {target.resolve()}
+
+    clean_rel = rel_target.replace("\\", "/")
+    while clean_rel.startswith("./"):
+        clean_rel = clean_rel[2:]
+    if not clean_rel or clean_rel.startswith("/") or ":" in clean_rel or ".." in clean_rel.split("/"):
+        return False, f"{LOCK_TAMPER_MESSAGE}: đường dẫn khoá không hợp lệ ({rel_target})", set()
+
+    candidates: list[Path] = [root_dir / clean_rel]
+    if lock_path.parent != root_dir:
+        local_cand = lock_path.parent / clean_rel
+        if local_cand != candidates[0]:
+            candidates.append(local_cand)
+
+    existing = [c for c in candidates if c.exists() or c.is_symlink()]
+    if not existing:
+        return False, f"{LOCK_TAMPER_MESSAGE}: thiếu file test {clean_rel}", set()
+
+    verified: set[Path] = set()
+    for cand in existing:
+        if not _is_safe_relative_subpath(root_dir, cand) or not cand.is_file():
+            return False, f"{LOCK_TAMPER_MESSAGE}: file test không hợp lệ ({clean_rel})", set()
+        if not _sha256_matches_file(cand, expected_hex):
+            return False, f"{LOCK_TAMPER_MESSAGE}: {clean_rel} lệch sha256", set()
+        verified.add(cand.resolve())
+    return True, "", verified
+
+
+def _find_unauthorized_hooks(root_dir: Path, locked_files: set[Path], check_dirs: set[Path]) -> list[str]:
+    # Chặn `conftest.py`, `pytest.py`, `sitecustomize.py`, `.pth` không nằm trong `.khoa` trên đường nạp test
+    root_resolved = root_dir.resolve()
+    dirs_to_scan: set[Path] = {root_resolved}
+    skip_dirs = {".git", "node_modules", ".venv", "venv", "__pycache__", ".next"}
+
+    for base_dir in check_dirs:
+        cur = base_dir.resolve()
+        while True:
+            dirs_to_scan.add(cur)
+            if cur == root_resolved or root_resolved not in cur.parents:
+                break
+            cur = cur.parent
+        if base_dir.is_dir():
+            for walk_root, sub_dirs, _ in os.walk(base_dir):
+                sub_dirs[:] = [d for d in sub_dirs if d not in skip_dirs]
+                dirs_to_scan.add(Path(walk_root).resolve())
+
+    violations: list[str] = []
+    for scan_dir in sorted(dirs_to_scan):
+        try:
+            rel_dir = scan_dir.relative_to(root_resolved).as_posix()
+        except ValueError:
+            continue
+        if rel_dir == "tests/nghiem-thu" or rel_dir.startswith("tests/nghiem-thu/"):
+            continue
+        try:
+            entries = list(scan_dir.iterdir())
+        except OSError:
+            continue
+        for entry in entries:
+            if entry.name in _AUTOLOAD_HOOK_NAMES or entry.name.endswith(".pth"):
+                try:
+                    if not entry.is_symlink() and entry.resolve() in locked_files:
+                        continue
+                except OSError:
+                    pass
+                rel_entry = f"{rel_dir}/{entry.name}".lstrip("./")
+                violations.append(rel_entry)
+    return sorted(set(violations))
+
+
+def verify_lock_files(
+    root_dir: Path,
+    khoa_paths: list[str],
+    snapshot_before: dict[str, bytes] | None = None,
+) -> tuple[bool, str]:
+    # Kiểm toàn bộ các file `.khoa` được khai báo trong phiếu trước khi chạy `lenh_kiem`
+    locked_files: set[Path] = set()
+    check_dirs: set[Path] = set()
+    for rel_khoa in khoa_paths:
+        lock_path = root_dir / rel_khoa
+        if not _is_safe_relative_subpath(root_dir, lock_path, rel_khoa) or not lock_path.is_file():
+            return False, f"{LOCK_TAMPER_MESSAGE}: không thấy file khoá {rel_khoa}"
+        if _was_lock_file_tampered(root_dir, rel_khoa, lock_path, snapshot_before):
+            return False, f"{LOCK_TAMPER_MESSAGE}: file khoá {rel_khoa} bị sửa"
+        try:
+            raw_text = lock_path.read_text(encoding="utf-8-sig")
+        except OSError:
+            return False, f"{LOCK_TAMPER_MESSAGE}: không đọc được {rel_khoa}"
+
+        check_dirs.add(lock_path.parent)
+        stripped = raw_text.strip()
+        if stripped.startswith("{"):
+            try:
+                json_obj = json.loads(stripped)
+            except ValueError:
+                return False, f"{LOCK_TAMPER_MESSAGE}: JSON khoá hỏng ({rel_khoa})"
+            if isinstance(json_obj, dict) and "meta" in json_obj and "features" in json_obj:
+                ok_f, err_f, files_f = _verify_features_json_lock(root_dir, lock_path, json_obj)
+                if not ok_f:
+                    return False, err_f
+                locked_files.update(files_f)
+                continue
+
+        entries, parse_err = _parse_lock_entries(lock_path, raw_text)
+        if entries is None:
+            return False, parse_err
+        for rel_target, expected_hex in entries:
+            ok_item, err_item, files_item = _verify_single_locked_entry(root_dir, lock_path, rel_target, expected_hex)
+            if not ok_item:
+                return False, err_item
+            locked_files.update(files_item)
+            for vf in files_item:
+                check_dirs.add(vf.parent)
+
+    hooks = _find_unauthorized_hooks(root_dir, locked_files, check_dirs)
+    if hooks:
+        return False, f"{LOCK_TAMPER_MESSAGE}: phát hiện file nạp tự động {', '.join(hooks)}"
+    return True, ""
+
+
+def build_verification_env() -> dict[str, str]:
+    # Tạo môi trường sạch cho `lenh_kiem` (tham khảo `canh/cong_kiem.py:moi_truong_kiem`)
+    env = dict(os.environ)
+    env["PYTHONSAFEPATH"] = "1"
+    env["PYTHONNOUSERSITE"] = "1"
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["PYTHONUTF8"] = "1"
+    addopts = env.get("PYTEST_ADDOPTS", "")
+    if "-p no:cacheprovider" not in addopts:
+        env["PYTEST_ADDOPTS"] = f"{addopts} -p no:cacheprovider".strip()
+    if sys.executable:
+        py_dir = str(Path(sys.executable).resolve().parent)
+        cur_path = env.get("PATH", "")
+        path_parts = cur_path.split(os.pathsep) if cur_path else []
+        if py_dir and (not path_parts or os.path.normcase(path_parts[0]) != os.path.normcase(py_dir)):
+            env["PATH"] = py_dir + (os.pathsep + cur_path if cur_path else "")
+    return env
+
+
+def run_verification_command(
+    command: str,
+    cwd: Path,
+    timeout_seconds: float = VERIFY_TIMEOUT_MINUTES * 60.0,
+) -> tuple[int, str, bool]:
+    # Chạy `lenh_kiem` tiền cảnh trong `cwd`, có trần thời gian và diệt cả cây tiến trình khi quá hạn
+    kw = {"creationflags": 0x08000000} if os.name == "nt" else {"start_new_session": True}
+    popen_fn = linhx_runner._POPEN_GOC
+    try:
+        proc = popen_fn(
+            command,
+            shell=True,
+            cwd=str(cwd),
+            env=build_verification_env(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            bufsize=0,
+            **kw,
+        )
+    except OSError as exc:
+        return -1, f"không chạy được lệnh kiểm: {exc}", False
+
+    out_chunks: list[bytes] = []
+    err_chunks: list[bytes] = []
+
+    def _drain(pipe, sink: list[bytes]) -> None:
+        if pipe is None:
+            return
+        try:
+            while True:
+                chunk = pipe.read(4096)
+                if not chunk:
+                    break
+                sink.append(chunk if isinstance(chunk, bytes) else chunk.encode("utf-8", errors="replace"))
+        except Exception:
+            pass
+        finally:
+            try:
+                pipe.close()
+            except Exception:
+                pass
+
+    t_out = threading.Thread(target=_drain, args=(proc.stdout, out_chunks), daemon=True)
+    t_err = threading.Thread(target=_drain, args=(proc.stderr, err_chunks), daemon=True)
+    t_out.start()
+    t_err.start()
+
+    deadline = time.monotonic() + max(0.05, float(timeout_seconds))
+    step = min(0.2, max(0.01, float(timeout_seconds) / 20.0))
+    timed_out = False
+    try:
+        while proc.poll() is None:
+            if time.monotonic() >= deadline:
+                timed_out = True
+                linhx_runner.dung_tien_trinh_agy(proc)
+                break
+            time.sleep(step)
+    finally:
+        if proc.poll() is None:
+            linhx_runner.dung_tien_trinh_agy(proc)
+        t_out.join(timeout=2.0)
+        t_err.join(timeout=2.0)
+
+    stdout_txt = b"".join(out_chunks).decode("utf-8", errors="replace")
+    stderr_txt = b"".join(err_chunks).decode("utf-8", errors="replace")
+    sep = "\n" if stdout_txt and stderr_txt and not stdout_txt.endswith("\n") else ""
+    combined = (stdout_txt + sep + stderr_txt).replace("\r\n", "\n").replace("\r", "\n").strip()
+    rc = -1 if timed_out else (proc.returncode if proc.returncode is not None else -1)
+    return rc, combined, timed_out
+
+
+def _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy: str, extra_note: str) -> str:
+    # Giữ lại cả câu trả lời gốc của agy trong nhật ký khi KET-QUA ưu tiên hiển thị lỗi cổng kiểm
+    parts: list[str] = []
+    if ket_qua_agy is not None and str(ket_qua_agy).strip():
+        parts.append(str(ket_qua_agy).strip())
+    if nhat_ky_agy and str(nhat_ky_agy).strip():
+        parts.append(str(nhat_ky_agy).strip())
+    if extra_note and str(extra_note).strip():
+        parts.append(str(extra_note).strip())
+    return "\n---\n".join(parts)
+
+
+def run_post_agy_verification(
+    cfg: dict,
+    viec: dict,
+    ket_qua_agy,
+    nhat_ky_agy: str,
+    snapshot_before: dict[str, bytes] | None = None,
+    tep_log: Path | None = None,
+) -> tuple[str, str | None, str]:
+    # Cổng tự chấm của runner sau khi agy báo xong: kiểm `.khoa` rồi chạy `lenh_kiem` (trần 15 phút)
+    khoa_paths = get_ticket_khoa_paths(viec)
+    lenh_kiem = get_ticket_lenh_kiem(viec)
+    if not khoa_paths and not lenh_kiem:
+        return "xong", ket_qua_agy, nhat_ky_agy
+
+    root_dir, dir_err = resolve_first_tracked_dir(cfg, viec)
+    if root_dir is None:
+        prefix = LOCK_TAMPER_MESSAGE if khoa_paths else "lệnh kiểm lỗi"
+        err_msg = f"{prefix}: {dir_err}"
+        if tep_log is not None:
+            _ghi_log_an_toan(tep_log, "cong_kiem", viec=viec.get("viec"), dat=False, ly_do=err_msg)
+        return "loi", err_msg, _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy, err_msg)
+
+    if khoa_paths:
+        ok_lock, lock_err = verify_lock_files(root_dir, khoa_paths, snapshot_before=snapshot_before)
+        if not ok_lock:
+            if tep_log is not None:
+                _ghi_log_an_toan(tep_log, "cong_kiem", viec=viec.get("viec"), dat=False, ly_do=lock_err)
+            return "loi", lock_err, _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy, lock_err)
+
+    if lenh_kiem:
+        timeout_minutes = linhx_runner._ep_so_duong((cfg or {}).get("tran_kiem_phut"), VERIFY_TIMEOUT_MINUTES)
+        rc, full_log, timed_out = run_verification_command(
+            lenh_kiem,
+            cwd=root_dir,
+            timeout_seconds=timeout_minutes * 60.0,
+        )
+        tail_log = full_log[-VERIFY_LOG_TAIL_LIMIT:] if full_log else ""
+        if tep_log is not None:
+            _ghi_log_an_toan(
+                tep_log,
+                "cong_kiem",
+                viec=viec.get("viec"),
+                dat=(not timed_out and rc == 0),
+                returncode=rc,
+                qua_gio=timed_out,
+                lenh_kiem=lenh_kiem,
+                duoi_log=tail_log,
+            )
+        if timed_out or rc != 0:
+            cmd_short = _cat_mot_dong(lenh_kiem, 120)
+            if timed_out:
+                head = f"lệnh kiểm quá trần {linhx_runner._dinh_dang_phut(timeout_minutes)} phút: {cmd_short}"
+            else:
+                head = f"lệnh kiểm trượt (exit={rc}): {cmd_short}"
+            fail_msg = f"{head}\n{tail_log}" if tail_log else head
+            return "loi", fail_msg, _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy, fail_msg)
+
+    pass_note = "cong_kiem=dat"
+    merged_ok_nk = f"{nhat_ky_agy}\n{pass_note}".strip() if nhat_ky_agy else pass_note
+    return "xong", ket_qua_agy, merged_ok_nk
+
+
 def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
     """Chay agy cho 1 phieu da giu trong dang/, chep Drive, ghi log jsonl va push KET-QUA.md."""
     phieu_id = viec["viec"]
@@ -1158,6 +1749,7 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         pass
 
     truoc = _chup_trang_thai_thu_muc(thu_muc)
+    moc_khoa_truoc = snapshot_lock_files(cfg, viec)
     _ghi_log_an_toan(
         tep_log,
         "nhan",
@@ -1182,6 +1774,15 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
     except Exception:
         tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
+    if tt == "xong" and has_verification_gate(viec):
+        tt, kq, nk = run_post_agy_verification(
+            cfg,
+            viec,
+            ket_qua_agy=kq,
+            nhat_ky_agy=nk,
+            snapshot_before=moc_khoa_truoc,
+            tep_log=tep_log,
+        )
     phut = (time.monotonic() - t0) / 60.0
 
     sau = _chup_trang_thai_thu_muc(thu_muc)

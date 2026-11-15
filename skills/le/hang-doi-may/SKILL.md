@@ -27,6 +27,8 @@ theo_doi: C:\linhx\wt-du-an   # BẮT BUỘC khi agy làm ngoài thư mục phi�
 phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong (trang_thai: xong); loi/dung thì bỏ qua
 tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-sua-<k>.md khi loi/dung (trừ lỗi máy)
 khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 20) cho việc lâu; tối đa bằng tran_phut
+khoa: viec/du-an/nghiem-thu/test.py.khoa  # tuỳ chọn: file .khoa (tương đối theo_doi đầu tiên); lệch sha256 → loi "sửa test khoá"
+lenh_kiem: python -m pytest viec/du-an/nghiem-thu -q  # tuỳ chọn: runner tự chạy sau agy (trần 15p), đạt mới xong; trượt → loi kèm 1500 ký tự cuối log
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
