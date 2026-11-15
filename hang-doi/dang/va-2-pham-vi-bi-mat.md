@@ -14,4 +14,4 @@ Vá 2, phạm vi sửa và bí mật: header `vung: glob1; glob2` (ví dụ `run
 Test trong runner/ (không conftest, không mạng). `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cập nhật `skills/le/hang-doi-may/SKILL.md` (mục Phiếu hoặc Bài học, ngắn). `git pull --rebase`, push nhánh. Trả lời ≤1200 ký tự: làm gì, số test, hash.
 Trước khi push chạy cả `python -m pytest tests/nghiem-thu -q` (CI chặn chuỗi giống bí mật, kể cả token giả trong test: ghép chuỗi lúc chạy).
 
-nhip: 11:32 9p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 11:35 12p root agent idle; waiting up to 40m0s for 1 background task(s)
