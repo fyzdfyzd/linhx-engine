@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\wt\bang-du-an
 phu_thuoc: lx-code-bang-du-an
+nhan: may-2 2026-11-15T13:15:45+0700
 
 Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn theo giờ. Việc PHỤ, ưu tiên thấp, cùng luật cấm như phiếu trước (không khởi động lại bảng đang chạy, không đụng runner, tiền cảnh, KHÔNG background task, mỗi 5 phút có file mới/commit).
 1. Làm tiếp trên nhánh `agy/bang-du-an` trong C:\linhx\wt\bang-du-an (`git pull`).
