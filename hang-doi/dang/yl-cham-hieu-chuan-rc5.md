@@ -15,4 +15,4 @@ Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải th�
 Không sửa điểm của mình sau khi xem đáp án.
 Trả lời KET-QUA.md (ngắn): bảng so điểm, số lỗi kiosk bắt được /5, các lỗi agy thấy mà bài Claude không có, các lỗi Claude thấy mà agy bỏ sót (mỗi lỗi một dòng), kết luận DÙNG ĐƯỢC nếu mọi phần lệch ≤ 0,5 và bắt ≥ 4/5 lỗi kiosk, ngược lại CHƯA.
 
-nhip: 12:16 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:19 33p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
