@@ -4,6 +4,7 @@ tran_phut: 40
 theo_doi: C:\linhx\wt-nhip
 khong_tien_phut: 25
 tu_sua: 1
+nhan: may-2 2026-11-15T08:48:03+0700
 
 LƯU Ý: lần trước dừng vì agy chạy tác vụ nền (subagent/background) rồi ngồi chờ, thư mục không đổi 10 phút. KHÔNG dùng background task hay subagent nền; tự làm tuần tự. Có thể đã làm dở trong C:\linhx\wt-nhip: kiểm git status rồi làm tiếp.
 
