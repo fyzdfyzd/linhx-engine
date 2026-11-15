@@ -3,9 +3,8 @@ loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-giao-dien
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 phu_thuoc: nhip-can-linh-b
-nhan: may-2 2026-11-15T09:20:03+0700
 
 KHÔNG chạy lệnh nền hay subagent nền: mọi lệnh tiền cảnh, làm tuần tự.
 Repo: `C:\linhx\wt-giao-dien` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-giao-dien`; có rồi: `git pull`). KHÔNG sửa C:\linhx\hang-doi. Đọc trước `viec/ra-quy-trinh/SO-SANH.md` (khâu liên quan).
@@ -18,3 +17,16 @@ Làm lại giao diện bảng theo dõi `runner/bang/` cho đẹp, hiện đại
 - Tự làm mới 15 giây bằng fetch /api/trang-thai, không nhấp nháy cả trang.
 Bằng chứng: chụp 390×844 và 1440×900, cả sáng và tối, lưu `viec/bang-giao-dien/anh/` (commit, mỗi ảnh < 500 KB). Test cũ của bang vẫn đạt; thêm test trang trả 200 và có các khối chính.
 `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cài lại bảng trên máy 2 (cai-bang.ps1 hoặc khởi động lại tác vụ LINHX-Bang). `git pull --rebase`, push. Trả lời: số test, hash, đường dẫn ảnh.
+
+## Lần trước trượt vì:
+phieu: bang-giao-dien-moi
+may: may-2
+trang_thai: dung
+tep_doi: (khong)
+drive: (khong)
+phut: 10.60
+token: vao=0 ra=0
+
+dừng agy: quá 10 phút không tiến
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
