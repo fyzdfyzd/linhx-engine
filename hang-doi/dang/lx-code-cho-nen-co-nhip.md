@@ -14,3 +14,5 @@ Phiếu nối tiếp lx-code-chan-cho-nen. Linh 15/11: CHO PHÉP chạy nền n�
 4. Bảng 8090: phiếu đang ở chế độ canh nền hiện nhãn "đang chờ nền · log cuối N phút trước".
 5. Sửa test runner/test_chan_cho_nen.py: có log tăng → không dừng; im 5 phút → dừng đúng lý do. `python -m pytest runner -q` + `python -m pytest tests/nghiem-thu -q`. Push `agy/chan-cho-nen`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail.
+
+nhip: 13:30 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
