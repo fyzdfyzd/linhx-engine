@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-phu-thuoc
+nhan: may-2 2026-11-15T07:43:29+0700
 
 Thêm 2 tính năng cho runner (học từ beads và agent-orchestrator).
 Repo: `C:\linhx\wt-phu-thuoc` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-phu-thuoc`; có rồi: `git pull`). KHÔNG sửa C:\linhx\hang-doi. Không đụng runner/bang/ (phiếu khác đang làm).
