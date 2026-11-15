@@ -2,7 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\ifagent-wt\T1
-phu_thuoc: yl-a1-gop-b
+phu_thuoc: yl-a1-gop-c
 
 Phiếu T1 Yên Lam: CHỈ viết test mới, KHÔNG sửa code sản phẩm. Chạy mọi lệnh ở tiền cảnh; mỗi 5 phút phải có file mới hoặc commit trong C:\linhx\ifagent-wt\T1.
 1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-a1-gop-b chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\T1 -b agy/yl-t1-test origin/agy/yl-a1-gop-b`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (lấy TIEU-CHUAN-NGHIEM-THU.md, CHUAN/, KHUNG/; không sửa các file này).
