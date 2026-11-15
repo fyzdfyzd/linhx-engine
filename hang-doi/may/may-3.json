@@ -1,0 +1,69 @@
+{
+  "ma_may": "may-3",
+  "ten_windows": "DESKTOP-2AUT482",
+  "he_dieu_hanh": "Windows 11",
+  "vai_tro": "",
+  "cpu": {
+    "ten": "AMD Ryzen 7 5800X 8-Core Processor",
+    "nhan": 8,
+    "luong": 16
+  },
+  "ram": {
+    "tong_gb": 63.91,
+    "trong_gb": 54.99
+  },
+  "gpu": [
+    {
+      "ten": "NVIDIA GeForce RTX 4060 Ti",
+      "vram_gb": 8.0
+    }
+  ],
+  "o_dia": [
+    {
+      "o": "C:",
+      "tong_gb": 476.08,
+      "trong_gb": 54.76
+    },
+    {
+      "o": "D:",
+      "tong_gb": 931.51,
+      "trong_gb": 305.83
+    },
+    {
+      "o": "G:",
+      "tong_gb": 476.08,
+      "trong_gb": 52.02
+    }
+  ],
+  "agy": {
+    "co": true,
+    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.exe",
+    "phien_ban": "1.5.9"
+  },
+  "python": "3.12.10",
+  "chrome": {
+    "co": true,
+    "profiles": [
+      "Person 1",
+      "Account KH_2",
+      "Linh",
+      "Kora",
+      "Đinh",
+      "Pham",
+      "Account KH_4",
+      "nguowif",
+      "listeningvietnam.com",
+      "Sữa"
+    ]
+  },
+  "nhan_phieu": {
+    "so_phieu": 5,
+    "nhan_bat_ky": true,
+    "che_do_nhan": "bat-ky"
+  },
+  "thong_ke_24h": {
+    "xong": 0,
+    "loi": 0
+  },
+  "cap_nhat_luc": "2026-11-15T22:01:14+0700"
+}
