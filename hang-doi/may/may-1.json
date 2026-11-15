@@ -1,108 +1,59 @@
 {
   "ma_may": "may-1",
-  "ten_windows": "DESKTOP-PVHR2CD",
-  "he_dieu_hanh": "Windows 10",
+  "ten_windows": "DESKTOP-2AUT482",
+  "he_dieu_hanh": "Windows 11",
   "vai_tro": "",
   "cpu": {
-    "ten": "11th Gen Intel(R) Core(TM) i5-11400 @ 2.60GHz",
-    "nhan": 6,
-    "luong": 12
+    "ten": "AMD Ryzen 7 5800X 8-Core Processor",
+    "nhan": 8,
+    "luong": 16
   },
   "ram": {
-    "tong_gb": 15.6,
-    "trong_gb": 1.73
+    "tong_gb": 63.91,
+    "trong_gb": 54.78
   },
   "gpu": [
     {
-      "ten": "Parsec Virtual Display Adapter",
-      "vram_gb": null
-    },
-    {
-      "ten": "Intel(R) UHD Graphics 730",
-      "vram_gb": 2.0
+      "ten": "NVIDIA GeForce RTX 4060 Ti",
+      "vram_gb": 8.0
     }
   ],
   "o_dia": [
     {
       "o": "C:",
-      "tong_gb": 118.63,
-      "trong_gb": 3.0
+      "tong_gb": 476.08,
+      "trong_gb": 54.86
     },
     {
       "o": "D:",
-      "tong_gb": 931.5,
-      "trong_gb": 726.37
-    },
-    {
-      "o": "E:",
-      "tong_gb": 197.47,
-      "trong_gb": 196.79
-    },
-    {
-      "o": "F:",
-      "tong_gb": 380.86,
-      "trong_gb": 135.25
+      "tong_gb": 931.51,
+      "trong_gb": 305.83
     },
     {
       "o": "G:",
-      "tong_gb": 351.56,
-      "trong_gb": 332.41
-    },
-    {
-      "o": "H:",
-      "tong_gb": 4657.51,
-      "trong_gb": 3920.2
-    },
-    {
-      "o": "I:",
-      "tong_gb": 931.5,
-      "trong_gb": 690.05
+      "tong_gb": 476.08,
+      "trong_gb": 52.11
     }
   ],
   "agy": {
     "co": true,
-    "duong_dan": "C:\\Users\\ADMIN\\.gemini\\bin\\agy.exe",
+    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.EXE",
     "phien_ban": "1.5.9"
   },
   "python": "3.12.10",
   "chrome": {
     "co": true,
     "profiles": [
-      "urah.vn",
-      "Art",
-      "chiemtinh.vn",
+      "Person 1",
+      "Account KH_2",
+      "Linh",
+      "Kora",
+      "Đinh",
       "Pham",
-      "Account KH_29_vang",
-      "Account KH_31_AI",
-      "Account KH_32_doanhnhan",
-      "User 4",
-      "User 6",
-      "User 9",
-      "User 12",
-      "User 20",
-      "Account KH_76",
-      "Account KH_77",
-      "Account KH_80",
-      "Account KH_86",
-      "Account KH_91",
-      "Account KH_92",
-      "Account KH_97",
-      "Account KH_104_dautu",
-      "User 8",
-      "Lavie_23",
-      "Lavie_24",
-      "Account KH_40_người cao tuổi",
-      "Lavie_25",
-      "Lavie_26",
-      "Lavie_27",
-      "Clone_1",
-      "Clone_2",
-      "Clone_3",
-      "Clone_4",
-      "Account KH_75",
-      "Account KH_81",
-      "Account KH_82",
-      "Account KH_87"
+      "Account KH_4",
+      "nguowif",
+      "listeningvietnam.com",
+      "Sữa"
     ]
   },
   "nhan_phieu": {
@@ -114,5 +65,5 @@
     "xong": 11,
     "loi": 3
   },
-  "cap_nhat_luc": "2026-11-15T15:05:17+0700"
+  "cap_nhat_luc": "2026-11-15T21:53:15+0700"
 }
