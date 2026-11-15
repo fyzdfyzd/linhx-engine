@@ -1,6 +1,8 @@
 may: may-2
 loai: code
 tran_phut: 40
+khong_tien_phut: 25
+tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\T1
 phu_thuoc: yl-a1-gop-c
 
