@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\ifagent-wt\A1b
+nhan: may-2 2026-11-15T09:04:02+0700
 
 Phiếu A1 Yên Lam (lần 2). Lần 1 dừng đúng luật: 43921412 nằm trên d8a6d09a nên phải lấy cả chuỗi. Chạy mọi lệnh ở tiền cảnh.
 1. `git -C C:\linhx\ifagent fetch --all`; `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\A1b -b agy/yl-a1-gop-b origin/claude/project-thread-qdzzr4` (phải là 075e80a5).
