@@ -1,6 +1,7 @@
 may: may-2
 loai: khac
 tran_phut: 15
+nhan: may-2 2026-11-15T09:05:41+0700
 
 Kiểm máy 2 đủ điều kiện deploy staging Yên Lam. Chỉ đọc, chạy tiền cảnh, không in nội dung bí mật.
 1. `gcloud --version` (dòng đầu), `gcloud config get account`, `gcloud compute instances list --project=ifagent-event-2026` (ghi tên + STATUS).
