@@ -15,4 +15,4 @@ Phiếu nối tiếp lx-code-chan-cho-nen. Linh 15/11: CHO PHÉP chạy nền n�
 5. Sửa test runner/test_chan_cho_nen.py: có log tăng → không dừng; im 5 phút → dừng đúng lý do. `python -m pytest runner -q` + `python -m pytest tests/nghiem-thu -q`. Push `agy/chan-cho-nen`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail.
 
-nhip: 13:51 24p root agent idle; waiting up to 40m0s for 2 background task(s)
+nhip: 13:55 27p root agent idle; waiting up to 40m0s for 2 background task(s)
