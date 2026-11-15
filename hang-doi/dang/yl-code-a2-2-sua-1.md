@@ -32,4 +32,4 @@ dừng agy: quá trần 40 phút
 warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
 root agent idle; waiting up to 40m0s for 1 background task(s)
 
-nhip: 14:40 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 14:43 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
