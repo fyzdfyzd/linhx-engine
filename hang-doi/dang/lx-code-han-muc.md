@@ -18,4 +18,4 @@ Phiếu nối tiếp sổ tài khoản: HẠN MỨC từng tài khoản + TAB "C
 6. Test runner/test_so_tai_khoan.py thêm ca: cộng token đúng, đọc giờ reset từ mẫu 429, "chua_ro" khi thiếu. Chạy `python -m pytest runner -q` + `python -m pytest tests/nghiem-thu -q`. Push `agy/so-tai-khoan`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test; bảng tài khoản máy 2 (email che) | đã dùng 24h | còn lại | reset | nguồn.
 
-nhip: 13:06 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:09 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
