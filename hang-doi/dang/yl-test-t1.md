@@ -20,3 +20,5 @@ Phiếu T1 Yên Lam: CHỈ viết test mới, KHÔNG sửa code sản phẩm. Ch
 4. Ghi `sha256` từng file test vào `apps/lab/test/nghiem-thu-rc6/KHOA.sha256`. Commit, push `agy/yl-test-t1`.
 CẤM: sửa code sản phẩm, sửa test cũ, sửa TIEU-CHUAN/CHUAN/KHUNG, deploy, in khoá/mật khẩu. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): SHA đỉnh; bảng file test | số test | đỏ/xanh trên code hiện tại | tiêu chí trích; ngưỡng chuẩn 9 lấy từ file nào.
+
+nhip: 11:10 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
