@@ -5,6 +5,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\wt-model
+nhan: may-2 2026-11-15T09:36:13+0700
 
 KHÔNG dùng background task, KHÔNG sinh thợ con: tự làm trực tiếp, mọi lệnh chạy tiền cảnh và chờ xong. (Lần trước phiếu runner-chon-model bị dừng vì agy chờ 1 background task tới 10 phút.)
 Repo: `C:\linhx\wt-model` (chưa có: `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-model`; có rồi: `git pull`, giữ phần lần trước đã làm nếu đúng). KHÔNG sửa C:\linhx\hang-doi.
