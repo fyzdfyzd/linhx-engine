@@ -550,7 +550,8 @@ def chay_agy(cfg, viec):
     )
     meta_viec = viec.get("meta") if isinstance(viec.get("meta"), dict) else {}
     kt_viec = _ep_so_duong(viec.get("khong_tien_phut") or meta_viec.get("khong_tien_phut"), kt_cfg)
-    khong_tien_phut = min(kt_viec, kt_cfg)
+    # phieu duoc nang nguong (viec lau: clone repo lon, test dai) nhung khong qua tran phut
+    khong_tien_phut = min(kt_viec, tran_phut) if (viec.get("khong_tien_phut") or meta_viec.get("khong_tien_phut")) else kt_cfg
     khong_tien_giay = khong_tien_phut * 60.0
 
     thu_muc = Path(cfg["thu_muc"])

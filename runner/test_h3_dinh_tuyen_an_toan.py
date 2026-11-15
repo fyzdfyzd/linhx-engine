@@ -583,3 +583,27 @@ def test_ram_trong_duoi_1_5_gb_khong_nhan_phieu_va_du_1_5_gb_thi_nhan(tmp_path, 
     nd_kq = (tm_kt / "hang-doi" / "xong" / "ram-01" / "KET-QUA.md").read_text(encoding="utf-8")
     assert "trang_thai: xong" in nd_kq
     assert "Du RAM de chay" in nd_kq
+
+
+def test_phieu_nang_nguong_khong_tien_nhung_khong_qua_tran(tmp_path, monkeypatch):
+    bare = _tao_bare_hang_doi(
+        tmp_path,
+        {"01-treo-lau": "may: may-1\nloai: code\ntran_phut: 40\nkhong_tien_phut: 25\n\nPhieu clone repo lon"},
+    )
+    cfg = _clone_may(bare, tmp_path, "may-1")
+    monkeypatch.setattr(linhx_runner, "_goi_taskkill_cay", lambda pid: None)
+    thoi_gian_gia = [1000.0]
+    proc = _TienTrinhAgyGia(pid=51101)
+
+    def ngu(giay):
+        thoi_gian_gia[0] += 60.0
+
+    monkeypatch.setattr(linhx_runner, "_dong_ho", lambda: thoi_gian_gia[0])
+    monkeypatch.setattr(linhx_runner, "_ngu", ngu)
+    monkeypatch.setattr(linhx_runner, "_tao_tien_trinh_agy", lambda *a, **kw: proc)
+
+    kq = hang_doi_git.xu_ly_mot_phieu(cfg)
+    assert kq["trang_thai"] == "dung"
+    assert "25 phút không tiến" in kq["nhat_ky"]
+    # khong dung oan o moc 10 phut mac dinh
+    assert 1500.0 <= (thoi_gian_gia[0] - 1000.0) < 1620.0

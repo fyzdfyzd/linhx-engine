@@ -25,6 +25,7 @@ tran_phut: 40         # trần, tối đa 40
 theo_doi: C:\linhx\wt-du-an   # BẮT BUỘC khi agy làm ngoài thư mục phiếu (repo clone riêng)
 phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong (trang_thai: xong); loi/dung thì bỏ qua
 tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-sua-<k>.md khi loi/dung (trừ lỗi máy)
+khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 10) cho việc lâu như clone repo lớn, test dài; tối đa bằng tran_phut
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
@@ -50,7 +51,7 @@ theo_doi: C:\linhx\wt-<du-an>
 Đọc viec/<du-an>/DE-BAI.md. Clone nhánh hang-doi riêng vào C:\linhx\wt-hang-doi (có rồi thì git pull). Chia thành phiếu con ≤ 40 phút, ghi vào hang-doi/moi/<du-an>-<n>.md (đúng khuôn phiếu, có may:, theo_doi:, phụ thuộc ghi trong thân phiếu), push nhánh hang-doi.
 Việc trình duyệt cần đăng nhập → may-1. Việc code → may-2 hoặc bat-ky.
 Không tự làm phiếu con. Trả lời: danh sách phiếu con + thứ tự.
-```
+``` Thợ con nền hay làm agy gốc ngồi chờ, thư mục không đổi → bị dừng oan: dặn "không chạy nền" hoặc nâng `khong_tien_phut`.
 Claude duyệt danh sách phiếu con (đọc 1 file), xoá phiếu sai, rồi để máy chạy. Bên trong một phiếu, agy được tự sinh thợ con (background task): khi đó bắt buộc có `theo_doi:`.
 
 ## Bài học (14/11)
