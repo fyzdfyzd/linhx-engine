@@ -4,6 +4,7 @@ tran_phut: 40
 theo_doi: C:\linhx\wt-va1
 khong_tien_phut: 25
 tu_sua: 1
+nhan: may-2 2026-11-15T10:58:46+0700
 
 
 KHÔNG chạy lệnh nền hay subagent nền: mọi lệnh tiền cảnh, làm tuần tự.
