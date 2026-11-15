@@ -12,4 +12,4 @@ Repo: `D:\linhx\wt-va4` (chưa có: `git clone -b claude/project-thread-jowxv1 h
 Vá 4, cổng phát hành (chỉ khuôn và script kiểm, KHÔNG deploy thật): `runner/cong_phat_hanh.py --base <url staging> --sha <sha>`: GET /healthz phải trả đúng BUILD_SHA; chặn nếu base trùng tên miền prod trong danh sách `--prod`; chặn nếu giờ VN > 22h hoặc < 7h; chỉ dùng GET. Thêm vào SKILL.md mục "Phát hành": phiếu deploy chỉ staging, chạy cổng này trước và sau, ghi lệnh rollback; prod luôn là CAN-LINH (Linh duyệt và chạy). Học từ AGENTS.md mục "Luật deploy" của repo ifagent (MSI đã có repo ở D:\LINHX\PRJ\IFAGENT, chỉ đọc, KHÔNG git pull hay sửa gì ở đó). Test giả lập HTTP cục bộ.
 Test trong runner/ (không conftest, không mạng). `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cập nhật `skills/le/hang-doi-may/SKILL.md` (mục Phiếu hoặc Bài học, ngắn). `git pull --rebase`, push nhánh. Trả lời ≤1200 ký tự: làm gì, số test, hash.
 
-nhip: 09:35 15p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 09:38 18p warning: --mode auto is not available for this account; continuing in the default mode.
