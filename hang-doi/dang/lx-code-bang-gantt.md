@@ -15,4 +15,4 @@ Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn 
 5. Chụp lại ảnh du-an-*.png (390×844, 1440×900, sáng/tối), commit, push `agy/bang-du-an`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; đường dẫn ảnh.
 
-nhip: 13:06 21p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 13:09 24p root agent idle; waiting up to 40m0s for 1 background task(s)
