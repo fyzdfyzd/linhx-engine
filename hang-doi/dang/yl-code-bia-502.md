@@ -21,4 +21,4 @@ Phiếu sửa lỗi 502 khi tạo bìa (kiosk Agentic Me, Yên Lam). Chạy mọ
 CẤM: deploy, gửi mail, in khoá/mật khẩu, xoá dữ liệu, sửa test cũ, sửa bất kỳ file nào trong apps/lab/test/nghiem-thu-rc6/ (chạy `sha256sum -c apps/lab/test/nghiem-thu-rc6/KHOA.sha256` trước khi push, lệch là tự trượt), sửa TIEU-CHUAN/CHUAN/KHUNG, gọi AI thật, push nền qdzzr4. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; bảng 04 (a)(b)(c)(d) trước/sau; 01/02 trước/sau; số pass/fail lab đủ; sha256sum -c OK/KHÔNG.
 
-nhip: 14:26 21p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 14:29 24p root agent idle; waiting up to 40m0s for 1 background task(s)
