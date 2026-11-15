@@ -17,4 +17,4 @@ Phiếu: thêm 2 tab "Dự án" và "Chất lượng" cho bảng theo dõi (runn
 CẤM: in khoá/mật khẩu, mở cổng ra ngoài, sửa phiếu khác, sửa nhánh hang-doi. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; số test pass/fail; đường dẫn 6 ảnh.
 
-nhip: 12:18 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:21 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
