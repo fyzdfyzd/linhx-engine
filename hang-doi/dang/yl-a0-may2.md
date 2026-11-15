@@ -2,6 +2,7 @@ may: may-2
 loai: khac
 tran_phut: 30
 theo_doi: C:\linhx\ifagent
+nhan: may-2 2026-11-15T08:26:30+0700
 
 Dựng chỗ làm Yên Lam trên máy 2 (repo private fyzdfyzd/ifagent, 2,9 GB). Chạy mọi lệnh ở tiền cảnh, không chạy lệnh nền.
 1. Ghi phiên bản: `git --version`, `node -v`, `npm -v`, `npx playwright --version`, `gcloud --version` (thiếu cái nào thì ghi THIEU, không tự cài gcloud).
