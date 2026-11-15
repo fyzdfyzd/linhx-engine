@@ -19,3 +19,5 @@ Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý a,b. Chạ
 7. Push `agy/yl-code-a2-1b`.
 CẤM: deploy, gửi mail, in khoá/mật khẩu, xoá dữ liệu, sửa test cũ, sửa bất kỳ file nào trong apps/lab/test/nghiem-thu-rc6/ (kiểm `sha256sum -c apps/lab/test/nghiem-thu-rc6/KHOA.sha256` trước khi push, lệch là tự trượt), sửa TIEU-CHUAN/CHUAN/KHUNG, tự sinh ảnh/video sản phẩm bằng AI, push nền qdzzr4. Màn chưa có khung duyệt thì không build, ghi CHUA_CO_KHUNG. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; bảng test khoá ý a,b trước/sau; số pass/fail lab đủ; đường dẫn ảnh ghép; sha256sum -c OK/KHÔNG.
+
+nhip: 13:27 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
