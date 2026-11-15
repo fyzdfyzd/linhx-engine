@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-nhip
+nhan: may-2 2026-11-15T08:25:28+0700
 
 KHÔNG chạy lệnh nền (background): mọi lệnh chạy tiền cảnh và chờ xong.
 
