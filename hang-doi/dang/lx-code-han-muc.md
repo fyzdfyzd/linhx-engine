@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\wt\so-tai-khoan
 phu_thuoc: lx-code-so-tai-khoan; lx-do-agy-tai-khoan
+nhan: may-2 2026-11-15T12:48:17+0700
 
 Phiếu nối tiếp sổ tài khoản: HẠN MỨC từng tài khoản + TAB "Công cụ" (sổ công cụ + crawler + Zalo). Việc phụ, cùng luật cấm phiếu lx-code-so-tai-khoan (không đọc/in cookie, token đăng nhập, mật khẩu; tiền cảnh, KHÔNG background task, mỗi 5 phút có file mới/commit).
 1. Làm tiếp nhánh `agy/so-tai-khoan` (`git pull`). Đọc KET-QUA của lx-do-agy-tai-khoan (nhánh hang-doi, xong/lx-do-agy-tai-khoan/KET-QUA.md).
