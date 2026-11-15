@@ -12,7 +12,7 @@ Claude cloud là não: nói chuyện với Linh, ra đề, khoá test, chấm cu
 | Mã | Máy | Dùng cho |
 |---|---|---|
 | may-1 | DESKTOP-PVHR2CD, `D:\linhx\hang-doi` | Chrome đã đăng nhập tài khoản. RAM ít, ổ C: gần đầy, đang chạy thợ ENGINE |
-| may-2 | DESKTOP-LNRQBEE, `C:\linhx\hang-doi` | Máy chính: dựng code, orchestration, chạy song song 3 phiếu |
+| may-2 | DESKTOP-LNRQBEE, `C:\linhx\hang-doi` | Máy chính: dựng code, orchestration, 3 phiếu song song; có trình duyệt đăng nhập (15/11); deploy staging Yên Lam |
 | may-3 | (cài sau) | |
 | may-4 | MSI (máy cá nhân) | Chỉ phiếu ghi đích danh may-4 (`-ChiDichDanh`) |
 
@@ -45,6 +45,9 @@ Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 
 Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. Runner tự chèn cuối mọi đề câu nhắc chạy tiền cảnh; bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
 Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).
+
+## Phiếu lệnh (không mở agy)
+`loai: lenh` + `lenh: <ten>`: runner chạy `runner/lenh/<ten>.ps1` đã commit (không chạy lệnh tuỳ ý trong phiếu), không tốn token. Có sẵn: `suc-khoe` (RAM, ổ, agy, log cuối), `xem-viec` (thư mục wt-*: commit cuối, file đổi).
 
 ## Quy trình một việc (đã chạy thử: landing Listening Vietnam 14/11)
 1. **Đề** (Claude): `viec/<du-an>/DE-BAI.md`: mục tiêu, người dùng, khối/chức năng, ràng buộc, định nghĩa xong. Đính brand/tài liệu vào repo vì máy không đọc được thư mục chung cloud.

@@ -1169,6 +1169,40 @@ def _ghep_canh_bao_nhat_ky(nhat_ky: str, canh_bao: str) -> str:
     return f"{canh_bao}\n{nhat_ky}"
 
 
+_MAU_TEN_LENH = re.compile(r"^[A-Za-z0-9._-]{1,80}$")
+THU_MUC_LENH = GOC / "lenh"
+
+
+def chay_lenh(cfg, viec):
+    """Phieu `loai: lenh`: chay script da commit runner/lenh/<lenh>.ps1 (Windows) hoac .sh, khong mo agy."""
+    meta = viec.get("meta") if isinstance(viec.get("meta"), dict) else {}
+    ten = str(meta.get("lenh") or "").split("#", 1)[0].strip()
+    if not ten or not _MAU_TEN_LENH.match(ten) or ".." in ten:
+        return "loi", None, f"phiếu lenh thiếu hoặc sai tên script: '{ten}'", 0, 0
+    ps1, sh = THU_MUC_LENH / f"{ten}.ps1", THU_MUC_LENH / f"{ten}.sh"
+    if os.name == "nt" and ps1.is_file():
+        cmd = ["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(ps1)]
+    elif sh.is_file():
+        cmd = ["bash", str(sh)]
+    elif ps1.is_file():
+        cmd = ["pwsh", "-NoProfile", "-File", str(ps1)]
+    else:
+        return "loi", None, f"không có script runner/lenh/{ten}.ps1|.sh", 0, 0
+    tran = _ep_so_duong(viec.get("tran_phut"), 10) * 60.0
+    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    t0 = _gio()
+    try:
+        p = _SUBPROCESS_RUN_GOC(cmd, cwd=str(cfg.get("thu_muc") or GOC), capture_output=True, text=True,
+                                encoding="utf-8", errors="replace", timeout=tran, **kw)
+    except subprocess.TimeoutExpired:
+        return "dung", None, f"dừng lệnh {ten}: quá {tran/60:.0f} phút", 0, 0
+    except OSError as e:
+        return "loi", None, f"không chạy được {ten}: {e}", 0, 0
+    ra = (p.stdout or "")[-4000:]
+    nk = f"lenh={ten} exit={p.returncode} giay={_gio()-t0:.0f}\n--- stderr ---\n{(p.stderr or '')[-4000:]}"
+    return ("xong" if p.returncode == 0 else "loi"), (ra or "(không in gì)"), nk, 0, 0
+
+
 def chay_agy(cfg, viec):
     """Tra ve (trang_thai, ket_qua, nhat_ky, token_vao, token_ra).
 
@@ -1178,6 +1212,8 @@ def chay_agy(cfg, viec):
       va tong CPU cua cay tien trinh agy khong tang trong 2 phut gan nhat)
       qua khong_tien_phut (mac dinh 20 phut).
     """
+    if str(viec.get("loai") or "").strip().lower() == "lenh":
+        return chay_lenh(cfg, viec)
     if viec.get("che_do") == "kiem":
         kq_m_kiem = chon_model_phieu(cfg, viec)
         if isinstance(viec, dict):
