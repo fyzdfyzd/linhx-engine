@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 theo_doi: C:\linhx\ifagent-wt\A1
 phu_thuoc: yl-a0-may2
+nhan: may-2 2026-11-15T08:35:19+0700
 
 Phiếu A1 Yên Lam: gộp 2 commit vào nền. Chạy mọi lệnh ở tiền cảnh, không chạy test nền rồi chờ.
 1. `git -C C:\linhx\ifagent fetch --all`, rồi `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\A1 -b agy/yl-a1-gop origin/claude/project-thread-qdzzr4` (nền 075e80a5).
