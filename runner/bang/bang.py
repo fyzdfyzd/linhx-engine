@@ -2979,6 +2979,14 @@ pre.step-log {
   font-size: 13px;
   font-weight: 600;
 }
+@media (min-width: 680px) {
+  .cham-table th:nth-child(-n+3),
+  .cham-table td:nth-child(-n+3) {
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+}
 @media (max-width: 679px) {
   .muc9-table {
     table-layout: fixed;
