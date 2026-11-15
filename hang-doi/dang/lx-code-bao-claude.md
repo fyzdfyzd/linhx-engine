@@ -14,3 +14,5 @@ GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner 
 5. Kiểm trên máy 2: có `gh` không, `gh auth status` (chỉ ghi có/không đăng nhập, không in token). Nếu chưa có cả gh lẫn LINHX_GH_TOKEN thì ghi CAN-LINH: "Máy 2: chạy `gh auth login` một lần (tài khoản fyzdfyzd)".
 6. Push `agy/bao-claude` (KHÔNG push vào claude/project-thread-jowxv1).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; máy 2 gửi được bằng gh hay token hay chưa được.
+
+nhip: 13:21 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
