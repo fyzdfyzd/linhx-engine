@@ -164,7 +164,7 @@ def tao_noi_dung_tho_env(
         f"LINHX_SO_PHIEU={int(so_phieu)}",
         f"LINHX_NHAN_BAT_KY={nhan_bat_ky}",
         "LINHX_TRAN_PHUT=40",
-        "LINHX_KHONG_TIEN_PHUT=10",
+        "LINHX_KHONG_TIEN_PHUT=20",
         "LINHX_RAM_TOI_THIEU_GB=1.5",
         f"AGY_CMD={agy_cmd}",
         f"AGY_ARGS={agy_args}",

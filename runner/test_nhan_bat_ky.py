@@ -90,6 +90,7 @@ def _tao_bare_day_du_runner(tmp_path: Path, phieu_moi: dict[str, str] | None = N
         "cai-may.ps1",
         "chay-an-tho.vbs",
         "agy-settings.json",
+        "model-theo-loai.json",
         "tho.env.example",
     ]:
         shutil.copy2(linhx_runner.GOC / ten, tm_runner_seed / ten)

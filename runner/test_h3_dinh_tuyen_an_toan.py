@@ -370,7 +370,7 @@ def test_dung_agy_khi_10_phut_khong_tien_va_khi_qua_40_phut(tmp_path, monkeypatc
     ds_pid_taskkill = []
     monkeypatch.setattr(linhx_runner, "_goi_taskkill_cay", lambda pid: ds_pid_taskkill.append(pid))
 
-    # --- Kich ban 1: Khong tien do -> phai dung ngay moc 10 phut (600 giay), KHONG cho toi 40 phut ---
+    # --- Kich ban 1: Khong tien do -> phai dung ngay moc 20 phut mac dinh (1200 giay), KHONG cho toi 40 phut ---
     thoi_gian_gia = [1000.0]
     proc_treo = _TienTrinhAgyGia(pid=51001)
 
@@ -384,12 +384,12 @@ def test_dung_agy_khi_10_phut_khong_tien_va_khi_qua_40_phut(tmp_path, monkeypatc
     kq_treo = hang_doi_git.xu_ly_mot_phieu(cfg)
     assert kq_treo is not None
     assert kq_treo["trang_thai"] == "dung"
-    assert "10 phút không tiến" in kq_treo["nhat_ky"]
+    assert "20 phút không tiến" in kq_treo["nhat_ky"]
     assert proc_treo.da_kill is True
     if os.name == "nt":
         assert 51001 in ds_pid_taskkill
-    # Dung o moc 10 phut (600s), khong phai 40 phut (2400s)
-    assert 600.0 <= (thoi_gian_gia[0] - 1000.0) < 720.0
+    # Dung o moc 20 phut (1200s), khong phai 40 phut (2400s)
+    assert 1200.0 <= (thoi_gian_gia[0] - 1000.0) < 1320.0
 
     # --- Kich ban 2: Co tien do moi 5 phut (sua file trong thu_muc) -> vuot qua 10/20/30 phut,
     # nhung den moc 40 phut (2400 giay) phai bi dung ---
@@ -421,7 +421,7 @@ def test_dung_agy_khi_10_phut_khong_tien_va_khi_qua_40_phut(tmp_path, monkeypatc
     nd_1 = (tm_kt / "hang-doi" / "xong" / "01-treo-10p" / "KET-QUA.md").read_text(encoding="utf-8")
     nd_2 = (tm_kt / "hang-doi" / "xong" / "02-chay-qua-40p" / "KET-QUA.md").read_text(encoding="utf-8")
     assert "trang_thai: dung" in nd_1
-    assert "10 phút không tiến" in nd_1
+    assert "20 phút không tiến" in nd_1
     assert "trang_thai: dung" in nd_2
     assert "quá trần 40 phút" in nd_2
 

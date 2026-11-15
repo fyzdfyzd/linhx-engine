@@ -10,12 +10,13 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
   LINHX_THO     ma tho, vd may-cty / may-1
   AGY_CMD       duong dan agy (mac dinh: agy)
   AGY_ARGS      them co cho agy (mac dinh: --output-format json)
+  LINHX_MODEL   ten model agy mac dinh khi phieu khong co header model: (vd gemini-4-argon-high)
   LINHX_THU_MUC thu muc lam viec cua agy (mac dinh: ./viec)
   LINHX_NGHI    giay giua 2 lan hoi (mac dinh 15)
   LINHX_SO_PHIEU        so phieu code chay song song toi da tren moi may (mac dinh 1)
   LINHX_NHAN_BAT_KY     1 (mac dinh, nhan ca phieu bat-ky) hoac 0 (chi nhan phieu dich danh may)
   LINHX_TRAN_PHUT       tran phut toi da moi phieu truoc khi dung agy (mac dinh 40)
-  LINHX_KHONG_TIEN_PHUT so phut khong tien truoc khi dung agy (mac dinh 10)
+  LINHX_KHONG_TIEN_PHUT so phut khong tien truoc khi dung agy (mac dinh 20)
   LINHX_RAM_TOI_THIEU_GB nguong RAM trong toi thieu de nhan phieu (mac dinh 1.5)
   LINHX_GIOI_HAN_THU_MUC thu muc goc cho phep agy lam viec, vd D:\linhx
   LINHX_VAI              vai tro may ghi vao ho so may, vd "Máy chính: code, điều phối"
@@ -26,6 +27,7 @@ import ctypes
 import json
 import os
 import platform
+import re
 import shlex
 import signal
 import subprocess
@@ -41,24 +43,58 @@ from pathlib import Path
 PHIEN_BAN = "0.1.1"
 DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
 PHUT_TOI_DA_MAC_DINH = 40
-PHUT_KHONG_TIEN_MAC_DINH = 10
+PHUT_KHONG_TIEN_MAC_DINH = 20
+CUA_SO_CPU_GIAY = 120.0
+NGUONG_CPU_TANG_GIAY = 0.02
 NHIP_PHUT_MAC_DINH = 3.0
 GIOI_HAN_DONG_NHIP = 120
 NGUONG_RAM_TRONG_GB = 1.5
 SO_PHIEU_CODE_MAC_DINH = 1
 NHAN_BAT_KY_MAC_DINH = 1
 THU_MUC_ENGINE_CAM = "d:/linhx/linhx-engine"
+CO_MODEL_AGY = "--model"
+MODEL_MAC_DINH_NHAN = "mac-dinh"
+_MAU_TEN_MODEL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+DANH_SACH_MODEL_AGY_DA_BIET = (
+    "gemini-4-carbon-medium",
+    "gemini-4-carbon-high",
+    "gemini-4-carbon-low",
+    "gemini-4-argon-medium",
+    "gemini-4-argon-high",
+    "gemini-4-argon-low",
+    "gemini-4-hydrogen-high",
+    "gemini-4-hydrogen-xhigh",
+    "gemini-4-hydrogen-medium",
+    "gemini-4-hydrogen-low",
+    "gemini-pro-orchestrator",
+    "gemini-pro-orchestrator-argon",
+    "gemini-3.8-flash-high",
+    "gemini-3.8-flash-medium",
+    "gemini-3.8-flash-low",
+    "claude-opus-5-5-low",
+    "claude-opus-5-5-medium",
+    "claude-opus-5-5-high",
+    "claude-sonnet-5-5-low",
+    "claude-sonnet-5-5-medium",
+    "claude-sonnet-5-5-high",
+    "gpt-oss-120b-medium",
+)
 CAU_NHAC_CAN_LINH = (
     "Nếu gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), "
     "DỪNG việc đó và ghi khối `CAN-LINH: <việc>; LENH: <lệnh dán được nếu có>` trong câu trả lời."
 )
+CAU_NHAC_TIEN_CANH = "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
 GOC = Path(__file__).resolve().parent
+TEP_MODEL_THEO_LOAI = GOC / "model-theo-loai.json"
 
 _SUBPROCESS_RUN_GOC = subprocess.run
 _POPEN_GOC = subprocess.Popen
 _tao_tien_trinh_agy = None
+_doc_ds_model_agy = None
+_doc_cpu_cay_agy = None
 _dong_ho = None
 _ngu = None
+_CACHE_MODEL_AGY: dict[str, tuple[float, set[str]]] = {}
 
 
 def _gio() -> float:
@@ -208,6 +244,318 @@ def _tach_agy_args(chuoi_args: str) -> list[str]:
     return ds
 
 
+def _lam_sach_gia_tri_model(gia_tri) -> str:
+    # Bỏ chú thích cuối dòng (# ...) và khoảng trắng thừa
+    if gia_tri is None:
+        return ""
+    return str(gia_tri).split("#", 1)[0].strip()
+
+
+def kiem_tra_ten_model(ten_model) -> tuple[bool, str]:
+    # Tên model chỉ nhận chữ, số, `-`, `.`, `_` và bắt đầu bằng chữ/số (chặn chèn cờ hoặc lệnh)
+    sach = _lam_sach_gia_tri_model(ten_model)
+    if not sach:
+        return True, ""
+    if not _MAU_TEN_MODEL.fullmatch(sach):
+        return (
+            False,
+            f"tên model không hợp lệ '{sach}' (chỉ nhận chữ, số, '-', '.', '_' và không bắt đầu bằng dấu)",
+        )
+    return True, sach
+
+
+def _xoa_co_model_agy_args(ds_args: list[str]) -> list[str]:
+    # Xoá mọi cờ --model <id> hoặc --model=<id> khỏi danh sách tham số AGY_ARGS
+    ket_qua: list[str] = []
+    i = 0
+    while i < len(ds_args):
+        muc = ds_args[i]
+        if muc == CO_MODEL_AGY:
+            i += 2 if (i + 1) < len(ds_args) else 1
+            continue
+        if muc.startswith(CO_MODEL_AGY + "="):
+            i += 1
+            continue
+        ket_qua.append(muc)
+        i += 1
+    return ket_qua
+
+
+def _trich_model_tu_agy_args(ds_args: list[str]) -> str:
+    # Lấy giá trị --model sẵn có trong AGY_ARGS (nếu có)
+    ket_qua = ""
+    i = 0
+    while i < len(ds_args):
+        muc = ds_args[i]
+        if muc == CO_MODEL_AGY:
+            if (i + 1) < len(ds_args):
+                ket_qua = ds_args[i + 1].strip()
+                i += 2
+            else:
+                i += 1
+            continue
+        if muc.startswith(CO_MODEL_AGY + "="):
+            ket_qua = muc.split("=", 1)[1].strip()
+        i += 1
+    return ket_qua
+
+
+def _thay_co_model_agy_args(ds_args: list[str], ten_model: str) -> list[str]:
+    # Xoá cờ --model sẵn có trong AGY_ARGS (nếu có) rồi gắn --model <ten_model>
+    if not ten_model:
+        return list(ds_args)
+    ket_qua = _xoa_co_model_agy_args(ds_args)
+    ket_qua.extend([CO_MODEL_AGY, ten_model])
+    return ket_qua
+
+
+def doc_bang_model_theo_loai(tep_json: str | Path | None = None) -> dict[str, str]:
+    # Đọc bảng ánh xạ tiền tố loại việc -> model từ runner/model-theo-loai.json
+    duong_dan = Path(tep_json) if tep_json else TEP_MODEL_THEO_LOAI
+    if not duong_dan.is_file():
+        return {}
+    try:
+        du_lieu = json.loads(duong_dan.read_text(encoding="utf-8-sig"))
+    except (OSError, ValueError, TypeError):
+        return {}
+    if not isinstance(du_lieu, dict):
+        return {}
+    ket_qua: dict[str, str] = {}
+    for k, v in du_lieu.items():
+        khoa = str(k or "").strip().lower()
+        gia_tri = _lam_sach_gia_tri_model(v)
+        if khoa and gia_tri:
+            ket_qua[khoa] = gia_tri
+    return ket_qua
+
+
+def lay_loai_tu_ten_phieu(ma_phieu: str) -> str:
+    # Tên phiếu dạng <du-an>-<loai>-<viec> -> lấy đoạn thứ 2 làm tiền tố loại việc
+    sach = str(ma_phieu or "").strip()
+    if sach.lower().endswith(".md"):
+        sach = sach[:-3]
+    cac_doan = sach.split("-")
+    if len(cac_doan) < 3:
+        return ""
+    if not cac_doan[0].strip() or not cac_doan[1].strip():
+        return ""
+    if not any(d.strip() for d in cac_doan[2:]):
+        return ""
+    return cac_doan[1].strip().lower()
+
+
+def phan_tich_dau_ra_agy_models(van_ban: str) -> list[str]:
+    # Phân tích đầu ra của lệnh `agy models` (dạng `<id>\t<Tên hiển thị>` hoặc `<id>` trên từng dòng)
+    ket_qua: list[str] = []
+    da_thay: set[str] = set()
+    for dong in str(van_ban or "").splitlines():
+        s = dong.strip()
+        if not s:
+            continue
+        ung_vien = ""
+        if "\t" in dong:
+            ung_vien = dong.split("\t", 1)[0].strip()
+        elif " " not in s:
+            ung_vien = s
+        if ung_vien and _MAU_TEN_MODEL.fullmatch(ung_vien) and ung_vien not in da_thay:
+            da_thay.add(ung_vien)
+            ket_qua.append(ung_vien)
+    return ket_qua
+
+
+def lay_danh_sach_model_agy(cfg: dict | None = None, chay_lenh_fn=None) -> set[str]:
+    # Lấy tập hợp model hợp lệ từ `agy models` (có bộ nhớ đệm; khi lỗi/offline thì dùng bảng đã biết)
+    if cfg and cfg.get("ds_model_agy") is not None:
+        return {str(m).strip() for m in cfg["ds_model_agy"] if str(m).strip()}
+    if _doc_ds_model_agy is not None:
+        ds = _doc_ds_model_agy(cfg)
+        return {str(m).strip() for m in (ds or ()) if str(m).strip()}
+
+    agy_cmd = str((cfg or {}).get("agy") or os.environ.get("AGY_CMD") or "agy").strip() or "agy"
+    bay_gio = time.monotonic()
+    if chay_lenh_fn is None and agy_cmd in _CACHE_MODEL_AGY:
+        moc_cu, tap_cu = _CACHE_MODEL_AGY[agy_cmd]
+        if (bay_gio - moc_cu) < 600.0 and tap_cu:
+            return set(tap_cu)
+
+    ham_chay = chay_lenh_fn or _SUBPROCESS_RUN_GOC
+    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    try:
+        proc = ham_chay(
+            [agy_cmd, "models"],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=10,
+            **kw,
+        )
+        if proc.returncode == 0:
+            ds_parse = phan_tich_dau_ra_agy_models(proc.stdout or "")
+            if ds_parse:
+                tap_moi = set(ds_parse)
+                if chay_lenh_fn is None:
+                    _CACHE_MODEL_AGY[agy_cmd] = (bay_gio, tap_moi)
+                return set(tap_moi)
+    except Exception:
+        pass
+    return set(DANH_SACH_MODEL_AGY_DA_BIET)
+
+
+def chon_model_phieu(
+    cfg: dict | None,
+    viec: dict | None,
+    tap_model_hop_le: set[str] | None = None,
+) -> dict:
+    """Chọn model theo thứ tự ưu tiên:
+    1. Header `model:` trong phiếu
+    2. Tiền tố loại việc trong tên phiếu `<du-an>-<loai>-<viec>` (`runner/model-theo-loai.json`)
+    3. Biến `LINHX_MODEL` trong `tho.env` / môi trường
+    4. Giữ `AGY_ARGS` như cũ
+    Nếu tên model chứa ký tự độc -> hop_le=False (báo lỗi, không chạy agy).
+    Nếu model không có trong `agy models` -> ghi cảnh báo, chạy model mặc định, không lỗi.
+    """
+    meta_viec = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    ung_vien = ""
+    nguon = "mac_dinh"
+
+    # 1. Header `model:`
+    raw_header = ""
+    if meta_viec and "model" in meta_viec and _lam_sach_gia_tri_model(meta_viec.get("model")):
+        raw_header = meta_viec.get("model")
+    elif viec and "model" in viec and _lam_sach_gia_tri_model(viec.get("model")):
+        raw_header = viec.get("model")
+
+    if _lam_sach_gia_tri_model(raw_header):
+        ok, sach = kiem_tra_ten_model(raw_header)
+        if not ok:
+            return {
+                "hop_le": False,
+                "model": "",
+                "model_that": "khong-hop-le",
+                "xoa_co_model": False,
+                "canh_bao": "",
+                "ly_do_loi": sach,
+                "nguon": "header",
+            }
+        ung_vien = sach
+        nguon = "header"
+
+    # 2. Tiền tố loại việc trong tên phiếu `<du-an>-<loai>-<viec>`
+    if not ung_vien:
+        loai_tt = lay_loai_tu_ten_phieu(str((viec or {}).get("viec") or ""))
+        if loai_tt:
+            tep_bang = (cfg or {}).get("tep_model_theo_loai") if cfg else None
+            bang_loai = doc_bang_model_theo_loai(tep_bang)
+            raw_loai = bang_loai.get(loai_tt, "")
+            if _lam_sach_gia_tri_model(raw_loai):
+                ok, sach = kiem_tra_ten_model(raw_loai)
+                if not ok:
+                    return {
+                        "hop_le": False,
+                        "model": "",
+                        "model_that": "khong-hop-le",
+                        "xoa_co_model": False,
+                        "canh_bao": "",
+                        "ly_do_loi": sach,
+                        "nguon": "tien_to",
+                    }
+                ung_vien = sach
+                nguon = "tien_to"
+
+    # 3. Biến `LINHX_MODEL` trong tho.env / môi trường
+    if not ung_vien:
+        if cfg and "model" in cfg and cfg["model"] is not None:
+            raw_cfg = cfg["model"]
+        else:
+            raw_cfg = os.environ.get("LINHX_MODEL", "")
+        if _lam_sach_gia_tri_model(raw_cfg):
+            ok, sach = kiem_tra_ten_model(raw_cfg)
+            if not ok:
+                return {
+                    "hop_le": False,
+                    "model": "",
+                    "model_that": "khong-hop-le",
+                    "xoa_co_model": False,
+                    "canh_bao": "",
+                    "ly_do_loi": sach,
+                    "nguon": "env",
+                }
+            ung_vien = sach
+            nguon = "env"
+
+    ds_agy_args = _tach_agy_args((cfg or {}).get("agy_args", "--output-format json"))
+    model_san_co = _trich_model_tu_agy_args(ds_agy_args)
+
+    # 4. Không chỉ định model -> giữ nguyên AGY_ARGS như cũ
+    if not ung_vien:
+        if model_san_co:
+            ok_args, sach_args = kiem_tra_ten_model(model_san_co)
+            if not ok_args:
+                return {
+                    "hop_le": False,
+                    "model": "",
+                    "model_that": "khong-hop-le",
+                    "xoa_co_model": False,
+                    "canh_bao": "",
+                    "ly_do_loi": sach_args,
+                    "nguon": "agy_args",
+                }
+            return {
+                "hop_le": True,
+                "model": "",
+                "model_that": sach_args,
+                "xoa_co_model": False,
+                "canh_bao": "",
+                "ly_do_loi": "",
+                "nguon": "agy_args",
+            }
+        return {
+            "hop_le": True,
+            "model": "",
+            "model_that": MODEL_MAC_DINH_NHAN,
+            "xoa_co_model": False,
+            "canh_bao": "",
+            "ly_do_loi": "",
+            "nguon": "mac_dinh",
+        }
+
+    # Kiểm tra model ứng viên có nằm trong `agy models` không
+    tap_hop_le = tap_model_hop_le if tap_model_hop_le is not None else lay_danh_sach_model_agy(cfg)
+    if tap_hop_le and ung_vien not in tap_hop_le:
+        canh_bao = (
+            f"[CẢNH BÁO] Model '{ung_vien}' không có trong agy models; "
+            f"chuyển sang chạy model mặc định."
+        )
+        return {
+            "hop_le": True,
+            "model": "",
+            "model_that": MODEL_MAC_DINH_NHAN,
+            "xoa_co_model": True,
+            "canh_bao": canh_bao,
+            "ly_do_loi": "",
+            "nguon": nguon,
+        }
+
+    return {
+        "hop_le": True,
+        "model": ung_vien,
+        "model_that": ung_vien,
+        "xoa_co_model": False,
+        "canh_bao": "",
+        "ly_do_loi": "",
+        "nguon": nguon,
+    }
+
+
+def xac_dinh_model_phieu(cfg: dict | None, viec: dict | None) -> tuple[bool, str, str]:
+    # Giữ hàm tương thích gọn trả (hop_le, ten_model_truyen_co, ly_do_loi)
+    kq = chon_model_phieu(cfg, viec)
+    if not kq["hop_le"]:
+        return False, "", kq["ly_do_loi"]
+    return True, kq["model"], kq["canh_bao"]
+
+
 class _MemoryStatusEx(ctypes.Structure):
     _fields_ = [
         ("dwLength", ctypes.c_ulong),
@@ -306,6 +654,7 @@ def doc_env(tep_env=None):
         "tho": os.environ.get("LINHX_THO", platform.node().lower()),
         "agy": os.environ.get("AGY_CMD", "agy"),
         "agy_args": os.environ.get("AGY_ARGS", "--output-format json"),
+        "model": os.environ.get("LINHX_MODEL", "").strip(),
         "thu_muc": Path(os.environ.get("LINHX_THU_MUC", str(GOC / "viec"))),
         "gioi_han_thu_muc": Path(gioi_han_env) if gioi_han_env else None,
         "nghi": float(os.environ.get("LINHX_NGHI", "15")),
@@ -462,7 +811,258 @@ def _dau_git_head(thu_muc: Path):
     return (head_txt, tuple(thong_ke))
 
 
-def _dau_thu_muc_nhanh(thu_muc: Path, gioi_han_tep: int = 5000):
+class _FILETIME(ctypes.Structure):
+    _fields_ = [
+        ("dwLowDateTime", ctypes.c_ulong),
+        ("dwHighDateTime", ctypes.c_ulong),
+    ]
+
+
+class _PROCESSENTRY32W(ctypes.Structure):
+    _fields_ = [
+        ("dwSize", ctypes.c_ulong),
+        ("cntUsage", ctypes.c_ulong),
+        ("th32ProcessID", ctypes.c_ulong),
+        ("th32DefaultHeapID", ctypes.c_size_t),
+        ("th32ModuleID", ctypes.c_ulong),
+        ("cntThreads", ctypes.c_ulong),
+        ("th32ParentProcessID", ctypes.c_ulong),
+        ("pcPriClassBase", ctypes.c_long),
+        ("dwFlags", ctypes.c_ulong),
+        ("szExeFile", ctypes.c_wchar * 260),
+    ]
+
+
+_K32_CPU = None
+
+
+def _lay_k32_cpu():
+    # Khởi tạo handle WinDLL riêng có khai báo kiểu con trỏ 64-bit an toàn cho đo CPU cây tiến trình
+    global _K32_CPU
+    if _K32_CPU is not None:
+        return _K32_CPU
+    if os.name != "nt":
+        return None
+    try:
+        dll = ctypes.WinDLL("kernel32", use_last_error=True)
+        dll.CreateToolhelp32Snapshot.argtypes = [ctypes.c_ulong, ctypes.c_ulong]
+        dll.CreateToolhelp32Snapshot.restype = ctypes.c_void_p
+        dll.Process32FirstW.argtypes = [ctypes.c_void_p, ctypes.POINTER(_PROCESSENTRY32W)]
+        dll.Process32FirstW.restype = ctypes.c_int
+        dll.Process32NextW.argtypes = [ctypes.c_void_p, ctypes.POINTER(_PROCESSENTRY32W)]
+        dll.Process32NextW.restype = ctypes.c_int
+        dll.OpenProcess.argtypes = [ctypes.c_ulong, ctypes.c_int, ctypes.c_ulong]
+        dll.OpenProcess.restype = ctypes.c_void_p
+        dll.GetProcessTimes.argtypes = [
+            ctypes.c_void_p,
+            ctypes.POINTER(_FILETIME),
+            ctypes.POINTER(_FILETIME),
+            ctypes.POINTER(_FILETIME),
+            ctypes.POINTER(_FILETIME),
+        ]
+        dll.GetProcessTimes.restype = ctypes.c_int
+        dll.CloseHandle.argtypes = [ctypes.c_void_p]
+        dll.CloseHandle.restype = ctypes.c_int
+        _K32_CPU = dll
+        return _K32_CPU
+    except Exception:
+        return None
+
+
+def _ft_sang_u64(ft: _FILETIME) -> int:
+    return (int(ft.dwHighDateTime) << 32) | int(ft.dwLowDateTime)
+
+
+def _doc_cpu_cay_win32_giay(pid_goc: int, bo_nho_cay: dict | None = None) -> float:
+    k32 = _lay_k32_cpu()
+    if k32 is None or pid_goc <= 0:
+        return 0.0
+    TH32CS_SNAPPROCESS = 0x00000002
+    PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+    INVALID_HANDLE = ctypes.c_void_p(-1).value
+
+    snap = k32.CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0)
+    if not snap or snap == INVALID_HANDLE:
+        return sum(bo_nho_cay.values()) if bo_nho_cay else 0.0
+
+    con_theo_cha: dict[int, list[int]] = {}
+    try:
+        pe = _PROCESSENTRY32W()
+        pe.dwSize = ctypes.sizeof(_PROCESSENTRY32W)
+        ok = k32.Process32FirstW(snap, ctypes.byref(pe))
+        while ok:
+            p_id = int(pe.th32ProcessID)
+            pp_id = int(pe.th32ParentProcessID)
+            if p_id > 0:
+                con_theo_cha.setdefault(pp_id, []).append(p_id)
+            ok = k32.Process32NextW(snap, ctypes.byref(pe))
+    finally:
+        k32.CloseHandle(snap)
+
+    cay_pid: list[int] = []
+    da_duyet: set[int] = set()
+    hang_doi = [int(pid_goc)]
+    while hang_doi:
+        hien_tai = hang_doi.pop()
+        if hien_tai in da_duyet or hien_tai <= 0:
+            continue
+        da_duyet.add(hien_tai)
+        cay_pid.append(hien_tai)
+        for pid_con in con_theo_cha.get(hien_tai, ()):
+            if pid_con not in da_duyet:
+                hang_doi.append(pid_con)
+
+    tong_hien_tai = 0.0
+    ft_create = _FILETIME()
+    ft_exit = _FILETIME()
+    ft_kernel = _FILETIME()
+    ft_user = _FILETIME()
+    for p_id in cay_pid:
+        h = k32.OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, 0, p_id)
+        if not h:
+            continue
+        try:
+            if k32.GetProcessTimes(
+                h,
+                ctypes.byref(ft_create),
+                ctypes.byref(ft_exit),
+                ctypes.byref(ft_kernel),
+                ctypes.byref(ft_user),
+            ):
+                cpu_giay = float(_ft_sang_u64(ft_kernel) + _ft_sang_u64(ft_user)) * 1e-7
+                tong_hien_tai += cpu_giay
+                if bo_nho_cay is not None:
+                    khoa_proc = (p_id, _ft_sang_u64(ft_create))
+                    cu = bo_nho_cay.get(khoa_proc, 0.0)
+                    if cpu_giay > cu:
+                        bo_nho_cay[khoa_proc] = cpu_giay
+        finally:
+            k32.CloseHandle(h)
+
+    if bo_nho_cay is not None:
+        return sum(bo_nho_cay.values())
+    return tong_hien_tai
+
+
+def _doc_cpu_cay_procfs_giay(pid_goc: int, bo_nho_cay: dict | None = None) -> float:
+    goc_proc = Path("/proc")
+    if pid_goc <= 0 or not goc_proc.is_dir():
+        return 0.0
+    try:
+        clk_tck = float(os.sysconf("SC_CLK_TCK"))
+        if clk_tck <= 0:
+            clk_tck = 100.0
+    except (AttributeError, ValueError, OSError):
+        clk_tck = 100.0
+
+    con_theo_cha: dict[int, list[int]] = {}
+    thong_so_pid: dict[int, tuple[int, float]] = {}
+    try:
+        cac_muc = list(goc_proc.iterdir())
+    except OSError:
+        return sum(bo_nho_cay.values()) if bo_nho_cay else 0.0
+
+    for muc in cac_muc:
+        ten = muc.name
+        if not ten.isdigit():
+            continue
+        p_id = int(ten)
+        try:
+            noi_dung = (muc / "stat").read_text(encoding="utf-8", errors="ignore")
+        except OSError:
+            continue
+        vi_tri_ngoac = noi_dung.rfind(")")
+        if vi_tri_ngoac < 0:
+            continue
+        truong = noi_dung[vi_tri_ngoac + 2 :].split()
+        if len(truong) < 20:
+            continue
+        try:
+            pp_id = int(truong[1])
+            utime = int(truong[11])
+            stime = int(truong[12])
+            cutime = int(truong[13])
+            cstime = int(truong[14])
+            starttime = int(truong[19])
+        except ValueError:
+            continue
+        con_theo_cha.setdefault(pp_id, []).append(p_id)
+        cpu_ban_than = float(utime + stime) / clk_tck
+        if p_id == pid_goc:
+            cpu_ban_than += float(max(0, cutime) + max(0, cstime)) / clk_tck
+        thong_so_pid[p_id] = (starttime, cpu_ban_than)
+
+    da_duyet: set[int] = set()
+    hang_doi = [int(pid_goc)]
+    tong_hien_tai = 0.0
+    while hang_doi:
+        hien_tai = hang_doi.pop()
+        if hien_tai in da_duyet or hien_tai <= 0:
+            continue
+        da_duyet.add(hien_tai)
+        if hien_tai in thong_so_pid:
+            st_time, cpu_g = thong_so_pid[hien_tai]
+            tong_hien_tai += cpu_g
+            if bo_nho_cay is not None:
+                khoa_proc = (hien_tai, st_time)
+                cu = bo_nho_cay.get(khoa_proc, 0.0)
+                if cpu_g > cu:
+                    bo_nho_cay[khoa_proc] = cpu_g
+        for pid_con in con_theo_cha.get(hien_tai, ()):
+            if pid_con not in da_duyet:
+                hang_doi.append(pid_con)
+
+    if bo_nho_cay is not None:
+        return sum(bo_nho_cay.values())
+    return tong_hien_tai
+
+
+def doc_cpu_cay_tien_trinh(pid: int, bo_nho_cay: dict | None = None) -> float:
+    """Đọc tổng thời gian CPU (giây) của toàn bộ cây tiến trình gốc `pid`."""
+    if pid is None or int(pid) <= 0:
+        return 0.0
+    if os.name == "nt":
+        return _doc_cpu_cay_win32_giay(int(pid), bo_nho_cay=bo_nho_cay)
+    return _doc_cpu_cay_procfs_giay(int(pid), bo_nho_cay=bo_nho_cay)
+
+
+def cpu_tang_trong_cua_so(
+    lich_su_cpu: list[tuple[float, float]],
+    bay_gio: float,
+    cpu_moi: float,
+    cpu_moc_cu: float,
+    cua_so_giay: float = CUA_SO_CPU_GIAY,
+    nguong_giay: float = NGUONG_CPU_TANG_GIAY,
+) -> tuple[bool, float]:
+    """Kiểm tra tổng CPU của cây tiến trình agy có tăng trong cửa sổ 2 phút gần nhất không."""
+    bien_duoi = bay_gio - max(0.0, float(cua_so_giay))
+    # Giữ lại 1 mẫu ngay trước biên dưới (nếu có) làm mốc đầu cửa sổ 2 phút và các mẫu trong cửa sổ
+    mau_truoc_bien = None
+    trong_cua_so: list[tuple[float, float]] = []
+    for t_mau, v_mau in lich_su_cpu:
+        if t_mau < bien_duoi:
+            mau_truoc_bien = (t_mau, v_mau)
+        else:
+            trong_cua_so.append((t_mau, v_mau))
+    lich_su_cpu.clear()
+    if mau_truoc_bien is not None:
+        lich_su_cpu.append(mau_truoc_bien)
+    lich_su_cpu.extend(trong_cua_so)
+    lich_su_cpu.append((bay_gio, float(cpu_moi)))
+
+    if len(lich_su_cpu) < 2:
+        return False, float(cpu_moc_cu)
+
+    cpu_nho_nhat_cua_so = min(v for _, v in lich_su_cpu[:-1])
+    co_tang = (float(cpu_moi) > float(cpu_moc_cu)) and (
+        (float(cpu_moi) - cpu_nho_nhat_cua_so) >= float(nguong_giay)
+    )
+    if co_tang:
+        return True, float(cpu_moi)
+    return False, float(cpu_moc_cu)
+
+
+def _dau_thu_muc_nhanh(thu_muc: Path, gioi_han_tep: int = 50000):
     if not thu_muc.is_dir():
         return (0, 0, 0, 0)
     so_tep = 0
@@ -509,21 +1109,23 @@ def _dau_nhip_tien_do(thu_muc: Path, dem_byte, tep_log=None, them_thu_muc=()):
     )
 
 
-def _thu_muc_theo_doi(meta_viec: dict) -> tuple:
+def _thu_muc_theo_doi(meta_viec: dict, viec: dict | None = None) -> tuple:
     """Phieu ghi `theo_doi: C:\\a; D:\\b` khi agy lam viec ngoai thu muc phieu (vd repo clone rieng).
     Thay doi trong cac thu muc nay cung tinh la tien (tranh dung oan khi agy chay orchestration)."""
-    gia_tri = (meta_viec or {}).get("theo_doi") or ""
-    return tuple(t.strip() for t in str(gia_tri).split(";") if t.strip() and Path(t.strip()).is_dir())
+    gia_tri = (meta_viec or {}).get("theo_doi") or ((viec or {}).get("theo_doi") if isinstance(viec, dict) else "") or ""
+    sach = str(gia_tri).split("#", 1)[0]
+    return tuple(t.strip() for t in sach.split(";") if t.strip() and Path(t.strip()).is_dir())
 
 
 def ghep_de_gui_agy(de_goc: str) -> str:
-    """Them huong dan CAN-LINH vao cuoi de gui agy (tranh chen trung neu da co)."""
+    """Thêm hướng dẫn CAN-LINH và câu cấm background task / thợ con vào cuối mọi đề gửi agy."""
     goc = str(de_goc or "").rstrip()
-    if CAU_NHAC_CAN_LINH in goc:
-        return goc
-    if not goc:
-        return CAU_NHAC_CAN_LINH
-    return f"{goc}\n\n{CAU_NHAC_CAN_LINH}"
+    cac_phan = [goc] if goc else []
+    if CAU_NHAC_CAN_LINH not in goc:
+        cac_phan.append(CAU_NHAC_CAN_LINH)
+    if CAU_NHAC_TIEN_CANH not in goc:
+        cac_phan.append(CAU_NHAC_TIEN_CANH)
+    return "\n\n".join(cac_phan)
 
 
 def trich_dong_cuoi_agy(buf_out: list[bytes], buf_err: list[bytes], gioi_han: int = GIOI_HAN_DONG_NHIP) -> str:
@@ -559,14 +1161,28 @@ def _phan_tich_ket_qua_agy(returncode: int, giay_chay: float, stdout: str, stder
     return "xong", ket_qua, nhat_ky, tv, tr
 
 
+def _ghep_canh_bao_nhat_ky(nhat_ky: str, canh_bao: str) -> str:
+    if not canh_bao:
+        return nhat_ky
+    if not nhat_ky:
+        return canh_bao
+    return f"{canh_bao}\n{nhat_ky}"
+
+
 def chay_agy(cfg, viec):
     """Tra ve (trang_thai, ket_qua, nhat_ky, token_vao, token_ra).
 
     Dung agy (tra trang_thai='dung') khi:
     - Chay qua tran_phut (mac dinh 40 phut), hoac
-    - Khong tien (khong stdout/stderr moi, khong thay doi tep/git commit) qua khong_tien_phut (mac dinh 10 phut).
+    - Khong tien (khong stdout/stderr moi, khong thay doi tep trong thu_muc / theo_doi de quy,
+      va tong CPU cua cay tien trinh agy khong tang trong 2 phut gan nhat)
+      qua khong_tien_phut (mac dinh 20 phut).
     """
     if viec.get("che_do") == "kiem":
+        kq_m_kiem = chon_model_phieu(cfg, viec)
+        if isinstance(viec, dict):
+            viec["_model_da_dung"] = kq_m_kiem["model_that"] if kq_m_kiem["hop_le"] else MODEL_MAC_DINH_NHAN
+            viec["_canh_bao_model"] = kq_m_kiem.get("canh_bao", "")
         return "xong", f"Thợ {cfg['tho']} trên {platform.node()} nhận được: {viec['de']}", "che_do=kiem, khong goi agy", 0, 0
 
     tran_cfg = _ep_so_duong(
@@ -587,6 +1203,16 @@ def chay_agy(cfg, viec):
     khong_tien_phut = min(kt_viec, tran_phut) if (viec.get("khong_tien_phut") or meta_viec.get("khong_tien_phut")) else kt_cfg
     khong_tien_giay = khong_tien_phut * 60.0
 
+    thong_tin_model = chon_model_phieu(cfg, viec)
+    if isinstance(viec, dict):
+        viec["_model_da_dung"] = thong_tin_model["model_that"]
+        viec["_canh_bao_model"] = thong_tin_model["canh_bao"]
+    if not thong_tin_model["hop_le"]:
+        return "loi", None, thong_tin_model["ly_do_loi"], 0, 0
+
+    ten_model = thong_tin_model["model"]
+    canh_bao_model = thong_tin_model["canh_bao"]
+
     thu_muc = Path(cfg["thu_muc"])
     gioi_han = cfg.get("gioi_han_thu_muc")
     if gioi_han is None and os.environ.get("LINHX_GIOI_HAN_THU_MUC", "").strip():
@@ -600,9 +1226,16 @@ def chay_agy(cfg, viec):
         # Windows gioi han dong lenh 32.767 ky tu: de dai thi ghi ra file, -p chi tro toi file
         f = thu_muc / f"de-{viec['viec']}.md"
         f.write_text(de, encoding="utf-8")
-        de = (f"Đọc toàn bộ file {f.name} trong thư mục hiện tại (chỉ đọc, không chạy lệnh shell) "
-              f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.")
-    cmd = [cfg["agy"], "-p", de] + _tach_agy_args(cfg.get("agy_args", "--output-format json"))
+        de = (
+            f"Đọc toàn bộ file {f.name} trong thư mục hiện tại (chỉ đọc, không chạy lệnh shell) "
+            f"và làm đúng theo đề trong đó. Trả lời đúng khuôn đề yêu cầu.\n\n{CAU_NHAC_TIEN_CANH}"
+        )
+    ds_agy_args = _tach_agy_args(cfg.get("agy_args", "--output-format json"))
+    if thong_tin_model["xoa_co_model"]:
+        ds_agy_args = _xoa_co_model_agy_args(ds_agy_args)
+    elif ten_model:
+        ds_agy_args = _thay_co_model_agy_args(ds_agy_args, ten_model)
+    cmd = [cfg["agy"], "-p", de] + ds_agy_args
     tep_log_raw = cfg.get("_tep_log_phieu")
 
     # Tuong thich nguoc khi test monkeypatch truc tiep subprocess.run
@@ -615,7 +1248,11 @@ def chay_agy(cfg, viec):
         except subprocess.TimeoutExpired as e:
             if tep_log_raw:
                 _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, _gio() - t0_run, e.stdout or "", e.stderr or "", "qua_gio")
-            return "dung", None, f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút\n{(e.stdout or '')[-4000:]}", 0, 0
+            nk_q = _ghep_canh_bao_nhat_ky(
+                f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút\n{(e.stdout or '')[-4000:]}",
+                canh_bao_model,
+            )
+            return "dung", None, nk_q, 0, 0
         except FileNotFoundError:
             return "loi", None, f"không thấy agy ở '{cfg['agy']}' (đặt AGY_CMD)", 0, 0
         except OSError as e:
@@ -625,7 +1262,8 @@ def chay_agy(cfg, viec):
         giay_chay = _gio() - t0_run
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), p.returncode, giay_chay, p.stdout, p.stderr)
-        return _phan_tich_ket_qua_agy(p.returncode, giay_chay, p.stdout, p.stderr)
+        tt_r, kq_r, nk_r, tv_r, tr_r = _phan_tich_ket_qua_agy(p.returncode, giay_chay, p.stdout, p.stderr)
+        return tt_r, kq_r, _ghep_canh_bao_nhat_ky(nk_r, canh_bao_model), tv_r, tr_r
 
     kw = {}
     if os.name == "nt":
@@ -680,8 +1318,21 @@ def chay_agy(cfg, viec):
     luong_out.start()
     luong_err.start()
 
-    theo_doi = _thu_muc_theo_doi(meta_viec)
+    bo_nho_cpu_cay: dict = {}
+
+    def _lay_cpu_cay() -> float:
+        pid_p = getattr(proc, "pid", None)
+        if _doc_cpu_cay_agy is not None:
+            return float(_doc_cpu_cay_agy(pid_p) or 0.0)
+        if isinstance(proc, subprocess.Popen) and pid_p:
+            return doc_cpu_cay_tien_trinh(int(pid_p), bo_nho_cay=bo_nho_cpu_cay)
+        return 0.0
+
+    theo_doi = _thu_muc_theo_doi(meta_viec, viec=viec)
     dau_cu = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
+    cpu_ban_dau = _lay_cpu_cay()
+    lich_su_cpu: list[tuple[float, float]] = [(t0, cpu_ban_dau)]
+    cpu_moc_tien = cpu_ban_dau
     moc_tien_cuoi = t0
     ham_ghi_nhip = cfg.get("_ghi_nhip_fn")
     nhip_phut = _ep_so_duong(
@@ -698,9 +1349,20 @@ def chay_agy(cfg, viec):
             if proc.poll() is not None:
                 break
             bay_gio = _gio()
+            theo_doi = _thu_muc_theo_doi(meta_viec, viec=viec)
             dau_moi = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
-            if dau_moi != dau_cu:
+            co_tien_tep = dau_moi != dau_cu
+            if co_tien_tep:
                 dau_cu = dau_moi
+            cpu_hien_tai = _lay_cpu_cay()
+            co_tien_cpu, cpu_moc_tien = cpu_tang_trong_cua_so(
+                lich_su_cpu,
+                bay_gio=bay_gio,
+                cpu_moi=cpu_hien_tai,
+                cpu_moc_cu=cpu_moc_tien,
+                cua_so_giay=CUA_SO_CPU_GIAY,
+            )
+            if co_tien_tep or co_tien_cpu:
                 moc_tien_cuoi = bay_gio
             if ham_ghi_nhip is not None and (bay_gio - moc_nhip_cuoi) >= nhip_giay:
                 moc_nhip_cuoi = bay_gio
@@ -733,18 +1395,27 @@ def chay_agy(cfg, viec):
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, giay_chay, stdout, stderr, "qua_gio")
         duoi = f"\n{stdout[-4000:]}" if stdout else (f"\n{stderr[-2000:]}" if stderr else "")
-        return "dung", None, f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút{duoi}", 0, 0
+        nk_qua_gio = _ghep_canh_bao_nhat_ky(
+            f"dừng agy: quá trần {_dinh_dang_phut(tran_phut)} phút{duoi}",
+            canh_bao_model,
+        )
+        return "dung", None, nk_qua_gio, 0, 0
 
     if ly_do_dung == "khong_tien":
         if tep_log_raw:
             _ghi_agy_raw(tep_log_raw, viec.get("viec"), -1, giay_chay, stdout, stderr, "khong_tien")
         duoi = f"\n{stdout[-4000:]}" if stdout else (f"\n{stderr[-2000:]}" if stderr else "")
-        return "dung", None, f"dừng agy: quá {_dinh_dang_phut(khong_tien_phut)} phút không tiến{duoi}", 0, 0
+        nk_khong_tien = _ghep_canh_bao_nhat_ky(
+            f"dừng agy: quá {_dinh_dang_phut(khong_tien_phut)} phút không tiến{duoi}",
+            canh_bao_model,
+        )
+        return "dung", None, nk_khong_tien, 0, 0
 
     returncode = proc.returncode if proc.returncode is not None else -1
     if tep_log_raw:
         _ghi_agy_raw(tep_log_raw, viec.get("viec"), returncode, giay_chay, stdout, stderr)
-    return _phan_tich_ket_qua_agy(returncode, giay_chay, stdout, stderr)
+    tt_cuoi, kq_cuoi, nk_cuoi, tv_cuoi, tr_cuoi = _phan_tich_ket_qua_agy(returncode, giay_chay, stdout, stderr)
+    return tt_cuoi, kq_cuoi, _ghep_canh_bao_nhat_ky(nk_cuoi, canh_bao_model), tv_cuoi, tr_cuoi
 
 
 def vong(cfg, mot_lan=False, mot_viec=False):

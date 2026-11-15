@@ -66,6 +66,8 @@ _MACHINE_ERROR_PATTERNS = (
     "khong thay agy",
     "không chạy được agy",
     "khong chay duoc agy",
+    "tên model không hợp lệ",
+    "ten model khong hop le",
     "thiếu agy",
     "thieu agy",
     "filenotfounderror",
@@ -385,6 +387,7 @@ def trich_khoi_can_linh(van_ban: str | None) -> tuple[str, str] | None:
     s = str(van_ban)
     # Bỏ qua chính câu hướng dẫn mẫu nếu vô tình bị lặp lại nguyên văn
     s = s.replace(linhx_runner.CAU_NHAC_CAN_LINH, "")
+    s = s.replace(linhx_runner.CAU_NHAC_TIEN_CANH, "")
     matches = list(_CAN_LINH_BLOCK_RE.finditer(s))
     for m in reversed(matches):
         viec_can = " ".join((m.group(1) or "").split()).strip(" `")
@@ -552,13 +555,19 @@ def tao_ket_qua_md(
     tep_doi=None,
     drive: str = "",
     gioi_han: int = GIOI_HAN_KET_QUA,
+    model: str = "",
+    canh_bao: str = "",
 ) -> str:
     if gioi_han <= 0:
         return ""
     tt = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
     ds_tep = _cat_mot_dong(", ".join(tep_doi), 300) if tep_doi else "(khong)"
     duong_drive = _cat_mot_dong(drive, 350) if drive and str(drive).strip() else "(khong)"
+    ten_model_hien_thi = (
+        _cat_mot_dong(model, 120) if model and str(model).strip() else linhx_runner.MODEL_MAC_DINH_NHAN
+    )
     dau = (
+        f"model: {ten_model_hien_thi}\n"
         f"phieu: {_cat_mot_dong(phieu_id, 120)}\n"
         f"may: {_cat_mot_dong(tho, 80)}\n"
         f"trang_thai: {tt}\n"
@@ -569,6 +578,9 @@ def tao_ket_qua_md(
     )
     nguon_than = ket_qua if ket_qua is not None and str(ket_qua).strip() else (nhat_ky or "")
     than = str(nguon_than).replace("\r\n", "\n").replace("\r", "\n").strip()
+    cb_sach = str(canh_bao or "").replace("\r\n", "\n").replace("\r", "\n").strip()
+    if cb_sach and cb_sach not in than:
+        than = f"{cb_sach}\n\n{than}" if than else cb_sach
     toan_bo = dau + (than + "\n" if than else "")
     if len(toan_bo) <= gioi_han:
         return toan_bo
@@ -983,6 +995,14 @@ def nhan_phieu_git(cfg: dict):
     return None
 
 
+def _xac_dinh_model_cho_ket_qua(cfg: dict, viec: dict) -> tuple[str, str]:
+    # Trả về (model_that_dung, canh_bao_model) để ghi vào đầu KET-QUA.md
+    if isinstance(viec, dict) and viec.get("_model_da_dung"):
+        return str(viec["_model_da_dung"]), str(viec.get("_canh_bao_model") or "")
+    kq_m = linhx_runner.chon_model_phieu(cfg, viec)
+    return kq_m["model_that"], kq_m["canh_bao"]
+
+
 def bao_ket_qua_git(
     cfg: dict,
     viec: dict,
@@ -994,12 +1014,17 @@ def bao_ket_qua_git(
     phut: float = 0.0,
     tep_doi=None,
     drive: str = "",
+    model: str = "",
+    canh_bao: str = "",
 ) -> Path:
     """Xoa dang/<id>.md, ghi xong/<id>/KET-QUA.md va push len remote."""
     _, _, remote, nhanh = _duong_dan_wt(cfg)
     tho = cfg["tho"]
     phieu_id = viec["viec"]
     tt_chuan = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
+    model_tu_viec, canh_bao_tu_viec = _xac_dinh_model_cho_ket_qua(cfg, viec)
+    model_ghi = model if model and str(model).strip() else model_tu_viec
+    canh_bao_ghi = canh_bao if canh_bao and str(canh_bao).strip() else canh_bao_tu_viec
     noi_dung_kq = tao_ket_qua_md(
         phieu_id=phieu_id,
         tho=tho,
@@ -1011,6 +1036,8 @@ def bao_ket_qua_git(
         token_ra=token_ra,
         tep_doi=tep_doi,
         drive=drive,
+        model=model_ghi,
+        canh_bao=canh_bao_ghi,
     )
     can_linh_cap = trich_khoi_can_linh(str(ket_qua or "") + "\n" + str(nhat_ky or ""))
     noi_dung_can_linh = (

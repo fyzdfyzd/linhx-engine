@@ -17,19 +17,33 @@ Claude cloud là não: nói chuyện với Linh, ra đề, khoá test, chấm cu
 | may-4 | MSI (máy cá nhân) | Chỉ phiếu ghi đích danh may-4 (`-ChiDichDanh`) |
 
 ## Phiếu
-File `hang-doi/moi/<id>.md` trên nhánh `hang-doi`, push là xong. Máy rảnh tự nhận (đổi sang `dang/`), làm xong ghi `xong/<id>/KET-QUA.md`.
+File `hang-doi/moi/<du-an>-<loai>-<viec>.md` trên nhánh `hang-doi`, push là xong. Quy ước tên `<du-an>-<loai>-<viec>` để runner lấy đoạn thứ 2 (`<loai>`) tự chọn model theo `runner/model-theo-loai.json`. Máy rảnh tự nhận (đổi sang `dang/`), làm xong ghi `xong/<id>/KET-QUA.md` (dòng đầu luôn có `model: <id thật dùng>`).
 ```
 may: may-2            # hoặc bat-ky
 loai: code            # code | trinh-duyet | khac
+model: gemini-pro-orchestrator  # tuỳ chọn: ghi đè model (--model <id>, chỉ chữ/số/-/./_)
 tran_phut: 40         # trần, tối đa 40
 theo_doi: C:\linhx\wt-du-an   # BẮT BUỘC khi agy làm ngoài thư mục phiếu (repo clone riêng)
 phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong (trang_thai: xong); loi/dung thì bỏ qua
 tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-sua-<k>.md khi loi/dung (trừ lỗi máy)
-khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 10) cho việc lâu như clone repo lớn, test dài; tối đa bằng tran_phut
+khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 20) cho việc lâu; tối đa bằng tran_phut
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
-Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone.
+**Chọn model theo phiếu** (cờ headless `--model <id>`, thứ tự ưu tiên): `model:` trong header phiếu → tiền tố `<loai>` ở đoạn thứ 2 của tên phiếu `<du-an>-<loai>-<viec>` → biến `LINHX_MODEL` trong `tho.env` → giữ `AGY_ARGS` mặc định như cũ. Model không có trong `agy models` thì runner ghi cảnh báo vào `KET-QUA.md` và chạy model mặc định (`mac-dinh`), không báo lỗi.
+
+| Tiền tố `<loai>` | Model (`runner/model-theo-loai.json`) | Dùng cho |
+|---|---|---|
+| `dp` | `gemini-pro-orchestrator` | Điều phối, chia phiếu |
+| `code` | `gemini-pro-orchestrator` | Dựng code, sửa kiến trúc |
+| `test` | `gemini-4-argon-high` | Viết / chạy kiểm thử |
+| `trien` | `gemini-4-argon-high` | Triển khai, cấu hình |
+| `gop` | `gemini-4-hydrogen-high` | Gộp nhánh, xử lý xung đột |
+| `do` | `gemini-4-hydrogen-high` | Đo đạc, benchmark, Lighthouse |
+| `td` | `gemini-4-hydrogen-high` | Trình duyệt / tương tác |
+| `kiem` | `gemini-4-hydrogen-low` | Kiểm nhanh, ping, rà nhẹ |
+
+Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. Runner tự chèn cuối mọi đề câu nhắc chạy tiền cảnh; bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
 Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).
 
 ## Quy trình một việc (đã chạy thử: landing Listening Vietnam 14/11)
