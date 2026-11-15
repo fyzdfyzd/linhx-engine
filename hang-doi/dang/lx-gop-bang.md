@@ -15,4 +15,4 @@ Phiếu GỘP 3 nhánh runner/bảng vào một nhánh cho Claude duyệt. Chạ
 CẤM: in khoá/token/mật khẩu/cookie, ghi email đầy đủ (chỉ dạng che), chép nội dung tin Zalo/số điện thoại/tên thành viên, xoá dữ liệu, push thẳng claude/project-thread-jowxv1 hay hang-doi. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA đỉnh; file từng xung đột và cách giữ; pytest gốc vs sau gộp; đường dẫn 4 ảnh.
 
-nhip: 14:41 6p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 14:44 9p root agent idle; waiting up to 40m0s for 1 background task(s)
