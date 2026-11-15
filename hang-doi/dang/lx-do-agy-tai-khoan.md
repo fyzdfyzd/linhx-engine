@@ -12,3 +12,5 @@ Mục tiêu: biết runner có tự đổi tài khoản agy khi hết hạn mứ
 3. Thử an toàn: tạo C:\linhx\wt\do-agy-tai-khoan\home-thu, chạy `agy --version` (hoặc lệnh không cần mạng) với USERPROFILE/HOME trỏ vào đó: agy có đòi đăng nhập lại không, có tạo cấu trúc thư mục mới không. KHÔNG đăng nhập.
 4. Xem log runner 24h qua (thư mục log runner) có dòng 429 / "quota" không, ghi nguyên văn 1 dòng mẫu (che email).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` nếu tìm được cách tách đăng nhập theo thư mục, `dat: khong` nếu không; đường dẫn lưu đăng nhập; cờ/biến dùng được; mẫu dòng lỗi hạn mức.
+
+nhip: 12:25 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
