@@ -1,6 +1,6 @@
 may: may-1
 loai: code
-model: gemini-pro-orchestrator
+model: gemini-4-carbon-high
 tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
@@ -12,4 +12,4 @@ Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải th�
 3. Chấm ảnh/video bằng chứng RC5 trong ops/staging-rc5 (kiosk "Nhắn Lam", trang BTC, bìa AGENTIC:ME) theo RUBRIC: mỗi phần một điểm 0–10 (điểm nhóm = tiêu chí thấp nhất), liệt kê lỗi thấy được, mỗi lỗi ghi tên ảnh + vùng (x,y,w,h). So ảnh với KHUNG/ khi có khung tương ứng. Ảnh tĩnh tối đa 8.
 4. Sau khi ghi xong điểm của mình vào D:\linhx\cham-yl\CHAM-AGY-RC5.md, mới mở CHAM-RC5.md và lập bảng so: phần | điểm agy | điểm Claude | lệch; lỗi (a)–(e) kiosk: agy có bắt được không.
 Không sửa điểm của mình sau khi xem đáp án.
-Trả lời KET-QUA.md (ngắn): bảng so điểm, số lỗi kiosk bắt được /5, các lỗi agy thấy mà bài cũ không có, kết luận DÙNG ĐƯỢC nếu mọi phần lệch ≤ 0,5 và bắt ≥ 4/5 lỗi kiosk, ngược lại CHƯA.
+Trả lời KET-QUA.md (ngắn): bảng so điểm, số lỗi kiosk bắt được /5, các lỗi agy thấy mà bài Claude không có, các lỗi Claude thấy mà agy bỏ sót (mỗi lỗi một dòng), kết luận DÙNG ĐƯỢC nếu mọi phần lệch ≤ 0,5 và bắt ≥ 4/5 lỗi kiosk, ngược lại CHƯA.
