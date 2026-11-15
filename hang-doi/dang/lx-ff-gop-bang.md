@@ -5,6 +5,7 @@ khong_tien_phut: 10
 tu_sua: 0
 theo_doi: C:\linhx\wt\gop-bang
 phu_thuoc: lx-duyet-gop-bang
+nhan: may-1 2026-11-15T21:53:16+0700
 
 Phiếu đẩy nhánh đã được Claude duyệt. Chạy tiền cảnh, KHÔNG background task.
 1. `git clone --filter=blob:none https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\gop-bang` (có rồi thì `git -C C:\linhx\wt\gop-bang fetch origin`).
