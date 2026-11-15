@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-code-a2-1b
 phu_thuoc: yl-khoa-t1
-nhan: may-2 2026-11-15T13:23:54+0700
 
 LUẬT CHẠY (bắt buộc, lượt trước mất 80 phút vì treo chờ tác vụ nền): KHÔNG chạy `npm run dev`, `npm start` hay server lab riêng. Test khoá tự dựng server trong tiến trình (createApp), cứ chạy `node --test --test-timeout=120000 <file>` tiền cảnh. Chụp ảnh/quay video: viết 1 script node tự dựng createApp trong tiến trình, chụp xong tự đóng server và thoát (process.exit), chạy tiền cảnh. Mọi lệnh bọc timeout ≤ 300 s. Nếu buộc phải chạy nền: ghi log vào thư mục theo_doi và tự tắt khi xong.
 
@@ -20,4 +19,16 @@ Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý a,b. Chạ
 CẤM: deploy, gửi mail, in khoá/mật khẩu, xoá dữ liệu, sửa test cũ, sửa bất kỳ file nào trong apps/lab/test/nghiem-thu-rc6/ (kiểm `sha256sum -c apps/lab/test/nghiem-thu-rc6/KHOA.sha256` trước khi push, lệch là tự trượt), sửa TIEU-CHUAN/CHUAN/KHUNG, tự sinh ảnh/video sản phẩm bằng AI, push nền qdzzr4. Màn chưa có khung duyệt thì không build, ghi CHUA_CO_KHUNG. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; bảng test khoá ý a,b trước/sau; số pass/fail lab đủ; đường dẫn ảnh ghép; sha256sum -c OK/KHÔNG.
 
-nhip: 14:03 39p root agent idle; waiting up to 40m0s for 1 background task(s)
+## Lần trước trượt vì:
+model: gemini-pro-orchestrator
+phieu: yl-code-a2-1b
+may: may-2
+trang_thai: dung
+tep_doi: KET-QUA.md
+drive: (khong)
+phut: 40.02
+token: vao=0 ra=0
+
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
