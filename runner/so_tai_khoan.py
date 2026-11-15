@@ -33,6 +33,7 @@ _SENSITIVE_KEY_WORDS = (
     "access_token",
     "session",
 )
+_SAFE_USAGE_COUNTER_KEYS = frozenset({"token_da_dung_24h", "token_da_dung_7n"})
 _SECRET_VAL_PATTERNS = (
     re.compile(r"\b" + "gh" + r"[pousr]_[A-Za-z0-9_]{12,}\b"),
     re.compile(r"\b" + "github" + "_pat_" + r"[A-Za-z0-9_]{12,}\b"),
@@ -55,6 +56,7 @@ _QUOTA_PATTERNS = (
     "ratelimit",
     "resource_exhausted",
     "exhausted your capacity",
+    "usage limit",
     "hết hạn mức",
     "het han muc",
 )
@@ -65,17 +67,28 @@ _ISO_ERR_RE = re.compile(
     re.IGNORECASE,
 )
 _REL_COMPOUND_RE = re.compile(
-    r"\b(?:in|after|sau|trong)\s+(?:(\d+)\s*(?:hours?|hrs?|h|giờ|gio))?\s*(?:(\d+)\s*(?:minutes?|mins?|m|phút|phut))?\s*(?:(\d+)\s*(?:seconds?|secs?|s|giây|giay))?",
+    r"\b(?:resets?(?:\s+(?:in|after|sau|trong))?|in|after|sau|trong)\s*[:=]?\s*"
+    r"(?:(\d+(?:[.,]\d+)?)\s*(?:hours?|hrs?|h|giờ|gio))?"
+    r"\s*(?:(\d+)\s*(?:minutes?|mins?|m|phút|phut))?"
+    r"\s*(?:(\d+)\s*(?:seconds?|secs?|s|giây|giay))?",
     re.IGNORECASE,
 )
 _RETRY_AFTER_RE = re.compile(r"retry[-_ ]after\s*[:=]\s*(\d+)", re.IGNORECASE)
-_CLOCK_TIME_RE = re.compile(
-    r"(?:try again at|resets?\s+at|available\s+at|until|mở lại lúc|mo lai luc|lúc|luc)\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(am|pm)?",
+_RETRY_DELAY_RE = re.compile(
+    r"""["']?retry[_ ]?delay["']?\s*[:=]\s*["']?(\d+(?:\.\d+)?)\s*([hms])?["']?""",
     re.IGNORECASE,
 )
+_CLOCK_TIME_RE = re.compile(
+    r"(?:try again at|resets?(?:\s+at)?|available\s+at|until|mở lại lúc|mo lai luc|lúc|luc)\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*(am|pm)?",
+    re.IGNORECASE,
+)
+_TOKEN_IN_RE = re.compile(r"vao\s*=\s*(\d+)", re.IGNORECASE)
+_TOKEN_OUT_RE = re.compile(r"ra\s*=\s*(\d+)", re.IGNORECASE)
+_HEADER_LINE_RE = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
 
 _STATE_LOCK = threading.RLock()
 _MEMORY_STATE: dict[str, dict] = {"con_tro": {}, "trang_thai": {}}
+_AGY_QUOTA_SUBCMDS_CACHE: dict[str, list[str]] = {}
 
 
 def _local_tz():
@@ -169,6 +182,9 @@ def lam_sach_ban_ghi_tai_khoan(obj):
         for k, v in obj.items():
             k_str = str(k)
             k_low = k_str.lower()
+            if k_low in _SAFE_USAGE_COUNTER_KEYS and isinstance(v, (int, float)) and not isinstance(v, bool):
+                sach[k_str] = int(v)
+                continue
             if any(tu in k_low for tu in _SENSITIVE_KEY_WORDS):
                 continue
             sach[k_str] = lam_sach_ban_ghi_tai_khoan(v)
@@ -438,14 +454,141 @@ def doc_tai_khoan_agy(agy_cmd: str = "agy", run_fn=None) -> str:
     return "chua_ro"
 
 
+def _phan_tich_han_muc_tu_text(raw_out: str, now_dt: datetime) -> dict | None:
+    """Trích xuất hạn mức còn lại / giờ reset từ output lệnh chỉ đọc của agy (không bịa số)."""
+    text = str(raw_out or "").strip()
+    if not text:
+        return None
+    con_lai: int | float | str = "chua_ro"
+    reset_luc = "chua_ro"
+
+    # 1. Thử parse JSON nếu CLI trả JSON
+    try:
+        parsed = json.loads(text)
+    except ValueError:
+        parsed = None
+
+    if isinstance(parsed, dict):
+        for k in ("con_lai", "remaining", "remaining_tokens", "remaining_credits", "credits_left", "quota_remaining"):
+            val = parsed.get(k)
+            if isinstance(val, (int, float)) and not isinstance(val, bool):
+                con_lai = int(val) if float(val).is_integer() else round(float(val), 2)
+                break
+            if isinstance(val, str) and val.strip() and val.strip().lower() != "chua_ro":
+                con_lai = _loc_chuoi_nhay_cam(val.strip())[:60]
+                break
+        for k in ("reset_luc", "resets_at", "reset_at", "reset_time", "resets_in"):
+            val = parsed.get(k)
+            if isinstance(val, str) and val.strip():
+                chuoi_v = val.strip()
+                dt_iso = _phan_tich_iso(chuoi_v)
+                if dt_iso is not None:
+                    reset_luc = _dinh_dang_iso(dt_iso)
+                else:
+                    chuoi_kt = f"resets {chuoi_v}" if k == "resets_in" and not chuoi_v.lower().startswith(("in ", "after ", "reset")) else chuoi_v
+                    dt_rel, _ = trich_gio_reset_429(chuoi_kt, bay_gio=now_dt)
+                    if dt_rel is not None:
+                        reset_luc = _dinh_dang_iso(dt_rel)
+                if reset_luc != "chua_ro":
+                    break
+        if con_lai != "chua_ro" or reset_luc != "chua_ro":
+            return {"con_lai": con_lai, "reset_luc": reset_luc, "nguon": "lenh"}
+
+    # 2. Thử bắt các cặp remaining / credits / quota left trong text
+    m_rem = re.search(
+        r"(?:remaining|con[_\s]*lai|credits?\s+left|quota\s+remaining)\s*[:=]\s*([\d.,]+(?:\s*(?:k|m|%|credits?|tokens?))?)",
+        text,
+        re.IGNORECASE,
+    )
+    if m_rem:
+        raw_num = m_rem.group(1).strip()
+        so_sach = raw_num.replace(",", "").strip()
+        if re.fullmatch(r"\d+", so_sach):
+            con_lai = int(so_sach)
+        else:
+            con_lai = _loc_chuoi_nhay_cam(raw_num)[:60]
+
+    dt_reset, nguon_dt = trich_gio_reset_429(text, bay_gio=now_dt)
+    if dt_reset is not None and nguon_dt == "loi-429":
+        reset_luc = _dinh_dang_iso(dt_reset)
+
+    if con_lai != "chua_ro" or reset_luc != "chua_ro":
+        return {"con_lai": con_lai, "reset_luc": reset_luc, "nguon": "lenh"}
+    return None
+
+
+def doc_han_muc_agy(agy_cmd: str = "agy", run_fn=None, *, bay_gio=None) -> dict | None:
+    """Chỉ gọi lệnh đọc hạn mức của `agy` nếu `--help` thật sự có subcommand đó; ngược lại trả `None`."""
+    thuc_thi = _tim_thuc_thi_agy(agy_cmd)
+    if not thuc_thi and run_fn is None:
+        return None
+    cmd_bin = thuc_thi or (agy_cmd or "agy")
+    ham_chay = run_fn or subprocess.run
+    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    now_dt = _now_dt(bay_gio)
+
+    cac_lenh_thu: list[list[str]] = []
+    if run_fn is not None:
+        cac_lenh_thu = [[cmd_bin, "quota"], [cmd_bin, "usage"], [cmd_bin, "limits"]]
+    else:
+        cached = _AGY_QUOTA_SUBCMDS_CACHE.get(cmd_bin)
+        if cached is not None:
+            cac_lenh_thu = [[cmd_bin, *parts.split()] for parts in cached]
+        else:
+            phat_hien: list[str] = []
+            try:
+                p_help = ham_chay(
+                    [cmd_bin, "--help"],
+                    capture_output=True,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    timeout=5,
+                    **kw,
+                )
+                help_txt = ((p_help.stdout or "") + "\n" + (p_help.stderr or "")).lower()
+                for cand in ("quota", "usage", "limits"):
+                    if re.search(rf"^\s*{cand}\b", help_txt, re.MULTILINE):
+                        phat_hien.append(cand)
+            except Exception:
+                phat_hien = []
+            _AGY_QUOTA_SUBCMDS_CACHE[cmd_bin] = phat_hien
+            cac_lenh_thu = [[cmd_bin, *parts.split()] for parts in phat_hien]
+
+    if not cac_lenh_thu:
+        return None
+
+    for args in cac_lenh_thu:
+        try:
+            proc = ham_chay(
+                args,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=5,
+                **kw,
+            )
+        except Exception:
+            continue
+        if getattr(proc, "returncode", 1) != 0:
+            continue
+        raw_out = ((getattr(proc, "stdout", "") or "") + "\n" + (getattr(proc, "stderr", "") or "")).strip()
+        kq = _phan_tich_han_muc_tu_text(raw_out, now_dt)
+        if kq is not None:
+            return kq
+    return None
+
+
 def thu_thap_tai_khoan_may(
     ma_may: str = "",
     local_state_path: Path | str | None = None,
     agy_cmd: str = "agy",
     run_fn=None,
 ) -> dict:
-    """Thu thập danh sách hồ sơ Chrome (email đã che) và tài khoản agy trên máy."""
+    """Thu thập danh sách hồ sơ Chrome (email đã che), tài khoản và hạn mức agy trên máy."""
     ma_chuan, _ = xac_dinh_ma_may(ma_may)
+    han_muc_agy = doc_han_muc_agy(agy_cmd=agy_cmd, run_fn=run_fn)
     du_lieu = {
         "ma_may": ma_chuan,
         "ten_windows": platform.node() or ma_chuan,
@@ -453,6 +596,8 @@ def thu_thap_tai_khoan_may(
         "ho_so_chrome": doc_ho_so_chrome_tai_khoan(local_state_path=local_state_path),
         "cap_nhat_luc": _dinh_dang_iso(_now_dt()),
     }
+    if han_muc_agy is not None:
+        du_lieu["han_muc_agy"] = han_muc_agy
     return lam_sach_ban_ghi_tai_khoan(du_lieu)
 
 
@@ -469,7 +614,7 @@ def cap_nhat_tai_khoan_may_git(
     run_fn=None,
     ep_ghi: bool = False,
 ) -> tuple[bool, Path | None, dict]:
-    """Ghi `hang-doi/may/<ma_may>-tai-khoan.json`, commit và push lên nhánh `hang-doi`."""
+    """Ghi `hang-doi/may/<ma_may>-tai-khoan.json` và đồng bộ `hang-doi/tai-khoan.json`, commit và push lên nhánh `hang-doi`."""
     try:
         from runner import hang_doi_git
     except ImportError:
@@ -505,11 +650,23 @@ def cap_nhat_tai_khoan_may_git(
                 du_lieu_moi["trang_thai_so"] = lam_sach_ban_ghi_tai_khoan(du_lieu_cu["trang_thai_so"])
 
             du_lieu_moi = lam_sach_ban_ghi_tai_khoan(du_lieu_moi)
-            if not ep_ghi and isinstance(du_lieu_cu, dict) and _ban_so_sanh_tai_khoan(du_lieu_cu) == _ban_so_sanh_tai_khoan(du_lieu_moi):
+            may_khong_doi = (
+                isinstance(du_lieu_cu, dict)
+                and _ban_so_sanh_tai_khoan(du_lieu_cu) == _ban_so_sanh_tai_khoan(du_lieu_moi)
+            )
+            if ep_ghi or not may_khong_doi:
+                tm_may.mkdir(parents=True, exist_ok=True)
+                tep_json.write_text(json.dumps(du_lieu_moi, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+            so_doi, _, _ = dong_bo_va_ghi_so_tai_khoan(
+                goc_hd,
+                tep_trang_thai=cfg.get("tep_trang_thai_tai_khoan"),
+                bo_sung_tu_may=True,
+                ep_ghi=ep_ghi,
+            )
+            if not ep_ghi and may_khong_doi and not so_doi:
                 return False, tep_json, du_lieu_moi
 
-            tm_may.mkdir(parents=True, exist_ok=True)
-            tep_json.write_text(json.dumps(du_lieu_moi, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             hang_doi_git._commit_git(wt, ma_may, f"may: cap nhat tai khoan {ma_may}")
             pull_rb = hang_doi_git.chay_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=45)
             if pull_rb.returncode != 0:
@@ -539,12 +696,43 @@ def _chuan_hoa_ds_cong_cu(raw) -> list[str]:
     return ket_qua
 
 
+def _chuan_hoa_con_lai(val) -> int | float | str:
+    if val is None or isinstance(val, bool):
+        return "chua_ro"
+    if isinstance(val, (int, float)):
+        return int(val) if float(val).is_integer() else round(float(val), 2)
+    s = str(val).strip()
+    if not s or s.lower() == "chua_ro":
+        return "chua_ro"
+    if re.fullmatch(r"\d+", s):
+        return int(s)
+    return _loc_chuoi_nhay_cam(s)[:80] or "chua_ro"
+
+
+def _chuan_hoa_so_token(val) -> int:
+    if isinstance(val, bool) or val is None:
+        return 0
+    if isinstance(val, (int, float)):
+        return max(0, int(val))
+    try:
+        return max(0, int(str(val).strip()))
+    except (ValueError, TypeError):
+        return 0
+
+
 def _chuan_hoa_dong_tai_khoan(muc: dict) -> dict:
     raw_email = str(muc.get("email_che") or muc.get("email") or "").strip()
     email_da_che = che_email(raw_email) if "@" in raw_email else _loc_chuoi_nhay_cam(raw_email)
     tt = str(muc.get("trang_thai") or "dung").strip().lower()
     if tt not in ("dung", "het_han_muc", "can_dang_nhap"):
         tt = "dung"
+    mo_lai = str(muc.get("mo_lai_luc") or "").strip()
+    reset_luc = str(muc.get("reset_luc") or "").strip()
+    if not reset_luc:
+        reset_luc = mo_lai if (tt == "het_han_muc" and mo_lai) else "chua_ro"
+    nguon = str(muc.get("nguon") or "").strip().lower()
+    if nguon not in ("lenh", "loi-429", "uoc"):
+        nguon = "uoc"
     ban = {
         "ma": str(muc.get("ma") or muc.get("id") or muc.get("ho_so_chrome") or "").strip(),
         "email_che": email_da_che,
@@ -552,7 +740,12 @@ def _chuan_hoa_dong_tai_khoan(muc: dict) -> dict:
         "ho_so_chrome": str(muc.get("ho_so_chrome") or muc.get("thu_muc") or "").strip(),
         "cong_cu": _chuan_hoa_ds_cong_cu(muc.get("cong_cu")),
         "trang_thai": tt,
-        "mo_lai_luc": str(muc.get("mo_lai_luc") or "").strip(),
+        "mo_lai_luc": mo_lai,
+        "token_da_dung_24h": _chuan_hoa_so_token(muc.get("token_da_dung_24h")),
+        "token_da_dung_7n": _chuan_hoa_so_token(muc.get("token_da_dung_7n")),
+        "con_lai": _chuan_hoa_con_lai(muc.get("con_lai")),
+        "reset_luc": reset_luc,
+        "nguon": nguon,
     }
     return lam_sach_ban_ghi_tai_khoan(ban)
 
@@ -768,8 +961,16 @@ def la_loi_han_muc(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
     return bool(_HTTP_429_RE.search(scrubbed))
 
 
-def trich_gio_mo_lai(van_ban_loi: str = "", bay_gio: datetime | float | str | None = None) -> datetime:
-    """Lấy thời điểm mở lại từ chuỗi lỗi; nếu không có giờ trong lỗi thì cộng +5 giờ."""
+def trich_gio_reset_429(
+    van_ban_loi: str = "",
+    bay_gio: datetime | float | str | None = None,
+) -> tuple[datetime | None, str]:
+    """Trích giờ reset từ thông báo lỗi 429/quota.
+
+    Trả về `(thoi_diem, nguon)` với `nguon` là `'loi-429'` nếu đọc được từ lỗi,
+    hoặc `(now + 5h, 'uoc')` nếu chỉ báo hết hạn mức mà không ghi giờ,
+    hoặc `(None, 'uoc')` nếu chuỗi lỗi không liên quan hạn mức.
+    """
     now_dt = _now_dt(bay_gio)
     van_ban = str(van_ban_loi or "")
 
@@ -777,7 +978,7 @@ def trich_gio_mo_lai(van_ban_loi: str = "", bay_gio: datetime | float | str | No
     for m in _ISO_ERR_RE.finditer(van_ban):
         dt = _phan_tich_iso(m.group(1))
         if dt is not None and dt > now_dt:
-            return dt
+            return dt, "loi-429"
 
     # 2. Tìm Retry-After: <giây>
     m_retry = _RETRY_AFTER_RE.search(van_ban)
@@ -785,20 +986,34 @@ def trich_gio_mo_lai(van_ban_loi: str = "", bay_gio: datetime | float | str | No
         try:
             giay = int(m_retry.group(1))
             if giay > 0:
-                return now_dt + timedelta(seconds=giay)
+                return now_dt + timedelta(seconds=giay), "loi-429"
         except ValueError:
             pass
 
-    # 3. Tìm khoảng thời gian tương đối (vd: in 2h 30m, after 45m, sau 3 giờ)
+    # 3. Tìm retryDelay (vd: "retryDelay": "42s", retry_delay=1.5h)
+    m_delay = _RETRY_DELAY_RE.search(van_ban)
+    if m_delay:
+        try:
+            val = float(m_delay.group(1))
+            don_vi = (m_delay.group(2) or "s").lower()
+            he_so = 3600 if don_vi == "h" else (60 if don_vi == "m" else 1)
+            giay = round(val * he_so)
+            if giay > 0:
+                return now_dt + timedelta(seconds=giay), "loi-429"
+        except ValueError:
+            pass
+
+    # 4. Tìm khoảng thời gian tương đối (vd: resets 5h, resets in 2h 30m, after 45m, sau 3 giờ)
     for m_rel in _REL_COMPOUND_RE.finditer(van_ban):
-        h = int(m_rel.group(1) or 0)
+        raw_h = (m_rel.group(1) or "").replace(",", ".").strip()
+        h_val = float(raw_h) if raw_h else 0.0
         m_val = int(m_rel.group(2) or 0)
         s_val = int(m_rel.group(3) or 0)
-        tong = h * 3600 + m_val * 60 + s_val
+        tong = round(h_val * 3600) + m_val * 60 + s_val
         if tong > 0:
-            return now_dt + timedelta(seconds=tong)
+            return now_dt + timedelta(seconds=tong), "loi-429"
 
-    # 4. Tìm giờ HH:MM (kèm AM/PM nếu có)
+    # 5. Tìm giờ HH:MM (kèm AM/PM nếu có)
     m_clk = _CLOCK_TIME_RE.search(van_ban)
     if m_clk:
         try:
@@ -814,11 +1029,21 @@ def trich_gio_mo_lai(van_ban_loi: str = "", bay_gio: datetime | float | str | No
                 ung_vien = now_dt.replace(hour=gio, minute=phut, second=giay, microsecond=0)
                 if ung_vien <= now_dt:
                     ung_vien += timedelta(days=1)
-                return ung_vien
+                return ung_vien, "loi-429"
         except ValueError:
             pass
 
-    return now_dt + timedelta(hours=5)
+    if la_loi_han_muc("loi", van_ban, ""):
+        return now_dt + timedelta(hours=5), "uoc"
+    return None, "uoc"
+
+
+def trich_gio_mo_lai(van_ban_loi: str = "", bay_gio: datetime | float | str | None = None) -> datetime:
+    """Lấy thời điểm mở lại từ chuỗi lỗi; nếu không có giờ trong lỗi thì cộng +5 giờ."""
+    dt, _ = trich_gio_reset_429(van_ban_loi, bay_gio=bay_gio)
+    if dt is not None:
+        return dt
+    return _now_dt(bay_gio) + timedelta(hours=5)
 
 
 def danh_dau_het_han_muc(
@@ -828,11 +1053,15 @@ def danh_dau_het_han_muc(
     bay_gio: datetime | float | str | None = None,
     danh_sach: list[dict] | None = None,
     tep_trang_thai: Path | str | None = None,
+    tep_so: Path | str | None = None,
     cfg: dict | None = None,
 ) -> dict:
-    """Đánh dấu tài khoản `het_han_muc` + `mo_lai_luc` (mặc định +5 giờ nếu lỗi không ghi giờ)."""
+    """Đánh dấu tài khoản `het_han_muc` + `reset_luc` (mặc định +5 giờ nếu lỗi không ghi giờ)."""
     ma = str(ma_tai_khoan or "").strip()
-    mo_lai_dt = trich_gio_mo_lai(van_ban_loi, bay_gio=bay_gio)
+    mo_lai_dt, nguon_reset = trich_gio_reset_429(van_ban_loi, bay_gio=bay_gio)
+    if mo_lai_dt is None:
+        mo_lai_dt = _now_dt(bay_gio) + timedelta(hours=5)
+        nguon_reset = "uoc"
     mo_lai_iso = _dinh_dang_iso(mo_lai_dt)
 
     with _STATE_LOCK:
@@ -841,6 +1070,9 @@ def danh_dau_het_han_muc(
             state.setdefault("trang_thai", {})[ma] = {
                 "trang_thai": "het_han_muc",
                 "mo_lai_luc": mo_lai_iso,
+                "reset_luc": mo_lai_iso,
+                "nguon": nguon_reset,
+                "con_lai": "chua_ro",
             }
             _ghi_trang_thai_runtime(state, tep_trang_thai)
 
@@ -849,14 +1081,51 @@ def danh_dau_het_han_muc(
                 if isinstance(item, dict) and str(item.get("ma") or "").strip() == ma:
                     item["trang_thai"] = "het_han_muc"
                     item["mo_lai_luc"] = mo_lai_iso
+                    item["reset_luc"] = mo_lai_iso
+                    item["nguon"] = nguon_reset
+                    if item.get("nguon") != "lenh":
+                        item["con_lai"] = "chua_ro"
+
+    tep_so_thuc = Path(tep_so) if tep_so else (_tim_tep_so_mac_dinh(cfg) if cfg else None)
+    if tep_so_thuc is not None and tep_so_thuc.is_file():
+        goc_hd_tu_so = tep_so_thuc.parent
+        dong_bo_va_ghi_so_tai_khoan(
+            goc_hd_tu_so,
+            tep_so=tep_so_thuc,
+            tep_trang_thai=tep_trang_thai,
+            runtime_bo_sung=state,
+            bay_gio=bay_gio,
+        )
 
     if cfg and ma and cfg.get("ghi_trang_thai_may_git"):
-        _cap_nhat_trang_thai_so_len_may_git(cfg, ma, mo_lai_iso)
+        _cap_nhat_trang_thai_so_len_may_git(
+            cfg,
+            ma,
+            mo_lai_iso,
+            nguon=nguon_reset,
+            tep_trang_thai=tep_trang_thai,
+            bay_gio=bay_gio,
+        )
 
-    return {"ma": ma, "trang_thai": "het_han_muc", "mo_lai_luc": mo_lai_iso}
+    return {
+        "ma": ma,
+        "trang_thai": "het_han_muc",
+        "mo_lai_luc": mo_lai_iso,
+        "reset_luc": mo_lai_iso,
+        "nguon": nguon_reset,
+        "con_lai": "chua_ro",
+    }
 
 
-def _cap_nhat_trang_thai_so_len_may_git(cfg: dict, ma_tk: str, mo_lai_iso: str) -> None:
+def _cap_nhat_trang_thai_so_len_may_git(
+    cfg: dict,
+    ma_tk: str,
+    mo_lai_iso: str,
+    *,
+    nguon: str = "uoc",
+    tep_trang_thai: Path | str | None = None,
+    bay_gio=None,
+) -> None:
     try:
         from runner import hang_doi_git
     except ImportError:
@@ -865,6 +1134,7 @@ def _cap_nhat_trang_thai_so_len_may_git(cfg: dict, ma_tk: str, mo_lai_iso: str) 
     ma_may = str(cfg.get("tho") or "may").strip().lower()
     ten_tep = hang_doi_git._ten_phieu_an_toan(ma_may)
     _, _, remote, nhanh = hang_doi_git._duong_dan_wt(cfg)
+    nguon_sach = nguon if nguon in ("lenh", "loi-429", "uoc") else "uoc"
     try:
         with hang_doi_git._khoa_tep(hang_doi_git._duong_dan_khoa_wt(cfg), timeout=10.0):
             wt = hang_doi_git.dam_bao_worktree(cfg)
@@ -881,16 +1151,490 @@ def _cap_nhat_trang_thai_so_len_may_git(cfg: dict, ma_tk: str, mo_lai_iso: str) 
             tt_so = du_lieu.get("trang_thai_so")
             if not isinstance(tt_so, dict):
                 tt_so = {}
-            tt_so[ma_tk] = {"trang_thai": "het_han_muc", "mo_lai_luc": mo_lai_iso}
+            tt_so[ma_tk] = {
+                "trang_thai": "het_han_muc",
+                "mo_lai_luc": mo_lai_iso,
+                "reset_luc": mo_lai_iso,
+                "nguon": nguon_sach,
+                "con_lai": "chua_ro",
+            }
             du_lieu["trang_thai_so"] = tt_so
             du_lieu = lam_sach_ban_ghi_tai_khoan(du_lieu)
             tep_json.parent.mkdir(parents=True, exist_ok=True)
             tep_json.write_text(json.dumps(du_lieu, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            if (goc_hd / "tai-khoan.json").is_file():
+                dong_bo_va_ghi_so_tai_khoan(
+                    goc_hd,
+                    tep_trang_thai=tep_trang_thai,
+                    bay_gio=bay_gio,
+                )
             hang_doi_git._commit_git(wt, ma_may, f"may: het han muc {ma_tk}")
             hang_doi_git.chay_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=30)
             hang_doi_git.chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=30)
     except Exception:
         pass
+
+
+def _tim_git_root_va_ts_xong(xong_dir: Path) -> dict[str, int]:
+    """Lấy timestamp commit git cho các file `xong/*/KET-QUA.md` chỉ bằng 1 lần gọi git log."""
+    git_root: Path | None = None
+    for cand in (xong_dir, xong_dir.parent, xong_dir.parent.parent):
+        if (cand / ".git").exists():
+            git_root = cand
+            break
+    if git_root is None:
+        return {}
+    try:
+        rel_xong = xong_dir.resolve().relative_to(git_root.resolve()).as_posix()
+    except ValueError:
+        return {}
+    try:
+        kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+        proc = subprocess.run(
+            ["git", "log", "--format=COMMIT|%ct", "--name-only", "--", rel_xong],
+            cwd=str(git_root),
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            timeout=15,
+            **kw,
+        )
+    except Exception:
+        return {}
+    if proc.returncode != 0 or not proc.stdout:
+        return {}
+
+    ts_map: dict[str, int] = {}
+    cur_ts = 0
+    for line in proc.stdout.splitlines():
+        s = line.strip()
+        if not s:
+            continue
+        if s.startswith("COMMIT|"):
+            try:
+                cur_ts = int(s.split("|", 1)[1].strip())
+            except ValueError:
+                cur_ts = 0
+            continue
+        if cur_ts <= 0:
+            continue
+        norm = s.replace("\\", "/")
+        if norm.endswith("/KET-QUA.md") and norm not in ts_map:
+            ts_map[norm] = cur_ts
+    return ts_map
+
+
+def tinh_token_tu_ket_qua(
+    goc_hd: Path | str,
+    *,
+    bay_gio: datetime | float | str | None = None,
+) -> dict:
+    """Cộng `token: vao=.. ra=..` và dấu vết lỗi 429 từ `xong/*/KET-QUA.md` theo `(tai_khoan, may)` trong 24h & 7 ngày."""
+    goc = Path(goc_hd)
+    now_dt = _now_dt(bay_gio)
+    moc_24h = now_dt - timedelta(hours=24)
+    moc_7n = now_dt - timedelta(days=7)
+
+    theo_tai_khoan: dict[tuple[str, str], dict[str, int]] = {}
+    khong_tk_theo_may: dict[str, dict[str, int]] = {}
+    theo_may: dict[str, dict[str, int]] = {}
+    loi_429_theo_tk: dict[tuple[str, str], dict] = {}
+    loi_429_theo_may: dict[str, dict] = {}
+
+    xong_dir: Path | None = None
+    for cand in (goc / "xong", goc / "hang-doi" / "xong"):
+        if cand.is_dir():
+            xong_dir = cand
+            break
+
+    if xong_dir is None:
+        return {
+            "theo_tai_khoan": theo_tai_khoan,
+            "khong_tk_theo_may": khong_tk_theo_may,
+            "theo_may": theo_may,
+            "loi_429_theo_tk": loi_429_theo_tk,
+            "loi_429_theo_may": loi_429_theo_may,
+        }
+
+    git_ts_map = _tim_git_root_va_ts_xong(xong_dir)
+    git_root: Path | None = None
+    if git_ts_map:
+        for cand in (xong_dir, xong_dir.parent, xong_dir.parent.parent):
+            if (cand / ".git").exists():
+                git_root = cand.resolve()
+                break
+
+    def _cong_vao_muc(bucket: dict, key, vao: int, ra: int, in_24h: bool, in_7n: bool) -> None:
+        muc = bucket.setdefault(key, {"vao_24h": 0, "ra_24h": 0, "tong_24h": 0, "vao_7n": 0, "ra_7n": 0, "tong_7n": 0})
+        if in_7n:
+            muc["vao_7n"] += vao
+            muc["ra_7n"] += ra
+            muc["tong_7n"] += vao + ra
+        if in_24h:
+            muc["vao_24h"] += vao
+            muc["ra_24h"] += ra
+            muc["tong_24h"] += vao + ra
+
+    for tep_kq in sorted(xong_dir.glob("*/KET-QUA.md")):
+        try:
+            text = tep_kq.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+
+        headers: dict[str, str] = {}
+        for dong in text.splitlines()[:30]:
+            s = dong.strip()
+            if not s:
+                if headers:
+                    break
+                continue
+            m_hdr = _HEADER_LINE_RE.match(s)
+            if m_hdr:
+                headers[m_hdr.group(1).strip().lower()] = m_hdr.group(2).strip()
+
+        may = headers.get("may", "").strip().lower()
+        tai_khoan = headers.get("tai_khoan", "").strip()
+        trang_thai = headers.get("trang_thai", "").strip().lower()
+
+        token_line = headers.get("token", "")
+        if not token_line:
+            for dong in text.splitlines()[:30]:
+                if dong.lower().lstrip().startswith("token:"):
+                    token_line = dong.split(":", 1)[1].strip()
+                    break
+        m_in = _TOKEN_IN_RE.search(token_line)
+        m_out = _TOKEN_OUT_RE.search(token_line)
+        vao = int(m_in.group(1)) if m_in else 0
+        ra = int(m_out.group(1)) if m_out else 0
+
+        ts_dt: datetime | None = None
+        for k_time in ("xong_luc", "luc", "thoi_diem"):
+            if headers.get(k_time):
+                ts_dt = _phan_tich_iso(headers[k_time])
+                if ts_dt is not None:
+                    break
+        if ts_dt is None and git_root is not None:
+            try:
+                rel_p = tep_kq.resolve().relative_to(git_root).as_posix()
+                if rel_p in git_ts_map:
+                    ts_dt = datetime.fromtimestamp(git_ts_map[rel_p], tz=_local_tz())
+            except ValueError:
+                pass
+        if ts_dt is None:
+            try:
+                ts_dt = datetime.fromtimestamp(tep_kq.stat().st_mtime, tz=_local_tz())
+            except OSError:
+                ts_dt = now_dt
+
+        in_7n = ts_dt >= moc_7n
+        in_24h = ts_dt >= moc_24h
+
+        if may:
+            _cong_vao_muc(theo_may, may, vao, ra, in_24h, in_7n)
+        if tai_khoan:
+            _cong_vao_muc(theo_tai_khoan, (tai_khoan, may), vao, ra, in_24h, in_7n)
+        elif may:
+            _cong_vao_muc(khong_tk_theo_may, may, vao, ra, in_24h, in_7n)
+
+        if trang_thai in ("loi", "dung") and la_loi_han_muc(trang_thai, "", text):
+            reset_dt, nguon_429 = trich_gio_reset_429(text, bay_gio=ts_dt)
+            if reset_dt is not None and reset_dt > now_dt:
+                info_429 = {
+                    "ts_epoch": ts_dt.timestamp(),
+                    "reset_luc": _dinh_dang_iso(reset_dt),
+                    "nguon": nguon_429,
+                }
+                if tai_khoan:
+                    prev = loi_429_theo_tk.get((tai_khoan, may))
+                    if prev is None or info_429["ts_epoch"] >= prev["ts_epoch"]:
+                        loi_429_theo_tk[(tai_khoan, may)] = info_429
+                elif may:
+                    prev_m = loi_429_theo_may.get(may)
+                    if prev_m is None or info_429["ts_epoch"] >= prev_m["ts_epoch"]:
+                        loi_429_theo_may[may] = info_429
+
+    return {
+        "theo_tai_khoan": theo_tai_khoan,
+        "khong_tk_theo_may": khong_tk_theo_may,
+        "theo_may": theo_may,
+        "loi_429_theo_tk": loi_429_theo_tk,
+        "loi_429_theo_may": loi_429_theo_may,
+    }
+
+
+def _doc_may_tai_khoan_trong_hang_doi(goc_hd: Path) -> dict[str, dict]:
+    """Đọc toàn bộ `hang-doi/may/*-tai-khoan.json` một cách an toàn."""
+    tm_may = goc_hd / "may"
+    if not tm_may.is_dir():
+        return {}
+    ket_qua: dict[str, dict] = {}
+    for tep in sorted(tm_may.glob("*-tai-khoan.json")):
+        try:
+            data = json.loads(tep.read_text(encoding="utf-8", errors="replace"))
+        except (OSError, ValueError):
+            continue
+        if not isinstance(data, dict):
+            continue
+        ma_may = str(data.get("ma_may") or tep.name[:-len("-tai-khoan.json")]).strip().lower()
+        if ma_may:
+            ket_qua[ma_may] = data
+    return ket_qua
+
+
+def dong_bo_va_ghi_so_tai_khoan(
+    goc_hd: Path | str,
+    *,
+    tep_so: Path | str | None = None,
+    tep_trang_thai: Path | str | None = None,
+    runtime_bo_sung: dict | None = None,
+    bo_sung_tu_may: bool = False,
+    han_muc_moi: dict | None = None,
+    bay_gio: datetime | float | str | None = None,
+    ep_ghi: bool = False,
+) -> tuple[bool, Path, list[dict]]:
+    """Tổng hợp token 24h/7n, hạn mức và reset_luc rồi cập nhật `hang-doi/tai-khoan.json`."""
+    goc = Path(goc_hd)
+    so_path = Path(tep_so) if tep_so else (goc / "tai-khoan.json")
+    now_dt = _now_dt(bay_gio)
+
+    raw_parsed = None
+    raw_text_cu = ""
+    raw_items: list[dict] = []
+    if so_path.is_file():
+        try:
+            raw_text_cu = so_path.read_text(encoding="utf-8-sig", errors="replace")
+            if raw_text_cu.strip():
+                raw_parsed = json.loads(raw_text_cu)
+                if isinstance(raw_parsed, list):
+                    raw_items = [x for x in raw_parsed if isinstance(x, dict)]
+                elif isinstance(raw_parsed, dict):
+                    if isinstance(raw_parsed.get("tai_khoan"), list):
+                        raw_items = [x for x in raw_parsed["tai_khoan"] if isinstance(x, dict)]
+                    elif isinstance(raw_parsed.get("items"), list):
+                        raw_items = [x for x in raw_parsed["items"] if isinstance(x, dict)]
+        except (OSError, ValueError):
+            raw_items = []
+
+    rows = [_chuan_hoa_dong_tai_khoan(x) for x in raw_items]
+    may_info_map = _doc_may_tai_khoan_trong_hang_doi(goc)
+
+    # Cập nhật email cho hồ sơ Chrome đã có hoặc bổ sung hàng mới từ từng máy nếu yêu cầu
+    for m_code, m_data in sorted(may_info_map.items()):
+        for hs in m_data.get("ho_so_chrome") or []:
+            if not isinstance(hs, dict):
+                continue
+            hs_dir = str(hs.get("thu_muc") or "").strip()
+            hs_email = che_email(str(hs.get("email_che") or "")) or _loc_chuoi_nhay_cam(str(hs.get("email_che") or ""))
+            for row in rows:
+                if row["may"] == m_code and row["ho_so_chrome"].lower() == hs_dir.lower() and hs_dir:
+                    if not row["email_che"] and hs_email:
+                        row["email_che"] = hs_email
+                    if not row["email_che"] and row["trang_thai"] == "dung":
+                        row["trang_thai"] = "can_dang_nhap"
+
+    if bo_sung_tu_may:
+        for m_code, m_data in sorted(may_info_map.items()):
+            da_co_agy = any(row["may"] == m_code and "agy" in row["cong_cu"] for row in rows)
+            if not da_co_agy:
+                agy_raw = str(m_data.get("agy_tai_khoan") or "chua_ro").strip()
+                agy_email = che_email(agy_raw) if "@" in agy_raw else (_loc_chuoi_nhay_cam(agy_raw) or "chua_ro")
+                hm = m_data.get("han_muc_agy") if isinstance(m_data.get("han_muc_agy"), dict) else {}
+                rows.append(
+                    _chuan_hoa_dong_tai_khoan(
+                        {
+                            "ma": f"agy-{m_code}",
+                            "email_che": agy_email,
+                            "may": m_code,
+                            "ho_so_chrome": "",
+                            "cong_cu": ["agy"],
+                            "trang_thai": "dung",
+                            "con_lai": hm.get("con_lai", "chua_ro"),
+                            "reset_luc": hm.get("reset_luc", "chua_ro"),
+                            "nguon": hm.get("nguon", "uoc"),
+                        }
+                    )
+                )
+
+            for hs in m_data.get("ho_so_chrome") or []:
+                if not isinstance(hs, dict):
+                    continue
+                hs_dir = str(hs.get("thu_muc") or "").strip()
+                hs_email = che_email(str(hs.get("email_che") or "")) or _loc_chuoi_nhay_cam(str(hs.get("email_che") or ""))
+                da_co_hs = any(
+                    row["may"] == m_code
+                    and (
+                        (hs_dir and row["ho_so_chrome"].lower() == hs_dir.lower())
+                        or (hs_email and row["email_che"].lower() == hs_email.lower() and not row["ho_so_chrome"])
+                    )
+                    for row in rows
+                )
+                if not da_co_hs and (hs_dir or hs_email):
+                    hs_slug = re.sub(r"[^a-z0-9_-]+", "-", hs_dir.lower()).strip("-") or "mac-dinh"
+                    ma_moi = f"{m_code}-{hs_slug}"
+                    so_hieu = 2
+                    ma_goc = ma_moi
+                    cac_ma = {r["ma"] for r in rows}
+                    while ma_moi in cac_ma:
+                        ma_moi = f"{ma_goc}-{so_hieu}"
+                        so_hieu += 1
+                    rows.append(
+                        _chuan_hoa_dong_tai_khoan(
+                            {
+                                "ma": ma_moi,
+                                "email_che": hs_email,
+                                "may": m_code,
+                                "ho_so_chrome": hs_dir,
+                                "cong_cu": ["chrome"],
+                                "trang_thai": "dung" if hs_email else "can_dang_nhap",
+                                "con_lai": "chua_ro",
+                                "reset_luc": "chua_ro",
+                                "nguon": "uoc",
+                            }
+                        )
+                    )
+
+    token_info = tinh_token_tu_ket_qua(goc, bay_gio=now_dt)
+    theo_tk = token_info["theo_tai_khoan"]
+    khong_tk_may = token_info["khong_tk_theo_may"]
+    loi_429_tk = token_info["loi_429_theo_tk"]
+    loi_429_may = token_info["loi_429_theo_may"]
+
+    # Đếm số tài khoản chạy `agy` trên mỗi máy để gán token lịch sử chưa ghi `tai_khoan:` khi không mơ hồ
+    agy_theo_may: dict[str, int] = {}
+    for row in rows:
+        if "agy" in row["cong_cu"] and row["may"]:
+            agy_theo_may[row["may"]] = agy_theo_may.get(row["may"], 0) + 1
+
+    runtime_overrides: dict[str, dict] = {}
+    if tep_trang_thai is not None:
+        rt = _doc_trang_thai_runtime(tep_trang_thai)
+        for ma_k, v_k in (rt.get("trang_thai") or {}).items():
+            if isinstance(v_k, dict):
+                runtime_overrides[ma_k] = dict(v_k)
+    if isinstance(runtime_bo_sung, dict):
+        for ma_k, v_k in (runtime_bo_sung.get("trang_thai") or {}).items():
+            if isinstance(v_k, dict):
+                runtime_overrides[ma_k] = dict(v_k)
+    for m_data in may_info_map.values():
+        tt_so = m_data.get("trang_thai_so")
+        if isinstance(tt_so, dict):
+            for ma_k, v_k in tt_so.items():
+                if isinstance(v_k, dict) and ma_k not in runtime_overrides:
+                    runtime_overrides[ma_k] = dict(v_k)
+
+    for row in rows:
+        ma = row["ma"]
+        may = row["may"]
+
+        # 1. Cộng token 24h & 7n theo tài khoản + máy
+        tong_24h = 0
+        tong_7n = 0
+        if may in ("", "bat-ky", "*", "all", "tat-ca"):
+            for (tk_k, _m_k), val in theo_tk.items():
+                if tk_k == ma:
+                    tong_24h += val["tong_24h"]
+                    tong_7n += val["tong_7n"]
+        else:
+            trung = theo_tk.get((ma, may))
+            if trung:
+                tong_24h += trung["tong_24h"]
+                tong_7n += trung["tong_7n"]
+            trung_rong = theo_tk.get((ma, ""))
+            if trung_rong:
+                tong_24h += trung_rong["tong_24h"]
+                tong_7n += trung_rong["tong_7n"]
+            if "agy" in row["cong_cu"] and agy_theo_may.get(may, 0) == 1:
+                fallback_m = khong_tk_may.get(may)
+                if fallback_m:
+                    tong_24h += fallback_m["tong_24h"]
+                    tong_7n += fallback_m["tong_7n"]
+
+        row["token_da_dung_24h"] = tong_24h
+        row["token_da_dung_7n"] = tong_7n
+
+        # 2. Áp kết quả từ lệnh đọc hạn mức agy nếu có
+        hm_ap_dung = None
+        if isinstance(han_muc_moi, dict) and han_muc_moi.get("ma") == ma:
+            hm_ap_dung = han_muc_moi
+        elif "agy" in row["cong_cu"] and may in may_info_map:
+            hm_may = may_info_map[may].get("han_muc_agy")
+            if isinstance(hm_may, dict):
+                hm_ap_dung = hm_may
+
+        if hm_ap_dung is not None:
+            row["con_lai"] = _chuan_hoa_con_lai(hm_ap_dung.get("con_lai"))
+            if hm_ap_dung.get("reset_luc") and str(hm_ap_dung.get("reset_luc")).strip() != "chua_ro":
+                row["reset_luc"] = str(hm_ap_dung["reset_luc"]).strip()
+            row["nguon"] = "lenh"
+
+        # 3. Áp trạng thái 429 / mở lại
+        ov = runtime_overrides.get(ma)
+        if ov is None:
+            ev_429 = loi_429_tk.get((ma, may))
+            if ev_429 is None and "agy" in row["cong_cu"] and agy_theo_may.get(may, 0) == 1:
+                ev_429 = loi_429_may.get(may)
+            if ev_429 is not None:
+                ov = {
+                    "trang_thai": "het_han_muc",
+                    "mo_lai_luc": ev_429["reset_luc"],
+                    "reset_luc": ev_429["reset_luc"],
+                    "nguon": ev_429["nguon"],
+                }
+
+        tt_hieu_luc = row["trang_thai"]
+        mo_lai_hi = row["mo_lai_luc"]
+        reset_hi = row["reset_luc"]
+        nguon_hi = row["nguon"]
+        if ov is not None:
+            tt_hieu_luc = str(ov.get("trang_thai") or tt_hieu_luc).strip().lower()
+            mo_lai_hi = str(ov.get("mo_lai_luc") or mo_lai_hi).strip()
+            reset_hi = str(ov.get("reset_luc") or mo_lai_hi or reset_hi or "chua_ro").strip()
+            nguon_ov = str(ov.get("nguon") or "").strip().lower()
+            if nguon_ov in ("lenh", "loi-429", "uoc"):
+                nguon_hi = nguon_ov
+
+        if tt_hieu_luc == "het_han_muc":
+            mo_dt = _phan_tich_iso(mo_lai_hi or ("" if reset_hi == "chua_ro" else reset_hi))
+            if mo_dt is not None and now_dt >= mo_dt:
+                tt_hieu_luc = "dung"
+                mo_lai_hi = ""
+                if nguon_hi != "lenh":
+                    reset_hi = "chua_ro"
+                    row["con_lai"] = "chua_ro"
+            else:
+                if not reset_hi:
+                    reset_hi = mo_lai_hi or "chua_ro"
+                if nguon_hi != "lenh":
+                    row["con_lai"] = "chua_ro"
+        else:
+            if nguon_hi != "lenh":
+                row["con_lai"] = "chua_ro"
+                if reset_hi and reset_hi != "chua_ro":
+                    r_dt = _phan_tich_iso(reset_hi)
+                    if r_dt is not None and now_dt >= r_dt:
+                        reset_hi = "chua_ro"
+
+        row["trang_thai"] = tt_hieu_luc if tt_hieu_luc in ("dung", "het_han_muc", "can_dang_nhap") else "dung"
+        row["mo_lai_luc"] = mo_lai_hi
+        row["reset_luc"] = reset_hi or "chua_ro"
+        row["nguon"] = nguon_hi if nguon_hi in ("lenh", "loi-429", "uoc") else "uoc"
+
+    rows_sach = [lam_sach_ban_ghi_tai_khoan(_chuan_hoa_dong_tai_khoan(r)) for r in rows]
+
+    if isinstance(raw_parsed, dict) and "tai_khoan" in raw_parsed:
+        payload_out = dict(raw_parsed)
+        payload_out["tai_khoan"] = rows_sach
+    else:
+        payload_out = rows_sach
+
+    noi_dung_moi = json.dumps(payload_out, ensure_ascii=False, indent=2) + "\n"
+    if not ep_ghi and raw_text_cu == noi_dung_moi:
+        return False, so_path, rows_sach
+
+    so_path.parent.mkdir(parents=True, exist_ok=True)
+    so_path.write_text(noi_dung_moi, encoding="utf-8")
+    return True, so_path, rows_sach
 
 
 def _lay_cong_cu_tu_viec(viec: dict | None) -> str:
@@ -899,6 +1643,48 @@ def _lay_cong_cu_tu_viec(viec: dict | None) -> str:
     meta = viec.get("meta") if isinstance(viec.get("meta"), dict) else {}
     raw = meta.get("cong_cu") if "cong_cu" in meta else viec.get("cong_cu")
     return str(raw or "").split("#", 1)[0].strip().lower()
+
+
+def _cap_nhat_han_muc_lenh_sau_phieu(
+    cfg: dict,
+    ma_tk: str,
+    tep_so: Path | str | None,
+    tep_trang_thai: Path | str | None,
+    bay_gio=None,
+) -> None:
+    """Sau mỗi phiếu dùng `agy`, gọi lệnh chỉ đọc hạn mức nếu CLI có hỗ trợ và ghi vào sổ."""
+    doc_fn = (cfg or {}).get("_doc_han_muc_agy_fn")
+    if callable(doc_fn):
+        hm = doc_fn()
+    else:
+        hm = doc_han_muc_agy(agy_cmd=str((cfg or {}).get("agy") or "agy"), bay_gio=bay_gio)
+    if not isinstance(hm, dict):
+        return
+
+    hm_ban = dict(hm)
+    hm_ban["ma"] = ma_tk
+    hm_ban["nguon"] = "lenh"
+
+    with _STATE_LOCK:
+        state = _doc_trang_thai_runtime(tep_trang_thai)
+        cur = dict((state.get("trang_thai") or {}).get(ma_tk) or {})
+        cur["con_lai"] = _chuan_hoa_con_lai(hm_ban.get("con_lai"))
+        if hm_ban.get("reset_luc") and str(hm_ban.get("reset_luc")).strip() != "chua_ro":
+            cur["reset_luc"] = str(hm_ban["reset_luc"]).strip()
+        cur["nguon"] = "lenh"
+        cur.setdefault("trang_thai", "dung")
+        state.setdefault("trang_thai", {})[ma_tk] = cur
+        _ghi_trang_thai_runtime(state, tep_trang_thai)
+
+    tep_so_thuc = Path(tep_so) if tep_so else _tim_tep_so_mac_dinh(cfg)
+    if tep_so_thuc is not None and tep_so_thuc.is_file():
+        dong_bo_va_ghi_so_tai_khoan(
+            tep_so_thuc.parent,
+            tep_so=tep_so_thuc,
+            tep_trang_thai=tep_trang_thai,
+            han_muc_moi=hm_ban,
+            bay_gio=bay_gio,
+        )
 
 
 def chay_voi_tai_khoan(
@@ -977,9 +1763,14 @@ def chay_voi_tai_khoan(
                 f"{kq or ''}\n{nk or ''}",
                 bay_gio=bay_gio,
                 tep_trang_thai=tep_tt_thuc,
+                tep_so=tep_so_thuc,
                 cfg=cfg,
             )
             continue
+
+        if cong_cu == "agy":
+            _cap_nhat_han_muc_lenh_sau_phieu(cfg, ma_tk, tep_so_thuc, tep_tt_thuc, bay_gio=bay_gio)
+
         return tt, kq, nk, tong_tv, tong_tr
 
 
@@ -1008,6 +1799,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo-hang-doi", default="", help="Đường dẫn repo chứa nhánh hang-doi.")
     parser.add_argument("--xuat-json", default="", help="Ghi bản sao JSON ra đường dẫn chỉ định.")
     parser.add_argument("--cap-nhat-git", action="store_true", help="Ghi và push lên nhánh hang-doi.")
+    parser.add_argument("--dong-bo-han-muc", action="store_true", help="Chỉ đồng bộ token & hạn mức vào hang-doi/tai-khoan.json.")
     parser.add_argument("--ep-ghi", action="store_true", help="Ép commit kể cả khi dữ liệu không đổi.")
     args = parser.parse_args(argv)
 
@@ -1038,6 +1830,19 @@ def main(argv: list[str] | None = None) -> int:
             p_out.parent.mkdir(parents=True, exist_ok=True)
             p_out.write_text(json.dumps(du_lieu, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
         _in_tom_tat(du_lieu, tep_git=tep_git, da_push=da_push)
+        return 0
+
+    if args.dong_bo_han_muc:
+        if repo_hd is None:
+            print("Khong xac dinh duoc repo hang-doi de dong bo han muc.", file=sys.stderr)
+            return 1
+        goc_sync = (Path(repo_hd) / "hang-doi") if (Path(repo_hd) / "hang-doi").is_dir() else Path(repo_hd)
+        da_ghi, tep_so, rows_so = dong_bo_va_ghi_so_tai_khoan(
+            goc_sync,
+            bo_sung_tu_may=True,
+            ep_ghi=bool(args.ep_ghi),
+        )
+        print(f"so_tai_khoan: {tep_so} | so_dong={len(rows_so)} | da_ghi={'co' if da_ghi else 'khong_doi'}")
         return 0
 
     du_lieu = thu_thap_tai_khoan_may(ma_may=ma_may, local_state_path=ls_path, agy_cmd=agy_cmd)
