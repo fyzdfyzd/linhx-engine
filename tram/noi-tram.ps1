@@ -44,6 +44,10 @@ git ls-remote $Tram hang-doi | Out-Null
 if ($LASTEXITCODE -ne 0) { Loi "Khong doc duoc tram $Tram" }
 Dat "Thay may 2 va tram git"
 
+# git daemon tren Windows treo khi push neu bat sideband: tat cho moi kho tren may nay
+git config --global sendpack.sideband false
+Dat "Tat sendpack.sideband (tranh treo khi push len tram Windows)"
+
 # 4. Clone hang doi hoac them remote tram
 if (-not (Test-Path "$Repo\.git")) {
   New-Item -ItemType Directory -Force $ThuMuc | Out-Null
