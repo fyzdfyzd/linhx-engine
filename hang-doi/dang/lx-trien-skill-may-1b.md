@@ -4,6 +4,8 @@ tran_phut: 30
 khong_tien_phut: 20
 tu_sua: 0
 theo_doi: D:\linhx\skills-kho
+nhan: may-1 2026-11-15T14:06:13+0700
+moc: 92f04caea8ceff935cfa8c2d6c0aa0834218ac32
 
 Phiếu NẠP KHO SKILL cho máy này (lượt 2: lượt 1 bị dừng vì agy đưa lệnh clone ra chạy nền rồi ngồi chờ; lượt này MỌI lệnh phải chạy trong cùng một lệnh tiền cảnh, đợi xong mới sang bước kế, clone dùng `--filter=blob:none --depth 1`). Chỉ cài, không sửa skill, không đụng phiếu khác hay worktree Yên Lam. Chạy mọi lệnh tiền cảnh, KHÔNG background task.
 1. Nếu D:\linhx\skills-kho chưa có: `git clone --depth 1 https://github.com/fyzdfyzd/linhx-engine D:\linhx\skills-kho`; có rồi: `git -C D:\linhx\skills-kho pull --ff-only`. (Máy 1 đã có bản ở D:\LINHX\LINHX-ENGINE từ 8/11: vẫn dùng D:\linhx\skills-kho để chung một chỗ cho mọi máy.)
