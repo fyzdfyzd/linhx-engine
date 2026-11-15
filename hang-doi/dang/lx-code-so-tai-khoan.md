@@ -19,4 +19,4 @@ Phiếu: SỔ TÀI KHOẢN cho đội máy (danh sách tài khoản đã đăng 
 CẤM: đăng xuất/đăng nhập tài khoản nào, đọc cookie/Login Data, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; bảng tài khoản máy 2 (email đã che) | hồ sơ Chrome | công cụ đoán được.
 
-nhip: 12:29 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:32 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
