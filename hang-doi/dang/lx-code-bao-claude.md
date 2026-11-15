@@ -4,6 +4,7 @@ tran_phut: 30
 khong_tien_phut: 20
 tu_sua: 1
 theo_doi: C:\linhx\wt\bao-claude
+nhan: may-2 2026-11-15T13:17:59+0700
 
 GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner BÁO NGAY khi phiếu cần Claude. Chạy mọi lệnh tiền cảnh, mỗi lệnh timeout ≤ 300 s, mỗi 5 phút có file mới/commit. KHÔNG khởi động lại runner đang chạy.
 1. `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\bao-claude` (có rồi thì fetch), `git checkout -b agy/bao-claude`.
