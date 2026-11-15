@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 tu_sua: 0
 theo_doi: D:\linhx\wt-cat-tran
+nhan: may-1 2026-11-15T21:58:54+0700
 
 Phiếu lx-code-cat-tran (runner LINHX). Chạy mọi lệnh ở TIỀN CẢNH, không dùng background task. Mỗi 5 phút có tệp mới hoặc commit.
 1. Kho nguồn là TRẠM (không dùng GitHub): `git -c sendpack.sideband=false clone -b claude/project-thread-jowxv1 git://192.168.1.136/linhx-engine.git D:\linhx\wt-cat-tran` rồi `git -C D:\linhx\wt-cat-tran checkout -b lx-code-cat-tran`.
