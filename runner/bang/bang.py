@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import contextmanager
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import glob
 import html
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -778,6 +778,13 @@ def read_queue_snapshot(
                 git_times,
                 meta.get("xong_luc") or meta.get("luc"),
             )
+            done_start_dt = parse_iso_datetime(meta.get("nhan_luc") or meta.get("bat_dau"))
+            if done_start_dt is None and meta.get("nhan"):
+                _, done_start_dt = _parse_claimed_info(meta, "")
+                if done_start_dt is None:
+                    done_start_dt = parse_iso_datetime(meta.get("nhan"))
+            if done_start_dt is None and done_dt is not None:
+                done_start_dt = done_dt - timedelta(minutes=max(0.0, minutes_val))
             record_machine_event(machine_name, "xong", ticket_id, done_dt)
 
             dat_ok, has_explicit_dat = analyze_ket_qua_dat(meta, body, status)
@@ -793,6 +800,7 @@ def read_queue_snapshot(
                 "tong_token": tok_total,
                 "tep_doi": (meta.get("tep_doi") or "(khong)").strip(),
                 "drive": (meta.get("drive") or "(khong)").strip(),
+                "nhan_luc": format_iso(done_start_dt),
                 "xong_luc": format_iso(done_dt),
                 "xong_luc_hien_thi": format_display_time(done_dt),
                 "tom_tat": _summarize_text(body, 100),
@@ -1376,6 +1384,246 @@ _STEP_STATUS_LABELS = {
     "cho-claude": "Chờ Claude",
     "cho-linh": "Chờ Linh",
 }
+_SUA_VARIANT_RE = re.compile(r"^(.+)-sua-(\d+)$")
+_GANTT_DELAY_THRESHOLD_MIN = 15.0
+
+
+def _format_hhmm(dt: datetime | None) -> str:
+    """Định dạng ngắn HH:MM theo múi giờ cục bộ."""
+    if dt is None:
+        return ""
+    return dt.astimezone(get_local_tz()).strftime("%H:%M")
+
+
+def _floor_30m(dt: datetime) -> datetime:
+    """Làm tròn xuống mốc 30 phút chẵn theo múi giờ cục bộ."""
+    local_dt = dt.astimezone(get_local_tz())
+    minute = (local_dt.minute // 30) * 30
+    return local_dt.replace(minute=minute, second=0, microsecond=0)
+
+
+def _ceil_30m(dt: datetime) -> datetime:
+    """Làm tròn lên mốc 30 phút chẵn theo múi giờ cục bộ."""
+    local_dt = dt.astimezone(get_local_tz())
+    if local_dt.minute % 30 == 0 and local_dt.second == 0 and local_dt.microsecond == 0:
+        return local_dt
+    return _floor_30m(local_dt) + timedelta(minutes=30)
+
+
+def _build_sua_variants_index(*ticket_maps) -> dict[str, list[tuple[int, str]]]:
+    """Lập bảng tra các phiếu tự sửa `<id>-sua-<n>` hiện có trên hàng đợi."""
+    buckets: dict[str, dict[str, int]] = {}
+    for mapping in ticket_maps:
+        for tid in mapping.keys():
+            m = _SUA_VARIANT_RE.match(str(tid))
+            if not m:
+                continue
+            base_id = m.group(1)
+            num = int(m.group(2))
+            buckets.setdefault(base_id, {})[tid] = num
+    out: dict[str, list[tuple[int, str]]] = {}
+    for base_id, items in buckets.items():
+        pairs = [(num, tid) for tid, num in items.items()]
+        pairs.sort(key=lambda pair: (pair[0], pair[1]))
+        out[base_id] = pairs
+    return out
+
+
+def _compute_project_gantt(
+    steps_out: list[dict],
+    han_dt: datetime | None,
+    current_time: datetime,
+) -> tuple[dict, str, str, int | None]:
+    """Tính thanh GANTT dự kiến/thực tế, bước trễ > 15p, trục giờ và câu dự kiến xong."""
+    # 1. Tìm bước mục tiêu cuối cùng có du_kien.xong để tính câu Dự kiến xong HH:MM (trễ/sớm N phút)
+    target_idx: int | None = None
+    for idx in range(len(steps_out) - 1, -1, -1):
+        if steps_out[idx].get("_dk_end_dt") is not None:
+            target_idx = idx
+            break
+
+    du_kien_xong_cau = ""
+    du_kien_xong_luc = ""
+    du_kien_lech_phut: int | None = None
+
+    if target_idx is not None:
+        shift_sec = 0.0
+        chain_end_dt: datetime | None = None
+        has_unfinished_before = False
+        for idx in range(target_idx + 1):
+            st_obj = steps_out[idx]
+            dk_s: datetime | None = st_obj.get("_dk_start_dt")
+            dk_e: datetime | None = st_obj.get("_dk_end_dt")
+            tt_s: datetime | None = st_obj.get("_tt_start_dt")
+            tt_e: datetime | None = st_obj.get("_tt_end_dt")
+            tt_buoc = st_obj.get("trang_thai") or "cho"
+
+            dur_sec = max(0.0, (dk_e - dk_s).total_seconds()) if (dk_s is not None and dk_e is not None) else 0.0
+            if tt_buoc in ("xong-dat", "xong-khong-dat") and tt_e is not None:
+                own_end: datetime | None = tt_e
+            elif tt_s is not None:
+                has_unfinished_before = True
+                own_end = max(current_time, tt_s + timedelta(seconds=dur_sec))
+            else:
+                has_unfinished_before = True
+                if dk_s is not None:
+                    est_st = max(current_time, dk_s + timedelta(seconds=shift_sec))
+                    own_end = est_st + timedelta(seconds=dur_sec)
+                elif dk_e is not None:
+                    own_end = max(current_time, dk_e + timedelta(seconds=shift_sec))
+                else:
+                    own_end = chain_end_dt
+
+            if own_end is not None:
+                if idx == target_idx and not has_unfinished_before:
+                    chain_end_dt = own_end
+                else:
+                    chain_end_dt = max(chain_end_dt, own_end) if chain_end_dt is not None else own_end
+                if dk_e is not None:
+                    shift_sec = (chain_end_dt - dk_e).total_seconds()
+
+        base_dk_end: datetime = steps_out[target_idx]["_dk_end_dt"]
+        est_final = chain_end_dt or base_dk_end
+        delta_min = int(round((est_final - base_dk_end).total_seconds() / 60.0))
+        hhmm_final = _format_hhmm(est_final)
+        if delta_min > 0:
+            du_kien_xong_cau = f"Dự kiến xong {hhmm_final} (trễ {delta_min} phút)"
+        elif delta_min < 0:
+            du_kien_xong_cau = f"Dự kiến xong {hhmm_final} (sớm {abs(delta_min)} phút)"
+        else:
+            du_kien_xong_cau = f"Dự kiến xong {hhmm_final} (sớm 0 phút)"
+        du_kien_xong_luc = format_iso(est_final)
+        du_kien_lech_phut = delta_min
+
+    # 2. Xác định miền trục giờ GANTT từ các bước (gồm hiện tại & hạn nếu gần miền bước)
+    step_points: list[datetime] = []
+    for st_obj in steps_out:
+        for k in ("_dk_start_dt", "_dk_end_dt", "_tt_start_dt", "_tt_end_dt"):
+            pt = st_obj.get(k)
+            if pt is not None:
+                step_points.append(pt)
+
+    if step_points:
+        min_step = min(step_points)
+        max_step = max(step_points)
+        pts: list[datetime] = [min_step, max_step]
+        if abs((current_time - min_step).total_seconds()) <= 6 * 3600 or (
+            min_step <= current_time <= max_step + timedelta(hours=6)
+        ):
+            pts.append(current_time)
+        core_span = max(3600.0, (max_step - min_step).total_seconds())
+        if han_dt is not None and (
+            min_step - timedelta(hours=4)
+            <= han_dt
+            <= max_step + timedelta(seconds=max(4 * 3600.0, core_span * 0.8))
+        ):
+            pts.append(han_dt)
+        raw_min = min(pts) - timedelta(minutes=15)
+        raw_max = max(pts) + timedelta(minutes=15)
+    else:
+        raw_min = current_time - timedelta(minutes=30)
+        raw_max = current_time + timedelta(minutes=150)
+
+    axis_start = _floor_30m(raw_min)
+    axis_end = _ceil_30m(raw_max)
+    if (axis_end - axis_start).total_seconds() < 1800.0:
+        axis_end = axis_start + timedelta(minutes=30)
+
+    total_sec = max(1.0, (axis_end - axis_start).total_seconds())
+    total_min = total_sec / 60.0
+    if total_min <= 180.0:
+        tick_min = 30
+    elif total_min <= 420.0:
+        tick_min = 60
+    elif total_min <= 780.0:
+        tick_min = 120
+    elif total_min <= 1440.0:
+        tick_min = 180
+    else:
+        tick_min = 360
+
+    moc_gio: list[dict] = []
+    day0 = axis_start.astimezone(get_local_tz()).replace(hour=0, minute=0, second=0, microsecond=0)
+    k_start = int(((axis_start - day0).total_seconds() // (tick_min * 60)))
+    tick_dt = day0 + timedelta(minutes=k_start * tick_min)
+    while tick_dt <= axis_end:
+        if tick_dt >= axis_start:
+            tick_pct = round(((tick_dt - axis_start).total_seconds() / total_sec) * 100.0, 2)
+            moc_gio.append({"gio": _format_hhmm(tick_dt), "pct": tick_pct})
+        tick_dt += timedelta(minutes=tick_min)
+
+    def _pct_of(dt: datetime) -> float:
+        return ((dt - axis_start).total_seconds() / total_sec) * 100.0
+
+    now_raw = _pct_of(current_time)
+    now_pct = round(min(99.0, max(1.0, now_raw)), 2)
+    now_ghim = not (0.0 <= now_raw <= 100.0)
+
+    han_co = han_dt is not None
+    han_pct: float | None = None
+    han_ghim = False
+    han_nhan = ""
+    if han_dt is not None:
+        han_raw = _pct_of(han_dt)
+        han_pct = round(min(99.2, max(0.8, han_raw)), 2)
+        han_ghim = not (0.0 <= han_raw <= 100.0)
+        han_local = han_dt.astimezone(get_local_tz())
+        han_nhan = _format_hhmm(han_local) if han_local.date() == axis_start.date() else han_local.strftime("%d/%m %H:%M")
+
+    # 3. Tính phần trăm vị trí các thanh dự kiến/thực tế cho từng bước và dọn key nội bộ
+    for st_obj in steps_out:
+        dk_s = st_obj.pop("_dk_start_dt", None)
+        dk_e = st_obj.pop("_dk_end_dt", None)
+        tt_s = st_obj.pop("_tt_start_dt", None)
+        tt_e = st_obj.pop("_tt_end_dt", None)
+
+        co_dk = dk_s is not None and dk_e is not None
+        if co_dk:
+            dk_l_raw = _pct_of(dk_s)
+            dk_r_raw = _pct_of(dk_e)
+            dk_l = round(min(98.8, max(0.0, dk_l_raw)), 2)
+            dk_r = round(min(100.0, max(dk_l, dk_r_raw)), 2)
+            dk_w = round(min(100.0 - dk_l, max(1.2, dk_r - dk_l)), 2)
+        else:
+            dk_l, dk_w = 0.0, 0.0
+
+        co_tt = tt_s is not None and tt_e is not None
+        if co_tt:
+            tt_l_raw = _pct_of(tt_s)
+            tt_r_raw = _pct_of(tt_e)
+            tt_l = round(min(98.8, max(0.0, tt_l_raw)), 2)
+            tt_r = round(min(100.0, max(tt_l, tt_r_raw)), 2)
+            tt_w = round(min(100.0 - tt_l, max(1.2, tt_r - tt_l)), 2)
+        else:
+            tt_l_raw, tt_r_raw = 0.0, 0.0
+            tt_l, tt_w = 0.0, 0.0
+
+        st_obj["gantt"] = {
+            "co_du_kien": co_dk,
+            "dk_left_pct": dk_l,
+            "dk_width_pct": dk_w,
+            "co_thuc_te": co_tt,
+            "tt_left_pct": tt_l,
+            "tt_width_pct": tt_w,
+            "tt_start_pct_raw": round(tt_l_raw, 3),
+            "tt_end_pct_raw": round(tt_r_raw, 3),
+        }
+
+    gantt_truc = {
+        "bat_dau": format_iso(axis_start),
+        "xong": format_iso(axis_end),
+        "bat_dau_gio": _format_hhmm(axis_start),
+        "xong_gio": _format_hhmm(axis_end),
+        "moc_gio": moc_gio,
+        "hien_tai_gio": _format_hhmm(current_time),
+        "hien_tai_pct": now_pct,
+        "hien_tai_ghim": now_ghim,
+        "han_co": han_co,
+        "han_pct": han_pct,
+        "han_ghim": han_ghim,
+        "han_nhan": han_nhan,
+    }
+    return gantt_truc, du_kien_xong_cau, du_kien_xong_luc, du_kien_lech_phut
 
 
 def read_projects_snapshot(
@@ -1386,7 +1634,7 @@ def read_projects_snapshot(
     done_info_map: dict[str, dict],
     can_linh_items: list[dict],
 ) -> list[dict]:
-    """Đọc toàn bộ `hang-doi/du-an/*.json` và tổng hợp 6 trạng thái bước + dữ liệu Chất lượng."""
+    """Đọc toàn bộ `hang-doi/du-an/*.json` và tổng hợp 6 trạng thái bước + GANTT + dữ liệu Chất lượng."""
     qroot = resolve_queue_root(Path(clone_dir))
     dir_proj = qroot / "du-an"
     if not dir_proj.is_dir():
@@ -1399,6 +1647,7 @@ def read_projects_snapshot(
         tid = cl.get("phieu") or cl.get("id") or ""
         if tid:
             can_linh_by_ticket.setdefault(tid, []).append(cl)
+    sua_variants = _build_sua_variants_index(running_map, waiting_map, done_info_map, can_linh_by_ticket)
 
     projects_out: list[dict] = []
     for proj_file in sorted(dir_proj.glob("*.json"), key=lambda p: p.name):
@@ -1440,7 +1689,24 @@ def read_projects_snapshot(
             phieu_ids = [str(x).strip() for x in (raw_step.get("phieu") or []) if str(x).strip()]
             cong_id = str(raw_step.get("cong") or "").strip()
             nguoi = str(raw_step.get("nguoi") or "").strip()
-            all_ids = phieu_ids + ([cong_id] if cong_id and cong_id not in phieu_ids else [])
+
+            expanded_phieu_ids: list[str] = []
+            seen_ids: set[str] = set()
+            latest_by_pid: dict[str, str] = {}
+            for pid in phieu_ids:
+                chain = [pid]
+                for _num, var_tid in sua_variants.get(pid) or ():
+                    if var_tid not in chain:
+                        chain.append(var_tid)
+                latest_by_pid[pid] = chain[-1]
+                for cid in chain:
+                    if cid not in seen_ids:
+                        seen_ids.add(cid)
+                        expanded_phieu_ids.append(cid)
+
+            all_ids = list(expanded_phieu_ids)
+            if cong_id and cong_id not in seen_ids:
+                all_ids.append(cong_id)
 
             running_in_step = [running_map[tid] for tid in all_ids if tid in running_map]
             can_linh_in_step: list[dict] = []
@@ -1452,6 +1718,14 @@ def read_projects_snapshot(
             nhip_cuoi = ""
             phieu_dang_chay = ""
 
+            def _is_pid_done(pid: str) -> bool:
+                eff_id = latest_by_pid.get(pid, pid)
+                return eff_id in done_info_map
+
+            def _is_pid_dat(pid: str) -> bool:
+                eff_id = latest_by_pid.get(pid, pid)
+                return bool(done_info_map[eff_id]["dat"])
+
             if running_in_step:
                 tt_buoc = "dang-chay"
                 r0 = running_in_step[0]
@@ -1462,8 +1736,13 @@ def read_projects_snapshot(
             elif can_linh_in_step:
                 tt_buoc = "cho-linh"
             elif nguoi:
-                if all_ids and all(tid in done_info_map for tid in all_ids):
-                    tt_buoc = "xong-dat" if all(done_info_map[tid]["dat"] for tid in all_ids) else "xong-khong-dat"
+                if all_ids and all(_is_pid_done(pid) for pid in phieu_ids) and (
+                    not cong_id or cong_id in done_info_map
+                ):
+                    ok_all = all(_is_pid_dat(pid) for pid in phieu_ids) and (
+                        not cong_id or bool(done_info_map[cong_id]["dat"])
+                    )
+                    tt_buoc = "xong-dat" if ok_all else "xong-khong-dat"
                 else:
                     tt_buoc = "cho-linh"
             elif not phieu_ids:
@@ -1475,7 +1754,7 @@ def read_projects_snapshot(
                 else:
                     tt_buoc = "cho"
             else:
-                if any(pid not in done_info_map for pid in phieu_ids):
+                if any(not _is_pid_done(pid) for pid in phieu_ids):
                     tt_buoc = "cho"
                 elif cong_id:
                     if cong_id not in done_info_map:
@@ -1485,10 +1764,10 @@ def read_projects_snapshot(
                         if cd.get("_co_dong_dat"):
                             is_ok = bool(cd["dat"])
                         else:
-                            is_ok = bool(cd["dat"]) and all(done_info_map[pid]["dat"] for pid in phieu_ids)
+                            is_ok = bool(cd["dat"]) and all(_is_pid_dat(pid) for pid in phieu_ids)
                         tt_buoc = "xong-dat" if is_ok else "xong-khong-dat"
                 else:
-                    is_ok = all(done_info_map[pid]["dat"] for pid in phieu_ids)
+                    is_ok = all(_is_pid_dat(pid) for pid in phieu_ids)
                     tt_buoc = "xong-dat" if is_ok else "xong-khong-dat"
 
             tt_nhan = (
@@ -1497,6 +1776,84 @@ def read_projects_snapshot(
                 else _STEP_STATUS_LABELS.get(tt_buoc, tt_buoc)
             )
 
+            # Tính mốc Dự kiến, Thực tế và độ trễ (> 15 phút tô cam) cho bước
+            dk_raw = raw_step.get("du_kien") if isinstance(raw_step.get("du_kien"), dict) else {}
+            dk_start_dt = parse_iso_datetime(dk_raw.get("bat_dau"))
+            dk_end_dt = parse_iso_datetime(dk_raw.get("xong"))
+            if dk_start_dt is not None and dk_end_dt is not None and dk_end_dt < dk_start_dt:
+                dk_end_dt = dk_start_dt
+            if dk_start_dt is not None and dk_end_dt is not None:
+                du_kien_gio = f"{_format_hhmm(dk_start_dt)}–{_format_hhmm(dk_end_dt)}"
+            elif dk_start_dt is not None:
+                du_kien_gio = f"{_format_hhmm(dk_start_dt)}–?"
+            elif dk_end_dt is not None:
+                du_kien_gio = f"?–{_format_hhmm(dk_end_dt)}"
+            else:
+                du_kien_gio = "—"
+
+            start_dts: list[datetime] = []
+            end_dts: list[datetime] = []
+            for tid in all_ids:
+                if tid in running_map:
+                    r_dt = parse_iso_datetime(running_map[tid].get("nhan_luc"))
+                    if r_dt is not None:
+                        start_dts.append(r_dt)
+                if tid in done_info_map:
+                    d_end = parse_iso_datetime(done_info_map[tid].get("xong_luc"))
+                    d_start = parse_iso_datetime(done_info_map[tid].get("nhan_luc"))
+                    if d_start is not None:
+                        start_dts.append(d_start)
+                    elif d_end is not None:
+                        start_dts.append(d_end)
+                    if d_end is not None:
+                        end_dts.append(d_end)
+
+            if not start_dts:
+                tt_start_dt: datetime | None = None
+                tt_end_dt: datetime | None = None
+                thuc_te_dang_chay = False
+                thuc_te_gio = "—"
+            else:
+                tt_start_dt = min(start_dts)
+                if tt_buoc == "dang-chay":
+                    tt_end_dt = max(tt_start_dt, current_time)
+                    thuc_te_dang_chay = True
+                    thuc_te_gio = f"{_format_hhmm(tt_start_dt)}–…"
+                else:
+                    tt_end_dt = max(end_dts) if end_dts else tt_start_dt
+                    tt_end_dt = max(tt_start_dt, tt_end_dt)
+                    thuc_te_dang_chay = False
+                    if tt_buoc in ("xong-dat", "xong-khong-dat"):
+                        thuc_te_gio = f"{_format_hhmm(tt_start_dt)}–{_format_hhmm(tt_end_dt)}"
+                    else:
+                        thuc_te_gio = f"{_format_hhmm(tt_start_dt)}–…"
+
+            if tt_buoc in ("xong-dat", "xong-khong-dat"):
+                if tt_end_dt is not None and dk_end_dt is not None:
+                    delay_min = (tt_end_dt - dk_end_dt).total_seconds() / 60.0
+                elif tt_start_dt is not None and dk_start_dt is not None:
+                    delay_min = (tt_start_dt - dk_start_dt).total_seconds() / 60.0
+                else:
+                    delay_min = 0.0
+            else:
+                cands: list[float] = []
+                if dk_end_dt is not None:
+                    cands.append((current_time - dk_end_dt).total_seconds() / 60.0)
+                if dk_start_dt is not None:
+                    ref_st = tt_start_dt if tt_start_dt is not None else current_time
+                    cands.append((ref_st - dk_start_dt).total_seconds() / 60.0)
+                delay_min = max(cands) if cands else 0.0
+
+            if delay_min > _GANTT_DELAY_THRESHOLD_MIN:
+                bi_tre = True
+                rounded_delay = int(round(delay_min))
+                tre_phut = max(16, rounded_delay) if rounded_delay <= 15 else rounded_delay
+                tre_nhan = f"trễ {tre_phut} phút"
+            else:
+                bi_tre = False
+                tre_phut = max(0, int(round(delay_min)))
+                tre_nhan = ""
+
             phieu_chi_tiet: list[dict] = []
             ket_qua_list: list[dict] = []
             step_images_pool: list[dict] = []
@@ -1504,7 +1861,7 @@ def read_projects_snapshot(
                 t_imgs = scan_ticket_images(goc_root, tid, max_images=MAX_TICKET_IMAGES)
                 step_images_pool.extend(t_imgs)
                 t_imgs_clean = [{k: v for k, v in im.items() if k != "_mtime"} for im in t_imgs]
-                la_cong = bool(cong_id and tid == cong_id and tid not in phieu_ids)
+                la_cong = bool(cong_id and tid == cong_id and tid not in expanded_phieu_ids)
                 if tid in running_map:
                     ri = running_map[tid]
                     phieu_chi_tiet.append(
@@ -1600,7 +1957,21 @@ def read_projects_snapshot(
                     "phieu": phieu_ids,
                     "cong": cong_id,
                     "nguoi": nguoi,
-                    "du_kien": raw_step.get("du_kien") if isinstance(raw_step.get("du_kien"), dict) else {},
+                    "du_kien": dk_raw,
+                    "du_kien_bat_dau": format_iso(dk_start_dt),
+                    "du_kien_xong": format_iso(dk_end_dt),
+                    "du_kien_gio": du_kien_gio,
+                    "thuc_te_bat_dau": format_iso(tt_start_dt),
+                    "thuc_te_xong": format_iso(tt_end_dt),
+                    "thuc_te_dang_chay": thuc_te_dang_chay,
+                    "thuc_te_gio": thuc_te_gio,
+                    "bi_tre": bi_tre,
+                    "tre_phut": tre_phut,
+                    "tre_nhan": tre_nhan,
+                    "_dk_start_dt": dk_start_dt,
+                    "_dk_end_dt": dk_end_dt,
+                    "_tt_start_dt": tt_start_dt,
+                    "_tt_end_dt": tt_end_dt,
                     "phieu_dang_chay": phieu_dang_chay,
                     "chay_phut": chay_phut,
                     "tran_phut": tran_phut,
@@ -1611,6 +1982,12 @@ def read_projects_snapshot(
                     "anh_thu_nho": anh_thu_nho,
                 }
             )
+
+        gantt_truc, du_kien_xong_cau, du_kien_xong_luc, du_kien_lech_phut = _compute_project_gantt(
+            steps_out=steps_out,
+            han_dt=han_dt,
+            current_time=current_time,
+        )
 
         # Tìm bước hiện tại và câu tóm tắt "đang ở bước X, việc tiếp theo Y"
         cur_idx: int | None = None
@@ -1655,6 +2032,10 @@ def read_projects_snapshot(
                 "qua_han": qua_han,
                 "goc_anh": goc_anh_raw,
                 "tom_tat_buoc": tom_tat_buoc,
+                "du_kien_xong_cau": du_kien_xong_cau,
+                "du_kien_xong_luc": du_kien_xong_luc,
+                "du_kien_lech_phut": du_kien_lech_phut,
+                "gantt_truc": gantt_truc,
                 "buoc": steps_out,
                 "chat_luong": chat_luong_obj,
             }
@@ -2719,8 +3100,176 @@ pre.ket-qua {
   font-size: 15px;
   font-weight: 500;
   color: var(--text);
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   overflow-wrap: anywhere;
+}
+.du-an-eta {
+  margin-bottom: 10px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--subtle);
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+.du-an-eta.is-late {
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  border-color: rgba(255, 149, 0, 0.45);
+}
+.du-an-eta.is-slightly-late {
+  background: var(--subtle);
+  color: var(--text);
+  border-color: var(--border);
+}
+.du-an-eta.is-on-time {
+  background: var(--ok-bg);
+  color: var(--ok-fg);
+  border-color: rgba(52, 199, 89, 0.35);
+}
+.gantt-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.gantt-head-row {
+  display: none;
+}
+.gantt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 10px;
+  padding: 2px 12px 6px;
+  font-size: 11.5px;
+  color: var(--muted);
+  min-width: 0;
+}
+.gantt-leg-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+.gantt-swatch-dk {
+  display: inline-block;
+  width: 14px;
+  height: 7px;
+  border-radius: 3px;
+  background: rgba(142, 142, 147, 0.28);
+  border: 1px solid rgba(142, 142, 147, 0.55);
+}
+.gantt-swatch-tt {
+  display: inline-block;
+  width: 14px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--dot-run);
+}
+.gantt-swatch-tre {
+  display: inline-block;
+  width: 14px;
+  height: 8px;
+  border-radius: 3px;
+  background: var(--dot-stuck);
+}
+.gantt-swatch-now {
+  display: inline-block;
+  width: 0;
+  height: 11px;
+  border-left: 2px dashed var(--accent);
+}
+.gantt-swatch-han {
+  display: inline-block;
+  width: 2px;
+  height: 11px;
+  background: var(--dot-silent);
+}
+.gantt-leg-now {
+  color: var(--accent);
+  font-weight: 600;
+}
+.gantt-leg-han {
+  color: var(--err-fg);
+  font-weight: 600;
+}
+.gantt-axis {
+  position: relative;
+  height: 28px;
+  border-bottom: 1px solid var(--border);
+  min-width: 0;
+}
+.gantt-tick {
+  position: absolute;
+  bottom: 5px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.gantt-tick::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 1px;
+  height: 4px;
+  background: var(--border);
+}
+.gantt-tick.is-left {
+  transform: none;
+}
+.gantt-tick.is-left::after {
+  left: 1px;
+}
+.gantt-tick.is-right {
+  transform: translateX(-100%);
+}
+.gantt-tick.is-right::after {
+  left: auto;
+  right: 1px;
+}
+.gantt-axis-now,
+.gantt-axis-han {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  pointer-events: none;
+}
+.gantt-axis-now {
+  background: var(--accent);
+  z-index: 3;
+}
+.gantt-axis-now::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+.gantt-axis-han {
+  background: var(--dot-silent);
+  z-index: 4;
+}
+.gantt-axis-han::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: -2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--dot-silent);
 }
 .timeline-list {
   display: flex;
@@ -2731,6 +3280,10 @@ pre.ket-qua {
   padding-left: 26px;
   padding-bottom: 12px;
   min-width: 0;
+}
+.tl-step.gantt-step {
+  padding-left: 0;
+  padding-bottom: 0;
 }
 .tl-step:last-child {
   padding-bottom: 0;
@@ -2744,7 +3297,8 @@ pre.ket-qua {
   width: 2px;
   background: var(--divider);
 }
-.tl-step:last-child::before {
+.tl-step:last-child::before,
+.tl-step.gantt-step::before {
   display: none;
 }
 .tl-dot {
@@ -2755,6 +3309,136 @@ pre.ket-qua {
   height: 12px;
   border-radius: 50%;
   background: var(--dot-idle);
+}
+.gantt-step .tl-dot {
+  position: static;
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: middle;
+  width: 10px;
+  height: 10px;
+  margin-right: 7px;
+}
+.gantt-row-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+.gantt-step .tl-step-toggle {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 5px;
+  padding: 10px 12px;
+}
+.gantt-step-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px 8px;
+  width: 100%;
+  min-width: 0;
+}
+.step-hours-line {
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.gantt-lane {
+  display: none;
+  position: relative;
+  min-height: 54px;
+  overflow: hidden;
+  min-width: 0;
+}
+.gantt-grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--divider);
+  pointer-events: none;
+  z-index: 1;
+}
+.gantt-bar-dk {
+  position: absolute;
+  top: 13px;
+  height: 11px;
+  border-radius: 4px;
+  background: rgba(142, 142, 147, 0.24);
+  border: 1px solid rgba(142, 142, 147, 0.45);
+  z-index: 2;
+  pointer-events: none;
+}
+.gantt-bar-tt {
+  position: absolute;
+  top: 28px;
+  height: 15px;
+  border-radius: 5px;
+  background: var(--dot-run);
+  z-index: 3;
+  pointer-events: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
+}
+.gantt-bar-tt.st-dang-chay { background: var(--accent); }
+.gantt-bar-tt.st-xong-dat { background: var(--dot-run); }
+.gantt-bar-tt.st-xong-khong-dat { background: var(--dot-silent); }
+.gantt-bar-tt.st-cho-claude { background: var(--dot-claude); }
+.gantt-bar-tt.st-cho-linh { background: var(--dot-stuck); }
+.gantt-bar-tt.is-late { background: var(--dot-stuck); }
+.gantt-vline-now {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 2px dashed var(--accent);
+  z-index: 4;
+  pointer-events: none;
+}
+.gantt-vline-han {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-1px);
+  background: var(--dot-silent);
+  z-index: 5;
+  pointer-events: none;
+}
+.tl-step.gantt-step.is-step-late .tl-step-box {
+  border-color: var(--dot-stuck);
+  box-shadow: inset 4px 0 0 var(--dot-stuck);
+}
+.tl-step.gantt-step.is-step-late .gantt-row-main {
+  background: var(--warn-bg);
+}
+.badge-step-late {
+  background: var(--warn-bg);
+  color: var(--warn-fg);
+  border: 1px solid rgba(255, 149, 0, 0.45);
+}
+@media (min-width: 680px) {
+  .gantt-head-row {
+    display: grid;
+    grid-template-columns: minmax(255px, 330px) minmax(0, 1fr);
+    align-items: end;
+    border: 1px solid transparent;
+    border-bottom: 1px solid var(--divider);
+    padding-bottom: 4px;
+  }
+  .gantt-row-main {
+    grid-template-columns: minmax(255px, 330px) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .gantt-step .tl-step-toggle {
+    border-right: 1px solid var(--divider);
+  }
+  .gantt-lane {
+    display: block;
+  }
 }
 .dot-buoc-cho { background: var(--dot-idle); }
 .dot-buoc-dang-chay {
@@ -3569,7 +4253,7 @@ _DASHBOARD_JS = r"""
     return '<span class="' + cls + '">' + esc(lbl) + "</span>";
   }
 
-  function renderProjectStep(maDa, step, idx) {
+  function renderProjectStep(maDa, step, idx, ganttTruc) {
     var st = step.trang_thai || "cho";
     var dotKnown = {
       "cho": "dot-buoc-cho",
@@ -3583,6 +4267,7 @@ _DASHBOARD_JS = r"""
     var maBuoc = step.ma || ("b" + idx);
     var stepKey = (maDa || "du-an") + ":" + maBuoc;
     var isOpen = Boolean(state.expandedSteps[stepKey]);
+    var isLate = Boolean(step.bi_tre);
 
     var codePart = (step.ma && step.ma !== step.ten)
       ? ('<span class="tl-step-code">' + esc(step.ma) + "</span> ")
@@ -3594,7 +4279,41 @@ _DASHBOARD_JS = r"""
     if (step.nguoi) {
       rightChips.push('<span class="tag-chip">Người: ' + esc(step.nguoi) + "</span>");
     }
+    if (isLate && step.tre_nhan) {
+      rightChips.push('<span class="badge badge-step-late">' + esc(step.tre_nhan) + "</span>");
+    }
     rightChips.push(renderStepStatusBadge(step));
+
+    var dkTxt = step.du_kien_gio || "—";
+    var ttTxt = step.thuc_te_gio || "—";
+    var hoursLine = '<div class="step-hours-line">dự kiến <span class="num">' + esc(dkTxt) +
+      '</span> · thực tế <span class="num">' + esc(ttTxt) + "</span></div>";
+
+    var truc = ganttTruc || {};
+    var moc = truc.moc_gio || [];
+    var gridHtml = "";
+    for (var m = 0; m < moc.length; m++) {
+      var mp = Number(moc[m].pct || 0);
+      if (mp > 0 && mp < 100) {
+        gridHtml += '<span class="gantt-grid-line" style="left:' + mp + '%"></span>';
+      }
+    }
+    var g = step.gantt || {};
+    var dkBarHtml = g.co_du_kien
+      ? ('<div class="gantt-bar-dk" style="left:' + Number(g.dk_left_pct || 0) + "%;width:" + Number(g.dk_width_pct || 0) + '%"></div>')
+      : "";
+    var ttBarCls = "gantt-bar-tt st-" + esc(st) + (isLate ? " is-late" : "");
+    var ttBarHtml = g.co_thuc_te
+      ? ('<div class="' + ttBarCls + '" style="left:' + Number(g.tt_left_pct || 0) + "%;width:" + Number(g.tt_width_pct || 0) + '%"></div>')
+      : "";
+    var nowLineHtml = (truc.hien_tai_pct !== undefined && truc.hien_tai_pct !== null)
+      ? ('<span class="gantt-vline-now" style="left:' + Number(truc.hien_tai_pct) + '%"></span>')
+      : "";
+    var hanLineHtml = (truc.han_co && truc.han_pct !== undefined && truc.han_pct !== null)
+      ? ('<span class="gantt-vline-han" style="left:' + Number(truc.han_pct) + '%"></span>')
+      : "";
+    var laneHtml = '<div class="gantt-lane" aria-hidden="true">' +
+      gridHtml + dkBarHtml + ttBarHtml + nowLineHtml + hanLineHtml + "</div>";
 
     var runBox = "";
     if (st === "dang-chay") {
@@ -3678,13 +4397,19 @@ _DASHBOARD_JS = r"""
             "</a>";
         }).join("") + "</div>");
 
-    return '<div class="tl-step">' +
-      '<span class="' + dotCls + '" aria-hidden="true"></span>' +
+    var stepCls = "tl-step gantt-step" + (isLate ? " is-step-late" : "");
+    return '<div class="' + stepCls + '">' +
       '<div class="tl-step-box">' +
+      '<div class="gantt-row-main">' +
       '<button type="button" class="tl-step-toggle" data-toggle-step="' + esc(stepKey) + '" aria-expanded="' + (isOpen ? "true" : "false") + '">' +
-      '<span class="tl-step-name">' + codePart + esc(step.ten || maBuoc) + "</span>" +
+      '<span class="gantt-step-top">' +
+      '<span class="tl-step-name"><span class="' + dotCls + '" aria-hidden="true"></span>' + codePart + esc(step.ten || maBuoc) + "</span>" +
       '<span class="tl-step-right">' + rightChips.join("") + "</span>" +
+      "</span>" +
+      hoursLine +
       "</button>" +
+      laneHtml +
+      "</div>" +
       runBox +
       '<div class="tl-step-detail" data-detail-step="' + esc(stepKey) + '"' + (isOpen ? "" : " hidden") + ">" +
       '<div class="step-subhead">Các phiếu (' + tickets.length + ")</div>" + ticketsHtml +
@@ -3692,6 +4417,45 @@ _DASHBOARD_JS = r"""
       '<div class="step-subhead">KET-QUA (' + kqList.length + ")</div>" + kqHtml +
       '<div class="step-subhead">Ảnh thu nhỏ (' + imgs.length + ")</div>" + imgHtml +
       "</div></div></div>";
+  }
+
+  function renderGanttHead(truc) {
+    var t = truc || {};
+    var leg = [
+      '<span class="gantt-leg-item"><span class="gantt-swatch-dk" aria-hidden="true"></span>dự kiến</span>',
+      '<span class="gantt-leg-item"><span class="gantt-swatch-tt" aria-hidden="true"></span>thực tế</span>',
+      '<span class="gantt-leg-item"><span class="gantt-swatch-tre" aria-hidden="true"></span>trễ &gt;15p</span>'
+    ];
+    if (t.hien_tai_gio) {
+      leg.push(
+        '<span class="gantt-leg-item gantt-leg-now"><span class="gantt-swatch-now" aria-hidden="true"></span>Hiện tại <span class="num">' +
+        esc(t.hien_tai_gio) + "</span>" + (t.hien_tai_ghim ? " (ngoài khung)" : "") + "</span>"
+      );
+    }
+    if (t.han_co) {
+      leg.push(
+        '<span class="gantt-leg-item gantt-leg-han"><span class="gantt-swatch-han" aria-hidden="true"></span>Hạn <span class="num">' +
+        esc(t.han_nhan || "") + "</span>" + (t.han_ghim ? " (ghim mép)" : "") + "</span>"
+      );
+    }
+    var ticks = t.moc_gio || [];
+    var tickHtml = "";
+    for (var k = 0; k < ticks.length; k++) {
+      var tk = ticks[k];
+      var pct = Number(tk.pct || 0);
+      var tCls = "gantt-tick" + (pct <= 5 ? " is-left" : (pct >= 95 ? " is-right" : ""));
+      tickHtml += '<span class="' + tCls + '" style="left:' + pct + '%">' + esc(tk.gio || "") + "</span>";
+    }
+    var nowMk = (t.hien_tai_pct !== undefined && t.hien_tai_pct !== null)
+      ? ('<span class="gantt-axis-now" style="left:' + Number(t.hien_tai_pct) + '%" title="Hiện tại ' + esc(t.hien_tai_gio || "") + '"></span>')
+      : "";
+    var hanMk = (t.han_co && t.han_pct !== undefined && t.han_pct !== null)
+      ? ('<span class="gantt-axis-han" style="left:' + Number(t.han_pct) + '%" title="Hạn ' + esc(t.han_nhan || "") + '"></span>')
+      : "";
+    return '<div class="gantt-head-row">' +
+      '<div class="gantt-legend">' + leg.join("") + "</div>" +
+      '<div class="gantt-axis" aria-hidden="true">' + tickHtml + nowMk + hanMk + "</div>" +
+      "</div>";
   }
 
   function renderProjectsTab(data) {
@@ -3708,12 +4472,20 @@ _DASHBOARD_JS = r"""
       var metaLine = p.han_hien_thi && p.han_hien_thi !== "—"
         ? ('<div class="meta" style="margin-bottom:10px">Mã: <code>' + esc(maDa) + '</code> · Hạn: <span class="num">' + esc(p.han_hien_thi) + "</span></div>")
         : ('<div class="meta" style="margin-bottom:10px">Mã: <code>' + esc(maDa) + "</code></div>");
+      var etaHtml = "";
+      if (p.du_kien_xong_cau) {
+        var lech = Number(p.du_kien_lech_phut || 0);
+        var etaCls = "du-an-eta " + (lech > 15 ? "is-late" : (lech > 0 ? "is-slightly-late" : "is-on-time"));
+        etaHtml = '<div class="' + etaCls + '">' + esc(p.du_kien_xong_cau) + "</div>";
+      }
       var steps = p.buoc || [];
+      var truc = p.gantt_truc || {};
       var stepsHtml = steps.length === 0
         ? '<p class="empty">Chưa khai báo các bước.</p>'
-        : ('<div class="timeline-list">' + steps.map(function (s, idx) {
-            return renderProjectStep(maDa, s, idx);
-          }).join("") + "</div>");
+        : ('<div class="gantt-table">' + renderGanttHead(truc) +
+           '<div class="timeline-list" style="gap:8px">' + steps.map(function (s, idx) {
+             return renderProjectStep(maDa, s, idx, truc);
+           }).join("") + "</div></div>");
       out.push(
         '<section class="card du-an-card">' +
         '<div class="du-an-head">' +
@@ -3721,6 +4493,7 @@ _DASHBOARD_JS = r"""
         '<span class="' + hanCls + '">' + esc(hanTxt) + "</span>" +
         "</div>" +
         metaLine +
+        etaHtml +
         '<div class="du-an-summary">' + esc(p.tom_tat_buoc || "") + "</div>" +
         stepsHtml +
         "</section>"
@@ -4473,8 +5246,8 @@ def _render_profiles_section(data: dict) -> str:
     return '<div class="cards-may">' + "".join(cards) + "</div>"
 
 
-def _render_project_step_html(ma_da: str, step: dict, idx: int) -> str:
-    """Sinh HTML cho một bước trên dòng thời gian dự án (mặc định thu gọn chi tiết)."""
+def _render_project_step_html(ma_da: str, step: dict, idx: int, gantt_truc: dict | None = None) -> str:
+    """Sinh HTML cho một bước trên bảng GANTT dự án (mặc định thu gọn chi tiết)."""
     st = step.get("trang_thai") or "cho"
     known_dots = {
         "cho": "dot-buoc-cho",
@@ -4490,6 +5263,7 @@ def _render_project_step_html(ma_da: str, step: dict, idx: int) -> str:
     ten_buoc = str(step.get("ten") or ma_buoc)
     step_key = f"{ma_da or 'du-an'}:{ma_buoc}"
     nhan = str(step.get("trang_thai_nhan") or _STEP_STATUS_LABELS.get(st, st))
+    is_late = bool(step.get("bi_tre"))
 
     code_part = f'<span class="tl-step-code">{_esc(ma_buoc)}</span> ' if ma_buoc and ma_buoc != ten_buoc else ""
     right_chips: list[str] = []
@@ -4497,7 +5271,48 @@ def _render_project_step_html(ma_da: str, step: dict, idx: int) -> str:
         right_chips.append(f'<span class="tag-chip">Cổng {_esc(step["cong"])}</span>')
     if step.get("nguoi"):
         right_chips.append(f'<span class="tag-chip">Người: {_esc(step["nguoi"])}</span>')
+    if is_late and step.get("tre_nhan"):
+        right_chips.append(f'<span class="badge badge-step-late">{_esc(step["tre_nhan"])}</span>')
     right_chips.append(f'<span class="{_esc(badge_cls)}">{_esc(nhan)}</span>')
+
+    dk_txt = str(step.get("du_kien_gio") or "—")
+    tt_txt = str(step.get("thuc_te_gio") or "—")
+    hours_line = (
+        f'<span class="step-hours-line">dự kiến <span class="num">{_esc(dk_txt)}</span> · '
+        f'thực tế <span class="num">{_esc(tt_txt)}</span></span>'
+    )
+
+    truc = gantt_truc or {}
+    grid_parts: list[str] = []
+    for tick in truc.get("moc_gio") or ():
+        mp = float(tick.get("pct") or 0.0)
+        if 0.0 < mp < 100.0:
+            grid_parts.append(f'<span class="gantt-grid-line" style="left:{mp}%"></span>')
+    g = step.get("gantt") if isinstance(step.get("gantt"), dict) else {}
+    dk_bar = (
+        f'<div class="gantt-bar-dk" style="left:{float(g.get("dk_left_pct") or 0)}%;width:{float(g.get("dk_width_pct") or 0)}%"></div>'
+        if g.get("co_du_kien")
+        else ""
+    )
+    tt_bar_cls = f"gantt-bar-tt st-{_esc(st)}" + (" is-late" if is_late else "")
+    tt_bar = (
+        f'<div class="{tt_bar_cls}" style="left:{float(g.get("tt_left_pct") or 0)}%;width:{float(g.get("tt_width_pct") or 0)}%"></div>'
+        if g.get("co_thuc_te")
+        else ""
+    )
+    now_pct = truc.get("hien_tai_pct")
+    now_line = f'<span class="gantt-vline-now" style="left:{float(now_pct)}%"></span>' if now_pct is not None else ""
+    han_pct = truc.get("han_pct")
+    han_line = (
+        f'<span class="gantt-vline-han" style="left:{float(han_pct)}%"></span>'
+        if truc.get("han_co") and han_pct is not None
+        else ""
+    )
+    lane_html = (
+        '<div class="gantt-lane" aria-hidden="true">'
+        f'{"".join(grid_parts)}{dk_bar}{tt_bar}{now_line}{han_line}'
+        "</div>"
+    )
 
     run_html = ""
     if st == "dang-chay":
@@ -4614,14 +5429,20 @@ def _render_project_step_html(ma_da: str, step: dict, idx: int) -> str:
             )
         imgs_html = '<div class="thumb-grid">' + "".join(im_cards) + "</div>"
 
+    step_cls = "tl-step gantt-step" + (" is-step-late" if is_late else "")
     return (
-        '<div class="tl-step">'
-        f'<span class="{_esc(dot_cls)}" aria-hidden="true"></span>'
+        f'<div class="{step_cls}">'
         '<div class="tl-step-box">'
+        '<div class="gantt-row-main">'
         f'<button type="button" class="tl-step-toggle" data-toggle-step="{_esc(step_key)}" aria-expanded="false">'
-        f'<span class="tl-step-name">{code_part}{_esc(ten_buoc)}</span>'
+        '<span class="gantt-step-top">'
+        f'<span class="tl-step-name"><span class="{_esc(dot_cls)}" aria-hidden="true"></span>{code_part}{_esc(ten_buoc)}</span>'
         f'<span class="tl-step-right">{"".join(right_chips)}</span>'
+        "</span>"
+        f"{hours_line}"
         "</button>"
+        f"{lane_html}"
+        "</div>"
         f"{run_html}"
         f'<div class="tl-step-detail" data-detail-step="{_esc(step_key)}" hidden>'
         f'<div class="step-subhead">Các phiếu ({len(tickets)})</div>{tickets_html}'
@@ -4632,8 +5453,53 @@ def _render_project_step_html(ma_da: str, step: dict, idx: int) -> str:
     )
 
 
+def _render_gantt_head_html(gantt_truc: dict | None) -> str:
+    """Sinh phần đầu GANTT (chú giải + trục giờ, vạch hiện tại và vạch hạn)."""
+    t = gantt_truc or {}
+    leg: list[str] = [
+        '<span class="gantt-leg-item"><span class="gantt-swatch-dk" aria-hidden="true"></span>dự kiến</span>',
+        '<span class="gantt-leg-item"><span class="gantt-swatch-tt" aria-hidden="true"></span>thực tế</span>',
+        '<span class="gantt-leg-item"><span class="gantt-swatch-tre" aria-hidden="true"></span>trễ &gt;15p</span>',
+    ]
+    if t.get("hien_tai_gio"):
+        ghim_now = " (ngoài khung)" if t.get("hien_tai_ghim") else ""
+        leg.append(
+            f'<span class="gantt-leg-item gantt-leg-now"><span class="gantt-swatch-now" aria-hidden="true"></span>'
+            f'Hiện tại <span class="num">{_esc(t["hien_tai_gio"])}</span>{ghim_now}</span>'
+        )
+    if t.get("han_co"):
+        ghim_han = " (ghim mép)" if t.get("han_ghim") else ""
+        leg.append(
+            f'<span class="gantt-leg-item gantt-leg-han"><span class="gantt-swatch-han" aria-hidden="true"></span>'
+            f'Hạn <span class="num">{_esc(t.get("han_nhan") or "")}</span>{ghim_han}</span>'
+        )
+    tick_parts: list[str] = []
+    for tick in t.get("moc_gio") or ():
+        pct = float(tick.get("pct") or 0.0)
+        t_cls = "gantt-tick" + (" is-left" if pct <= 5.0 else (" is-right" if pct >= 95.0 else ""))
+        tick_parts.append(f'<span class="{t_cls}" style="left:{pct}%">{_esc(tick.get("gio") or "")}</span>')
+    now_pct = t.get("hien_tai_pct")
+    now_mk = (
+        f'<span class="gantt-axis-now" style="left:{float(now_pct)}%" title="Hiện tại {_esc(t.get("hien_tai_gio") or "")}"></span>'
+        if now_pct is not None
+        else ""
+    )
+    han_pct = t.get("han_pct")
+    han_mk = (
+        f'<span class="gantt-axis-han" style="left:{float(han_pct)}%" title="Hạn {_esc(t.get("han_nhan") or "")}"></span>'
+        if t.get("han_co") and han_pct is not None
+        else ""
+    )
+    return (
+        '<div class="gantt-head-row">'
+        f'<div class="gantt-legend">{"".join(leg)}</div>'
+        f'<div class="gantt-axis" aria-hidden="true">{"".join(tick_parts)}{now_mk}{han_mk}</div>'
+        "</div>"
+    )
+
+
 def _render_projects_section(data: dict) -> str:
-    """Sinh nội dung tab Dự án: tên, thời hạn, câu tóm tắt bước và dòng thời gian 6 trạng thái."""
+    """Sinh nội dung tab Dự án: tên, hạn, câu dự kiến xong, tóm tắt bước và GANTT rút gọn theo giờ."""
     projects = data.get("du_an") or []
     if not projects:
         return '<section class="card"><p class="empty">Chưa có dự án nào trong hang-doi/du-an/*.json.</p></section>'
@@ -4650,11 +5516,21 @@ def _render_projects_section(data: dict) -> str:
             if han_disp and han_disp != "—"
             else f'<div class="meta" style="margin-bottom:10px">Mã: <code>{_esc(ma_da)}</code></div>'
         )
+        eta_cau = str(proj.get("du_kien_xong_cau") or "")
+        eta_html = ""
+        if eta_cau:
+            lech = int(proj.get("du_kien_lech_phut") or 0)
+            eta_cls = "du-an-eta " + ("is-late" if lech > 15 else ("is-slightly-late" if lech > 0 else "is-on-time"))
+            eta_html = f'<div class="{eta_cls}">{_esc(eta_cau)}</div>'
+
         steps = proj.get("buoc") or []
+        truc = proj.get("gantt_truc") if isinstance(proj.get("gantt_truc"), dict) else {}
         steps_html = (
-            '<div class="timeline-list">'
-            + "".join(_render_project_step_html(ma_da, step, s_idx) for s_idx, step in enumerate(steps))
-            + "</div>"
+            '<div class="gantt-table">'
+            + _render_gantt_head_html(truc)
+            + '<div class="timeline-list" style="gap:8px">'
+            + "".join(_render_project_step_html(ma_da, step, s_idx, truc) for s_idx, step in enumerate(steps))
+            + "</div></div>"
             if steps
             else '<p class="empty">Chưa khai báo các bước.</p>'
         )
@@ -4665,6 +5541,7 @@ def _render_projects_section(data: dict) -> str:
             f'<span class="{han_cls}">{_esc(han_txt)}</span>'
             "</div>"
             f"{meta_line}"
+            f"{eta_html}"
             f'<div class="du-an-summary">{_esc(proj.get("tom_tat_buoc") or "")}</div>'
             f"{steps_html}"
             "</section>"
