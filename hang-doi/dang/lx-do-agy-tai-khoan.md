@@ -3,6 +3,7 @@ loai: kiem
 tran_phut: 25
 khong_tien_phut: 20
 theo_doi: C:\linhx\wt\do-agy-tai-khoan
+nhan: may-2 2026-11-15T12:22:28+0700
 
 Phiếu DÒ (chỉ đọc, không đổi đăng nhập, không đăng xuất, không in token/khoá). Chạy mọi lệnh tiền cảnh, KHÔNG background task, mỗi 5 phút ghi file mới vào thư mục theo_doi.
 Mục tiêu: biết runner có tự đổi tài khoản agy khi hết hạn mức được không.
