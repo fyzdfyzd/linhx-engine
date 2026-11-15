@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://linhx.local/schemas/the-thu-phap.schema.json",
+  "title": "TheThuPhap",
+  "description": "Schema chung cho thẻ thủ pháp của họ skill linhx-rea.",
+  "type": "object",
+  "required": [
+    "ten",
+    "loai",
+    "moc",
+    "mo_ta",
+    "cach_lam",
+    "khi_dung",
+    "nguon"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ten": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Tên ngắn gọn của thủ pháp."
+    },
+    "loai": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Nhóm phân loại thủ pháp (vd: bo_cuc, anh_sang, mau_sac, khong_gian, chat_lieu, chu, nhip, bieu_tuong, cau_truc)."
+    },
+    "moc": {
+      "description": "Mốc vị trí trong tác phẩm (ô lưới A1..C3, toạ độ chuẩn hoá 0..1, khoảng giây, hoặc mã đoạn).",
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "array",
+          "minItems": 1
+        },
+        {
+          "type": "object",
+          "minProperties": 1
+        }
+      ]
+    },
+    "mo_ta": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Mô tả thủ pháp thể hiện cụ thể trên tác phẩm gốc."
+    },
+    "cach_lam": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Các bước thực hành để tái tạo thủ pháp."
+    },
+    "khi_dung": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Tình huống và mục đích sử dụng phù hợp."
+    },
+    "nguon": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Tên file hoặc định danh nguồn rút trích."
+    },
+    "tu_khoa": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "chi_so_do": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

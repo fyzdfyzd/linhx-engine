@@ -1,6 +1,6 @@
 # Danh mục skill LINHX
 
-Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **235** skill.
+Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **237** skill.
 
 | Nhóm | Số |
 |---|---|
@@ -12,7 +12,7 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | Marketing, cộng đồng, kênh | 26 |
 | Nghiên cứu, radar, dữ liệu | 15 |
 | Giáo dục, khoá học | 8 |
-| Khác | 1 |
+| Khác | 3 |
 
 ## Thiết kế: ảnh, slide, deck, brand, web, KV
 
@@ -293,3 +293,5 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | Skill | Làm gì | Ở đâu |
 |---|---|---|
 | `bu-frontpage` | Dựng trọn mặt tiền web của một BU B2B (trang chủ lấy lead, 15–20 trang con, form brief + gọi lại, GEO, own media 3 pha) từ khuôn đã chạy thật ở event.ifagent.ne… | `le/bu-frontpage` |
+| `rea` | Cửa vào họ skill phân tích ngược linhx-rea cho 5 loại đầu vào (video, sách, báo cáo, bài, ảnh). Dùng khi người dùng muốn mổ xẻ cấu trúc, thẩm mỹ, thủ pháp hoặc … | `bo/linhx-rea/skills/rea` |
+| `rea-anh` | Phân tích ngược ảnh tĩnh, keyframe và poster/KV theo 7 bước cố định (đo định lượng, tạo việc đọc, điền đáp án có mốc, áp đáp án, vẽ ngược, rút thẻ thủ pháp, tóm… | `bo/linhx-rea/skills/rea-anh` |

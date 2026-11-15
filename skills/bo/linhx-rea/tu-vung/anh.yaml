@@ -1,0 +1,181 @@
+loai: anh
+phien_ban: "0.1.0"
+mo_ta: >
+  Bộ từ vựng đóng 17 trục dùng cho rea-anh (10 trục đọc hình ảnh + 7 thành phần thị giác Bruce Block).
+  Mốc (moc) dùng toạ độ chuẩn hoá [x, y] trong [0, 1] hoặc mã ô lưới 3x3 từ A1 đến C3.
+
+truc:
+  - ma: chu_the_chinh
+    cau_hoi: "Chủ thể chính chiếm ưu thế thị giác trong khung hình là gì và nằm ở đâu?"
+    gia_tri:
+      - chan_dung_nguoi
+      - nhom_nguoi
+      - co_the_ban_tay
+      - vat_the_dao_cu
+      - khoi_chu_tieu_de
+      - hinh_khoi_do_hoa
+      - kien_truc_khong_gian
+      - thien_nhien_canh_vat
+    can_moc: true
+
+  - ma: chu_the_phu
+    cau_hoi: "Chủ thể phụ hoặc yếu tố đối trọng với chủ thể chính là gì (nếu không có, chỉ vùng khoảng thở đối trọng)?"
+    gia_tri:
+      - nguoi_phu
+      - dao_cu_vat_the
+      - khoi_chu_thong_tin
+      - logo_nhan_hieu
+      - mang_hinh_trang_tri
+      - tien_canh_che_mo
+      - hau_canh_boi_canh
+      - khong_co
+    can_moc: true
+
+  - ma: duong_dan_mat
+    cau_hoi: "Cơ chế dẫn hướng ánh nhìn chính trong khung hình là gì và đi qua vùng nào?"
+    gia_tri:
+      - duong_cheo
+      - duong_cong_chu_s
+      - duong_hoi_tu_phoi_canh
+      - khung_trong_khung
+      - huong_nhin_nhan_vat
+      - luong_sang_tia_sang
+      - truc_luoi_chu_do_hoa
+      - phan_bo_tinh_tam
+      - khong_ro
+    can_moc: true
+
+  - ma: anh_sang_huong
+    cau_hoi: "Hướng chiếu của nguồn sáng chính tác động lên chủ thể đến từ đâu?"
+    gia_tri:
+      - thuan_truoc
+      - chech_trai
+      - chech_phai
+      - ngang_trai
+      - ngang_phai
+      - nguoc_sang_vien
+      - dinh_chieu_xuong
+      - duoi_hat_len
+      - toa_deu_do_hoa_phang
+    can_moc: true
+
+  - ma: anh_sang_cung_mem
+    cau_hoi: "Tính chất biên bóng đổ và độ gắt của ánh sáng thuộc loại nào?"
+    gia_tri:
+      - cung_gat
+      - vua_ro_khoi
+      - mem_khuech_tan
+      - phang_khong_bong
+    can_moc: false
+
+  - ma: nhiet_mau
+    cau_hoi: "Cảm nhận nhiệt màu tổng thể của bức ảnh nghiêng về hướng nào?"
+    gia_tri:
+      - nong_am
+      - lanh_tram
+      - trung_tinh
+      - tuong_phan_nong_lanh
+      - don_sac_trang_den
+    can_moc: false
+
+  - ma: chat_lieu
+    cau_hoi: "Bề mặt chất liệu nổi bật nhất mà mắt cảm nhận được nằm ở đâu và thuộc nhóm nào?"
+    gia_tri:
+      - da_nguoi_tu_nhien
+      - vai_lua_trang_phuc
+      - kim_loai_kinh_phan_xa
+      - go_da_be_tong_tho
+      - khoi_suong_nuoc
+      - hat_film_nhieu_anh
+      - mang_vector_phang
+      - giay_in_hat_tram
+      - hon_hop
+    can_moc: true
+
+  - ma: phong_cach
+    cau_hoi: "Phong cách tạo hình tổng thể của khung hình thuộc nhóm nào?"
+    gia_tri:
+      - dien_anh_kich_tinh
+      - san_khau_mv
+      - chan_dung_studio
+      - doi_thuong_tai_lieu
+      - do_hoa_hien_dai_thuy_si
+      - poster_su_kien_thuong_hieu
+      - toi_gian
+      - sieu_thuc_y_niem
+    can_moc: false
+
+  - ma: bieu_tuong
+    cau_hoi: "Yếu tố ẩn dụ hoặc biểu tượng thị giác đáng chú ý nhất là gì và đặt tại đâu?"
+    gia_tri:
+      - tuong_phan_sang_toi
+      - phan_chieu_guong_bong
+      - hinh_hoc_bien_dang
+      - mau_sac_an_du
+      - dao_cu_bieu_trung
+      - chu_tao_hinh
+      - khong_ro
+    can_moc: true
+
+  - ma: cam_xuc
+    cau_hoi: "Sắc thái cảm xúc chủ đạo mà khung hình truyền tải là gì?"
+    gia_tri:
+      - kich_tinh_cang_thang
+      - lang_dong_u_buon
+      - am_ap_gan_gui
+      - bi_an_lanh_lung
+      - nang_dong_ruc_ro
+      - trang_trong_chuan_muc
+      - vui_tuoi_phong_khoang
+      - tinh_lang_chiem_nghiem
+    can_moc: false
+
+  # 7 thành phần thị giác Bruce Block (The Visual Story)
+  - ma: khong_gian
+    cau_hoi: "Không gian thị giác (chiều sâu phối cảnh so với mặt phẳng 2D) vận hành theo tương phản hay tương đồng?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: duong_net
+    cau_hoi: "Hệ thống đường nét (hướng, độ cong/thẳng, độ dày) tạo sự tương phản hay tương đồng?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: hinh_khoi
+    cau_hoi: "Hình dáng và khối cơ bản (vuông, tròn, tam giác, hữu cơ/hình học) tương phản hay tương đồng?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: sac_do
+    cau_hoi: "Phân bố sắc độ sáng tối giữa các mảng/lớp tạo tương phản mạnh hay tương đồng êm?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: mau
+    cau_hoi: "Quan hệ màu sắc (tông màu, độ bão hoà, nóng/lạnh) vận hành theo tương phản hay tương đồng?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: chuyen_dong
+    cau_hoi: "Hướng động thị giác (lực hút mắt, hướng nghiêng/nhìn, vệt mờ) tạo tương phản hay tương đồng?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false
+
+  - ma: nhip
+    cau_hoi: "Nhịp điệu lặp lại và khoảng cách giữa các yếu tố thị giác mang tính tương phản (đột ngột, biến đổi) hay tương đồng (đều đặn)?"
+    gia_tri:
+      - tuong_phan
+      - tuong_dong
+    can_moc: false

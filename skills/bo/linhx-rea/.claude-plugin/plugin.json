@@ -1,0 +1,15 @@
+{
+  "name": "linhx-rea",
+  "version": "0.1.0",
+  "description": "Bộ skill phân tích ngược cấu trúc và thẩm mỹ (ảnh, video, sách, báo cáo, bài viết) theo hai tầng: máy đo định lượng và agent đọc có mốc.",
+  "author": {
+    "name": "linhx"
+  },
+  "license": "MIT",
+  "keywords": [
+    "rea",
+    "reverse-engineering",
+    "aesthetics",
+    "rea-anh"
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "anh": "anh_mau_tu_sinh.png",
+  "trang_thai": "da_dien",
+  "nguoi_doc": "agy-mau",
+  "tra_loi": [
+    {
+      "ma": "chu_the_chinh",
+      "gia_tri": "hinh_khoi_do_hoa",
+      "ghi_chu": "Hình tròn đỏ cam bão hoà cao đặt gần tâm khung hình trên nền xanh than tối.",
+      "moc": {
+        "x": 0.5,
+        "y": 0.48
+      }
+    },
+    {
+      "ma": "chu_the_phu",
+      "gia_tri": "mang_hinh_trang_tri",
+      "ghi_chu": "Khối chữ nhật xám sáng ở cánh phải làm đối trọng thị giác với khối tròn trung tâm.",
+      "moc": {
+        "vung": "B3"
+      }
+    },
+    {
+      "ma": "duong_dan_mat",
+      "gia_tri": "duong_cheo",
+      "ghi_chu": "Dải sáng chéo xuất phát từ góc trái-trên dẫn thẳng ánh nhìn vào khối tròn đỏ tại B2.",
+      "moc": {
+        "hop": [
+          0.06,
+          0.08,
+          0.56,
+          0.56
+        ]
+      }
+    },
+    {
+      "ma": "anh_sang_huong",
+      "gia_tri": "chech_trai",
+      "ghi_chu": "Điểm loé sáng lệch phía trên-trái mặt khối tròn tạo cảm giác nguồn chiếu chếch trái.",
+      "moc": {
+        "x": 0.47,
+        "y": 0.45
+      }
+    },
+    {
+      "ma": "anh_sang_cung_mem",
+      "gia_tri": "vua_ro_khoi",
+      "ghi_chu": "Biên mảng hình học rõ ràng kèm vành chuyển tiếp nhẹ quanh khối chính."
+    },
+    {
+      "ma": "nhiet_mau",
+      "gia_tri": "tuong_phan_nong_lanh",
+      "ghi_chu": "Đối lập trực diện giữa nền xanh than lạnh và tâm điểm đỏ cam nóng."
+    },
+    {
+      "ma": "chat_lieu",
+      "gia_tri": "mang_vector_phang",
+      "ghi_chu": "Các mảng màu đồ hoạ phẳng sắc cạnh, không nhiễu hạt.",
+      "moc": {
+        "vung": "B2"
+      }
+    },
+    {
+      "ma": "phong_cach",
+      "gia_tri": "toi_gian",
+      "ghi_chu": "Tối giản hoá xuống 3 yếu tố hình học cơ bản để gom lực hút mắt."
+    },
+    {
+      "ma": "bieu_tuong",
+      "gia_tri": "mau_sac_an_du",
+      "ghi_chu": "Đốm đỏ nóng đơn độc giữa không gian lạnh biểu trưng cho tiêu điểm năng lượng.",
+      "moc": {
+        "x": 0.5,
+        "y": 0.48
+      }
+    },
+    {
+      "ma": "cam_xuc",
+      "gia_tri": "kich_tinh_cang_thang",
+      "ghi_chu": "Độ chênh sắc độ và nhiệt màu cao tạo điểm tụ dồn nén."
+    },
+    {
+      "ma": "khong_gian",
+      "gia_tri": "tuong_dong",
+      "ghi_chu": "Không gian đồ hoạ phẳng phân lớp đơn giản, ít biến thiên phối cảnh phức tạp."
+    },
+    {
+      "ma": "duong_net",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Đường chéo nghiêng cắt qua hệ cạnh đứng-ngang của khối chữ nhật."
+    },
+    {
+      "ma": "hinh_khoi",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Đối lập hình học giữa khối tròn trung tâm, dải đa giác chéo và khối chữ nhật đứng."
+    },
+    {
+      "ma": "sac_do",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Nền tối sâu tách bạch mạnh với khối xám sáng và điểm nhấn trung tâm."
+    },
+    {
+      "ma": "mau",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Cặp màu nóng-lạnh đối xứng trên vòng màu làm bật ngay tiêu điểm số 1."
+    },
+    {
+      "ma": "chuyen_dong",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Vector lao chéo từ A1 xuống B2 va vào thế đứng tĩnh của khối chữ nhật B3."
+    },
+    {
+      "ma": "nhip",
+      "gia_tri": "tuong_phan",
+      "ghi_chu": "Khoảng cách và diện tích ba cụm hình biến đổi đột ngột thay vì lặp đều."
+    }
+  ],
+  "the_de_xuat": [
+    {
+      "ten": "Dẫn chéo vào điểm nhấn đỏ nóng trên nền lạnh tối",
+      "loai": "bo_cuc",
+      "moc": {
+        "vung": "B2"
+      },
+      "mo_ta": "Dải trung sắc chéo từ góc A1 dẫn mắt thẳng tới khối tròn đỏ cam bão hoà cao tại B2 trên nền xanh than tối >75% diện tích, đồng thời đặt một khối xám nhỏ ở B3 để giữ thăng bằng khung hình.",
+      "cach_lam": "Dành 75-85% khung cho nền lạnh độ sáng thấp (<0.20); đặt chủ thể màu nóng bão hoà cao chiếm 4-8% diện tích ở B2; thêm một đường dẫn chéo sắc độ trung gian nối từ góc ngoài vào chủ thể và một mảng trung tính nhỏ đối trọng phía bên kia.",
+      "khi_dung": "Dùng cho poster sự kiện, thumbnail hoặc keyframe cần khoá ánh nhìn tức khắc vào một vật thể hay biểu tượng duy nhất.",
+      "nguon": "anh_mau_tu_sinh.png"
+    }
+  ]
+}
