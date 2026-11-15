@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-code-bia-502
 phu_thuoc: yl-khoa-bia-502
+nhan: may-2 2026-11-15T14:45:16+0700
 
 Phiếu sửa lỗi 502 khi tạo bìa (kiosk Agentic Me, Yên Lam). Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, KHÔNG dựng server riêng (test tự createApp trong tiến trình), mỗi lệnh test timeout ≤ 300 s, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-bia-502 -b agy/yl-code-bia-502 origin/agy/yl-test-bia-502`.
