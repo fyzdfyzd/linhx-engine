@@ -18,6 +18,7 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
   LINHX_KHONG_TIEN_PHUT so phut khong tien truoc khi dung agy (mac dinh 10)
   LINHX_RAM_TOI_THIEU_GB nguong RAM trong toi thieu de nhan phieu (mac dinh 1.5)
   LINHX_GIOI_HAN_THU_MUC thu muc goc cho phep agy lam viec, vd D:\linhx
+  LINHX_VAI              vai tro may ghi vao ho so may, vd "Máy chính: code, điều phối"
 Chi stdlib, Python >= 3.9.
 """
 from contextlib import contextmanager
@@ -41,10 +42,16 @@ PHIEN_BAN = "0.1.1"
 DE_DAI = 6000  # ky tu; dai hon thi dua de qua file
 PHUT_TOI_DA_MAC_DINH = 40
 PHUT_KHONG_TIEN_MAC_DINH = 10
+NHIP_PHUT_MAC_DINH = 3.0
+GIOI_HAN_DONG_NHIP = 120
 NGUONG_RAM_TRONG_GB = 1.5
 SO_PHIEU_CODE_MAC_DINH = 1
 NHAN_BAT_KY_MAC_DINH = 1
 THU_MUC_ENGINE_CAM = "d:/linhx/linhx-engine"
+CAU_NHAC_CAN_LINH = (
+    "Nếu gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), "
+    "DỪNG việc đó và ghi khối `CAN-LINH: <việc>; LENH: <lệnh dán được nếu có>` trong câu trả lời."
+)
 GOC = Path(__file__).resolve().parent
 
 _SUBPROCESS_RUN_GOC = subprocess.run
@@ -313,7 +320,9 @@ def doc_env(tep_env=None):
         "nhan_bat_ky": _ep_cong_tac(os.environ.get("LINHX_NHAN_BAT_KY"), bool(NHAN_BAT_KY_MAC_DINH)),
         "tran_phut": _ep_so_duong(os.environ.get("LINHX_TRAN_PHUT"), PHUT_TOI_DA_MAC_DINH),
         "khong_tien_phut": _ep_so_duong(os.environ.get("LINHX_KHONG_TIEN_PHUT"), PHUT_KHONG_TIEN_MAC_DINH),
+        "nhip_phut": _ep_so_duong(os.environ.get("LINHX_NHIP_PHUT"), NHIP_PHUT_MAC_DINH),
         "nguong_ram_gb": _ep_so_duong(os.environ.get("LINHX_RAM_TOI_THIEU_GB"), NGUONG_RAM_TRONG_GB),
+        "vai_tro": os.environ.get("LINHX_VAI", "").strip(),
     }
     ok_tm, _ = kiem_tra_thu_muc_lam_viec(cfg["thu_muc"], cfg["gioi_han_thu_muc"])
     if ok_tm:
@@ -507,6 +516,30 @@ def _thu_muc_theo_doi(meta_viec: dict) -> tuple:
     return tuple(t.strip() for t in str(gia_tri).split(";") if t.strip() and Path(t.strip()).is_dir())
 
 
+def ghep_de_gui_agy(de_goc: str) -> str:
+    """Them huong dan CAN-LINH vao cuoi de gui agy (tranh chen trung neu da co)."""
+    goc = str(de_goc or "").rstrip()
+    if CAU_NHAC_CAN_LINH in goc:
+        return goc
+    if not goc:
+        return CAU_NHAC_CAN_LINH
+    return f"{goc}\n\n{CAU_NHAC_CAN_LINH}"
+
+
+def trich_dong_cuoi_agy(buf_out: list[bytes], buf_err: list[bytes], gioi_han: int = GIOI_HAN_DONG_NHIP) -> str:
+    """Lay dong stdout/stderr cuoi cung khong rong cua agy (cat <= gioi_han ky tu)."""
+    for buf in (buf_out, buf_err):
+        if not buf:
+            continue
+        duoi_bytes = b"".join(buf[-4:])[-8192:]
+        van_ban = duoi_bytes.decode("utf-8", errors="replace")
+        for dong in reversed(van_ban.splitlines()):
+            sach = " ".join(dong.strip().split())
+            if sach:
+                return sach[:gioi_han]
+    return "(chưa có đầu ra)"[:gioi_han]
+
+
 def _phan_tich_ket_qua_agy(returncode: int, giay_chay: float, stdout: str, stderr: str):
     nhat_ky = f"exit={returncode} giay={giay_chay:.0f}\n--- stderr ---\n{stderr[-8000:]}"
     out = stdout.strip()
@@ -562,7 +595,7 @@ def chay_agy(cfg, viec):
     if not ok_tm:
         return "loi", None, ly_do_tm, 0, 0
     thu_muc.mkdir(parents=True, exist_ok=True)
-    de = viec["de"]
+    de = ghep_de_gui_agy(viec["de"])
     if len(de) > DE_DAI:
         # Windows gioi han dong lenh 32.767 ky tu: de dai thi ghi ra file, -p chi tro toi file
         f = thu_muc / f"de-{viec['viec']}.md"
@@ -650,6 +683,13 @@ def chay_agy(cfg, viec):
     theo_doi = _thu_muc_theo_doi(meta_viec)
     dau_cu = _dau_nhip_tien_do(thu_muc, dem_byte, tep_log_raw, theo_doi)
     moc_tien_cuoi = t0
+    ham_ghi_nhip = cfg.get("_ghi_nhip_fn")
+    nhip_phut = _ep_so_duong(
+        cfg.get("nhip_phut"),
+        _ep_so_duong(os.environ.get("LINHX_NHIP_PHUT"), NHIP_PHUT_MAC_DINH),
+    )
+    nhip_giay = nhip_phut * 60.0
+    moc_nhip_cuoi = t0
     ly_do_dung = None
     buoc_nghi = min(1.0, max(0.01, min(tran_giay, khong_tien_giay) / 20.0))
 
@@ -662,6 +702,14 @@ def chay_agy(cfg, viec):
             if dau_moi != dau_cu:
                 dau_cu = dau_moi
                 moc_tien_cuoi = bay_gio
+            if ham_ghi_nhip is not None and (bay_gio - moc_nhip_cuoi) >= nhip_giay:
+                moc_nhip_cuoi = bay_gio
+                try:
+                    phut_da_chay = (bay_gio - t0) / 60.0
+                    dong_cuoi = trich_dong_cuoi_agy(buf_out, buf_err, GIOI_HAN_DONG_NHIP)
+                    ham_ghi_nhip(phut_da_chay, dong_cuoi)
+                except Exception:
+                    pass
             if (bay_gio - t0) >= tran_giay:
                 ly_do_dung = "qua_gio"
                 dung_tien_trinh_agy(proc)

@@ -436,16 +436,16 @@ def test_http_endpoints_html_json_ticket_detail_and_readonly(tmp_path: Path):
             html_body = resp_html.read().decode("utf-8")
 
         assert '<meta http-equiv="refresh" content="30">' in html_body
-        assert "1. Đang chạy" in html_body
-        assert "2. Đang chờ" in html_body
-        assert "3. Xong gần nhất" in html_body
-        assert "4. Trạng thái máy" in html_body
+        assert "Máy (" in html_body
+        assert "Đang chạy (" in html_body
+        assert "Đang chờ (" in html_body
+        assert "Xong gần nhất (" in html_body
         assert "6 phút" in html_body
         assert "tt-xong" in html_body
         assert "tt-loi" in html_body
         assert "tt-dung" in html_body
         assert 'class="qua-han"' in html_body
-        assert "Quá 30 phút không hoạt động" in html_body
+        assert "Im lặng &gt; 30 phút" in html_body
         assert 'href="/phieu/xong-ok"' in html_body
 
         # 3. Bấm vào phiếu xem KET-QUA.md (kiểm tra luôn chống XSS)

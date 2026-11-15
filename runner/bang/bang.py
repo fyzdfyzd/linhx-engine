@@ -33,8 +33,10 @@ DEFAULT_REMOTE = "origin"
 DEFAULT_FETCH_INTERVAL = 30.0
 INACTIVE_THRESHOLD_MINUTES = 30.0
 MAX_RECENT_DONE = 20
+LOW_DISK_C_THRESHOLD_GB = 10.0
 
 _HEADER_LINE_RE = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
+_NHIP_LINE_RE = re.compile(r"^nhip\s*:\s*(.+)$", re.IGNORECASE)
 _TZ_COMPACT_RE = re.compile(r"([+-]\d{2})(\d{2})$")
 _TOKEN_IN_RE = re.compile(r"vao\s*=\s*(\d+)", re.IGNORECASE)
 _TOKEN_OUT_RE = re.compile(r"ra\s*=\s*(\d+)", re.IGNORECASE)
@@ -257,6 +259,29 @@ def _summarize_text(text: str, max_len: int = 120) -> str:
     return single[: max(0, max_len - 3)] + "..."
 
 
+def _extract_nhip_and_clean_body(raw_body: str, meta: dict[str, str]) -> tuple[str, str]:
+    """Tách dòng `nhip: ...` ở cuối thân phiếu đang chạy (hoặc trong header) và trả về (nhip, than_sach)."""
+    nhip_val = (meta.get("nhip") or "").strip()
+    kept_lines: list[str] = []
+    for line in (raw_body or "").splitlines():
+        m = _NHIP_LINE_RE.match(line.strip())
+        if m:
+            nhip_val = m.group(1).strip()
+        else:
+            kept_lines.append(line)
+    return nhip_val, "\n".join(kept_lines).strip()
+
+
+def _extract_ket_reason(body: str, max_len: int = 90) -> str:
+    """Rút lý do ngắn gọn từ thân KET-QUA.md khi phiếu kết thúc `dung` hoặc `loi`."""
+    for raw_line in (body or "").splitlines():
+        s = raw_line.strip()
+        if not s or s.startswith("---"):
+            continue
+        return _summarize_text(s, max_len)
+    return _summarize_text(body or "", max_len)
+
+
 def _parse_claimed_info(meta: dict[str, str], fallback_machine: str) -> tuple[str, datetime | None]:
     """Tách tên máy và thời điểm nhận từ trường `nhan: <may> <thoi_gian>`."""
     claimed_raw = (meta.get("nhan") or "").strip()
@@ -307,6 +332,8 @@ def read_queue_snapshot(
 
     machine_events: dict[str, dict] = {}
     running_count_by_machine: dict[str, int] = {}
+    running_by_machine: dict[str, list[dict]] = {}
+    latest_done_by_machine: dict[str, dict] = {}
     known_machines: set[str] = set()
 
     def record_machine_event(machine_name: str, event_type: str, ticket_id: str, event_dt: datetime | None) -> None:
@@ -324,6 +351,72 @@ def read_queue_snapshot(
                 "phieu": ticket_id,
             }
 
+    # 0. Đọc hang-doi/can-linh/*.md (Cần anh làm)
+    can_linh_items: list[dict] = []
+    dir_can_linh = qroot / "can-linh"
+    if dir_can_linh.is_dir():
+        for cl_file in sorted(dir_can_linh.glob("*.md"), key=lambda p: p.name):
+            try:
+                raw_cl = cl_file.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            meta_cl, body_cl = parse_markdown_headers(raw_cl)
+            ticket_id = (meta_cl.get("phieu") or cl_file.stem).strip()
+            machine_cl = (meta_cl.get("may") or "chua-ro").strip().lower()
+            if machine_cl and machine_cl not in ("bat-ky", "*", "all", "tat-ca", "chua-ro", "(khong)"):
+                known_machines.add(machine_cl)
+            viec_cl = (meta_cl.get("viec") or body_cl or ticket_id).strip()
+            lenh_cl = (meta_cl.get("lenh") or "").strip()
+            gio_dt = _file_timestamp(cl_file, clone_dir, git_times, meta_cl.get("gio"))
+            can_linh_items.append(
+                {
+                    "id": cl_file.stem,
+                    "may": machine_cl,
+                    "phieu": ticket_id,
+                    "viec": viec_cl,
+                    "lenh": lenh_cl,
+                    "gio": format_iso(gio_dt),
+                    "gio_hien_thi": format_display_time(gio_dt),
+                    "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
+                    "_sort_ts": gio_dt.timestamp() if gio_dt else 0.0,
+                }
+            )
+    can_linh_items.sort(key=lambda item: (-item["_sort_ts"], item["phieu"]))
+    for item in can_linh_items:
+        item.pop("_sort_ts", None)
+
+    # 0b. Đọc hang-doi/may/*.json (Hồ sơ máy)
+    profiles_by_machine: dict[str, dict] = {}
+    dir_profiles = qroot / "may"
+    if dir_profiles.is_dir():
+        for prof_file in sorted(dir_profiles.glob("*.json"), key=lambda p: p.name):
+            try:
+                prof_data = json.loads(prof_file.read_text(encoding="utf-8", errors="replace"))
+            except (OSError, ValueError, TypeError):
+                continue
+            if not isinstance(prof_data, dict):
+                continue
+            m_code = str(prof_data.get("ma_may") or prof_file.stem).strip().lower()
+            if not m_code or m_code in ("bat-ky", "*", "all", "tat-ca"):
+                continue
+            known_machines.add(m_code)
+            # Cảnh báo ổ C dưới 10 GB
+            low_disk_c = False
+            disk_c_free = None
+            for od in prof_data.get("o_dia") or []:
+                if isinstance(od, dict) and str(od.get("o") or "").strip().upper().rstrip("\\/") == "C:":
+                    try:
+                        disk_c_free = float(od.get("trong_gb"))
+                        if disk_c_free < LOW_DISK_C_THRESHOLD_GB:
+                            low_disk_c = True
+                    except (ValueError, TypeError):
+                        pass
+            prof_enriched = dict(prof_data)
+            prof_enriched["ma_may"] = m_code
+            prof_enriched["canh_bao_o_c"] = low_disk_c
+            prof_enriched["o_c_trong_gb"] = disk_c_free
+            profiles_by_machine[m_code] = prof_enriched
+
     # 1. Đọc hang-doi/dang/*.md (Đang chạy)
     running_items: list[dict] = []
     dir_running = qroot / "dang"
@@ -334,11 +427,14 @@ def read_queue_snapshot(
             except OSError:
                 continue
             ticket_id = md_file.stem
-            meta, body = parse_markdown_headers(raw_text)
+            meta, raw_body = parse_markdown_headers(raw_text)
+            nhip_line, body = _extract_nhip_and_clean_body(raw_body, meta)
             target_machine = (meta.get("may") or "bat-ky").strip().lower()
             claimed_machine, claimed_dt = _parse_claimed_info(meta, target_machine)
+            file_dt = _file_timestamp(md_file, clone_dir, git_times)
             if claimed_dt is None:
-                claimed_dt = _file_timestamp(md_file, clone_dir, git_times)
+                claimed_dt = file_dt
+            last_active_dt = file_dt if (nhip_line and file_dt and claimed_dt and file_dt > claimed_dt) else claimed_dt
 
             elapsed_sec = max(0.0, (current_time - claimed_dt).total_seconds()) if claimed_dt else 0.0
             try:
@@ -347,27 +443,31 @@ def read_queue_snapshot(
                 limit_min = 40.0
 
             kind = (meta.get("loai") or "code").strip().lower()
+            record_machine_event(claimed_machine, "nhan", ticket_id, last_active_dt)
+
+            run_entry = {
+                "phieu": ticket_id,
+                "may": claimed_machine,
+                "loai": kind,
+                "nhan_luc": format_iso(claimed_dt),
+                "nhan_luc_hien_thi": format_display_time(claimed_dt),
+                "chay_giay": int(round(elapsed_sec)),
+                "chay_phut": round(elapsed_sec / 60.0, 2),
+                "chay_bao_lau": format_duration_vi(elapsed_sec) if claimed_dt else "—",
+                "tran_phut": int(limit_min) if limit_min.is_integer() else limit_min,
+                "nhip": nhip_line,
+                "de": _summarize_text(body or ticket_id),
+                "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
+                "_sort_ts": claimed_dt.timestamp() if claimed_dt else 0.0,
+            }
             if claimed_machine not in ("bat-ky", "chua-ro"):
                 running_count_by_machine[claimed_machine] = running_count_by_machine.get(claimed_machine, 0) + 1
-            record_machine_event(claimed_machine, "nhan", ticket_id, claimed_dt)
+                running_by_machine.setdefault(claimed_machine, []).append(run_entry)
 
-            running_items.append(
-                {
-                    "phieu": ticket_id,
-                    "may": claimed_machine,
-                    "loai": kind,
-                    "nhan_luc": format_iso(claimed_dt),
-                    "nhan_luc_hien_thi": format_display_time(claimed_dt),
-                    "chay_giay": int(round(elapsed_sec)),
-                    "chay_phut": round(elapsed_sec / 60.0, 2),
-                    "chay_bao_lau": format_duration_vi(elapsed_sec) if claimed_dt else "—",
-                    "tran_phut": int(limit_min) if limit_min.is_integer() else limit_min,
-                    "de": _summarize_text(body or ticket_id),
-                    "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
-                    "_sort_ts": claimed_dt.timestamp() if claimed_dt else 0.0,
-                }
-            )
+            running_items.append(run_entry)
     running_items.sort(key=lambda item: (-item["_sort_ts"], item["phieu"]))
+    for m_runs in running_by_machine.values():
+        m_runs.sort(key=lambda item: (-item["_sort_ts"], item["phieu"]))
     for item in running_items:
         item.pop("_sort_ts", None)
 
@@ -443,44 +543,85 @@ def read_queue_snapshot(
             )
             record_machine_event(machine_name, "xong", ticket_id, done_dt)
 
-            all_done_items.append(
-                {
-                    "phieu": ticket_id,
-                    "may": machine_name,
-                    "trang_thai": status,
-                    "phut": minutes_val,
-                    "token": token_raw,
-                    "token_vao": tok_in,
-                    "token_ra": tok_out,
-                    "tong_token": tok_total,
-                    "tep_doi": (meta.get("tep_doi") or "(khong)").strip(),
-                    "drive": (meta.get("drive") or "(khong)").strip(),
-                    "xong_luc": format_iso(done_dt),
-                    "xong_luc_hien_thi": format_display_time(done_dt),
-                    "tom_tat": _summarize_text(body, 100),
-                    "ket_qua": raw_kq,
-                    "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
-                    "_sort_ts": done_dt.timestamp() if done_dt else 0.0,
-                }
-            )
+            done_entry = {
+                "phieu": ticket_id,
+                "may": machine_name,
+                "trang_thai": status,
+                "phut": minutes_val,
+                "token": token_raw,
+                "token_vao": tok_in,
+                "token_ra": tok_out,
+                "tong_token": tok_total,
+                "tep_doi": (meta.get("tep_doi") or "(khong)").strip(),
+                "drive": (meta.get("drive") or "(khong)").strip(),
+                "xong_luc": format_iso(done_dt),
+                "xong_luc_hien_thi": format_display_time(done_dt),
+                "tom_tat": _summarize_text(body, 100),
+                "ly_do_ngan": _extract_ket_reason(body, 90) if status in ("loi", "dung") else "",
+                "ket_qua": raw_kq,
+                "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
+                "_sort_ts": done_dt.timestamp() if done_dt else 0.0,
+            }
+            all_done_items.append(done_entry)
+            if machine_name and machine_name not in ("bat-ky", "chua-ro", "(khong)"):
+                prev_done = latest_done_by_machine.get(machine_name)
+                if prev_done is None or done_entry["_sort_ts"] >= prev_done["_sort_ts"]:
+                    latest_done_by_machine[machine_name] = dict(done_entry)
 
     all_done_items.sort(key=lambda item: (-item["_sort_ts"], item["phieu"]))
     recent_done = all_done_items[: max(0, int(max_done))]
     for item in recent_done:
         item.pop("_sort_ts", None)
 
-    # 4. Tổng hợp trạng thái từng máy (quá 30 phút không nhận/xong phiếu -> đỏ)
+    # 4. Tổng hợp trạng thái từng máy: đang làm gì (phiếu + phút + nhip), trạng thái (chạy / rảnh / kẹt / im lặng > 30p)
     machines_list: list[dict] = []
+    ho_so_list: list[dict] = []
     for machine_name in sorted(known_machines):
         ev = machine_events.get(machine_name)
+        m_runs = running_by_machine.get(machine_name) or []
+        run_primary = m_runs[0] if m_runs else None
+        last_done = latest_done_by_machine.get(machine_name)
+        prof = profiles_by_machine.get(machine_name)
+        if prof is not None:
+            ho_so_list.append(prof)
+
+        nhip_may = (run_primary.get("nhip") or "") if run_primary else ""
+        dang_lam_phieu = run_primary["phieu"] if run_primary else ""
+        dang_lam_phut = run_primary["chay_phut"] if run_primary else 0.0
+
+        # Kiểm tra dừng/lỗi gần nhất của máy
+        ket_phieu = ""
+        ket_trang_thai = ""
+        ket_ly_do = ""
+        if last_done and last_done.get("trang_thai") in ("loi", "dung"):
+            ket_phieu = last_done["phieu"]
+            ket_trang_thai = last_done["trang_thai"]
+            ket_ly_do = last_done.get("ly_do_ngan") or last_done.get("tom_tat") or ket_trang_thai
+
         if ev is not None:
             last_dt: datetime = ev["dt"]
             idle_sec = max(0.0, (current_time - last_dt).total_seconds())
             idle_min = idle_sec / 60.0
             is_overdue = idle_min > float(inactive_minutes)
+            if run_primary is not None:
+                tt_may = "im-lang" if is_overdue else "chay"
+            elif ket_phieu:
+                tt_may = "ket"
+            elif is_overdue:
+                tt_may = "im-lang"
+            else:
+                tt_may = "ranh"
+
             machines_list.append(
                 {
                     "may": machine_name,
+                    "trang_thai_may": tt_may,
+                    "dang_lam_phieu": dang_lam_phieu,
+                    "dang_lam_phut": dang_lam_phut,
+                    "nhip": nhip_may,
+                    "ket_phieu": ket_phieu,
+                    "ket_trang_thai": ket_trang_thai,
+                    "ket_ly_do": ket_ly_do,
                     "su_kien_cuoi": ev["su_kien"],
                     "phieu_cuoi": ev["phieu"],
                     "lan_cuoi": format_iso(last_dt),
@@ -489,31 +630,63 @@ def read_queue_snapshot(
                     "khong_hoat_dong_phut": round(idle_min, 2),
                     "qua_30_phut": is_overdue,
                     "dang_chay_so_luong": running_count_by_machine.get(machine_name, 0),
+                    "vai_tro": (prof or {}).get("vai_tro") or "",
+                    "canh_bao_o_c": bool((prof or {}).get("canh_bao_o_c")),
                 }
             )
         else:
+            # Nếu máy mới đăng ký hồ sơ may/<id>.json gần đây mà chưa chạy phiếu nào
+            prof_dt = parse_iso_datetime((prof or {}).get("cap_nhat_luc")) if prof else None
+            if prof_dt is not None:
+                idle_sec = max(0.0, (current_time - prof_dt).total_seconds())
+                idle_min = idle_sec / 60.0
+                is_overdue = idle_min > float(inactive_minutes)
+                tt_may = "im-lang" if is_overdue else "ranh"
+                lan_cuoi_iso = format_iso(prof_dt)
+                lan_cuoi_ht = format_display_time(prof_dt)
+                cach_day_txt = f"{format_duration_vi(idle_sec)} trước"
+                khong_hd_phut = round(idle_min, 2)
+            else:
+                is_overdue = True
+                tt_may = "im-lang"
+                lan_cuoi_iso = ""
+                lan_cuoi_ht = "Chưa từng hoạt động"
+                cach_day_txt = "—"
+                khong_hd_phut = None
+
             machines_list.append(
                 {
                     "may": machine_name,
+                    "trang_thai_may": tt_may,
+                    "dang_lam_phieu": "",
+                    "dang_lam_phut": 0.0,
+                    "nhip": "",
+                    "ket_phieu": ket_phieu,
+                    "ket_trang_thai": ket_trang_thai,
+                    "ket_ly_do": ket_ly_do,
                     "su_kien_cuoi": "chua-co",
                     "phieu_cuoi": "",
-                    "lan_cuoi": "",
-                    "lan_cuoi_hien_thi": "Chưa từng hoạt động",
-                    "cach_day": "—",
-                    "khong_hoat_dong_phut": None,
-                    "qua_30_phut": True,
+                    "lan_cuoi": lan_cuoi_iso,
+                    "lan_cuoi_hien_thi": lan_cuoi_ht,
+                    "cach_day": cach_day_txt,
+                    "khong_hoat_dong_phut": khong_hd_phut,
+                    "qua_30_phut": is_overdue,
                     "dang_chay_so_luong": 0,
+                    "vai_tro": (prof or {}).get("vai_tro") or "",
+                    "canh_bao_o_c": bool((prof or {}).get("canh_bao_o_c")),
                 }
             )
 
     return {
         "cap_nhat_luc": format_iso(current_time),
         "cap_nhat_hien_thi": format_display_time(current_time),
+        "can_linh": can_linh_items,
         "dang_chay": running_items,
         "dang_cho": waiting_items,
         "tong_xong": len(all_done_items),
         "xong_gan_nhat": recent_done,
         "may": machines_list,
+        "ho_so_may": ho_so_list,
     }
 
 
@@ -754,31 +927,48 @@ _COMMON_CSS = """
   --err-fg: #991b1b;
   --warn-bg: #fef3c7;
   --warn-fg: #92400e;
+  --run-bg: #dbeafe;
+  --run-fg: #1e40af;
 }
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  padding: 16px;
+  padding: 12px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.45;
   background: var(--bg);
   color: var(--text);
 }
-.wrap { max-width: 1180px; margin: 0 auto; }
+.wrap { max-width: 1120px; margin: 0 auto; }
 header {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
   border-bottom: 1px solid var(--border);
 }
-h1 { margin: 0; font-size: 20px; }
+h1 { margin: 0; font-size: 18px; }
 h2 { margin: 0 0 8px 0; font-size: 15px; }
-.meta { color: var(--muted); font-size: 13px; }
+.meta { color: var(--muted); font-size: 12.5px; }
+nav.tabs { display: flex; gap: 6px; align-items: center; }
+nav.tabs a {
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-weight: 600;
+  font-size: 13px;
+}
+nav.tabs a.active {
+  background: var(--text);
+  color: #ffffff;
+  border-color: var(--text);
+}
 .err-banner {
   background: var(--err-bg);
   color: var(--err-fg);
@@ -787,23 +977,43 @@ h2 { margin: 0 0 8px 0; font-size: 15px; }
   border-radius: 6px;
   margin-bottom: 12px;
 }
-.grid-top {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 14px;
-  margin-bottom: 14px;
+section.can-linh-box {
+  background: #fef2f2;
+  border: 2px solid #dc2626;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
 }
-@media (min-width: 900px) {
-  .grid-top { grid-template-columns: 1.2fr 1fr; }
+section.can-linh-box h2 {
+  color: #991b1b;
+  margin: 0 0 6px 0;
+  font-size: 15px;
+}
+.can-linh-item {
+  padding: 6px 0;
+  border-top: 1px solid #fecaca;
+}
+.can-linh-item:first-of-type { border-top: none; padding-top: 2px; }
+.cmd-paste {
+  display: block;
+  margin-top: 4px;
+  padding: 5px 8px;
+  background: #1e293b;
+  color: #f8fafc;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12.5px;
+  overflow-x: auto;
+  user-select: all;
 }
 section.card {
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
-  margin-bottom: 14px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
 }
-.grid-top section.card { margin-bottom: 0; }
+.table-wrap { overflow-x: auto; }
 table {
   width: 100%;
   border-collapse: collapse;
@@ -818,13 +1028,13 @@ th, td {
 th {
   color: var(--muted);
   font-weight: 600;
-  font-size: 12.5px;
+  font-size: 12px;
   white-space: nowrap;
 }
 tr:last-child td { border-bottom: none; }
 a { color: var(--link); text-decoration: none; font-weight: 500; }
 a:hover { text-decoration: underline; }
-.empty { color: var(--muted); font-style: italic; padding: 6px 0; margin: 0; }
+.empty { color: var(--muted); font-style: italic; padding: 4px 0; margin: 0; }
 .badge {
   display: inline-block;
   padding: 1px 8px;
@@ -834,11 +1044,66 @@ a:hover { text-decoration: underline; }
   white-space: nowrap;
 }
 .tt-xong, .may-ok { background: var(--ok-bg); color: var(--ok-fg); }
+.tt-chay { background: var(--run-bg); color: var(--run-fg); }
 .tt-loi, .may-do { background: var(--err-bg); color: var(--err-fg); }
-.tt-dung { background: var(--warn-bg); color: var(--warn-fg); }
+.tt-dung, .may-ket { background: var(--warn-bg); color: var(--warn-fg); }
 tr.qua-han td { background: #fef2f2; color: var(--err-fg); }
 tr.qua-han a { color: var(--err-fg); text-decoration: underline; }
+.nhip-line {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  margin-top: 2px;
+  word-break: break-word;
+}
+.ket-note { color: var(--err-fg); font-size: 12.5px; margin-top: 2px; }
 .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cards-may {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 760px) {
+  .cards-may { grid-template-columns: repeat(2, 1fr); }
+}
+.may-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+.may-card.warn-disk { border-color: #dc2626; }
+.may-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.vai-tro { color: #0f172a; font-weight: 500; font-size: 13px; margin-bottom: 8px; }
+.spec-list { margin: 0; padding: 0; list-style: none; font-size: 13px; }
+.spec-list li { padding: 3px 0; border-bottom: 1px dashed var(--border); }
+.spec-list li:last-child { border-bottom: none; }
+.bar-row { margin: 6px 0; font-size: 12.5px; }
+.bar-track {
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 3px;
+}
+.bar-fill { height: 100%; background: #2563eb; }
+.bar-fill.warn { background: #dc2626; }
+.disk-alert {
+  background: var(--err-bg);
+  color: var(--err-fg);
+  border: 1px solid #fca5a5;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-weight: 600;
+  font-size: 12.5px;
+  margin-bottom: 8px;
+}
 pre.ket-qua {
   background: #0f172a;
   color: #f8fafc;
@@ -858,9 +1123,59 @@ def _esc(val) -> str:
     return html.escape(str(val if val is not None else ""), quote=True)
 
 
-def render_dashboard_html(data: dict) -> str:
-    """Sinh HTML trang chủ tối giản bằng tiếng Việt, tự làm mới 30 giây."""
+def _render_can_linh_block(can_linh: list[dict]) -> str:
+    """Sinh khối đỏ 'Cần anh làm' trên cùng trang (ẩn hoàn toàn khi rỗng)."""
+    if not can_linh:
+        return ""
+    items_html = []
+    for cl in can_linh:
+        phieu = cl.get("phieu") or cl.get("id") or ""
+        href = cl.get("ket_qua_url") or f"/phieu/{urllib.parse.quote(phieu)}"
+        lenh = (cl.get("lenh") or "").strip()
+        lenh_html = f'<code class="cmd-paste">{_esc(lenh)}</code>' if lenh else ""
+        items_html.append(
+            '<div class="can-linh-item">'
+            f'<strong>{_esc(cl.get("may") or "máy")}</strong> · '
+            f'<a href="{_esc(href)}">{_esc(phieu)}</a>: '
+            f'<span>{_esc(cl.get("viec") or "")}</span> '
+            f'<span class="meta">({_esc(cl.get("gio_hien_thi") or "")})</span>'
+            f"{lenh_html}"
+            "</div>"
+        )
+    return (
+        '<section class="can-linh-box">'
+        f"<h2>Cần anh làm ({len(can_linh)})</h2>"
+        + "".join(items_html)
+        + "</section>"
+    )
+
+
+def _render_header_nav(active_tab: str, data: dict) -> str:
     refresh_sec = int(data.get("chu_ky_giay") or 30)
+    sync_disp = _esc(data.get("dong_bo_hien_thi") or "—")
+    updated_disp = _esc(data.get("cap_nhat_hien_thi") or "—")
+    cls_home = ' class="active"' if active_tab == "bang" else ""
+    cls_may = ' class="active"' if active_tab == "may" else ""
+    cnt_may = len(data.get("ho_so_may") or data.get("may") or [])
+    return f"""<header>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <h1>LINHX Hàng đợi</h1>
+        <nav class="tabs">
+          <a href="/"{cls_home}>Bảng trực</a>
+          <a href="/may"{cls_may}>Máy ({cnt_may})</a>
+        </nav>
+      </div>
+      <div class="meta">
+        Cập nhật: {updated_disp} · Git: {sync_disp} · {refresh_sec}s ·
+        <a href="/api/trang-thai">JSON</a>
+      </div>
+    </header>"""
+
+
+def render_dashboard_html(data: dict) -> str:
+    """Sinh HTML trang chủ tối giản đọc trong 5 giây trên điện thoại, tự làm mới 30 giây."""
+    refresh_sec = int(data.get("chu_ky_giay") or 30)
+    can_linh = data.get("can_linh") or []
     running = data.get("dang_chay") or []
     waiting = data.get("dang_cho") or []
     done_list = data.get("xong_gan_nhat") or []
@@ -872,14 +1187,89 @@ def render_dashboard_html(data: dict) -> str:
         if sync_err
         else ""
     )
+    can_linh_html = _render_can_linh_block(can_linh)
 
-    # (1) Đang chạy
+    # Bảng chính: mỗi máy 1 dòng (đang làm gì + trạng thái chạy / rảnh / kẹt / im lặng > 30p)
+    if machines:
+        rows_machine = []
+        for m in machines:
+            is_red = bool(m.get("qua_30_phut"))
+            tt_may = m.get("trang_thai_may") or ("im-lang" if is_red else "ranh")
+            row_cls = ' class="qua-han"' if is_red else ""
+
+            # Cột Đang làm gì: phiếu + phút + dòng nhip
+            dang_phieu = m.get("dang_lam_phieu") or ""
+            nhip_txt = m.get("nhip") or ""
+            if dang_phieu:
+                phut_so = int(round(float(m.get("dang_lam_phut") or 0)))
+                href_run = f"/phieu/{urllib.parse.quote(dang_phieu)}"
+                extra_cnt = int(m.get("dang_chay_so_luong") or 1)
+                extra_txt = f" (+{extra_cnt - 1})" if extra_cnt > 1 else ""
+                nhip_div = f'<div class="nhip-line">{_esc(nhip_txt)}</div>' if nhip_txt else ""
+                doing_html = (
+                    f'<a href="{_esc(href_run)}">{_esc(dang_phieu)}</a>'
+                    f'{_esc(extra_txt)} · <span class="num">{phut_so} phút</span>'
+                    f"{nhip_div}"
+                )
+            else:
+                ev_kind = m.get("su_kien_cuoi") or ""
+                ev_ticket = m.get("phieu_cuoi") or ""
+                if ev_kind in ("nhan", "xong") and ev_ticket:
+                    verb = "nhận" if ev_kind == "nhan" else "xong"
+                    ticket_href = f"/phieu/{urllib.parse.quote(ev_ticket)}"
+                    ago = m.get("cach_day") or ""
+                    ago_part = f" ({_esc(ago)})" if ago and ago != "—" else ""
+                    doing_html = f'<span class="meta">Rảnh · mới {verb} <a href="{_esc(ticket_href)}">{_esc(ev_ticket)}</a>{ago_part}</span>'
+                else:
+                    doing_html = '<span class="meta">Chưa nhận việc</span>'
+
+            # Cột Trạng thái: chạy / rảnh / kẹt (dừng-lỗi kèm lý do) / im lặng > 30 phút đỏ
+            ket_phieu = m.get("ket_phieu") or ""
+            ket_tt = m.get("ket_trang_thai") or ""
+            ket_ly_do = m.get("ket_ly_do") or ""
+            ket_extra = ""
+            if ket_phieu:
+                ket_href = f"/phieu/{urllib.parse.quote(ket_phieu)}"
+                ket_extra = (
+                    f'<div class="ket-note">Kẹt ({_esc(ket_tt)}) '
+                    f'<a href="{_esc(ket_href)}">{_esc(ket_phieu)}</a>: {_esc(ket_ly_do)}</div>'
+                )
+
+            if is_red:
+                badge_html = '<span class="badge may-do">Im lặng &gt; 30 phút</span>'
+            elif tt_may == "chay":
+                badge_html = '<span class="badge tt-chay">Chạy</span>'
+            elif tt_may == "ket":
+                badge_html = f'<span class="badge may-ket">Kẹt ({_esc(ket_tt or "lỗi")})</span>'
+            else:
+                badge_html = '<span class="badge may-ok">Rảnh</span>'
+
+            disk_badge = ' <span class="badge may-do">Ổ C &lt; 10GB</span>' if m.get("canh_bao_o_c") else ""
+            vai_html = f'<div class="meta">{_esc(m["vai_tro"])}</div>' if m.get("vai_tro") else ""
+
+            rows_machine.append(
+                f"<tr{row_cls}>"
+                f"<td><strong>{_esc(m['may'])}</strong>{disk_badge}{vai_html}</td>"
+                f"<td>{doing_html}</td>"
+                f"<td>{badge_html}{ket_extra}</td>"
+                "</tr>"
+            )
+        machines_html = (
+            '<div class="table-wrap"><table><thead><tr>'
+            "<th>Máy</th><th>Đang làm gì</th><th>Trạng thái</th>"
+            "</tr></thead><tbody>" + "".join(rows_machine) + "</tbody></table></div>"
+        )
+    else:
+        machines_html = '<p class="empty">Chưa ghi nhận máy nào.</p>'
+
+    # Đang chạy chi tiết
     if running:
         rows_run = []
         for item in running:
+            nhip_cell = f'<div class="nhip-line">{_esc(item["nhip"])}</div>' if item.get("nhip") else ""
             rows_run.append(
                 "<tr>"
-                f'<td><a href="{_esc(item["ket_qua_url"])}">{_esc(item["phieu"])}</a></td>'
+                f'<td><a href="{_esc(item["ket_qua_url"])}">{_esc(item["phieu"])}</a>{nhip_cell}</td>'
                 f"<td><code>{_esc(item['may'])}</code></td>"
                 f"<td>{_esc(item['loai'])}</td>"
                 f'<td class="num">{_esc(item["chay_bao_lau"])}</td>'
@@ -887,50 +1277,14 @@ def render_dashboard_html(data: dict) -> str:
                 "</tr>"
             )
         running_html = (
-            "<table><thead><tr>"
+            '<div class="table-wrap"><table><thead><tr>'
             "<th>Phiếu</th><th>Máy</th><th>Loại</th><th>Chạy bao lâu</th><th>Nhận lúc</th>"
-            "</tr></thead><tbody>" + "".join(rows_run) + "</tbody></table>"
+            "</tr></thead><tbody>" + "".join(rows_run) + "</tbody></table></div>"
         )
     else:
         running_html = '<p class="empty">Không có phiếu đang chạy.</p>'
 
-    # (4) Mỗi máy
-    if machines:
-        rows_machine = []
-        for m in machines:
-            is_red = bool(m.get("qua_30_phut"))
-            row_cls = ' class="qua-han"' if is_red else ""
-            badge_cls = "badge may-do" if is_red else "badge may-ok"
-            status_label = "Quá 30 phút không hoạt động" if is_red else "Hoạt động"
-            ev_kind = m.get("su_kien_cuoi") or ""
-            ev_ticket = m.get("phieu_cuoi") or ""
-            if ev_kind in ("nhan", "xong") and ev_ticket:
-                verb = "nhận" if ev_kind == "nhan" else "xong"
-                ticket_href = f"/phieu/{urllib.parse.quote(ev_ticket)}"
-                ev_html = f'{verb} <a href="{_esc(ticket_href)}">{_esc(ev_ticket)}</a>'
-            else:
-                ev_html = "—"
-            last_txt = _esc(m.get("lan_cuoi_hien_thi") or "—")
-            ago_txt = m.get("cach_day") or ""
-            if ago_txt and ago_txt != "—":
-                last_txt = f"{last_txt} ({_esc(ago_txt)})"
-            rows_machine.append(
-                f"<tr{row_cls}>"
-                f"<td><strong>{_esc(m['may'])}</strong></td>"
-                f'<td class="num">{last_txt}</td>'
-                f"<td>{ev_html}</td>"
-                f'<td><span class="{badge_cls}">{status_label}</span></td>'
-                "</tr>"
-            )
-        machines_html = (
-            "<table><thead><tr>"
-            "<th>Máy</th><th>Lần cuối nhận/xong</th><th>Sự kiện</th><th>Trạng thái</th>"
-            "</tr></thead><tbody>" + "".join(rows_machine) + "</tbody></table>"
-        )
-    else:
-        machines_html = '<p class="empty">Chưa ghi nhận máy nào.</p>'
-
-    # (2) Đang chờ
+    # Đang chờ
     if waiting:
         rows_wait = []
         for item in waiting:
@@ -944,14 +1298,14 @@ def render_dashboard_html(data: dict) -> str:
                 "</tr>"
             )
         waiting_html = (
-            "<table><thead><tr>"
+            '<div class="table-wrap"><table><thead><tr>'
             "<th>Phiếu</th><th>Máy đích</th><th>Loại</th><th>Trần</th><th>Đề tóm tắt</th>"
-            "</tr></thead><tbody>" + "".join(rows_wait) + "</tbody></table>"
+            "</tr></thead><tbody>" + "".join(rows_wait) + "</tbody></table></div>"
         )
     else:
         waiting_html = '<p class="empty">Không có phiếu đang chờ.</p>'
 
-    # (3) Xong gần nhất 20 phiếu
+    # Xong gần nhất 20 phiếu
     if done_list:
         rows_done = []
         for item in done_list:
@@ -969,16 +1323,15 @@ def render_dashboard_html(data: dict) -> str:
                 "</tr>"
             )
         done_html = (
-            "<table><thead><tr>"
+            '<div class="table-wrap"><table><thead><tr>'
             "<th>Phiếu (bấm xem KET-QUA)</th><th>Máy</th><th>Trạng thái</th>"
             "<th>Phút</th><th>Token</th><th>Xong lúc</th>"
-            "</tr></thead><tbody>" + "".join(rows_done) + "</tbody></table>"
+            "</tr></thead><tbody>" + "".join(rows_done) + "</tbody></table></div>"
         )
     else:
         done_html = '<p class="empty">Chưa có phiếu hoàn thành.</p>'
 
-    sync_disp = _esc(data.get("dong_bo_hien_thi") or "—")
-    updated_disp = _esc(data.get("cap_nhat_hien_thi") or "—")
+    header_html = _render_header_nav("bang", data)
 
     return f"""<!DOCTYPE html>
 <html lang="vi">
@@ -991,32 +1344,145 @@ def render_dashboard_html(data: dict) -> str:
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <h1>Bảng theo dõi hàng đợi LINHX</h1>
-      <div class="meta">
-        Cập nhật: {updated_disp} · Đồng bộ git: {sync_disp} · Tự làm mới {refresh_sec} giây ·
-        <a href="/api/trang-thai">JSON</a>
-      </div>
-    </header>
+    {header_html}
     {err_html}
-    <div class="grid-top">
-      <section class="card">
-        <h2>1. Đang chạy ({len(running)})</h2>
-        {running_html}
-      </section>
-      <section class="card">
-        <h2>4. Trạng thái máy ({len(machines)})</h2>
-        {machines_html}
-      </section>
-    </div>
+    {can_linh_html}
     <section class="card">
-      <h2>2. Đang chờ ({len(waiting)})</h2>
-      {waiting_html}
+      <h2>Máy ({len(machines)})</h2>
+      {machines_html}
     </section>
     <section class="card">
-      <h2>3. Xong gần nhất ({len(done_list)}/{int(data.get("tong_xong") or len(done_list))} phiếu)</h2>
+      <h2>Đang chạy ({len(running)}) · Đang chờ ({len(waiting)})</h2>
+      {running_html}
+      {waiting_html if waiting else ""}
+    </section>
+    <section class="card">
+      <h2>Xong gần nhất ({len(done_list)}/{int(data.get("tong_xong") or len(done_list))} phiếu)</h2>
       {done_html}
     </section>
+  </div>
+</body>
+</html>
+"""
+
+
+def _render_usage_bar(label: str, total_gb: float, free_gb: float, warn_low_free: bool = False) -> str:
+    """Sinh thanh tiến độ dung lượng RAM / ổ đĩa."""
+    tot = max(0.0, float(total_gb or 0.0))
+    free = max(0.0, float(free_gb or 0.0))
+    used = max(0.0, tot - free)
+    pct = min(100, max(0, int(round((used / tot) * 100.0)))) if tot > 0 else 0
+    fill_cls = "bar-fill warn" if (warn_low_free or pct >= 90) else "bar-fill"
+    return (
+        '<div class="bar-row">'
+        f"<div><strong>{_esc(label)}</strong>: trống {free:.1f} GB / {tot:.1f} GB (đã dùng {pct}%)</div>"
+        f'<div class="bar-track"><div class="{fill_cls}" style="width:{pct}%"></div></div>'
+        "</div>"
+    )
+
+
+def render_machines_html(data: dict) -> str:
+    """Sinh trang/tab `/may`: mỗi máy 1 thẻ hồ sơ + năng lực, thanh RAM/ổ đĩa, cảnh báo ổ C < 10 GB."""
+    refresh_sec = int(data.get("chu_ky_giay") or 30)
+    profiles = data.get("ho_so_may") or []
+    can_linh = data.get("can_linh") or []
+    header_html = _render_header_nav("may", data)
+    can_linh_html = _render_can_linh_block(can_linh)
+
+    if profiles:
+        cards = []
+        for p in profiles:
+            ma = p.get("ma_may") or "may"
+            ten_win = p.get("ten_windows") or "—"
+            vai_tro = p.get("vai_tro") or "Chưa đặt LINHX_VAI trong tho.env"
+            cpu = p.get("cpu") or {}
+            ram = p.get("ram") or {}
+            gpus = p.get("gpu") or []
+            disks = p.get("o_dia") or []
+            agy = p.get("agy") or {}
+            chrome = p.get("chrome") or {}
+            nhan_cfg = p.get("nhan_phieu") or {}
+            tk24 = p.get("thong_ke_24h") or {}
+            warn_c = bool(p.get("canh_bao_o_c"))
+            c_free = p.get("o_c_trong_gb")
+
+            card_cls = "may-card warn-disk" if warn_c else "may-card"
+            alert_html = (
+                f'<div class="disk-alert">Cảnh báo: Ổ C: chỉ còn trống {float(c_free or 0):.1f} GB (&lt; 10 GB)!</div>'
+                if warn_c
+                else ""
+            )
+
+            ram_bar = _render_usage_bar("RAM", ram.get("tong_gb") or 0, ram.get("trong_gb") or 0)
+            disk_bars = []
+            for od in disks:
+                if not isinstance(od, dict):
+                    continue
+                o_name = str(od.get("o") or "Ổ")
+                is_c_low = o_name.strip().upper().rstrip("\\/") == "C:" and float(od.get("trong_gb") or 0) < LOW_DISK_C_THRESHOLD_GB
+                disk_bars.append(
+                    _render_usage_bar(f"Ổ {o_name}", od.get("tong_gb") or 0, od.get("trong_gb") or 0, warn_low_free=is_c_low)
+                )
+
+            if gpus:
+                gpu_parts = []
+                for g in gpus:
+                    if isinstance(g, dict):
+                        vram = f" ({g['vram_gb']} GB)" if g.get("vram_gb") else ""
+                        gpu_parts.append(f"{g.get('ten', 'GPU')}{vram}")
+                gpu_txt = ", ".join(gpu_parts)
+            else:
+                gpu_txt = "Không rõ / Onboard"
+
+            if chrome.get("co"):
+                profs = chrome.get("profiles") or []
+                prof_preview = ", ".join(str(x) for x in profs[:8])
+                if len(profs) > 8:
+                    prof_preview += f" (+{len(profs) - 8})"
+                chrome_txt = f"Có ({prof_preview})" if prof_preview else "Có"
+            else:
+                chrome_txt = "Không"
+
+            che_do_nhan = "Nhận cả bat-ky" if nhan_cfg.get("nhan_bat_ky", True) else "Chỉ nhận đích danh"
+            so_phieu = nhan_cfg.get("so_phieu", 1)
+
+            cards.append(
+                f'<article class="{card_cls}">'
+                '<div class="may-card-head">'
+                f"<h2>{_esc(ma)} · <code>{_esc(ten_win)}</code></h2>"
+                f'<span class="meta">24h: xong {int(tk24.get("xong") or 0)} / lỗi {int(tk24.get("loi") or 0)}</span>'
+                "</div>"
+                f'<div class="vai-tro">{_esc(vai_tro)}</div>'
+                f"{alert_html}"
+                f"{ram_bar}"
+                f"{''.join(disk_bars)}"
+                '<ul class="spec-list">'
+                f"<li><strong>CPU:</strong> {_esc(cpu.get('ten') or '—')} ({_esc(cpu.get('nhan') or '?')} nhân / {_esc(cpu.get('luong') or '?')} luồng)</li>"
+                f"<li><strong>GPU:</strong> {_esc(gpu_txt)}</li>"
+                f"<li><strong>Nhận phiếu:</strong> tối đa <strong>{_esc(so_phieu)}</strong> phiếu code · {_esc(che_do_nhan)}</li>"
+                f"<li><strong>agy:</strong> <code>{_esc(agy.get('duong_dan') or 'agy')}</code> ({_esc(agy.get('phien_ban') or 'chưa rõ')}) · Python {_esc(p.get('python') or '—')}</li>"
+                f"<li><strong>Chrome:</strong> {_esc(chrome_txt)}</li>"
+                "</ul>"
+                "</article>"
+            )
+        body_html = '<div class="cards-may">' + "".join(cards) + "</div>"
+    else:
+        body_html = '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>'
+
+    return f"""<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="refresh" content="{refresh_sec}">
+  <title>Hồ sơ máy - LINHX</title>
+  <style>{_COMMON_CSS}</style>
+</head>
+<body>
+  <div class="wrap">
+    {header_html}
+    {can_linh_html}
+    {body_html}
   </div>
 </body>
 </html>
@@ -1101,9 +1567,19 @@ def create_http_server(
                 self._send_html(200, render_dashboard_html(status_data), head_only=head_only)
                 return
 
+            if path == "/may":
+                status_data = monitor.get_status()
+                self._send_html(200, render_machines_html(status_data), head_only=head_only)
+                return
+
             if path == "/api/trang-thai":
                 status_data = monitor.get_status()
                 self._send_json(200, status_data, head_only=head_only)
+                return
+
+            if path == "/api/may":
+                status_data = monitor.get_status()
+                self._send_json(200, {"may": status_data.get("ho_so_may") or []}, head_only=head_only)
                 return
 
             if path.startswith("/api/ket-qua/"):

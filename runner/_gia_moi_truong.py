@@ -15,3 +15,5 @@ def _gia_ram_va_moi_truong_h3(monkeypatch):
     monkeypatch.delenv("LINHX_KHONG_TIEN_PHUT", raising=False)
     monkeypatch.delenv("LINHX_RAM_TOI_THIEU_GB", raising=False)
     monkeypatch.delenv("LINHX_GIOI_HAN_THU_MUC", raising=False)
+    monkeypatch.delenv("LINHX_VAI", raising=False)
+    monkeypatch.setenv("LINHX_GHI_HO_SO", "0")

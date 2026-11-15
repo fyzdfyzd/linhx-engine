@@ -88,6 +88,7 @@ def _tao_bare_day_du_runner(tmp_path: Path, phieu_moi: dict[str, str] | None = N
     cac_tep_runner = [
         "linhx_runner.py",
         "hang_doi_git.py",
+        "ho_so_may.py",
         "cai_may.py",
         "cai-may.ps1",
         "chay-an-tho.vbs",

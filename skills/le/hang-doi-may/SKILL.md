@@ -30,6 +30,7 @@ khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc đ
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
 Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone.
+Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).
 
 ## Quy trình một việc (đã chạy thử: landing Listening Vietnam 14/11)
 1. **Đề** (Claude): `viec/<du-an>/DE-BAI.md`: mục tiêu, người dùng, khối/chức năng, ràng buộc, định nghĩa xong. Đính brand/tài liệu vào repo vì máy không đọc được thư mục chung cloud.
@@ -61,6 +62,8 @@ Claude duyệt danh sách phiếu con (đọc 1 file), xoá phiếu sai, rồi �
 - Mỗi lần mở agy tốn khoảng 13k token cố định, ảnh chụp màn hình tốn thêm nhiều: gom việc vào một phiếu, phiếu nhẹ (ping, kiểm) dùng model nhẹ.
 - Sửa code runner thì Linh phải `git pull` trong thư mục `hang-doi` trên từng máy.
 - Máy thiếu agy dòng lệnh hoặc không có ổ D: → truyền `-AgyCmd`, `-ThuMuc`.
+- Không chạy subagent hay background task rồi ngồi chờ (dễ kẹt 10 phút không đổi thư mục); dặn agy làm tuần tự và chạy mọi lệnh ở tiền cảnh.
+- Khi gặp việc chỉ người làm được (đăng nhập, quyền Admin/UAC, captcha, cài phần mềm, duyệt), agy dừng ngay và trả `CAN-LINH: ...; LENH: ...` thay vì thử mù.
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):

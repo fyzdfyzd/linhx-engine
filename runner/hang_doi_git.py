@@ -25,6 +25,11 @@ try:
 except ImportError:
     import linhx_runner
 
+try:
+    from runner import ho_so_may
+except ImportError:
+    import ho_so_may
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -33,6 +38,13 @@ THU_MUC_DRIVE_MAC_DINH = Path(r"G:\My Drive\LINHX-VIEC")
 THU_MUC_LOG_MAC_DINH = Path(r"D:\linhx\linhx-runner\log")
 DUONG_DAN_PHIEU_PING_MAU = linhx_runner.GOC / "phieu-mau" / "ping.md"
 SO_LAN_THU_PUSH = 8
+SO_LAN_THU_PUSH_NHIP = 3
+HO_SO_CHU_KY_PHUT_MAC_DINH = 60.0
+_CAN_LINH_BLOCK_RE = re.compile(
+    r"`?\bCAN-LINH\s*:\s*([^;\r\n`]+?)(?:\s*;\s*LENH\s*:\s*([^\r\n`]*))?`?(?:\r?\n|$)",
+    re.IGNORECASE,
+)
+_NHIP_CUOI_DONG_RE = re.compile(r"^nhip\s*:\s*(.+)$", re.IGNORECASE)
 SO_PHIEU_TRINH_DUYET_TOI_DA = 1
 SO_PHIEU_CODE_MAC_DINH = linhx_runner.SO_PHIEU_CODE_MAC_DINH
 NHAN_BAT_KY_MAC_DINH = linhx_runner.NHAN_BAT_KY_MAC_DINH
@@ -340,6 +352,163 @@ def chen_dong_nhan(noi_dung: str, tho: str, thoi_gian: str = "") -> str:
     if van_ban.endswith("\n") or not ket_qua.endswith("\n"):
         ket_qua += "\n"
     return ket_qua
+
+
+def cap_nhat_dong_nhip_cuoi(
+    noi_dung: str,
+    phut_da_chay: float,
+    dong_cuoi: str,
+    gio_chuoi: str = "",
+) -> str:
+    """Ghi 1 dòng `nhip: <giờ> <phút đã chạy> <dòng stdout/stderr cuối ≤120 ký tự>` vào cuối phiếu (chỉ giữ 1 dòng nhip)."""
+    gio = (gio_chuoi or time.strftime("%H:%M")).strip()
+    phut_txt = f"{max(0, int(round(float(phut_da_chay))))}p"
+    dong_sach = " ".join(str(dong_cuoi or "").splitlines()).strip()[: linhx_runner.GIOI_HAN_DONG_NHIP]
+    if not dong_sach:
+        dong_sach = "(chưa có đầu ra)"
+    dong_nhip_moi = f"nhip: {gio} {phut_txt} {dong_sach}"
+
+    cac_dong = str(noi_dung or "").splitlines()
+    # Bỏ toàn bộ các dòng nhip cũ ở cuối phiếu để chỉ giữ đúng 1 dòng nhip mới nhất
+    giu_lai = [d for d in cac_dong if not _NHIP_CUOI_DONG_RE.match(d.strip())]
+    while giu_lai and not giu_lai[-1].strip():
+        giu_lai.pop()
+    giu_lai.append("")
+    giu_lai.append(dong_nhip_moi)
+    return "\n".join(giu_lai) + "\n"
+
+
+def trich_khoi_can_linh(van_ban: str | None) -> tuple[str, str] | None:
+    """Tách khối `CAN-LINH: <việc>; LENH: <lệnh>` từ câu trả lời của agy."""
+    if not van_ban:
+        return None
+    s = str(van_ban)
+    # Bỏ qua chính câu hướng dẫn mẫu nếu vô tình bị lặp lại nguyên văn
+    s = s.replace(linhx_runner.CAU_NHAC_CAN_LINH, "")
+    matches = list(_CAN_LINH_BLOCK_RE.finditer(s))
+    for m in reversed(matches):
+        viec_can = " ".join((m.group(1) or "").split()).strip(" `")
+        lenh_dan = " ".join((m.group(2) or "").split()).strip(" `")
+        if not viec_can or viec_can.startswith("<việc>"):
+            continue
+        if lenh_dan.startswith("<lệnh"):
+            lenh_dan = ""
+        return viec_can, lenh_dan
+    return None
+
+
+def tao_can_linh_md(
+    phieu_id: str,
+    tho: str,
+    viec_can: str,
+    lenh_dan: str = "",
+    gio_iso: str = "",
+) -> str:
+    """Tạo nội dung file `hang-doi/can-linh/<id>.md` gồm máy, phiếu, việc, lệnh, giờ."""
+    moc_gio = (gio_iso or time.strftime("%Y-%m-%dT%H:%M:%S%z")).strip()
+    viec_sach = _cat_mot_dong(viec_can, 400)
+    lenh_sach = _cat_mot_dong(lenh_dan, 500)
+    cac_dong = [
+        f"may: {_cat_mot_dong(tho, 80)}",
+        f"phieu: {_cat_mot_dong(phieu_id, 120)}",
+        f"viec: {viec_sach}",
+        f"lenh: {lenh_sach}",
+        f"gio: {moc_gio}",
+    ]
+    return "\n".join(cac_dong) + "\n"
+
+
+def ghi_nhip_phieu_git(
+    cfg: dict,
+    phieu_id: str,
+    phut_da_chay: float,
+    dong_cuoi: str,
+    gio_chuoi: str = "",
+) -> bool:
+    """Cập nhật dòng nhip vào cuối `hang-doi/dang/<id>.md`, pull --rebase và push tối đa 3 lần (lỗi bỏ qua)."""
+    _, _, remote, nhanh = _duong_dan_wt(cfg)
+    tho = cfg["tho"]
+    try:
+        with _khoa_tep(_duong_dan_khoa_wt(cfg), timeout=10.0):
+            wt = dam_bao_worktree(cfg)
+            if wt is None:
+                return False
+            for lan in range(SO_LAN_THU_PUSH_NHIP):
+                if lan > 0:
+                    chay_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=45)
+                goc_hd = thu_muc_hang_doi(wt)
+                tep_dang = goc_hd / "dang" / f"{phieu_id}.md"
+                if not tep_dang.is_file():
+                    return False
+                noi_dung_cu = tep_dang.read_text(encoding="utf-8", errors="replace")
+                noi_dung_moi = cap_nhat_dong_nhip_cuoi(
+                    noi_dung_cu,
+                    phut_da_chay=phut_da_chay,
+                    dong_cuoi=dong_cuoi,
+                    gio_chuoi=gio_chuoi,
+                )
+                if noi_dung_moi == noi_dung_cu:
+                    return True
+                tep_dang.write_text(noi_dung_moi, encoding="utf-8")
+                _commit_git(wt, tho, f"nhip: {phieu_id} ({int(round(phut_da_chay))}p)")
+                pull_rb = chay_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=45)
+                if pull_rb.returncode != 0:
+                    chay_git(["rebase", "--abort"], cwd=wt, check=False, timeout=15)
+                    wt = dam_bao_worktree(cfg)
+                    if wt is None:
+                        return False
+                    continue
+                push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=45)
+                if push.returncode == 0:
+                    return True
+                wt = dam_bao_worktree(cfg)
+                if wt is None:
+                    return False
+    except Exception:
+        return False
+    return False
+
+
+def cap_nhat_ho_so_may_git(cfg: dict, thu_thap_fn=None) -> bool:
+    """Ghi `hang-doi/may/<ma-may>.json` và chỉ commit + push khi hồ sơ thay đổi (lỗi bỏ qua)."""
+    if not linhx_runner._ep_cong_tac(cfg.get("ghi_ho_so_may", os.environ.get("LINHX_GHI_HO_SO", "1")), True):
+        return False
+    _, _, remote, nhanh = _duong_dan_wt(cfg)
+    tho = str(cfg.get("tho") or "may").strip().lower()
+    ten_tep = _ten_phieu_an_toan(tho)
+    ham_thu_thap = thu_thap_fn or ho_so_may.thu_thap_ho_so_may
+    try:
+        with _khoa_tep(_duong_dan_khoa_wt(cfg), timeout=15.0):
+            for lan in range(SO_LAN_THU_PUSH_NHIP):
+                wt = dam_bao_worktree(cfg)
+                if wt is None:
+                    return False
+                goc_hd = thu_muc_hang_doi(wt)
+                tm_may = goc_hd / "may"
+                tep_json = tm_may / f"{ten_tep}.json"
+                ho_so_cu = None
+                if tep_json.is_file():
+                    try:
+                        ho_so_cu = json.loads(tep_json.read_text(encoding="utf-8", errors="replace"))
+                    except (OSError, ValueError):
+                        ho_so_cu = None
+                ho_so_moi = ham_thu_thap(cfg, wt=wt)
+                if not ho_so_may.ho_so_da_doi(ho_so_cu, ho_so_moi):
+                    return False
+                tm_may.mkdir(parents=True, exist_ok=True)
+                tep_json.write_text(json.dumps(ho_so_moi, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                _commit_git(wt, tho, f"may: cap nhat ho so {tho}")
+                pull_rb = chay_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=45)
+                if pull_rb.returncode != 0:
+                    chay_git(["rebase", "--abort"], cwd=wt, check=False, timeout=15)
+                    continue
+                push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=45)
+                if push.returncode == 0:
+                    return True
+                time.sleep(0.05 * (lan + 1))
+    except Exception:
+        return False
+    return False
 
 
 def _cat_mot_dong(gia_tri: str, gioi_han_dong: int = 320) -> str:
@@ -843,7 +1012,17 @@ def bao_ket_qua_git(
         tep_doi=tep_doi,
         drive=drive,
     )
-    can_sua = tt_chuan in ("loi", "dung") and not is_machine_error(tt_chuan, ket_qua, nhat_ky)
+    can_linh_cap = trich_khoi_can_linh(str(ket_qua or "") + "\n" + str(nhat_ky or ""))
+    noi_dung_can_linh = (
+        tao_can_linh_md(phieu_id, tho, can_linh_cap[0], can_linh_cap[1])
+        if can_linh_cap is not None
+        else None
+    )
+    can_sua = (
+        tt_chuan in ("loi", "dung")
+        and noi_dung_can_linh is None
+        and not is_machine_error(tt_chuan, ket_qua, nhat_ky)
+    )
     loi_cuoi = ""
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
         for lan in range(SO_LAN_THU_PUSH):
@@ -862,6 +1041,14 @@ def bao_ket_qua_git(
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
 
             thong_diep = f"xong: {phieu_id} ({tt_chuan})"
+            if noi_dung_can_linh is not None:
+                tm_can_linh = goc_hd / "can-linh"
+                tm_can_linh.mkdir(parents=True, exist_ok=True)
+                (tm_can_linh / f"{_ten_phieu_an_toan(phieu_id)}.md").write_text(
+                    noi_dung_can_linh,
+                    encoding="utf-8",
+                )
+                thong_diep = f"{thong_diep} [can-linh]"
             if can_sua:
                 noi_dung_sua = build_self_repair_ticket(viec_nguon, noi_dung_kq)
                 if noi_dung_sua is not None:
@@ -954,7 +1141,13 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
     )
 
     ham_agy = _lay_ham_chay_agy(chay_agy_fn)
-    cfg_agy = {**cfg, "_tep_log_phieu": tep_log} if ham_agy is linhx_runner.chay_agy else cfg
+    if ham_agy is linhx_runner.chay_agy:
+        def _callback_nhip(phut_chay: float, dong_cuoi: str) -> None:
+            ghi_nhip_phieu_git(cfg, phieu_id, phut_chay, dong_cuoi)
+
+        cfg_agy = {**cfg, "_tep_log_phieu": tep_log, "_ghi_nhip_fn": _callback_nhip}
+    else:
+        cfg_agy = cfg
     t0 = time.monotonic()
     try:
         tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
@@ -1043,13 +1236,42 @@ def xu_ly_mot_phieu(cfg: dict, chay_agy_fn=None):
     return thuc_thi_phieu_da_nhan(cfg, viec, chay_agy_fn=chay_agy_fn)
 
 
+def _co_nen_kiem_ho_so_may(cfg: dict, chu_ky_giay: float) -> bool:
+    """Chống đọc/fetch thừa mỗi phút khi chạy qua Task Scheduler (`--mot-lan`), chỉ kiểm lúc mới khởi động hoặc mỗi 60 phút."""
+    tho_an_toan = _ten_phieu_an_toan(str(cfg.get("tho") or "may"))
+    repo = Path(cfg.get("repo_hang_doi") or linhx_runner.GOC.parent).resolve()
+    tep_dau = repo.parent / f".{repo.name}-{tho_an_toan}-ho-so.stamp"
+    bay_gio = time.time()
+    try:
+        if tep_dau.is_file():
+            lan_truoc = float(tep_dau.read_text(encoding="utf-8").strip() or "0")
+            if 0 <= (bay_gio - lan_truoc) < chu_ky_giay:
+                return False
+        tep_dau.write_text(f"{bay_gio:.3f}\n", encoding="utf-8")
+    except (OSError, ValueError):
+        pass
+    return True
+
+
 def vong_git(cfg: dict, mot_lan: bool = False, mot_viec: bool = False, chay_agy_fn=None):
     linhx_runner.log(
         f"linhx-runner {linhx_runner.PHIEN_BAN} tho={cfg['tho']} nguon=github "
         f"nhanh={cfg.get('nhanh_hang_doi', NHANH_MAC_DINH)} so_phieu={lay_so_phieu_toi_da(cfg)}"
     )
+    chu_ky_ho_so_phut = linhx_runner._ep_so_duong(
+        cfg.get("ho_so_phut"),
+        linhx_runner._ep_so_duong(os.environ.get("LINHX_HO_SO_PHUT"), HO_SO_CHU_KY_PHUT_MAC_DINH),
+    )
+    chu_ky_ho_so_giay = chu_ky_ho_so_phut * 60.0
+    if not mot_lan or _co_nen_kiem_ho_so_may(cfg, chu_ky_ho_so_giay):
+        cap_nhat_ho_so_may_git(cfg)
+    moc_ho_so_cuoi = linhx_runner._gio()
+
     if mot_viec:
         while True:
+            if (linhx_runner._gio() - moc_ho_so_cuoi) >= chu_ky_ho_so_giay:
+                moc_ho_so_cuoi = linhx_runner._gio()
+                cap_nhat_ho_so_may_git(cfg)
             try:
                 kq = xu_ly_mot_phieu(cfg, chay_agy_fn=chay_agy_fn)
                 if kq is not None:
@@ -1064,6 +1286,9 @@ def vong_git(cfg: dict, mot_lan: bool = False, mot_viec: bool = False, chay_agy_
     su_kien_xong = threading.Event()
 
     while True:
+        if (linhx_runner._gio() - moc_ho_so_cuoi) >= chu_ky_ho_so_giay:
+            moc_ho_so_cuoi = linhx_runner._gio()
+            cap_nhat_ho_so_may_git(cfg)
         dang_chay = [t for t in dang_chay if t.is_alive()]
         su_kien_xong.clear()
         viec = None
