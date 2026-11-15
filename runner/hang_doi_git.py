@@ -37,6 +37,11 @@ try:
 except ImportError:
     import rao_phieu
 
+try:
+    from runner import bao_claude
+except ImportError:
+    import bao_claude
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -344,6 +349,150 @@ def get_ticket_cham(viec: dict | None) -> bool:
     return parse_cham_flag(meta.get("cham"))
 
 
+def parse_bao_header(raw_value) -> str:
+    # Đọc giá trị header `bao:` (vd `bao: claude`)
+    if raw_value is None:
+        return ""
+    return _strip_unquoted_comment(str(raw_value)).strip().lower()
+
+
+def get_ticket_bao(viec: dict | None) -> str:
+    # Lấy cấu hình `bao:` của phiếu (hỗ trợ cả trường trực tiếp và `meta`)
+    if not isinstance(viec, dict):
+        return ""
+    if "bao" in viec and viec.get("bao") is not None:
+        val = parse_bao_header(viec.get("bao"))
+        if val:
+            return val
+    meta = viec.get("meta") if isinstance(viec.get("meta"), dict) else {}
+    return parse_bao_header(meta.get("bao"))
+
+
+def _da_co_trong_xong(goc_hd: Path, dep_id: str) -> bool:
+    # Kiểm tra một id phụ thuộc đã xuất hiện trong `hang-doi/xong/` chưa
+    clean_id = str(dep_id or "").strip()
+    if not clean_id or "/" in clean_id or "\\" in clean_id or ".." in clean_id:
+        return False
+    tm_xong = goc_hd / "xong"
+    return (
+        (tm_xong / clean_id / "KET-QUA.md").is_file()
+        or (tm_xong / clean_id).is_dir()
+        or (tm_xong / f"{clean_id}.md").is_file()
+    )
+
+
+def co_cong_claude_dang_cho(wt: Path, tru_phieu_id: str = "") -> bool:
+    # Có phiếu khác trong `moi/` đang `phu_thuoc` vào `yl-khoa-*` hoặc `yl-duyet-*` chưa có trong `xong/`
+    goc_hd = thu_muc_hang_doi(wt)
+    tm_moi = goc_hd / "moi"
+    if not tm_moi.is_dir():
+        return False
+    for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
+        if tru_phieu_id and tep.stem == tru_phieu_id:
+            continue
+        try:
+            noi_dung = tep.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        viec_cho = phan_tich_phieu(noi_dung, tep.stem)
+        for dep_id in viec_cho.get("phu_thuoc") or ():
+            if (dep_id.startswith("yl-khoa-") or dep_id.startswith("yl-duyet-")) and not _da_co_trong_xong(goc_hd, dep_id):
+                return True
+    return False
+
+
+def _con_luot_sua_dang_chay(wt: Path, phieu_id: str) -> bool:
+    # Kiểm tra trong `moi/` hoặc `dang/` có phiếu `-sua-<k>` kế tiếp của cùng chuỗi phiếu không
+    goc_hd = thu_muc_hang_doi(wt)
+    m = _SELF_REPAIR_SUFFIX_RE.match(str(phieu_id or "").strip())
+    if m:
+        base_id = m.group(1)
+        cur_idx = int(m.group(2))
+    else:
+        base_id = str(phieu_id or "").strip()
+        cur_idx = 0
+    if not base_id:
+        return False
+    repair_prefix = f"{base_id}-sua-"
+    for folder_name in ("moi", "dang"):
+        folder = goc_hd / folder_name
+        if not folder.is_dir():
+            continue
+        try:
+            entries = list(folder.iterdir())
+        except OSError:
+            continue
+        for entry in entries:
+            if not entry.is_file() or entry.suffix.lower() != ".md":
+                continue
+            if not entry.stem.startswith(repair_prefix):
+                continue
+            m_cand = _SELF_REPAIR_SUFFIX_RE.match(entry.stem)
+            if m_cand and m_cand.group(1) == base_id and int(m_cand.group(2)) > cur_idx:
+                return True
+    return False
+
+
+def co_can_bao_claude(
+    wt: Path,
+    phieu_id: str,
+    viec: dict | None,
+    trang_thai: str,
+    da_sinh_phieu_sua: bool = False,
+) -> bool:
+    # Chỉ báo Claude khi kết thúc xong/dung/loi, chưa từng báo, không phải lượt dừng giữa chừng của `-sua-`,
+    # và thoả ít nhất 1 điều kiện: id bắt đầu `yl-`, header `bao: claude`, hoặc Claude đang là cổng trong `moi/`.
+    tt = str(trang_thai or "").strip().lower()
+    if tt not in ("xong", "dung", "loi"):
+        return False
+    ma_sach = str(phieu_id or "").strip()
+    if not ma_sach:
+        return False
+    goc_hd = thu_muc_hang_doi(wt)
+    if (goc_hd / "xong" / ma_sach / ".da-bao").exists():
+        return False
+    if tt in ("dung", "loi") and (da_sinh_phieu_sua or _con_luot_sua_dang_chay(wt, ma_sach)):
+        return False
+    if ma_sach.startswith("yl-"):
+        return True
+    if get_ticket_bao(viec) == "claude":
+        return True
+    return co_cong_claude_dang_cho(wt, tru_phieu_id=ma_sach)
+
+
+def _ghi_dau_da_bao_git(cfg: dict, phieu_id: str, tho: str, tep_kq_du_phong: Path | None = None) -> None:
+    # Ghi dấu `hang-doi/xong/<id>/.da-bao` rồi commit + push lên nhánh `hang-doi`; lỗi mạng bỏ qua
+    _, _, remote, nhanh = _duong_dan_wt(cfg)
+    noi_dung = f"phieu: {phieu_id}\nmay: {tho}\nluc: {time.strftime('%Y-%m-%dT%H:%M:%S%z')}\n"
+    try:
+        with _khoa_tep(_duong_dan_khoa_wt(cfg), timeout=15.0):
+            for lan in range(SO_LAN_THU_PUSH_NHIP):
+                wt = dam_bao_worktree(cfg)
+                if wt is None:
+                    break
+                goc_hd = thu_muc_hang_doi(wt)
+                tep_dau = goc_hd / "xong" / phieu_id / ".da-bao"
+                if tep_dau.exists():
+                    return
+                tep_dau.parent.mkdir(parents=True, exist_ok=True)
+                tep_dau.write_text(noi_dung, encoding="utf-8")
+                _commit_git(wt, tho, f"bao-claude: {phieu_id} ({tho})")
+                push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=45)
+                if push.returncode == 0:
+                    return
+                time.sleep(0.05 * (lan + 1))
+    except Exception as exc:
+        linhx_runner.log("bao-claude", f"khong push duoc .da-bao cho {phieu_id}: {exc}")
+    if tep_kq_du_phong is not None:
+        try:
+            tep_du_phong = tep_kq_du_phong.parent / ".da-bao"
+            if not tep_du_phong.exists():
+                tep_du_phong.parent.mkdir(parents=True, exist_ok=True)
+                tep_du_phong.write_text(noi_dung, encoding="utf-8")
+        except OSError:
+            pass
+
+
 def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     van_ban = noi_dung.lstrip("\ufeff")
     cac_dong = van_ban.splitlines()
@@ -408,6 +557,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
     vung = parse_vung_globs(meta.get("vung"))
     cham = parse_cham_flag(meta.get("cham"))
+    bao = parse_bao_header(meta.get("bao"))
     moc = _strip_unquoted_comment(str(meta.get("moc") or "")).strip()
 
     return {
@@ -422,6 +572,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "khoa": khoa,
         "vung": vung,
         "cham": cham,
+        "bao": bao,
         "moc": moc,
         "de": de,
         "meta": meta,
@@ -1532,6 +1683,8 @@ def _khoi_phuc_viec_tu_tep_dang(viec: dict, tep_dang: Path, phieu_id: str) -> di
         merged["moc"] = parsed_dang["moc"]
     if "cham" not in merged:
         merged["cham"] = parsed_dang.get("cham", False)
+    if not merged.get("bao") and parsed_dang.get("bao"):
+        merged["bao"] = parsed_dang["bao"]
     if not merged.get("de") and parsed_dang.get("de"):
         merged["de"] = parsed_dang["de"]
     if not merged.get("may") and parsed_dang.get("may"):
@@ -1599,6 +1752,12 @@ def bao_ket_qua_git(
         and noi_dung_can_linh is None
         and (loi_cong_kiem or not is_machine_error(tt_chuan, ket_qua, nhat_ky))
     )
+    co_bat_bao = linhx_runner._ep_cong_tac(
+        cfg.get("bao_claude", os.environ.get("LINHX_BAO_CLAUDE", "1")),
+        True,
+    )
+    can_bao_claude = False
+    tep_kq_da_push: Path | None = None
     loi_cuoi = ""
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
         for lan in range(SO_LAN_THU_PUSH):
@@ -1611,6 +1770,7 @@ def bao_ket_qua_git(
             if tep_dang.exists():
                 tep_dang.unlink()
             tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
+            da_bao_truoc = (tep_kq.parent / ".da-bao").exists()
             tep_kq.parent.mkdir(parents=True, exist_ok=True)
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
 
@@ -1623,6 +1783,7 @@ def bao_ket_qua_git(
                     encoding="utf-8",
                 )
                 thong_diep = f"{thong_diep} [can-linh]"
+            da_sinh_phieu_sua = False
             if can_sua:
                 noi_dung_sua = build_self_repair_ticket(viec_nguon, noi_dung_kq)
                 if noi_dung_sua is not None:
@@ -1630,6 +1791,7 @@ def bao_ket_qua_git(
                     tm_moi = goc_hd / "moi"
                     tm_moi.mkdir(parents=True, exist_ok=True)
                     (tm_moi / f"{ma_phieu_sua}.md").write_text(noi_dung_sua, encoding="utf-8")
+                    da_sinh_phieu_sua = True
                     thong_diep = f"{thong_diep} -> {ma_phieu_sua}"
             if tt_chuan == "xong":
                 noi_dung_cham = build_review_ticket(
@@ -1654,13 +1816,43 @@ def bao_ket_qua_git(
             if ds_huy_day_chuyen:
                 thong_diep = f"{thong_diep} [huy: {', '.join(ds_huy_day_chuyen)}]"
 
+            can_bao_claude = (
+                co_bat_bao
+                and (not da_bao_truoc)
+                and co_can_bao_claude(
+                    wt,
+                    phieu_id,
+                    viec_nguon,
+                    tt_chuan,
+                    da_sinh_phieu_sua=da_sinh_phieu_sua,
+                )
+            )
+
             _commit_git(wt, tho, thong_diep)
             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
             if push.returncode == 0:
-                return tep_kq
+                tep_kq_da_push = tep_kq
+                break
             loi_cuoi = (push.stderr or push.stdout or "").strip()
             time.sleep(0.05 * (lan + 1))
-    raise RuntimeError(f"Khong push duoc KET-QUA.md cho {phieu_id}: {loi_cuoi}")
+    if tep_kq_da_push is None:
+        raise RuntimeError(f"Khong push duoc KET-QUA.md cho {phieu_id}: {loi_cuoi}")
+
+    if can_bao_claude:
+        try:
+            nguon_dat = ket_qua if ket_qua is not None and str(ket_qua).strip() else noi_dung_kq
+            dat_bao = bao_claude.trich_dat_tu_ket_qua(nguon_dat, trang_thai=tt_chuan)
+            tep_env_cfg = cfg.get("tep_env") if isinstance(cfg, dict) else None
+            if tep_env_cfg is not None:
+                da_gui_bao = bao_claude.bao(phieu_id, dat_bao, tho, phut, tep_env=tep_env_cfg)
+            else:
+                da_gui_bao = bao_claude.bao(phieu_id, dat_bao, tho, phut)
+            if da_gui_bao:
+                _ghi_dau_da_bao_git(cfg, phieu_id, tho, tep_kq_du_phong=tep_kq_da_push)
+        except Exception as exc:
+            linhx_runner.log("bao-claude", f"bo qua loi bao {phieu_id}: {exc}")
+
+    return tep_kq_da_push
 
 
 def _chup_trang_thai_thu_muc(thu_muc: Path) -> dict[str, tuple[int, int]]:

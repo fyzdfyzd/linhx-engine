@@ -30,6 +30,10 @@ _MAU_DONG_DAT = re.compile(
     re.IGNORECASE,
 )
 
+# Hook noi bo phuc vu test ma khong chan subprocess.run cua git
+_CHAY_LENH_FN = None
+_URLOPEN_FN = None
+
 
 def che_bi_mat(van_ban: str, secret_val: str = "") -> str:
     """An toan hoa chuoi log bang cach che secret va token GitHub."""
@@ -129,7 +133,7 @@ def doc_token_gh(tep_env: Path | str | None = None) -> str:
 
 def kiem_tra_gh_dang_nhap(chay_lenh_fn=None) -> tuple[bool, bool]:
     """Tra ve (co_gh, da_dang_nhap) ma khong bao gio in/log token."""
-    ham_chay = chay_lenh_fn or subprocess.run
+    ham_chay = chay_lenh_fn or _CHAY_LENH_FN or subprocess.run
     kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
     try:
         proc = ham_chay(
@@ -147,10 +151,12 @@ def kiem_tra_gh_dang_nhap(chay_lenh_fn=None) -> tuple[bool, bool]:
 
 
 def _ghi_log_an_toan(log_fn, thong_diep: str, secret_val: str = "") -> None:
-    if log_fn is None:
-        return
+    sach = che_bi_mat(thong_diep, secret_val)
     try:
-        log_fn(che_bi_mat(thong_diep, secret_val))
+        if log_fn is not None:
+            log_fn(sach)
+        else:
+            print(time.strftime("%H:%M:%S"), "bao-claude", sach, flush=True)
     except Exception:
         pass
 
@@ -265,8 +271,8 @@ def bao(
             return False
 
         dong = tao_dong_bao(phieu_id, dat, may, phut)
-        ham_chay = chay_lenh_fn or subprocess.run
-        ham_mo = urlopen_fn or urllib.request.urlopen
+        ham_chay = chay_lenh_fn or _CHAY_LENH_FN or subprocess.run
+        ham_mo = urlopen_fn or _URLOPEN_FN or urllib.request.urlopen
         ham_ngu = ngu_fn or time.sleep
 
         co_gh, da_dang_nhap = kiem_tra_gh_dang_nhap(chay_lenh_fn=ham_chay)
