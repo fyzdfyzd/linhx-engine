@@ -1,6 +1,7 @@
 may: may-1
 loai: khac
 tran_phut: 10
+nhan: may-1 2026-11-15T07:35:12+0700
 
 Linh duyệt 15/11 07:34: tạm tắt OPC Live trên máy này (tắt lịch OPC-Live, không xoá; dừng server cổng 4900 và tunnel của nó).
 1. `schtasks /query /fo list | findstr /i "OPC"` tìm lịch; Disable (KHÔNG xoá) lịch tên chứa OPC-Live/OPC Live.
