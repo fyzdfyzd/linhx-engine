@@ -683,6 +683,13 @@ def log(*a):
     print(time.strftime("%H:%M:%S"), *a, flush=True)
 
 
+def log_json(ban_ghi: dict) -> str:
+    # Ghi một dòng JSON thuần vào luồng log của runner (stdout / tho.log)
+    dong = json.dumps(ban_ghi, ensure_ascii=False)
+    print(dong, flush=True)
+    return dong
+
+
 def _ghi_agy_raw(tep_log, phieu_id, returncode, giay, stdout, stderr, ghi_chu=""):
     try:
         p = Path(tep_log)

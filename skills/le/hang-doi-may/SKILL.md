@@ -29,6 +29,7 @@ tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-s
 khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 20) cho việc lâu; tối đa bằng tran_phut
 khoa: viec/du-an/nghiem-thu/test.py.khoa  # tuỳ chọn: file .khoa (tương đối theo_doi đầu tiên); lệch sha256 → loi "sửa test khoá"
 lenh_kiem: python -m pytest viec/du-an/nghiem-thu -q  # tuỳ chọn: runner tự chạy sau agy (trần 15p), đạt mới xong; trượt → loi kèm 1500 ký tự cuối log
+vung: runner/**; skills/le/hang-doi-may/**  # tuỳ chọn: glob phạm vi commit mới ở theo_doi đầu; ngoài vùng ("sửa ngoài vùng: <file>") hoặc lộ bí mật (<file>:<dòng>) → loi
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
@@ -101,6 +102,7 @@ Học từ luật deploy thực chiến của `ifagent`: mọi dự án có serv
 - Phát hành qua phiếu chỉ được chạm staging trong khung 07:00–22:00 giờ VN, chạy `runner/cong_phat_hanh.py` trước/sau để khoá `GET /healthz == BUILD_SHA` kèm lệnh rollback; lên prod luôn dừng ở `CAN-LINH`.
 - Giao diện không mở `file://` tĩnh (dễ lọt lỗi CORS/CSP/đường dẫn và lặp ảnh); luôn dựng HTTP server cục bộ hoặc URL staging rồi chạy `runner/bang_chung.py`.
 - Gắn `khoa:` + `lenh_kiem:` vào header phiếu để runner tự đối chiếu sha256 test khoá và chạy lệnh kiểm (trần 15 phút) ngoài tay agy trước khi công nhận `xong`.
+- Gắn `vung: glob1; glob2` để runner đối chiếu diff các commit mới so với `HEAD` lúc nhận phiếu ở `theo_doi` đầu tiên, chặn sửa ngoài vùng và quét bí mật (chỉ báo `<file>:<dòng>`, không in giá trị, ghi 1 dòng JSON/phiếu vào log runner).
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):

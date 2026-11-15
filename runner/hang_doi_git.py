@@ -32,6 +32,11 @@ try:
 except ImportError:
     import ho_so_may
 
+try:
+    from runner import rao_phieu
+except ImportError:
+    import rao_phieu
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -63,7 +68,7 @@ _SHA256_ONLY_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 _SHA256_LINE_RE = re.compile(r"^([0-9a-fA-F]{64})\s+\*?(.+?)\s*$")
 _SHA256_BSD_RE = re.compile(r"^SHA256\s*\((.+?)\)\s*=\s*([0-9a-fA-F]{64})\s*$")
 _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
-_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi", "lenh_kiem", "khoa"})
+_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi", "lenh_kiem", "khoa", "vung"})
 _SELF_REPAIR_SUFFIX_RE = re.compile(r"^(.*)-sua-(\d+)$")
 _SELF_REPAIR_SECTION_SPLIT_RE = re.compile(r"\n+(?:##\s*)?Lần trước trượt vì:\s*\n", re.UNICODE)
 _HTTP_429_RE = re.compile(r"(?<!\d)429(?!\d)")
@@ -298,6 +303,11 @@ def parse_lenh_kiem(raw_value) -> str:
     return _strip_unquoted_comment(str(raw_value)).strip()
 
 
+def parse_vung_globs(raw_value) -> list[str]:
+    # Phân tích danh sách mẫu glob phạm vi được sửa từ header `vung: glob1; glob2`
+    return rao_phieu.parse_vung_globs(raw_value, _strip_unquoted_comment)
+
+
 def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     van_ban = noi_dung.lstrip("\ufeff")
     cac_dong = van_ban.splitlines()
@@ -360,6 +370,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     lenh_kiem = parse_lenh_kiem(meta.get("lenh_kiem"))
     khoa_list = parse_khoa_paths(meta.get("khoa"))
     khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
+    vung = parse_vung_globs(meta.get("vung"))
 
     return {
         "viec": ma_phieu,
@@ -371,6 +382,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "tu_sua": tu_sua,
         "lenh_kiem": lenh_kiem,
         "khoa": khoa,
+        "vung": vung,
         "de": de,
         "meta": meta,
     }
@@ -688,6 +700,45 @@ def duong_dan_log_phieu(phieu_id: str, cfg: dict | None = None, thu_muc_log: Pat
     return goc_log / f"{_ten_phieu_an_toan(phieu_id)}.jsonl"
 
 
+def duong_dan_log_runner(cfg: dict | None = None, thu_muc_log: Path | str | None = None) -> Path:
+    # Đường dẫn tệp JSONL chung của runner ghi tóm tắt mỗi phiếu (phiếu, số file, ngoài vùng, bí mật)
+    goc_log = Path(thu_muc_log) if thu_muc_log is not None else _thu_muc_log(cfg)
+    return goc_log / "runner.jsonl"
+
+
+def ghi_log_rao_runner(
+    cfg: dict | None,
+    phieu_id: str,
+    so_file: int,
+    ngoai_vung: list[str] | tuple[str, ...],
+    bi_mat: list[str] | tuple[str, ...],
+) -> dict:
+    # Ghi một dòng JSON cho mỗi phiếu vào luồng log runner (stdout/tho.log và runner.jsonl)
+    ban_ghi = {
+        "luc": time.strftime("%Y-%m-%dT%H:%M:%S%z"),
+        "phieu": str(phieu_id),
+        "so_file": int(so_file),
+        "ngoai_vung": list(ngoai_vung),
+        "bi_mat": list(bi_mat),
+    }
+    dong = linhx_runner.log_json(ban_ghi)
+    try:
+        tep_runner = duong_dan_log_runner(cfg)
+        tep_runner.parent.mkdir(parents=True, exist_ok=True)
+        trung_stdout = False
+        try:
+            if hasattr(sys.stdout, "fileno") and tep_runner.exists():
+                trung_stdout = os.path.samefile(sys.stdout.fileno(), tep_runner)
+        except OSError:
+            trung_stdout = False
+        if not trung_stdout:
+            with tep_runner.open("a", encoding="utf-8") as fh:
+                fh.write(dong + "\n")
+    except OSError as exc:
+        linhx_runner.log("canh bao log runner", phieu_id, exc)
+    return ban_ghi
+
+
 def ghi_log_phieu(tep_log: Path, su_kien: str, **truong) -> Path:
     """Ghi 1 dong JSONL day du vao file log cua phieu tren may."""
     tep_log = Path(tep_log)
@@ -957,6 +1008,7 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
 
     meta = dict(viec.get("meta") or {})
     meta.pop("nhan", None)
+    meta.pop("head_nhan", None)
     header_lines: list[str] = []
     has_may = False
     has_tu_sua = False
@@ -976,6 +1028,8 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
             header_lines.append(f"khoa: {khoa_joined}")
     if "lenh_kiem" not in meta and parse_lenh_kiem(viec.get("lenh_kiem")):
         header_lines.append(f"lenh_kiem: {parse_lenh_kiem(viec.get('lenh_kiem'))}")
+    if "vung" not in meta and parse_vung_globs(viec.get("vung")):
+        header_lines.append(f"vung: {'; '.join(parse_vung_globs(viec.get('vung')))}")
     if not has_tu_sua:
         header_lines.append(f"tu_sua: {remaining}")
 
@@ -1063,6 +1117,9 @@ def nhan_phieu_git(cfg: dict):
             _commit_git(wt, tho, f"nhan: {viec['viec']} ({tho})")
             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
             if push.returncode == 0:
+                head_luc_nhan = snapshot_tracked_head(cfg, viec)
+                viec["head_nhan"] = head_luc_nhan
+                viec["_head_nhan"] = head_luc_nhan
                 return viec
             linhx_runner.log("tranh phieu", viec["viec"], "push bi tu choi, keo lai")
             time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
@@ -1243,6 +1300,56 @@ def get_ticket_lenh_kiem(viec: dict | None) -> str:
 def has_verification_gate(viec: dict | None) -> bool:
     # Kiểm tra phiếu có bật tự chấm bằng `khoa:` hoặc `lenh_kiem:` không
     return bool(get_ticket_khoa_paths(viec) or get_ticket_lenh_kiem(viec))
+
+
+def get_ticket_vung_globs(viec: dict | None) -> list[str]:
+    # Đọc danh sách mẫu glob từ header `vung:` của phiếu (hỗ trợ cả top-level và `meta`)
+    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    raw = (viec or {}).get("vung") if (viec and "vung" in viec and viec.get("vung") is not None) else meta.get("vung")
+    return parse_vung_globs(raw)
+
+
+def snapshot_tracked_head(cfg: dict | None, viec: dict | None) -> str:
+    # Ghi lại SHA `HEAD` của thư mục `theo_doi` đầu tiên ngay thời điểm nhận phiếu
+    _, repo_toplevel, _, _ = rao_phieu.resolve_tracked_git_repo(
+        cfg,
+        viec,
+        chay_git_fn=chay_git,
+        kiem_tra_thu_muc_fn=linhx_runner.kiem_tra_thu_muc_lam_viec,
+        strip_comment_fn=_strip_unquoted_comment,
+        goc_runner=linhx_runner.GOC,
+    )
+    return rao_phieu.capture_repo_head(repo_toplevel, chay_git)
+
+
+def run_post_agy_diff_audit(
+    cfg: dict | None,
+    viec: dict | None,
+    head_truoc: str = "",
+    agy_trang_thai: str = "xong",
+) -> dict:
+    # Sau khi agy chạy, lấy diff các commit mới trong `theo_doi` đầu tiên, kiểm `vung:` và quét bí mật
+    vung_globs = get_ticket_vung_globs(viec)
+    _, repo_toplevel, repo_err, _ = rao_phieu.resolve_tracked_git_repo(
+        cfg,
+        viec,
+        chay_git_fn=chay_git,
+        kiem_tra_thu_muc_fn=linhx_runner.kiem_tra_thu_muc_lam_viec,
+        strip_comment_fn=_strip_unquoted_comment,
+        goc_runner=linhx_runner.GOC,
+    )
+    if repo_toplevel is None:
+        if vung_globs and agy_trang_thai == "xong":
+            return {
+                "dat": False,
+                "so_file": 0,
+                "file_doi": [],
+                "ngoai_vung": [],
+                "bi_mat": [],
+                "thong_diep_loi": f"lỗi kiểm vùng: {repo_err}",
+            }
+        return {"dat": True, "so_file": 0, "file_doi": [], "ngoai_vung": [], "bi_mat": [], "thong_diep_loi": ""}
+    return rao_phieu.inspect_new_commits(repo_toplevel, head_truoc, vung_globs, chay_git)
 
 
 def resolve_first_tracked_dir(cfg: dict | None, viec: dict | None) -> tuple[Path | None, str]:
@@ -1762,23 +1869,35 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
     tep_log = duong_dan_log_phieu(phieu_id, cfg)
 
     bo_qua = {f"de-{phieu_id}.md"}
-    try:
-        bo_qua.add(tep_log.resolve().relative_to(thu_muc.resolve()).as_posix())
-    except (OSError, ValueError):
-        pass
+    for tep_log_he_thong in (tep_log, duong_dan_log_runner(cfg)):
+        try:
+            bo_qua.add(tep_log_he_thong.resolve().relative_to(thu_muc.resolve()).as_posix())
+        except (OSError, ValueError):
+            pass
 
     truoc = _chup_trang_thai_thu_muc(thu_muc)
     moc_khoa_truoc = snapshot_lock_files(cfg, viec)
-    _ghi_log_an_toan(
-        tep_log,
-        "nhan",
-        viec=phieu_id,
-        may=cfg["tho"],
-        loai=viec["loai"],
-        che_do=viec["che_do"],
-        tran_phut=viec["tran_phut"],
-        de=viec["de"],
-    )
+    if isinstance(viec, dict) and "_head_nhan" in viec:
+        head_truoc = str(viec.get("_head_nhan") or "")
+    elif isinstance(viec, dict) and "head_nhan" in viec and viec.get("head_nhan") is not None:
+        head_truoc = str(viec.get("head_nhan") or "")
+    else:
+        head_truoc = snapshot_tracked_head(cfg, viec)
+        if isinstance(viec, dict):
+            viec["head_nhan"] = head_truoc
+            viec["_head_nhan"] = head_truoc
+
+    truong_nhan = {
+        "viec": phieu_id,
+        "may": cfg["tho"],
+        "loai": viec["loai"],
+        "che_do": viec["che_do"],
+        "tran_phut": viec["tran_phut"],
+        "de": viec["de"],
+    }
+    if head_truoc:
+        truong_nhan["head_nhan"] = head_truoc
+    _ghi_log_an_toan(tep_log, "nhan", **truong_nhan)
 
     ham_agy = _lay_ham_chay_agy(chay_agy_fn)
     if ham_agy is linhx_runner.chay_agy:
@@ -1793,7 +1912,19 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
     except Exception:
         tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
-    if tt == "xong" and has_verification_gate(viec):
+
+    kq_rao = run_post_agy_diff_audit(cfg, viec, head_truoc=head_truoc, agy_trang_thai=tt)
+    if kq_rao["bi_mat"]:
+        kq = rao_phieu.redact_secrets_in_text(kq) if kq is not None else None
+        nk = rao_phieu.redact_secrets_in_text(nk)
+    if not kq_rao["dat"]:
+        if isinstance(viec, dict):
+            viec["_loi_cong_kiem"] = True
+        err_rao = kq_rao["thong_diep_loi"]
+        nk = _merge_agy_into_nhat_ky(kq, nk, err_rao)
+        tt = "loi"
+        kq = err_rao
+    elif tt == "xong" and has_verification_gate(viec):
         tt, kq, nk = run_post_agy_verification(
             cfg,
             viec,
@@ -1825,6 +1956,14 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         linhx_runner.log("loi chep Drive", phieu_id, e)
         drive_str = f"(loi chep Drive: {e})"
 
+    ghi_log_rao_runner(
+        cfg,
+        phieu_id=phieu_id,
+        so_file=kq_rao["so_file"],
+        ngoai_vung=kq_rao["ngoai_vung"],
+        bi_mat=kq_rao["bi_mat"],
+    )
+
     _ghi_log_an_toan(
         tep_log,
         "ket_qua",
@@ -1837,6 +1976,9 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         tep_doi=tat_ca_tep_doi,
         tep_drive=[str(p) for p in tep_da_chep],
         drive=drive_str,
+        so_file=kq_rao["so_file"],
+        ngoai_vung=kq_rao["ngoai_vung"],
+        bi_mat=kq_rao["bi_mat"],
         ket_qua=kq,
         nhat_ky=nk,
     )
@@ -1874,6 +2016,9 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         "drive": drive_str,
         "tep_drive": [str(p) for p in tep_da_chep],
         "tep_log": str(tep_log),
+        "so_file": kq_rao["so_file"],
+        "ngoai_vung": kq_rao["ngoai_vung"],
+        "bi_mat": kq_rao["bi_mat"],
     }
 
 
