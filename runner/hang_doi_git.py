@@ -90,6 +90,8 @@ _LAY_RAM_GOC = linhx_runner.lay_ram_trong_gb
 lay_ram_trong_gb = _LAY_RAM_GOC
 
 
+CHU_KY_CAP_NHAT_GIAY = float(os.environ.get("LINHX_CHU_KY_CAP_NHAT_GIAY", "180"))
+
 def _lay_ham_chay_agy(chay_agy_fn=None):
     if chay_agy_fn is not None:
         return chay_agy_fn
@@ -1311,18 +1313,28 @@ def vong_git(cfg: dict, mot_lan: bool = False, mot_viec: bool = False, chay_agy_
 
     dang_chay: list[threading.Thread] = []
     su_kien_xong = threading.Event()
+    moc_cap_nhat = linhx_runner._gio()
+    cho_khoi_dong_lai = False
 
     while True:
         if (linhx_runner._gio() - moc_ho_so_cuoi) >= chu_ky_ho_so_giay:
             moc_ho_so_cuoi = linhx_runner._gio()
             cap_nhat_ho_so_may_git(cfg)
         dang_chay = [t for t in dang_chay if t.is_alive()]
+        if not mot_lan and not cho_khoi_dong_lai and (linhx_runner._gio() - moc_cap_nhat) >= CHU_KY_CAP_NHAT_GIAY:
+            moc_cap_nhat = linhx_runner._gio()
+            if linhx_runner.co_ban_runner_moi():
+                cho_khoi_dong_lai = True
+                linhx_runner.log("cap-nhat", "co ban runner moi: ngung nhan phieu, cho phieu dang chay xong roi khoi dong lai")
+        if cho_khoi_dong_lai and not dang_chay:
+            return "khoi_dong_lai"
         su_kien_xong.clear()
         viec = None
-        try:
-            viec = nhan_phieu_git(cfg)
-        except Exception:
-            linhx_runner.log("loi", traceback.format_exc()[-800:])
+        if not cho_khoi_dong_lai:
+            try:
+                viec = nhan_phieu_git(cfg)
+            except Exception:
+                linhx_runner.log("loi", traceback.format_exc()[-800:])
 
         if viec is not None:
             def _chay_cong_viec(v=viec):

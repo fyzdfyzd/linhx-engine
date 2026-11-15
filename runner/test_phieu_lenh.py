@@ -29,3 +29,20 @@ def test_phieu_lenh_ten_doc_hoac_khong_co(tmp_path, monkeypatch):
         assert tt == "loi"
     tt, _, nk, *_ = lr.chay_agy({}, {"viec": "v", "loai": "lenh", "meta": {"lenh": "khong-co"}, "de": ""})
     assert tt == "loi" and "không có script" in nk
+
+
+def test_co_ban_runner_moi_khi_head_doi(tmp_path):
+    (tmp_path / ".git").mkdir()
+    heads = iter(["aaa", "", "bbb"])
+
+    class R:
+        def __init__(self, out):
+            self.stdout = out
+            self.returncode = 0
+
+    def chay(cmd, **kw):
+        return R(next(heads) if "rev-parse" in cmd else "") if "rev-parse" in cmd else R("")
+    heads = iter(["aaa", "bbb"])
+    assert lr.co_ban_runner_moi(tmp_path, chay) is True
+    heads = iter(["aaa", "aaa"])
+    assert lr.co_ban_runner_moi(tmp_path, chay) is False

@@ -1558,6 +1558,38 @@ def tu_cap_nhat(goc_repo: Path | None = None, chay=None) -> str:
         return "loi"
 
 
+def co_ban_runner_moi(goc_repo: Path | None = None, chay=None) -> bool:
+    """Vong dai (khong --mot-lan): keo ban moi; True neu HEAD doi (code dang nap trong bo nho da cu).
+    Tat bang LINHX_TU_CAP_NHAT=0."""
+    if os.environ.get("LINHX_TU_CAP_NHAT", "1").strip() == "0":
+        return False
+    goc_repo = goc_repo or GOC.parent
+    if not (goc_repo / ".git").exists():
+        return False
+    chay = chay or _SUBPROCESS_RUN_GOC
+    try:
+        truoc = chay(["git", "-C", str(goc_repo), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=30).stdout.strip()
+        chay(["git", "-C", str(goc_repo), "pull", "--ff-only", "-q"], capture_output=True, text=True, timeout=60)
+        sau = chay(["git", "-C", str(goc_repo), "rev-parse", "HEAD"], capture_output=True, text=True, timeout=30).stdout.strip()
+        return bool(truoc and sau and truoc != sau)
+    except Exception:
+        return False
+
+
+def khoi_dong_lai_runner(argv=None, popen=None):
+    """Mo tien trinh runner moi (an, tach roi) voi cung tham so, sau khi tien trinh cu da nha khoa."""
+    argv = list(sys.argv if argv is None else argv)
+    popen = popen or _POPEN_GOC
+    kw = {"creationflags": 0x00000008 | 0x00000200 | 0x08000000} if os.name == "nt" else {"start_new_session": True}
+    log("cap-nhat", "khoi dong lai runner voi ban moi")
+    try:
+        popen([sys.executable] + argv, cwd=str(GOC), stdin=subprocess.DEVNULL,
+              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, close_fds=True, **kw)
+        return True
+    except OSError as e:
+        log("loi", f"khong khoi dong lai duoc: {e}")
+        return False
+
 def chay_cli(argv=None, tep_env=None) -> int:
     ds_arg = list(sys.argv[1:] if argv is None else argv)
     mot_viec = "--mot-viec" in ds_arg
@@ -1583,19 +1615,23 @@ def chay_cli(argv=None, tep_env=None) -> int:
             return 0
         if mot_lan and argv is None:
             tu_cap_nhat()
+        kq_vong = None
         if tep_log_cli is None:
-            vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
-            return 0
-        tep_log_cli.parent.mkdir(parents=True, exist_ok=True)
-        out_cu, err_cu = sys.stdout, sys.stderr
-        with tep_log_cli.open("a", encoding="utf-8", buffering=1) as fh_log:
-            try:
-                sys.stdout = fh_log
-                sys.stderr = fh_log
-                vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
-            finally:
-                sys.stdout = out_cu
-                sys.stderr = err_cu
+            kq_vong = vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
+        else:
+            tep_log_cli.parent.mkdir(parents=True, exist_ok=True)
+            out_cu, err_cu = sys.stdout, sys.stderr
+            with tep_log_cli.open("a", encoding="utf-8", buffering=1) as fh_log:
+                try:
+                    sys.stdout = fh_log
+                    sys.stderr = fh_log
+                    kq_vong = vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
+                finally:
+                    sys.stdout = out_cu
+                    sys.stderr = err_cu
+    # da ra khoi khoa: tien trinh moi lay duoc khoa
+    if kq_vong == "khoi_dong_lai" and argv is None:
+        khoi_dong_lai_runner()
     return 0
 
 
