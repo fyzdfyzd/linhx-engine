@@ -20,7 +20,7 @@
       "ten": "Viết test khoá",
       "phieu": [
         "yl-test-t1",
-        "yl-test-a6-b"
+        "yl-test-a6-c"
       ],
       "cong": "yl-khoa-t1",
       "du_kien": {
@@ -32,7 +32,7 @@
       "ma": "A2",
       "ten": "Sửa kiosk Nhắn Lam",
       "phieu": [
-        "yl-code-a2-1",
+        "yl-code-a2-1b",
         "yl-code-a2-2",
         "yl-code-a2-3"
       ],
@@ -73,7 +73,7 @@
       "ma": "CHAM",
       "ten": "Chấm RC6",
       "phieu": [
-        "yl-cham-hieu-chuan-rc5"
+        "yl-cham-hieu-chuan-rc5-sua-1"
       ],
       "du_kien": {
         "bat_dau": "2026-11-15T16:20:00+07:00",
@@ -102,6 +102,19 @@
   "chat_luong": {
     "do_muc_9": "C:\\linhx\\ifagent-wt\\*\\bang-chung\\**\\do-muc-9.json",
     "anh_ghep": "C:\\linhx\\ifagent-wt\\*\\bang-chung\\**\\ghep-*.png",
-    "cham": []
+    "cham": [
+      {
+        "rc": "RC5",
+        "nguoi": "Claude",
+        "diem": "kiosk 6,5 · BTC 7,5 · bìa 8,0",
+        "ghi_chu": "bài CHAM-RC5"
+      },
+      {
+        "rc": "RC5",
+        "nguoi": "agy Carbon high",
+        "diem": "kiosk 5,5 · BTC 5,5 · bìa 5,5",
+        "ghi_chu": "bắt 5/5 lỗi kiosk, thêm lỗi 502 bìa, chữ >12 từ; 76 phút (2 lượt)"
+      }
+    ]
   }
 }

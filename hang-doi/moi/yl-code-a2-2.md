@@ -4,10 +4,10 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl-code-a2-2
-phu_thuoc: yl-code-a2-1; yl-duyet-a2-1
+phu_thuoc: yl-code-a2-1b; yl-duyet-a2-1
 
 Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý c,e. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
-1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-code-a2-1 chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-a2-2 -b agy/yl-code-a2-2 origin/agy/yl-code-a2-1`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (chỉ đọc).
+1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-code-a2-1b chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-a2-2 -b agy/yl-code-a2-2 origin/agy/yl-code-a2-1b`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (chỉ đọc).
 2. Đọc khung 2c-K-AM và CHU-TREN-MAN trong NOP/KHUNG, RUBRIC.md, LOI-DA-BAT.md.
 3. Việc (mỗi ý một commit, tiêu đề "A2(c,e): ..."): (c) mở bàn phím: logo và đầu Lam vẫn trong khung, trang không trượt (boundingBox trước/sau); (e) hỏi "Lễ khai mạc lúc mấy giờ?" mở thẻ Khai mạc, không mở thẻ Vé.
 4. Giữ nguyên các móc test: window.__kl.may.{hoiChu,tiengDau,clipHet,trangThai}, window.__kl.moChat (test khoá gọi chúng). Không cần làm xanh 03-a6-do-muc-9 (đang viết lại riêng). Test khoá: các test ý c,e trong apps/lab/test/nghiem-thu-rc6/ phải từ ĐỎ thành XANH. Chỉ sửa code sản phẩm. Thiếu test thì viết test mới ngoài nghiem-thu-rc6.
