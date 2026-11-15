@@ -786,6 +786,22 @@ def _duong_dan_khoa_runner(cfg: dict) -> Path:
     return GOC / "viec" / f"tho-{tho_an_toan}.lock"
 
 
+def tu_cap_nhat(goc_repo: Path | None = None, chay=None) -> str:
+    """Tu keo ban moi cua runner (git pull --ff-only) truoc moi luot, de Linh khong phai git pull tay.
+    Tat bang LINHX_TU_CAP_NHAT=0. Loi mang/xung dot thi bo qua, chay ban dang co."""
+    if os.environ.get("LINHX_TU_CAP_NHAT", "1").strip() == "0":
+        return "tat"
+    goc_repo = goc_repo or GOC.parent
+    if not (goc_repo / ".git").exists():
+        return "khong-phai-repo"
+    chay = chay or subprocess.run
+    try:
+        r = chay(["git", "-C", str(goc_repo), "pull", "--ff-only", "-q"], capture_output=True, text=True, timeout=60)
+        return "ok" if r.returncode == 0 else "loi"
+    except Exception:
+        return "loi"
+
+
 def chay_cli(argv=None, tep_env=None) -> int:
     ds_arg = list(sys.argv[1:] if argv is None else argv)
     mot_viec = "--mot-viec" in ds_arg
@@ -809,6 +825,8 @@ def chay_cli(argv=None, tep_env=None) -> int:
     with khoa_mot_tien_trinh(tep_khoa) as co_khoa:
         if not co_khoa:
             return 0
+        if mot_lan and argv is None:
+            tu_cap_nhat()
         if tep_log_cli is None:
             vong(cfg, mot_lan=mot_lan, mot_viec=mot_viec)
             return 0

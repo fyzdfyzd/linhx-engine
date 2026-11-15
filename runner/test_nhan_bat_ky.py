@@ -343,3 +343,24 @@ def test_theo_doi_thu_muc_ngoai_tinh_la_tien(tmp_path):
     (ngoai / "index.html").write_text("x", encoding="utf-8")
     b = lr._dau_nhip_tien_do(tm, dem, None, td)
     assert a != b
+
+
+def test_tu_cap_nhat_goi_git_pull_va_tat_duoc(tmp_path, monkeypatch):
+    """Runner tu git pull --ff-only truoc moi luot; LINHX_TU_CAP_NHAT=0 thi bo qua."""
+    from runner import linhx_runner as lr
+    (tmp_path / ".git").mkdir()
+    goi = []
+
+    class R:
+        returncode = 0
+
+    def gia(lenh, **kw):
+        goi.append(lenh)
+        return R()
+
+    monkeypatch.delenv("LINHX_TU_CAP_NHAT", raising=False)
+    assert lr.tu_cap_nhat(tmp_path, gia) == "ok"
+    assert goi and goi[0][-2:] == ["--ff-only", "-q"]
+    monkeypatch.setenv("LINHX_TU_CAP_NHAT", "0")
+    assert lr.tu_cap_nhat(tmp_path, gia) == "tat"
+    assert len(goi) == 1
