@@ -13,3 +13,5 @@ Repo: `C:\linhx\wt-va2` (chưa có: `git clone -b claude/project-thread-jowxv1 h
 Vá 2, phạm vi sửa và bí mật: header `vung: glob1; glob2` (ví dụ `runner/**; skills/le/hang-doi-may/**`). Sau agy, runner lấy diff các commit mới trong thư mục theo_doi đầu (so với HEAD lúc nhận phiếu, ghi lại khi nhận). File ngoài vung → `loi` "sửa ngoài vùng: <file>". Quét diff tìm bí mật (khoá API dạng sk-/AIza/ghp_/xox, PRIVATE KEY, password=, file .env, tho.env) → `loi`, KHÔNG in giá trị, chỉ in tên file:dòng. Ghi một dòng JSON mỗi phiếu vào log runner (phiếu, số file, ngoài vùng, bí mật).
 Test trong runner/ (không conftest, không mạng). `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cập nhật `skills/le/hang-doi-may/SKILL.md` (mục Phiếu hoặc Bài học, ngắn). `git pull --rebase`, push nhánh. Trả lời ≤1200 ký tự: làm gì, số test, hash.
 Trước khi push chạy cả `python -m pytest tests/nghiem-thu -q` (CI chặn chuỗi giống bí mật, kể cả token giả trong test: ghép chuỗi lúc chạy).
+
+nhip: 11:26 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
