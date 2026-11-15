@@ -24,8 +24,9 @@ loai: code            # code | trinh-duyet | khac
 model: gemini-pro-orchestrator  # tuỳ chọn: ghi đè model (--model <id>, chỉ chữ/số/-/./_)
 tran_phut: 40         # trần, tối đa 40
 theo_doi: C:\linhx\wt-du-an   # BẮT BUỘC khi agy làm ngoài thư mục phiếu (repo clone riêng)
-phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong (trang_thai: xong); loi/dung thì bỏ qua
+phu_thuoc: id1; id2   # tuỳ chọn: chỉ nhận khi mọi id đã xong; cha loi/dung hết tu_sua → huy ("phụ thuộc trượt")
 tu_sua: 2             # tuỳ chọn (0–3, mặc định 0): tự tạo <id>-sua-<k>.md khi loi/dung (trừ lỗi máy)
+cham: 1               # tuỳ chọn: khi xong tự sinh moi/<id>-cham.md (loai: cham, mắt mới đọc đề gốc + diff, ngưỡng 9/10)
 khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc định 20) cho việc lâu; tối đa bằng tran_phut
 khoa: viec/du-an/nghiem-thu/test.py.khoa  # tuỳ chọn: file .khoa (tương đối theo_doi đầu tiên); lệch sha256 → loi "sửa test khoá"
 lenh_kiem: python -m pytest viec/du-an/nghiem-thu -q  # tuỳ chọn: runner tự chạy sau agy (trần 15p), đạt mới xong; trượt → loi kèm 1500 ký tự cuối log
@@ -103,6 +104,7 @@ Học từ luật deploy thực chiến của `ifagent`: mọi dự án có serv
 - Giao diện không mở `file://` tĩnh (dễ lọt lỗi CORS/CSP/đường dẫn và lặp ảnh); luôn dựng HTTP server cục bộ hoặc URL staging rồi chạy `runner/bang_chung.py`.
 - Gắn `khoa:` + `lenh_kiem:` vào header phiếu để runner tự đối chiếu sha256 test khoá và chạy lệnh kiểm (trần 15 phút) ngoài tay agy trước khi công nhận `xong`.
 - Gắn `vung: glob1; glob2` để runner đối chiếu diff các commit mới so với `HEAD` lúc nhận phiếu ở `theo_doi` đầu tiên, chặn sửa ngoài vùng và quét bí mật (chỉ báo `<file>:<dòng>`, không in giá trị, ghi 1 dòng JSON/phiếu vào log runner).
+- Lúc nhận phiếu runner ghi `moc: <sha HEAD>` vào `dang/<id>.md` để lùi code khi cần; `cham: 1` tự sinh `<id>-cham.md` (`loai: cham`) chấm mắt mới trên diff; phụ thuộc trượt hết `tu_sua` tự chuyển `xong/<id>/KET-QUA.md` (`trang_thai: huy`, `"phụ thuộc trượt"`); `agy` trả `429`/hết hạn mức thì máy ghi cờ tạm nghỉ 30 phút không nhận phiếu mới.
 
 ## Cài máy mới
 CMD trên máy (đổi `may-N`, ổ):

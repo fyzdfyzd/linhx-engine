@@ -59,6 +59,14 @@ NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 MAX_SELF_REPAIR = 3
 SELF_REPAIR_EXCERPT_LIMIT = 1500
 SELF_REPAIR_SECTION_TITLE = "Lần trước trượt vì:"
+QUOTA_PAUSE_MINUTES = 30.0
+DEPENDENCY_FAILED_REASON = "phụ thuộc trượt"
+REVIEW_PROMPT_HEADER = (
+    "Bạn là người chấm mắt mới, KHÔNG xem lý do của thợ. "
+    "Đọc đề gốc + diff, chấm từng tiêu chí đạt/không, điểm /10, ngưỡng 9; "
+    "dưới ngưỡng ghi lỗi file:dòng."
+)
+VALID_RESULT_STATUSES = ("xong", "loi", "dung", "huy")
 VERIFY_TIMEOUT_MINUTES = 15.0
 VERIFY_LOG_TAIL_LIMIT = 1500
 LOCK_TAMPER_MESSAGE = "sửa test khoá"
@@ -76,6 +84,20 @@ _NON_HTTP_429_CONTEXT_RE = re.compile(
     r"(?:\bgiay=429\b|\bline\s+429\b|[A-Za-z0-9_./\\-]+:429(?::|\b))",
     re.IGNORECASE,
 )
+_QUOTA_ERROR_PATTERNS = (
+    "too many requests",
+    "rate limit",
+    "rate_limit",
+    "ratelimit",
+    "resource_exhausted",
+    "quota exceeded",
+    "quota reached",
+    "exceeded your current quota",
+    "exhausted your capacity",
+    "out of quota",
+    "hết hạn mức",
+    "het han muc",
+)
 _MACHINE_ERROR_PATTERNS = (
     "không thấy agy",
     "khong thay agy",
@@ -88,15 +110,7 @@ _MACHINE_ERROR_PATTERNS = (
     "filenotfounderror",
     "command not found",
     "is not recognized as an internal or external command",
-    "too many requests",
-    "rate limit",
-    "rate_limit",
-    "ratelimit",
-    "resource_exhausted",
-    "quota exceeded",
-    "exhausted your capacity",
-    "out of quota",
-)
+) + _QUOTA_ERROR_PATTERNS
 
 _CHAY_AGY_GOC = linhx_runner.chay_agy
 chay_agy = _CHAY_AGY_GOC
@@ -308,6 +322,28 @@ def parse_vung_globs(raw_value) -> list[str]:
     return rao_phieu.parse_vung_globs(raw_value, _strip_unquoted_comment)
 
 
+def parse_cham_flag(raw_value) -> bool:
+    # Phân tích cờ `cham: 1` (bật sinh phiếu chấm mắt mới khi phiếu hoàn tất `xong`)
+    if raw_value is None:
+        return False
+    if isinstance(raw_value, bool):
+        return raw_value
+    cleaned = _strip_unquoted_comment(str(raw_value)).strip().lower()
+    if not cleaned:
+        return False
+    return linhx_runner._ep_cong_tac(cleaned, False)
+
+
+def get_ticket_cham(viec: dict | None) -> bool:
+    # Đọc cờ `cham:` từ phiếu (hỗ trợ cả trường trực tiếp và `meta`)
+    if not isinstance(viec, dict):
+        return False
+    if "cham" in viec and viec.get("cham") is not None:
+        return parse_cham_flag(viec.get("cham"))
+    meta = viec.get("meta") if isinstance(viec.get("meta"), dict) else {}
+    return parse_cham_flag(meta.get("cham"))
+
+
 def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     van_ban = noi_dung.lstrip("\ufeff")
     cac_dong = van_ban.splitlines()
@@ -371,6 +407,8 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     khoa_list = parse_khoa_paths(meta.get("khoa"))
     khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
     vung = parse_vung_globs(meta.get("vung"))
+    cham = parse_cham_flag(meta.get("cham"))
+    moc = _strip_unquoted_comment(str(meta.get("moc") or "")).strip()
 
     return {
         "viec": ma_phieu,
@@ -383,6 +421,8 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "lenh_kiem": lenh_kiem,
         "khoa": khoa,
         "vung": vung,
+        "cham": cham,
+        "moc": moc,
         "de": de,
         "meta": meta,
     }
@@ -411,26 +451,38 @@ def tao_phieu_ping(may: str = "bat-ky", che_do: str | None = None, tran_phut: in
     return "\n".join(dau) + "\n\n" + than.strip() + "\n"
 
 
-def chen_dong_nhan(noi_dung: str, tho: str, thoi_gian: str = "") -> str:
-    moc = thoi_gian or time.strftime("%Y-%m-%dT%H:%M:%S%z")
-    dong_nhan = f"nhan: {tho} {moc}"
+def chen_dong_nhan(noi_dung: str, tho: str, thoi_gian: str = "", moc: str = "") -> str:
+    # Chèn `nhan: <máy> <giờ>` và `moc: <sha HEAD>` (nếu có) vào phần header của phiếu trong `dang/`
+    moc_gio = thoi_gian or time.strftime("%Y-%m-%dT%H:%M:%S%z")
+    dong_chen = [f"nhan: {tho} {moc_gio}"]
+    moc_sach = str(moc or "").strip()
+    if moc_sach:
+        dong_chen.append(f"moc: {moc_sach}")
     van_ban = noi_dung.lstrip("\ufeff")
     cac_dong = van_ban.splitlines()
 
     if cac_dong and cac_dong[0].strip() == "---":
         for i in range(1, len(cac_dong)):
             if cac_dong[i].strip() == "---":
-                cac_dong.insert(i, dong_nhan)
-                return "\n".join(cac_dong) + ("\n" if van_ban.endswith("\n") else "")
+                phan_dau = [
+                    d for d in cac_dong[1:i]
+                    if not (moc_sach and d.strip().lower().startswith("moc:"))
+                ]
+                moi = [cac_dong[0], *phan_dau, *dong_chen, *cac_dong[i:]]
+                return "\n".join(moi) + ("\n" if van_ban.endswith("\n") else "")
 
+    phan_dau_thuong: list[str] = []
     vi_tri = 0
     for i, dong in enumerate(cac_dong):
         if _tach_cap_khoa_gia_tri(dong.strip()):
             vi_tri = i + 1
+            if moc_sach and dong.strip().lower().startswith("moc:"):
+                continue
+            phan_dau_thuong.append(dong)
         else:
             break
-    cac_dong.insert(vi_tri, dong_nhan)
-    ket_qua = "\n".join(cac_dong)
+    moi_thuong = [*phan_dau_thuong, *dong_chen, *cac_dong[vi_tri:]]
+    ket_qua = "\n".join(moi_thuong)
     if van_ban.endswith("\n") or not ket_qua.endswith("\n"):
         ket_qua += "\n"
     return ket_qua
@@ -640,7 +692,7 @@ def tao_ket_qua_md(
 ) -> str:
     if gioi_han <= 0:
         return ""
-    tt = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
+    tt = trang_thai if trang_thai in VALID_RESULT_STATUSES else "loi"
     ds_tep = _cat_mot_dong(", ".join(tep_doi), 300) if tep_doi else "(khong)"
     duong_drive = _cat_mot_dong(drive, 350) if drive and str(drive).strip() else "(khong)"
     ten_model_hien_thi = (
@@ -946,30 +998,214 @@ def read_result_status(wt: Path, dep_id: str) -> str | None:
     return ""
 
 
+def get_dependency_state(wt: Path, dep_id: str) -> str:
+    # Trạng thái phụ thuộc: 'xong' (đạt), 'cho' (đang chờ/chạy hoặc còn lượt tự sửa), 'truot' (đã trượt hẳn)
+    clean_id = str(dep_id or "").strip()
+    if not clean_id or "/" in clean_id or "\\" in clean_id or ".." in clean_id:
+        return "cho"
+    goc_hd = thu_muc_hang_doi(wt)
+    m = _SELF_REPAIR_SUFFIX_RE.match(clean_id)
+    if m:
+        base_id = m.group(1)
+        min_idx = int(m.group(2))
+    else:
+        base_id = clean_id
+        min_idx = 0
+
+    repair_prefix = f"{base_id}-sua-"
+    for folder_name in ("moi", "dang"):
+        folder = goc_hd / folder_name
+        if not folder.is_dir():
+            continue
+        if (folder / f"{clean_id}.md").is_file():
+            return "cho"
+        try:
+            entries = list(folder.iterdir())
+        except OSError:
+            entries = []
+        for entry in entries:
+            if not entry.is_file() or entry.suffix.lower() != ".md":
+                continue
+            if not entry.stem.startswith(repair_prefix):
+                continue
+            m_cand = _SELF_REPAIR_SUFFIX_RE.match(entry.stem)
+            if m_cand and m_cand.group(1) == base_id and int(m_cand.group(2)) > min_idx:
+                return "cho"
+
+    latest_repair_idx = min_idx
+    latest_repair_id = ""
+    tm_xong = goc_hd / "xong"
+    if tm_xong.is_dir():
+        try:
+            done_entries = list(tm_xong.iterdir())
+        except OSError:
+            done_entries = []
+        for cand_dir in done_entries:
+            if not cand_dir.is_dir() or not cand_dir.name.startswith(repair_prefix):
+                continue
+            m_cand = _SELF_REPAIR_SUFFIX_RE.match(cand_dir.name)
+            if m_cand and m_cand.group(1) == base_id:
+                idx_val = int(m_cand.group(2))
+                if idx_val > latest_repair_idx and (cand_dir / "KET-QUA.md").is_file():
+                    latest_repair_idx = idx_val
+                    latest_repair_id = cand_dir.name
+
+    effective_id = latest_repair_id or clean_id
+    status = read_result_status(wt, effective_id)
+    if status is None:
+        return "cho"
+    if status == "xong":
+        return "xong"
+    if status in ("loi", "dung", "huy"):
+        return "truot"
+    return "cho"
+
+
 def are_dependencies_met(wt: Path, dependencies: list[str] | tuple[str, ...]) -> bool:
-    # Mọi id trong `phu_thuoc` đều phải có `xong/<id>/KET-QUA.md` với `trang_thai: xong`.
-    # Nếu chưa xong hoặc kết thúc `loi`/`dung` thì bỏ qua (không nhận phiếu, không ghi KET-QUA).
+    # Mọi id trong `phu_thuoc` đều phải hoàn tất `xong` (tính cả trường hợp lượt `-sua-<k>` sửa đạt `xong`)
     if not dependencies:
         return True
     for dep_id in dependencies:
-        if read_result_status(wt, dep_id) != "xong":
+        if get_dependency_state(wt, dep_id) != "xong":
             return False
     return True
 
 
-def is_machine_error(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
-    # Nhận diện lỗi máy (thiếu agy, HTTP 429 / hết hạn mức) để không sinh phiếu tự sửa vô ích
+def huy_phieu_phu_thuoc_truot_trong_wt(wt: Path, tho: str) -> list[str]:
+    # Chuyển dây chuyền mọi phiếu trong `moi/` có `phu_thuoc` đã trượt hẳn sang `xong/<id>/KET-QUA.md` (`huy`)
+    goc_hd = thu_muc_hang_doi(wt)
+    tm_moi = goc_hd / "moi"
+    if not tm_moi.is_dir():
+        return []
+    da_huy: list[str] = []
+    while True:
+        huy_vong_nay: list[str] = []
+        for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
+            noi_dung = tep.read_text(encoding="utf-8", errors="replace")
+            viec_ung = phan_tich_phieu(noi_dung, tep.stem)
+            deps = viec_ung.get("phu_thuoc") or []
+            if not deps:
+                continue
+            if any(get_dependency_state(wt, dep_id) == "truot" for dep_id in deps):
+                phieu_huy = tep.stem
+                tep.unlink()
+                tep_kq_huy = goc_hd / "xong" / phieu_huy / "KET-QUA.md"
+                tep_kq_huy.parent.mkdir(parents=True, exist_ok=True)
+                nd_huy = tao_ket_qua_md(
+                    phieu_id=phieu_huy,
+                    tho=tho,
+                    trang_thai="huy",
+                    ket_qua=DEPENDENCY_FAILED_REASON,
+                )
+                tep_kq_huy.write_text(nd_huy, encoding="utf-8")
+                huy_vong_nay.append(phieu_huy)
+                da_huy.append(phieu_huy)
+        if not huy_vong_nay:
+            break
+    return da_huy
+
+
+def is_quota_error(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
+    # Nhận diện lỗi HTTP 429 / hết hạn mức từ agy để máy tạm nghỉ nhận phiếu mới
     if trang_thai not in ("loi", "dung"):
         return False
     combined = f"{ket_qua or ''}\n{nhat_ky or ''}"
     lowered = combined.lower()
-    for pattern in _MACHINE_ERROR_PATTERNS:
+    for pattern in _QUOTA_ERROR_PATTERNS:
         if pattern in lowered:
             return True
     scrubbed = _NON_HTTP_429_CONTEXT_RE.sub("", combined)
     if _HTTP_429_RE.search(scrubbed):
         return True
     return False
+
+
+def is_machine_error(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
+    # Nhận diện lỗi máy (thiếu agy, HTTP 429 / hết hạn mức) để không sinh phiếu tự sửa vô ích
+    if trang_thai not in ("loi", "dung"):
+        return False
+    if is_quota_error(trang_thai, ket_qua, nhat_ky):
+        return True
+    combined = f"{ket_qua or ''}\n{nhat_ky or ''}"
+    lowered = combined.lower()
+    for pattern in _MACHINE_ERROR_PATTERNS:
+        if pattern in lowered:
+            return True
+    return False
+
+
+def duong_dan_co_tam_nghi_quota(cfg: dict | None = None) -> Path:
+    # Đường dẫn file cờ tạm nghỉ khi máy dính lỗi 429 / hết hạn mức
+    if cfg and cfg.get("tep_tam_nghi_quota"):
+        return Path(cfg["tep_tam_nghi_quota"])
+    env_path = os.environ.get("LINHX_TEP_TAM_NGHI_QUOTA", "").strip()
+    if env_path:
+        return Path(env_path)
+    tho_an_toan = _ten_phieu_an_toan(str((cfg or {}).get("tho") or "may").strip().lower())
+    return _thu_muc_log(cfg) / f"tam-nghi-quota-{tho_an_toan}.json"
+
+
+def ghi_co_tam_nghi_quota(
+    cfg: dict | None,
+    phieu_id: str = "",
+    ly_do: str = "",
+    phut_nghi: float | None = None,
+    now_epoch: float | None = None,
+) -> Path:
+    # Ghi file cờ tạm nghỉ nhận phiếu mới trong 30 phút (mặc định) khi agy trả 429 / hết hạn mức
+    bay_gio = float(time.time() if now_epoch is None else now_epoch)
+    nguon_phut = (
+        phut_nghi
+        if phut_nghi is not None
+        else (cfg or {}).get("tam_nghi_quota_phut", os.environ.get("LINHX_TAM_NGHI_QUOTA_PHUT"))
+    )
+    so_phut = linhx_runner._ep_so_duong(nguon_phut, QUOTA_PAUSE_MINUTES)
+    tam_nghi_den = bay_gio + so_phut * 60.0
+    tep_co = duong_dan_co_tam_nghi_quota(cfg)
+    tep_co.parent.mkdir(parents=True, exist_ok=True)
+    du_lieu = {
+        "may": str((cfg or {}).get("tho") or "may"),
+        "phieu": str(phieu_id or ""),
+        "bat_dau": bay_gio,
+        "tam_nghi_phut": so_phut,
+        "tam_nghi_den": tam_nghi_den,
+        "tam_nghi_den_iso": time.strftime("%Y-%m-%dT%H:%M:%S%z", time.localtime(tam_nghi_den)),
+        "ly_do": _cat_mot_dong(ly_do, 240),
+    }
+    tep_co.write_text(json.dumps(du_lieu, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return tep_co
+
+
+def dang_tam_nghi_quota(cfg: dict | None, now_epoch: float | None = None) -> tuple[bool, float]:
+    # Kiểm tra file cờ tạm nghỉ quota: trả về (đang_nghỉ, số_phút_còn_lại); hết hạn thì tự xoá cờ
+    tep_co = duong_dan_co_tam_nghi_quota(cfg)
+    if not tep_co.is_file():
+        return False, 0.0
+    bay_gio = float(time.time() if now_epoch is None else now_epoch)
+    try:
+        raw = tep_co.read_text(encoding="utf-8", errors="replace").strip()
+        if not raw:
+            tep_co.unlink(missing_ok=True)
+            return False, 0.0
+        if raw.startswith("{"):
+            obj = json.loads(raw)
+            tam_nghi_den = float(obj.get("tam_nghi_den") or 0.0)
+        else:
+            tam_nghi_den = float(raw.splitlines()[0].strip())
+    except (OSError, ValueError, TypeError):
+        try:
+            tep_co.unlink(missing_ok=True)
+        except OSError:
+            pass
+        return False, 0.0
+
+    if bay_gio < tam_nghi_den:
+        return True, (tam_nghi_den - bay_gio) / 60.0
+    try:
+        tep_co.unlink(missing_ok=True)
+    except OSError:
+        pass
+    return False, 0.0
 
 
 def extract_original_prompt(prompt_text: str) -> str:
@@ -1009,6 +1245,7 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
     meta = dict(viec.get("meta") or {})
     meta.pop("nhan", None)
     meta.pop("head_nhan", None)
+    meta.pop("moc", None)
     header_lines: list[str] = []
     has_may = False
     has_tu_sua = False
@@ -1030,6 +1267,8 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
         header_lines.append(f"lenh_kiem: {parse_lenh_kiem(viec.get('lenh_kiem'))}")
     if "vung" not in meta and parse_vung_globs(viec.get("vung")):
         header_lines.append(f"vung: {'; '.join(parse_vung_globs(viec.get('vung')))}")
+    if "cham" not in meta and get_ticket_cham(viec):
+        header_lines.append("cham: 1")
     if not has_tu_sua:
         header_lines.append(f"tu_sua: {remaining}")
 
@@ -1038,6 +1277,120 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
     if excerpt and not excerpt.endswith("\n"):
         excerpt += "\n"
     body = f"{original_body}\n\n## {SELF_REPAIR_SECTION_TITLE}\n{excerpt}"
+    return "\n".join(header_lines) + "\n\n" + body
+
+
+def lay_moc_head(cfg: dict | None, viec: dict | None) -> str:
+    # Lấy SHA HEAD hiện tại của repo `theo_doi` đầu tiên (hoặc `thu_muc` nếu là git repo) lúc nhận phiếu để hoàn tác
+    _, repo_toplevel, _, co_theo_doi = rao_phieu.resolve_tracked_git_repo(
+        cfg,
+        viec,
+        chay_git_fn=chay_git,
+        kiem_tra_thu_muc_fn=linhx_runner.kiem_tra_thu_muc_lam_viec,
+        strip_comment_fn=_strip_unquoted_comment,
+        goc_runner=linhx_runner.GOC,
+    )
+    if repo_toplevel is None and not co_theo_doi and cfg and cfg.get("thu_muc"):
+        fb_path = Path(cfg["thu_muc"])
+        limit_dir = cfg.get("gioi_han_thu_muc")
+        if limit_dir is None and os.environ.get("LINHX_GIOI_HAN_THU_MUC", "").strip():
+            limit_dir = Path(os.environ["LINHX_GIOI_HAN_THU_MUC"].strip())
+        ok_dir, _ = linhx_runner.kiem_tra_thu_muc_lam_viec(fb_path, limit_dir)
+        if ok_dir and fb_path.is_dir():
+            p_top = chay_git(["rev-parse", "--show-toplevel"], cwd=fb_path, check=False, timeout=15)
+            if p_top.returncode == 0 and p_top.stdout.strip():
+                cand_top = Path(p_top.stdout.strip()).resolve()
+                outer_roots = {os.path.normcase(str(linhx_runner.GOC.parent.resolve()))}
+                if cfg.get("repo_hang_doi"):
+                    try:
+                        outer_roots.add(os.path.normcase(str(Path(cfg["repo_hang_doi"]).resolve())))
+                    except OSError:
+                        pass
+                top_nc = os.path.normcase(str(cand_top))
+                fb_nc = os.path.normcase(str(fb_path.resolve()))
+                if fb_nc == top_nc or top_nc not in outer_roots:
+                    repo_toplevel = cand_top
+    if repo_toplevel is None:
+        return ""
+    proc = chay_git(["rev-parse", "--verify", "-q", "HEAD"], cwd=repo_toplevel, check=False, timeout=15)
+    if proc.returncode == 0 and proc.stdout.strip():
+        return proc.stdout.strip()
+    return ""
+
+
+def build_diff_command(cfg: dict | None, viec: dict | None, moc_sha: str = "") -> str:
+    # Dựng lệnh git diff từ mốc `moc:` tới `HEAD` để người chấm mắt mới đọc thay đổi
+    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
+    raw_tracked = meta.get("theo_doi") or ((viec or {}).get("theo_doi") if isinstance(viec, dict) else "") or ""
+    cleaned_tracked = _strip_unquoted_comment(str(raw_tracked))
+    tracked_items = [item.strip() for item in cleaned_tracked.split(";") if item.strip()]
+    repo_display = ""
+    if tracked_items:
+        first_item = tracked_items[0]
+        if len(first_item) >= 2 and first_item[0] == first_item[-1] and first_item[0] in ("'", '"'):
+            first_item = first_item[1:-1].strip()
+        repo_display = first_item
+
+    _, repo_toplevel, _, _ = rao_phieu.resolve_tracked_git_repo(
+        cfg,
+        viec,
+        chay_git_fn=chay_git,
+        kiem_tra_thu_muc_fn=linhx_runner.kiem_tra_thu_muc_lam_viec,
+        strip_comment_fn=_strip_unquoted_comment,
+        goc_runner=linhx_runner.GOC,
+    )
+    if not repo_display and repo_toplevel is not None:
+        repo_display = str(repo_toplevel)
+
+    moc = str(
+        moc_sha
+        or ((viec or {}).get("moc") if isinstance(viec, dict) else "")
+        or meta.get("moc")
+        or ((viec or {}).get("head_nhan") if isinstance(viec, dict) else "")
+        or ""
+    ).strip()
+    if moc == rao_phieu.GIT_EMPTY_TREE_SHA:
+        moc = ""
+    if not moc and repo_toplevel is not None:
+        inferred = rao_phieu.infer_initial_base_when_cloned_in_agy(repo_toplevel, chay_git)
+        if inferred and inferred != rao_phieu.GIT_EMPTY_TREE_SHA:
+            moc = inferred
+
+    diff_range = f"{moc}..HEAD" if moc else "HEAD~1..HEAD"
+    if repo_display:
+        repo_arg = f'"{repo_display}"' if any(ch.isspace() for ch in repo_display) else repo_display
+        return f"git -C {repo_arg} diff {diff_range}"
+    return f"git diff {diff_range}"
+
+
+def build_review_ticket(viec: dict, moc_sha: str = "", cfg: dict | None = None) -> str | None:
+    # Tạo nội dung phiếu `hang-doi/moi/<id>-cham.md` (`loai: cham`, cùng `may`, `theo_doi`) kèm đề gốc và lệnh diff
+    if not isinstance(viec, dict) or not get_ticket_cham(viec):
+        return None
+    loai_goc = str(viec.get("loai") or (viec.get("meta") or {}).get("loai") or "code").strip().lower()
+    if loai_goc == "cham":
+        return None
+
+    meta = dict(viec.get("meta") or {})
+    may_goc = _strip_unquoted_comment(str(meta.get("may") or viec.get("may") or "bat-ky")).strip().lower() or "bat-ky"
+    header_lines = [
+        f"may: {may_goc}",
+        "loai: cham",
+    ]
+    if "tran_phut" in meta and str(meta["tran_phut"]).strip():
+        header_lines.append(f"tran_phut: {_strip_unquoted_comment(str(meta['tran_phut'])).strip()}")
+    raw_theo_doi = meta.get("theo_doi") or viec.get("theo_doi") or ""
+    theo_doi_sach = _strip_unquoted_comment(str(raw_theo_doi)).strip()
+    if theo_doi_sach:
+        header_lines.append(f"theo_doi: {theo_doi_sach}")
+
+    lenh_diff = build_diff_command(cfg, viec, moc_sha=moc_sha)
+    de_goc = extract_original_prompt(viec.get("de") or viec.get("viec") or "")
+    body = (
+        f"{REVIEW_PROMPT_HEADER}\n\n"
+        f"Lệnh xem diff:\n`{lenh_diff}`\n\n"
+        f"## Đề gốc\n{de_goc}\n"
+    )
     return "\n".join(header_lines) + "\n\n" + body
 
 
@@ -1086,6 +1439,10 @@ def _commit_git(wt: Path, tho: str, thong_diep: str):
 
 def nhan_phieu_git(cfg: dict):
     """Keo nhanh hang-doi, chon phieu phu hop va giu phieu bang commit + push."""
+    dang_nghi, con_lai_phut = dang_tam_nghi_quota(cfg)
+    if dang_nghi:
+        linhx_runner.log(f"may tam nghi quota con {con_lai_phut:.1f} phut, khong nhan phieu moi")
+        return None
     ok_ram, ram_gb = du_ram_nhan_viec(cfg)
     if not ok_ram:
         nguong = cfg.get("nguong_ram_gb", NGUONG_RAM_TRONG_GB)
@@ -1095,14 +1452,25 @@ def nhan_phieu_git(cfg: dict):
     tho = cfg["tho"]
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
         for lan in range(SO_LAN_THU_PUSH):
+            dang_nghi, _ = dang_tam_nghi_quota(cfg)
+            if dang_nghi:
+                return None
             ok_ram, ram_gb = du_ram_nhan_viec(cfg)
             if not ok_ram:
                 return None
             wt = dam_bao_worktree(cfg)
             if wt is None:
                 return None
+            ds_huy = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
             ung_vien = chon_ung_vien(wt, tho, cfg=cfg)
             if not ung_vien:
+                if ds_huy:
+                    _commit_git(wt, tho, f"huy: {', '.join(ds_huy)} ({tho})")
+                    push_huy = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+                    if push_huy.returncode == 0:
+                        return None
+                    time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
+                    continue
                 return None
             tep_moi, viec = ung_vien[0]
             goc_hd = thu_muc_hang_doi(wt)
@@ -1110,16 +1478,28 @@ def nhan_phieu_git(cfg: dict):
             tm_dang.mkdir(parents=True, exist_ok=True)
             tep_dang = tm_dang / tep_moi.name
 
-            noi_dung_moi = chen_dong_nhan(tep_moi.read_text(encoding="utf-8", errors="replace"), tho)
+            moc_head = lay_moc_head(cfg, viec)
+            noi_dung_moi = chen_dong_nhan(
+                tep_moi.read_text(encoding="utf-8", errors="replace"),
+                tho,
+                moc=moc_head,
+            )
             tep_moi.unlink()
             tep_dang.write_text(noi_dung_moi, encoding="utf-8")
 
-            _commit_git(wt, tho, f"nhan: {viec['viec']} ({tho})")
+            thong_diep_nhan = f"nhan: {viec['viec']} ({tho})"
+            if ds_huy:
+                thong_diep_nhan = f"{thong_diep_nhan} [huy: {', '.join(ds_huy)}]"
+            _commit_git(wt, tho, thong_diep_nhan)
             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
             if push.returncode == 0:
                 head_luc_nhan = snapshot_tracked_head(cfg, viec)
                 viec["head_nhan"] = head_luc_nhan
                 viec["_head_nhan"] = head_luc_nhan
+                if moc_head:
+                    viec["moc"] = moc_head
+                    if isinstance(viec.get("meta"), dict):
+                        viec["meta"]["moc"] = moc_head
                 return viec
             linhx_runner.log("tranh phieu", viec["viec"], "push bi tu choi, keo lai")
             time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
@@ -1132,6 +1512,33 @@ def _xac_dinh_model_cho_ket_qua(cfg: dict, viec: dict) -> tuple[str, str]:
         return str(viec["_model_da_dung"]), str(viec.get("_canh_bao_model") or "")
     kq_m = linhx_runner.chon_model_phieu(cfg, viec)
     return kq_m["model_that"], kq_m["canh_bao"]
+
+
+def _khoi_phuc_viec_tu_tep_dang(viec: dict, tep_dang: Path, phieu_id: str) -> dict:
+    # Bổ sung các trường header (`moc`, `cham`, `tu_sua`, `meta`, `de`) từ `dang/<id>.md` trước khi xoá
+    if not tep_dang.is_file():
+        return viec
+    raw_text = tep_dang.read_text(encoding="utf-8", errors="replace")
+    clean_lines = [d for d in raw_text.splitlines() if not _NHIP_CUOI_DONG_RE.match(d.strip())]
+    parsed_dang = phan_tich_phieu("\n".join(clean_lines), phieu_id)
+    if "tu_sua" not in viec and "meta" not in viec and "cham" not in viec:
+        return parsed_dang
+    merged = dict(viec)
+    meta_cur = dict(merged.get("meta") or {})
+    for k, v in (parsed_dang.get("meta") or {}).items():
+        meta_cur.setdefault(k, v)
+    merged["meta"] = meta_cur
+    if not merged.get("moc") and parsed_dang.get("moc"):
+        merged["moc"] = parsed_dang["moc"]
+    if "cham" not in merged:
+        merged["cham"] = parsed_dang.get("cham", False)
+    if not merged.get("de") and parsed_dang.get("de"):
+        merged["de"] = parsed_dang["de"]
+    if not merged.get("may") and parsed_dang.get("may"):
+        merged["may"] = parsed_dang["may"]
+    if not merged.get("loai") and parsed_dang.get("loai"):
+        merged["loai"] = parsed_dang["loai"]
+    return merged
 
 
 def bao_ket_qua_git(
@@ -1152,11 +1559,15 @@ def bao_ket_qua_git(
     _, _, remote, nhanh = _duong_dan_wt(cfg)
     tho = cfg["tho"]
     phieu_id = viec["viec"]
-    tt_chuan = trang_thai if trang_thai in ("xong", "loi", "dung") else "loi"
+    tt_chuan = trang_thai if trang_thai in VALID_RESULT_STATUSES else "loi"
     model_tu_viec, canh_bao_tu_viec = _xac_dinh_model_cho_ket_qua(cfg, viec)
     model_ghi = model if model and str(model).strip() else model_tu_viec
     canh_bao_ghi = canh_bao if canh_bao and str(canh_bao).strip() else canh_bao_tu_viec
     loi_cong_kiem = bool(isinstance(viec, dict) and viec.get("_loi_cong_kiem"))
+    if not loi_cong_kiem and is_quota_error(tt_chuan, ket_qua, nhat_ky):
+        dang_nghi_ht, _ = dang_tam_nghi_quota(cfg)
+        if not dang_nghi_ht:
+            ghi_co_tam_nghi_quota(cfg, phieu_id=phieu_id, ly_do=str(ket_qua or nhat_ky or "429"))
     gioi_han_kq = (
         max(GIOI_HAN_KET_QUA, len(str(ket_qua or "")) + 900)
         if loi_cong_kiem
@@ -1196,9 +1607,7 @@ def bao_ket_qua_git(
                 raise RuntimeError(f"Khong tim thay nhanh {nhanh} khi bao ket qua {phieu_id}")
             goc_hd = thu_muc_hang_doi(wt)
             tep_dang = goc_hd / "dang" / f"{phieu_id}.md"
-            viec_nguon = viec
-            if tep_dang.is_file() and "tu_sua" not in viec and "meta" not in viec:
-                viec_nguon = phan_tich_phieu(tep_dang.read_text(encoding="utf-8", errors="replace"), phieu_id)
+            viec_nguon = _khoi_phuc_viec_tu_tep_dang(viec, tep_dang, phieu_id)
             if tep_dang.exists():
                 tep_dang.unlink()
             tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
@@ -1222,6 +1631,28 @@ def bao_ket_qua_git(
                     tm_moi.mkdir(parents=True, exist_ok=True)
                     (tm_moi / f"{ma_phieu_sua}.md").write_text(noi_dung_sua, encoding="utf-8")
                     thong_diep = f"{thong_diep} -> {ma_phieu_sua}"
+            if tt_chuan == "xong":
+                noi_dung_cham = build_review_ticket(
+                    viec_nguon,
+                    moc_sha=str(viec_nguon.get("moc") or ""),
+                    cfg=cfg,
+                )
+                if noi_dung_cham is not None:
+                    ma_phieu_cham = f"{phieu_id}-cham"
+                    da_co_cham = (
+                        (goc_hd / "moi" / f"{ma_phieu_cham}.md").exists()
+                        or (goc_hd / "dang" / f"{ma_phieu_cham}.md").exists()
+                        or (goc_hd / "xong" / ma_phieu_cham).exists()
+                    )
+                    if not da_co_cham:
+                        tm_moi = goc_hd / "moi"
+                        tm_moi.mkdir(parents=True, exist_ok=True)
+                        (tm_moi / f"{ma_phieu_cham}.md").write_text(noi_dung_cham, encoding="utf-8")
+                        thong_diep = f"{thong_diep} -> {ma_phieu_cham}"
+
+            ds_huy_day_chuyen = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
+            if ds_huy_day_chuyen:
+                thong_diep = f"{thong_diep} [huy: {', '.join(ds_huy_day_chuyen)}]"
 
             _commit_git(wt, tho, thong_diep)
             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
@@ -1912,6 +2343,10 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
     except Exception:
         tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
+
+    if is_quota_error(tt, kq, nk):
+        tep_co_quota = ghi_co_tam_nghi_quota(cfg, phieu_id=phieu_id, ly_do=str(kq or nk or "429"))
+        linhx_runner.log("tam-nghi-quota", cfg["tho"], phieu_id, tep_co_quota)
 
     kq_rao = run_post_agy_diff_audit(cfg, viec, head_truoc=head_truoc, agy_trang_thai=tt)
     if kq_rao["bi_mat"]:

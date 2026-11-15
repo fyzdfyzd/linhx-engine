@@ -526,7 +526,7 @@ def read_queue_snapshot(
             ticket_id = sub_dir.name
             machine_name = (meta.get("may") or "chua-ro").strip().lower()
             status = (meta.get("trang_thai") or "loi").strip().lower()
-            if status not in ("xong", "loi", "dung"):
+            if status not in ("xong", "loi", "dung", "huy"):
                 status = "loi"
             try:
                 minutes_val = round(float(meta.get("phut") or 0.0), 2)
@@ -557,7 +557,7 @@ def read_queue_snapshot(
                 "xong_luc": format_iso(done_dt),
                 "xong_luc_hien_thi": format_display_time(done_dt),
                 "tom_tat": _summarize_text(body, 100),
-                "ly_do_ngan": _extract_ket_reason(body, 90) if status in ("loi", "dung") else "",
+                "ly_do_ngan": _extract_ket_reason(body, 90) if status in ("loi", "dung", "huy") else "",
                 "ket_qua": raw_kq,
                 "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
                 "_sort_ts": done_dt.timestamp() if done_dt else 0.0,
@@ -1261,7 +1261,7 @@ section.can-linh-box h2 {
 .tt-xong, .may-ok { background: var(--ok-bg); color: var(--ok-fg); }
 .tt-chay { background: var(--accent-soft); color: var(--accent); }
 .may-chay { background: var(--run-bg); color: var(--run-fg); }
-.may-ranh { background: var(--idle-bg); color: var(--idle-fg); }
+.may-ranh, .tt-huy { background: var(--idle-bg); color: var(--idle-fg); }
 .tt-dung, .may-ket { background: var(--warn-bg); color: var(--warn-fg); }
 .tt-loi, .may-do { background: var(--err-bg); color: var(--err-fg); }
 .qua-han {
@@ -2078,7 +2078,7 @@ _DASHBOARD_JS = r"""
 
     var renderDoneRow = function (d) {
       var st = d.trang_thai || "loi";
-      var bCls = (st === "xong" || st === "loi" || st === "dung") ? ("badge tt-" + st) : "badge tt-loi";
+      var bCls = (st === "xong" || st === "loi" || st === "dung" || st === "huy") ? ("badge tt-" + st) : "badge tt-loi";
       var tok = Number(d.tong_token || 0).toLocaleString("en-US");
       var extraReason = d.ly_do_ngan ? ('<div class="ket-note">' + esc(d.ly_do_ngan) + "</div>") : (d.tom_tat ? ('<div class="ticket-sub">' + esc(d.tom_tat) + "</div>") : "");
       return '<div class="ticket-row"><div class="ticket-row-head">' +
@@ -2660,7 +2660,7 @@ def _render_tickets_section(data: dict) -> str:
 
     def _done_row(item: dict) -> str:
         st = item.get("trang_thai") or "loi"
-        badge_cls = f"badge tt-{st}" if st in ("xong", "loi", "dung") else "badge tt-loi"
+        badge_cls = f"badge tt-{st}" if st in ("xong", "loi", "dung", "huy") else "badge tt-loi"
         tok_str = f"{int(item.get('tong_token') or 0):,}"
         ly_do = item.get("ly_do_ngan") or ""
         tom_tat = item.get("tom_tat") or ""

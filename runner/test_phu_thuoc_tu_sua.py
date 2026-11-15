@@ -244,15 +244,18 @@ def test_dependencies_skip_without_ket_qua_when_dep_fails_or_stops(tmp_path, mon
 
     monkeypatch.setattr(hang_doi_git, "chay_agy", fake_agy)
 
-    # Chạy hết vòng: chỉ chạy 01-bi-loi, 02-bi-dung, 05-du-phu-thuoc; tuyệt đối không nhận 03 và 04
+    # Chạy hết vòng: chỉ chạy 01-bi-loi, 02-bi-dung, 05-du-phu-thuoc; tuyệt đối không nhận 03 và 04,
+    # đồng thời 03 và 04 (phụ thuộc đã hết tu_sua) chuyển sang xong/<id>/KET-QUA.md trạng thái huy.
     hang_doi_git.vong_git(cfg, mot_lan=True)
     assert set(executed) == {"01-bi-loi", "02-bi-dung", "05-du-phu-thuoc"}
 
     inspect_dir = _inspect_queue_branch(bare_repo, tmp_path, "kt-phu-thuoc-bo")
-    assert (inspect_dir / "hang-doi" / "moi" / "03-can-loi.md").is_file()
-    assert (inspect_dir / "hang-doi" / "moi" / "04-can-dung.md").is_file()
-    assert not (inspect_dir / "hang-doi" / "xong" / "03-can-loi").exists()
-    assert not (inspect_dir / "hang-doi" / "xong" / "04-can-dung").exists()
+    assert not (inspect_dir / "hang-doi" / "moi" / "03-can-loi.md").exists()
+    assert not (inspect_dir / "hang-doi" / "moi" / "04-can-dung.md").exists()
+    kq_03 = (inspect_dir / "hang-doi" / "xong" / "03-can-loi" / "KET-QUA.md").read_text(encoding="utf-8")
+    kq_04 = (inspect_dir / "hang-doi" / "xong" / "04-can-dung" / "KET-QUA.md").read_text(encoding="utf-8")
+    assert "trang_thai: huy" in kq_03 and "phụ thuộc trượt" in kq_03
+    assert "trang_thai: huy" in kq_04 and "phụ thuộc trượt" in kq_04
     assert (inspect_dir / "hang-doi" / "xong" / "05-du-phu-thuoc" / "KET-QUA.md").is_file()
 
 
@@ -405,6 +408,12 @@ def test_self_repair_not_generated_on_machine_errors(tmp_path, monkeypatch):
         return "xong", "Đã sửa xong 03", "exit=0", 40, 20
 
     monkeypatch.setattr(hang_doi_git, "chay_agy", fake_agy)
+    # Lượt chạy 02-loi-429: không sinh -sua-1 và bật cờ tạm nghỉ quota cho máy may-1
+    r_429 = hang_doi_git.xu_ly_mot_phieu(cfg)
+    assert r_429 is not None and r_429["viec"] == "02-loi-429"
+    assert hang_doi_git.dang_tam_nghi_quota(cfg)[0] is True
+    # Xoá cờ tạm nghỉ để kiểm tiếp 03-loi-code-429s (giay=429 / line 429 không phải lỗi 429 HTTP)
+    hang_doi_git.duong_dan_co_tam_nghi_quota(cfg).unlink(missing_ok=True)
     hang_doi_git.vong_git(cfg, mot_lan=True)
 
     inspect_final = _inspect_queue_branch(bare_repo, tmp_path, "kt-loi-may-final")
