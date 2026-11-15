@@ -6,6 +6,7 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\T1
 phu_thuoc: yl-gop-a1d
+nhan: may-2 2026-11-15T11:06:57+0700
 
 Phiếu T1 Yên Lam: CHỈ viết test mới, KHÔNG sửa code sản phẩm. Chạy mọi lệnh ở tiền cảnh; mỗi 5 phút phải có file mới hoặc commit trong C:\linhx\ifagent-wt\T1.
 1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-a1-gop-b chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\T1 -b agy/yl-test-t1 origin/agy/yl-a1-gop-b`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (lấy TIEU-CHUAN-NGHIEM-THU.md, CHUAN/, KHUNG/; không sửa các file này).
