@@ -6,6 +6,7 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl-test-a6-b
 phu_thuoc: yl-khoa-t1
+nhan: may-2 2026-11-15T12:03:24+0700
 
 Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG sửa code sản phẩm. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git -C C:\linhx\ifagent fetch --all`, `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-test-a6-b -b agy/yl-test-a6-b origin/agy/yl-test-t1`.
