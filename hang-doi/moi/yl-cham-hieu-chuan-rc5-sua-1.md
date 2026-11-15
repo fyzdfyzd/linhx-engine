@@ -3,9 +3,8 @@ loai: code
 model: gemini-4-carbon-high
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\cham-yl
-nhan: may-1 2026-11-15T11:46:12+0700
 
 Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải thợ đã làm). Chỉ đọc, không sửa code, không deploy. Mọi lệnh tiền cảnh. Không dùng background task.
 1. Nếu D:\linhx\cham-yl đã có (lượt trước bị dừng) thì xoá CHAM-AGY-RC5.md cũ nếu có, `git -C D:\linhx\cham-yl fetch origin` rồi làm tiếp từ sparse-checkout. Clone thưa (ổ C máy 1 gần đầy, dùng D:): `git clone --filter=blob:none --no-checkout https://github.com/fyzdfyzd/ifagent D:\linhx\cham-yl`, rồi `git -C D:\linhx\cham-yl sparse-checkout set .handoff/yen-lam-dong-hanh/NOP ops/staging-rc5` và `git -C D:\linhx\cham-yl checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` + `git -C D:\linhx\cham-yl checkout origin/claude/project-thread-4abpu3 -- ops/staging-rc5`.
@@ -15,4 +14,15 @@ Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải th�
 Không sửa điểm của mình sau khi xem đáp án.
 Trả lời KET-QUA.md (ngắn): bảng so điểm, số lỗi kiosk bắt được /5, các lỗi agy thấy mà bài Claude không có, các lỗi Claude thấy mà agy bỏ sót (mỗi lỗi một dòng), kết luận DÙNG ĐƯỢC nếu mọi phần lệch ≤ 0,5 và bắt ≥ 4/5 lỗi kiosk, ngược lại CHƯA.
 
-nhip: 12:25 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: gemini-4-carbon-high
+phieu: yl-cham-hieu-chuan-rc5
+may: may-1
+trang_thai: dung
+tep_doi: (khong)
+drive: (khong)
+phut: 40.10
+token: vao=0 ra=0
+
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
