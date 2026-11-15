@@ -6,6 +6,7 @@ khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-test-a6-c
 phu_thuoc: yl-khoa-t1
+nhan: may-2 2026-11-15T14:12:42+0700
 
 LƯỢT 3 (hai lượt trước đều bị dừng ở phút 40 vì agy đưa lệnh ra chạy nền rồi ngồi chờ): (1) worktree C:\linhx\ifagent-wt\yl-test-a6-c đã có thì DÙNG LẠI, không tạo lại; đọc git status xem lượt trước làm tới đâu. (2) Mỗi lệnh test bọc trong PowerShell: `$p = Start-Process node -ArgumentList '--test','--test-timeout=120000','<file>' -NoNewWindow -PassThru -Wait` là SAI; hãy gọi thẳng `node --test --test-timeout=120000 <file> 2>&1 | Tee-Object bang-chung\log-<ten>.txt` và đợi lệnh trả về trong CÙNG lượt gọi công cụ. (3) Sau mỗi test viết xong: commit + `git push -u origin agy/yl-test-a6-c` ngay, để lượt sau không mất việc. (4) Lệnh nào quá 5 phút chưa xong thì bỏ, ghi vào KET-QUA, làm phần còn lại.
 
