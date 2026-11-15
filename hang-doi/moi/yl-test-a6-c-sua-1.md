@@ -7,6 +7,8 @@ tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-test-a6-c
 phu_thuoc: yl-khoa-t1
 
+LƯỢT 3 (hai lượt trước đều bị dừng ở phút 40 vì agy đưa lệnh ra chạy nền rồi ngồi chờ): (1) worktree C:\linhx\ifagent-wt\yl-test-a6-c đã có thì DÙNG LẠI, không tạo lại; đọc git status xem lượt trước làm tới đâu. (2) Mỗi lệnh test bọc trong PowerShell: `$p = Start-Process node -ArgumentList '--test','--test-timeout=120000','<file>' -NoNewWindow -PassThru -Wait` là SAI; hãy gọi thẳng `node --test --test-timeout=120000 <file> 2>&1 | Tee-Object bang-chung\log-<ten>.txt` và đợi lệnh trả về trong CÙNG lượt gọi công cụ. (3) Sau mỗi test viết xong: commit + `git push -u origin agy/yl-test-a6-c` ngay, để lượt sau không mất việc. (4) Lệnh nào quá 5 phút chưa xong thì bỏ, ghi vào KET-QUA, làm phần còn lại.
+
 LUẬT CHẠY (bắt buộc, lượt trước mất 80 phút vì treo chờ tác vụ nền): KHÔNG chạy `npm run dev`, `npm start` hay server lab riêng. Test khoá tự dựng server trong tiến trình (createApp), cứ chạy `node --test --test-timeout=120000 <file>` tiền cảnh. Chụp ảnh/quay video: viết 1 script node tự dựng createApp trong tiến trình, chụp xong tự đóng server và thoát (process.exit), chạy tiền cảnh. Mọi lệnh bọc timeout ≤ 300 s. Nếu buộc phải chạy nền: ghi log vào thư mục theo_doi và tự tắt khi xong.
 
 Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG sửa code sản phẩm. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
