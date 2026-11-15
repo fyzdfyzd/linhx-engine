@@ -16,7 +16,7 @@ Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG s�
    (b) [A6-01] ≤ 12 từ/màn: đếm chữ khách thấy trên màn (bỏ chữ ẩn, aria, chữ trong ảnh). Thêm cột "chữ duyệt CHU-TREN-MAN" cho cùng màn. Nếu chính chữ đã duyệt vượt 12 từ thì ghi CHU_DUYET_VUOT ở bảng (không tính đỏ cho code, Claude báo Linh); nếu chữ thật nhiều hơn chữ duyệt thì đỏ.
    Không đổi ngưỡng nào. Các mục A6-02..06 giữ nguyên.
 4. Kiểm hiệu chuẩn: chạy test (b)(a) với chính ảnh khung PNG làm "bản dựng" giả (nạp ảnh khung vào trang trắng có các hộp đúng toạ độ) → phải ra lệch ≈ 0%. Ghi kết quả.
-5. Chạy 03 trên code hiện tại, ghi sha256 mới vào KHOA.sha256, commit, push `agy/yl-test-a6-b`.
+5. Test 03 ghi thêm bảng số ra `bang-chung/<tên nhánh>/do-muc-9.json` dạng [{"ma":"A6-01","ten":"...","nguong":"...","te_nhat":"...","dat":true/false}] (bảng theo dõi đọc file này). Chạy 03 trên code hiện tại, ghi sha256 mới vào KHOA.sha256, commit, push `agy/yl-test-a6-b`.
 CẤM: sửa code sản phẩm, sửa 01/02, sửa TIEU-CHUAN/CHUAN/KHUNG/CHU-TREN-MAN, deploy, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA đỉnh; bảng 7 mục A6 đỏ/xanh; bảng A6-07 theo khối; danh sách màn CHU_DUYET_VUOT; kết quả hiệu chuẩn bước 4.
 
