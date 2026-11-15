@@ -42,6 +42,11 @@ try:
 except ImportError:
     import nhat_ky_agy
 
+try:
+    from runner import so_tai_khoan
+except ImportError:
+    import so_tai_khoan
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -700,6 +705,7 @@ def tao_ket_qua_md(
     model: str = "",
     canh_bao: str = "",
     ly_do: str = "",
+    tai_khoan: str = "",
 ) -> str:
     if gioi_han <= 0:
         return ""
@@ -710,10 +716,13 @@ def tao_ket_qua_md(
         _cat_mot_dong(model, 120) if model and str(model).strip() else linhx_runner.MODEL_MAC_DINH_NHAN
     )
     dong_ly_do = f"ly_do: {_cat_mot_dong(ly_do, 120)}\n" if ly_do and str(ly_do).strip() else ""
+    tk_sach = _cat_mot_dong(tai_khoan, 120) if tai_khoan and str(tai_khoan).strip() else ""
+    dong_tk = f"tai_khoan: {tk_sach}\n" if tk_sach else ""
     dau = (
         f"model: {ten_model_hien_thi}\n"
         f"phieu: {_cat_mot_dong(phieu_id, 120)}\n"
         f"may: {_cat_mot_dong(tho, 80)}\n"
+        f"{dong_tk}"
         f"trang_thai: {tt}\n"
         f"{dong_ly_do}"
         f"tep_doi: {ds_tep}\n"
@@ -1611,6 +1620,7 @@ def bao_ket_qua_git(
         else GIOI_HAN_KET_QUA
     )
     ly_do_ghi = str((viec.get("_ly_do_dung") if isinstance(viec, dict) else "") or "").strip()
+    tai_khoan_ghi = str(viec.get("_tai_khoan_da_dung") or "") if isinstance(viec, dict) else ""
     noi_dung_kq = tao_ket_qua_md(
         phieu_id=phieu_id,
         tho=tho,
@@ -1626,6 +1636,7 @@ def bao_ket_qua_git(
         model=model_ghi,
         canh_bao=canh_bao_ghi,
         ly_do=ly_do_ghi,
+        tai_khoan=tai_khoan_ghi,
     )
     noi_dung_nhat_ky = (
         nhat_ky_agy.thu_tao_nhat_ky_debug_tu_ket_qua(
@@ -1665,6 +1676,17 @@ def bao_ket_qua_git(
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
             if noi_dung_nhat_ky is not None:
                 (tep_kq.parent / "NHAT-KY.md").write_text(noi_dung_nhat_ky, encoding="utf-8")
+
+            if (goc_hd / "tai-khoan.json").is_file():
+                try:
+                    so_tai_khoan.dong_bo_va_ghi_so_tai_khoan(
+                        goc_hd,
+                        tep_trang_thai=cfg.get("tep_trang_thai_tai_khoan"),
+                        dung_bo_nho_runtime=True,
+                        bo_sung_tu_may=False,
+                    )
+                except Exception:
+                    pass
 
             thong_diep = f"xong: {phieu_id} ({tt_chuan})"
             if noi_dung_can_linh is not None:
@@ -2392,7 +2414,7 @@ def thuc_thi_phieu_da_nhan(cfg: dict, viec: dict, chay_agy_fn=None):
         cfg_agy = cfg
     t0 = time.monotonic()
     try:
-        tt, kq, nk, tv, tr = ham_agy(cfg_agy, viec)
+        tt, kq, nk, tv, tr = so_tai_khoan.chay_voi_tai_khoan(cfg_agy, viec, ham_agy)
     except Exception:
         tt, kq, nk, tv, tr = "loi", None, traceback.format_exc(), 0, 0
 

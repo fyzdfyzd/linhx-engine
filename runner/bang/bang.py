@@ -83,6 +83,481 @@ _NEG_CONCLUSION_RE = re.compile(
 _SECRET_LINE_RE = re.compile(
     r"(?i)(api[_-]?key|access[_-]?token|refresh[_-]?token|secret[_-]?key|password|mat_khau|authorization)\s*([:=])\s*\S+"
 )
+_EMAIL_RE = re.compile(r"\b([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+\.[A-Za-z]{2,})\b")
+_PHONE_RE = re.compile(r"(?<!\d)(?:\+?84|0)(?:[\s.\-]?\d){8,10}(?!\d)")
+_SECRET_VAL_PATTERNS = (
+    re.compile(r"\b" + "gh" + r"[pousr]_[A-Za-z0-9_]{12,}\b"),
+    re.compile(r"\b" + "github" + "_pat_" + r"[A-Za-z0-9_]{12,}\b"),
+    re.compile(r"\b" + "sk" + r"-[A-Za-z0-9_-]{12,}\b"),
+    re.compile(r"\b" + "AI" + "za" + r"[0-9A-Za-z_-]{12,}\b"),
+    re.compile(r"\b" + "ya" + r"29\.[A-Za-z0-9_-]{12,}\b"),
+    re.compile(r"\b" + "Bea" + r"rer\s+[A-Za-z0-9._-]{10,}\b", re.IGNORECASE),
+)
+
+
+def _mask_email(raw_email: str) -> str:
+    """Che phần giữa địa chỉ email (vd `zo***@gmail.com`), không lộ email đầy đủ."""
+    text = str(raw_email or "").strip()
+    if "@" not in text:
+        return ""
+    local, domain = text.split("@", 1)
+    if not local or not domain:
+        return ""
+    if len(local) <= 2:
+        prefix = local[:1]
+    else:
+        prefix = local[:2]
+    return f"{prefix}***@{domain}"
+
+
+def _mask_emails_in_text(text: str) -> str:
+    """Che mọi địa chỉ email xuất hiện trong chuỗi trước khi đưa ra UI/API."""
+    raw = str(text or "").strip()
+    if not raw:
+        return ""
+    return _EMAIL_RE.sub(lambda m: _mask_email(m.group(0)), raw)
+
+
+def _mask_sensitive_text(text: str, *, mask_phones: bool = False) -> str:
+    """Che email, bí mật và tùy chọn số điện thoại trước khi hiển thị."""
+    s = _mask_emails_in_text(text)
+    for pat in _SECRET_VAL_PATTERNS:
+        s = pat.sub("[ẩn]", s)
+    if mask_phones and s:
+        s = _PHONE_RE.sub("[ẩn-sđt]", s)
+    return s
+
+
+def _normalize_cong_cu_list(raw) -> list[str]:
+    if raw is None:
+        return []
+    if isinstance(raw, str):
+        items = re.split(r"[,;|]+", raw)
+    elif isinstance(raw, (list, tuple, set)):
+        items = [str(x) for x in raw]
+    else:
+        return []
+    out: list[str] = []
+    for item in items:
+        s = str(item or "").strip().lower()
+        if s and s not in out:
+            out.append(s)
+    return out
+
+
+def _normalize_nonneg_int(val) -> int:
+    if isinstance(val, bool) or val is None:
+        return 0
+    if isinstance(val, (int, float)):
+        return max(0, int(val))
+    try:
+        return max(0, int(str(val).strip()))
+    except (ValueError, TypeError):
+        return 0
+
+
+def _normalize_con_lai(val):
+    if val is None or isinstance(val, bool):
+        return "chua_ro"
+    if isinstance(val, (int, float)):
+        return int(val) if float(val).is_integer() else round(float(val), 2)
+    s = str(val).strip()
+    if not s or s.lower() == "chua_ro":
+        return "chua_ro"
+    if re.fullmatch(r"\d+", s):
+        return int(s)
+    return _mask_sensitive_text(s)[:80] or "chua_ro"
+
+
+def _read_tai_khoan_ledger(qroot: Path) -> list[dict]:
+    """Đọc `hang-doi/tai-khoan.json` an toàn (chỉ lấy metadata và email đã che)."""
+    ledger_path = qroot / "tai-khoan.json"
+    if not ledger_path.is_file():
+        return []
+    try:
+        raw_text = ledger_path.read_text(encoding="utf-8", errors="replace").strip()
+    except OSError:
+        return []
+    if not raw_text:
+        return []
+
+    raw_items: list[dict] = []
+    try:
+        parsed = json.loads(raw_text)
+        if isinstance(parsed, list):
+            raw_items = [x for x in parsed if isinstance(x, dict)]
+        elif isinstance(parsed, dict):
+            if isinstance(parsed.get("tai_khoan"), list):
+                raw_items = [x for x in parsed["tai_khoan"] if isinstance(x, dict)]
+            elif isinstance(parsed.get("items"), list):
+                raw_items = [x for x in parsed["items"] if isinstance(x, dict)]
+            else:
+                raw_items = [parsed]
+    except ValueError:
+        for line in raw_text.splitlines():
+            s = line.strip()
+            if not s or s.startswith("#"):
+                continue
+            try:
+                obj = json.loads(s)
+                if isinstance(obj, dict):
+                    raw_items.append(obj)
+            except ValueError:
+                continue
+
+    rows: list[dict] = []
+    for item in raw_items:
+        may = str(item.get("may") or "").strip().lower()
+        ho_so = str(item.get("ho_so_chrome") or item.get("thu_muc") or "").strip()
+        raw_email = str(item.get("email_che") or item.get("email") or "").strip()
+        email_che = _mask_email(raw_email) if "@" in raw_email else _mask_sensitive_text(raw_email)
+        tt = str(item.get("trang_thai") or "dung").strip().lower()
+        if tt not in ("dung", "het_han_muc", "can_dang_nhap"):
+            tt = "dung"
+        mo_lai = str(item.get("mo_lai_luc") or "").strip()
+        reset_luc = str(item.get("reset_luc") or "").strip()
+        if not reset_luc:
+            reset_luc = mo_lai if (tt == "het_han_muc" and mo_lai) else "chua_ro"
+        nguon = str(item.get("nguon") or "").strip().lower()
+        if nguon not in ("lenh", "loi-429", "uoc"):
+            nguon = "uoc"
+        rows.append(
+            {
+                "ma": str(item.get("ma") or item.get("id") or ho_so).strip(),
+                "may": may,
+                "ho_so_chrome": ho_so,
+                "email_che": email_che,
+                "cong_cu": _normalize_cong_cu_list(item.get("cong_cu")),
+                "trang_thai": tt,
+                "mo_lai_luc": mo_lai,
+                "token_da_dung_24h": _normalize_nonneg_int(item.get("token_da_dung_24h")),
+                "token_da_dung_7n": _normalize_nonneg_int(item.get("token_da_dung_7n")),
+                "con_lai": _normalize_con_lai(item.get("con_lai")),
+                "reset_luc": reset_luc or "chua_ro",
+                "nguon": nguon,
+            }
+        )
+    return rows
+
+
+def _build_tools_ledger_groups(
+    *,
+    ledger_rows: list[dict],
+    machine_accounts_by_may: dict[str, dict],
+    current_time: datetime,
+) -> list[dict]:
+    """Gom sổ tài khoản theo từng công cụ tự do, sắp công cụ có cảnh báo lên đầu."""
+    runtime_so: dict[str, dict] = {}
+    for m_data in machine_accounts_by_may.values():
+        tt_so = m_data.get("trang_thai_so")
+        if isinstance(tt_so, dict):
+            for k, v in tt_so.items():
+                if isinstance(v, dict):
+                    runtime_so[str(k).strip()] = v
+
+    working = [dict(r) for r in ledger_rows]
+    # Bổ sung thông tin máy (agy / Chrome profile) nếu chưa có trong tai-khoan.json
+    for m_code in sorted(machine_accounts_by_may):
+        m_data = machine_accounts_by_may[m_code] or {}
+        if not any(r.get("may") == m_code and "agy" in (r.get("cong_cu") or []) for r in working):
+            agy_raw = str(m_data.get("agy_tai_khoan") or "chua_ro").strip()
+            agy_email = _mask_email(agy_raw) if "@" in agy_raw else (_mask_sensitive_text(agy_raw) or "chua_ro")
+            hm = m_data.get("han_muc_agy") if isinstance(m_data.get("han_muc_agy"), dict) else {}
+            working.append(
+                {
+                    "ma": f"agy-{m_code}",
+                    "may": m_code,
+                    "ho_so_chrome": "",
+                    "email_che": agy_email,
+                    "cong_cu": ["agy"],
+                    "trang_thai": "dung",
+                    "mo_lai_luc": "",
+                    "token_da_dung_24h": 0,
+                    "token_da_dung_7n": 0,
+                    "con_lai": _normalize_con_lai(hm.get("con_lai")),
+                    "reset_luc": str(hm.get("reset_luc") or "chua_ro").strip() or "chua_ro",
+                    "nguon": str(hm.get("nguon") or "uoc").strip() or "uoc",
+                }
+            )
+        for prof in m_data.get("ho_so_chrome") or []:
+            if not isinstance(prof, dict):
+                continue
+            hs_dir = str(prof.get("thu_muc") or prof.get("ho_so_chrome") or "").strip()
+            raw_em = str(prof.get("email_che") or prof.get("email") or "").strip()
+            em_che = _mask_email(raw_em) if "@" in raw_em else _mask_sensitive_text(raw_em)
+            already = any(
+                r.get("may") == m_code
+                and (
+                    (hs_dir and (r.get("ho_so_chrome") or "").lower() == hs_dir.lower())
+                    or (em_che and (r.get("email_che") or "").lower() == em_che.lower() and not r.get("ho_so_chrome"))
+                )
+                for r in working
+            )
+            if not already and em_che:
+                tt_prof = str(prof.get("trang_thai") or "dung").strip().lower()
+                if tt_prof not in ("dung", "het_han_muc", "can_dang_nhap"):
+                    tt_prof = "dung"
+                working.append(
+                    {
+                        "ma": f"{m_code}-{re.sub(r'[^a-z0-9_-]+', '-', hs_dir.lower()).strip('-') or 'chrome'}",
+                        "may": m_code,
+                        "ho_so_chrome": hs_dir,
+                        "email_che": em_che,
+                        "cong_cu": ["chrome"],
+                        "trang_thai": tt_prof,
+                        "mo_lai_luc": "",
+                        "token_da_dung_24h": 0,
+                        "token_da_dung_7n": 0,
+                        "con_lai": "chua_ro",
+                        "reset_luc": "chua_ro",
+                        "nguon": "uoc",
+                    }
+                )
+
+    tools_map: dict[str, list[dict]] = {}
+    seen_per_tool: dict[str, set[tuple[str, str, str]]] = {}
+
+    for row in working:
+        ma = str(row.get("ma") or "").strip()
+        may = str(row.get("may") or "").strip().lower()
+        ho_so = str(row.get("ho_so_chrome") or "").strip()
+        email_che = str(row.get("email_che") or "").strip() or "chua_ro"
+
+        tt = str(row.get("trang_thai") or "dung").strip().lower()
+        mo_lai = str(row.get("mo_lai_luc") or "").strip()
+        reset_luc = str(row.get("reset_luc") or "chua_ro").strip() or "chua_ro"
+        nguon = str(row.get("nguon") or "uoc").strip().lower()
+        con_lai = row.get("con_lai", "chua_ro")
+
+        ov = runtime_so.get(ma)
+        if ov is not None:
+            tt = str(ov.get("trang_thai") or tt).strip().lower()
+            mo_lai = str(ov.get("mo_lai_luc") or mo_lai).strip()
+            reset_luc = str(ov.get("reset_luc") or mo_lai or reset_luc or "chua_ro").strip()
+            ov_ng = str(ov.get("nguon") or "").strip().lower()
+            if ov_ng in ("lenh", "loi-429", "uoc"):
+                nguon = ov_ng
+
+        if tt == "het_han_muc":
+            mo_dt = parse_iso_datetime(mo_lai or ("" if reset_luc == "chua_ro" else reset_luc))
+            if mo_dt is not None and current_time >= mo_dt:
+                tt = "dung"
+                if nguon != "lenh":
+                    reset_luc = "chua_ro"
+                    con_lai = "chua_ro"
+
+        if tt not in ("dung", "het_han_muc", "can_dang_nhap"):
+            tt = "dung"
+
+        acc_view = {
+            "ma": ma,
+            "email_che": email_che,
+            "may": may or "bat-ky",
+            "ho_so_chrome": ho_so,
+            "da_dung_24h": _normalize_nonneg_int(row.get("token_da_dung_24h")),
+            "da_dung_7n": _normalize_nonneg_int(row.get("token_da_dung_7n")),
+            "con_lai": _normalize_con_lai(con_lai),
+            "reset_luc": reset_luc or "chua_ro",
+            "nguon": nguon if nguon in ("lenh", "loi-429", "uoc") else "uoc",
+            "trang_thai": tt,
+        }
+
+        tool_names = row.get("cong_cu") or ["khac"]
+        for tool in tool_names:
+            t_key = str(tool or "khac").strip().lower() or "khac"
+            dedup_key = (ma or email_che, may, ho_so.lower())
+            seen_set = seen_per_tool.setdefault(t_key, set())
+            if dedup_key in seen_set:
+                continue
+            seen_set.add(dedup_key)
+            tools_map.setdefault(t_key, []).append(acc_view)
+
+    status_rank = {"can_dang_nhap": 0, "het_han_muc": 1, "dung": 2}
+    groups: list[dict] = []
+    for tool_name, accs in tools_map.items():
+        accs.sort(
+            key=lambda a: (
+                status_rank.get(a["trang_thai"], 3),
+                a["may"],
+                a["ho_so_chrome"].lower(),
+                a["email_che"].lower(),
+                a["ma"].lower(),
+            )
+        )
+        c_ok = sum(1 for a in accs if a["trang_thai"] == "dung")
+        c_hm = sum(1 for a in accs if a["trang_thai"] == "het_han_muc")
+        c_dn = sum(1 for a in accs if a["trang_thai"] == "can_dang_nhap")
+        groups.append(
+            {
+                "cong_cu": tool_name,
+                "tai_khoan": accs,
+                "tong": len(accs),
+                "dung_duoc": c_ok,
+                "het_han_muc": c_hm,
+                "can_dang_nhap": c_dn,
+                "can_xu_ly": c_hm + c_dn,
+            }
+        )
+
+    groups.sort(
+        key=lambda g: (
+            0 if g["can_xu_ly"] > 0 else 1,
+            -g["can_dang_nhap"],
+            -g["het_han_muc"],
+            g["cong_cu"],
+        )
+    )
+    return groups
+
+
+def _summarize_crawler_entries(crawler_by_may: dict[str, dict]) -> list[dict]:
+    """Chuẩn hóa dữ liệu `hang-doi/may/<may>-crawler.json` để đưa lên tab Công cụ."""
+    ket_qua: list[dict] = []
+    for m_code in sorted(crawler_by_may):
+        raw = crawler_by_may[m_code] or {}
+        nguon_rows: list[dict] = []
+        for item in raw.get("nguon") or []:
+            if not isinstance(item, dict):
+                continue
+            tt = str(item.get("trang_thai") or "chua_chay").strip().lower()
+            if tt not in ("ok", "loi", "bi_chan", "chua_chay"):
+                tt = "chua_chay"
+            nguon_rows.append(
+                {
+                    "nguon": _mask_sensitive_text(str(item.get("nguon") or "").strip())[:80],
+                    "lan_chay_cuoi": str(item.get("lan_chay_cuoi") or "").strip(),
+                    "so_trang": _normalize_nonneg_int(item.get("so_trang")),
+                    "loi_gan_nhat": _mask_sensitive_text(str(item.get("loi_gan_nhat") or "").strip())[:180],
+                    "thu_muc_du_lieu": _mask_sensitive_text(str(item.get("thu_muc_du_lieu") or "").strip())[:180],
+                    "trang_thai": tt,
+                }
+            )
+        da_thu = [_mask_sensitive_text(str(p).strip()) for p in (raw.get("duong_dan_da_thu") or []) if str(p).strip()]
+        ket_qua.append(
+            {
+                "may": m_code,
+                "tim_thay": bool(raw.get("tim_thay") or nguon_rows),
+                "mcp_linhx_crawler": bool(raw.get("mcp_linhx_crawler")),
+                "nguon": nguon_rows,
+                "duong_dan_da_thu": da_thu,
+                "cap_nhat_luc": str(raw.get("cap_nhat_luc") or "").strip(),
+            }
+        )
+    return ket_qua
+
+
+def _summarize_zalo_entries(zalo_by_may: dict[str, dict]) -> list[dict]:
+    """Chuẩn hóa dữ liệu `hang-doi/may/<may>-zalo.json` (chỉ tên nhóm, không SĐT/thành viên/nội dung)."""
+    ket_qua: list[dict] = []
+    for m_code in sorted(zalo_by_may):
+        raw = zalo_by_may[m_code] or {}
+        listeners: list[dict] = []
+        for item in raw.get("bo_nghe") or []:
+            if not isinstance(item, dict):
+                continue
+            raw_groups = item.get("nhom") if isinstance(item.get("nhom"), list) else []
+            groups = [
+                _mask_sensitive_text(str(g).strip(), mask_phones=True)[:80]
+                for g in raw_groups
+                if str(g).strip()
+            ]
+            listeners.append(
+                {
+                    "ten": _mask_sensitive_text(str(item.get("ten") or "").strip(), mask_phones=True)[:80],
+                    "duong_dan": _mask_sensitive_text(str(item.get("duong_dan") or "").strip(), mask_phones=True)[:180],
+                    "dang_chay": bool(item.get("dang_chay")),
+                    "nhom": groups,
+                    "tin_cuoi_luc": str(item.get("tin_cuoi_luc") or "").strip(),
+                    "loi_gan_nhat": _mask_sensitive_text(str(item.get("loi_gan_nhat") or "").strip(), mask_phones=True)[:180],
+                }
+            )
+        da_thu = [_mask_sensitive_text(str(p).strip()) for p in (raw.get("duong_dan_da_thu") or []) if str(p).strip()]
+        ket_qua.append(
+            {
+                "may": m_code,
+                "tim_thay": bool(raw.get("tim_thay") or listeners),
+                "bo_nghe": listeners,
+                "duong_dan_da_thu": da_thu,
+                "cap_nhat_luc": str(raw.get("cap_nhat_luc") or "").strip(),
+            }
+        )
+    return ket_qua
+
+
+def _summarize_machine_accounts(
+    *,
+    profiles_by_machine: dict[str, dict],
+    machine_accounts_by_may: dict[str, dict],
+    ledger_rows: list[dict],
+    current_time: datetime,
+) -> list[dict]:
+    """Gộp thống kê tài khoản mỗi máy từ `tai-khoan.json` và `may/<may>-tai-khoan.json`."""
+    ledger_machines = {
+        str(r.get("may") or "").strip().lower()
+        for r in ledger_rows
+        if str(r.get("may") or "").strip().lower() not in ("", "bat-ky", "*", "all", "tat-ca")
+    }
+    all_machines = sorted(set(profiles_by_machine) | set(machine_accounts_by_may) | ledger_machines)
+    summaries: list[dict] = []
+
+    for m_code in all_machines:
+        statuses: list[str] = []
+        seen_profiles: set[str] = set()
+        seen_emails: set[str] = set()
+
+        for row in ledger_rows:
+            if row.get("may") != m_code:
+                continue
+            tt = row.get("trang_thai") or "dung"
+            if tt == "het_han_muc":
+                mo_dt = parse_iso_datetime(row.get("mo_lai_luc"))
+                if mo_dt is not None and current_time >= mo_dt:
+                    tt = "dung"
+            statuses.append(tt)
+            hs_key = str(row.get("ho_so_chrome") or "").strip().lower()
+            em_key = str(row.get("email_che") or "").strip().lower()
+            if hs_key:
+                seen_profiles.add(hs_key)
+            if em_key:
+                seen_emails.add(em_key)
+
+        mach_acc = machine_accounts_by_may.get(m_code) or {}
+        for prof in mach_acc.get("ho_so_chrome") or []:
+            if not isinstance(prof, dict):
+                continue
+            raw_em = str(prof.get("email_che") or prof.get("email") or "").strip()
+            email_che = _mask_email(raw_em) if "@" in raw_em else _mask_emails_in_text(raw_em)
+            thu_muc = str(prof.get("thu_muc") or prof.get("ho_so_chrome") or "").strip()
+            hs_key = thu_muc.lower()
+            em_key = email_che.lower()
+            if not em_key:
+                continue
+            if (hs_key and hs_key in seen_profiles) or (em_key and em_key in seen_emails):
+                continue
+            tt_prof = str(prof.get("trang_thai") or "dung").strip().lower()
+            if tt_prof not in ("dung", "het_han_muc", "can_dang_nhap"):
+                tt_prof = "dung"
+            statuses.append(tt_prof)
+            if hs_key:
+                seen_profiles.add(hs_key)
+            if em_key:
+                seen_emails.add(em_key)
+
+        dung_duoc = sum(1 for st in statuses if st == "dung")
+        het_han_muc = sum(1 for st in statuses if st == "het_han_muc")
+        can_dang_nhap = sum(1 for st in statuses if st == "can_dang_nhap")
+        agy_tk = _mask_emails_in_text(str(mach_acc.get("agy_tai_khoan") or ""))
+        summaries.append(
+            {
+                "may": m_code,
+                "dung_duoc": dung_duoc,
+                "het_han_muc": het_han_muc,
+                "can_dang_nhap": can_dang_nhap,
+                "tong": len(statuses),
+                "agy_tai_khoan": agy_tk,
+            }
+        )
+    return summaries
 
 
 def get_local_tz():
@@ -700,8 +1175,11 @@ def read_queue_snapshot(
     for item in can_linh_items:
         item.pop("_sort_ts", None)
 
-    # 0b. Đọc hang-doi/may/*.json (Hồ sơ máy)
+    # 0b. Đọc hang-doi/may/*.json (Hồ sơ máy + tài khoản + crawler + zalo)
     profiles_by_machine: dict[str, dict] = {}
+    machine_accounts_by_may: dict[str, dict] = {}
+    crawler_by_may: dict[str, dict] = {}
+    zalo_by_may: dict[str, dict] = {}
     dir_profiles = qroot / "may"
     if dir_profiles.is_dir():
         for prof_file in sorted(dir_profiles.glob("*.json"), key=lambda p: p.name):
@@ -710,6 +1188,24 @@ def read_queue_snapshot(
             except (OSError, ValueError, TypeError):
                 continue
             if not isinstance(prof_data, dict):
+                continue
+            if prof_file.name.endswith("-tai-khoan.json"):
+                raw_may = str(prof_data.get("ma_may") or prof_file.stem[: -len("-tai-khoan")]).strip().lower()
+                if raw_may and raw_may not in ("bat-ky", "*", "all", "tat-ca"):
+                    known_machines.add(raw_may)
+                    machine_accounts_by_may[raw_may] = prof_data
+                continue
+            if prof_file.name.endswith("-crawler.json"):
+                raw_may = str(prof_data.get("ma_may") or prof_file.stem[: -len("-crawler")]).strip().lower()
+                if raw_may and raw_may not in ("bat-ky", "*", "all", "tat-ca"):
+                    known_machines.add(raw_may)
+                    crawler_by_may[raw_may] = prof_data
+                continue
+            if prof_file.name.endswith("-zalo.json"):
+                raw_may = str(prof_data.get("ma_may") or prof_file.stem[: -len("-zalo")]).strip().lower()
+                if raw_may and raw_may not in ("bat-ky", "*", "all", "tat-ca"):
+                    known_machines.add(raw_may)
+                    zalo_by_may[raw_may] = prof_data
                 continue
             m_code = str(prof_data.get("ma_may") or prof_file.stem).strip().lower()
             if not m_code or m_code in ("bat-ky", "*", "all", "tat-ca"):
@@ -1033,6 +1529,27 @@ def read_queue_snapshot(
         can_linh_items=can_linh_items,
     )
 
+    ledger_rows = _read_tai_khoan_ledger(qroot)
+    account_summary_list = _summarize_machine_accounts(
+        profiles_by_machine=profiles_by_machine,
+        machine_accounts_by_may=machine_accounts_by_may,
+        ledger_rows=ledger_rows,
+        current_time=current_time,
+    )
+    account_by_machine = {item["may"]: item for item in account_summary_list}
+    for prof in ho_so_list:
+        m_acc = account_by_machine.get(prof.get("ma_may") or "")
+        if m_acc is not None:
+            prof["tai_khoan"] = m_acc
+
+    tools_ledger = _build_tools_ledger_groups(
+        ledger_rows=ledger_rows,
+        machine_accounts_by_may=machine_accounts_by_may,
+        current_time=current_time,
+    )
+    crawler_list = _summarize_crawler_entries(crawler_by_may)
+    zalo_list = _summarize_zalo_entries(zalo_by_may)
+
     return {
         "cap_nhat_luc": format_iso(current_time),
         "cap_nhat_hien_thi": format_display_time(current_time),
@@ -1044,6 +1561,10 @@ def read_queue_snapshot(
         "may": machines_list,
         "ho_so_may": ho_so_list,
         "du_an": projects_list,
+        "tai_khoan_may": account_summary_list,
+        "so_cong_cu": tools_ledger,
+        "crawler": crawler_list,
+        "zalo": zalo_list,
     }
 
 
@@ -3161,6 +3682,121 @@ section.card h2 {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+.accounts-card {
+  margin-bottom: 18px;
+}
+.acc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.acc-item {
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.acc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+.acc-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.acc-ok { color: var(--run-fg); font-weight: 600; }
+.acc-warn { color: var(--warn-fg); font-weight: 600; }
+.acc-err { color: var(--err-fg); font-weight: 600; }
+
+/* Tab Công cụ: Sổ công cụ + Crawler + Zalo */
+.tool-block.has-alert {
+  border-color: var(--urgent-border);
+}
+.tool-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+.tool-head h2 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tool-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 14px;
+}
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+.tool-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.tool-table th,
+.tool-table td {
+  text-align: left;
+  padding: 9px 10px;
+  border-top: 1px solid var(--divider);
+  vertical-align: top;
+}
+.tool-table thead th {
+  border-top: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  font-weight: 600;
+}
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.status-dot.dot-ok { background: var(--dot-run); }
+.status-dot.dot-warn { background: var(--dot-stuck); }
+.status-dot.dot-err { background: var(--dot-silent); }
+.status-dot.dot-idle { background: var(--dot-idle); }
+.tried-paths {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--divider);
+  font-size: 14px;
+}
+.tried-paths summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-weight: 600;
+}
+.tried-list {
+  margin: 8px 0 0 18px;
+  padding: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
 
 /* Trang xem chi tiết phiếu KET-QUA.md */
 .detail-top-bar {
@@ -3949,7 +4585,7 @@ _DASHBOARD_JS = r"""
   }
 
   function setTab(tabName, pushUrl) {
-    if (["du-an", "chat-luong", "tong-quan", "phieu", "may"].indexOf(tabName) === -1) {
+    if (["du-an", "chat-luong", "tong-quan", "phieu", "may", "cong-cu"].indexOf(tabName) === -1) {
       tabName = "du-an";
     }
     state.activeTab = tabName;
@@ -3976,7 +4612,8 @@ _DASHBOARD_JS = r"""
         "chat-luong": "/chat-luong",
         "tong-quan": "/tong-quan",
         "phieu": "/phieu",
-        "may": "/may"
+        "may": "/may",
+        "cong-cu": "/cong-cu"
       };
       var nextPath = pathMap[tabName] || "/";
       if (window.location.pathname !== nextPath) {
@@ -4302,6 +4939,183 @@ _DASHBOARD_JS = r"""
       '<section class="card"><h2>Đang chờ (' + waiting.length + ")</h2>" + waitHtml + "</section>" +
       '<section class="card"><h2>Xong 24h (' + split.d24.length + ') <span class="sub-heading">· Xong gần nhất (' + allDone.length + "/" + totalDone + " phiếu)</span></h2>" +
       done24Html + olderBlock + "</section>";
+  }
+
+  function renderAccountsCardHtml(data) {
+    var rows = data.tai_khoan_may || [];
+    if (rows.length === 0) {
+      return '<section class="card accounts-card"><h2>Tài khoản</h2><p class="empty">Chưa có dữ liệu tài khoản.</p></section>';
+    }
+    var items = [];
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var agyTag = (r.agy_tai_khoan && r.agy_tai_khoan !== "chua_ro")
+        ? ('<span class="meta">agy: <code>' + esc(r.agy_tai_khoan) + "</code></span>")
+        : "";
+      items.push(
+        '<div class="acc-item">' +
+        '<div class="acc-head"><strong>' + esc(r.may || "may") + "</strong>" + agyTag + "</div>" +
+        '<div class="acc-stats">' +
+        '<span class="acc-ok">' + Number(r.dung_duoc || 0) + " dùng được</span>" +
+        '<span class="acc-warn">' + Number(r.het_han_muc || 0) + " hết hạn mức</span>" +
+        '<span class="acc-err">' + Number(r.can_dang_nhap || 0) + " cần đăng nhập</span>" +
+        "</div></div>"
+      );
+    }
+    return '<section class="card accounts-card"><h2>Tài khoản</h2><div class="acc-grid">' + items.join("") + "</div></section>";
+  }
+
+  function fmtNum(val) {
+    var n = Number(val);
+    if (!isFinite(n)) return esc(val);
+    try {
+      return n.toLocaleString("en-US");
+    } catch (_e) {
+      return String(n);
+    }
+  }
+
+  function renderAccountStatusPill(tt) {
+    if (tt === "can_dang_nhap") {
+      return '<span class="status-pill acc-err"><span class="status-dot dot-err"></span>Cần đăng nhập</span>';
+    }
+    if (tt === "het_han_muc") {
+      return '<span class="status-pill acc-warn"><span class="status-dot dot-warn"></span>Hết hạn mức</span>';
+    }
+    return '<span class="status-pill acc-ok"><span class="status-dot dot-ok"></span>Dùng được</span>';
+  }
+
+  function renderToolsTab(data) {
+    var htmlParts = [renderAccountsCardHtml(data)];
+    var tools = data.so_cong_cu || [];
+    if (tools.length === 0) {
+      htmlParts.push('<section class="card"><h2>Sổ công cụ</h2><p class="empty">Chưa có mục nào trong hang-doi/tai-khoan.json.</p></section>');
+    } else {
+      for (var t = 0; t < tools.length; t++) {
+        var grp = tools[t];
+        var cls = (Number(grp.can_xu_ly || 0) > 0) ? "card tool-block has-alert" : "card tool-block";
+        var rowsHtml = [];
+        var accs = grp.tai_khoan || [];
+        for (var a = 0; a < accs.length; a++) {
+          var row = accs[a];
+          var conLaiTxt = (row.con_lai === "chua_ro" || row.con_lai === null || row.con_lai === undefined)
+            ? '<span class="meta">chua_ro</span>'
+            : fmtNum(row.con_lai);
+          var resetRaw = row.reset_luc && row.reset_luc !== "chua_ro" ? esc(row.reset_luc) : '<span class="meta">chua_ro</span>';
+          var nguonTag = row.nguon ? (' <span class="meta">(' + esc(row.nguon) + ")</span>") : "";
+          rowsHtml.push(
+            "<tr>" +
+            "<td><code>" + esc(row.email_che || "chua_ro") + "</code></td>" +
+            "<td><code>" + esc(row.may || "bat-ky") + "</code></td>" +
+            "<td>" + (row.ho_so_chrome ? ("<code>" + esc(row.ho_so_chrome) + "</code>") : '<span class="meta">—</span>') + "</td>" +
+            '<td class="num">' + fmtNum(row.da_dung_24h || 0) + "</td>" +
+            '<td class="num">' + conLaiTxt + "</td>" +
+            '<td class="num">' + resetRaw + nguonTag + "</td>" +
+            "<td>" + renderAccountStatusPill(row.trang_thai) + "</td>" +
+            "</tr>"
+          );
+        }
+        htmlParts.push(
+          '<section class="' + cls + '">' +
+          '<div class="tool-head">' +
+          "<h2><code>" + esc(grp.cong_cu || "khac") + "</code></h2>" +
+          '<div class="tool-counts">' +
+          '<span class="acc-ok">' + Number(grp.dung_duoc || 0) + " dùng được</span>" +
+          '<span class="acc-warn">' + Number(grp.het_han_muc || 0) + " hết hạn mức</span>" +
+          '<span class="acc-err">' + Number(grp.can_dang_nhap || 0) + " cần đăng nhập</span>" +
+          "</div></div>" +
+          '<div class="table-scroll"><table class="tool-table">' +
+          "<thead><tr><th>Tài khoản</th><th>Máy</th><th>Hồ sơ Chrome</th><th>Đã dùng 24h</th><th>Còn lại</th><th>Reset lúc</th><th>Trạng thái</th></tr></thead>" +
+          "<tbody>" + rowsHtml.join("") + "</tbody></table></div></section>"
+        );
+      }
+    }
+
+    // Khối Crawler
+    var crawlerMachines = data.crawler || [];
+    var cRows = [];
+    var cTried = [];
+    for (var c = 0; c < crawlerMachines.length; c++) {
+      var cm = crawlerMachines[c];
+      var nguons = cm.nguon || [];
+      for (var n = 0; n < nguons.length; n++) {
+        var ng = nguons[n];
+        var dotCls = "dot-idle";
+        var lbl = "Chưa chạy";
+        if (ng.trang_thai === "ok") { dotCls = "dot-ok"; lbl = "Ổn định"; }
+        else if (ng.trang_thai === "bi_chan") { dotCls = "dot-err"; lbl = "Bị chặn"; }
+        else if (ng.trang_thai === "loi") { dotCls = "dot-err"; lbl = "Lỗi"; }
+        cRows.push(
+          "<tr>" +
+          '<td><span class="status-pill"><span class="status-dot ' + dotCls + '"></span>' + esc(lbl) + "</span></td>" +
+          "<td><strong>" + esc(ng.nguon || "—") + "</strong></td>" +
+          "<td><code>" + esc(cm.may || "—") + "</code></td>" +
+          '<td class="num">' + esc(ng.lan_chay_cuoi || "—") + "</td>" +
+          '<td class="num">' + fmtNum(ng.so_trang || 0) + "</td>" +
+          "<td>" + esc(ng.loi_gan_nhat || "—") + "</td>" +
+          "<td><code>" + esc(ng.thu_muc_du_lieu || "—") + "</code></td>" +
+          "</tr>"
+        );
+      }
+      if (!cm.tim_thay || nguons.length === 0) {
+        var cpList = (cm.duong_dan_da_thu || []).map(function (p) { return "<li><code>" + esc(p) + "</code></li>"; }).join("");
+        cTried.push(
+          '<div class="tried-paths"><strong>Máy <code>' + esc(cm.may) + "</code>:</strong> chưa tìm thấy crawler." +
+          (cpList ? ('<details><summary>Đường dẫn đã thử (' + (cm.duong_dan_da_thu || []).length + ')</summary><ul class="tried-list">' + cpList + "</ul></details>") : "") +
+          "</div>"
+        );
+      }
+    }
+    var crawlerBody = "";
+    if (cRows.length > 0) {
+      crawlerBody += '<div class="table-scroll"><table class="tool-table"><thead><tr><th>Trạng thái</th><th>Nguồn / Adapter</th><th>Máy</th><th>Lần chạy cuối</th><th>Số trang/bài</th><th>Lỗi / bị chặn</th><th>Thư mục dữ liệu</th></tr></thead><tbody>' + cRows.join("") + "</tbody></table></div>";
+    } else if (crawlerMachines.length === 0) {
+      crawlerBody += '<p class="empty">Chưa có báo cáo từ <code>runner/lenh/crawler.ps1</code>.</p>';
+    }
+    crawlerBody += cTried.join("");
+    htmlParts.push('<section class="card crawler-card"><h2>Crawler</h2>' + crawlerBody + "</section>");
+
+    // Khối Zalo
+    var zaloMachines = data.zalo || [];
+    var zRows = [];
+    var zTried = [];
+    for (var z = 0; z < zaloMachines.length; z++) {
+      var zm = zaloMachines[z];
+      var bns = zm.bo_nghe || [];
+      for (var b = 0; b < bns.length; b++) {
+        var bn = bns[b];
+        var zDot = bn.dang_chay ? "dot-ok" : "dot-err";
+        var zLbl = bn.dang_chay ? "Đang chạy" : "Dừng";
+        var grps = (bn.nhom || []).map(function (g) { return '<span class="tag-chip">' + esc(g) + "</span>"; }).join(" ") || '<span class="meta">—</span>';
+        zRows.push(
+          "<tr>" +
+          '<td><span class="status-pill"><span class="status-dot ' + zDot + '"></span>' + esc(zLbl) + "</span></td>" +
+          "<td><strong>" + esc(bn.ten || "—") + "</strong></td>" +
+          "<td><code>" + esc(zm.may || "—") + "</code></td>" +
+          "<td>" + grps + "</td>" +
+          '<td class="num">' + esc(bn.tin_cuoi_luc || "—") + "</td>" +
+          "<td>" + esc(bn.loi_gan_nhat || "—") + "</td>" +
+          "</tr>"
+        );
+      }
+      if (!zm.tim_thay || bns.length === 0) {
+        var zpList = (zm.duong_dan_da_thu || []).map(function (p) { return "<li><code>" + esc(p) + "</code></li>"; }).join("");
+        zTried.push(
+          '<div class="tried-paths"><strong>Máy <code>' + esc(zm.may) + "</code>:</strong> chưa tìm thấy bộ nghe Zalo." +
+          (zpList ? ('<details><summary>Đường dẫn đã thử (' + (zm.duong_dan_da_thu || []).length + ')</summary><ul class="tried-list">' + zpList + "</ul></details>") : "") +
+          "</div>"
+        );
+      }
+    }
+    var zaloBody = "";
+    if (zRows.length > 0) {
+      zaloBody += '<div class="table-scroll"><table class="tool-table"><thead><tr><th>Trạng thái</th><th>Bộ nghe</th><th>Máy</th><th>Nhóm đang nghe</th><th>Tin cuối lúc</th><th>Lỗi gần nhất</th></tr></thead><tbody>' + zRows.join("") + "</tbody></table></div>";
+    } else if (zaloMachines.length === 0) {
+      zaloBody += '<p class="empty">Chưa có báo cáo từ <code>runner/lenh/zalo.ps1</code>.</p>';
+    }
+    zaloBody += zTried.join("");
+    htmlParts.push('<section class="card zalo-card"><h2>Zalo</h2>' + zaloBody + "</section>");
+    return htmlParts.join("");
   }
 
   function renderProfilesTab(data) {
@@ -4774,6 +5588,10 @@ _DASHBOARD_JS = r"""
     var chatLuongEl = document.getElementById("chat-luong-content-slot");
     if (chatLuongEl) chatLuongEl.innerHTML = renderQualityTab(data);
 
+    var cntCc = (data.so_cong_cu && data.so_cong_cu.length) || 0;
+    var tabCcEl = document.getElementById("tab-lbl-cong-cu");
+    if (tabCcEl) tabCcEl.textContent = "Công cụ (" + cntCc + ")";
+
     var ovEl = document.getElementById("overview-machines-slot");
     if (ovEl) ovEl.innerHTML = renderOverviewMachines(data);
 
@@ -4782,6 +5600,9 @@ _DASHBOARD_JS = r"""
 
     var mayEl = document.getElementById("may-content-slot");
     if (mayEl) mayEl.innerHTML = renderProfilesTab(data);
+
+    var ccEl = document.getElementById("cong-cu-content-slot");
+    if (ccEl) ccEl.innerHTML = renderToolsTab(data);
   }
 
   function findAttrEl(attr, val) {
@@ -5300,8 +6121,190 @@ def _render_tickets_section(data: dict) -> str:
     )
 
 
+def _render_accounts_card(data: dict) -> str:
+    """Sinh thẻ nhỏ 'Tài khoản' ở tab Máy: đếm tài khoản dùng được / hết hạn mức / cần đăng nhập."""
+    rows = data.get("tai_khoan_may") or []
+    if not rows:
+        return '<section class="card accounts-card"><h2>Tài khoản</h2><p class="empty">Chưa có dữ liệu tài khoản.</p></section>'
+    items_html = []
+    for row in rows:
+        ma = _esc(row.get("may") or "may")
+        agy_tk = _mask_emails_in_text(str(row.get("agy_tai_khoan") or ""))
+        agy_tag = (
+            f'<span class="meta">agy: <code>{_esc(agy_tk)}</code></span>'
+            if agy_tk and agy_tk != "chua_ro"
+            else ""
+        )
+        dung_duoc = int(row.get("dung_duoc") or 0)
+        het_han_muc = int(row.get("het_han_muc") or 0)
+        can_dang_nhap = int(row.get("can_dang_nhap") or 0)
+        items_html.append(
+            '<div class="acc-item">'
+            f'<div class="acc-head"><strong>{ma}</strong>{agy_tag}</div>'
+            '<div class="acc-stats">'
+            f'<span class="acc-ok">{dung_duoc} dùng được</span>'
+            f'<span class="acc-warn">{het_han_muc} hết hạn mức</span>'
+            f'<span class="acc-err">{can_dang_nhap} cần đăng nhập</span>'
+            "</div></div>"
+        )
+    return '<section class="card accounts-card"><h2>Tài khoản</h2><div class="acc-grid">' + "".join(items_html) + "</div></section>"
+
+
+def _fmt_int(val) -> str:
+    try:
+        return f"{int(val):,}"
+    except (ValueError, TypeError):
+        return _esc(val)
+
+
+def _render_account_status_pill(tt: str) -> str:
+    if tt == "can_dang_nhap":
+        return '<span class="status-pill acc-err"><span class="status-dot dot-err"></span>Cần đăng nhập</span>'
+    if tt == "het_han_muc":
+        return '<span class="status-pill acc-warn"><span class="status-dot dot-warn"></span>Hết hạn mức</span>'
+    return '<span class="status-pill acc-ok"><span class="status-dot dot-ok"></span>Dùng được</span>'
+
+
+def _render_tools_section(data: dict) -> str:
+    """Sinh nội dung tab Công cụ: thẻ Tài khoản, Sổ công cụ (sắp cảnh báo lên đầu), Crawler và Zalo."""
+    parts = [_render_accounts_card(data)]
+
+    tools = data.get("so_cong_cu") or []
+    if not tools:
+        parts.append('<section class="card"><h2>Sổ công cụ</h2><p class="empty">Chưa có mục nào trong hang-doi/tai-khoan.json.</p></section>')
+    else:
+        for grp in tools:
+            has_alert = int(grp.get("can_xu_ly") or 0) > 0
+            cls = "card tool-block has-alert" if has_alert else "card tool-block"
+            rows_html = []
+            for row in grp.get("tai_khoan") or []:
+                con_lai = row.get("con_lai", "chua_ro")
+                con_lai_html = (
+                    '<span class="meta">chua_ro</span>'
+                    if con_lai == "chua_ro" or con_lai is None
+                    else _esc(f"{int(con_lai):,}" if isinstance(con_lai, int) else con_lai)
+                )
+                reset_val = str(row.get("reset_luc") or "chua_ro").strip()
+                reset_html = '<span class="meta">chua_ro</span>' if reset_val == "chua_ro" else _esc(reset_val)
+                nguon_val = str(row.get("nguon") or "").strip()
+                nguon_html = f' <span class="meta">({_esc(nguon_val)})</span>' if nguon_val else ""
+                hs_val = str(row.get("ho_so_chrome") or "").strip()
+                hs_html = f"<code>{_esc(hs_val)}</code>" if hs_val else '<span class="meta">—</span>'
+                rows_html.append(
+                    "<tr>"
+                    f"<td><code>{_esc(row.get('email_che') or 'chua_ro')}</code></td>"
+                    f"<td><code>{_esc(row.get('may') or 'bat-ky')}</code></td>"
+                    f"<td>{hs_html}</td>"
+                    f'<td class="num">{_fmt_int(row.get("da_dung_24h") or 0)}</td>'
+                    f'<td class="num">{con_lai_html}</td>'
+                    f'<td class="num">{reset_html}{nguon_html}</td>'
+                    f"<td>{_render_account_status_pill(str(row.get('trang_thai') or 'dung'))}</td>"
+                    "</tr>"
+                )
+            parts.append(
+                f'<section class="{cls}">'
+                '<div class="tool-head">'
+                f"<h2><code>{_esc(grp.get('cong_cu') or 'khac')}</code></h2>"
+                '<div class="tool-counts">'
+                f'<span class="acc-ok">{int(grp.get("dung_duoc") or 0)} dùng được</span>'
+                f'<span class="acc-warn">{int(grp.get("het_han_muc") or 0)} hết hạn mức</span>'
+                f'<span class="acc-err">{int(grp.get("can_dang_nhap") or 0)} cần đăng nhập</span>'
+                "</div></div>"
+                '<div class="table-scroll"><table class="tool-table">'
+                "<thead><tr><th>Tài khoản</th><th>Máy</th><th>Hồ sơ Chrome</th><th>Đã dùng 24h</th><th>Còn lại</th><th>Reset lúc</th><th>Trạng thái</th></tr></thead>"
+                f"<tbody>{''.join(rows_html)}</tbody></table></div></section>"
+            )
+
+    # Khối Crawler
+    crawler_machines = data.get("crawler") or []
+    c_rows: list[str] = []
+    c_tried: list[str] = []
+    for cm in crawler_machines:
+        may_c = str(cm.get("may") or "may")
+        nguons = cm.get("nguon") or []
+        for ng in nguons:
+            st = str(ng.get("trang_thai") or "chua_chay").lower()
+            if st == "ok":
+                dot_cls, lbl = "dot-ok", "Ổn định"
+            elif st == "bi_chan":
+                dot_cls, lbl = "dot-err", "Bị chặn"
+            elif st == "loi":
+                dot_cls, lbl = "dot-err", "Lỗi"
+            else:
+                dot_cls, lbl = "dot-idle", "Chưa chạy"
+            c_rows.append(
+                "<tr>"
+                f'<td><span class="status-pill"><span class="status-dot {dot_cls}"></span>{_esc(lbl)}</span></td>'
+                f"<td><strong>{_esc(ng.get('nguon') or '—')}</strong></td>"
+                f"<td><code>{_esc(may_c)}</code></td>"
+                f'<td class="num">{_esc(ng.get("lan_chay_cuoi") or "—")}</td>'
+                f'<td class="num">{_fmt_int(ng.get("so_trang") or 0)}</td>'
+                f"<td>{_esc(ng.get('loi_gan_nhat') or '—')}</td>"
+                f"<td><code>{_esc(ng.get('thu_muc_du_lieu') or '—')}</code></td>"
+                "</tr>"
+            )
+        if not cm.get("tim_thay") or not nguons:
+            paths = cm.get("duong_dan_da_thu") or []
+            p_items = "".join(f"<li><code>{_esc(p)}</code></li>" for p in paths)
+            details = f'<details><summary>Đường dẫn đã thử ({len(paths)})</summary><ul class="tried-list">{p_items}</ul></details>' if p_items else ""
+            c_tried.append(f'<div class="tried-paths"><strong>Máy <code>{_esc(may_c)}</code>:</strong> chưa tìm thấy crawler.{details}</div>')
+
+    crawler_body = ""
+    if c_rows:
+        crawler_body += (
+            '<div class="table-scroll"><table class="tool-table">'
+            "<thead><tr><th>Trạng thái</th><th>Nguồn / Adapter</th><th>Máy</th><th>Lần chạy cuối</th><th>Số trang/bài</th><th>Lỗi / bị chặn</th><th>Thư mục dữ liệu</th></tr></thead>"
+            f"<tbody>{''.join(c_rows)}</tbody></table></div>"
+        )
+    elif not crawler_machines:
+        crawler_body += '<p class="empty">Chưa có báo cáo từ <code>runner/lenh/crawler.ps1</code>.</p>'
+    crawler_body += "".join(c_tried)
+    parts.append(f'<section class="card crawler-card"><h2>Crawler</h2>{crawler_body}</section>')
+
+    # Khối Zalo
+    zalo_machines = data.get("zalo") or []
+    z_rows: list[str] = []
+    z_tried: list[str] = []
+    for zm in zalo_machines:
+        may_z = str(zm.get("may") or "may")
+        bns = zm.get("bo_nghe") or []
+        for bn in bns:
+            is_run = bool(bn.get("dang_chay"))
+            z_dot = "dot-ok" if is_run else "dot-err"
+            z_lbl = "Đang chạy" if is_run else "Dừng"
+            grps = " ".join(f'<span class="tag-chip">{_esc(g)}</span>' for g in (bn.get("nhom") or [])) or '<span class="meta">—</span>'
+            z_rows.append(
+                "<tr>"
+                f'<td><span class="status-pill"><span class="status-dot {z_dot}"></span>{z_lbl}</span></td>'
+                f"<td><strong>{_esc(bn.get('ten') or '—')}</strong></td>"
+                f"<td><code>{_esc(may_z)}</code></td>"
+                f"<td>{grps}</td>"
+                f'<td class="num">{_esc(bn.get("tin_cuoi_luc") or "—")}</td>'
+                f"<td>{_esc(bn.get('loi_gan_nhat') or '—')}</td>"
+                "</tr>"
+            )
+        if not zm.get("tim_thay") or not bns:
+            paths = zm.get("duong_dan_da_thu") or []
+            p_items = "".join(f"<li><code>{_esc(p)}</code></li>" for p in paths)
+            details = f'<details><summary>Đường dẫn đã thử ({len(paths)})</summary><ul class="tried-list">{p_items}</ul></details>' if p_items else ""
+            z_tried.append(f'<div class="tried-paths"><strong>Máy <code>{_esc(may_z)}</code>:</strong> chưa tìm thấy bộ nghe Zalo.{details}</div>')
+
+    zalo_body = ""
+    if z_rows:
+        zalo_body += (
+            '<div class="table-scroll"><table class="tool-table">'
+            "<thead><tr><th>Trạng thái</th><th>Bộ nghe</th><th>Máy</th><th>Nhóm đang nghe</th><th>Tin cuối lúc</th><th>Lỗi gần nhất</th></tr></thead>"
+            f"<tbody>{''.join(z_rows)}</tbody></table></div>"
+        )
+    elif not zalo_machines:
+        zalo_body += '<p class="empty">Chưa có báo cáo từ <code>runner/lenh/zalo.ps1</code>.</p>'
+    zalo_body += "".join(z_tried)
+    parts.append(f'<section class="card zalo-card"><h2>Zalo</h2>{zalo_body}</section>')
+    return "".join(parts)
+
+
 def _render_profiles_section(data: dict) -> str:
-    """Sinh nội dung tab Máy: hồ sơ năng lực, thanh RAM/ổ đĩa, cảnh báo ổ C < 10 GB."""
+    """Sinh nội dung tab Máy: hồ sơ năng lực, thanh RAM/ổ đĩa (thẻ Tài khoản đã chuyển sang tab Công cụ)."""
     profiles = data.get("ho_so_may") or []
     if not profiles:
         return '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>'
@@ -5809,7 +6812,7 @@ def _render_quality_section(data: dict) -> str:
 
 def render_app_html(data: dict, active_tab: str = "du-an") -> str:
     """Sinh giao diện bảng theo dõi chuẩn Apple tối giản, đọc trong 5 giây, tự làm mới 15s qua fetch."""
-    if active_tab not in ("du-an", "chat-luong", "tong-quan", "phieu", "may"):
+    if active_tab not in ("du-an", "chat-luong", "tong-quan", "phieu", "may", "cong-cu"):
         active_tab = "du-an"
 
     refresh_sec = int(data.get("chu_ky_giay") or 30)
@@ -5838,6 +6841,7 @@ def render_app_html(data: dict, active_tab: str = "du-an") -> str:
     cnt_du_an_txt = f"Dự án ({len(projects)})" if projects else "Dự án"
     cnt_phieu_active = len(running) + len(waiting)
     cnt_may = max(len(data.get("ho_so_may") or []), len(machines))
+    cnt_cong_cu = len(data.get("so_cong_cu") or [])
 
     def _tab_attrs(name: str) -> str:
         is_act = active_tab == name
@@ -5850,12 +6854,14 @@ def render_app_html(data: dict, active_tab: str = "du-an") -> str:
     hid_tq = "" if active_tab == "tong-quan" else " hidden"
     hid_ph = "" if active_tab == "phieu" else " hidden"
     hid_ma = "" if active_tab == "may" else " hidden"
+    hid_cc = "" if active_tab == "cong-cu" else " hidden"
 
     projects_html = _render_projects_section(data)
     quality_html = _render_quality_section(data)
     overview_html = _render_overview_machines_section(data)
     tickets_html = _render_tickets_section(data)
     profiles_html = _render_profiles_section(data)
+    tools_html = _render_tools_section(data)
     safe_json = _safe_inline_json(data)
 
     title_map = {
@@ -5864,6 +6870,7 @@ def render_app_html(data: dict, active_tab: str = "du-an") -> str:
         "tong-quan": "Tổng quan · LINHX",
         "phieu": "Phiếu hàng đợi · LINHX",
         "may": "Hồ sơ máy · LINHX",
+        "cong-cu": "Công cụ & Hạn mức · LINHX",
     }
     page_title = title_map.get(active_tab, "Bảng theo dõi · LINHX")
 
@@ -5902,6 +6909,7 @@ def render_app_html(data: dict, active_tab: str = "du-an") -> str:
       <button type="button" role="tab" {_tab_attrs("tong-quan")}>Tổng quan</button>
       <button type="button" role="tab" {_tab_attrs("phieu")}><span id="tab-lbl-phieu">Phiếu ({cnt_phieu_active})</span></button>
       <button type="button" role="tab" {_tab_attrs("may")}><span id="tab-lbl-may">Máy ({cnt_may})</span></button>
+      <button type="button" role="tab" {_tab_attrs("cong-cu")}><span id="tab-lbl-cong-cu">Công cụ ({cnt_cong_cu})</span></button>
     </nav>
 
     <main>
@@ -5924,6 +6932,10 @@ def render_app_html(data: dict, active_tab: str = "du-an") -> str:
 
       <section class="tab-panel" id="panel-may" data-panel="may" role="tabpanel"{hid_ma}>
         <div id="may-content-slot">{profiles_html}</div>
+      </section>
+
+      <section class="tab-panel" id="panel-cong-cu" data-panel="cong-cu" role="tabpanel"{hid_cc}>
+        <div id="cong-cu-content-slot">{tools_html}</div>
       </section>
     </main>
   </div>
@@ -5962,6 +6974,11 @@ def render_tickets_page_html(data: dict) -> str:
 def render_machines_html(data: dict) -> str:
     """Sinh HTML mở sẵn tab Máy (`/may`)."""
     return render_app_html(data, active_tab="may")
+
+
+def render_tools_html(data: dict) -> str:
+    """Sinh HTML mở sẵn tab Công cụ (`/cong-cu`)."""
+    return render_app_html(data, active_tab="cong-cu")
 
 
 def render_ticket_html(detail: dict) -> str:
@@ -6111,6 +7128,11 @@ def create_http_server(
                 self._send_html(200, render_machines_html(status_data), head_only=head_only)
                 return
 
+            if path == "/cong-cu":
+                status_data = monitor.get_status()
+                self._send_html(200, render_tools_html(status_data), head_only=head_only)
+                return
+
             if path == "/api/trang-thai":
                 status_data = monitor.get_status()
                 self._send_json(200, status_data, head_only=head_only)
@@ -6119,6 +7141,20 @@ def create_http_server(
             if path == "/api/may":
                 status_data = monitor.get_status()
                 self._send_json(200, {"may": status_data.get("ho_so_may") or []}, head_only=head_only)
+                return
+
+            if path == "/api/cong-cu":
+                status_data = monitor.get_status()
+                self._send_json(
+                    200,
+                    {
+                        "tai_khoan_may": status_data.get("tai_khoan_may") or [],
+                        "so_cong_cu": status_data.get("so_cong_cu") or [],
+                        "crawler": status_data.get("crawler") or [],
+                        "zalo": status_data.get("zalo") or [],
+                    },
+                    head_only=head_only,
+                )
                 return
 
             if path.startswith("/api/ket-qua/"):
