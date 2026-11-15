@@ -1221,6 +1221,7 @@ def bao_ket_qua_git(
                     so_tai_khoan.dong_bo_va_ghi_so_tai_khoan(
                         goc_hd,
                         tep_trang_thai=cfg.get("tep_trang_thai_tai_khoan"),
+                        dung_bo_nho_runtime=True,
                         bo_sung_tu_may=False,
                     )
                 except Exception:

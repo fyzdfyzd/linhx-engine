@@ -1388,6 +1388,7 @@ def dong_bo_va_ghi_so_tai_khoan(
     tep_so: Path | str | None = None,
     tep_trang_thai: Path | str | None = None,
     runtime_bo_sung: dict | None = None,
+    dung_bo_nho_runtime: bool = False,
     bo_sung_tu_may: bool = False,
     han_muc_moi: dict | None = None,
     bay_gio: datetime | float | str | None = None,
@@ -1511,6 +1512,12 @@ def dong_bo_va_ghi_so_tai_khoan(
         rt = _doc_trang_thai_runtime(tep_trang_thai)
         for ma_k, v_k in (rt.get("trang_thai") or {}).items():
             if isinstance(v_k, dict):
+                runtime_overrides[ma_k] = dict(v_k)
+    elif dung_bo_nho_runtime:
+        rt_mem = _doc_trang_thai_runtime(None)
+        ma_trong_so = {r["ma"] for r in rows if r.get("ma")}
+        for ma_k, v_k in (rt_mem.get("trang_thai") or {}).items():
+            if isinstance(v_k, dict) and ma_k in ma_trong_so:
                 runtime_overrides[ma_k] = dict(v_k)
     if isinstance(runtime_bo_sung, dict):
         for ma_k, v_k in (runtime_bo_sung.get("trang_thai") or {}).items():
