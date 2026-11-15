@@ -14,3 +14,5 @@ Hiệu chuẩn AGY CHẤM ẢNH Yên Lam (độc lập: bạn KHÔNG phải th�
 4. Sau khi ghi xong điểm của mình vào D:\linhx\cham-yl\CHAM-AGY-RC5.md, mới mở CHAM-RC5.md và lập bảng so: phần | điểm agy | điểm Claude | lệch; lỗi (a)–(e) kiosk: agy có bắt được không.
 Không sửa điểm của mình sau khi xem đáp án.
 Trả lời KET-QUA.md (ngắn): bảng so điểm, số lỗi kiosk bắt được /5, các lỗi agy thấy mà bài Claude không có, các lỗi Claude thấy mà agy bỏ sót (mỗi lỗi một dòng), kết luận DÙNG ĐƯỢC nếu mọi phần lệch ≤ 0,5 và bắt ≥ 4/5 lỗi kiosk, ngược lại CHƯA.
+
+nhip: 11:49 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
