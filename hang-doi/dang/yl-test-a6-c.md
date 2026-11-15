@@ -22,4 +22,4 @@ Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG s�
 CẤM: sửa code sản phẩm, sửa 01/02, sửa TIEU-CHUAN/CHUAN/KHUNG/CHU-TREN-MAN, deploy, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA đỉnh; bảng 7 mục A6 đỏ/xanh; bảng A6-07 theo khối; danh sách màn CHU_DUYET_VUOT; kết quả hiệu chuẩn bước 4.
 
-nhip: 14:01 36p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 14:04 39p root agent idle; waiting up to 40m0s for 1 background task(s)
