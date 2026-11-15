@@ -4,7 +4,7 @@ param(
     [string]$May = "",
     [string]$LocalState = "",
     [string]$RepoHangDoi = "",
-    [switch]$XuatJson,
+    [string]$XuatJson = "",
     [switch]$KhongGit,
     [switch]$EpGhi
 )
@@ -27,7 +27,7 @@ if ($RepoHangDoi) {
     $thamSo += @("--repo-hang-doi", $RepoHangDoi)
 }
 if ($XuatJson) {
-    $thamSo += "--xuat-json"
+    $thamSo += @("--xuat-json", $XuatJson)
 }
 if (-not $KhongGit) {
     $thamSo += "--cap-nhat-git"

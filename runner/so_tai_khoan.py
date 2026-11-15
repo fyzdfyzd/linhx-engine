@@ -125,6 +125,16 @@ def che_email(raw_email: str) -> str:
     s = str(raw_email or "").strip()
     if not s or "@" not in s:
         return ""
+    head, _, tail = s.partition("@")
+    head_low = head.strip().lower()
+    tail_low = tail.strip().lower()
+    if (
+        head_low
+        and _MASKED_LOCAL_RE.search(head_low)
+        and re.fullmatch(r"[a-z0-9._%+\-*]+", head_low)
+        and re.fullmatch(r"[a-z0-9.\-]+\.[a-z]{2,}", tail_low)
+    ):
+        return f"{head_low}@{tail_low}"
     m = _EMAIL_RE.search(s)
     if not m:
         return ""
@@ -132,8 +142,6 @@ def che_email(raw_email: str) -> str:
     domain = m.group(2).strip().lower()
     if not local or not domain:
         return ""
-    if _MASKED_LOCAL_RE.search(local):
-        return f"{local}@{domain}"
     if len(local) >= 3:
         return f"{local[:2]}***@{domain}"
     return f"{local[0]}***@{domain}"
