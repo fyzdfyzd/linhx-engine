@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl-code-a2-2
 phu_thuoc: yl-code-a2-1-sua-1; yl-duyet-a2-1
-nhan: may-2 2026-11-15T13:57:10+0700
 
 Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý c,e. Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git -C C:\linhx\ifagent fetch --all`. Nếu origin/agy/yl-code-a2-1 chưa có thì dừng, ghi CHUA_CO_NEN. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl-code-a2-2 -b agy/yl-code-a2-2 origin/agy/yl-code-a2-1`, rồi `git checkout origin/claude/nop-phat-hanh -- .handoff/yen-lam-dong-hanh/NOP` (chỉ đọc).
@@ -18,4 +17,16 @@ Phiếu A2 Yên Lam, kiosk "Nhắn Lam" (/yen-lam/csmo/kiosk-lam), ý c,e. Chạ
 CẤM: deploy, gửi mail, in khoá/mật khẩu, xoá dữ liệu, sửa test cũ, sửa bất kỳ file nào trong apps/lab/test/nghiem-thu-rc6/ (kiểm `sha256sum -c apps/lab/test/nghiem-thu-rc6/KHOA.sha256` trước khi push, lệch là tự trượt), sửa TIEU-CHUAN/CHUAN/KHUNG, tự sinh ảnh/video sản phẩm bằng AI, push nền qdzzr4. Màn chưa có khung duyệt thì không build, ghi CHUA_CO_KHUNG. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; bảng test khoá ý c,e trước/sau; số pass/fail lab đủ; đường dẫn ảnh ghép; sha256sum -c OK/KHÔNG.
 
-nhip: 14:36 39p root agent idle; waiting up to 40m0s for 1 background task(s)
+## Lần trước trượt vì:
+model: gemini-pro-orchestrator
+phieu: yl-code-a2-2
+may: may-2
+trang_thai: dung
+tep_doi: KET-QUA.md, bang-chung/agy/yl-test-a6-c/do-muc-9.json, bang-chung/log-03-a6.txt, bang-chung/yl-test-a6-c/do-muc-9.json
+drive: (khong)
+phut: 40.03
+token: vao=0 ra=0
+
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
