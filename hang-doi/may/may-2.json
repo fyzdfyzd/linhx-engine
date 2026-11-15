@@ -1,0 +1,102 @@
+{
+  "ma_may": "may-2",
+  "ten_windows": "DESKTOP-LNRQBEE",
+  "he_dieu_hanh": "Windows 10",
+  "vai_tro": "",
+  "cpu": {
+    "ten": "Intel(R) Xeon(R) CPU E5-2697A v4 @ 2.60GHz",
+    "nhan": 32,
+    "luong": 64
+  },
+  "ram": {
+    "tong_gb": 31.91,
+    "trong_gb": 21.74
+  },
+  "gpu": [
+    {
+      "ten": "NVIDIA GeForce GTX 1060 6GB",
+      "vram_gb": 6.0
+    },
+    {
+      "ten": "Parsec Virtual Display Adapter",
+      "vram_gb": null
+    }
+  ],
+  "o_dia": [
+    {
+      "o": "C:",
+      "tong_gb": 476.31,
+      "trong_gb": 304.38
+    },
+    {
+      "o": "G:",
+      "tong_gb": 476.31,
+      "trong_gb": 289.16
+    }
+  ],
+  "agy": {
+    "co": true,
+    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.exe",
+    "phien_ban": "1.5.9"
+  },
+  "python": "3.12.10",
+  "chrome": {
+    "co": true,
+    "profiles": [
+      "clone_17",
+      "clone_18",
+      "Clone_19",
+      "Clone_20",
+      "urah.vn",
+      "Account KH_47",
+      "Account KH_48",
+      "Account KH_49",
+      "Account KH_51",
+      "Lavie_5",
+      "Account KH_23",
+      "Account KH_25",
+      "Account KH_26",
+      "Account KH_27",
+      "Account KH_28",
+      "Account KH_5",
+      "Account KH_11",
+      "User 10",
+      "Lavie_7",
+      "Account KH_18",
+      "Account KH_74",
+      "Lavie_28",
+      "Lavie_29",
+      "Lavie_6",
+      "Account KH_1",
+      "Account KH_2",
+      "User 13",
+      "Account KH_78",
+      "Account KH_79",
+      "Account KH_83",
+      "Account KH_84",
+      "Account KH_89",
+      "Account KH_90",
+      "Account KH_93",
+      "Account KH_94",
+      "Account KH_98",
+      "Account KH_99",
+      "Art",
+      "listeningvietnam.com",
+      "Linh",
+      "clone _13",
+      "clone_14",
+      "Clone_15",
+      "clone_16"
+    ]
+  },
+  "nhan_phieu": {
+    "so_phieu": 5,
+    "nhan_bat_ky": true,
+    "che_do_nhan": "bat-ky"
+  },
+  "thong_ke_24h": {
+    "xong": 17,
+    "loi": 14
+  },
+  "cap_nhat_luc": "2026-11-15T10:48:22+0700"
+}
