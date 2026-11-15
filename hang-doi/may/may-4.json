@@ -1,0 +1,78 @@
+{
+  "ma_may": "may-4",
+  "ten_windows": "MSI",
+  "he_dieu_hanh": "Windows 11",
+  "vai_tro": "",
+  "cpu": {
+    "ten": "13th Gen Intel(R) Core(TM) i7-13620H",
+    "nhan": 10,
+    "luong": 16
+  },
+  "ram": {
+    "tong_gb": 15.71,
+    "trong_gb": 2.35
+  },
+  "gpu": [
+    {
+      "ten": "NVIDIA GeForce RTX 4060 Laptop GPU",
+      "vram_gb": 8.0
+    },
+    {
+      "ten": "Intel(R) UHD Graphics",
+      "vram_gb": 1.0
+    }
+  ],
+  "o_dia": [
+    {
+      "o": "C:",
+      "tong_gb": 249.4,
+      "trong_gb": 15.39
+    },
+    {
+      "o": "D:",
+      "tong_gb": 683.59,
+      "trong_gb": 20.35
+    }
+  ],
+  "agy": {
+    "co": true,
+    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.exe",
+    "phien_ban": "1.5.9"
+  },
+  "python": "3.12.2",
+  "chrome": {
+    "co": true,
+    "profiles": [
+      "chiemtinh.vn",
+      "Account KH_42",
+      "Clone_6",
+      "Clone_7",
+      "Clone_8",
+      "An",
+      "Fra",
+      "unikon.vn",
+      "Tài urah.vn",
+      "Account KH_44",
+      "Account KH_12",
+      "urah.vn",
+      "Product",
+      "Phuong",
+      "Đặng",
+      "Minh hiền",
+      "baotinmanhhai.vn",
+      "User 11",
+      "Tài",
+      "Clone_5"
+    ]
+  },
+  "nhan_phieu": {
+    "so_phieu": 1,
+    "nhan_bat_ky": false,
+    "che_do_nhan": "chi-dich-danh"
+  },
+  "thong_ke_24h": {
+    "xong": 2,
+    "loi": 0
+  },
+  "cap_nhat_luc": "2026-11-15T09:17:45+0700"
+}
