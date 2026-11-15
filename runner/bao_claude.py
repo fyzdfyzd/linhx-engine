@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import subprocess
 import time
 import urllib.error
@@ -31,8 +32,39 @@ _MAU_DONG_DAT = re.compile(
 )
 
 # Hook noi bo phuc vu test ma khong chan subprocess.run cua git
+_SUBPROCESS_RUN_GOC = subprocess.run
+_SHUTIL_WHICH_GOC = shutil.which
 _CHAY_LENH_FN = None
 _URLOPEN_FN = None
+
+
+def _dang_mock_lenh(chay_lenh_fn=None) -> bool:
+    return (
+        (chay_lenh_fn is not None and chay_lenh_fn is not _SUBPROCESS_RUN_GOC)
+        or _CHAY_LENH_FN is not None
+        or subprocess.run is not _SUBPROCESS_RUN_GOC
+    )
+
+
+def _tim_lenh_gh(co_mock: bool = False) -> str:
+    """Tim ten hoac duong dan thuc thi cua gh CLI (ho tro Windows PATH chua cap nhat)."""
+    if co_mock:
+        return "gh"
+    tim_thay = shutil.which("gh")
+    if tim_thay:
+        return tim_thay
+    if os.name == "nt" and shutil.which is _SHUTIL_WHICH_GOC:
+        ung_vien = [
+            Path(r"C:\Program Files\GitHub CLI\gh.exe"),
+            Path(r"C:\Program Files (x86)\GitHub CLI\gh.exe"),
+        ]
+        local_app = os.environ.get("LOCALAPPDATA", "").strip()
+        if local_app:
+            ung_vien.append(Path(local_app) / "Programs" / "GitHub CLI" / "gh.exe")
+        for p in ung_vien:
+            if p.is_file():
+                return str(p)
+    return "gh"
 
 
 def che_bi_mat(van_ban: str, secret_val: str = "") -> str:
@@ -133,11 +165,16 @@ def doc_token_gh(tep_env: Path | str | None = None) -> str:
 
 def kiem_tra_gh_dang_nhap(chay_lenh_fn=None) -> tuple[bool, bool]:
     """Tra ve (co_gh, da_dang_nhap) ma khong bao gio in/log token."""
+    co_mock = _dang_mock_lenh(chay_lenh_fn)
+    lenh_gh = _tim_lenh_gh(co_mock=co_mock)
     ham_chay = chay_lenh_fn or _CHAY_LENH_FN or subprocess.run
-    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    kw: dict = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    if not co_mock:
+        kw["stdin"] = subprocess.DEVNULL
+        kw["env"] = {**os.environ, "GH_PROMPT_DISABLED": "1"}
     try:
         proc = ham_chay(
-            ["gh", "auth", "status"],
+            [lenh_gh, "auth", "status"],
             capture_output=True,
             text=True,
             encoding="utf-8",
@@ -181,9 +218,15 @@ def _gui_bang_gh(
     chay_lenh_fn,
     ham_ngu,
     log_fn,
+    lenh_gh: str = "gh",
+    secret_val: str = "",
+    co_mock: bool = False,
 ) -> bool:
-    cmd = ["gh", "pr", "comment", str(so_pr), "-R", str(repo), "-b", dong]
-    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    cmd = [lenh_gh, "pr", "comment", str(so_pr), "-R", str(repo), "-b", dong]
+    kw: dict = {"creationflags": 0x08000000} if os.name == "nt" else {}
+    if not co_mock:
+        kw["stdin"] = subprocess.DEVNULL
+        kw["env"] = {**os.environ, "GH_PROMPT_DISABLED": "1"}
     loi_cuoi = ""
     for lan in range(1, SO_LAN_THU + 1):
         try:
@@ -203,7 +246,7 @@ def _gui_bang_gh(
             loi_cuoi = str(exc)
         if lan < SO_LAN_THU:
             ham_ngu(0.2 * lan)
-    _ghi_log_an_toan(log_fn, f"gh pr comment that bai sau {SO_LAN_THU} lan: {loi_cuoi}")
+    _ghi_log_an_toan(log_fn, f"gh pr comment that bai sau {SO_LAN_THU} lan: {loi_cuoi}", secret_val=secret_val)
     return False
 
 
@@ -262,6 +305,7 @@ def bao(
     log_fn=None,
 ) -> bool:
     """Dang 1 dong thong bao len PR #36 bang gh CLI hoac REST API; loi mang thu lai 3 lan roi bo qua."""
+    token = ""
     try:
         phieu_id = " ".join(str(id or "").split()).strip()
         if not phieu_id:
@@ -270,19 +314,31 @@ def bao(
         if tep_da_bao is not None and tep_da_bao.exists():
             return False
 
+        token = doc_token_gh(tep_env=tep_env)
         dong = tao_dong_bao(phieu_id, dat, may, phut)
         ham_chay = chay_lenh_fn or _CHAY_LENH_FN or subprocess.run
         ham_mo = urlopen_fn or _URLOPEN_FN or urllib.request.urlopen
         ham_ngu = ngu_fn or time.sleep
 
+        co_mock = _dang_mock_lenh(chay_lenh_fn)
+        lenh_gh = _tim_lenh_gh(co_mock=co_mock)
         co_gh, da_dang_nhap = kiem_tra_gh_dang_nhap(chay_lenh_fn=ham_chay)
         if co_gh and da_dang_nhap:
-            ok = _gui_bang_gh(dong, repo, so_pr, ham_chay, ham_ngu, log_fn)
+            ok = _gui_bang_gh(
+                dong,
+                repo,
+                so_pr,
+                ham_chay,
+                ham_ngu,
+                log_fn,
+                lenh_gh=lenh_gh,
+                secret_val=token,
+                co_mock=co_mock,
+            )
             if ok:
                 _ghi_dau_da_bao(tep_da_bao, phieu_id)
             return ok
 
-        token = doc_token_gh(tep_env=tep_env)
         if not token:
             _ghi_log_an_toan(log_fn, "bo qua bao claude: may chua dang nhap gh va thieu LINHX_GH_TOKEN")
             return False
@@ -292,5 +348,5 @@ def bao(
             _ghi_dau_da_bao(tep_da_bao, phieu_id)
         return ok
     except Exception as exc:
-        _ghi_log_an_toan(log_fn, f"loi ngoai le khi bao claude: {exc}")
+        _ghi_log_an_toan(log_fn, f"loi ngoai le khi bao claude: {exc}", secret_val=token)
         return False

@@ -466,7 +466,7 @@ def _ghi_dau_da_bao_git(cfg: dict, phieu_id: str, tho: str, tep_kq_du_phong: Pat
     noi_dung = f"phieu: {phieu_id}\nmay: {tho}\nluc: {time.strftime('%Y-%m-%dT%H:%M:%S%z')}\n"
     try:
         with _khoa_tep(_duong_dan_khoa_wt(cfg), timeout=15.0):
-            for lan in range(SO_LAN_THU_PUSH_NHIP):
+            for lan in range(SO_LAN_THU_PUSH):
                 wt = dam_bao_worktree(cfg)
                 if wt is None:
                     break
@@ -1420,6 +1420,8 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
         header_lines.append(f"vung: {'; '.join(parse_vung_globs(viec.get('vung')))}")
     if "cham" not in meta and get_ticket_cham(viec):
         header_lines.append("cham: 1")
+    if "bao" not in meta and get_ticket_bao(viec):
+        header_lines.append(f"bao: {get_ticket_bao(viec)}")
     if not has_tu_sua:
         header_lines.append(f"tu_sua: {remaining}")
 
@@ -1760,6 +1762,20 @@ def bao_ket_qua_git(
     tep_kq_da_push: Path | None = None
     loi_cuoi = ""
     with _khoa_tep(_duong_dan_khoa_wt(cfg)):
+        repo_hd, wt_dk, _, _ = _duong_dan_wt(cfg)
+        noi_dung_da_bao_cu = ""
+        for goc_ung in (wt_dk / "hang-doi", wt_dk, repo_hd / "hang-doi"):
+            tep_cu = goc_ung / "xong" / phieu_id / ".da-bao"
+            if tep_cu.is_file():
+                try:
+                    noi_dung_da_bao_cu = tep_cu.read_text(encoding="utf-8", errors="replace")
+                except OSError:
+                    noi_dung_da_bao_cu = f"phieu: {phieu_id}\nmay: {tho}\n"
+                if not noi_dung_da_bao_cu:
+                    noi_dung_da_bao_cu = f"phieu: {phieu_id}\nmay: {tho}\n"
+                break
+        da_bao_cuc_bo = bool(noi_dung_da_bao_cu)
+
         for lan in range(SO_LAN_THU_PUSH):
             wt = dam_bao_worktree(cfg)
             if wt is None:
@@ -1770,9 +1786,11 @@ def bao_ket_qua_git(
             if tep_dang.exists():
                 tep_dang.unlink()
             tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
-            da_bao_truoc = (tep_kq.parent / ".da-bao").exists()
+            da_bao_truoc = da_bao_cuc_bo or (tep_kq.parent / ".da-bao").exists()
             tep_kq.parent.mkdir(parents=True, exist_ok=True)
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
+            if da_bao_cuc_bo and not (tep_kq.parent / ".da-bao").exists():
+                (tep_kq.parent / ".da-bao").write_text(noi_dung_da_bao_cu, encoding="utf-8")
 
             thong_diep = f"xong: {phieu_id} ({tt_chuan})"
             if noi_dung_can_linh is not None:

@@ -442,3 +442,77 @@ def test_token_khong_xuat_hien_trong_log_va_loi_mang_khong_lam_hong_phieu(tmp_pa
     for tep_log in log_dir.rglob("*"):
         if tep_log.is_file():
             assert khoa_gia not in tep_log.read_text(encoding="utf-8", errors="replace")
+
+
+def test_bao_tu_sua_giu_header_bao_va_che_token_tuy_y(tmp_path):
+    # Kiem build_self_repair_ticket giu nguyen header `bao: claude` khi truyen truc tiep ngoai meta
+    viec = {
+        "viec": "lx-code-khan",
+        "may": "may-2",
+        "tu_sua": 2,
+        "bao": "claude",
+        "de": "Sua lai dung yeu cau.",
+        "meta": {"may": "may-2", "tu_sua": "2"},
+    }
+    phieu_sua = hang_doi_git.build_self_repair_ticket(viec, "trang_thai: loi\nthieu file")
+    assert phieu_sua is not None
+    assert "bao: claude" in phieu_sua
+
+    # Kiem co_can_bao_claude tat o luot dung co da_sinh_phieu_sua=True, bat o luot cuoi
+    wt_gia = tmp_path / "wt-gia"
+    (wt_gia / "hang-doi" / "xong").mkdir(parents=True)
+    assert hang_doi_git.co_can_bao_claude(wt_gia, "lx-code-khan", viec, "dung", da_sinh_phieu_sua=True) is False
+    assert hang_doi_git.co_can_bao_claude(wt_gia, "lx-code-khan-sua-1", viec, "xong", da_sinh_phieu_sua=False) is True
+
+    # Kiem che token tuy y (khong bat dau bang tien to gh) trong log ca nhanh gh va nhanh REST
+    khoa_tuy_y = "khoa_tuy_y_" + "987654"
+    tep_env = tmp_path / "tho.env"
+    tep_env.write_text(f"LINHX_GH_TOKEN={khoa_tuy_y}\n", encoding="utf-8")
+
+    # 1. Nhanh gh pr comment loi co dinh token trong stderr
+    log_gh: list[str] = []
+
+    def fake_gh_comment_loi(cmd, **_kwargs):
+        if cmd[:3] == ["gh", "auth", "status"]:
+            return SimpleNamespace(returncode=0, stdout="", stderr="")
+        return SimpleNamespace(returncode=1, stdout="", stderr=f"khong gui duoc voi {khoa_tuy_y}")
+
+    ok_gh = bao_claude.bao(
+        "yl-token-tuy-y-gh",
+        "khong",
+        "may-2",
+        2,
+        tep_env=tep_env,
+        chay_lenh_fn=fake_gh_comment_loi,
+        ngu_fn=lambda _s: None,
+        log_fn=log_gh.append,
+    )
+    assert ok_gh is False
+    assert len(log_gh) == 1
+    assert khoa_tuy_y not in log_gh[0] and "***" in log_gh[0]
+
+    # 2. Nhanh REST API loi co dinh token trong URLError
+    log_rest: list[str] = []
+
+    def fake_gh_chua_dn(_cmd, **_kwargs):
+        return SimpleNamespace(returncode=1, stdout="", stderr="")
+
+    def fake_http_loi(req, timeout=30):
+        raise urllib.error.URLError(f"loi mang {khoa_tuy_y}")
+
+    ok_rest = bao_claude.bao(
+        "yl-token-tuy-y-rest",
+        "khong",
+        "may-2",
+        2,
+        tep_env=tep_env,
+        chay_lenh_fn=fake_gh_chua_dn,
+        urlopen_fn=fake_http_loi,
+        ngu_fn=lambda _s: None,
+        log_fn=log_rest.append,
+    )
+    assert ok_rest is False
+    assert len(log_rest) == 1
+    assert khoa_tuy_y not in log_rest[0] and "***" in log_rest[0]
+    assert bao_claude._dang_mock_lenh(bao_claude._SUBPROCESS_RUN_GOC) is False
+    assert bao_claude._dang_mock_lenh(fake_gh_comment_loi) is True
