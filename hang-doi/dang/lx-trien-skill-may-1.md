@@ -14,4 +14,4 @@ Phiếu NẠP KHO SKILL cho máy này. Chỉ cài, không sửa skill, không đ
 CẤM: xoá thư mục thật, sửa nội dung skill, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` nếu agy thấy skill, `dat: khong` nếu không; SHA kho; số junction mỗi đích; danh sách tên bị bỏ qua; agy CLI đọc skill ở thư mục nào.
 
-nhip: 12:42 12p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 12:45 15p root agent idle; waiting up to 40m0s for 1 background task(s)
