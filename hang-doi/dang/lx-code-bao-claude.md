@@ -15,4 +15,4 @@ GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner 
 6. Push `agy/bao-claude` (KHÔNG push vào claude/project-thread-jowxv1).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; máy 2 gửi được bằng gh hay token hay chưa được.
 
-nhip: 13:24 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:27 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
