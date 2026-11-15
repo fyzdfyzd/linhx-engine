@@ -21,3 +21,5 @@ Phiếu viết lại test đo mức 9 (A6) Yên Lam. CHỈ sửa test, KHÔNG s�
 5. Test 03 ghi thêm bảng số ra `bang-chung/<tên nhánh>/do-muc-9.json` dạng [{"ma":"A6-01","ten":"...","nguong":"...","te_nhat":"...","dat":true/false}]. Chạy 03 trên code hiện tại, ghi sha256 mới vào KHOA.sha256, commit, push `agy/yl-test-a6-c`.
 CẤM: sửa code sản phẩm, sửa 01/02, sửa TIEU-CHUAN/CHUAN/KHUNG/CHU-TREN-MAN, deploy, in khoá. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA đỉnh; bảng 7 mục A6 đỏ/xanh; bảng A6-07 theo khối; danh sách màn CHU_DUYET_VUOT; kết quả hiệu chuẩn bước 4.
+
+nhip: 13:28 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
