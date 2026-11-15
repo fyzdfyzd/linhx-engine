@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\wt\so-tai-khoan
+nhan: may-2 2026-11-15T12:22:58+0700
 
 Phiếu: SỔ TÀI KHOẢN cho đội máy (danh sách tài khoản đã đăng nhập sẵn trên từng máy, runner tự chọn). Việc PHỤ, ưu tiên thấp: không khởi động lại runner/bảng đang chạy. Chạy mọi lệnh tiền cảnh, KHÔNG background task, mỗi 5 phút có file mới hoặc commit trong theo_doi. TUYỆT ĐỐI không đọc/in/commit cookie, token, mật khẩu; chỉ đọc tên hồ sơ và địa chỉ email hiển thị.
 1. `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\so-tai-khoan` (có rồi thì fetch), `git checkout -b agy/so-tai-khoan`.
