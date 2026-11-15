@@ -5,6 +5,7 @@ khong_tien_phut: 20
 tu_sua: 1
 theo_doi: C:\linhx\wt\chan-cho-nen
 phu_thuoc: lx-code-chan-cho-nen
+nhan: may-2 2026-11-15T13:27:45+0700
 
 Phiếu nối tiếp lx-code-chan-cho-nen. Linh 15/11: CHO PHÉP chạy nền nếu có log + nhịp. Chạy mọi lệnh tiền cảnh, mỗi 5 phút có file mới/commit. KHÔNG khởi động lại runner đang chạy.
 1. Làm tiếp nhánh `agy/chan-cho-nen` (`git pull`).
