@@ -16,3 +16,5 @@ Phiếu: thêm 2 tab "Dự án" và "Chất lượng" cho bảng theo dõi (runn
 7. Chụp 4 ảnh (390×844 và 1440×900, sáng/tối) tab Dự án + 2 ảnh tab Chất lượng bằng dữ liệu giả, lưu viec/bang-giao-dien/anh/du-an-*.png, commit. Push `agy/bang-du-an`. KHÔNG push vào claude/project-thread-jowxv1.
 CẤM: in khoá/mật khẩu, mở cổng ra ngoài, sửa phiếu khác, sửa nhánh hang-doi. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; số test pass/fail; đường dẫn 6 ảnh.
+
+nhip: 12:15 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
