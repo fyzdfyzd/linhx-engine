@@ -1,0 +1,47 @@
+# Chuông báo Claude: khi runner đẩy KET-QUA mới vào hang-doi/xong/, bình luận 1 dòng lên PR #36 (Hộp thư Claude).
+name: bao-claude
+on:
+  push:
+    branches: [hang-doi]
+    paths: ['hang-doi/xong/**/KET-QUA.md']
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+jobs:
+  bao:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 50
+      - name: Tim KET-QUA moi
+        id: tim
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          set -e
+          if git cat-file -e "$BEFORE" 2>/dev/null; then RANGE="$BEFORE..$AFTER"; else RANGE="$AFTER~1..$AFTER"; fi
+          : > dong.txt
+          for f in $(git diff --name-only --diff-filter=A $RANGE -- 'hang-doi/xong/*/KET-QUA.md'); do
+            id=$(basename "$(dirname "$f")")
+            case "$id" in yl-*|*bao-claude*) ;; *) grep -qiE '^bao:\s*claude' "$f" || continue ;; esac
+            tt=$(grep -m1 -E '^trang_thai:' "$f" | sed 's/.*:\s*//')
+            dat=$(grep -m1 -E '^dat:' "$f" | sed 's/.*:\s*//'); dat=${dat:-?}
+            may=$(grep -m1 -E '^may:' "$f" | sed 's/.*:\s*//')
+            phut=$(grep -m1 -E '^phut:' "$f" | sed 's/.*:\s*//')
+            # phieu dung ma da sinh phieu -sua- dang chay thi khong bao
+            if [ "$tt" = "dung" ] && ls hang-doi/dang/${id}-sua-*.md hang-doi/moi/${id}-sua-*.md >/dev/null 2>&1; then continue; fi
+            echo "XONG $id trang_thai=$tt dat=$dat may=$may phut=$phut" >> dong.txt
+          done
+          cat dong.txt
+      - name: Binh luan PR 36
+        if: hashFiles('dong.txt') != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const t = fs.readFileSync('dong.txt', 'utf8').trim();
+            if (!t) return;
+            await github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: 36, body: t });
