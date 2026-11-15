@@ -2,6 +2,7 @@ may: may-2
 loai: khac
 tran_phut: 40
 theo_doi: C:\linhx\wt-ra-qt; C:\linhx\ifagent
+nhan: may-2 2026-11-15T08:29:24+0700
 
 KHÔNG chạy lệnh nền (background): mọi lệnh chạy tiền cảnh và chờ xong. Chỉ đọc, không sửa repo ifagent.
 
