@@ -3,6 +3,7 @@ loai: kiem
 tran_phut: 20
 khong_tien_phut: 15
 theo_doi: C:\linhx\skills-kho
+nhan: may-2 2026-11-15T12:30:11+0700
 
 Phiếu NẠP KHO SKILL cho máy này. Chỉ cài, không sửa skill, không đụng phiếu khác hay worktree Yên Lam. Chạy mọi lệnh tiền cảnh, KHÔNG background task.
 1. Nếu C:\linhx\skills-kho chưa có: `git clone --depth 1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\skills-kho`; có rồi: `git -C C:\linhx\skills-kho pull --ff-only`. (Máy 1 đã có bản ở D:\LINHX\LINHX-ENGINE từ 8/11: vẫn dùng C:\linhx\skills-kho để chung một chỗ cho mọi máy.)
