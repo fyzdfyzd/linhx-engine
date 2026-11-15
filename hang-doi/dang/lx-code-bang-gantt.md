@@ -14,3 +14,5 @@ Phiếu nối tiếp lx-code-bang-du-an: tab "Dự án" thành GANTT rút gọn 
 4. Test: thanh thực tế đúng giờ với dữ liệu giả; bước trễ tô cam; thiếu du_kien thì không vỡ. Chạy `python -m pytest runner -q` và `python -m pytest tests/nghiem-thu -q`.
 5. Chụp lại ảnh du-an-*.png (390×844, 1440×900, sáng/tối), commit, push `agy/bang-du-an`.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; đường dẫn ảnh.
+
+nhip: 12:48 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
