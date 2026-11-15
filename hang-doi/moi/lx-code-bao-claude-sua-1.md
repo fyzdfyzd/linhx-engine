@@ -2,9 +2,8 @@ may: may-2
 loai: code
 tran_phut: 30
 khong_tien_phut: 20
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\wt\bao-claude
-nhan: may-2 2026-11-15T13:17:59+0700
 
 GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner BÁO NGAY khi phiếu cần Claude. Chạy mọi lệnh tiền cảnh, mỗi lệnh timeout ≤ 300 s, mỗi 5 phút có file mới/commit. KHÔNG khởi động lại runner đang chạy.
 1. `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\bao-claude` (có rồi thì fetch), `git checkout -b agy/bao-claude`.
@@ -15,4 +14,16 @@ GẤP vừa. Chuông báo Claude: thay vì Claude đọc 30 phút/lần, runner 
 6. Push `agy/bao-claude` (KHÔNG push vào claude/project-thread-jowxv1).
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co`/`dat: khong`; SHA; test pass/fail; máy 2 gửi được bằng gh hay token hay chưa được.
 
-nhip: 13:45 27p root agent idle; waiting up to 40m0s for 1 background task(s)
+## Lần trước trượt vì:
+model: gemini-pro-orchestrator
+phieu: lx-code-bao-claude
+may: may-2
+trang_thai: dung
+tep_doi: (khong)
+drive: (khong)
+phut: 30.03
+token: vao=0 ra=0
+
+dừng agy: quá trần 30 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
