@@ -31,6 +31,7 @@ khong_tien_phut: 25    # tuỳ chọn: nâng ngưỡng "không tiến" (mặc đ
 khoa: viec/du-an/nghiem-thu/test.py.khoa  # tuỳ chọn: file .khoa (tương đối theo_doi đầu tiên); lệch sha256 → loi "sửa test khoá"
 lenh_kiem: python -m pytest viec/du-an/nghiem-thu -q  # tuỳ chọn: runner tự chạy sau agy (trần 15p), đạt mới xong; trượt → loi kèm 1500 ký tự cuối log
 vung: runner/**; skills/le/hang-doi-may/**  # tuỳ chọn: glob phạm vi commit mới ở theo_doi đầu; ngoài vùng ("sửa ngoài vùng: <file>") hoặc lộ bí mật (<file>:<dòng>) → loi
+cho_nen: co           # tuỳ chọn: đặt khi phiếu được phép chạy tác vụ nền / thợ con (mặc định tắt)
 
 Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 ```
@@ -47,7 +48,7 @@ Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
 | `td` | `gemini-4-hydrogen-high` | Trình duyệt / tương tác |
 | `kiem` | `gemini-4-hydrogen-low` | Kiểm nhanh, ping, rà nhẹ |
 
-Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. Runner tự chèn cuối mọi đề câu nhắc chạy tiền cảnh; bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
+Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. `agy` hiện không có cờ CLI tắt background task/subagent nên runner tự chèn câu nhắc chạy tiền cảnh vào cuối đề (trừ khi `cho_nen: co`) và đọc luồng ra theo dòng: thấy `waiting up to ... background task`, `root agent idle` hoặc `status ERROR` có `"chờ lệnh hoàn tất"` thì dừng cả cây tiến trình ngay (`trang_thai: dung`, `ly_do: cho-tac-vu-nen`), không chờ tới `tran_phut`, đồng thời sinh phiếu `-sua-` nhấn mạnh chạy tiền cảnh nếu còn `tu_sua`. Khi phiếu kết thúc (`xong` hoặc `dung`), runner chép 60 bước cuối đã che bí mật vào `hang-doi/xong/<id>/NHAT-KY.md`. Bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
 Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).
 
 ## Phiếu lệnh (không mở agy)

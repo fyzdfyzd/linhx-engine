@@ -37,6 +37,11 @@ try:
 except ImportError:
     import rao_phieu
 
+try:
+    from runner import nhat_ky_agy
+except ImportError:
+    import nhat_ky_agy
+
 NHANH_MAC_DINH = "hang-doi"
 REMOTE_MAC_DINH = "origin"
 GIOI_HAN_KET_QUA = 2000
@@ -59,6 +64,8 @@ NGUONG_RAM_TRONG_GB = linhx_runner.NGUONG_RAM_TRONG_GB
 MAX_SELF_REPAIR = 3
 SELF_REPAIR_EXCERPT_LIMIT = 1500
 SELF_REPAIR_SECTION_TITLE = "Lần trước trượt vì:"
+SELF_REPAIR_BG_WAIT_REASON = linhx_runner.LY_DO_CHO_TAC_VU_NEN
+SELF_REPAIR_BG_WAIT_PREFIX = linhx_runner.CAU_DAU_DE_SUA_CHO_NEN
 QUOTA_PAUSE_MINUTES = 30.0
 DEPENDENCY_FAILED_REASON = "phụ thuộc trượt"
 REVIEW_PROMPT_HEADER = (
@@ -408,6 +415,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
     khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
     vung = parse_vung_globs(meta.get("vung"))
     cham = parse_cham_flag(meta.get("cham"))
+    cho_nen = linhx_runner.cho_phep_chay_nen({"meta": meta})
     moc = _strip_unquoted_comment(str(meta.get("moc") or "")).strip()
 
     return {
@@ -422,6 +430,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
         "khoa": khoa,
         "vung": vung,
         "cham": cham,
+        "cho_nen": cho_nen,
         "moc": moc,
         "de": de,
         "meta": meta,
@@ -689,6 +698,7 @@ def tao_ket_qua_md(
     gioi_han: int = GIOI_HAN_KET_QUA,
     model: str = "",
     canh_bao: str = "",
+    ly_do: str = "",
 ) -> str:
     if gioi_han <= 0:
         return ""
@@ -698,11 +708,13 @@ def tao_ket_qua_md(
     ten_model_hien_thi = (
         _cat_mot_dong(model, 120) if model and str(model).strip() else linhx_runner.MODEL_MAC_DINH_NHAN
     )
+    dong_ly_do = f"ly_do: {_cat_mot_dong(ly_do, 120)}\n" if ly_do and str(ly_do).strip() else ""
     dau = (
         f"model: {ten_model_hien_thi}\n"
         f"phieu: {_cat_mot_dong(phieu_id, 120)}\n"
         f"may: {_cat_mot_dong(tho, 80)}\n"
         f"trang_thai: {tt}\n"
+        f"{dong_ly_do}"
         f"tep_doi: {ds_tep}\n"
         f"drive: {duong_drive}\n"
         f"phut: {phut:.2f}\n"
@@ -1209,9 +1221,12 @@ def dang_tam_nghi_quota(cfg: dict | None, now_epoch: float | None = None) -> tup
 
 
 def extract_original_prompt(prompt_text: str) -> str:
-    # Tách lấy phần đề gốc (bỏ mục "Lần trước trượt vì:" của lượt sửa trước nếu có)
+    # Tách lấy phần đề gốc (bỏ mục "Lần trước trượt vì:" và câu đầu nhắc chạy nền của lượt sửa trước nếu có)
     parts = _SELF_REPAIR_SECTION_SPLIT_RE.split(str(prompt_text or "").strip(), maxsplit=1)
-    return parts[0].strip()
+    goc = parts[0].strip()
+    if goc.startswith(SELF_REPAIR_BG_WAIT_PREFIX):
+        goc = goc[len(SELF_REPAIR_BG_WAIT_PREFIX) :].lstrip()
+    return goc
 
 
 def next_self_repair_id(wt: Path, ticket_id: str) -> str:
@@ -1233,7 +1248,7 @@ def next_self_repair_id(wt: Path, ticket_id: str) -> str:
     return f"{base_id}-sua-{next_index}"
 
 
-def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
+def build_self_repair_ticket(viec: dict, ket_qua_md: str, ly_do: str = "") -> str | None:
     # Tạo nội dung phiếu `hang-doi/moi/<id>-sua-<k>.md`: giữ nguyên header (giảm `tu_sua` đi 1),
     # thân = đề gốc + mục "Lần trước trượt vì:" chép 1500 ký tự cuối KET-QUA.
     raw_tu_sua = viec.get("tu_sua") if "tu_sua" in viec else (viec.get("meta") or {}).get("tu_sua")
@@ -1269,10 +1284,24 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str) -> str | None:
         header_lines.append(f"vung: {'; '.join(parse_vung_globs(viec.get('vung')))}")
     if "cham" not in meta and get_ticket_cham(viec):
         header_lines.append("cham: 1")
+    if "cho_nen" not in meta and viec.get("cho_nen"):
+        header_lines.append("cho_nen: co")
     if not has_tu_sua:
         header_lines.append(f"tu_sua: {remaining}")
 
     original_body = extract_original_prompt(viec.get("de") or viec.get("viec") or "")
+    la_cho_nen = (
+        str(ly_do or "").strip() == SELF_REPAIR_BG_WAIT_REASON
+        or (isinstance(viec, dict) and viec.get("_ly_do_dung") == SELF_REPAIR_BG_WAIT_REASON)
+        or (f"ly_do: {SELF_REPAIR_BG_WAIT_REASON}" in str(ket_qua_md or ""))
+        or (SELF_REPAIR_BG_WAIT_REASON in str(ket_qua_md or ""))
+    )
+    if la_cho_nen:
+        original_body = (
+            f"{SELF_REPAIR_BG_WAIT_PREFIX}\n\n{original_body}"
+            if original_body
+            else SELF_REPAIR_BG_WAIT_PREFIX
+        )
     excerpt = str(ket_qua_md or "")[-SELF_REPAIR_EXCERPT_LIMIT:]
     if excerpt and not excerpt.endswith("\n"):
         excerpt += "\n"
@@ -1522,6 +1551,9 @@ def _khoi_phuc_viec_tu_tep_dang(viec: dict, tep_dang: Path, phieu_id: str) -> di
     clean_lines = [d for d in raw_text.splitlines() if not _NHIP_CUOI_DONG_RE.match(d.strip())]
     parsed_dang = phan_tich_phieu("\n".join(clean_lines), phieu_id)
     if "tu_sua" not in viec and "meta" not in viec and "cham" not in viec:
+        for k_noi_bo in ("_ly_do_dung", "_nhat_ky_debug", "_model_da_dung", "_canh_bao_model", "_loi_cong_kiem"):
+            if isinstance(viec, dict) and k_noi_bo in viec:
+                parsed_dang[k_noi_bo] = viec[k_noi_bo]
         return parsed_dang
     merged = dict(viec)
     meta_cur = dict(merged.get("meta") or {})
@@ -1532,6 +1564,8 @@ def _khoi_phuc_viec_tu_tep_dang(viec: dict, tep_dang: Path, phieu_id: str) -> di
         merged["moc"] = parsed_dang["moc"]
     if "cham" not in merged:
         merged["cham"] = parsed_dang.get("cham", False)
+    if "cho_nen" not in merged:
+        merged["cho_nen"] = parsed_dang.get("cho_nen", False)
     if not merged.get("de") and parsed_dang.get("de"):
         merged["de"] = parsed_dang["de"]
     if not merged.get("may") and parsed_dang.get("may"):
@@ -1573,6 +1607,7 @@ def bao_ket_qua_git(
         if loi_cong_kiem
         else GIOI_HAN_KET_QUA
     )
+    ly_do_ghi = str((viec.get("_ly_do_dung") if isinstance(viec, dict) else "") or "").strip()
     noi_dung_kq = tao_ket_qua_md(
         phieu_id=phieu_id,
         tho=tho,
@@ -1587,6 +1622,18 @@ def bao_ket_qua_git(
         gioi_han=gioi_han_kq,
         model=model_ghi,
         canh_bao=canh_bao_ghi,
+        ly_do=ly_do_ghi,
+    )
+    noi_dung_nhat_ky = (
+        nhat_ky_agy.thu_tao_nhat_ky_debug_tu_ket_qua(
+            cfg,
+            viec,
+            tt_chuan,
+            ket_qua=ket_qua,
+            nhat_ky=nhat_ky,
+        )
+        if tt_chuan in ("xong", "dung", "loi")
+        else None
     )
     can_linh_cap = trich_khoi_can_linh(str(ket_qua or "") + "\n" + str(nhat_ky or ""))
     noi_dung_can_linh = (
@@ -1613,6 +1660,8 @@ def bao_ket_qua_git(
             tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
             tep_kq.parent.mkdir(parents=True, exist_ok=True)
             tep_kq.write_text(noi_dung_kq, encoding="utf-8")
+            if noi_dung_nhat_ky is not None:
+                (tep_kq.parent / "NHAT-KY.md").write_text(noi_dung_nhat_ky, encoding="utf-8")
 
             thong_diep = f"xong: {phieu_id} ({tt_chuan})"
             if noi_dung_can_linh is not None:
@@ -1624,7 +1673,7 @@ def bao_ket_qua_git(
                 )
                 thong_diep = f"{thong_diep} [can-linh]"
             if can_sua:
-                noi_dung_sua = build_self_repair_ticket(viec_nguon, noi_dung_kq)
+                noi_dung_sua = build_self_repair_ticket(viec_nguon, noi_dung_kq, ly_do=ly_do_ghi)
                 if noi_dung_sua is not None:
                     ma_phieu_sua = next_self_repair_id(wt, phieu_id)
                     tm_moi = goc_hd / "moi"
