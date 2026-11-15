@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-phu-thuoc
+nhan: may-2 2026-11-15T08:02:28+0700
 
 LƯU Ý: lần trước bị dừng vì agy chạy tác vụ nền rồi ngồi chờ. TUYỆT ĐỐI không chạy lệnh nền (background), mọi lệnh (clone, pytest, git) chạy tiền cảnh và chờ xong. Có thể phần việc đã làm dở trong C:\linhx\wt-phu-thuoc: kiểm `git status` trước, làm tiếp.
 
