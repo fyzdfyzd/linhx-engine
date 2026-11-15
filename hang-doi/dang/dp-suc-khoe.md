@@ -2,6 +2,7 @@ may: may-2
 loai: dieu-phoi
 tran_phut: 15
 theo_doi: C:\linhx\wt-hang-doi
+nhan: may-2 2026-11-15T07:26:27+0700
 
 Thử agy tự điều phối. Việc lớn: "kiểm sức khoẻ cả đội máy".
 Clone nhánh hang-doi riêng vào C:\linhx\wt-hang-doi (`git clone -b hang-doi https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-hang-doi`, có rồi thì `git pull`).
