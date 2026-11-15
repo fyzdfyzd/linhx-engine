@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+import http.client
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ import subprocess
 import sys
 import threading
 import urllib.error
+import urllib.parse
 import urllib.request
 import uuid
 
@@ -859,4 +861,403 @@ def test_ui_200_va_cac_khoi_chinh_giao_dien_moi(tmp_path: Path):
         server.shutdown()
         server.server_close()
         srv_thread.join(timeout=3)
+
+
+_MINI_PNG = (
+    b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x02\x00\x00\x00\x02"
+    b"\x08\x02\x00\x00\x00\xfd\xd4\x9as\x00\x00\x00\x12IDATx\x9cc\xfc\xff\xff?"
+    b"\x03\x10\x00\x00\x07\x8c\x01\xf9\x85^\x9f\xdd\x00\x00\x00\x00IEND\xaeB`\x82"
+)
+
+
+def _start_test_server(monitor: bang.QueueMonitor):
+    """Khởi chạy server HTTP trên cổng ngẫu nhiên 127.0.0.1:0 cho test."""
+    server = bang.create_http_server(monitor, host="127.0.0.1", port=0)
+    port = server.server_address[1]
+    srv_thread = threading.Thread(target=server.serve_forever, daemon=True)
+    srv_thread.start()
+    return server, port, srv_thread
+
+
+def _stop_test_server(server, srv_thread) -> None:
+    """Dừng server HTTP test gọn gàng."""
+    server.shutdown()
+    server.server_close()
+    srv_thread.join(timeout=3)
+
+
+def test_tab_du_an_du_6_trang_thai_va_chi_tiet_buoc(tmp_path: Path):
+    """Tab Dự án đặt đầu & mặc định, đủ 6 trạng thái bước, cắt 30 dòng log và 6 ảnh ưu tiên ghep-*.png."""
+    tz_vn = timezone(timedelta(hours=7))
+    fixed_now = datetime(2026, 11, 15, 10, 0, 0, tzinfo=tz_vn)
+    han_dt = fixed_now + timedelta(days=2)
+
+    clone_dir = tmp_path / "bang-du-an"
+    qroot = clone_dir / "hang-doi"
+    for sub in ("moi", "dang", "xong", "can-linh", "du-an"):
+        (qroot / sub).mkdir(parents=True)
+
+    goc_anh = tmp_path / "goc-anh-du-an"
+    (goc_anh / "t1-dat" / "bang-chung").mkdir(parents=True)
+
+    # Bước 1 (xong-dat): có "Không xung đột: **ĐẠT**" ở Tiêu chí để kiểm tra không bắt nhầm
+    _write_done_ticket(
+        qroot,
+        "t1-dat",
+        "may-1",
+        "xong",
+        5.5,
+        1200,
+        300,
+        "dat: co\n\n### 6. Tiêu chí\n- Không xung đột với main: **ĐẠT**\n- Pytest: 10/10\n",
+    )
+    _write_done_ticket(qroot, "cong-b1", "claude", "xong", 1.0, 100, 50, "dat: co\nĐã gộp xong.")
+
+    # Tạo 45 dòng log để kiểm tra cắt đúng 30 dòng cuối
+    log_lines = [f"dong-log-{idx:02d} trang-thai ok" for idx in range(1, 46)]
+    (goc_anh / "t1-dat" / "chay.log").write_text("\n".join(log_lines) + "\n", encoding="utf-8")
+
+    # Tạo 8 ảnh trong bang-chung: 2 ảnh ghep-*.png cũ hơn vẫn phải được ưu tiên lên đầu (tối đa 6 ảnh)
+    base_ts = 1_763_100_000.0
+    for idx in range(1, 7):
+        fp = goc_anh / "t1-dat" / "bang-chung" / f"khung-{idx:02d}.png"
+        fp.write_bytes(_MINI_PNG)
+        os.utime(fp, (base_ts + 100 + idx, base_ts + 100 + idx))
+    for idx, gname in enumerate(("ghep-390x844.png", "ghep-1440x900.png")):
+        gfp = goc_anh / "t1-dat" / "bang-chung" / gname
+        gfp.write_bytes(_MINI_PNG)
+        os.utime(gfp, (base_ts + idx, base_ts + idx))
+
+    # Bước 2 (xong-khong-dat): kiểm cả chữ hoa KHÔNG ở mục Tiêu chí và trường hợp dat: khong
+    _write_done_ticket(
+        qroot,
+        "t2-loi",
+        "may-2",
+        "xong",
+        7.0,
+        1000,
+        200,
+        "### Tiêu chí\n- Ngưỡng 390px không tràn ngang: **KHÔNG**\n",
+    )
+    is_dat_tc, _ = bang.analyze_ket_qua_dat({}, "### Tiêu chí\n- Đáp ứng toàn bộ: KHÔNG", "xong")
+    assert is_dat_tc is False
+    is_dat_meta, _ = bang.analyze_ket_qua_dat({"dat": "khong"}, "Đã chạy", "xong")
+    assert is_dat_meta is False
+
+    # Bước 3 (cho-claude): phiếu xong hết nhưng xong/cong-claude chưa có
+    _write_done_ticket(qroot, "t3-code", "may-1", "xong", 4.0, 900, 150, "dat: co\nXong phần code.")
+
+    # Bước 4 (dang-chay): đang chạy 14 phút / trần 45 phút + dòng nhịp cuối
+    t_run = (fixed_now - timedelta(minutes=14)).strftime("%Y-%m-%dT%H:%M:%S%z")
+    (qroot / "dang" / "t4-run.md").write_text(
+        f"may: may-1\nloai: trinh-duyet\ntran_phut: 45\nnhan: may-1 {t_run}\n"
+        "nhip: Đang chụp ảnh 1440px và kiểm tra A6\n\nKiểm thử bước 4\n",
+        encoding="utf-8",
+    )
+
+    # Bước 5 (cho-linh): chờ người
+    # Bước 6 (cho): phiếu còn nằm trong moi/
+    (qroot / "moi" / "t6-cho.md").write_text("may: bat-ky\nloai: code\ntran_phut: 30\n\nĐóng gói RC\n", encoding="utf-8")
+
+    (qroot / "du-an" / "du-an-thu.json").write_text(
+        json.dumps(
+            {
+                "ma": "du-an-thu",
+                "ten": "Dự án Yên Lam (Thử)",
+                "han": han_dt.isoformat(timespec="seconds"),
+                "goc_anh": str(goc_anh),
+                "buoc": [
+                    {"ma": "b1", "ten": "Xây nền", "phieu": ["t1-dat"], "cong": "cong-b1"},
+                    {"ma": "b2", "ten": "Đo tiêu chí", "phieu": ["t2-loi"]},
+                    {"ma": "b3", "ten": "Chờ cổng Claude", "phieu": ["t3-code"], "cong": "cong-claude"},
+                    {"ma": "b4", "ten": "Kiểm thử chạy", "phieu": ["t4-run"]},
+                    {"ma": "b5", "ten": "Linh duyệt UI", "nguoi": "Linh", "phieu": []},
+                    {"ma": "b6", "ten": "Đóng gói cuối", "phieu": ["t6-cho"]},
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(
+        clone_dir=clone_dir,
+        repo_url="",
+        enable_git_sync=False,
+        clock_fn=lambda: fixed_now,
+    )
+    snap = monitor.get_status()
+    assert len(snap["du_an"]) == 1
+    da = snap["du_an"][0]
+    assert da["ten"] == "Dự án Yên Lam (Thử)"
+    assert da["qua_han"] is False
+    assert "2 ngày" in da["han_con_lai"]
+    assert da["tom_tat_buoc"] == "Đang ở bước b4 (Kiểm thử chạy), việc tiếp theo b5 (Linh duyệt UI)"
+
+    statuses = [s["trang_thai"] for s in da["buoc"]]
+    assert statuses == ["xong-dat", "xong-khong-dat", "cho-claude", "dang-chay", "cho-linh", "cho"]
+
+    step_b1 = da["buoc"][0]
+    assert len(step_b1["log_cuoi"]) == 30
+    assert "dong-log-16" in step_b1["log_cuoi"][0]
+    assert "dong-log-45" in step_b1["log_cuoi"][-1]
+    assert all("dong-log-15" not in line for line in step_b1["log_cuoi"])
+    assert len(step_b1["anh_thu_nho"]) == 6
+    assert step_b1["anh_thu_nho"][0]["ten"].startswith("ghep-")
+    assert step_b1["anh_thu_nho"][1]["ten"].startswith("ghep-")
+    assert step_b1["ket_qua_list"][0]["dat"] is True
+
+    step_b4 = da["buoc"][3]
+    assert step_b4["phieu_dang_chay"] == "t4-run"
+    assert int(round(step_b4["chay_phut"])) == 14
+    assert step_b4["tran_phut"] == 45
+    assert "Đang chụp ảnh 1440px" in step_b4["nhip_cuoi"]
+
+    html = bang.render_dashboard_html(snap)
+    assert 'data-initial-tab="du-an"' in html
+    assert html.index('data-tab="du-an"') < html.index('data-tab="chat-luong"')
+    assert html.index('data-tab="chat-luong"') < html.index('data-tab="tong-quan"')
+    assert 'id="panel-du-an" data-panel="du-an" role="tabpanel">' in html
+    assert 'id="panel-chat-luong" data-panel="chat-luong" role="tabpanel" hidden>' in html
+    for cls_dot in (
+        "dot-buoc-xong-dat",
+        "dot-buoc-xong-khong-dat",
+        "dot-buoc-cho-claude",
+        "dot-buoc-dang-chay",
+        "dot-buoc-cho-linh",
+        "dot-buoc-cho",
+    ):
+        assert cls_dot in html
+    assert "14 phút / 45p" in html
+    assert "dong-log-45" in html
+    assert "/tep?p=" in html
+
+
+def test_route_tep_bao_mat_va_phuc_vu_anh(tmp_path: Path):
+    """Route /tep chỉ GET, phục vụ file hợp lệ dưới goc_anh, chặn .., ngoài gốc, ổ khác, symlink và đuôi lạ."""
+    clone_dir = tmp_path / "bang-tep"
+    qroot = clone_dir / "hang-doi"
+    (qroot / "du-an").mkdir(parents=True)
+
+    goc_anh = tmp_path / "goc_anh"
+    goc_ngoai = tmp_path / "goc_anh_ngoai"
+    (goc_anh / "sub").mkdir(parents=True)
+    goc_ngoai.mkdir(parents=True)
+
+    ok_png = goc_anh / "sub" / "ok.png"
+    ok_png.write_bytes(_MINI_PNG)
+    ok_log = goc_anh / "sub" / "run.log"
+    ok_log.write_text("nhip: ok\n", encoding="utf-8")
+    ok_json = goc_anh / "sub" / "do-muc-9.json"
+    ok_json.write_text('[{"ma":"A6-01","dat":true}]', encoding="utf-8")
+
+    bad_ext = goc_anh / "sub" / "hack.py"
+    bad_ext.write_text("print('khong duoc doc')", encoding="utf-8")
+
+    oversized = goc_anh / "sub" / "qua-lon.log"
+    with open(oversized, "wb") as fp:
+        fp.seek(bang.MAX_TEP_BYTES + 128)
+        fp.write(b"x")
+
+    outside_png = goc_ngoai / "bi-mat.png"
+    outside_png.write_bytes(_MINI_PNG)
+
+    # Tạo junction/symlink trỏ từ bên trong goc_anh ra thư mục ngoài gốc để kiểm tra chặn thoát gốc
+    link_dir = goc_anh / "cau-noi"
+    link_created = False
+    if os.name == "nt":
+        proc = subprocess.run(
+            ["cmd", "/c", "mklink", "/J", str(link_dir), str(goc_ngoai)],
+            capture_output=True,
+            text=True,
+            creationflags=0x08000000,
+        )
+        link_created = proc.returncode == 0
+    else:
+        try:
+            os.symlink(goc_ngoai, link_dir, target_is_directory=True)
+            link_created = True
+        except OSError:
+            link_created = False
+
+    (qroot / "du-an" / "p1.json").write_text(
+        json.dumps({"ma": "p1", "ten": "P1", "goc_anh": str(goc_anh), "buoc": []}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(clone_dir=clone_dir, repo_url="", enable_git_sync=False)
+    server, port, srv_thread = _start_test_server(monitor)
+    try:
+        def _req(method: str, target_url: str):
+            conn = http.client.HTTPConnection("127.0.0.1", port, timeout=5)
+            try:
+                conn.request(method, target_url)
+                resp = conn.getresponse()
+                data = resp.read()
+                return resp.status, dict(resp.getheaders()), data
+            finally:
+                conn.close()
+
+        # 1. Phục vụ đúng ảnh .png, .log, .json trong gốc
+        st, hdrs, body = _req("GET", f"/tep?p={urllib.parse.quote(str(ok_png), safe='')}")
+        assert st == 200
+        assert body == _MINI_PNG
+        assert hdrs.get("Content-Type") == "image/png"
+        assert hdrs.get("X-Content-Type-Options") == "nosniff"
+
+        st_log, hdrs_log, body_log = _req("GET", f"/tep?p={urllib.parse.quote(str(ok_log), safe='')}")
+        assert st_log == 200
+        assert "text/plain" in (hdrs_log.get("Content-Type") or "")
+        assert b"nhip: ok" in body_log
+
+        st_json, hdrs_json, _ = _req("GET", f"/tep?p={urllib.parse.quote(str(ok_json), safe='')}")
+        assert st_json == 200
+        assert "application/json" in (hdrs_json.get("Content-Type") or "")
+
+        # 2. Chặn thiếu p / file không tồn tại / vượt 20MB
+        assert _req("GET", "/tep")[0] == 400
+        assert _req("GET", f"/tep?p={urllib.parse.quote(str(goc_anh / 'sub' / 'khong-co.png'), safe='')}")[0] == 404
+        assert _req("GET", f"/tep?p={urllib.parse.quote(str(oversized), safe='')}")[0] == 413
+
+        # 3. Chặn leo thư mục .. (thô và mã hóa), ngoài gốc cùng tiền tố, ổ khác, đường dẫn tương đối, đuôi lạ
+        trav_raw = str(goc_anh / "sub" / ".." / ".." / "goc_anh_ngoai" / "bi-mat.png")
+        assert _req("GET", f"/tep?p={urllib.parse.quote(trav_raw, safe='')}")[0] == 403
+        assert _req("GET", f"/tep?p={urllib.parse.quote(str(goc_anh), safe='')}%2F%2e%2e%2Fbi-mat.png")[0] == 403
+        assert _req("GET", f"/tep?p={urllib.parse.quote(str(outside_png), safe='')}")[0] == 403
+        assert _req("GET", f"/tep?p={urllib.parse.quote('Z:\\o-khac\\anh.png', safe='')}")[0] == 403
+        assert _req("GET", "/tep?p=sub%2Fok.png")[0] == 403
+        assert _req("GET", f"/tep?p={urllib.parse.quote(str(bad_ext), safe='')}")[0] == 403
+        if link_created:
+            via_link = goc_anh / "cau-noi" / "bi-mat.png"
+            assert _req("GET", f"/tep?p={urllib.parse.quote(str(via_link), safe='')}")[0] == 403
+
+        # 4. Chỉ GET trên /tep (HEAD/POST/DELETE/OPTIONS đều 405)
+        ok_q = f"/tep?p={urllib.parse.quote(str(ok_png), safe='')}"
+        for blocked_method in ("HEAD", "POST", "DELETE", "OPTIONS"):
+            assert _req(blocked_method, ok_q)[0] == 405
+    finally:
+        _stop_test_server(server, srv_thread)
+
+
+def test_tab_chat_luong_chua_do_va_du_lieu_day_du(tmp_path: Path):
+    """Tab Chất lượng hiện 'Chưa đo' khi thiếu file và đọc đúng file do-muc-9 mới nhất + ảnh ghép + bảng chấm."""
+    tz_vn = timezone(timedelta(hours=7))
+    fixed_now = datetime(2026, 11, 15, 11, 0, 0, tzinfo=tz_vn)
+
+    clone_dir = tmp_path / "bang-cl"
+    qroot = clone_dir / "hang-doi"
+    (qroot / "du-an").mkdir(parents=True)
+
+    goc_anh = tmp_path / "goc-cl"
+    (goc_anh / "phieu-rc1" / "bang-chung").mkdir(parents=True)
+    (goc_anh / "luu").mkdir(parents=True)
+
+    du_an_json = qroot / "du-an" / "cl.json"
+    du_an_json.write_text(
+        json.dumps(
+            {
+                "ma": "cl-test",
+                "ten": "Dự án Chất lượng",
+                "goc_anh": str(goc_anh),
+                "buoc": [],
+                "chat_luong": {
+                    "do_muc_9": str(goc_anh / "**" / "do-muc-9*.json"),
+                    "anh_ghep": str(goc_anh / "**" / "ghep-*.png"),
+                    "cham": [],
+                },
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(
+        clone_dir=clone_dir,
+        repo_url="",
+        enable_git_sync=False,
+        clock_fn=lambda: fixed_now,
+    )
+    snap_empty = monitor.get_status()
+    dm9_empty = snap_empty["du_an"][0]["chat_luong"]["do_muc_9"]
+    assert dm9_empty["chua_do"] is True
+    assert dm9_empty["chi_so"] == []
+    html_empty = bang.render_quality_html(snap_empty)
+    assert "Chưa đo" in html_empty
+    assert "Chưa có ảnh ghép" in html_empty
+    assert "Chưa có dữ liệu chấm" in html_empty
+
+    # Bổ sung 2 file do-muc-9 cũ và mới -> phải chọn file mới hơn với đủ 7 chỉ số
+    old_m9 = goc_anh / "luu" / "do-muc-9-cu.json"
+    old_m9.write_text(
+        json.dumps([{"ma": "A6-01", "ten": "Số cũ", "nguong": "<= 1", "te_nhat": "99", "dat": False}]),
+        encoding="utf-8",
+    )
+    os.utime(old_m9, (1_763_100_000.0, 1_763_100_000.0))
+
+    metrics_7 = [
+        {"ma": "A6-01", "ten": "Tràn ngang 390px", "nguong": "0 px", "te_nhat": "0 px", "dat": True},
+        {"ma": "A6-02", "ten": "Độ cao đường chân", "nguong": "<= 64 px", "te_nhat": "58 px", "dat": True},
+        {"ma": "A6-03", "ten": "Khoảng cách nút", "nguong": ">= 8 px", "te_nhat": "10 px", "dat": True},
+        {"ma": "A6-04", "ten": "Tương phản chữ", "nguong": ">= 4.5", "te_nhat": "5.1", "dat": True},
+        {"ma": "A6-05", "ten": "Ảnh lỗi nứt", "nguong": "0", "te_nhat": "0", "dat": True},
+        {"ma": "A6-06", "ten": "Chữ bị cắt góc", "nguong": "0", "te_nhat": "2", "dat": False},
+        {"ma": "A6-07", "ten": "Thời gian vẽ khung", "nguong": "<= 150 ms", "te_nhat": "92 ms", "dat": True},
+    ]
+    new_m9 = goc_anh / "luu" / "do-muc-9-moi.json"
+    new_m9.write_text(json.dumps(metrics_7, ensure_ascii=False), encoding="utf-8")
+    os.utime(new_m9, (1_763_200_000.0, 1_763_200_000.0))
+
+    ghep_fp = goc_anh / "phieu-rc1" / "bang-chung" / "ghep-so-sanh.png"
+    ghep_fp.write_bytes(_MINI_PNG)
+    cham_log = goc_anh / "cham-rc2.txt"
+    cham_log.write_text("Nhan xet rc2\n", encoding="utf-8")
+
+    du_an_json.write_text(
+        json.dumps(
+            {
+                "ma": "cl-test",
+                "ten": "Dự án Chất lượng",
+                "goc_anh": str(goc_anh),
+                "buoc": [],
+                "chat_luong": {
+                    "do_muc_9": str(goc_anh / "**" / "do-muc-9*.json"),
+                    "anh_ghep": str(goc_anh / "**" / "ghep-*.png"),
+                    "cham": [
+                        {
+                            "rc": "rc-2",
+                            "nguoi": "Linh",
+                            "diem": "8.5/10",
+                            "ghi_chu": "Khớp khung chuẩn",
+                            "tep": str(cham_log),
+                        }
+                    ],
+                },
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    snap_full = monitor.get_status()
+    cl_full = snap_full["du_an"][0]["chat_luong"]
+    assert cl_full["do_muc_9"]["chua_do"] is False
+    assert cl_full["do_muc_9"]["tep"] == "do-muc-9-moi.json"
+    assert len(cl_full["do_muc_9"]["chi_so"]) == 7
+    assert cl_full["anh_ghep"][0]["phieu"] == "phieu-rc1"
+    assert cl_full["cham"][0]["rc"] == "rc-2"
+    assert cl_full["cham"][0]["tep_url"].startswith("/tep?p=")
+
+    server, port, srv_thread = _start_test_server(monitor)
+    try:
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/chat-luong", timeout=5) as resp:
+            assert resp.status == 200
+            html_cl = resp.read().decode("utf-8")
+        assert "A6-06" in html_cl and "Chữ bị cắt góc" in html_cl and "Đỏ" in html_cl
+        assert "Đạt" in html_cl
+        assert "phieu-rc1" in html_cl
+        assert "rc-2" in html_cl and "8.5/10" in html_cl and "Khớp khung chuẩn" in html_cl
+        assert 'data-panel="chat-luong" role="tabpanel">' in html_cl
+    finally:
+        _stop_test_server(server, srv_thread)
+
 
