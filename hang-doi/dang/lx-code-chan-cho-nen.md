@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 20
 tu_sua: 1
 theo_doi: C:\linhx\wt\chan-cho-nen
+nhan: may-2 2026-11-15T12:53:03+0700
 
 GẤP. Vá runner: 3 phiếu vừa mất trọn 40 phút vì agy chạy tác vụ nền rồi ngồi chờ (KET-QUA có dòng "root agent idle; waiting up to 40m0s for 1 background task(s)" và status ERROR "chờ lệnh hoàn tất"), dù đề đã cấm. Chạy mọi lệnh tiền cảnh, KHÔNG background task, mỗi 5 phút có file mới hoặc commit trong theo_doi. KHÔNG khởi động lại runner đang chạy.
 1. `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\chan-cho-nen` (có rồi thì fetch), `git checkout -b agy/chan-cho-nen`.
