@@ -41,6 +41,164 @@ _TZ_COMPACT_RE = re.compile(r"([+-]\d{2})(\d{2})$")
 _TOKEN_IN_RE = re.compile(r"vao\s*=\s*(\d+)", re.IGNORECASE)
 _TOKEN_OUT_RE = re.compile(r"ra\s*=\s*(\d+)", re.IGNORECASE)
 _SAFE_TICKET_ID_RE = re.compile(r"^[A-Za-z0-9._-]+$")
+_EMAIL_RE = re.compile(r"\b([A-Za-z0-9._%+-]+)@([A-Za-z0-9.-]+\.[A-Za-z]{2,})\b")
+
+
+def _mask_email(raw_email: str) -> str:
+    """Che phần giữa địa chỉ email (vd `zo***@gmail.com`), không lộ email đầy đủ."""
+    text = str(raw_email or "").strip()
+    if "@" not in text:
+        return ""
+    local, domain = text.split("@", 1)
+    if not local or not domain:
+        return ""
+    if len(local) <= 2:
+        prefix = local[:1]
+    else:
+        prefix = local[:2]
+    return f"{prefix}***@{domain}"
+
+
+def _mask_emails_in_text(text: str) -> str:
+    """Che mọi địa chỉ email xuất hiện trong chuỗi trước khi đưa ra UI/API."""
+    raw = str(text or "").strip()
+    if not raw:
+        return ""
+    return _EMAIL_RE.sub(lambda m: _mask_email(m.group(0)), raw)
+
+
+def _read_tai_khoan_ledger(qroot: Path) -> list[dict]:
+    """Đọc `hang-doi/tai-khoan.json` an toàn (chỉ lấy metadata và email đã che)."""
+    ledger_path = qroot / "tai-khoan.json"
+    if not ledger_path.is_file():
+        return []
+    try:
+        raw_text = ledger_path.read_text(encoding="utf-8", errors="replace").strip()
+    except OSError:
+        return []
+    if not raw_text:
+        return []
+
+    raw_items: list[dict] = []
+    try:
+        parsed = json.loads(raw_text)
+        if isinstance(parsed, list):
+            raw_items = [x for x in parsed if isinstance(x, dict)]
+        elif isinstance(parsed, dict):
+            if isinstance(parsed.get("tai_khoan"), list):
+                raw_items = [x for x in parsed["tai_khoan"] if isinstance(x, dict)]
+            elif isinstance(parsed.get("items"), list):
+                raw_items = [x for x in parsed["items"] if isinstance(x, dict)]
+            else:
+                raw_items = [parsed]
+    except ValueError:
+        for line in raw_text.splitlines():
+            s = line.strip()
+            if not s or s.startswith("#"):
+                continue
+            try:
+                obj = json.loads(s)
+                if isinstance(obj, dict):
+                    raw_items.append(obj)
+            except ValueError:
+                continue
+
+    rows: list[dict] = []
+    for item in raw_items:
+        may = str(item.get("may") or "").strip().lower()
+        ho_so = str(item.get("ho_so_chrome") or item.get("thu_muc") or "").strip()
+        raw_email = str(item.get("email_che") or item.get("email") or "").strip()
+        email_che = _mask_email(raw_email) if "@" in raw_email else _mask_emails_in_text(raw_email)
+        tt = str(item.get("trang_thai") or "dung").strip().lower()
+        if tt not in ("dung", "het_han_muc", "can_dang_nhap"):
+            tt = "dung"
+        rows.append(
+            {
+                "ma": str(item.get("ma") or item.get("id") or ho_so).strip(),
+                "may": may,
+                "ho_so_chrome": ho_so,
+                "email_che": email_che,
+                "trang_thai": tt,
+                "mo_lai_luc": str(item.get("mo_lai_luc") or "").strip(),
+            }
+        )
+    return rows
+
+
+def _summarize_machine_accounts(
+    *,
+    profiles_by_machine: dict[str, dict],
+    machine_accounts_by_may: dict[str, dict],
+    ledger_rows: list[dict],
+    current_time: datetime,
+) -> list[dict]:
+    """Gộp thống kê tài khoản mỗi máy từ `tai-khoan.json` và `may/<may>-tai-khoan.json`."""
+    ledger_machines = {
+        str(r.get("may") or "").strip().lower()
+        for r in ledger_rows
+        if str(r.get("may") or "").strip().lower() not in ("", "bat-ky", "*", "all", "tat-ca")
+    }
+    all_machines = sorted(set(profiles_by_machine) | set(machine_accounts_by_may) | ledger_machines)
+    summaries: list[dict] = []
+
+    for m_code in all_machines:
+        statuses: list[str] = []
+        seen_profiles: set[str] = set()
+        seen_emails: set[str] = set()
+
+        for row in ledger_rows:
+            if row.get("may") != m_code:
+                continue
+            tt = row.get("trang_thai") or "dung"
+            if tt == "het_han_muc":
+                mo_dt = parse_iso_datetime(row.get("mo_lai_luc"))
+                if mo_dt is not None and current_time >= mo_dt:
+                    tt = "dung"
+            statuses.append(tt)
+            hs_key = str(row.get("ho_so_chrome") or "").strip().lower()
+            em_key = str(row.get("email_che") or "").strip().lower()
+            if hs_key:
+                seen_profiles.add(hs_key)
+            if em_key:
+                seen_emails.add(em_key)
+
+        mach_acc = machine_accounts_by_may.get(m_code) or {}
+        for prof in mach_acc.get("ho_so_chrome") or []:
+            if not isinstance(prof, dict):
+                continue
+            raw_em = str(prof.get("email_che") or prof.get("email") or "").strip()
+            email_che = _mask_email(raw_em) if "@" in raw_em else _mask_emails_in_text(raw_em)
+            thu_muc = str(prof.get("thu_muc") or prof.get("ho_so_chrome") or "").strip()
+            hs_key = thu_muc.lower()
+            em_key = email_che.lower()
+            if not em_key:
+                continue
+            if (hs_key and hs_key in seen_profiles) or (em_key and em_key in seen_emails):
+                continue
+            tt_prof = str(prof.get("trang_thai") or "dung").strip().lower()
+            if tt_prof not in ("dung", "het_han_muc", "can_dang_nhap"):
+                tt_prof = "dung"
+            statuses.append(tt_prof)
+            if hs_key:
+                seen_profiles.add(hs_key)
+            if em_key:
+                seen_emails.add(em_key)
+
+        dung_duoc = sum(1 for st in statuses if st == "dung")
+        het_han_muc = sum(1 for st in statuses if st == "het_han_muc")
+        can_dang_nhap = sum(1 for st in statuses if st == "can_dang_nhap")
+        agy_tk = _mask_emails_in_text(str(mach_acc.get("agy_tai_khoan") or ""))
+        summaries.append(
+            {
+                "may": m_code,
+                "dung_duoc": dung_duoc,
+                "het_han_muc": het_han_muc,
+                "can_dang_nhap": can_dang_nhap,
+                "tong": len(statuses),
+                "agy_tai_khoan": agy_tk,
+            }
+        )
+    return summaries
 
 
 def get_local_tz():
@@ -385,8 +543,9 @@ def read_queue_snapshot(
     for item in can_linh_items:
         item.pop("_sort_ts", None)
 
-    # 0b. Đọc hang-doi/may/*.json (Hồ sơ máy)
+    # 0b. Đọc hang-doi/may/*.json (Hồ sơ máy + tài khoản máy)
     profiles_by_machine: dict[str, dict] = {}
+    machine_accounts_by_may: dict[str, dict] = {}
     dir_profiles = qroot / "may"
     if dir_profiles.is_dir():
         for prof_file in sorted(dir_profiles.glob("*.json"), key=lambda p: p.name):
@@ -395,6 +554,12 @@ def read_queue_snapshot(
             except (OSError, ValueError, TypeError):
                 continue
             if not isinstance(prof_data, dict):
+                continue
+            if prof_file.name.endswith("-tai-khoan.json"):
+                raw_may = str(prof_data.get("ma_may") or prof_file.stem[: -len("-tai-khoan")]).strip().lower()
+                if raw_may and raw_may not in ("bat-ky", "*", "all", "tat-ca"):
+                    known_machines.add(raw_may)
+                    machine_accounts_by_may[raw_may] = prof_data
                 continue
             m_code = str(prof_data.get("ma_may") or prof_file.stem).strip().lower()
             if not m_code or m_code in ("bat-ky", "*", "all", "tat-ca"):
@@ -677,6 +842,19 @@ def read_queue_snapshot(
                 }
             )
 
+    ledger_rows = _read_tai_khoan_ledger(qroot)
+    account_summary_list = _summarize_machine_accounts(
+        profiles_by_machine=profiles_by_machine,
+        machine_accounts_by_may=machine_accounts_by_may,
+        ledger_rows=ledger_rows,
+        current_time=current_time,
+    )
+    account_by_machine = {item["may"]: item for item in account_summary_list}
+    for prof in ho_so_list:
+        m_acc = account_by_machine.get(prof.get("ma_may") or "")
+        if m_acc is not None:
+            prof["tai_khoan"] = m_acc
+
     return {
         "cap_nhat_luc": format_iso(current_time),
         "cap_nhat_hien_thi": format_display_time(current_time),
@@ -687,6 +865,7 @@ def read_queue_snapshot(
         "xong_gan_nhat": recent_done,
         "may": machines_list,
         "ho_so_may": ho_so_list,
+        "tai_khoan_may": account_summary_list,
     }
 
 
@@ -1660,6 +1839,38 @@ section.card h2 {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
+.accounts-card {
+  margin-bottom: 18px;
+}
+.acc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 10px;
+}
+.acc-item {
+  background: var(--subtle);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.acc-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 15px;
+}
+.acc-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.acc-ok { color: var(--run-fg); font-weight: 600; }
+.acc-warn { color: var(--warn-fg); font-weight: 600; }
+.acc-err { color: var(--err-fg); font-weight: 600; }
 
 /* Trang xem chi tiết phiếu KET-QUA.md */
 .detail-top-bar {
@@ -2109,10 +2320,35 @@ _DASHBOARD_JS = r"""
       done24Html + olderBlock + "</section>";
   }
 
+  function renderAccountsCardHtml(data) {
+    var rows = data.tai_khoan_may || [];
+    if (rows.length === 0) {
+      return '<section class="card accounts-card"><h2>Tài khoản</h2><p class="empty">Chưa có dữ liệu tài khoản.</p></section>';
+    }
+    var items = [];
+    for (var i = 0; i < rows.length; i++) {
+      var r = rows[i];
+      var agyTag = (r.agy_tai_khoan && r.agy_tai_khoan !== "chua_ro")
+        ? ('<span class="meta">agy: <code>' + esc(r.agy_tai_khoan) + "</code></span>")
+        : "";
+      items.push(
+        '<div class="acc-item">' +
+        '<div class="acc-head"><strong>' + esc(r.may || "may") + "</strong>" + agyTag + "</div>" +
+        '<div class="acc-stats">' +
+        '<span class="acc-ok">' + Number(r.dung_duoc || 0) + " dùng được</span>" +
+        '<span class="acc-warn">' + Number(r.het_han_muc || 0) + " hết hạn mức</span>" +
+        '<span class="acc-err">' + Number(r.can_dang_nhap || 0) + " cần đăng nhập</span>" +
+        "</div></div>"
+      );
+    }
+    return '<section class="card accounts-card"><h2>Tài khoản</h2><div class="acc-grid">' + items.join("") + "</div></section>";
+  }
+
   function renderProfilesTab(data) {
+    var accCardHtml = renderAccountsCardHtml(data);
     var profs = data.ho_so_may || [];
     if (profs.length === 0) {
-      return '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>';
+      return accCardHtml + '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>';
     }
     var cards = [];
     for (var i = 0; i < profs.length; i++) {
@@ -2709,11 +2945,41 @@ def _render_tickets_section(data: dict) -> str:
     )
 
 
+def _render_accounts_card(data: dict) -> str:
+    """Sinh thẻ nhỏ 'Tài khoản' ở tab Máy: đếm tài khoản dùng được / hết hạn mức / cần đăng nhập."""
+    rows = data.get("tai_khoan_may") or []
+    if not rows:
+        return '<section class="card accounts-card"><h2>Tài khoản</h2><p class="empty">Chưa có dữ liệu tài khoản.</p></section>'
+    items_html = []
+    for row in rows:
+        ma = _esc(row.get("may") or "may")
+        agy_tk = _mask_emails_in_text(str(row.get("agy_tai_khoan") or ""))
+        agy_tag = (
+            f'<span class="meta">agy: <code>{_esc(agy_tk)}</code></span>'
+            if agy_tk and agy_tk != "chua_ro"
+            else ""
+        )
+        dung_duoc = int(row.get("dung_duoc") or 0)
+        het_han_muc = int(row.get("het_han_muc") or 0)
+        can_dang_nhap = int(row.get("can_dang_nhap") or 0)
+        items_html.append(
+            '<div class="acc-item">'
+            f'<div class="acc-head"><strong>{ma}</strong>{agy_tag}</div>'
+            '<div class="acc-stats">'
+            f'<span class="acc-ok">{dung_duoc} dùng được</span>'
+            f'<span class="acc-warn">{het_han_muc} hết hạn mức</span>'
+            f'<span class="acc-err">{can_dang_nhap} cần đăng nhập</span>'
+            "</div></div>"
+        )
+    return '<section class="card accounts-card"><h2>Tài khoản</h2><div class="acc-grid">' + "".join(items_html) + "</div></section>"
+
+
 def _render_profiles_section(data: dict) -> str:
-    """Sinh nội dung tab Máy: hồ sơ năng lực, thanh RAM/ổ đĩa, cảnh báo ổ C < 10 GB."""
+    """Sinh nội dung tab Máy: thẻ Tài khoản và hồ sơ năng lực, thanh RAM/ổ đĩa."""
+    acc_card_html = _render_accounts_card(data)
     profiles = data.get("ho_so_may") or []
     if not profiles:
-        return '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>'
+        return acc_card_html + '<section class="card"><p class="empty">Chưa có hồ sơ máy trong hang-doi/may/*.json.</p></section>'
 
     cards = []
     for p in profiles:
@@ -2793,7 +3059,7 @@ def _render_profiles_section(data: dict) -> str:
             "</ul>"
             "</article>"
         )
-    return '<div class="cards-may">' + "".join(cards) + "</div>"
+    return acc_card_html + '<div class="cards-may">' + "".join(cards) + "</div>"
 
 
 def render_app_html(data: dict, active_tab: str = "tong-quan") -> str:
