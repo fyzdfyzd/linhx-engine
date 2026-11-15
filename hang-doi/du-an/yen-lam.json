@@ -4,15 +4,100 @@
   "han": "2026-11-16T12:00:00+07:00",
   "goc_anh": "C:\\linhx\\ifagent-wt",
   "buoc": [
-    {"ma": "A1", "ten": "Gộp nền", "phieu": ["yl-gop-a1d"]},
-    {"ma": "T1", "ten": "Viết test khoá", "phieu": ["yl-test-t1", "yl-test-a6-b"], "cong": "yl-khoa-t1"},
-    {"ma": "A2", "ten": "Sửa kiosk Nhắn Lam", "phieu": ["yl-code-a2-1", "yl-code-a2-2", "yl-code-a2-3"], "cong": "yl-duyet-a2-2"},
-    {"ma": "A4", "ten": "Đóng RC6", "phieu": []},
-    {"ma": "A5", "ten": "Deploy staging", "phieu": []},
-    {"ma": "A6", "ten": "Quay, chụp, đo mức 9", "phieu": []},
-    {"ma": "CHAM", "ten": "Chấm RC6", "phieu": ["yl-cham-hieu-chuan-rc5"]},
-    {"ma": "A7", "ten": "Linh thử ở booth", "nguoi": "Linh"},
-    {"ma": "A8", "ten": "Linh lên prod", "nguoi": "Linh"}
+    {
+      "ma": "A1",
+      "ten": "Gộp nền",
+      "phieu": [
+        "yl-gop-a1d"
+      ],
+      "du_kien": {
+        "bat_dau": "2026-11-15T10:30:00+07:00",
+        "xong": "2026-11-15T11:05:00+07:00"
+      }
+    },
+    {
+      "ma": "T1",
+      "ten": "Viết test khoá",
+      "phieu": [
+        "yl-test-t1",
+        "yl-test-a6-b"
+      ],
+      "cong": "yl-khoa-t1",
+      "du_kien": {
+        "bat_dau": "2026-11-15T11:07:00+07:00",
+        "xong": "2026-11-15T12:40:00+07:00"
+      }
+    },
+    {
+      "ma": "A2",
+      "ten": "Sửa kiosk Nhắn Lam",
+      "phieu": [
+        "yl-code-a2-1",
+        "yl-code-a2-2",
+        "yl-code-a2-3"
+      ],
+      "cong": "yl-duyet-a2-2",
+      "du_kien": {
+        "bat_dau": "2026-11-15T12:10:00+07:00",
+        "xong": "2026-11-15T14:40:00+07:00"
+      }
+    },
+    {
+      "ma": "A4",
+      "ten": "Đóng RC6",
+      "phieu": [],
+      "du_kien": {
+        "bat_dau": "2026-11-15T14:40:00+07:00",
+        "xong": "2026-11-15T15:10:00+07:00"
+      }
+    },
+    {
+      "ma": "A5",
+      "ten": "Deploy staging",
+      "phieu": [],
+      "du_kien": {
+        "bat_dau": "2026-11-15T15:10:00+07:00",
+        "xong": "2026-11-15T15:40:00+07:00"
+      }
+    },
+    {
+      "ma": "A6",
+      "ten": "Quay, chụp, đo mức 9",
+      "phieu": [],
+      "du_kien": {
+        "bat_dau": "2026-11-15T15:40:00+07:00",
+        "xong": "2026-11-15T16:20:00+07:00"
+      }
+    },
+    {
+      "ma": "CHAM",
+      "ten": "Chấm RC6",
+      "phieu": [
+        "yl-cham-hieu-chuan-rc5"
+      ],
+      "du_kien": {
+        "bat_dau": "2026-11-15T16:20:00+07:00",
+        "xong": "2026-11-15T16:40:00+07:00"
+      }
+    },
+    {
+      "ma": "A7",
+      "ten": "Linh thử ở booth",
+      "nguoi": "Linh",
+      "du_kien": {
+        "bat_dau": "2026-11-15T16:40:00+07:00",
+        "xong": "2026-11-15T17:30:00+07:00"
+      }
+    },
+    {
+      "ma": "A8",
+      "ten": "Linh lên prod",
+      "nguoi": "Linh",
+      "du_kien": {
+        "bat_dau": "2026-11-15T17:30:00+07:00",
+        "xong": "2026-11-15T18:00:00+07:00"
+      }
+    }
   ],
   "chat_luong": {
     "do_muc_9": "C:\\linhx\\ifagent-wt\\*\\bang-chung\\**\\do-muc-9.json",
