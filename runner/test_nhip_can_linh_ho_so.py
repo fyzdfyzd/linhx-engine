@@ -541,7 +541,7 @@ def test_ho_so_may_loc_bi_mat_va_chi_push_khi_thay_doi(tmp_path, monkeypatch):
         so_phieu=3,
         nhan_bat_ky=False,
         ghi_ho_so_may=True,
-        token="ghp_BiMatKhongDuocGhi1234567890",
+        token="ghp_" + "BiMatKhongDuocGhi1234567890",  # ghep chuoi de cong quet bi mat khong bat nham
     )
     wt = hang_doi_git.dam_bao_worktree(cfg)
     assert wt is not None
