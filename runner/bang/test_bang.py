@@ -1571,4 +1571,82 @@ def test_gantt_thieu_du_kien_khong_vo(tmp_path: Path):
         _stop_test_server(server, srv_thread)
 
 
+def test_gantt_suy_gio_thuc_te_tu_phut_va_mtime_ket_qua(tmp_path: Path):
+    """Định dạng KET-QUA.md thật (chỉ có phut + mtime, không có nhan_luc/xong_luc) và dự án dài ngày không vỡ trục."""
+    tz_vn = timezone(timedelta(hours=7))
+    fixed_now = datetime(2026, 11, 15, 13, 30, 0, tzinfo=tz_vn)
+
+    clone_dir = tmp_path / "bang-mtime"
+    qroot = clone_dir / "hang-doi"
+    for sub in ("moi", "dang", "xong", "can-linh", "du-an"):
+        (qroot / sub).mkdir(parents=True)
+
+    # Phiếu 1: xong lúc 10:40, chạy 20 phút => suy ra bắt đầu 10:20
+    t1_end = datetime(2026, 11, 15, 10, 40, 0, tzinfo=tz_vn)
+    _write_done_ticket(
+        qroot, "real-p1", "may-1", "xong",
+        minutes=20.0, tok_in=100, tok_out=50,
+        body="dat: co\nXong phiếu 1.",
+        mtime_epoch=t1_end.timestamp(),
+    )
+    # Phiếu 2: xong lúc 11:05, chạy 15 phút => suy ra bắt đầu 10:50
+    t2_end = datetime(2026, 11, 15, 11, 5, 0, tzinfo=tz_vn)
+    _write_done_ticket(
+        qroot, "real-p2", "may-2", "xong",
+        minutes=15.0, tok_in=120, tok_out=60,
+        body="dat: co\nXong phiếu 2.",
+        mtime_epoch=t2_end.timestamp(),
+    )
+
+    (qroot / "du-an" / "da-dai-ngay.json").write_text(
+        json.dumps(
+            {
+                "ma": "da-dai-ngay",
+                "ten": "Dự án Dài Ngày",
+                "buoc": [
+                    {
+                        "ma": "B1",
+                        "ten": "Gom số liệu mtime",
+                        "phieu": ["real-p1", "real-p2"],
+                        "du_kien": {
+                            "bat_dau": "2026-11-15T10:15:00+07:00",
+                            "xong": "2026-11-15T11:15:00+07:00",
+                        },
+                    },
+                    {
+                        "ma": "B2",
+                        "ten": "Nghiệm thu cuối tuần",
+                        "phieu": [],
+                        "du_kien": {
+                            "bat_dau": "2026-11-20T16:00:00+07:00",
+                            "xong": "2026-11-20T18:00:00+07:00",
+                        },
+                    },
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+
+    monitor = bang.QueueMonitor(
+        clone_dir=clone_dir,
+        repo_url="",
+        enable_git_sync=False,
+        clock_fn=lambda: fixed_now,
+    )
+    snap = monitor.get_status()
+    da = snap["du_an"][0]
+    b1 = da["buoc"][0]
+    assert b1["thuc_te_gio"] == "10:20–11:05"
+    assert b1["gantt"]["co_thuc_te"] is True
+    assert b1["gantt"]["tt_end_pct_raw"] > b1["gantt"]["tt_start_pct_raw"]
+    assert 1 <= len(da["gantt_truc"]["moc_gio"]) <= 10
+
+    html = bang.render_dashboard_html(snap)
+    assert "10:20–11:05" in html
+    assert "Dự án Dài Ngày" in html
+
+
+
 

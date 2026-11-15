@@ -1540,7 +1540,7 @@ def _compute_project_gantt(
     elif total_min <= 1440.0:
         tick_min = 180
     else:
-        tick_min = 360
+        tick_min = max(360, ((int(total_min) + 8 * 360 - 1) // (8 * 360)) * 360)
 
     moc_gio: list[dict] = []
     day0 = axis_start.astimezone(get_local_tz()).replace(hour=0, minute=0, second=0, microsecond=0)
@@ -3343,6 +3343,7 @@ pre.ket-qua {
   min-width: 0;
 }
 .step-hours-line {
+  display: block;
   font-size: 12.5px;
   line-height: 1.35;
   color: var(--muted);
@@ -4288,8 +4289,8 @@ _DASHBOARD_JS = r"""
 
     var dkTxt = step.du_kien_gio || "—";
     var ttTxt = step.thuc_te_gio || "—";
-    var hoursLine = '<div class="step-hours-line">dự kiến <span class="num">' + esc(dkTxt) +
-      '</span> · thực tế <span class="num">' + esc(ttTxt) + "</span></div>";
+    var hoursLine = '<span class="step-hours-line">dự kiến <span class="num">' + esc(dkTxt) +
+      '</span> · thực tế <span class="num">' + esc(ttTxt) + "</span></span>";
 
     var truc = ganttTruc || {};
     var moc = truc.moc_gio || [];
