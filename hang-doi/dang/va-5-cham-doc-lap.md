@@ -14,4 +14,4 @@ Vá 5, chấm độc lập và ngắt dây chuyền: (a) header `cham: 1`: khi p
 Test trong runner/ (không conftest, không mạng). `python -m pytest runner -q` đạt hết trừ test đường dẫn chỉ Windows. Cập nhật `skills/le/hang-doi-may/SKILL.md` (mục Phiếu hoặc Bài học, ngắn). `git pull --rebase`, push nhánh. Trả lời ≤1200 ký tự: làm gì, số test, hash.
 Trước khi push chạy cả `python -m pytest tests/nghiem-thu -q` (CI chặn chuỗi giống bí mật, kể cả token giả trong test: ghép chuỗi lúc chạy).
 
-nhip: 12:29 33p root agent idle; waiting up to 40m0s for 1 background task(s)
+nhip: 12:32 36p root agent idle; waiting up to 40m0s for 1 background task(s)
