@@ -181,7 +181,189 @@ def test_nhan_dien_cac_mau_cho_tac_vu_nen_va_bo_qua_success():
     assert linhx_runner.phat_hien_luong_cho_tac_vu_nen(json_success_nhac_loi) == ""
 
 
-def test_dung_ngay_cay_tien_trinh_va_tao_phieu_sua_khi_gap_waiting_background_task(tmp_path, monkeypatch):
+def test_canh_nen_co_log_tang_hoac_doi_file_khong_dung(tmp_path, monkeypatch):
+    """Gặp waiting background task nhưng log tác vụ nền tăng dòng trong 5 phút -> vẫn để chạy tới xong."""
+    tm_theo_doi = tmp_path / "repo-theo-doi"
+    tm_theo_doi.mkdir(parents=True)
+    log_nen = tm_theo_doi / "bg-task.log"
+    log_nen.write_text("line 1 init\n", encoding="utf-8")
+
+    started_flag = tmp_path / "started.flag"
+    done_flag = tmp_path / "done.flag"
+
+    bare, clone, tm_viec = _tao_kho_hang_doi(
+        tmp_path,
+        {
+            "yl-canh-nen-co-log": (
+                "may: may-2\n"
+                "loai: code\n"
+                "tran_phut: 40\n"
+                "khong_tien_phut: 20\n"
+                "tu_sua: 2\n"
+                f"theo_doi: {tm_theo_doi}\n\n"
+                "Chạy tác vụ nền có log tăng dần."
+            )
+        },
+    )
+
+    payload_ok = {
+        "conversation_id": "33333333-4444-5555-6666-777777777777",
+        "status": "SUCCESS",
+        "response": "Tác vụ nền ghi log xong.",
+        "usage": {"input_tokens": 111, "output_tokens": 22},
+    }
+    script_ok = tmp_path / "agy_nen_co_log.py"
+    script_ok.write_text(
+        (
+            "import json, pathlib, sys, time\n"
+            "print('root agent idle; waiting up to 40m0s for 1 background task(s)', file=sys.stderr, flush=True)\n"
+            f"pathlib.Path(r'{started_flag}').write_text('ok', encoding='utf-8')\n"
+            f"done_p = pathlib.Path(r'{done_flag}')\n"
+            "han = time.monotonic() + 30.0\n"
+            "while not done_p.exists() and time.monotonic() < han:\n"
+            "    time.sleep(0.01)\n"
+            f"print({json.dumps(json.dumps(payload_ok))}, flush=True)\n"
+        ),
+        encoding="utf-8",
+    )
+
+    fake_clock = [0.0]
+    da_cho_pipe = [False]
+    cac_moc_log = {180.0: False, 360.0: False}  # 3p: tăng dòng log; 6p: file mới trong theo_doi -> sống qua 500s (> 180+300)
+    nhip_ghi_lai: list[tuple[float, str]] = []
+    goc_ghi_nhip = hang_doi_git.ghi_nhip_phieu_git
+
+    def _theo_doi_ghi_nhip(cfg_p, phieu_id_p, phut_da_chay, dong_cuoi, gio_chuoi=""):
+        nhip_ghi_lai.append((phut_da_chay, dong_cuoi))
+        return goc_ghi_nhip(cfg_p, phieu_id_p, phut_da_chay, dong_cuoi, gio_chuoi=gio_chuoi)
+
+    def _fake_sleep(giay: float) -> None:
+        if not started_flag.exists():
+            time.sleep(0.01)
+            return
+        if not da_cho_pipe[0]:
+            time.sleep(0.06)
+            da_cho_pipe[0] = True
+        fake_clock[0] += float(giay)
+        if fake_clock[0] >= 180.0 and not cac_moc_log[180.0]:
+            cac_moc_log[180.0] = True
+            with log_nen.open("a", encoding="utf-8") as fh:
+                fh.write("line 2 progress at 3m\n")
+        if fake_clock[0] >= 360.0 and not cac_moc_log[360.0]:
+            cac_moc_log[360.0] = True
+            (tm_theo_doi / "progress.txt").write_text("file moi trong theo_doi o 6m\n", encoding="utf-8")
+        if fake_clock[0] >= 500.0 and not done_flag.exists():
+            done_flag.write_text("done", encoding="utf-8")
+            time.sleep(0.05)
+        if int(fake_clock[0]) % 50 == 0:
+            time.sleep(0.001)
+
+    monkeypatch.setattr(hang_doi_git, "duong_dan_log_runner", lambda cfg: tmp_path / "runner.jsonl")
+    monkeypatch.setattr(hang_doi_git, "ghi_nhip_phieu_git", _theo_doi_ghi_nhip)
+    monkeypatch.setattr(linhx_runner, "_dong_ho", lambda: fake_clock[0])
+    monkeypatch.setattr(linhx_runner, "_ngu", _fake_sleep)
+    monkeypatch.setattr(linhx_runner, "_doc_cpu_cay_agy", lambda pid: 0.0)
+    orig_popen = subprocess.Popen
+    monkeypatch.setattr(
+        linhx_runner,
+        "_tao_tien_trinh_agy",
+        lambda cmd, **kw: orig_popen([sys.executable, str(script_ok)], **kw),
+    )
+
+    cfg = _tao_cfg(tmp_path, clone, tm_viec)
+    cfg["nhip_phut"] = 2.0
+    kq = hang_doi_git.xu_ly_mot_phieu(cfg)
+
+    assert kq is not None
+    assert kq["trang_thai"] == "xong"
+    assert fake_clock[0] >= 500.0
+    assert kq["token_vao"] == 111
+    assert kq["token_ra"] == 22
+    assert any("đang chờ nền · log cuối" in d for _, d in nhip_ghi_lai)
+
+    tm_kt = tmp_path / "kt-co-log"
+    _run_git(["clone", "-b", "hang-doi", str(bare), str(tm_kt)], tmp_path)
+    nd_kq = (tm_kt / "hang-doi" / "xong" / "yl-canh-nen-co-log" / "KET-QUA.md").read_text(encoding="utf-8")
+    assert "trang_thai: xong\n" in nd_kq
+    assert "Tác vụ nền ghi log xong." in nd_kq
+    assert not (tm_kt / "hang-doi" / "moi" / "yl-canh-nen-co-log-sua-1.md").exists()
+
+
+def test_canh_nen_log_tasks_agy_cli_tang_dong_khong_dung(tmp_path, monkeypatch):
+    """Log `.system_generated/tasks/task-1.log` tăng dòng trong 5 phút -> vẫn cho chạy tiếp tới xong."""
+    conv_id = "44444444-5555-6666-7777-888888888888"
+    cli_dir = tmp_path / "agy-cli-tasks"
+    tasks_dir = cli_dir / "brain" / conv_id / ".system_generated" / "tasks"
+    tasks_dir.mkdir(parents=True)
+    task_log = tasks_dir / "task-1.log"
+    task_log.write_text("boot\n", encoding="utf-8")
+
+    started_flag = tmp_path / "started_cli.flag"
+    done_flag = tmp_path / "done_cli.flag"
+    payload_ok = {"status": "SUCCESS", "response": "Task log ok"}
+    script_ok = tmp_path / "agy_cli_task.py"
+    script_ok.write_text(
+        (
+            "import pathlib, sys, time\n"
+            "print('waiting up to 40m0s for 1 background task(s)', file=sys.stderr, flush=True)\n"
+            f"pathlib.Path(r'{started_flag}').write_text('ok', encoding='utf-8')\n"
+            f"done_p = pathlib.Path(r'{done_flag}')\n"
+            "han = time.monotonic() + 30.0\n"
+            "while not done_p.exists() and time.monotonic() < han:\n"
+            "    time.sleep(0.01)\n"
+            f"print({json.dumps(json.dumps(payload_ok))}, flush=True)\n"
+        ),
+        encoding="utf-8",
+    )
+
+    fake_clock = [0.0]
+    da_cho_pipe = [False]
+    moc_cli = {180.0: False, 360.0: False}
+
+    def _fake_sleep(giay: float) -> None:
+        if not started_flag.exists():
+            time.sleep(0.01)
+            return
+        if not da_cho_pipe[0]:
+            time.sleep(0.06)
+            da_cho_pipe[0] = True
+        fake_clock[0] += float(giay)
+        if fake_clock[0] >= 180.0 and not moc_cli[180.0]:
+            moc_cli[180.0] = True
+            with task_log.open("a", encoding="utf-8") as fh:
+                fh.write("task output line 2\n")
+        if fake_clock[0] >= 360.0 and not moc_cli[360.0]:
+            moc_cli[360.0] = True
+            with task_log.open("a", encoding="utf-8") as fh:
+                fh.write("task output line 3\n")
+        if fake_clock[0] >= 480.0 and not done_flag.exists():
+            done_flag.write_text("ok", encoding="utf-8")
+            time.sleep(0.05)
+        if int(fake_clock[0]) % 50 == 0:
+            time.sleep(0.001)
+
+    monkeypatch.setattr(linhx_runner, "_dong_ho", lambda: fake_clock[0])
+    monkeypatch.setattr(linhx_runner, "_ngu", _fake_sleep)
+    monkeypatch.setattr(linhx_runner, "_doc_cpu_cay_agy", lambda pid: 0.0)
+    orig_popen = subprocess.Popen
+    monkeypatch.setattr(
+        linhx_runner,
+        "_tao_tien_trinh_agy",
+        lambda cmd, **kw: orig_popen([sys.executable, str(script_ok)], **kw),
+    )
+
+    cfg = _tao_cfg(tmp_path, tmp_path, tmp_path / "viec-cli-task", agy_cli_dir=cli_dir)
+    viec = hang_doi_git.phan_tich_phieu("may: may-2\nloai: code\ntran_phut: 40\n\nTask cli.", "p-cli-task")
+    tt, kq, _, _, _ = linhx_runner.chay_agy(cfg, viec)
+    assert tt == "xong"
+    assert "Task log ok" in kq
+    assert fake_clock[0] >= 480.0
+
+
+def test_dung_cay_va_tao_phieu_sua_khi_canh_nen_im_5_phut(tmp_path, monkeypatch):
+    """Vào CANH NỀN rồi im hoàn toàn 5 phút (dù CPU tick nhẹ) -> dừng cả cây, lý do cho-nen-im-lang."""
+    tm_theo_doi = tmp_path / "repo-im-lang"
+    tm_theo_doi.mkdir(parents=True)
     bare, clone, tm_viec = _tao_kho_hang_doi(
         tmp_path,
         {
@@ -190,7 +372,8 @@ def test_dung_ngay_cay_tien_trinh_va_tao_phieu_sua_khi_gap_waiting_background_ta
                 "loai: code\n"
                 "tran_phut: 40\n"
                 "khong_tien_phut: 20\n"
-                "tu_sua: 2\n\n"
+                "tu_sua: 2\n"
+                f"theo_doi: {tm_theo_doi}\n\n"
                 "Sửa module ABC và kiểm bằng pytest."
             )
         },
@@ -208,25 +391,40 @@ def test_dung_ngay_cay_tien_trinh_va_tao_phieu_sua_khi_gap_waiting_background_ta
         encoding="utf-8",
     )
 
+    fake_clock = [0.0]
+    da_cho_pipe = [False]
+
+    def _fake_sleep(giay: float) -> None:
+        if not pid_file.exists():
+            time.sleep(0.01)
+            return
+        if not da_cho_pipe[0]:
+            time.sleep(0.06)
+            da_cho_pipe[0] = True
+        fake_clock[0] += float(giay)
+        if int(fake_clock[0]) % 50 == 0:
+            time.sleep(0.001)
+
     monkeypatch.setattr(hang_doi_git, "duong_dan_log_runner", lambda cfg: tmp_path / "runner.jsonl")
-    # Chay tien trinh Python that (cha + chau) thay vi shell ngam agy.exe
+    monkeypatch.setattr(linhx_runner, "_dong_ho", lambda: fake_clock[0])
+    monkeypatch.setattr(linhx_runner, "_ngu", _fake_sleep)
+    # Dev server rảnh vẫn nhích CPU nhỏ: không được phép kéo dài ngưỡng 5 phút canh nền
+    monkeypatch.setattr(linhx_runner, "_doc_cpu_cay_agy", lambda pid: fake_clock[0] * 0.05)
     orig_popen = subprocess.Popen
-
-    def _popen_python(cmd, **kw):
-        cmd_that = [sys.executable, str(script_gia)]
-        return orig_popen(cmd_that, **kw)
-
-    monkeypatch.setattr(linhx_runner, "_tao_tien_trinh_agy", _popen_python)
+    monkeypatch.setattr(
+        linhx_runner,
+        "_tao_tien_trinh_agy",
+        lambda cmd, **kw: orig_popen([sys.executable, str(script_gia)], **kw),
+    )
 
     cfg = _tao_cfg(tmp_path, clone, tm_viec)
-    t0 = time.monotonic()
     kq = hang_doi_git.xu_ly_mot_phieu(cfg)
-    thoi_gian = time.monotonic() - t0
 
     assert kq is not None
-    assert thoi_gian < 10.0, f"Không dừng ngay lập tức, mất {thoi_gian:.2f}s"
+    # Không dừng ngay ở 0s, cũng không chờ tới khong_tien_phut (20p): dừng đúng quanh mốc 5 phút (300s)
+    assert 300.0 <= fake_clock[0] <= 315.0, f"Thời gian dừng bất thường: {fake_clock[0]:.2f}s"
     assert kq["trang_thai"] == "dung"
-    assert linhx_runner.LY_DO_CHO_TAC_VU_NEN in kq["nhat_ky"]
+    assert linhx_runner.LY_DO_CHO_NEN_IM_LANG in kq["nhat_ky"]
 
     # Cay tien trinh (cha + chau 120s) phai bi diet sach (cho toi da 2s cho Windows don handle)
     chau_pid = int(pid_file.read_text(encoding="utf-8").strip())
@@ -240,7 +438,7 @@ def test_dung_ngay_cay_tien_trinh_va_tao_phieu_sua_khi_gap_waiting_background_ta
     _run_git(["clone", "-b", "hang-doi", str(bare), str(tm_kt)], tmp_path)
     nd_kq = (tm_kt / "hang-doi" / "xong" / "yl-cho-nen" / "KET-QUA.md").read_text(encoding="utf-8")
     assert "trang_thai: dung\n" in nd_kq
-    assert "ly_do: cho-tac-vu-nen\n" in nd_kq
+    assert "ly_do: cho-nen-im-lang\n" in nd_kq
     assert (tm_kt / "hang-doi" / "xong" / "yl-cho-nen" / "NHAT-KY.md").is_file()
 
     tep_sua = tm_kt / "hang-doi" / "moi" / "yl-cho-nen-sua-1.md"
@@ -248,7 +446,8 @@ def test_dung_ngay_cay_tien_trinh_va_tao_phieu_sua_khi_gap_waiting_background_ta
     parsed_sua = hang_doi_git.phan_tich_phieu(tep_sua.read_text(encoding="utf-8"), "yl-cho-nen-sua-1")
     assert parsed_sua["tu_sua"] == 1
     assert parsed_sua["de"].startswith(
-        "Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh."
+        "Lượt trước chạy tác vụ nền không ghi log rồi chờ. "
+        "Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong."
     )
     assert "Sửa module ABC và kiểm bằng pytest." in parsed_sua["de"]
 
@@ -321,7 +520,7 @@ def test_status_error_cho_lenh_hoan_tat_tao_dung_va_nhat_ky_tu_conv_id(tmp_path,
     _run_git(["clone", "-b", "hang-doi", str(bare), str(tm_kt)], tmp_path)
     nd_kq = (tm_kt / "hang-doi" / "xong" / "yl-err-json" / "KET-QUA.md").read_text(encoding="utf-8")
     assert "trang_thai: dung\n" in nd_kq
-    assert "ly_do: cho-tac-vu-nen\n" in nd_kq
+    assert "ly_do: cho-nen-im-lang\n" in nd_kq
 
     nd_nk = (tm_kt / "hang-doi" / "xong" / "yl-err-json" / "NHAT-KY.md").read_text(encoding="utf-8")
     assert f"conversation_id: {conv_id}" in nd_nk

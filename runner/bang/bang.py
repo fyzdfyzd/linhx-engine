@@ -37,6 +37,16 @@ LOW_DISK_C_THRESHOLD_GB = 10.0
 
 _HEADER_LINE_RE = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
 _NHIP_LINE_RE = re.compile(r"^nhip\s*:\s*(.+)$", re.IGNORECASE)
+_CANH_NEN_LOG_ISO_RE = re.compile(r"\[?log_cuoi=([^\s\]]+)\]?", re.IGNORECASE)
+_CANH_NEN_LOG_PHUT_RE = re.compile(r"log\s+cuối\s+(\d+)\s+phút\s+trước", re.IGNORECASE)
+_CANH_NEN_NHAN_TAG_RE = re.compile(
+    r"đang\s+chờ\s+nền(?:\s*·\s*log\s+cuối\s+\d+\s+phút\s+trước)?",
+    re.IGNORECASE,
+)
+_CANH_NEN_WAITING_BG_RE = re.compile(r"waiting\s+up\s+to\b.*\bbackground\s+task", re.IGNORECASE)
+_CANH_NEN_ROOT_IDLE_RE = re.compile(r"\broot\s+agent\s+idle\b", re.IGNORECASE)
+_CANH_NEN_TRUE_VALUES = frozenset({"co", "có", "1", "true", "yes", "bat", "bật"})
+_CANH_NEN_FALSE_VALUES = frozenset({"0", "false", "khong", "không", "no", "off", "tat", "tắt"})
 _TZ_COMPACT_RE = re.compile(r"([+-]\d{2})(\d{2})$")
 _TOKEN_IN_RE = re.compile(r"vao\s*=\s*(\d+)", re.IGNORECASE)
 _TOKEN_OUT_RE = re.compile(r"ra\s*=\s*(\d+)", re.IGNORECASE)
@@ -272,6 +282,74 @@ def _extract_nhip_and_clean_body(raw_body: str, meta: dict[str, str]) -> tuple[s
     return nhip_val, "\n".join(kept_lines).strip()
 
 
+def _parse_canh_nen_status(
+    meta: dict[str, str],
+    nhip_line: str,
+    current_time: datetime,
+    fallback_dt: datetime | None,
+    file_dt: datetime | None = None,
+) -> tuple[bool, int | None, str, str]:
+    """Nhận diện phiếu đang ở chế độ canh nền và sinh nhãn `đang chờ nền · log cuối N phút trước`."""
+    raw_canh_nen = (meta.get("canh_nen") or meta.get("che_do_nen") or "").strip()
+    canh_nen_flag_dt = parse_iso_datetime(raw_canh_nen)
+    nhip_txt = (nhip_line or "").strip()
+    nhip_lower = nhip_txt.lower()
+
+    meta_enabled = False
+    if raw_canh_nen and raw_canh_nen.lower() not in _CANH_NEN_FALSE_VALUES:
+        meta_enabled = bool(canh_nen_flag_dt is not None or raw_canh_nen.lower() in _CANH_NEN_TRUE_VALUES or raw_canh_nen)
+
+    nhip_has_marker = bool(
+        "đang chờ nền" in nhip_lower
+        or "[canh-nen" in nhip_lower
+        or "log_cuoi=" in nhip_lower
+        or _CANH_NEN_WAITING_BG_RE.search(nhip_txt)
+        or _CANH_NEN_ROOT_IDLE_RE.search(nhip_txt)
+    )
+    if not (meta_enabled or nhip_has_marker):
+        return False, None, "", nhip_txt
+
+    m_iso = _CANH_NEN_LOG_ISO_RE.search(nhip_txt)
+    log_dt = (
+        parse_iso_datetime(m_iso.group(1) if m_iso else None)
+        or parse_iso_datetime(meta.get("log_cuoi"))
+        or canh_nen_flag_dt
+    )
+    if log_dt is not None:
+        n_phut = max(0, int((current_time - log_dt).total_seconds() // 60.0))
+    elif (meta.get("log_cuoi_phut") or "").strip():
+        try:
+            base_min = max(0, int(float(meta["log_cuoi_phut"].strip())))
+        except ValueError:
+            base_min = 0
+        delta_file = (
+            max(0, int((current_time - file_dt).total_seconds() // 60.0))
+            if file_dt is not None and current_time > file_dt
+            else 0
+        )
+        n_phut = base_min + delta_file
+    else:
+        m_phut = _CANH_NEN_LOG_PHUT_RE.search(nhip_txt)
+        if m_phut:
+            base_min = max(0, int(m_phut.group(1)))
+            delta_file = (
+                max(0, int((current_time - file_dt).total_seconds() // 60.0))
+                if file_dt is not None and current_time > file_dt
+                else 0
+            )
+            n_phut = base_min + delta_file
+        elif fallback_dt is not None:
+            n_phut = max(0, int((current_time - fallback_dt).total_seconds() // 60.0))
+        else:
+            n_phut = 0
+
+    nhan = f"đang chờ nền · log cuối {n_phut} phút trước"
+    nhip_clean = _CANH_NEN_LOG_ISO_RE.sub("", nhip_txt)
+    nhip_clean = _CANH_NEN_NHAN_TAG_RE.sub(nhan, nhip_clean)
+    nhip_clean = re.sub(r"\s{2,}", " ", nhip_clean).strip(" ·-")
+    return True, n_phut, nhan, nhip_clean
+
+
 def _extract_ket_reason(body: str, max_len: int = 90) -> str:
     """Rút lý do ngắn gọn từ thân KET-QUA.md khi phiếu kết thúc `dung` hoặc `loi`."""
     for raw_line in (body or "").splitlines():
@@ -443,6 +521,13 @@ def read_queue_snapshot(
                 limit_min = 40.0
 
             kind = (meta.get("loai") or "code").strip().lower()
+            is_canh_nen, log_cuoi_phut, nhan_canh_nen, nhip_clean = _parse_canh_nen_status(
+                meta=meta,
+                nhip_line=nhip_line,
+                current_time=current_time,
+                fallback_dt=last_active_dt,
+                file_dt=file_dt,
+            )
             record_machine_event(claimed_machine, "nhan", ticket_id, last_active_dt)
 
             run_entry = {
@@ -455,7 +540,10 @@ def read_queue_snapshot(
                 "chay_phut": round(elapsed_sec / 60.0, 2),
                 "chay_bao_lau": format_duration_vi(elapsed_sec) if claimed_dt else "—",
                 "tran_phut": int(limit_min) if limit_min.is_integer() else limit_min,
-                "nhip": nhip_line,
+                "nhip": nhip_clean,
+                "canh_nen": is_canh_nen,
+                "log_cuoi_phut": log_cuoi_phut,
+                "nhan_canh_nen": nhan_canh_nen,
                 "de": _summarize_text(body or ticket_id),
                 "ket_qua_url": f"/phieu/{urllib.parse.quote(ticket_id)}",
                 "_sort_ts": claimed_dt.timestamp() if claimed_dt else 0.0,
@@ -588,6 +676,9 @@ def read_queue_snapshot(
         nhip_may = (run_primary.get("nhip") or "") if run_primary else ""
         dang_lam_phieu = run_primary["phieu"] if run_primary else ""
         dang_lam_phut = run_primary["chay_phut"] if run_primary else 0.0
+        canh_nen_may = bool(run_primary and run_primary.get("canh_nen"))
+        log_cuoi_phut_may = run_primary.get("log_cuoi_phut") if run_primary else None
+        nhan_canh_nen_may = (run_primary.get("nhan_canh_nen") or "") if run_primary else ""
 
         # Kiểm tra dừng/lỗi gần nhất của máy
         ket_phieu = ""
@@ -619,6 +710,9 @@ def read_queue_snapshot(
                     "dang_lam_phieu": dang_lam_phieu,
                     "dang_lam_phut": dang_lam_phut,
                     "nhip": nhip_may,
+                    "canh_nen": canh_nen_may,
+                    "log_cuoi_phut": log_cuoi_phut_may,
+                    "nhan_canh_nen": nhan_canh_nen_may,
                     "ket_phieu": ket_phieu,
                     "ket_trang_thai": ket_trang_thai,
                     "ket_ly_do": ket_ly_do,
@@ -661,6 +755,9 @@ def read_queue_snapshot(
                     "dang_lam_phieu": "",
                     "dang_lam_phut": 0.0,
                     "nhip": "",
+                    "canh_nen": False,
+                    "log_cuoi_phut": None,
+                    "nhan_canh_nen": "",
                     "ket_phieu": ket_phieu,
                     "ket_trang_thai": ket_trang_thai,
                     "ket_ly_do": ket_ly_do,
@@ -690,7 +787,12 @@ def read_queue_snapshot(
     }
 
 
-def read_ticket_detail(clone_dir: Path, ticket_id: str) -> dict | None:
+def read_ticket_detail(
+    clone_dir: Path,
+    ticket_id: str,
+    now: datetime | None = None,
+    commit_times: dict[str, int] | None = None,
+) -> dict | None:
     """Đọc nội dung chi tiết KET-QUA.md (hoặc phiếu đang chạy/chờ nếu chưa xong)."""
     if not is_safe_ticket_id(ticket_id):
         return None
@@ -721,14 +823,31 @@ def read_ticket_detail(clone_dir: Path, ticket_id: str) -> dict | None:
     running_path = qroot / "dang" / f"{ticket_id}.md"
     if running_path.is_file():
         raw_text = running_path.read_text(encoding="utf-8", errors="replace")
-        meta, body = parse_markdown_headers(raw_text)
-        machine, _ = _parse_claimed_info(meta, (meta.get("may") or "bat-ky").strip().lower())
+        meta, raw_body = parse_markdown_headers(raw_text)
+        nhip_line, body = _extract_nhip_and_clean_body(raw_body, meta)
+        machine, claimed_dt = _parse_claimed_info(meta, (meta.get("may") or "bat-ky").strip().lower())
+        git_times = load_git_file_commit_times(Path(clone_dir)) if commit_times is None else commit_times
+        file_dt = _file_timestamp(running_path, Path(clone_dir), git_times)
+        if claimed_dt is None:
+            claimed_dt = file_dt
+        last_active_dt = file_dt if (nhip_line and file_dt and claimed_dt and file_dt > claimed_dt) else claimed_dt
+        current_time = (now or now_local()).astimezone(get_local_tz())
+        is_canh_nen, log_cuoi_phut, nhan_canh_nen, _ = _parse_canh_nen_status(
+            meta=meta,
+            nhip_line=nhip_line,
+            current_time=current_time,
+            fallback_dt=last_active_dt,
+            file_dt=file_dt,
+        )
         return {
             "phieu": ticket_id,
             "nguon_tep": f"hang-doi/dang/{ticket_id}.md",
             "giai_doan": "dang",
             "may": machine,
             "trang_thai": "dang",
+            "canh_nen": is_canh_nen,
+            "log_cuoi_phut": log_cuoi_phut,
+            "nhan_canh_nen": nhan_canh_nen,
             "phut": "—",
             "token": "—",
             "token_vao": 0,
@@ -886,7 +1005,8 @@ class QueueMonitor:
     def get_ticket(self, ticket_id: str) -> dict | None:
         """Đọc chi tiết 1 phiếu dưới khóa đồng bộ."""
         with self._lock:
-            return read_ticket_detail(self.clone_dir, ticket_id)
+            commit_times = self._refresh_commit_cache_if_needed()
+            return read_ticket_detail(self.clone_dir, ticket_id, now=self._now(), commit_times=commit_times)
 
     def start_background_sync(self) -> None:
         """Đồng bộ ngay lập tức 1 lần và khởi chạy luồng `git fetch` định kỳ."""
@@ -1263,6 +1383,7 @@ section.can-linh-box h2 {
 .may-chay { background: var(--run-bg); color: var(--run-fg); }
 .may-ranh, .tt-huy { background: var(--idle-bg); color: var(--idle-fg); }
 .tt-dung, .may-ket { background: var(--warn-bg); color: var(--warn-fg); }
+.badge-canh-nen { white-space: normal; }
 .tt-loi, .may-do { background: var(--err-bg); color: var(--err-fg); }
 .qua-han {
   display: inline-flex;
@@ -1934,9 +2055,12 @@ _DASHBOARD_JS = r"""
         var extraTxt = extraCnt > 1 ? " (+" + (extraCnt - 1) + ")" : "";
         var hrefRun = "/phieu/" + encodeURIComponent(m.dang_lam_phieu);
         var nhipTxt = m.nhip || "Mới nhận phiếu, đang chờ nhịp báo cáo…";
+        var canhNenTxt = m.nhan_canh_nen || rItem.nhan_canh_nen || "";
+        var canhNenRow = canhNenTxt ? ('<div style="margin:6px 0 4px"><span class="badge tt-dung badge-canh-nen">' + esc(canhNenTxt) + "</span></div>") : "";
         workHtml = '<div class="may-work-box"><div class="work-top">' +
           '<div class="work-ticket"><a href="' + esc(hrefRun) + '">' + esc(m.dang_lam_phieu) + "</a>" + esc(extraTxt) + "</div>" +
           '<div class="work-time">' + phutInt + " phút / " + tranInt + "p</div></div>" +
+          canhNenRow +
           '<div class="progress-track"><div class="' + pFillCls + '" style="width:' + pct + '%"></div></div>' +
           '<div class="nhip-line">' + esc(nhipTxt) + "</div></div>";
       } else if (m.ket_phieu) {
@@ -2040,10 +2164,11 @@ _DASHBOARD_JS = r"""
         var tran = Number(it.tran_phut || 40);
         var phut = Number(it.chay_phut || 0);
         var pct = tran > 0 ? Math.min(100, Math.max(4, Math.round((phut / tran) * 100))) : 0;
+        var canhNenBadge = it.nhan_canh_nen ? ('<span class="badge tt-dung badge-canh-nen">' + esc(it.nhan_canh_nen) + "</span>") : "";
         rRows.push(
           '<div class="ticket-row"><div class="ticket-row-head">' +
           '<a class="ticket-main-link" href="' + esc(it.ket_qua_url) + '">' + esc(it.phieu) + "</a>" +
-          '<div class="ticket-tags"><span class="tag-chip">' + esc(it.may) + "</span>" +
+          '<div class="ticket-tags">' + canhNenBadge + '<span class="tag-chip">' + esc(it.may) + "</span>" +
           '<span class="tag-chip">' + esc(it.loai) + "</span>" +
           '<span class="num">' + esc(it.chay_bao_lau) + " / " + esc(it.tran_phut) + "p</span></div></div>" +
           '<div class="progress-track" style="margin:8px 0 4px"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
@@ -2504,12 +2629,19 @@ def _render_overview_machines_section(data: dict) -> str:
             extra_txt = f" (+{extra_cnt - 1})" if extra_cnt > 1 else ""
             href_run = f"/phieu/{urllib.parse.quote(dang_phieu)}"
             nhip_txt = m.get("nhip") or "Mới nhận phiếu, đang chờ nhịp báo cáo…"
+            canh_nen_txt = m.get("nhan_canh_nen") or r_item.get("nhan_canh_nen") or ""
+            canh_nen_row = (
+                f'<div style="margin:6px 0 4px"><span class="badge tt-dung badge-canh-nen">{_esc(canh_nen_txt)}</span></div>'
+                if canh_nen_txt
+                else ""
+            )
             work_html = (
                 '<div class="may-work-box">'
                 '<div class="work-top">'
                 f'<div class="work-ticket"><a href="{_esc(href_run)}">{_esc(dang_phieu)}</a>{_esc(extra_txt)}</div>'
                 f'<div class="work-time">{phut_so} phút / {tran_so}p</div>'
                 "</div>"
+                f"{canh_nen_row}"
                 f'<div class="progress-track"><div class="{pfill_cls}" style="width:{pct}%"></div></div>'
                 f'<div class="nhip-line">{_esc(nhip_txt)}</div>'
                 "</div>"
@@ -2622,11 +2754,17 @@ def _render_tickets_section(data: dict) -> str:
             pct = min(100, max(4, int(round((phut_val / tran_val) * 100.0)))) if tran_val > 0 else 0
             de_div = f'<div class="ticket-desc">{_esc(item["de"])}</div>' if item.get("de") else ""
             nhip_div = f'<div class="nhip-line">{_esc(item["nhip"])}</div>' if item.get("nhip") else ""
+            canh_nen_badge = (
+                f'<span class="badge tt-dung badge-canh-nen">{_esc(item["nhan_canh_nen"])}</span>'
+                if item.get("nhan_canh_nen")
+                else ""
+            )
             rows_run.append(
                 '<div class="ticket-row">'
                 '<div class="ticket-row-head">'
                 f'<a class="ticket-main-link" href="{_esc(item["ket_qua_url"])}">{_esc(item["phieu"])}</a>'
                 '<div class="ticket-tags">'
+                f"{canh_nen_badge}"
                 f'<span class="tag-chip">{_esc(item["may"])}</span>'
                 f'<span class="tag-chip">{_esc(item["loai"])}</span>'
                 f'<span class="num">{_esc(item["chay_bao_lau"])} / {_esc(item["tran_phut"])}p</span>'
@@ -2923,6 +3061,11 @@ def render_ticket_html(detail: dict) -> str:
     """Sinh HTML hiển thị nội dung KET-QUA.md của một phiếu theo phong cách tối giản đồng bộ."""
     st = detail.get("trang_thai") or "xong"
     badge_cls = f"badge tt-{st}" if st in ("xong", "loi", "dung", "dang") else "badge may-ranh"
+    canh_nen_html = (
+        f'<span>Chế độ: <span class="badge tt-dung badge-canh-nen">{_esc(detail["nhan_canh_nen"])}</span></span>'
+        if detail.get("nhan_canh_nen")
+        else ""
+    )
     return f"""<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -2943,6 +3086,7 @@ def render_ticket_html(detail: dict) -> str:
     <section class="card">
       <div class="detail-meta-grid">
         <span>Trạng thái: <span class="{_esc(badge_cls)}">{_esc(st)}</span></span>
+        {canh_nen_html}
         <span>Máy: <code>{_esc(detail["may"])}</code></span>
         <span class="num">Phút: <strong>{_esc(detail["phut"])}</strong></span>
         <span class="num">Token: <strong>{_esc(detail["token"])}</strong></span>
