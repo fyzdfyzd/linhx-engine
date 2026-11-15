@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\wt\bang-du-an
+nhan: may-2 2026-11-15T12:12:38+0700
 
 Phiếu: thêm 2 tab "Dự án" và "Chất lượng" cho bảng theo dõi (runner/bang/bang.py, cổng 8090). Việc PHỤ, ưu tiên thấp: KHÔNG khởi động lại bảng đang chạy, KHÔNG đụng runner/linhx_runner.py, hang_doi_git.py, không chạy Playwright song song quá 1 trình duyệt (máy đang chạy phiếu Yên Lam). Chạy mọi lệnh ở tiền cảnh, KHÔNG dùng background task, mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
 1. `git clone -b claude/project-thread-jowxv1 https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt\bang-du-an` (có rồi thì fetch + checkout lại), `git checkout -b agy/bang-du-an`.
