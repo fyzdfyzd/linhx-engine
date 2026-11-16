@@ -16,4 +16,4 @@ Brand health check: bỏ chữ kỹ thuật khỏi phần người xem đọc. C
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON trong bao-cao/bien-tap, đụng apps/event, apps/lab, packages/, push nhánh khác. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md ngắn: `dat: co|khong`; SHA đỉnh; test luật mới đỏ→xanh; verify pass/fail; số trang PDF trước/sau; danh sách ảnh.
 
-nhip: 23:52 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:55 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
