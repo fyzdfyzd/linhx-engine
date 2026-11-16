@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\wt-csmo\tool
+nhan: may-2 2026-11-16T23:21:50+0700
 
 Phiếu csmo-tool. Đọc viec/csmo-talk/DE-BAI.md mục "Phiếu csmo-tool" và KICH-BAN-v5.md trên nhánh hang-doi (chỉ đọc).
 0. git clone -b hang-doi https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-csmo\tool (clone riêng). Tạo nhánh agy/csmo-tool.
