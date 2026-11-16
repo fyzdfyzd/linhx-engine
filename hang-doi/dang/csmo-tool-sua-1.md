@@ -3,6 +3,8 @@ loai: code
 tran_phut: 25
 khong_tien_phut: 15
 theo_doi: C:\linhx\wt-csmo\tool
+nhan: may-2 2026-11-17T00:14:50+0700
+moc: 79a087c62d87cf82b7d65703556abface268794f
 
 Phiếu csmo-tool-sua-1: sửa trang viec/csmo-talk/tool/index.html trên nhánh agy/csmo-tool (clone C:\linhx\wt-csmo\tool đã có, git pull trước).
 1. Bỏ khối công thức "Agentic Visibility..." lặp ở đầu mọi bước; chỉ giữ ở Bước 1, 1 dòng.
