@@ -14,3 +14,5 @@ Phiếu đẩy nhánh đã được Claude duyệt. Chạy tiền cảnh, KHÔNG
 4. `git ls-remote origin claude/project-thread-jowxv1` ra SHA đỉnh.
 CẤM: --force, sửa file, push nhánh khác. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md: dòng đầu `dat: co`/`dat: khong`; SHA đỉnh jowxv1 trước/sau.
+
+nhip: 22:45 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
