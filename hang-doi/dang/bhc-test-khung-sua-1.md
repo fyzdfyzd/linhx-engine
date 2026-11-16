@@ -17,3 +17,5 @@ Lỗi phải sửa, mỗi lỗi một commit:
 5. npm.cmd run verify xanh. Bằng chứng ghi đè bang-chung/bhc-code-khung-trang-chu/: 4 màn × 1280 và 360 Sáng màn đầu, màn a 1280 Đêm, ghep-1280.png, thêm ghep-360.png (4 màn 360 cạnh nhau). Mỗi ảnh ≤ 600 KB.
 CẤM: sửa server/, nối vào app, đổi chữ ngoài 3 ô placeholder, sinh ảnh AI, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test mới đỏ→xanh; verify pass/fail; danh sách ảnh.
+
+nhip: 02:27 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
