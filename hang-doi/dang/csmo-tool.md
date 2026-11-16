@@ -13,4 +13,4 @@ Phiếu csmo-tool. Đọc viec/csmo-talk/DE-BAI.md mục "Phiếu csmo-tool" và
 CẤM: deploy, gọi AI thật, sửa ngoài viec/csmo-talk/tool và bang-chung.
 KET-QUA.md: dòng đầu dat: co/khong; SHA; số test pass/fail; việc dở.
 
-nhip: 23:30 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:33 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
