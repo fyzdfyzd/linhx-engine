@@ -13,3 +13,5 @@ Sửa trong khung landing B (server/lib/landing.js / bao-cao/khung/B/landing-b.j
 Kiểm: npm.cmd run verify xanh. Chụp http://localhost:3020 landing 2 thương hiệu màn đầu 1280×800 và 360×780 Sáng + Vinamilk 1280 Đêm vào bang-chung/bhc-code-nhan-nguon/ (ghi đè, ≤ 600 KB). Commit, push.
 CẤM như các phiếu bhc trước (không deploy, không AI thật, không đụng apps/event, apps/lab, packages/).
 KET-QUA.md: `dat: co|khong`; SHA; verify; danh sách ảnh.
+
+nhip: 02:27 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
