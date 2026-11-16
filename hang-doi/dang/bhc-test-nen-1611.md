@@ -15,4 +15,4 @@ Phiếu kiểm nền "Brand health check" (công cụ đo brand IF Agent). CHỈ
 CẤM: sửa bất kỳ file nào ngoài bang-chung/bhc-test-nen/, deploy, gọi AI thật hay dùng khoá API, in khoá/mật khẩu, gửi mail, xoá dữ liệu, tự sinh ảnh bằng AI, push nhánh khác. Gặp việc cần người thì trả CAN-LINH.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh agy/bhc-test-nen; verify pass/fail; số trang Full/Light mỗi thương hiệu; bảng trang × (console lỗi, tràn 360, PDF tải HTTP); danh sách ảnh đã commit.
 
-nhip: 23:07 11p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-16T23:07:09+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 23:10 14p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-16T23:09:24+0700] · root agent idle; waiting up to 40m0s for 1 ba
