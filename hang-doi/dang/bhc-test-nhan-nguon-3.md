@@ -14,4 +14,4 @@ Kiểm: npm.cmd run verify xanh. Chụp http://localhost:3020 landing 2 thương
 CẤM như các phiếu bhc trước (không deploy, không AI thật, không đụng apps/event, apps/lab, packages/).
 KET-QUA.md: `dat: co|khong`; SHA; verify; danh sách ảnh.
 
-nhip: 02:30 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 02:33 9p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T02:33:30+0700] · root agent idle; waiting up to 40m0s for 1 ba
