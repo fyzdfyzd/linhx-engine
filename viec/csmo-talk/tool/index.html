@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Soi thương hiệu trong 10 phút · Topic 07</title>
-  <meta name="description" content="Từ Brand Claim đến Verifiable Truth — Tự đo thương hiệu theo 4 chỉ số, biết mình rơi ở bước nào và nhận kế hoạch 30 ngày.">
+  <meta name="description" content="Từ Brand Claim đến Verifiable Truth. Tự đo thương hiệu theo 4 chỉ số, biết mình rơi ở bước nào và nhận kế hoạch 30 ngày.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -108,30 +108,19 @@
     }
 
     .hero-subtitle {
-      margin: 0 0 var(--space-3);
-      font-size: var(--text-base);
-      color: var(--color-text-muted);
-    }
-
-    .formula-banner {
-      background-color: var(--color-surface-muted);
-      border-left: 4px solid var(--color-accent);
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      padding: var(--space-3) var(--space-4);
-    }
-
-    .formula-eq {
-      margin: 0 0 var(--space-1);
-      font-size: var(--text-base);
-      font-weight: 700;
-      color: var(--color-text);
-      overflow-wrap: anywhere;
-    }
-
-    .formula-note {
       margin: 0;
       font-size: var(--text-base);
       color: var(--color-text-muted);
+    }
+
+    .formula-inline {
+      margin: 0 0 var(--space-4);
+      padding-left: var(--space-3);
+      border-left: 3px solid var(--color-accent);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+      overflow-wrap: anywhere;
     }
 
     /* Thẻ dùng chung */
@@ -163,24 +152,13 @@
       font-weight: 700;
     }
 
-    /* Khối 2 câu đo cảm nhận đầu trang */
-    .pulse-card {
-      background-color: var(--color-surface);
-      border: 1px solid var(--color-border-strong);
-    }
-
-    .pulse-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--space-2);
-      margin-bottom: var(--space-3);
-      flex-wrap: wrap;
-    }
-
-    .pulse-header .section-title {
-      margin: 0;
-      font-size: var(--text-lg);
+    /* Khối đo cảm nhận nhanh (đầu Bước 1 và đầu Bước 4) */
+    .pulse-inline-box {
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
     }
 
     .rating-scale {
@@ -610,37 +588,38 @@
       color: var(--color-text-muted);
     }
 
-    /* Sơ đồ 5 bước Agent đọc thương hiệu */
+    /* Danh sách gọn 5 bước Agent đọc thương hiệu (chỉ tô bước đang rơi) */
     .agent-steps-list {
       list-style: none;
       margin: 0;
       padding: 0;
       display: grid;
-      gap: var(--space-2);
+      gap: var(--space-1);
     }
 
     .agent-step-item {
-      padding: var(--space-3);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-sm);
-      background-color: var(--color-surface);
+      padding: var(--space-1) var(--space-2);
+      border-left: 3px solid transparent;
       font-size: var(--text-base);
+      line-height: 1.45;
+      color: var(--color-text-muted);
+    }
+
+    .agent-step-item:not(.is-falling) .agent-step-desc {
+      display: none;
     }
 
     .agent-step-item.is-falling {
-      border: 2px solid var(--color-accent);
+      padding: var(--space-2) var(--space-3);
+      border-left: 4px solid var(--color-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
       background-color: var(--color-accent-soft);
+      color: var(--color-text);
     }
 
-    .falling-badge {
-      display: inline-block;
-      margin-top: var(--space-2);
-      padding: 2px 10px;
-      border-radius: var(--radius-sm);
-      background-color: var(--color-accent);
-      color: var(--color-on-accent);
-      font-size: var(--text-base);
+    .agent-step-item.is-falling .agent-step-name {
       font-weight: 700;
+      color: var(--color-text);
     }
 
     .action-list {
@@ -739,52 +718,10 @@
     <header class="hero-header">
       <p class="event-kicker">VSMCamp &amp; CSMO Summit 2026 · Topic 07</p>
       <h1 class="hero-title">Soi thương hiệu trong 10 phút</h1>
-      <p class="hero-subtitle">Từ Brand Claim đến Verifiable Truth — Khi khách nhờ AI chọn hộ, thương hiệu được tin bằng gì?</p>
-      <div class="formula-banner">
-        <p class="formula-eq">Agentic Visibility = Brand Reputation × Verifiable Data</p>
-        <p class="formula-note">Phép nhân, không phải phép cộng. Được yêu mà không kiểm được thì nhân với 0. Dữ liệu đầy đủ mà không ai yêu cũng nhân với 0.</p>
-      </div>
+      <p class="hero-subtitle">Từ Brand Claim đến Verifiable Truth. Khi khách nhờ AI chọn hộ, thương hiệu được tin bằng gì?</p>
     </header>
 
     <main id="main-content">
-      <!-- Đầu trang: 2 câu đo cảm nhận (Mục 4 kịch bản) -->
-      <section class="card pulse-card" aria-labelledby="pulse-heading">
-        <div class="pulse-header">
-          <h2 id="pulse-heading" class="section-title">Đo cảm nhận nhanh</h2>
-          <button type="button" id="toggle-pulse-btn" class="btn btn-secondary" aria-expanded="true" aria-controls="pulse-body">Thu gọn</button>
-        </div>
-        <div id="pulse-body">
-          <div class="field-group">
-            <span id="trust-rating-label" class="field-label">1. Bạn tin AI đang nói đúng về thương hiệu mình bao nhiêu? (1–5)</span>
-            <div class="rating-scale" role="group" aria-labelledby="trust-rating-label">
-              <button type="button" class="scale-btn" data-rating="1" aria-pressed="false">1</button>
-              <button type="button" class="scale-btn" data-rating="2" aria-pressed="false">2</button>
-              <button type="button" class="scale-btn" data-rating="3" aria-pressed="false">3</button>
-              <button type="button" class="scale-btn" data-rating="4" aria-pressed="false">4</button>
-              <button type="button" class="scale-btn" data-rating="5" aria-pressed="false">5</button>
-            </div>
-            <div class="scale-captions">
-              <span>1: Rất ít đúng</span>
-              <span>5: Đúng hoàn toàn</span>
-            </div>
-          </div>
-
-          <div class="field-group">
-            <label for="monday-action-input" class="field-label">2. Một việc bạn sẽ làm trước thứ Hai</label>
-            <input
-              type="text"
-              id="monday-action-input"
-              class="text-input"
-              placeholder="Ví dụ: Viết Bảng sự thật một trang và đặt lên web bằng chữ"
-              autocomplete="off"
-            >
-          </div>
-
-          <button type="button" id="save-pulse-btn" class="btn btn-secondary">Lưu cảm nhận</button>
-          <p id="pulse-status" class="status-toast" role="status" aria-live="polite" hidden></p>
-        </div>
-      </section>
-
       <!-- Thanh tiến trình 4 bước -->
       <nav class="stepper-nav" aria-label="Các bước soi thương hiệu">
         <button type="button" class="step-tab" data-step-target="1" aria-current="step">1. Khai báo</button>
@@ -793,9 +730,27 @@
         <button type="button" class="step-tab" data-step-target="4">4. Chẩn đoán</button>
       </nav>
 
-      <!-- BƯỚC 1: Form thông tin thương hiệu & 3 sự thật -->
+      <!-- BƯỚC 1: Công thức 1 dòng, câu thang 1–5 & form thông tin thương hiệu -->
       <section id="step-1" class="card step-panel" aria-labelledby="step-1-heading">
         <h2 id="step-1-heading" class="section-title">Bước 1 · Thương hiệu và 3 sự thật</h2>
+        <p id="formula-line" class="formula-inline">Agentic Visibility = Brand Reputation × Verifiable Data</p>
+
+        <div id="pulse-step-1" class="pulse-inline-box" aria-labelledby="pulse-heading">
+          <h3 id="pulse-heading" class="sub-title">Đo cảm nhận nhanh</h3>
+          <span id="trust-rating-label" class="field-label">Bạn tin AI đang nói đúng về thương hiệu mình bao nhiêu? (1–5)</span>
+          <div class="rating-scale" role="group" aria-labelledby="trust-rating-label">
+            <button type="button" class="scale-btn" data-rating="1" aria-pressed="false">1</button>
+            <button type="button" class="scale-btn" data-rating="2" aria-pressed="false">2</button>
+            <button type="button" class="scale-btn" data-rating="3" aria-pressed="false">3</button>
+            <button type="button" class="scale-btn" data-rating="4" aria-pressed="false">4</button>
+            <button type="button" class="scale-btn" data-rating="5" aria-pressed="false">5</button>
+          </div>
+          <div class="scale-captions">
+            <span>1: Rất ít đúng</span>
+            <span>5: Đúng hoàn toàn</span>
+          </div>
+        </div>
+
         <p class="section-desc">Không cần đăng nhập, không gọi AI từ máy chủ. Thông tin lưu ngay trên trình duyệt của anh chị.</p>
 
         <form id="brand-form" novalidate>
@@ -865,7 +820,7 @@
       <!-- BƯỚC 2: 3 câu hỏi ghép sẵn đúng nguyên văn kịch bản -->
       <section id="step-2" class="card step-panel" aria-labelledby="step-2-heading" hidden>
         <h2 id="step-2-heading" class="section-title">Bước 2 · Hỏi 2 AI, mỗi câu 3 lần (cuộc trò chuyện mới)</h2>
-        <p class="section-desc">Đừng đo thứ hạng. ChatGPT thay 74% nguồn trích dẫn mỗi tuần. Hỏi hai lần, ra hai danh sách khác nhau. Chép từng câu dưới đây và mở cuộc trò chuyện mới trên cả 2 AI.</p>
+        <p class="section-desc">Đừng đo thứ hạng. Hỏi hai lần, AI có thể ra hai danh sách khác nhau, nên hỏi mỗi câu 3 lần. Chép từng câu dưới đây và mở cuộc trò chuyện mới trên cả 2 AI.</p>
 
         <div class="ai-links-grid">
           <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-chatgpt-link">Mở chatgpt.com ↗</a>
@@ -996,7 +951,7 @@
         </div>
       </section>
 
-      <!-- BƯỚC 4: Điểm 0–100, rơi ở bước X, 3 việc tuần này, kế hoạch 30 ngày, tải Bảng sự thật -->
+      <!-- BƯỚC 4: Điểm 0–100, rơi ở bước X, câu trước thứ Hai, 3 việc tuần này, 5 bước gọn, kế hoạch 30 ngày, tải Bảng sự thật -->
       <section id="step-4" class="card step-panel" aria-labelledby="step-4-heading" hidden>
         <h2 id="step-4-heading" class="section-title">Bước 4 · Điểm 4 chỉ số &amp; Kế hoạch 30 ngày</h2>
 
@@ -1004,6 +959,22 @@
           <p id="diagnosis-brand-line" class="diagnosis-brand">Thương hiệu đang soi</p>
           <h3 id="diagnosis-headline" class="diagnosis-headline">Anh chị đang rơi ở bước 1</h3>
           <p id="diagnosis-detail" class="diagnosis-detail">Không có ở nguồn nó đọc thì vô hình.</p>
+        </div>
+
+        <div id="pulse-step-4" class="pulse-inline-box" aria-labelledby="pulse-step-4-heading">
+          <h3 id="pulse-step-4-heading" class="sub-title">Đo cảm nhận nhanh</h3>
+          <div class="field-group">
+            <label for="monday-action-input" class="field-label">Một việc bạn sẽ làm trước thứ Hai</label>
+            <input
+              type="text"
+              id="monday-action-input"
+              class="text-input"
+              placeholder="Ví dụ: Viết Bảng sự thật một trang và đặt lên web bằng chữ"
+              autocomplete="off"
+            >
+          </div>
+          <button type="button" id="save-pulse-btn" class="btn btn-secondary">Lưu cảm nhận</button>
+          <p id="pulse-status" class="status-toast" role="status" aria-live="polite" hidden></p>
         </div>
 
         <div class="scores-grid" aria-label="Điểm 4 chỉ số từ 0 đến 100">
@@ -1029,19 +1000,7 @@
           </div>
         </div>
 
-        <div class="sub-section">
-          <h3 class="sub-title">Agent đọc thương hiệu qua 5 bước</h3>
-          <p class="field-hint">Không có mặt: bước 1. Sai, nhầm: bước 2 và 3. Không được đề xuất: bước 4 và 5.</p>
-          <ol class="agent-steps-list" id="agent-steps-list">
-            <li class="agent-step-item" data-agent-step="1"><div><strong>Bước 1 · Tìm:</strong> không có ở nguồn nó đọc thì vô hình.</div></li>
-            <li class="agent-step-item" data-agent-step="2"><div><strong>Bước 2 · Nhận diện:</strong> tên ngắn, trùng tên, viết tắt thì bị gán nhầm.</div></li>
-            <li class="agent-step-item" data-agent-step="3"><div><strong>Bước 3 · Đối chiếu:</strong> giá web một kiểu, sàn một kiểu, báo một kiểu thì nó bớt tin.</div></li>
-            <li class="agent-step-item" data-agent-step="4"><div><strong>Bước 4 · Lọc theo khách:</strong> không nói rõ mình dành cho ai thì không được ghép.</div></li>
-            <li class="agent-step-item" data-agent-step="5"><div><strong>Bước 5 · Đề xuất có lý do:</strong> lý do có nguồn thì khách tin; lý do bịa thì mình chịu tiếng.</div></li>
-          </ol>
-        </div>
-
-        <div class="sub-section">
+        <div id="weekly-actions-section" class="sub-section">
           <h3 class="sub-title">3 việc tuần này (trước thứ Hai)</h3>
           <ol class="action-list">
             <li>Hỏi 2 AI, mỗi AI 3 lần, 3 câu trong phiếu. Chụp lại câu trả lời.</li>
@@ -1050,11 +1009,22 @@
           </ol>
         </div>
 
+        <div id="agent-steps-section" class="sub-section">
+          <h3 class="sub-title">Agent đọc thương hiệu qua 5 bước</h3>
+          <ol class="agent-steps-list" id="agent-steps-list">
+            <li class="agent-step-item" data-agent-step="1"><span class="agent-step-name">1. Tìm</span><span class="agent-step-desc">: không có ở nguồn nó đọc thì vô hình.</span></li>
+            <li class="agent-step-item" data-agent-step="2"><span class="agent-step-name">2. Nhận diện</span><span class="agent-step-desc">: tên ngắn, trùng tên, viết tắt thì bị gán nhầm.</span></li>
+            <li class="agent-step-item" data-agent-step="3"><span class="agent-step-name">3. Đối chiếu</span><span class="agent-step-desc">: giá web một kiểu, sàn một kiểu, báo một kiểu thì nó bớt tin.</span></li>
+            <li class="agent-step-item" data-agent-step="4"><span class="agent-step-name">4. Lọc theo khách</span><span class="agent-step-desc">: không nói rõ mình dành cho ai thì không được ghép.</span></li>
+            <li class="agent-step-item" data-agent-step="5"><span class="agent-step-name">5. Đề xuất có lý do</span><span class="agent-step-desc">: lý do có nguồn thì khách tin; lý do bịa thì mình chịu tiếng.</span></li>
+          </ol>
+        </div>
+
         <div class="sub-section">
           <h3 class="sub-title">Kế hoạch 30 ngày</h3>
           <div class="plan-grid">
             <div class="plan-week"><strong>Tuần 1:</strong> Sửa chỗ AI nói sai.</div>
-            <div class="plan-week"><strong>Tuần 2:</strong> Bảng sự thật (là ai, làm gì, cho ai, giá, chính sách, ngày cập nhật — viết bằng chữ, không nhét trong ảnh).</div>
+            <div class="plan-week"><strong>Tuần 2:</strong> Bảng sự thật (là ai, làm gì, cho ai, giá, chính sách, ngày cập nhật). Viết bằng chữ, không nhét trong ảnh.</div>
             <div class="plan-week"><strong>Tuần 3:</strong> Đồng bộ kênh (cùng một tên, giá, địa chỉ trên web, Google, fanpage, sàn, LinkedIn, trang đăng ký doanh nghiệp).</div>
             <div class="plan-week"><strong>Tuần 4:</strong> Thêm bằng chứng bên thứ ba (giải thưởng có link về trang ban tổ chức, chứng nhận có số hiệu, case khách hàng có tên đã xin phép), đo lại.</div>
           </div>
@@ -1121,8 +1091,7 @@
       function getDefaultPulse() {
         return {
           trustRating: 0,
-          mondayAction: '',
-          collapsed: false
+          mondayAction: ''
         };
       }
 
@@ -1178,7 +1147,6 @@
         var rating = Number(raw.trustRating);
         base.trustRating = (rating >= 1 && rating <= 5) ? rating : 0;
         base.mondayAction = typeof raw.mondayAction === 'string' ? raw.mondayAction : '';
-        base.collapsed = Boolean(raw.collapsed);
         return base;
       }
 
@@ -1243,7 +1211,7 @@
           detail = 'AI đang nói sai/nhầm ' + wrongFacts + '/3 sự thật và 2 AI trả lời khác nhau do thông tin giữa các kênh chưa đồng nhất.';
         } else if (wrongFacts > 0) {
           fallingSteps = [2, 3];
-          headline = 'Anh chị đang rơi ở bước 2 (Nhận diện — nhóm bước 2 và 3)';
+          headline = 'Anh chị đang rơi ở bước 2 (Nhận diện, nhóm bước 2 và 3)';
           detail = 'Tên ngắn, trùng tên, viết tắt hoặc thiếu Bảng sự thật bằng chữ khiến AI gán nhầm hoặc tự bịa (' + wrongFacts + '/3 sự thật bị sai).';
         } else if (consistencyScore === 0 || missingFacts > 0) {
           fallingSteps = [3];
@@ -1260,7 +1228,7 @@
         } else {
           fallingSteps = [];
           headline = 'Anh chị vượt qua cả 5 bước (0 bước rơi hiện tại)';
-          detail = 'Đạt 100/100 ở cả 4 chỉ số. Hãy đo lại sau 30 ngày vì ChatGPT thay 74% nguồn trích dẫn mỗi tuần.';
+          detail = 'Đạt 100/100 ở cả 4 chỉ số. Hỏi hai lần, AI có thể ra hai danh sách khác nhau, nên hỏi mỗi câu 3 lần. Hãy đo lại sau 30 ngày.';
         }
 
         return {
@@ -1313,12 +1281,12 @@
           '',
           '## 3. Đồng bộ nhất quán mọi kênh',
           '- **Website chính thức:** [URL]',
-          '- **Google Business Profile:** [URL — kiểm tra khớp tên, địa chỉ, giờ mở cửa, số điện thoại]',
+          '- **Google Business Profile:** [URL, kiểm tra khớp tên, địa chỉ, giờ mở cửa, số điện thoại]',
           '- ** Trang đăng ký doanh nghiệp / Mã số thuế:** [Mã số thuế & tên pháp nhân]',
           '- **Fanpage / LinkedIn / Gian hàng chính thức:** [URL các kênh chính chủ]',
           '',
           '## 4. Bên thứ ba xác nhận & Người thật đứng tên',
-          '- **Chứng nhận / Giải thưởng:** [Tên chứng nhận — Số hiệu — Link trang ban tổ chức]',
+          '- **Chứng nhận / Giải thưởng:** [Tên chứng nhận, số hiệu, link trang ban tổ chức]',
           '- **Khách hàng tiêu biểu (đã xin phép nêu tên):** [Danh sách khách hàng / case study]',
           '- **Người chịu trách nhiệm nội dung sự thật:** [Họ tên, chức danh, hồ sơ công khai]',
           '',
@@ -1341,13 +1309,6 @@
         var mondayInput = document.getElementById('monday-action-input');
         if (mondayInput && mondayInput.value !== pulse.mondayAction) {
           mondayInput.value = pulse.mondayAction;
-        }
-        var pulseBody = document.getElementById('pulse-body');
-        var toggleBtn = document.getElementById('toggle-pulse-btn');
-        if (pulseBody && toggleBtn) {
-          pulseBody.hidden = pulse.collapsed;
-          toggleBtn.setAttribute('aria-expanded', pulse.collapsed ? 'false' : 'true');
-          toggleBtn.textContent = pulse.collapsed ? 'Mở ra' : 'Thu gọn';
         }
       }
 
@@ -1436,16 +1397,6 @@
           var stepNum = Number(li.getAttribute('data-agent-step'));
           var isFalling = diag.fallingSteps.indexOf(stepNum) !== -1;
           li.classList.toggle('is-falling', isFalling);
-          var existingBadge = li.querySelector('.falling-badge');
-          if (existingBadge) {
-            existingBadge.remove();
-          }
-          if (isFalling) {
-            var badge = document.createElement('span');
-            badge.className = 'falling-badge';
-            badge.textContent = 'Đang rơi ở bước ' + stepNum;
-            li.appendChild(badge);
-          }
         });
       }
 
@@ -1538,18 +1489,17 @@
         }
       }
 
-      /* Nối sự kiện khối Đo cảm nhận đầu trang */
-      document.getElementById('toggle-pulse-btn').addEventListener('click', function () {
-        pulse.collapsed = !pulse.collapsed;
-        persistPulse();
-        renderPulse();
-      });
-
+      /* Nối sự kiện Đo cảm nhận nhanh ở đầu Bước 1 và đầu Bước 4 */
       document.querySelectorAll('.scale-btn').forEach(function (btn) {
         btn.addEventListener('click', function () {
           pulse.trustRating = Number(btn.getAttribute('data-rating'));
           persistPulse();
           renderPulse();
+          window.guiKetQua({
+            type: 'cam_nhan_dau_trang',
+            trustRating: pulse.trustRating,
+            mondayAction: pulse.mondayAction
+          });
         });
       });
 

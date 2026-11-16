@@ -145,11 +145,8 @@ test('2. Luồng E2E đầy đủ: 2 câu đầu trang -> Bước 1 -> Bước 2
   const hasGuiKetQua = await page.evaluate(() => typeof window.guiKetQua === 'function');
   expect(hasGuiKetQua).toBe(true);
 
-  // Đầu trang: 2 câu đo cảm nhận
+  // Đầu Bước 1: câu thang 1–5 (không thu gọn)
   await page.locator('.scale-btn[data-rating="2"]').click();
-  await page.fill('#monday-action-input', 'Đặt Bảng sự thật bằng chữ lên trang giới thiệu trước sáng thứ Hai');
-  await page.click('#save-pulse-btn');
-  await expect(page.locator('#pulse-status')).toBeVisible();
 
   // Kiểm tra bắt lỗi khi bấm sang Bước 2 mà để trống Bước 1
   await page.click('#to-step-2-btn');
@@ -164,13 +161,10 @@ test('2. Luồng E2E đầy đủ: 2 câu đầu trang -> Bước 1 -> Bước 2
   await page.fill('#fact-2', 'Đạt chứng nhận ISO 22000:2018, bảng giá niêm yết từ 350.000đ đến 1.200.000đ/hộp');
   await page.fill('#fact-3', '4,8/5 trên 1.450 đánh giá xác thực, 98% đơn bù đổi xử lý trong 24 giờ');
 
-  // Tải lại trang kiểm tra lưu và đọc localStorage
+  // Tải lại trang kiểm tra lưu và đọc localStorage ở Bước 1
   await page.reload();
   await expect(page.locator('#brand-name')).toHaveValue('Trà Bản Mộc');
   await expect(page.locator('.scale-btn[data-rating="2"]')).toHaveAttribute('aria-pressed', 'true');
-  await expect(page.locator('#monday-action-input')).toHaveValue(
-    'Đặt Bảng sự thật bằng chữ lên trang giới thiệu trước sáng thứ Hai'
-  );
 
   // Sang Bước 2 kiểm tra nguyên văn 3 câu hỏi từ KICH-BAN-v5.md
   await page.click('#to-step-2-btn');
@@ -231,6 +225,15 @@ test('2. Luồng E2E đầy đủ: 2 câu đầu trang -> Bước 1 -> Bước 2
   await expect(page.locator('#score-consistency')).toHaveText('100');
   await expect(page.locator('#score-recommendation')).toHaveText('0');
   await expect(page.locator('#diagnosis-headline')).toContainText('đang rơi ở bước 4 và 5');
+
+  // Đầu Bước 4 (sau khi xem chẩn đoán): câu "một việc làm trước thứ Hai" + lưu localStorage
+  await page.fill('#monday-action-input', 'Đặt Bảng sự thật bằng chữ lên trang giới thiệu trước sáng thứ Hai');
+  await page.click('#save-pulse-btn');
+  await expect(page.locator('#pulse-status')).toBeVisible();
+  await page.reload();
+  await expect(page.locator('#monday-action-input')).toHaveValue(
+    'Đặt Bảng sự thật bằng chữ lên trang giới thiệu trước sáng thứ Hai'
+  );
 
   // Kiểm tra tải mẫu "Bảng sự thật 1 trang" (.md) tạo ngay trong trình duyệt
   const downloadPromise = page.waitForEvent('download');
@@ -306,7 +309,6 @@ test('4. Chuẩn 360px & 1280px (chữ >= 16px, nút >= 44px, không cuộn ngan
 
     // Điền dữ liệu thực tế rõ nghĩa để chụp từng bước
     await page.locator('.scale-btn[data-rating="3"]').click();
-    await page.fill('#monday-action-input', 'Viết Bảng sự thật một trang đặt lên web bằng chữ');
     await page.fill('#brand-name', 'Trà Bản Mộc');
     await page.fill('#industry', 'quà tặng trà đặc sản cho doanh nghiệp');
     await page.fill('#target-customer', 'trưởng phòng nhân sự tại công ty 100–500 người');
@@ -317,8 +319,6 @@ test('4. Chuẩn 360px & 1280px (chữ >= 16px, nút >= 44px, không cuộn ngan
 
     for (const stepNum of [1, 2, 3, 4]) {
       if (stepNum === 2) {
-        // Từ Bước 2 thu gọn khối cảm nhận đầu trang để ảnh tập trung vào từng bước
-        await page.click('#toggle-pulse-btn');
         await page.click('#to-step-2-btn');
       } else if (stepNum === 3) {
         await page.click('#to-step-3-btn');
@@ -332,6 +332,7 @@ test('4. Chuẩn 360px & 1280px (chữ >= 16px, nút >= 44px, không cuộn ngan
         await page.locator('.consistent-btn[data-cons-val="khac"]').click();
       } else if (stepNum === 4) {
         await page.click('#to-step-4-btn');
+        await page.fill('#monday-action-input', 'Viết Bảng sự thật một trang đặt lên web bằng chữ');
       }
 
       // Kiểm tra không cuộn ngang, chữ >= 16px, vùng chạm nút >= 44px
@@ -406,4 +407,96 @@ test('4. Chuẩn 360px & 1280px (chữ >= 16px, nút >= 44px, không cuộn ngan
     expect(consoleErrors).toEqual([]);
     await context.close();
   }
+});
+
+test('5. Kiểm tra 5 mục sửa csmo-tool-sua-1', async ({ page }) => {
+  const htmlSource = fs.readFileSync(INDEX_HTML_PATH, 'utf8');
+
+  // Mục 2 & 3: Không còn câu 74%, không còn dấu gạch ngang dài (—)
+  expect(htmlSource).not.toContain('74%');
+  expect(htmlSource).not.toContain('\u2014');
+  expect(htmlSource).not.toContain('&mdash;');
+
+  const consoleErrors = [];
+  await setupOfflineSafePage(page, consoleErrors);
+  await page.setViewportSize({ width: 360, height: 800 });
+  await page.goto(baseUrl);
+
+  // Mục 1 & 4 ở Bước 1: công thức 1 dòng chỉ ở Bước 1; thang 1–5 hiện ở đầu Bước 1, không có nút thu gọn; câu thứ Hai ẩn
+  await expect(page.locator('#toggle-pulse-btn')).toHaveCount(0);
+  await expect(page.locator('#formula-line')).toBeVisible();
+  await expect(page.locator('#formula-line')).toHaveText('Agentic Visibility = Brand Reputation × Verifiable Data');
+  await expect(page.locator('#pulse-step-1')).toBeVisible();
+  await expect(page.locator('#monday-action-input')).toBeHidden();
+
+  // Điền nhanh để đi qua Bước 2, 3, 4
+  await page.fill('#brand-name', 'Trà Bản Mộc');
+  await page.fill('#industry', 'quà tặng trà đặc sản');
+  await page.fill('#target-customer', 'doanh nghiệp 100–500 người');
+  await page.fill('#competitor', 'Trà Việt Cổ');
+  await page.fill('#fact-1', 'Phục vụ 420 doanh nghiệp tính đến 11/2026');
+  await page.fill('#fact-2', 'Đạt ISO 22000:2018, giá từ 350.000đ/hộp');
+  await page.fill('#fact-3', '4,8/5 trên 1.450 đánh giá xác thực');
+
+  // Bước 2: không lặp công thức, có câu mới thay cho câu 74%
+  await page.click('#to-step-2-btn');
+  await expect(page.locator('#formula-line')).toBeHidden();
+  await expect(page.locator('#pulse-step-1')).toBeHidden();
+  await expect(page.locator('#step-2')).toContainText(
+    'Hỏi hai lần, AI có thể ra hai danh sách khác nhau, nên hỏi mỗi câu 3 lần.'
+  );
+  const step2Text = await page.evaluate(() => document.body.innerText);
+  expect(step2Text).not.toContain('\u2014');
+
+  // Bước 3: tích kịch bản rơi ở bước 2 và 3, công thức vẫn ẩn
+  await page.click('#to-step-3-btn');
+  await expect(page.locator('#formula-line')).toBeHidden();
+  await page.locator('.presence-btn[data-presence-index="0"]').click();
+  await page.locator('.presence-btn[data-presence-index="1"]').click();
+  await page.locator('.presence-btn[data-presence-index="3"]').click();
+  await page.locator('.fact-status-btn[data-fact-index="0"][data-fact-val="dung"]').click();
+  await page.locator('.fact-status-btn[data-fact-index="2"][data-fact-val="sai"]').click();
+
+  // Bước 4 trên 360: câu thứ Hai ở đầu Bước 4 (sau chẩn đoán); "3 việc tuần này" ngay dưới 4 ô điểm; "5 bước" chỉ tô bước rơi
+  await page.click('#to-step-4-btn');
+  await expect(page.locator('#formula-line')).toBeHidden();
+  await expect(page.locator('#monday-action-input')).toBeVisible();
+
+  const step4Audit = await page.evaluate(() => {
+    const diagRect = document.getElementById('diagnosis-box').getBoundingClientRect();
+    const pulse4Rect = document.getElementById('pulse-step-4').getBoundingClientRect();
+    const scoresRect = document.querySelector('.scores-grid').getBoundingClientRect();
+    const actionsRect = document.getElementById('weekly-actions-section').getBoundingClientRect();
+    const stepsRect = document.getElementById('agent-steps-section').getBoundingClientRect();
+
+    const stepItems = Array.from(document.querySelectorAll('#agent-steps-list .agent-step-item')).map((li) => {
+      const desc = li.querySelector('.agent-step-desc');
+      return {
+        step: Number(li.getAttribute('data-agent-step')),
+        isFalling: li.classList.contains('is-falling'),
+        descVisible: desc ? getComputedStyle(desc).display !== 'none' : false
+      };
+    });
+
+    return {
+      pulseAfterDiag: pulse4Rect.top >= diagRect.bottom - 1,
+      pulseBeforeScores: pulse4Rect.bottom <= scoresRect.top + 1,
+      actionsRightAfterScores: actionsRect.top >= scoresRect.bottom - 1 && actionsRect.bottom <= stepsRect.top + 1,
+      stepItems,
+      hasEmDash: document.body.innerText.includes('\u2014')
+    };
+  });
+
+  expect(step4Audit.pulseAfterDiag).toBe(true);
+  expect(step4Audit.pulseBeforeScores).toBe(true);
+  expect(step4Audit.actionsRightAfterScores).toBe(true);
+  expect(step4Audit.hasEmDash).toBe(false);
+  expect(step4Audit.stepItems).toEqual([
+    { step: 1, isFalling: false, descVisible: false },
+    { step: 2, isFalling: true, descVisible: true },
+    { step: 3, isFalling: true, descVisible: true },
+    { step: 4, isFalling: false, descVisible: false },
+    { step: 5, isFalling: false, descVisible: false }
+  ]);
+  expect(consoleErrors).toEqual([]);
 });
