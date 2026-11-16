@@ -24,4 +24,4 @@ LUẬT CHUNG cụm event (mọi phiếu ev-*):
 - Ảnh bằng chứng: PNG fullPage ở 1280 và 360 rộng, ≤ 600 KB mỗi tấm, đặt trong bang-chung/<mã phiếu>/ của nhánh và commit.
 - KET-QUA.md ngắn: dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; số pass/fail npm test và e2e (nếu chạy); danh sách xung đột đã gỡ (tệp + cách gỡ); việc còn dở.
 
-nhip: 23:42 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:45 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
