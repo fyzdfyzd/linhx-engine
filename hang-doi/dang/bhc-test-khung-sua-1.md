@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-khung-trang-chu
+nhan: may-2 2026-11-17T02:24:48+0700
+moc: 2c7cd183b8348f4dfd37fc3f2cfb6eec0c1c7255
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh và chờ xong. Trong PowerShell gọi `npm.cmd`/`npx.cmd`. Push nhánh sau MỖI commit. Server chạy bằng Start-Process, nhớ PID, tắt đúng PID.
 Sửa khung B-trang-chu theo chấm Claude (bản 2c7cd18 được 7/10). Làm trên worktree và nhánh agy/bhc-code-khung-trang-chu có sẵn (git pull trước).
