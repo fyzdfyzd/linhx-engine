@@ -15,3 +15,5 @@ Brand health check: nối khung B-trang-chu vào app (thay trang chủ nền t�
 5. Bằng chứng bang-chung/bhc-code-noi-app/: 4 bước × 1280 và 360 trên app thật, video Playwright 1 lượt (ngoài git, chép G:\My Drive\brand-health\bhc-code-noi-app\ nếu có G:).
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON bao-cao/bien-tap, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW. Hết giờ thì push phần đã xong và ghi rõ còn thiếu gì.
 KET-QUA.md: `dat: co|khong`; SHA; E2E pass/fail; verify; phần còn thiếu.
+
+nhip: 05:15 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
