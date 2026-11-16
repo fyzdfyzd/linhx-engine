@@ -16,4 +16,4 @@ Chạy lại test tiền cảnh, chụp lại 8 ảnh vào bang-chung/csmo-tool/
 CẤM: đổi cấu trúc 4 bước, sửa test cũ để cho qua.
 KET-QUA.md: dat: co/khong; SHA; test pass/fail.
 
-nhip: 00:26 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 00:29 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
