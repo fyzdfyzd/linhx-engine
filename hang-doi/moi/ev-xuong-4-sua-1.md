@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-xuong-4
 phu_thuoc: ev-vo-web-3
-nhan: may-2 2026-11-16T23:57:34+0700
 
 Phiếu cụm event.ifagent.net (ev-xuong-4). Bàn giao: C:\linhx\hang-doi\viec\event-ifagent\BAN-GIAO.md (nhánh hang-doi, chỉ đọc). Khung đã duyệt + chữ đã duyệt: C:\linhx\hang-doi\viec\event-ifagent\khung\ (TK-3/4/5 và SP-DOC-CHU-TK-*). Chữ trên màn lấy nguyên văn từ SP-DOC-CHU.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-xuong-4 -b agy/ev-xuong-4 origin/agy/ev-vo-web-3`. Nếu origin/agy/ev-vo-web-3 chưa có thì dừng, ghi CHUA_CO_NEN. Trong apps/event: `npm ci` (hoặc npm i nếu ci lỗi).
@@ -26,4 +25,14 @@ LUẬT CHUNG cụm event (mọi phiếu ev-*):
 - KET-QUA.md ngắn: dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; số pass/fail npm test và e2e (nếu chạy); danh sách xung đột đã gỡ (tệp + cách gỡ); việc còn dở.
 - Bộ quét bí mật của runner đang báo nhầm các dòng CŨ (apps/lab/..., apps/event/test/e2e/platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...) vì mốc so sánh là HEAD clone gốc. KHÔNG sửa/xoá các tệp đó. Không thêm khoá thật vào bất kỳ tệp nào. Nếu phiếu bị đánh "phát hiện bí mật" chỉ với các dòng cũ này thì phiếu sửa chỉ cần kiểm `git diff <base phiếu>..HEAD` không có bí mật mới, ghi vào KET-QUA, xong.
 
-nhip: 00:33 36p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T00:33:35+0700] · root agent idle; waiting up to 40m0s for 1 ba
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-xuong-4
+may: may-2
+trang_thai: loi
+tep_doi: KET-QUA.md, bang-chung/csmo-tool/buoc-1-1280.png, bang-chung/csmo-tool/buoc-1-360.png, bang-chung/csmo-tool/buoc-2-1280.png, bang-chung/csmo-tool/buoc-2-360.png, bang-chung/csmo-tool/buoc-3-1280.png, bang-chung/csmo-tool/buoc-3-360.png, bang-chung/csmo-tool/buoc-4-1280.png, bang-chung/csmo-tool/b...
+drive: (khong)
+phut: 39.21
+token: vao=503836 ra=89992
+
+phát hiện bí mật: apps/event/test/e2e/platform.test.js:38, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:73, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:86, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:111, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:212, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:265, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:275, apps/lab/test/agentic-me-luot.test.js:126, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/yen-lam-t101.test.js:13, apps/veew-booth/server/setup-kiosks.js:7, infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:53, infra/staging/stg-event/chay-cloud.sh:23
