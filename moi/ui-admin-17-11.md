@@ -1,0 +1,10 @@
+may: may-1
+loai: code
+tran_phut: 40
+theo_doi: D:\linhx\wt-ui-admin-17-11
+
+Phiếu UI ADMIN/BTC: ưu tiên màn tổng quan admin, danh sách khách, chi tiết khách, cấu hình. KHÔNG đụng trang Dashboard sự kiện, Tri thức, Kiểm duyệt (phiếu khác làm song song) ngoài token màu dùng chung.
+LUẬT (Linh chốt): TỐI GIẢN: mỗi màn 1 việc chính, 1 nút chính nổi bật, bỏ chữ thừa, icon thay chữ khi rõ nghĩa, khách hình dung được trong 3 giây; nhiều khoảng trắng, một màu nhấn, nhận diện VSMCamp/CSMO + kính mờ Yên Lam (glassmorphism, không khối màu đặc). Icon một bộ thống nhất (nét, cùng độ dày, SVG tự host), nhãn tiếng Việt 1–2 chữ, aria-label, vùng bấm ≥48px. KHÔNG làm vỡ luồng/selector data-* và id đang dùng trong E2E.
+PHƯƠNG ÁN LITE (bản NHẸ, không phải giao diện sáng): cho từng màn một bản chỉ giữ tính năng cốt lõi, ít thành phần, ít bước nhất, tải nhanh (ít ảnh nặng/hiệu ứng, ít JS), chạy tốt khi mạng nghẽn; bật bằng ?ban=lite, KHÔNG đổi mặc định.
+ẢNH SO SÁNH từng màn [hiện tại (nhánh stg-e2e-17-11) | tối giản | lite] ở 360 và 1280, ghép ngang so-sanh-<man>.jpg (≤1800px, JPG 80), kèm so-do.md: KB tải, thời gian tải trên 3G giả lập (Playwright CDP throttling), số bước để xong việc chính, cho từng bản.
+CÁCH LÀM: git clone https://github.com/fyzdfyzd/ifagent D:\linhx\wt-ui-admin-17-11 ; checkout -b ui-admin-17-11 origin/stg-e2e-17-11 ; npm ci trong apps/lab (hoặc theo README) ; chạy app cục bộ để chụp (đọc package.json/README; dùng AI giả, không gọi khoá thật). Mỗi mục 1 commit + test node --test (không sửa test khoá nghiem-thu-*; test khoá 10 tạp chí phải xanh nếu chạm tạp chí). Push nhánh ui-admin-17-11 lên origin. Ảnh: clone https://github.com/fyzdfyzd/linhx-engine nhánh soi-rc8-17-11 vào D:\linhx\wt-soi-ui-admin-17-11, đặt ảnh + so-do.md vào soi/so-sanh-giao-dien/admin/, git pull --rebase rồi push (retry 4 lần). KHÔNG deploy, không đụng prod/staging, không in khoá. Lệnh chạy tiền cảnh. HẠN CỨNG 07:00 giờ VN: hết giờ push phần đã xong, ghi còn thiếu. KET-QUA (≤2000 ký tự): SHA nhánh code, SHA soi, test, số đo, còn thiếu.
