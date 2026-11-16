@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\ev-xuong-4
 phu_thuoc: ev-vo-web-3
+nhan: may-2 2026-11-16T23:57:34+0700
 
 Phiếu cụm event.ifagent.net (ev-xuong-4). Bàn giao: C:\linhx\hang-doi\viec\event-ifagent\BAN-GIAO.md (nhánh hang-doi, chỉ đọc). Khung đã duyệt + chữ đã duyệt: C:\linhx\hang-doi\viec\event-ifagent\khung\ (TK-3/4/5 và SP-DOC-CHU-TK-*). Chữ trên màn lấy nguyên văn từ SP-DOC-CHU.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-xuong-4 -b agy/ev-xuong-4 origin/agy/ev-vo-web-3`. Nếu origin/agy/ev-vo-web-3 chưa có thì dừng, ghi CHUA_CO_NEN. Trong apps/event: `npm ci` (hoặc npm i nếu ci lỗi).
