@@ -14,3 +14,5 @@ Phiếu kiểm nền "Brand health check" (công cụ đo brand IF Agent). CHỈ
 5. Commit chỉ bang-chung/bhc-test-nen/, tiêu đề "bhc: bằng chứng kiểm nền 5942bf0", push `agy/bhc-test-nen`.
 CẤM: sửa bất kỳ file nào ngoài bang-chung/bhc-test-nen/, deploy, gọi AI thật hay dùng khoá API, in khoá/mật khẩu, gửi mail, xoá dữ liệu, tự sinh ảnh bằng AI, push nhánh khác. Gặp việc cần người thì trả CAN-LINH.
 Trả lời KET-QUA.md (ngắn): dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh agy/bhc-test-nen; verify pass/fail; số trang Full/Light mỗi thương hiệu; bảng trang × (console lỗi, tràn 360, PDF tải HTTP); danh sách ảnh đã commit.
+
+nhip: 22:59 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
