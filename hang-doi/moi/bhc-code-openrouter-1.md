@@ -4,7 +4,6 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-openrouter
-phu_thuoc: bhc-code-noi-app-1
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit.
 Brand health check: thêm cổng OpenRouter để hỏi nhiều mô hình AI (chưa có khoá, chỉ dựng + test bằng AI giả).
