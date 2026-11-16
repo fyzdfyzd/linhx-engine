@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soi thương hiệu trong 10 phút · Topic 07</title>
+  <meta name="description" content="Từ Brand Claim đến Verifiable Truth — Tự đo thương hiệu theo 4 chỉ số, biết mình rơi ở bước nào và nhận kế hoạch 30 ngày.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Bảng token thiết kế: tối giản trắng ngà + 1 màu nhấn tương phản cao */
+    :root {
+      --color-bg: #FAF8F4;
+      --color-surface: #FFFFFF;
+      --color-surface-muted: #F2EFE9;
+      --color-text: #18181B;
+      --color-text-muted: #4A4A52;
+      --color-on-accent: #FFFFFF;
+      --color-border: #DDD8CE;
+      --color-border-strong: #9E9585;
+      --color-accent: #B83A1B;
+      --color-accent-hover: #962E14;
+      --color-accent-soft: #FDF2EE;
+      --color-ok: #166534;
+      --color-ok-bg: #ECFDF3;
+      --color-ok-border: #86EFAC;
+      --color-err: #991B1B;
+      --color-err-bg: #FEF2F2;
+      --color-err-border: #FCA5A5;
+
+      --font-sans: 'Be Vietnam Pro', 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
+      --text-base: 1rem;       /* 16px - cỡ chữ nhỏ nhất trên toàn trang */
+      --text-md: 1.125rem;     /* 18px */
+      --text-lg: 1.25rem;      /* 20px */
+      --text-xl: 1.375rem;     /* 22px */
+      --text-2xl: 1.625rem;    /* 26px */
+      --text-score: 2rem;      /* 32px */
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --touch-min: 44px;
+      --touch-lg: 48px;
+      --container-max: 840px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.55;
+      overflow-x: hidden;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    .page-shell {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: var(--space-4) var(--space-4) var(--space-8);
+    }
+
+    /* Đầu trang */
+    .hero-header {
+      padding-bottom: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-4);
+    }
+
+    .event-kicker {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+
+    .hero-title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-2xl);
+      line-height: 1.25;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      margin: 0 0 var(--space-3);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    .formula-banner {
+      background-color: var(--color-surface-muted);
+      border-left: 4px solid var(--color-accent);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: var(--space-3) var(--space-4);
+    }
+
+    .formula-eq {
+      margin: 0 0 var(--space-1);
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-text);
+      overflow-wrap: anywhere;
+    }
+
+    .formula-note {
+      margin: 0;
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    /* Thẻ dùng chung */
+    .card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-xl);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .section-desc {
+      margin: 0 0 var(--space-4);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    .sub-title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-lg);
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    /* Khối 2 câu đo cảm nhận đầu trang */
+    .pulse-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border-strong);
+    }
+
+    .pulse-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-bottom: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    .pulse-header .section-title {
+      margin: 0;
+      font-size: var(--text-lg);
+    }
+
+    .rating-scale {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-top: var(--space-2);
+    }
+
+    .scale-btn {
+      min-height: var(--touch-lg);
+      min-width: var(--touch-min);
+      border: 1.5px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--text-md);
+      font-weight: 700;
+      cursor: pointer;
+      padding: var(--space-2);
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .scale-btn:hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-accent-soft);
+    }
+
+    .scale-btn[aria-pressed="true"] {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
+    }
+
+    .scale-captions {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-2);
+      margin-top: var(--space-1);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    /* Thanh chuyển 4 bước */
+    .stepper-nav {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .step-tab {
+      min-height: var(--touch-lg);
+      min-width: var(--touch-min);
+      padding: var(--space-2) var(--space-3);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+      color: var(--color-text-muted);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .step-tab:hover {
+      border-color: var(--color-accent);
+      color: var(--color-text);
+    }
+
+    .step-tab[aria-current="step"] {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
+    }
+
+    .step-panel[hidden] {
+      display: none !important;
+    }
+
+    /* Biểu mẫu */
+    .field-group {
+      margin-bottom: var(--space-4);
+    }
+
+    .field-grid-two {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: var(--space-2);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .field-hint {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    .text-input,
+    .text-area {
+      width: 100%;
+      min-height: var(--touch-lg);
+      padding: var(--space-3);
+      border: 1.5px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      line-height: 1.45;
+    }
+
+    .text-area {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .sub-section {
+      margin-top: var(--space-5);
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .text-input[aria-invalid="true"],
+    .text-area[aria-invalid="true"] {
+      border-color: var(--color-err);
+      background-color: var(--color-err-bg);
+    }
+
+    .field-error {
+      margin: var(--space-1) 0 0;
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-err);
+    }
+
+    .field-error[hidden] {
+      display: none !important;
+    }
+
+    /* Hộp đối chiếu Claim -> Bằng chứng */
+    .claim-example-box {
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .claim-example-list {
+      margin: var(--space-2) 0 0;
+      padding-left: var(--space-5);
+    }
+
+    .claim-example-list li {
+      margin-bottom: var(--space-2);
+      font-size: var(--text-base);
+    }
+
+    /* Nút bấm */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: var(--touch-lg);
+      min-width: var(--touch-min);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: 1.5px solid transparent;
+      text-align: center;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--color-accent-hover);
+      border-color: var(--color-accent-hover);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-surface);
+      border-color: var(--color-border-strong);
+      color: var(--color-text);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-accent-soft);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .btn-row .btn {
+      flex: 1 1 200px;
+    }
+
+    /* Bước 2: Hộp 3 câu hỏi */
+    .ai-links-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .prompt-card {
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      margin-bottom: var(--space-3);
+    }
+
+    .prompt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-2);
+      margin-bottom: var(--space-2);
+      flex-wrap: wrap;
+    }
+
+    .prompt-tag {
+      font-size: var(--text-base);
+      font-weight: 700;
+      color: var(--color-accent);
+      margin: 0;
+    }
+
+    .prompt-meaning {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    .prompt-text {
+      margin: 0 0 var(--space-3);
+      padding: var(--space-3);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      font-size: var(--text-md);
+      font-weight: 500;
+      color: var(--color-text);
+      overflow-wrap: anywhere;
+    }
+
+    /* Bước 3: Ô tích kết quả */
+    .metric-block {
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      background-color: var(--color-surface);
+    }
+
+    .ai-runs-row {
+      margin-bottom: var(--space-3);
+    }
+
+    .ai-runs-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .ai-runs-label {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      font-weight: 600;
+    }
+
+    .runs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-2);
+    }
+
+    .choice-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .choice-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .toggle-pill {
+      min-height: var(--touch-lg);
+      min-width: var(--touch-min);
+      padding: var(--space-2) var(--space-3);
+      border: 1.5px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+      color: var(--color-text);
+      font-family: var(--font-sans);
+      font-size: var(--text-base);
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: var(--space-2);
+    }
+
+    .toggle-pill:hover {
+      border-color: var(--color-accent);
+      background-color: var(--color-accent-soft);
+    }
+
+    .toggle-pill[aria-pressed="true"],
+    .toggle-pill[aria-checked="true"] {
+      background-color: var(--color-accent);
+      border-color: var(--color-accent);
+      color: var(--color-on-accent);
+    }
+
+    .fact-eval-item {
+      padding: var(--space-3);
+      background-color: var(--color-surface-muted);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+    }
+
+    .fact-eval-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .fact-eval-title {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-base);
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    /* Bước 4: Điểm số, bước rơi, kế hoạch */
+    .diagnosis-banner {
+      background-color: var(--color-accent-soft);
+      border: 2px solid var(--color-accent);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+
+    .diagnosis-brand {
+      margin: 0 0 var(--space-1);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text-muted);
+      overflow-wrap: anywhere;
+    }
+
+    .diagnosis-headline {
+      margin: 0 0 var(--space-2);
+      font-size: var(--text-xl);
+      line-height: 1.3;
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    .diagnosis-detail {
+      margin: 0;
+      font-size: var(--text-base);
+      color: var(--color-text);
+    }
+
+    .scores-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .score-card {
+      background-color: var(--color-surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      padding: var(--space-3);
+    }
+
+    .score-label {
+      margin: 0 0 var(--space-1);
+      font-size: var(--text-base);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .score-value {
+      margin: 0 0 var(--space-1);
+      font-size: var(--text-score);
+      line-height: 1.1;
+      font-weight: 700;
+      color: var(--color-accent);
+    }
+
+    .score-meta {
+      margin: 0;
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    /* Sơ đồ 5 bước Agent đọc thương hiệu */
+    .agent-steps-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: var(--space-2);
+    }
+
+    .agent-step-item {
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface);
+      font-size: var(--text-base);
+    }
+
+    .agent-step-item.is-falling {
+      border: 2px solid var(--color-accent);
+      background-color: var(--color-accent-soft);
+    }
+
+    .falling-badge {
+      display: inline-block;
+      margin-top: var(--space-2);
+      padding: 2px 10px;
+      border-radius: var(--radius-sm);
+      background-color: var(--color-accent);
+      color: var(--color-on-accent);
+      font-size: var(--text-base);
+      font-weight: 700;
+    }
+
+    .action-list {
+      margin: 0;
+      padding-left: var(--space-5);
+    }
+
+    .action-list li {
+      margin-bottom: var(--space-2);
+      font-size: var(--text-base);
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2);
+    }
+
+    .plan-week {
+      padding: var(--space-3);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-surface-muted);
+      font-size: var(--text-base);
+    }
+
+    .status-toast {
+      margin-top: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      background-color: var(--color-ok-bg);
+      border: 1px solid var(--color-ok-border);
+      color: var(--color-ok);
+      font-size: var(--text-base);
+      font-weight: 600;
+    }
+
+    .status-toast[hidden] {
+      display: none !important;
+    }
+
+    .site-footer {
+      margin-top: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-border);
+      font-size: var(--text-base);
+      color: var(--color-text-muted);
+    }
+
+    /* Đáp ứng màn hình lớn (tablet / desktop 1280px) */
+    @media (min-width: 680px) {
+      .page-shell {
+        padding: var(--space-6) var(--space-6) var(--space-8);
+      }
+
+      .hero-title {
+        font-size: 2.125rem;
+      }
+
+      .card {
+        padding: var(--space-6);
+      }
+
+      .stepper-nav {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .field-grid-two {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .ai-links-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .choice-grid-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .choice-grid-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .scores-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .plan-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero-header">
+      <p class="event-kicker">VSMCamp &amp; CSMO Summit 2026 · Topic 07</p>
+      <h1 class="hero-title">Soi thương hiệu trong 10 phút</h1>
+      <p class="hero-subtitle">Từ Brand Claim đến Verifiable Truth — Khi khách nhờ AI chọn hộ, thương hiệu được tin bằng gì?</p>
+      <div class="formula-banner">
+        <p class="formula-eq">Agentic Visibility = Brand Reputation × Verifiable Data</p>
+        <p class="formula-note">Phép nhân, không phải phép cộng. Được yêu mà không kiểm được thì nhân với 0. Dữ liệu đầy đủ mà không ai yêu cũng nhân với 0.</p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <!-- Đầu trang: 2 câu đo cảm nhận (Mục 4 kịch bản) -->
+      <section class="card pulse-card" aria-labelledby="pulse-heading">
+        <div class="pulse-header">
+          <h2 id="pulse-heading" class="section-title">Đo cảm nhận nhanh</h2>
+          <button type="button" id="toggle-pulse-btn" class="btn btn-secondary" aria-expanded="true" aria-controls="pulse-body">Thu gọn</button>
+        </div>
+        <div id="pulse-body">
+          <div class="field-group">
+            <span id="trust-rating-label" class="field-label">1. Bạn tin AI đang nói đúng về thương hiệu mình bao nhiêu? (1–5)</span>
+            <div class="rating-scale" role="group" aria-labelledby="trust-rating-label">
+              <button type="button" class="scale-btn" data-rating="1" aria-pressed="false">1</button>
+              <button type="button" class="scale-btn" data-rating="2" aria-pressed="false">2</button>
+              <button type="button" class="scale-btn" data-rating="3" aria-pressed="false">3</button>
+              <button type="button" class="scale-btn" data-rating="4" aria-pressed="false">4</button>
+              <button type="button" class="scale-btn" data-rating="5" aria-pressed="false">5</button>
+            </div>
+            <div class="scale-captions">
+              <span>1: Rất ít đúng</span>
+              <span>5: Đúng hoàn toàn</span>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="monday-action-input" class="field-label">2. Một việc bạn sẽ làm trước thứ Hai</label>
+            <input
+              type="text"
+              id="monday-action-input"
+              class="text-input"
+              placeholder="Ví dụ: Viết Bảng sự thật một trang và đặt lên web bằng chữ"
+              autocomplete="off"
+            >
+          </div>
+
+          <button type="button" id="save-pulse-btn" class="btn btn-secondary">Lưu cảm nhận</button>
+          <p id="pulse-status" class="status-toast" role="status" aria-live="polite" hidden></p>
+        </div>
+      </section>
+
+      <!-- Thanh tiến trình 4 bước -->
+      <nav class="stepper-nav" aria-label="Các bước soi thương hiệu">
+        <button type="button" class="step-tab" data-step-target="1" aria-current="step">1. Khai báo</button>
+        <button type="button" class="step-tab" data-step-target="2">2. Câu hỏi AI</button>
+        <button type="button" class="step-tab" data-step-target="3">3. Tích kết quả</button>
+        <button type="button" class="step-tab" data-step-target="4">4. Chẩn đoán</button>
+      </nav>
+
+      <!-- BƯỚC 1: Form thông tin thương hiệu & 3 sự thật -->
+      <section id="step-1" class="card step-panel" aria-labelledby="step-1-heading">
+        <h2 id="step-1-heading" class="section-title">Bước 1 · Thương hiệu và 3 sự thật</h2>
+        <p class="section-desc">Không cần đăng nhập, không gọi AI từ máy chủ. Thông tin lưu ngay trên trình duyệt của anh chị.</p>
+
+        <form id="brand-form" novalidate>
+          <div class="field-grid-two">
+            <div class="field-group">
+              <label for="brand-name" class="field-label">Tên thương hiệu *</label>
+              <input type="text" id="brand-name" name="brandName" class="text-input" placeholder="Ví dụ: Cà phê Sơn Nguyên" required>
+              <p id="err-brand-name" class="field-error" hidden>Vui lòng nhập tên thương hiệu.</p>
+            </div>
+
+            <div class="field-group">
+              <label for="industry" class="field-label">Ngành / sản phẩm, dịch vụ *</label>
+              <input type="text" id="industry" name="industry" class="text-input" placeholder="Ví dụ: cà phê đặc sản cho văn phòng" required>
+              <p id="err-industry" class="field-error" hidden>Vui lòng nhập ngành hoặc sản phẩm, dịch vụ.</p>
+            </div>
+
+            <div class="field-group">
+              <label for="target-customer" class="field-label">Khách mục tiêu *</label>
+              <input type="text" id="target-customer" name="targetCustomer" class="text-input" placeholder="Ví dụ: doanh nghiệp 30–200 nhân sự tại Hà Nội" required>
+              <p id="err-target-customer" class="field-error" hidden>Vui lòng nhập khách mục tiêu.</p>
+            </div>
+
+            <div class="field-group">
+              <label for="competitor" class="field-label">Đối thủ chính *</label>
+              <input type="text" id="competitor" name="competitor" class="text-input" placeholder="Ví dụ: chuỗi cà phê văn phòng lớn cùng phân khúc" required>
+              <p id="err-competitor" class="field-error" hidden>Vui lòng nhập đối thủ chính để ghép câu so sánh.</p>
+            </div>
+          </div>
+
+          <div class="claim-example-box">
+            <h3 class="sub-title">3 sự thật kiểm được về mình</h3>
+            <p class="field-hint">Claim là điều mình tự nói. Bằng chứng là điều máy kiểm được. Ví dụ minh hoạ:</p>
+            <ul class="claim-example-list">
+              <li>Thay vì <em>"Thương hiệu số 1 Việt Nam"</em> → <strong>"Phục vụ 1.240 doanh nghiệp tính đến 11/2026, danh sách công khai tại [link]"</strong></li>
+              <li>Thay vì <em>"Chất lượng hàng đầu"</em> → <strong>"Đạt ISO 22000, số chứng nhận …, tra tại trang tổ chức cấp"</strong></li>
+              <li>Thay vì <em>"Được khách hàng tin yêu"</em> → <strong>"4,7/5 trên 3.100 đánh giá, 96% khiếu nại xử lý trong 48 giờ"</strong></li>
+            </ul>
+          </div>
+
+          <div class="field-group">
+            <label for="fact-1" class="field-label">Sự thật 1 (là ai, làm gì, quy mô kiểm được) *</label>
+            <textarea id="fact-1" name="fact1" rows="2" class="text-area" placeholder="Ví dụ: Phục vụ 1.240 doanh nghiệp tính đến 11/2026, danh sách công khai trên web" required></textarea>
+            <p id="err-fact-1" class="field-error" hidden>Vui lòng nhập Sự thật 1.</p>
+          </div>
+
+          <div class="field-group">
+            <label for="fact-2" class="field-label">Sự thật 2 (giá, chính sách hoặc chứng nhận có số hiệu) *</label>
+            <textarea id="fact-2" name="fact2" rows="2" class="text-area" placeholder="Ví dụ: Đạt ISO 22000, giá niêm yết công khai từ 180.000đ/gói" required></textarea>
+            <p id="err-fact-2" class="field-error" hidden>Vui lòng nhập Sự thật 2.</p>
+          </div>
+
+          <div class="field-group">
+            <label for="fact-3" class="field-label">Sự thật 3 (đánh giá khách hàng, cam kết xử lý thực tế) *</label>
+            <textarea id="fact-3" name="fact3" rows="2" class="text-area" placeholder="Ví dụ: 4,7/5 trên 3.100 đánh giá, 96% khiếu nại xử lý trong 48 giờ" required></textarea>
+            <p id="err-fact-3" class="field-error" hidden>Vui lòng nhập Sự thật 3.</p>
+          </div>
+
+          <p id="step-1-saved" class="status-toast" role="status" aria-live="polite" hidden></p>
+
+          <div class="btn-row">
+            <button type="button" id="to-step-2-btn" class="btn btn-primary">Sang Bước 2: Lấy 3 câu hỏi →</button>
+            <button type="button" id="reset-all-btn" class="btn btn-secondary">Xoá dữ liệu làm lại</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- BƯỚC 2: 3 câu hỏi ghép sẵn đúng nguyên văn kịch bản -->
+      <section id="step-2" class="card step-panel" aria-labelledby="step-2-heading" hidden>
+        <h2 id="step-2-heading" class="section-title">Bước 2 · Hỏi 2 AI, mỗi câu 3 lần (cuộc trò chuyện mới)</h2>
+        <p class="section-desc">Đừng đo thứ hạng. ChatGPT thay 74% nguồn trích dẫn mỗi tuần. Hỏi hai lần, ra hai danh sách khác nhau. Chép từng câu dưới đây và mở cuộc trò chuyện mới trên cả 2 AI.</p>
+
+        <div class="ai-links-grid">
+          <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-chatgpt-link">Mở chatgpt.com ↗</a>
+          <a href="https://gemini.google.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="open-gemini-link">Mở gemini.google.com ↗</a>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-header">
+            <h3 class="prompt-tag">Câu 1 · Có mặt</h3>
+            <button type="button" class="btn btn-secondary copy-prompt-btn" data-prompt-id="presence">Chép câu 1</button>
+          </div>
+          <p class="prompt-meaning">Hỏi chung về ngành, AI có tự nhắc tới mình không?</p>
+          <p id="prompt-presence" class="prompt-text"></p>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-header">
+            <h3 class="prompt-tag">Câu 2 · Đúng</h3>
+            <button type="button" class="btn btn-secondary copy-prompt-btn" data-prompt-id="accuracy">Chép câu 2</button>
+          </div>
+          <p class="prompt-meaning">Hỏi thẳng về mình, đúng bao nhiêu ý?</p>
+          <p id="prompt-accuracy" class="prompt-text"></p>
+        </div>
+
+        <div class="prompt-card">
+          <div class="prompt-header">
+            <h3 class="prompt-tag">Câu 3 · Đề xuất</h3>
+            <button type="button" class="btn btn-secondary copy-prompt-btn" data-prompt-id="recommendation">Chép câu 3</button>
+          </div>
+          <p class="prompt-meaning">AI có khuyên chọn mình, vì lý do đúng không?</p>
+          <p id="prompt-recommendation" class="prompt-text"></p>
+        </div>
+
+        <button type="button" id="copy-all-prompts-btn" class="btn btn-secondary">Chép cả 3 câu</button>
+        <p id="copy-status" class="status-toast" role="status" aria-live="polite" hidden></p>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-step-jump="1">← Quay lại Bước 1</button>
+          <button type="button" id="to-step-3-btn" class="btn btn-primary">Sang Bước 3: Tích kết quả →</button>
+        </div>
+      </section>
+
+      <!-- BƯỚC 3: Ô tích kết quả theo 4 chỉ số -->
+      <section id="step-3" class="card step-panel" aria-labelledby="step-3-heading" hidden>
+        <h2 id="step-3-heading" class="section-title">Bước 3 · Tích kết quả theo 4 chỉ số</h2>
+        <p class="section-desc">Đối chiếu câu trả lời vừa nhận từ ChatGPT và Gemini rồi chạm vào kết quả thực tế.</p>
+
+        <!-- Chỉ số 1: Có mặt (2 AI × 3 lần) -->
+        <div class="metric-block">
+          <h3 class="sub-title">1. Có mặt (2 AI × 3 lần hỏi câu 1)</h3>
+          <p class="field-hint">Chạm vào những lần AI tự nhắc tới tên thương hiệu của anh chị (<span id="presence-counter">0/6 lần</span>):</p>
+
+          <div class="ai-runs-row">
+            <p class="ai-runs-label">ChatGPT (3 cuộc trò chuyện mới):</p>
+            <div class="runs-grid" role="group" aria-label="Kết quả Có mặt trên ChatGPT">
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="0" aria-pressed="false">Lần 1</button>
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="1" aria-pressed="false">Lần 2</button>
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="2" aria-pressed="false">Lần 3</button>
+            </div>
+          </div>
+
+          <div class="ai-runs-row">
+            <p class="ai-runs-label">Gemini (3 cuộc trò chuyện mới):</p>
+            <div class="runs-grid" role="group" aria-label="Kết quả Có mặt trên Gemini">
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="3" aria-pressed="false">Lần 1</button>
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="4" aria-pressed="false">Lần 2</button>
+              <button type="button" class="toggle-pill presence-btn" data-presence-index="5" aria-pressed="false">Lần 3</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chỉ số 2: Đúng (3 sự thật: đúng / sai / không nhắc) -->
+        <div class="metric-block">
+          <h3 class="sub-title">2. Đúng (hỏi câu 2 về từng sự thật)</h3>
+          <p class="field-hint">Với mỗi sự thật đã khai ở Bước 1, AI trả lời đúng, nói sai/nhầm hay không nhắc tới?</p>
+
+          <div class="fact-eval-item">
+            <p id="eval-fact-label-0" class="fact-eval-title">Sự thật 1</p>
+            <div class="choice-grid-3" role="radiogroup" aria-labelledby="eval-fact-label-0">
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="0" data-fact-val="dung" aria-checked="false">Đúng</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="0" data-fact-val="sai" aria-checked="false">Sai / nhầm</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="0" data-fact-val="khong_nhac" aria-checked="true">Không nhắc</button>
+            </div>
+          </div>
+
+          <div class="fact-eval-item">
+            <p id="eval-fact-label-1" class="fact-eval-title">Sự thật 2</p>
+            <div class="choice-grid-3" role="radiogroup" aria-labelledby="eval-fact-label-1">
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="1" data-fact-val="dung" aria-checked="false">Đúng</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="1" data-fact-val="sai" aria-checked="false">Sai / nhầm</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="1" data-fact-val="khong_nhac" aria-checked="true">Không nhắc</button>
+            </div>
+          </div>
+
+          <div class="fact-eval-item">
+            <p id="eval-fact-label-2" class="fact-eval-title">Sự thật 3</p>
+            <div class="choice-grid-3" role="radiogroup" aria-labelledby="eval-fact-label-2">
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="2" data-fact-val="dung" aria-checked="false">Đúng</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="2" data-fact-val="sai" aria-checked="false">Sai / nhầm</button>
+              <button type="button" role="radio" class="toggle-pill fact-status-btn" data-fact-index="2" data-fact-val="khong_nhac" aria-checked="true">Không nhắc</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chỉ số 3: Được đề xuất (được khuyên có / không) -->
+        <div class="metric-block">
+          <h3 id="rec-heading" class="sub-title">3. Được đề xuất (hỏi câu 3 so sánh)</h3>
+          <p class="field-hint">AI có khuyên chọn mình vì lý do đúng không?</p>
+          <div class="choice-grid-2" role="radiogroup" aria-labelledby="rec-heading">
+            <button type="button" role="radio" class="toggle-pill recommended-btn" data-rec-val="co" aria-checked="false">Có được khuyên</button>
+            <button type="button" role="radio" class="toggle-pill recommended-btn" data-rec-val="khong" aria-checked="true">Không được khuyên</button>
+          </div>
+        </div>
+
+        <!-- Chỉ số 4: Nhất quán (2 AI giống / khác) -->
+        <div class="metric-block">
+          <h3 id="cons-heading" class="sub-title">4. Nhất quán (đối chiếu ChatGPT và Gemini)</h3>
+          <p class="field-hint">Hai AI có nói giống nhau về tên, sản phẩm, giá và đối tượng khách hàng không?</p>
+          <div class="choice-grid-2" role="radiogroup" aria-labelledby="cons-heading">
+            <button type="button" role="radio" class="toggle-pill consistent-btn" data-cons-val="giong" aria-checked="false">2 AI giống nhau</button>
+            <button type="button" role="radio" class="toggle-pill consistent-btn" data-cons-val="khac" aria-checked="true">2 AI khác nhau</button>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-step-jump="2">← Quay lại Bước 2</button>
+          <button type="button" id="to-step-4-btn" class="btn btn-primary">Xem điểm &amp; Chẩn đoán Bước 4 →</button>
+        </div>
+      </section>
+
+      <!-- BƯỚC 4: Điểm 0–100, rơi ở bước X, 3 việc tuần này, kế hoạch 30 ngày, tải Bảng sự thật -->
+      <section id="step-4" class="card step-panel" aria-labelledby="step-4-heading" hidden>
+        <h2 id="step-4-heading" class="section-title">Bước 4 · Điểm 4 chỉ số &amp; Kế hoạch 30 ngày</h2>
+
+        <div id="diagnosis-box" class="diagnosis-banner" aria-live="polite">
+          <p id="diagnosis-brand-line" class="diagnosis-brand">Thương hiệu đang soi</p>
+          <h3 id="diagnosis-headline" class="diagnosis-headline">Anh chị đang rơi ở bước 1</h3>
+          <p id="diagnosis-detail" class="diagnosis-detail">Không có ở nguồn nó đọc thì vô hình.</p>
+        </div>
+
+        <div class="scores-grid" aria-label="Điểm 4 chỉ số từ 0 đến 100">
+          <div class="score-card">
+            <p class="score-label">Có mặt</p>
+            <p id="score-presence" class="score-value">0</p>
+            <p id="meta-presence" class="score-meta">0/6 lần nhắc tên</p>
+          </div>
+          <div class="score-card">
+            <p class="score-label">Đúng</p>
+            <p id="score-accuracy" class="score-value">0</p>
+            <p id="meta-accuracy" class="score-meta">0/3 sự thật đúng</p>
+          </div>
+          <div class="score-card">
+            <p class="score-label">Được đề xuất</p>
+            <p id="score-recommendation" class="score-value">0</p>
+            <p id="meta-recommendation" class="score-meta">Không được khuyên</p>
+          </div>
+          <div class="score-card">
+            <p class="score-label">Nhất quán</p>
+            <p id="score-consistency" class="score-value">0</p>
+            <p id="meta-consistency" class="score-meta">2 AI khác nhau</p>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <h3 class="sub-title">Agent đọc thương hiệu qua 5 bước</h3>
+          <p class="field-hint">Không có mặt: bước 1. Sai, nhầm: bước 2 và 3. Không được đề xuất: bước 4 và 5.</p>
+          <ol class="agent-steps-list" id="agent-steps-list">
+            <li class="agent-step-item" data-agent-step="1"><div><strong>Bước 1 · Tìm:</strong> không có ở nguồn nó đọc thì vô hình.</div></li>
+            <li class="agent-step-item" data-agent-step="2"><div><strong>Bước 2 · Nhận diện:</strong> tên ngắn, trùng tên, viết tắt thì bị gán nhầm.</div></li>
+            <li class="agent-step-item" data-agent-step="3"><div><strong>Bước 3 · Đối chiếu:</strong> giá web một kiểu, sàn một kiểu, báo một kiểu thì nó bớt tin.</div></li>
+            <li class="agent-step-item" data-agent-step="4"><div><strong>Bước 4 · Lọc theo khách:</strong> không nói rõ mình dành cho ai thì không được ghép.</div></li>
+            <li class="agent-step-item" data-agent-step="5"><div><strong>Bước 5 · Đề xuất có lý do:</strong> lý do có nguồn thì khách tin; lý do bịa thì mình chịu tiếng.</div></li>
+          </ol>
+        </div>
+
+        <div class="sub-section">
+          <h3 class="sub-title">3 việc tuần này (trước thứ Hai)</h3>
+          <ol class="action-list">
+            <li>Hỏi 2 AI, mỗi AI 3 lần, 3 câu trong phiếu. Chụp lại câu trả lời.</li>
+            <li>Viết Bảng sự thật một trang. Đặt lên web bằng chữ.</li>
+            <li>Sửa chỗ lệch thông tin giữa web và Google Business Profile.</li>
+          </ol>
+        </div>
+
+        <div class="sub-section">
+          <h3 class="sub-title">Kế hoạch 30 ngày</h3>
+          <div class="plan-grid">
+            <div class="plan-week"><strong>Tuần 1:</strong> Sửa chỗ AI nói sai.</div>
+            <div class="plan-week"><strong>Tuần 2:</strong> Bảng sự thật (là ai, làm gì, cho ai, giá, chính sách, ngày cập nhật — viết bằng chữ, không nhét trong ảnh).</div>
+            <div class="plan-week"><strong>Tuần 3:</strong> Đồng bộ kênh (cùng một tên, giá, địa chỉ trên web, Google, fanpage, sàn, LinkedIn, trang đăng ký doanh nghiệp).</div>
+            <div class="plan-week"><strong>Tuần 4:</strong> Thêm bằng chứng bên thứ ba (giải thưởng có link về trang ban tổ chức, chứng nhận có số hiệu, case khách hàng có tên đã xin phép), đo lại.</div>
+          </div>
+        </div>
+
+        <div class="sub-section">
+          <h3 class="sub-title">Mẫu "Bảng sự thật 1 trang"</h3>
+          <p class="field-hint">Tạo sẵn file Markdown (.md) ngay trong trình duyệt từ thông tin anh chị vừa khai để đưa lên website bằng chữ.</p>
+          <button type="button" id="download-truth-sheet-btn" class="btn btn-primary">Tải mẫu "Bảng sự thật 1 trang" (.md)</button>
+          <p id="download-status" class="status-toast" role="status" aria-live="polite" hidden></p>
+        </div>
+
+        <div class="sub-section">
+          <h3 class="sub-title">Nhắc đo lại sau 30 ngày (tuỳ chọn)</h3>
+          <p class="field-hint">Ba mươi ngày nữa, anh chị hỏi lại AI đúng câu lúc nãy để đối chiếu tiến bộ.</p>
+          <div class="field-group">
+            <label for="reminder-email" class="field-label">Email nhận lời nhắc (không bắt buộc)</label>
+            <input type="email" id="reminder-email" class="text-input" placeholder="ten@congty.vn" autocomplete="email">
+          </div>
+          <button type="button" id="save-reminder-btn" class="btn btn-secondary">Lưu lịch nhắc 30 ngày</button>
+          <p id="reminder-status" class="status-toast" role="status" aria-live="polite" hidden></p>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn btn-secondary" data-step-jump="3">← Quay lại chỉnh Bước 3</button>
+          <button type="button" class="btn btn-secondary" data-step-jump="1">Về Bước 1 sửa thông tin</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Mười năm qua, thương hiệu thắng là thương hiệu kể chuyện hay nhất. Mười năm tới, thương hiệu thắng là thương hiệu dễ kiểm chứng nhất.</p>
+    </footer>
+  </div>
+
+  <script>
+    /* Hàm để trống chờ nối máy chủ sau theo đúng đề bài (cấm gọi mạng ngoài) */
+    function guiKetQua(payload) {
+      /* Chờ nối máy chủ thu kết quả ẩn danh ở phiên bản sự kiện */
+      void payload;
+    }
+    window.guiKetQua = guiKetQua;
+
+    (function initBrandAuditTool() {
+      var STORAGE_KEY = 'csmo_topic07_brand_tool_v1';
+      var PULSE_KEY = 'csmo_topic07_pulse_v1';
+
+      function getDefaultState() {
+        return {
+          currentStep: 1,
+          brandName: '',
+          industry: '',
+          targetCustomer: '',
+          competitor: '',
+          facts: ['', '', ''],
+          presenceRuns: [false, false, false, false, false, false],
+          factStatuses: ['khong_nhac', 'khong_nhac', 'khong_nhac'],
+          recommended: 'khong',
+          consistent: 'khac',
+          reminderEmail: ''
+        };
+      }
+
+      function getDefaultPulse() {
+        return {
+          trustRating: 0,
+          mondayAction: '',
+          collapsed: false
+        };
+      }
+
+      /* Đọc/ghi localStorage luôn bọc try/catch để không lỗi trong chế độ chặn lưu trữ */
+      function safeReadJson(key, fallbackFactory) {
+        try {
+          var raw = window.localStorage.getItem(key);
+          if (!raw) return fallbackFactory();
+          var parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return fallbackFactory();
+          return parsed;
+        } catch (err) {
+          return fallbackFactory();
+        }
+      }
+
+      function safeWriteJson(key, value) {
+        try {
+          window.localStorage.setItem(key, JSON.stringify(value));
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      function normalizeState(raw) {
+        var base = getDefaultState();
+        var step = Number(raw.currentStep);
+        base.currentStep = (step >= 1 && step <= 4) ? step : 1;
+        base.brandName = typeof raw.brandName === 'string' ? raw.brandName : '';
+        base.industry = typeof raw.industry === 'string' ? raw.industry : '';
+        base.targetCustomer = typeof raw.targetCustomer === 'string' ? raw.targetCustomer : '';
+        base.competitor = typeof raw.competitor === 'string' ? raw.competitor : '';
+        if (Array.isArray(raw.facts) && raw.facts.length === 3) {
+          base.facts = raw.facts.map(function (item) { return typeof item === 'string' ? item : ''; });
+        }
+        if (Array.isArray(raw.presenceRuns) && raw.presenceRuns.length === 6) {
+          base.presenceRuns = raw.presenceRuns.map(Boolean);
+        }
+        if (Array.isArray(raw.factStatuses) && raw.factStatuses.length === 3) {
+          base.factStatuses = raw.factStatuses.map(function (val) {
+            return (val === 'dung' || val === 'sai' || val === 'khong_nhac') ? val : 'khong_nhac';
+          });
+        }
+        base.recommended = raw.recommended === 'co' ? 'co' : 'khong';
+        base.consistent = raw.consistent === 'giong' ? 'giong' : 'khac';
+        base.reminderEmail = typeof raw.reminderEmail === 'string' ? raw.reminderEmail : '';
+        return base;
+      }
+
+      function normalizePulse(raw) {
+        var base = getDefaultPulse();
+        var rating = Number(raw.trustRating);
+        base.trustRating = (rating >= 1 && rating <= 5) ? rating : 0;
+        base.mondayAction = typeof raw.mondayAction === 'string' ? raw.mondayAction : '';
+        base.collapsed = Boolean(raw.collapsed);
+        return base;
+      }
+
+      var state = normalizeState(safeReadJson(STORAGE_KEY, getDefaultState));
+      var pulse = normalizePulse(safeReadJson(PULSE_KEY, getDefaultPulse));
+
+      function persistState() {
+        safeWriteJson(STORAGE_KEY, state);
+      }
+
+      function persistPulse() {
+        safeWriteJson(PULSE_KEY, pulse);
+      }
+
+      function showToast(elementId, message) {
+        var el = document.getElementById(elementId);
+        if (!el) return;
+        el.textContent = message;
+        el.hidden = false;
+      }
+
+      /* Ghép đúng nguyên văn 3 câu hỏi mục 3 KICH-BAN-v5.md */
+      function buildPrompts() {
+        var name = state.brandName.trim() || '[Tên]';
+        var industry = state.industry.trim() || '[ngành]';
+        var customer = state.targetCustomer.trim() || '[khách]';
+        var competitor = state.competitor.trim() || '[Đối thủ]';
+
+        return {
+          presence: 'Tôi đang tìm ' + industry + ' tại Việt Nam cho ' + customer + '. Giới thiệu 5 lựa chọn đáng cân nhắc nhất và lý do.',
+          accuracy: name + ' là ai, làm gì, bán gì, cho ai, giá khoảng bao nhiêu? Nêu nguồn.',
+          recommendation: 'So sánh ' + name + ' với ' + competitor + '. Nếu tôi là ' + customer + ', bạn khuyên chọn bên nào, vì sao?'
+        };
+      }
+
+      /* Tính điểm 0–100 cho 4 chỉ số và xác định "đang rơi ở bước X" theo mục 2 phút 9:00 */
+      function computeDiagnosis() {
+        var presenceCount = state.presenceRuns.filter(Boolean).length;
+        var presenceScore = Math.round((presenceCount / 6) * 100);
+
+        var correctFacts = state.factStatuses.filter(function (s) { return s === 'dung'; }).length;
+        var wrongFacts = state.factStatuses.filter(function (s) { return s === 'sai'; }).length;
+        var missingFacts = state.factStatuses.filter(function (s) { return s === 'khong_nhac'; }).length;
+        var accuracyScore = Math.round((correctFacts / 3) * 100);
+
+        var recommendationScore = state.recommended === 'co' ? 100 : 0;
+        var consistencyScore = state.consistent === 'giong' ? 100 : 0;
+
+        var headline = '';
+        var detail = '';
+        var fallingSteps = [];
+
+        /* Ánh xạ đúng nguyên văn phút 9:00:
+           "Không có mặt: bước 1. Sai, nhầm: bước 2 và 3. Không được đề xuất: bước 4 và 5." */
+        if (presenceCount === 0 || presenceScore < 34) {
+          fallingSteps = [1];
+          headline = 'Anh chị đang rơi ở bước 1 (Tìm)';
+          detail = 'Không có ở nguồn AI đọc thì vô hình (mới xuất hiện ' + presenceCount + '/6 lần khi khách hỏi chung về ngành).';
+        } else if (wrongFacts > 0 && consistencyScore === 0) {
+          fallingSteps = [2, 3];
+          headline = 'Anh chị đang rơi ở bước 2 và 3 (Nhận diện & Đối chiếu)';
+          detail = 'AI đang nói sai/nhầm ' + wrongFacts + '/3 sự thật và 2 AI trả lời khác nhau do thông tin giữa các kênh chưa đồng nhất.';
+        } else if (wrongFacts > 0) {
+          fallingSteps = [2, 3];
+          headline = 'Anh chị đang rơi ở bước 2 (Nhận diện — nhóm bước 2 và 3)';
+          detail = 'Tên ngắn, trùng tên, viết tắt hoặc thiếu Bảng sự thật bằng chữ khiến AI gán nhầm hoặc tự bịa (' + wrongFacts + '/3 sự thật bị sai).';
+        } else if (consistencyScore === 0 || missingFacts > 0) {
+          fallingSteps = [3];
+          headline = 'Anh chị đang rơi ở bước 3 (Đối chiếu)';
+          detail = 'Giá web một kiểu, sàn một kiểu, báo một kiểu hoặc sự thật chưa viết rõ bằng chữ trên web nên AI đối chiếu lệch / bỏ sót.';
+        } else if (recommendationScore === 0) {
+          fallingSteps = [4, 5];
+          headline = 'Anh chị đang rơi ở bước 4 và 5 (Lọc theo khách & Đề xuất có lý do)';
+          detail = 'Đã có mặt và đúng sự thật nhưng chưa nói rõ mình dành cho ai hoặc thiếu bằng chứng bên thứ ba để AI khuyên chọn trước đối thủ.';
+        } else if (presenceScore < 100) {
+          fallingSteps = [1];
+          headline = 'Anh chị đang rơi nhẹ ở bước 1 (Tìm)';
+          detail = 'Khi nhớ ra thì AI nói đúng và khuyên chọn, nhưng mới xuất hiện ' + presenceCount + '/6 lần khi hỏi chung về ngành.';
+        } else {
+          fallingSteps = [];
+          headline = 'Anh chị vượt qua cả 5 bước (0 bước rơi hiện tại)';
+          detail = 'Đạt 100/100 ở cả 4 chỉ số. Hãy đo lại sau 30 ngày vì ChatGPT thay 74% nguồn trích dẫn mỗi tuần.';
+        }
+
+        return {
+          presenceCount: presenceCount,
+          presenceScore: presenceScore,
+          correctFacts: correctFacts,
+          wrongFacts: wrongFacts,
+          accuracyScore: accuracyScore,
+          recommendationScore: recommendationScore,
+          consistencyScore: consistencyScore,
+          headline: headline,
+          detail: detail,
+          fallingSteps: fallingSteps
+        };
+      }
+
+      /* Tạo nội dung mẫu Bảng sự thật 1 trang (.md) trong trình duyệt */
+      function buildTruthSheetMarkdown() {
+        var today = new Date().toISOString().slice(0, 10);
+        var brand = state.brandName.trim() || '[Tên thương hiệu]';
+        var industry = state.industry.trim() || '[Ngành / sản phẩm, dịch vụ]';
+        var customer = state.targetCustomer.trim() || '[Khách mục tiêu]';
+        var competitor = state.competitor.trim() || '[Đối thủ cùng phân khúc]';
+        var f1 = state.facts[0].trim() || '[Điền sự thật 1 kèm con số và đường dẫn kiểm chứng]';
+        var f2 = state.facts[1].trim() || '[Điền sự thật 2 kèm số hiệu chứng nhận / bảng giá công khai]';
+        var f3 = state.facts[2].trim() || '[Điền sự thật 3 kèm số lượng đánh giá và thời gian xử lý khiếu nại]';
+        var diag = computeDiagnosis();
+
+        return [
+          '# BẢNG SỰ THẬT THƯƠNG HIỆU (1 TRANG)',
+          '',
+          '> Đặt trang này công khai trên website bằng chữ (HTML/văn bản), không nhét thông tin quan trọng vào ảnh.',
+          '> Ngày cập nhật gần nhất: ' + today,
+          '',
+          '## 1. Sự thật có cấu trúc (Định danh rõ để không bị gán nhầm)',
+          '- **Tên chính thức:** ' + brand,
+          '- **Tên viết tắt / tên thường gọi (nếu có):** [Ghi rõ hoặc ghi "Không dùng tên viết tắt"]',
+          '- **Ngành / sản phẩm, dịch vụ chính:** ' + industry,
+          '- **Dành cho khách hàng mục tiêu:** ' + customer,
+          '- **Không dành cho (để tránh bán sai tệp):** [Ghi rõ nhóm khách không phù hợp]',
+          '- **Khoảng giá niêm yết:** [Ghi khoảng giá + đơn vị tính + ngày áp dụng]',
+          '- **Chính sách bảo hành / đổi trả / SLA:** [Ghi rõ thời hạn xử lý bằng con số]',
+          '',
+          '## 2. Ba sự thật cốt lõi & Bằng chứng máy đọc được',
+          '| Sự thật công bố | Bằng chứng kiểm được (số hiệu, đường dẫn công khai) |',
+          '|---|---|',
+          '| ' + f1.replace(/\|/g, '\\|') + ' | [Dán đường dẫn công khai] |',
+          '| ' + f2.replace(/\|/g, '\\|') + ' | [Dán số chứng nhận / trang tra cứu] |',
+          '| ' + f3.replace(/\|/g, '\\|') + ' | [Dán đường dẫn trang đánh giá / báo cáo] |',
+          '',
+          '## 3. Đồng bộ nhất quán mọi kênh',
+          '- **Website chính thức:** [URL]',
+          '- **Google Business Profile:** [URL — kiểm tra khớp tên, địa chỉ, giờ mở cửa, số điện thoại]',
+          '- ** Trang đăng ký doanh nghiệp / Mã số thuế:** [Mã số thuế & tên pháp nhân]',
+          '- **Fanpage / LinkedIn / Gian hàng chính thức:** [URL các kênh chính chủ]',
+          '',
+          '## 4. Bên thứ ba xác nhận & Người thật đứng tên',
+          '- **Chứng nhận / Giải thưởng:** [Tên chứng nhận — Số hiệu — Link trang ban tổ chức]',
+          '- **Khách hàng tiêu biểu (đã xin phép nêu tên):** [Danh sách khách hàng / case study]',
+          '- **Người chịu trách nhiệm nội dung sự thật:** [Họ tên, chức danh, hồ sơ công khai]',
+          '',
+          '## 5. Mốc tự đo gần nhất (' + today + ')',
+          '- **Có mặt:** ' + diag.presenceScore + '/100 (' + diag.presenceCount + '/6 lần)',
+          '- **Đúng:** ' + diag.accuracyScore + '/100 (' + diag.correctFacts + '/3 sự thật đúng)',
+          '- **Được đề xuất (so với ' + competitor + '):** ' + diag.recommendationScore + '/100',
+          '- **Nhất quán giữa ChatGPT & Gemini:** ' + diag.consistencyScore + '/100',
+          '- **Chẩn đoán:** ' + diag.headline,
+          ''
+        ].join('\n');
+      }
+
+      function renderPulse() {
+        var scaleBtns = document.querySelectorAll('.scale-btn');
+        scaleBtns.forEach(function (btn) {
+          var val = Number(btn.getAttribute('data-rating'));
+          btn.setAttribute('aria-pressed', val === pulse.trustRating ? 'true' : 'false');
+        });
+        var mondayInput = document.getElementById('monday-action-input');
+        if (mondayInput && mondayInput.value !== pulse.mondayAction) {
+          mondayInput.value = pulse.mondayAction;
+        }
+        var pulseBody = document.getElementById('pulse-body');
+        var toggleBtn = document.getElementById('toggle-pulse-btn');
+        if (pulseBody && toggleBtn) {
+          pulseBody.hidden = pulse.collapsed;
+          toggleBtn.setAttribute('aria-expanded', pulse.collapsed ? 'false' : 'true');
+          toggleBtn.textContent = pulse.collapsed ? 'Mở ra' : 'Thu gọn';
+        }
+      }
+
+      function renderFormInputs() {
+        var map = [
+          ['brand-name', state.brandName],
+          ['industry', state.industry],
+          ['target-customer', state.targetCustomer],
+          ['competitor', state.competitor],
+          ['fact-1', state.facts[0]],
+          ['fact-2', state.facts[1]],
+          ['fact-3', state.facts[2]],
+          ['reminder-email', state.reminderEmail]
+        ];
+        map.forEach(function (pair) {
+          var el = document.getElementById(pair[0]);
+          if (el && el.value !== pair[1]) {
+            el.value = pair[1];
+          }
+        });
+      }
+
+      function renderPrompts() {
+        var prompts = buildPrompts();
+        document.getElementById('prompt-presence').textContent = prompts.presence;
+        document.getElementById('prompt-accuracy').textContent = prompts.accuracy;
+        document.getElementById('prompt-recommendation').textContent = prompts.recommendation;
+      }
+
+      function renderStep3Controls() {
+        var count = state.presenceRuns.filter(Boolean).length;
+        document.getElementById('presence-counter').textContent = count + '/6 lần';
+
+        document.querySelectorAll('.presence-btn').forEach(function (btn) {
+          var idx = Number(btn.getAttribute('data-presence-index'));
+          btn.setAttribute('aria-pressed', state.presenceRuns[idx] ? 'true' : 'false');
+        });
+
+        for (var i = 0; i < 3; i++) {
+          var labelEl = document.getElementById('eval-fact-label-' + i);
+          var text = state.facts[i].trim();
+          labelEl.textContent = 'Sự thật ' + (i + 1) + (text ? ': "' + text + '"' : ' (chưa nhập chi tiết ở Bước 1)');
+        }
+
+        document.querySelectorAll('.fact-status-btn').forEach(function (btn) {
+          var fIdx = Number(btn.getAttribute('data-fact-index'));
+          var fVal = btn.getAttribute('data-fact-val');
+          btn.setAttribute('aria-checked', state.factStatuses[fIdx] === fVal ? 'true' : 'false');
+        });
+
+        document.querySelectorAll('.recommended-btn').forEach(function (btn) {
+          var val = btn.getAttribute('data-rec-val');
+          btn.setAttribute('aria-checked', state.recommended === val ? 'true' : 'false');
+        });
+
+        document.querySelectorAll('.consistent-btn').forEach(function (btn) {
+          var val = btn.getAttribute('data-cons-val');
+          btn.setAttribute('aria-checked', state.consistent === val ? 'true' : 'false');
+        });
+      }
+
+      function renderStep4Diagnosis() {
+        var diag = computeDiagnosis();
+        var brandTitle = state.brandName.trim() || 'Thương hiệu của anh chị';
+        var indTitle = state.industry.trim();
+        document.getElementById('diagnosis-brand-line').textContent =
+          indTitle ? (brandTitle + ' · ' + indTitle) : brandTitle;
+        document.getElementById('diagnosis-headline').textContent = diag.headline;
+        document.getElementById('diagnosis-detail').textContent = diag.detail;
+
+        document.getElementById('score-presence').textContent = String(diag.presenceScore);
+        document.getElementById('meta-presence').textContent = diag.presenceCount + '/6 lần nhắc tên';
+
+        document.getElementById('score-accuracy').textContent = String(diag.accuracyScore);
+        document.getElementById('meta-accuracy').textContent = diag.correctFacts + '/3 sự thật đúng';
+
+        document.getElementById('score-recommendation').textContent = String(diag.recommendationScore);
+        document.getElementById('meta-recommendation').textContent =
+          state.recommended === 'co' ? 'Có được khuyên' : 'Không được khuyên';
+
+        document.getElementById('score-consistency').textContent = String(diag.consistencyScore);
+        document.getElementById('meta-consistency').textContent =
+          state.consistent === 'giong' ? '2 AI giống nhau' : '2 AI khác nhau';
+
+        document.querySelectorAll('#agent-steps-list .agent-step-item').forEach(function (li) {
+          var stepNum = Number(li.getAttribute('data-agent-step'));
+          var isFalling = diag.fallingSteps.indexOf(stepNum) !== -1;
+          li.classList.toggle('is-falling', isFalling);
+          var existingBadge = li.querySelector('.falling-badge');
+          if (existingBadge) {
+            existingBadge.remove();
+          }
+          if (isFalling) {
+            var badge = document.createElement('span');
+            badge.className = 'falling-badge';
+            badge.textContent = 'Đang rơi ở bước ' + stepNum;
+            li.appendChild(badge);
+          }
+        });
+      }
+
+      function setActiveStep(stepNumber, shouldScroll) {
+        state.currentStep = stepNumber;
+        persistState();
+
+        for (var s = 1; s <= 4; s++) {
+          var panel = document.getElementById('step-' + s);
+          if (panel) {
+            panel.hidden = (s !== stepNumber);
+          }
+        }
+
+        document.querySelectorAll('.step-tab').forEach(function (tab) {
+          var target = Number(tab.getAttribute('data-step-target'));
+          if (target === stepNumber) {
+            tab.setAttribute('aria-current', 'step');
+          } else {
+            tab.removeAttribute('aria-current');
+          }
+        });
+
+        renderPrompts();
+        renderStep3Controls();
+        renderStep4Diagnosis();
+
+        if (shouldScroll) {
+          var activePanel = document.getElementById('step-' + stepNumber);
+          if (activePanel && typeof activePanel.scrollIntoView === 'function') {
+            activePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      }
+
+      function validateStep1() {
+        var checks = [
+          ['brand-name', 'err-brand-name', state.brandName],
+          ['industry', 'err-industry', state.industry],
+          ['target-customer', 'err-target-customer', state.targetCustomer],
+          ['competitor', 'err-competitor', state.competitor],
+          ['fact-1', 'err-fact-1', state.facts[0]],
+          ['fact-2', 'err-fact-2', state.facts[1]],
+          ['fact-3', 'err-fact-3', state.facts[2]]
+        ];
+        var firstInvalid = null;
+        checks.forEach(function (item) {
+          var inputEl = document.getElementById(item[0]);
+          var errEl = document.getElementById(item[1]);
+          var ok = item[2].trim().length > 0;
+          inputEl.setAttribute('aria-invalid', ok ? 'false' : 'true');
+          errEl.hidden = ok;
+          if (!ok && !firstInvalid) {
+            firstInvalid = inputEl;
+          }
+        });
+        if (firstInvalid) {
+          firstInvalid.focus();
+          return false;
+        }
+        return true;
+      }
+
+      function copyTextToClipboard(text, callback) {
+        if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+          navigator.clipboard.writeText(text).then(function () {
+            callback(true);
+          }).catch(function () {
+            fallbackCopy(text, callback);
+          });
+          return;
+        }
+        fallbackCopy(text, callback);
+      }
+
+      function fallbackCopy(text, callback) {
+        try {
+          var temp = document.createElement('textarea');
+          temp.value = text;
+          temp.setAttribute('readonly', '');
+          temp.style.position = 'fixed';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.select();
+          var copied = document.execCommand('copy');
+          document.body.removeChild(temp);
+          callback(Boolean(copied));
+        } catch (err) {
+          callback(false);
+        }
+      }
+
+      /* Nối sự kiện khối Đo cảm nhận đầu trang */
+      document.getElementById('toggle-pulse-btn').addEventListener('click', function () {
+        pulse.collapsed = !pulse.collapsed;
+        persistPulse();
+        renderPulse();
+      });
+
+      document.querySelectorAll('.scale-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          pulse.trustRating = Number(btn.getAttribute('data-rating'));
+          persistPulse();
+          renderPulse();
+        });
+      });
+
+      document.getElementById('monday-action-input').addEventListener('input', function (e) {
+        pulse.mondayAction = e.target.value;
+        persistPulse();
+      });
+
+      document.getElementById('save-pulse-btn').addEventListener('click', function () {
+        persistPulse();
+        window.guiKetQua({
+          type: 'cam_nhan_dau_trang',
+          trustRating: pulse.trustRating,
+          mondayAction: pulse.mondayAction
+        });
+        showToast('pulse-status', 'Đã lưu câu trả lời trên thiết bị của anh chị.');
+      });
+
+      /* Nối sự kiện thanh chuyển bước */
+      document.querySelectorAll('.step-tab').forEach(function (tab) {
+        tab.addEventListener('click', function () {
+          var target = Number(tab.getAttribute('data-step-target'));
+          setActiveStep(target, false);
+        });
+      });
+
+      document.querySelectorAll('[data-step-jump]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var target = Number(btn.getAttribute('data-step-jump'));
+          setActiveStep(target, true);
+        });
+      });
+
+      /* Nối sự kiện Bước 1 */
+      function bindStep1Input(elementId, updater, errorId) {
+        var el = document.getElementById(elementId);
+        el.addEventListener('input', function () {
+          updater(el.value);
+          if (el.value.trim().length > 0) {
+            el.setAttribute('aria-invalid', 'false');
+            var errEl = document.getElementById(errorId);
+            if (errEl) errEl.hidden = true;
+          }
+          persistState();
+          renderPrompts();
+          renderStep3Controls();
+          renderStep4Diagnosis();
+          showToast('step-1-saved', 'Đã tự động lưu trên trình duyệt.');
+        });
+      }
+
+      bindStep1Input('brand-name', function (v) { state.brandName = v; }, 'err-brand-name');
+      bindStep1Input('industry', function (v) { state.industry = v; }, 'err-industry');
+      bindStep1Input('target-customer', function (v) { state.targetCustomer = v; }, 'err-target-customer');
+      bindStep1Input('competitor', function (v) { state.competitor = v; }, 'err-competitor');
+      bindStep1Input('fact-1', function (v) { state.facts[0] = v; }, 'err-fact-1');
+      bindStep1Input('fact-2', function (v) { state.facts[1] = v; }, 'err-fact-2');
+      bindStep1Input('fact-3', function (v) { state.facts[2] = v; }, 'err-fact-3');
+
+      document.getElementById('to-step-2-btn').addEventListener('click', function () {
+        if (!validateStep1()) return;
+        setActiveStep(2, true);
+      });
+
+      document.getElementById('reset-all-btn').addEventListener('click', function () {
+        state = getDefaultState();
+        try {
+          window.localStorage.removeItem(STORAGE_KEY);
+        } catch (err) {
+          /* Bỏ qua nếu trình duyệt chặn localStorage */
+        }
+        renderFormInputs();
+        setActiveStep(1, false);
+        showToast('step-1-saved', 'Đã xoá dữ liệu để nhập thương hiệu mới.');
+      });
+
+      /* Nối sự kiện Bước 2 */
+      document.querySelectorAll('.copy-prompt-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var key = btn.getAttribute('data-prompt-id');
+          var prompts = buildPrompts();
+          var text = prompts[key] || '';
+          var originalLabel = btn.textContent;
+          copyTextToClipboard(text, function () {
+            btn.textContent = 'Đã chép';
+            showToast('copy-status', 'Đã chép câu hỏi vào bộ nhớ tạm.');
+            window.setTimeout(function () {
+              btn.textContent = originalLabel;
+            }, 1800);
+          });
+        });
+      });
+
+      document.getElementById('copy-all-prompts-btn').addEventListener('click', function () {
+        var p = buildPrompts();
+        var combined = [
+          '1. Có mặt: ' + p.presence,
+          '2. Đúng: ' + p.accuracy,
+          '3. Đề xuất: ' + p.recommendation
+        ].join('\n\n');
+        copyTextToClipboard(combined, function () {
+          showToast('copy-status', 'Đã chép cả 3 câu hỏi vào bộ nhớ tạm.');
+        });
+      });
+
+      document.getElementById('to-step-3-btn').addEventListener('click', function () {
+        setActiveStep(3, true);
+      });
+
+      /* Nối sự kiện Bước 3 */
+      document.querySelectorAll('.presence-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var idx = Number(btn.getAttribute('data-presence-index'));
+          state.presenceRuns[idx] = !state.presenceRuns[idx];
+          persistState();
+          renderStep3Controls();
+          renderStep4Diagnosis();
+        });
+      });
+
+      document.querySelectorAll('.fact-status-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var fIdx = Number(btn.getAttribute('data-fact-index'));
+          var fVal = btn.getAttribute('data-fact-val');
+          state.factStatuses[fIdx] = fVal;
+          persistState();
+          renderStep3Controls();
+          renderStep4Diagnosis();
+        });
+      });
+
+      document.querySelectorAll('.recommended-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.recommended = btn.getAttribute('data-rec-val');
+          persistState();
+          renderStep3Controls();
+          renderStep4Diagnosis();
+        });
+      });
+
+      document.querySelectorAll('.consistent-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          state.consistent = btn.getAttribute('data-cons-val');
+          persistState();
+          renderStep3Controls();
+          renderStep4Diagnosis();
+        });
+      });
+
+      document.getElementById('to-step-4-btn').addEventListener('click', function () {
+        var diag = computeDiagnosis();
+        window.guiKetQua({
+          type: 'ket_qua_4_chi_so',
+          scores: {
+            presence: diag.presenceScore,
+            accuracy: diag.accuracyScore,
+            recommendation: diag.recommendationScore,
+            consistency: diag.consistencyScore
+          },
+          fallingSteps: diag.fallingSteps
+        });
+        setActiveStep(4, true);
+      });
+
+      /* Nối sự kiện Bước 4: Tải Bảng sự thật (.md) và lưu nhắc 30 ngày */
+      document.getElementById('download-truth-sheet-btn').addEventListener('click', function () {
+        var mdContent = buildTruthSheetMarkdown();
+        var blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        var slug = (state.brandName.trim() || 'thuong-hieu')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .replace(/[đĐ]/g, 'd')
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '') || 'thuong-hieu';
+        link.href = url;
+        link.download = 'bang-su-that-1-trang-' + slug + '.md';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.setTimeout(function () {
+          URL.revokeObjectURL(url);
+        }, 1000);
+        showToast('download-status', 'Đã tạo và tải về file ' + link.download);
+      });
+
+      document.getElementById('reminder-email').addEventListener('input', function (e) {
+        state.reminderEmail = e.target.value;
+        persistState();
+      });
+
+      document.getElementById('save-reminder-btn').addEventListener('click', function () {
+        persistState();
+        window.guiKetQua({
+          type: 'nhac_30_ngay',
+          email: state.reminderEmail.trim()
+        });
+        showToast('reminder-status', 'Đã lưu thông tin nhắc đo lại sau 30 ngày.');
+      });
+
+      /* Khởi chạy lần đầu */
+      renderPulse();
+      renderFormInputs();
+      setActiveStep(state.currentStep, false);
+    })();
+  </script>
+</body>
+</html>
