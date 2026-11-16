@@ -20,4 +20,4 @@ Phiếu cụm event.ifagent.net (ev-sang-8): bổ sung GIAO DIỆN SÁNG (anh Li
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-sang-8/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không tự viết chữ mới trên màn (chỉ thêm 2 nhãn nút ở trên). Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff origin/agy/ev-tran-7..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; trang nào chưa đạt tương phản.
 
-nhip: 05:27 14p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T05:27:26+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 05:30 17p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-17T05:29:09+0700] · root agent idle; waiting up to 40m0s for 1 ba
