@@ -15,3 +15,5 @@ Brand health check: bỏ chữ kỹ thuật khỏi phần người xem đọc. C
 6. Commit từng ý, push `agy/bhc-code-nhan-nguon`.
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON trong bao-cao/bien-tap, đụng apps/event, apps/lab, packages/, push nhánh khác. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md ngắn: `dat: co|khong`; SHA đỉnh; test luật mới đỏ→xanh; verify pass/fail; số trang PDF trước/sau; danh sách ảnh.
+
+nhip: 23:36 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
