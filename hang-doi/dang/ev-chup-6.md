@@ -26,4 +26,4 @@ LUẬT CHUNG cụm event (mọi phiếu ev-*):
 - KET-QUA.md ngắn: dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; số pass/fail npm test và e2e (nếu chạy); danh sách xung đột đã gỡ (tệp + cách gỡ); việc còn dở.
 - Bộ quét bí mật của runner đang báo nhầm các dòng CŨ (apps/lab/..., apps/event/test/e2e/platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...) vì mốc so sánh là HEAD clone gốc. KHÔNG sửa/xoá các tệp đó. Không thêm khoá thật vào bất kỳ tệp nào. Nếu phiếu bị đánh "phát hiện bí mật" chỉ với các dòng cũ này thì phiếu sửa chỉ cần kiểm `git diff <base phiếu>..HEAD` không có bí mật mới, ghi vào KET-QUA, xong.
 
-nhip: 02:00 23p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T02:00:07+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 02:03 26p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T02:02:19+0700] · root agent idle; waiting up to 40m0s for 1 ba
