@@ -23,4 +23,4 @@ Lý do: trang chủ hiện tại (http://localhost:3020/) là giao diện cũ n�
 CẤM: nối khung vào app, sửa server/, deploy, gọi AI thật, sinh ảnh bằng AI, in khoá, gửi mail, đụng apps/event, apps/lab, packages/, push nhánh khác. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md ngắn: `dat: co|khong`; SHA đỉnh; verify pass/fail; tràn 360 từng màn; đường dẫn ghep-1280.png.
 
-nhip: 01:31 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 01:34 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
