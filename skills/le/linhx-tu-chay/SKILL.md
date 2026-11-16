@@ -15,6 +15,7 @@ spec-kit / Kiro (spec → plan → tasks), BMAD (vai PM, kiến trúc, QA) và b
 3. Mỗi feature có `lenh_kiem` chạy được bằng máy (test, curl, Playwright, cổng 17 luật report-core).
 4. Một phiên thợ = một feature, rồi commit + ghi TIEN-DO.md. Phiên mới đọc TIEN-DO.md + git log trước.
 5. 5 cổng người (LAB081): duyệt PRD, KYC/thanh toán, giá, tiêu tiền ads, đăng công khai.
+6. Thợ làm sai mà máy bắt được thì thêm luật lint (`canh/luat_lint.py`, `canh/luat-lint.json` của linhx-engine), không dặn thêm bằng văn xuôi. Bằng chứng do bộ chạy tạo; bản đồ tính năng theo `mau/BAN-DO-TINH-NANG.md`; sạch một máy rồi mới nhân máy. Chi tiết: `skills/luat/QUY-CHUAN-DU-AN-TU-CHAY.md` mục 9–12.
 
 ## Các bước
 0. Linh viết `Y-DINH.md` 4 câu: bán gì, cho ai, thu tiền thế nào, xong là khi nào.

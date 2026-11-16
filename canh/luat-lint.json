@@ -1,0 +1,73 @@
+{
+ "ghi_chu": "Mỗi lỗi thật của thợ mà máy bắt được thì thêm một luật ở đây, kèm nguồn (phiếu, commit), ví dụ sai, ví dụ đúng và cách sửa. Chạy canh/luat_lint.py --tu-kiem trước khi commit. Thợ không được sửa file này (canh/**). vi_du_sai có thể là danh sách mảnh, được nối lại khi tự kiểm (để chuỗi giống khoá không nằm liền trong repo, tránh quét bí mật N1).",
+ "luat": [
+  {
+   "id": "L001",
+   "ten": "Test bị skip hoặc xfail",
+   "nguon": "CLAUDE.md chiemtinhso/mayquet: có test skip là CHUA_DAT ngay",
+   "vung": [
+    "tests/**",
+    "**/test_*.py",
+    "**/*.test.*",
+    "**/*.spec.*"
+   ],
+   "cam": "pytest\\.mark\\.(skip|skipif|xfail)|pytest\\.(skip|xfail)\\(|unittest\\.skip|\\b(it|test|describe)\\.(skip|todo)\\(|\\bxit\\(",
+   "sua": "Không tắt test. Sửa code cho test đạt; nếu test sai đề thì dừng phiếu, ghi CAN-LINH kèm lý do.",
+   "vi_du_sai": "@pytest.mark.skip(reason='chưa xong')",
+   "vi_du_dung": "def test_gia_dung(): assert tinh(1) == 2"
+  },
+  {
+   "id": "L002",
+   "ten": "Khoá bí mật nằm trong code",
+   "nguon": "CLAUDE.md: bí mật trong diff là CHUA_DAT ngay; luật kho số 6",
+   "vung": [
+    "**"
+   ],
+   "tru": [
+    "canh/luat-lint.json"
+   ],
+   "cam": "sk-(ant-|proj-)?[A-Za-z0-9_-]{20,}|AIza[0-9A-Za-z_-]{30,}|gh[pousr]_[A-Za-z0-9]{30,}|xox[baprs]-[A-Za-z0-9-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY-----",
+   "sua": "Xoá khoá khỏi file, đọc từ biến môi trường (os.environ), khoá thật để trong .env ngoài git. Khoá đã lọt thì báo Linh đổi khoá.",
+   "vi_du_sai": [
+    "API_KEY = 'AI",
+    "zaSyD0123456789abcdefghijklmnopqrstuv'"
+   ],
+   "vi_du_dung": "API_KEY = os.environ['GEMINI_API_KEY']"
+  },
+  {
+   "id": "L003",
+   "ten": "Test gọi mạng thật",
+   "nguon": "CLAUDE.md mayquet: test gọi mạng thật là CHUA_DAT ngay",
+   "vung": [
+    "tests/**",
+    "**/test_*.py"
+   ],
+   "cam": "(requests|httpx)\\.(get|post|put|delete|request)\\(\\s*[fr]?[\"']https?://(?!(localhost|127\\.0\\.0\\.1))|urlopen\\(\\s*[\"']https?://(?!(localhost|127\\.0\\.0\\.1))",
+   "sua": "Dùng dữ liệu mẫu trong tests/du-lieu hoặc monkeypatch/respx; chỉ được gọi localhost.",
+   "vi_du_sai": "r = requests.get('https://cafebiz.vn/tin.chn')",
+   "vi_du_dung": "r = requests.get('http://localhost:8000/health')"
+  },
+  {
+   "id": "L004",
+   "ten": "Comment biện minh cho chỗ vá tạm",
+   "nguon": "Bài Lauren Tan 'All Code Is Slop': comment giải thích đường tắt làm thợ sau tưởng là chuẩn và chép khắp nơi",
+   "vung": [
+    "**/*.py",
+    "**/*.js",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mjs",
+    "**/*.ps1"
+   ],
+   "tru": [
+    "tests/**",
+    "canh/**",
+    "skills/**"
+   ],
+   "cam": "(?i)(#|(?<!:)//)\\s*(workaround|hack|vá tạm|va tam|chữa cháy|tạm thời:|tam thoi:|fixme)\\b",
+   "sua": "Sửa gốc thay vì vá. Không sửa được trong phiếu thì bỏ chỗ vá, ghi vấn đề vào .handoff/VAN-DE.md để Claude ra luật hoặc đề riêng.",
+   "vi_du_sai": "time.sleep(2)  # workaround: chờ server lên",
+   "vi_du_dung": "# Nhóm 5: chặn yêu cầu lách luật, hack; lỗi tạm thời thì thử lại"
+  }
+ ]
+}
