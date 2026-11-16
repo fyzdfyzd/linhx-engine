@@ -23,3 +23,5 @@ LUẬT CHUNG cụm event (mọi phiếu ev-*):
 - Playwright: dùng chromium có sẵn trên máy; nếu playwright đòi bản khác, đặt PW_CHROMIUM tới chrome.exe có sẵn.
 - Ảnh bằng chứng: PNG fullPage ở 1280 và 360 rộng, ≤ 600 KB mỗi tấm, đặt trong bang-chung/<mã phiếu>/ của nhánh và commit.
 - KET-QUA.md ngắn: dòng đầu `dat: co` hoặc `dat: khong`; SHA đỉnh; số pass/fail npm test và e2e (nếu chạy); danh sách xung đột đã gỡ (tệp + cách gỡ); việc còn dở.
+
+nhip: 23:00 3p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-16T23:00:39+0700] · root agent idle; waiting up to 40m0s for 1 ba
