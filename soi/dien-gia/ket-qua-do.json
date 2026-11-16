@@ -1,0 +1,86 @@
+[
+  {
+    "file": "01-danh-sach-tat-ca-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "02-danh-sach-loc-19-olive-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "03-chi-tiet-nhieu-phien-dao-trung-thanh-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "04-chi-tiet-host-mod-huynh-thi-xuan-lien-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "05-chi-tiet-mot-phien-nguyen-duc-son-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "06-lich-chuong-trinh-1280.png",
+    "width": 1280,
+    "scrollWidth": 1280,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "01-danh-sach-tat-ca-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "02-danh-sach-loc-19-olive-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "03-chi-tiet-nhieu-phien-dao-trung-thanh-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "04-chi-tiet-host-mod-huynh-thi-xuan-lien-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "05-chi-tiet-mot-phien-nguyen-duc-son-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  },
+  {
+    "file": "06-lich-chuong-trinh-360.png",
+    "width": 360,
+    "scrollWidth": 360,
+    "khongTranNgang": true,
+    "loiTrang": 0
+  }
+]
