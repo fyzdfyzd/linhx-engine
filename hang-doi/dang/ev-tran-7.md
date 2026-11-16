@@ -14,3 +14,5 @@ Phiếu cụm event.ifagent.net (ev-tran-7): sửa lỗi Claude soi ảnh ev-chu
 4. Push agy/ev-tran-7.
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-tran-7/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI. Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff origin/agy/ev-chup-6..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; phần tử gây tràn và cách sửa.
+
+nhip: 02:49 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
