@@ -16,4 +16,4 @@ Brand health check: nối khung B-trang-chu vào app (thay trang chủ nền t�
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON bao-cao/bien-tap, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW. Hết giờ thì push phần đã xong và ghi rõ còn thiếu gì.
 KET-QUA.md: `dat: co|khong`; SHA; E2E pass/fail; verify; phần còn thiếu.
 
-nhip: 05:42 30p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T05:42:48+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 05:45 33p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T05:45:50+0700] · root agent idle; waiting up to 40m0s for 1 ba
