@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-code-nhan-nguon
+nhan: may-2 2026-11-17T02:24:50+0700
+moc: 288a6b4680ad0385c4ffc975209383b9710161c3
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh và chờ xong. Trong PowerShell gọi `npm.cmd`/`npx.cmd`. Push nhánh sau MỖI commit. Server chạy bằng Start-Process, nhớ PID, tắt đúng PID.
 Landing báo cáo (nhánh agy/bhc-code-nhan-nguon, đỉnh 288a6b4, git pull trước): nhãn nguồn mới "· Gemini, trả lời từ trí nhớ · câu C1.3" dài hơn nên ở 1280 đẩy nút "Xem nguyên văn" xuống dòng riêng và nhãn nằm lệch cao hơn dòng chữ bên cạnh.
