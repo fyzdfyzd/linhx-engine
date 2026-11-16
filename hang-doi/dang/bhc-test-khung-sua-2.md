@@ -16,4 +16,4 @@ Khung B-trang-chu (nhánh agy/bhc-code-khung-trang-chu, đỉnh 41d7c19, git pul
 CẤM: sửa server/, đổi bố cục/màu, sinh ảnh AI, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test mới đỏ→xanh; verify pass/fail.
 
-nhip: 03:43 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 03:46 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
