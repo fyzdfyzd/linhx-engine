@@ -5,6 +5,7 @@ khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-khung-trang-chu
 phu_thuoc: bhc-code-nhan-nguon
 
+Lưu ý máy: trong PowerShell gọi `npm.cmd`, `npx.cmd` (npm.ps1 bị chặn ExecutionPolicy). Push nhánh sau MỖI commit để không mất việc khi quá giờ.
 Brand health check: VẼ KHUNG (chưa nối vào app) cho luồng khách tự quét, cùng ngôn ngữ hướng B "tạp chí" của báo cáo. Chạy tiền cảnh, tuần tự, không sinh thợ con.
 Lý do: trang chủ hiện tại (http://localhost:3020/) là giao diện cũ nền tối, logo và kiểu chữ khác hẳn landing báo cáo /bao-cao/<mã>/ (nền giấy sáng, chữ lớn, nút Sáng/Đêm). Khách đi từ trang chủ sang báo cáo thấy hai sản phẩm khác nhau.
 1. `git -C C:\linhx\ifagent fetch origin agy/bhc-code-nhan-nguon`, worktree `C:\linhx\ifagent-wt\bhc-code-khung-trang-chu` nhánh mới `agy/bhc-code-khung-trang-chu` từ origin/agy/bhc-code-nhan-nguon. Chưa có nhánh đó thì dừng, ghi CHUA_CO_NEN.
