@@ -18,4 +18,4 @@ Lỗi phải sửa, mỗi lỗi một commit:
 CẤM: sửa server/, nối vào app, đổi chữ ngoài 3 ô placeholder, sinh ảnh AI, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test mới đỏ→xanh; verify pass/fail; danh sách ảnh.
 
-nhip: 02:27 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 02:30 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
