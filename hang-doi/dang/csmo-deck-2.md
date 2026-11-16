@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\wt-csmo\deck2
+nhan: may-2 2026-11-17T01:19:58+0700
 
 
 Phiếu csmo-deck-2 (lần 2). Đọc viec/csmo-talk/DE-BAI.md mục "Phiếu csmo-deck", KICH-BAN-v5.md và viec/csmo-talk/mau/ (ảnh mẫu + GHI-CHU.md thẻ phong cách) trên nhánh hang-doi. Thẻ phong cách đã có: viec/csmo-talk/mau/GHI-CHU.md + 4 ảnh tr-*.jpg (chuẩn guideline BTMH). Theo đúng thẻ.
