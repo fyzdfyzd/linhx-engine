@@ -2,9 +2,8 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\bhc-code-nhan-nguon
-nhan: may-2 2026-11-16T23:33:52+0700
 
 Brand health check: bỏ chữ kỹ thuật khỏi phần người xem đọc. Chạy mọi lệnh ở tiền cảnh, tuần tự, không sinh thợ con.
 1. `git -C C:\linhx\ifagent fetch origin claude/project-thread-apl8gd` rồi `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\bhc-code-nhan-nguon -b agy/bhc-code-nhan-nguon origin/claude/project-thread-apl8gd` (HEAD 5942bf0). Thiếu module khi test thì đặt NODE_PATH như phiếu bhc-test-nen.
@@ -16,4 +15,15 @@ Brand health check: bỏ chữ kỹ thuật khỏi phần người xem đọc. C
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON trong bao-cao/bien-tap, đụng apps/event, apps/lab, packages/, push nhánh khác. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md ngắn: `dat: co|khong`; SHA đỉnh; test luật mới đỏ→xanh; verify pass/fail; số trang PDF trước/sau; danh sách ảnh.
 
-nhip: 00:13 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: gemini-pro-orchestrator
+phieu: bhc-code-nhan-nguon
+may: may-2
+trang_thai: loi
+ly_do: qua_gio
+tep_doi: KET-QUA.md
+drive: (khong)
+phut: 40.32
+token: vao=0 ra=0
+
+phát hiện bí mật: apps/event/test/e2e/platform.test.js:38, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:73, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:86, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:111, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:212, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:265, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:275, apps/lab/test/agentic-me-luot.test.js:126, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/yen-lam-t101.test.js:13, apps/veew-booth/server/setup-kiosks.js:7
