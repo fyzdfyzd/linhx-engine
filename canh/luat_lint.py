@@ -67,6 +67,9 @@ def soi(cac_dong, luat):
 def tu_kiem(luat):
     hong = []
     for l in luat:
+        for k in ("vi_du_sai", "vi_du_dung"):
+            if isinstance(l[k], list):
+                l[k] = "".join(l[k])
         for f in l["vung"]:
             mau = f.replace("**/", "a/").replace("**", "a").replace("*", "x")
             if not khop(mau, l["vung"]):
