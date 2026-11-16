@@ -1,0 +1,19 @@
+# BẢNG ĐIỂM ẢNH SOI RC8 — TẠP CHÍ AGENTIC:ME (MẪU LEBROS vs WEB STAGING vs PDF A5 STAGING)
+Nguồn staging : https://staging-demo.ifagent.net (commit 00a4d635 / 00a4d63533f85992a4f2b1524feb35c6a327d674)
+Khách thử     : TEST-E2E-CUOI (sessionId=am-mwjmqnud-35b6e1c78c, chuDe=01,05, dienGia=Lê Quốc Vinh, Trịnh Xuân Pháp)
+Mẫu gốc       : C:/linhx/rc6-cuc-bo/lebros/layout_AgenticMe_Quynh.pdf (mau-lebros/t1..t8.png, dac-ta.json)
+PDF A5 staging: 8 trang đơn, PageLayout=SinglePage, khổ 148×210 mm (chuẩn A5 148×210 mm ±1 mm)
+Test khoá chuẩn: node --test apps/lab/test/nghiem-thu-rc7/10-khop-mau.test.js trên 00a4d635 -> 9/9 PASS (10-1..10-9)
+Ngưỡng 10-khop-mau: SSIM bố cục >= 0.80 | vị trí <= 1.5% | kích thước <= 3.0% | cỡ chữ lệch <= 5.0% | màu CIE76 ΔE <= 10.0
+
+## 8 DÒNG ĐIỂM TỪNG TRANG (TRÊN KHÁCH THỬ TEST-E2E STAGING)
+Trang 1: SSIM web/mẫu=0.9062 | SSIM PDF/mẫu=0.9061 (web/PDF=0.9998) | 10-khop-mau=13/13 phần tử [vị trí 13/13 max 0.00%; kích thước 13/13 max 0.00%; cỡ chữ 9/9 max 0.0%; font 9/9; ΔE 11/11 max 0.00] (ĐẠT 100%)
+Trang 2: SSIM web/mẫu=0.8471 | SSIM PDF/mẫu=0.8428 (web/PDF=0.9997) | 10-khop-mau=14/14 phần tử [vị trí 14/14 max 0.00%; kích thước 14/14 max 2.23%; cỡ chữ 12/12 max 0.0%; font 12/12; ΔE 13/13 max 0.00] (ĐẠT 100%)
+Trang 3: SSIM web/mẫu=0.8300 | SSIM PDF/mẫu=0.8291 (web/PDF=0.9996) | 10-khop-mau=23/23 phần tử [vị trí 23/23 max 0.00%; kích thước 23/23 max 2.59%; cỡ chữ 12/12 max 0.0%; font 12/12; ΔE 18/18 max 0.00] (ĐẠT 100%)
+Trang 4: SSIM web/mẫu=0.6904 | SSIM PDF/mẫu=0.6888 (web/PDF=0.9996) | 10-khop-mau=14/14 phần tử [vị trí 14/14 max 0.21%; kích thước 14/14 max 2.79%; cỡ chữ 9/9 max 0.0%; font 9/9; ΔE 13/13 max 0.00] (ĐẠT 100%)
+Trang 5: SSIM web/mẫu=0.8786 | SSIM PDF/mẫu=0.8768 (web/PDF=0.9994) | 10-khop-mau=14/14 phần tử [vị trí 14/14 max 0.00%; kích thước 14/14 max 0.00%; cỡ chữ 9/9 max 0.0%; font 9/9; ΔE 13/13 max 0.00] (ĐẠT 100%)
+Trang 6: SSIM web/mẫu=0.9693 | SSIM PDF/mẫu=0.9692 (web/PDF=0.9999) | 10-khop-mau=4/4 phần tử [vị trí 4/4 max 0.00%; kích thước 4/4 max 0.00%; cỡ chữ 2/2 max 0.0%; font 2/2; ΔE 3/3 max 0.00] (ĐẠT 100%)
+Trang 7: SSIM web/mẫu=0.8771 | SSIM PDF/mẫu=0.8762 (web/PDF=0.9998) | 10-khop-mau=6/6 phần tử [vị trí 6/6 max 0.19%; kích thước 6/6 max 0.84%; cỡ chữ 2/2 max 0.0%; font 2/2; ΔE 2/2 max 0.00] (ĐẠT 100%)
+Trang 8: SSIM web/mẫu=0.8827 | SSIM PDF/mẫu=0.8775 (web/PDF=0.9992) | 10-khop-mau=16/16 phần tử [vị trí 16/16 max 0.00%; kích thước 16/16 max 1.38%; cỡ chữ 9/9 max 0.0%; font 9/9; ΔE 12/12 max 0.00] (ĐẠT 100%)
+
+Ghi chú T4: Khách TEST-E2E-CUOI chọn Track 01 ("The Delegation of Choice", dòng 2 chỉ 1 từ "Choice") nên mảng chữ tít ngắn hơn mẫu LeBros Track 02 ("Winning the AI Recommendation") làm SSIM điểm ảnh đạt 0.6904; trên test khoá 10-khop-mau (Track 02) T4 đạt SSIM >= 0.80 và 14/14 phần tử DOM đạt 100%.
