@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-sang-8
+nhan: may-2 2026-11-17T05:52:04+0700
+moc: 2e8bf2e94a2de13e2d84ff909ed1207c0de18d15
 
 Phiếu cụm event.ifagent.net (ev-sang-8): bổ sung GIAO DIỆN SÁNG (anh Linh yêu cầu 17/11). Tham chiếu: C:\linhx\hang-doi\viec\event-ifagent\khung\ (bang-ghep-b-1440.png, bang-ghep-b-390.png = hướng B nền Giấy; TK-1-HAI-HUONG.md).
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-sang-8 -b agy/ev-sang-8 origin/agy/ev-tran-7`. Trong apps/event: `npm ci`.
