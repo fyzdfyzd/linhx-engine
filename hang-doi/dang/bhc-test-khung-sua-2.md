@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-code-khung-trang-chu
+nhan: may-2 2026-11-17T03:37:22+0700
+moc: 41d7c19dd6eace20d0b979576d165eb038fbaa3d
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Khung B-trang-chu (nhánh agy/bhc-code-khung-trang-chu, đỉnh 41d7c19, git pull trước). Chấm Claude 8/10, còn 2 lỗi nội dung:
