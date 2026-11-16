@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\bhc-code-nhan-nguon
+nhan: may-2 2026-11-17T00:14:15+0700
+moc: 996f173a1fe2f6a0395f1151933fc88203a67c38
 
 Brand health check: bỏ chữ kỹ thuật khỏi phần người xem đọc. Chạy mọi lệnh ở tiền cảnh, tuần tự, không sinh thợ con.
 1. `git -C C:\linhx\ifagent fetch origin claude/project-thread-apl8gd` rồi `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\bhc-code-nhan-nguon -b agy/bhc-code-nhan-nguon origin/claude/project-thread-apl8gd` (HEAD 5942bf0). Thiếu module khi test thì đặt NODE_PATH như phiếu bhc-test-nen.
