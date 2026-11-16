@@ -1,6 +1,6 @@
 # Danh mục skill LINHX
 
-Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **235** skill.
+Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa tay. Tổng **236** skill.
 
 | Nhóm | Số |
 |---|---|
@@ -12,7 +12,7 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | Marketing, cộng đồng, kênh | 26 |
 | Nghiên cứu, radar, dữ liệu | 15 |
 | Giáo dục, khoá học | 8 |
-| Khác | 1 |
+| Khác | 2 |
 
 ## Thiết kế: ảnh, slide, deck, brand, web, KV
 
@@ -293,3 +293,4 @@ Sinh tự động bằng `python scripts/skill_kiem.py --index`, không sửa ta
 | Skill | Làm gì | Ở đâu |
 |---|---|---|
 | `bu-frontpage` | Dựng trọn mặt tiền web của một BU B2B (trang chủ lấy lead, 15–20 trang con, form brief + gọi lại, GEO, own media 3 pha) từ khuôn đã chạy thật ở event.ifagent.ne… | `le/bu-frontpage` |
+| `hang-doi-may` | Giao việc cho đội máy agy qua hàng đợi phiếu GitHub (nhánh hang-doi của linhx-engine): Claude ra đề, khoá test, agy trên các máy tự nhận, tự chia việc, Claude c… | `le/hang-doi-may` |
