@@ -20,4 +20,4 @@ Phiếu cụm event.ifagent.net (ev-sang-8): bổ sung GIAO DIỆN SÁNG (anh Li
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-sang-8/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không tự viết chữ mới trên màn (chỉ thêm 2 nhãn nút ở trên). Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff origin/agy/ev-tran-7..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; trang nào chưa đạt tương phản.
 
-nhip: 05:19 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:22 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
