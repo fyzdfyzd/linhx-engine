@@ -15,3 +15,5 @@ Brand health check, phần 1/2: bỏ mã nguồn thô khỏi chữ người xem 
 4. `npm.cmd run verify` trong apps/brand-health xanh (≥ 51 pass, 0 fail). Commit "bhc: nhanNguon", push.
 CẤM: deploy, gọi AI thật, in khoá, gửi mail, sửa test cũ, sửa JSON bao-cao/bien-tap, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; verify pass/fail; kết quả grep bước 3.
+
+nhip: 01:16 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
