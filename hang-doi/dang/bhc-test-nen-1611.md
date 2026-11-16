@@ -4,6 +4,7 @@ tran_phut: 30
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-test-nen
 vung: bang-chung/bhc-test-nen/**
+nhan: may-2 2026-11-16T22:56:22+0700
 
 Phiếu kiểm nền "Brand health check" (công cụ đo brand IF Agent). CHỈ KIỂM VÀ CHỤP, KHÔNG SỬA CODE. Chạy mọi lệnh ở tiền cảnh, làm tuần tự, không sinh thợ con.
 1. `git -C C:\linhx\ifagent fetch origin claude/project-thread-apl8gd` rồi `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\bhc-test-nen -b agy/bhc-test-nen origin/claude/project-thread-apl8gd`. HEAD phải là 5942bf0, khác thì dừng, ghi SAI_NEN.
