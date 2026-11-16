@@ -16,4 +16,4 @@ Brand health check: nối khung B-trang-chu vào app (thay trang chủ nền t�
 CẤM: deploy, gọi AI thật/khoá API, in khoá, gửi mail, sửa test cũ, sửa JSON bao-cao/bien-tap, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW. Hết giờ thì push phần đã xong và ghi rõ còn thiếu gì.
 KET-QUA.md: `dat: co|khong`; SHA; E2E pass/fail; verify; phần còn thiếu.
 
-nhip: 05:39 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:42 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
