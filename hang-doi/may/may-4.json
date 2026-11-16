@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 15.71,
-    "trong_gb": 2.02
+    "trong_gb": 4.75
   },
   "gpu": [
     {
@@ -26,7 +26,7 @@
     {
       "o": "C:",
       "tong_gb": 249.4,
-      "trong_gb": 18.18
+      "trong_gb": 17.81
     },
     {
       "o": "D:",
@@ -37,7 +37,7 @@
   "agy": {
     "co": true,
     "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.exe",
-    "phien_ban": "chưa rõ"
+    "phien_ban": "1.5.9"
   },
   "python": "3.12.2",
   "chrome": {
@@ -74,5 +74,5 @@
     "xong": 0,
     "loi": 0
   },
-  "cap_nhat_luc": "2026-11-17T00:39:32+0700"
+  "cap_nhat_luc": "2026-11-17T05:07:49+0700"
 }
