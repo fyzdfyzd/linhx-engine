@@ -17,4 +17,4 @@ Brand health check, phần 2/2: luật khoá + bằng chứng. Nền: nhánh agy
 CẤM như phần 1.
 KET-QUA.md: `dat: co|khong`; SHA; log luật đỏ trên 5942bf0 → xanh; verify pass/fail; số trang PDF; danh sách ảnh.
 
-nhip: 01:37 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 01:40 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
