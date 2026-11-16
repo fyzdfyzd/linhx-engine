@@ -5,6 +5,8 @@ tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-nhan-nguon
 phu_thuoc: bhc-test-nhan-nguon-1
+nhan: may-2 2026-11-17T01:31:02+0700
+moc: 139f3226610dfe54a25e66b6156bf4ba0679d532
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh và chờ xong. Trong PowerShell gọi `npm.cmd`/`npx.cmd`. Push nhánh sau MỖI commit. Nếu C:\linhx\ifagent-wt\bhc-code-nhan-nguon đã có thì dùng lại, nhánh agy/bhc-code-nhan-nguon.
 Brand health check, phần 2/2: luật khoá + bằng chứng. Nền: nhánh agy/bhc-code-nhan-nguon (đã có hàm nhanNguon).
