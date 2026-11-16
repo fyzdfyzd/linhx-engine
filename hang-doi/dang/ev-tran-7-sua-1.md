@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-tran-7
+nhan: may-2 2026-11-17T03:11:16+0700
+moc: 8d55bca4117d7811b34cf81487480bcb0643f83e
 
 Phiếu cụm event.ifagent.net (ev-tran-7): sửa lỗi Claude soi ảnh ev-chup-6 và khoá bằng test.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-tran-7 -b agy/ev-tran-7 origin/agy/ev-chup-6`. Trong apps/event: `npm ci`.
