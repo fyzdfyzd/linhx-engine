@@ -14,4 +14,4 @@ Phiếu csmo-deck-2 (lần 2). Đọc viec/csmo-talk/DE-BAI.md mục "Phiếu cs
 CẤM: sinh ảnh AI, ảnh có chữ do AI vẽ, nêu tên thương hiệu của Linh, sửa ngoài viec/csmo-talk/deck.
 KET-QUA.md: dòng đầu dat: co/khong; SHA; số slide; danh sách slide phải bỏ bớt chữ so với kịch bản.
 
-nhip: 01:53 33p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 01:56 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
