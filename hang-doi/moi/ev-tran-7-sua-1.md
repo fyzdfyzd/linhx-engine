@@ -2,9 +2,8 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-tran-7
-nhan: may-2 2026-11-17T02:46:22+0700
 
 Phiếu cụm event.ifagent.net (ev-tran-7): sửa lỗi Claude soi ảnh ev-chup-6 và khoá bằng test.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-tran-7 -b agy/ev-tran-7 origin/agy/ev-chup-6`. Trong apps/event: `npm ci`.
@@ -15,4 +14,14 @@ Phiếu cụm event.ifagent.net (ev-tran-7): sửa lỗi Claude soi ảnh ev-chu
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-tran-7/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI. Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff origin/agy/ev-chup-6..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; phần tử gây tràn và cách sửa.
 
-nhip: 03:08 22p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T03:07:23+0700] · root agent idle; waiting up to 40m0s for 1 ba
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-tran-7
+may: may-2
+trang_thai: loi
+tep_doi: (khong)
+drive: (khong)
+phut: 24.85
+token: vao=341037 ra=32059
+
+phát hiện bí mật: apps/event/test/e2e/platform.test.js:38, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:73, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:86, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:111, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:212, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:265, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:275, apps/lab/test/agentic-me-luot.test.js:126, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/yen-lam-t101.test.js:13, apps/veew-booth/server/setup-kiosks.js:7, infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:53, infra/staging/stg-event/chay-cloud.sh:23
