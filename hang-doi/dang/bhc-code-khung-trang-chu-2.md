@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-khung-trang-chu
 model: gemini-4-argon-high
+nhan: may-2 2026-11-17T01:13:48+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh và chờ xong. Trong PowerShell gọi `npm.cmd`/`npx.cmd`. Push nhánh sau MỖI commit. 
 Brand health check: VẼ KHUNG (chưa nối vào app) cho luồng khách tự quét, cùng ngôn ngữ hướng B "tạp chí" của báo cáo. Chạy tiền cảnh, tuần tự, không sinh thợ con.
