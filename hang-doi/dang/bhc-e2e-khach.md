@@ -54,4 +54,4 @@ Mỗi bước: ảnh 1280×800 và 360×780 (chụp cả trang), ghi console l�
 
 Ca hỏng được ghi theo mã (K4-360, Q6…), mức nghiêm trọng (chặn / nặng / nhẹ), ảnh chứng, cách sửa đề xuất.
 
-nhip: 22:13 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 22:13 18p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T22:13:22+0700] · root agent idle; waiting up to 40m0s for 1 ba
