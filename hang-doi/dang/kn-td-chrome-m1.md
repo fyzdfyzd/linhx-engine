@@ -17,4 +17,4 @@ Máy: DESKTOP-PVHR2CD (may-1). Kỹ năng: agy điều khiển được trình d
 4. Không đăng nhập thì để hồ sơ chrome-agy (cách c) MỞ SẴN cho Linh, ghi `CAN-LINH` liệt kê dịch vụ còn thiếu trên máy này.
 ĐẠT khi: điều khiển được trình duyệt + có bảng 6 dịch vụ. Trả: bảng dịch vụ | đăng nhập | gói.
 
-nhip: 19:47 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 19:48 4p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T19:47:57+0700] · root agent idle; waiting up to 40m0s for 1 ba
