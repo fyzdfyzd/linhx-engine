@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14
+nhan: may-3 2026-11-17T19:44:17+0700
 
 Phiếu ev-hieu-nang-14 (song song, máy 3): đo và nâng điểm Lighthouse cho event.ifagent.net bản agy. COMMIT + PUSH SAU MỖI Ý.
 0. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-hieu-nang-14` (nếu đã có thì fetch), `git checkout -b agy/ev-hieu-nang-14 origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`, chạy máy chủ local theo README/package.json của apps/event (tiền cảnh trong cùng lệnh test, không để chạy nền sau khi xong).
