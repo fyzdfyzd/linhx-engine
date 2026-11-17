@@ -17,3 +17,5 @@ Brand health check: gửi báo cáo qua email cho khách để lại lead. Workt
 5. Bằng chứng bang-chung/bhc-email/: ảnh thư HTML ở 600 px và 360 px, ảnh màn Lead có cột trạng thái.
 CẤM: gọi Resend thật, in khoá, gửi thư thật, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test thư; test:lap; verify.
+
+nhip: 12:23 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
