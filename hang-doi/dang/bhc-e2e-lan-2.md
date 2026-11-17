@@ -12,4 +12,4 @@ E2E giao diện vòng 2 (chấm lại sau sửa). Worktree C:\linhx\ifagent-wt\b
 Chạy cả hai luồng 2 lần độc lập (DATA_DIR trắng mỗi lần, AI giả, không mạng ngoài). Ảnh 1280×800 + 360×780 full page mỗi bước: bang-chung/bhc-e2e-lan-2/<khach|quan-tri>/lan-<n>/<ma>-<1280|360>.png, video webm lan-1. Ghi so-sanh-2-lan.md và loi.md (mã bước, mức chặn/nặng/nhẹ, ảnh, cách sửa). Push agy/bhc-e2e-lan-2.
 KET-QUA.md: số bước đạt/hỏng mỗi lần mỗi luồng, danh sách lỗi còn lại.
 
-nhip: 01:02 6p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T01:02:34+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 01:05 9p đang chờ nền · log cuối 3 phút trước [log_cuoi=2026-11-18T01:02:34+0700] · root agent idle; waiting up to 40m0s for 1 ba
