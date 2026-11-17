@@ -16,4 +16,4 @@ Sửa thư báo cáo (nhánh agy/bhc-quan-tri, đỉnh 7b793e2, git pull trướ
 CẤM: gửi thư thật, gọi Resend thật, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; luật mới đỏ→xanh; verify.
 
-nhip: 13:00 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:03 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
