@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 25
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-quan-tri
+nhan: may-2 2026-11-17T12:54:48+0700
+moc: 7b793e205524a8e9e9f862148117aff7438ecb85
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Commit + push mỗi 10 phút.
 Sửa thư báo cáo (nhánh agy/bhc-quan-tri, đỉnh 7b793e2, git pull trước). Claude soi bang-chung/bhc-email/thu-html-360.png:
