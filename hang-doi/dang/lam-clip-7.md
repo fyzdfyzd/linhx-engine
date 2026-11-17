@@ -2,6 +2,7 @@ may: may-4
 loai: trinh-duyet
 tran_phut: 40
 theo_doi: D:\linhx\lam-clip
+nhan: may-4 2026-11-18T02:03:31+0700
 
 Làm lại theo chấm của Claude. Luật như `viec/lam-clip/DE-BAI.md` (kể cả mục "Sửa 18/11 0:15": credit, ảnh soi).
 1) `m-chi-qr` TRƯỢT: bản hiện tại chỉ ngang sang phải ngang ngực, giống m-chi-phai. Cần chỉ XUỐNG đáy màn hình. Đề riêng mới (2 lượt, lấy lượt chỉ xuống rõ hơn):
