@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 phu_thuoc: ev-anh-ly-12b
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-13b
-nhan: may-2 2026-11-17T19:26:22+0700
 
 Phiếu ev-de-xuat-13b (vòng 4): gắn 2 ảnh ly cà phê Gemini vào bộ slide đề xuất mẫu và sửa chữ "AI" rơi dòng. COMMIT + PUSH SAU MỖI Ý.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-13b -b agy/ev-de-xuat-13b origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`. Lấy 2 ảnh từ nhánh hang-doi của linhx-engine: `xong/ev-anh-ly-12b/ly-ngang.*` và `ly-vuong.*` (nếu KET-QUA ev-anh-ly-12b ghi KHONG_THAY hoặc SAI_MAY thì bỏ ý 1, làm ý 2–3, ghi rõ).
@@ -15,4 +14,14 @@ Phiếu ev-de-xuat-13b (vòng 4): gắn 2 ảnh ly cà phê Gemini vào bộ sli
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-13b/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail; TONG-SLIDE.png.
 
-nhip: 19:47 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-de-xuat-13b
+may: may-2
+trang_thai: loi
+tep_doi: (khong)
+drive: (khong)
+phut: 22.73
+token: vao=263236 ra=54843
+
+phát hiện bí mật: apps/event/test/e2e/platform.test.js:38, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:73, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:86, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:111, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:212, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:265, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:275, apps/lab/test/agentic-me-luot.test.js:126, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/yen-lam-t101.test.js:13, apps/veew-booth/server/setup-kiosks.js:7, infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:53, infra/staging/stg-event/chay-cloud.sh:23
