@@ -14,4 +14,4 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ
 4. Chi tiết lượt quản trị: gom 4 nút đầu trang (Chấm lại, Quét lại, Xuất bản, Ẩn) — Xuất bản/Ẩn thành một nút bật tắt; 360: thẻ lượt quét chỉ giữ một nút chính "Mở chi tiết", "Mở báo cáo" + "Sao chép mã" vào dòng phụ.
 Test khoá cho 1, 2 (thời gian tải lần đầu sau khi quét xong < 2s với AI giả), 3 (không có chuỗi "Đúng là:"). Chạy lại e2e-giao-dien K1–K9 và Q4 một lần, ảnh 1280/360 vào bang-chung/bhc-sua-4/. verify + test:lap xanh. Push agy/bhc-sua-4.
 
-nhip: 04:44 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:46 26p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T04:46:28+0700] · root agent idle; waiting up to 40m0s for 1 ba
