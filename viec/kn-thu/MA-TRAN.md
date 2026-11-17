@@ -2,15 +2,15 @@
 
 | Kỹ năng | Máy 1 PVHR2CD | Máy 3 2AUT482 | MSI (may-4) |
 |---|---|---|---|
-| Điều khiển Chrome + kiểm đăng nhập | chờ | chờ | chờ |
+| Điều khiển Chrome + kiểm đăng nhập | ĐẠT cdp (Browsentic hỏng cổng 8765) | ĐẠT cdp (chưa có Browsentic) | ĐẠT Browsentic, 6/6 đã đăng nhập |
 | Ảnh Gemini | – | – | chờ |
 | Nhạc Gemini | – | – | chờ |
 | Nhạc Suno | – | – | chờ |
 | Video Google Flow | – | – | chờ |
-| Deep Research ChatGPT Plus | chờ | – | – |
+| Deep Research ChatGPT Plus | CHƯA ĐĂNG NHẬP (chờ Browsentic) | – | – |
 | Google Colab | chờ | – | – |
 | Đổi tài khoản | chờ | – | – |
-| Gemini Task: tính toán + mạng | – | chờ | – |
+| Gemini Task: tính toán + mạng | – | CHƯA ĐĂNG NHẬP (chờ Browsentic) | – |
 | Gemini Task: video | – | chờ | – |
 | Gemini Task: xlsx, pip, PDF | – | chờ | – |
 | Crawler quét web | chờ | – | – |
