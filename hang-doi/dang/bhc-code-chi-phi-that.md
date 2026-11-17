@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-chi-phi
+nhan: may-2 2026-11-17T18:29:22+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh tiền cảnh. Gọi `npm.cmd`. Commit đầu trong 5 phút, commit + push mỗi 10 phút.
 Brand health check: chi phí thật + làn ChatGPT quá giờ. Worktree C:\linhx\ifagent-wt\bhc-chi-phi, nhánh agy/bhc-chi-phi từ origin/agy/bhc-staging. CHỈ sửa apps/brand-health (+ bang-chung/bhc-chi-phi). Không deploy, không gọi AI thật.
