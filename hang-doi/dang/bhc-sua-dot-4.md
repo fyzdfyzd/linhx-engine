@@ -13,3 +13,5 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ
 3. Câu mở đầu báo cáo tự quét: bỏ khung "Đúng là: ..." vụng; dạng: dòng lớn = điều AI nói (trích ngắn), dòng phụ = "Sự thật: ..." theo bảng sự thật; với AI giả cũng phải đọc tự nhiên. Không đổi bố cục.
 4. Chi tiết lượt quản trị: gom 4 nút đầu trang (Chấm lại, Quét lại, Xuất bản, Ẩn) — Xuất bản/Ẩn thành một nút bật tắt; 360: thẻ lượt quét chỉ giữ một nút chính "Mở chi tiết", "Mở báo cáo" + "Sao chép mã" vào dòng phụ.
 Test khoá cho 1, 2 (thời gian tải lần đầu sau khi quét xong < 2s với AI giả), 3 (không có chuỗi "Đúng là:"). Chạy lại e2e-giao-dien K1–K9 và Q4 một lần, ảnh 1280/360 vào bang-chung/bhc-sua-4/. verify + test:lap xanh. Push agy/bhc-sua-4.
+
+nhip: 04:23 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
