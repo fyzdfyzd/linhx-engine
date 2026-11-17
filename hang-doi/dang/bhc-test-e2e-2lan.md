@@ -15,4 +15,4 @@ Brand health check: chạy kiểm thử đầu-cuối HAI LẦN liên tiếp tr�
 CẤM: sửa code sản phẩm, deploy, gọi AI thật, in khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; bảng ca × lần 1 × lần 2; lỗi sản phẩm tìm thấy.
 
-nhip: 07:52 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 07:55 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
