@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-18T06:47:22+0700
+moc: c52875cec5121b351634c5490f454edb530609c5
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ; `npm.cmd`. Push mỗi bước.
 Đưa bản đã sửa 4 đợt (origin/agy/bhc-sua-4 7b853da, 115 test xanh) lên staging stg-brand. Giờ VN 07:00–22:00.
