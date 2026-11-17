@@ -2,9 +2,8 @@ may: may-3
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14b
-nhan: may-3 2026-11-17T20:42:49+0700
 
 Phiếu ev-hieu-nang-14b (song song, máy 3): đo và nâng điểm Lighthouse cho event.ifagent.net bản agy. COMMIT + PUSH SAU MỖI Ý.
 0. Nếu `git ls-remote https://github.com/fyzdfyzd/ifagent` lỗi xác thực thì dừng ngay, KET-QUA ghi `CAN-LINH: dang nhap GitHub may-3`. Không mở hộp thoại, đặt `$env:GIT_TERMINAL_PROMPT=0` trước mọi lệnh git. Rồi `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-hieu-nang-14b` (nếu đã có thì fetch), `git checkout -b agy/ev-hieu-nang-14b origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`, KHÔNG chạy máy chủ nền bằng lệnh riêng: máy chủ phải được khởi động và tắt BÊN TRONG chính tiến trình test/script node (start server → đo → close), mỗi lệnh tự kết thúc. Lần trước agy để một tác vụ nền nên phiếu bị dừng "cho-tac-vu-nen".
@@ -13,8 +12,17 @@ Phiếu ev-hieu-nang-14b (song song, máy 3): đo và nâng điểm Lighthouse c
 3. Thêm test khoá `apps/event/test/e2e/lighthouse-nguong.test.js` (script npm `test:lh`): chạy 18 trang di động, trượt ngưỡng thì báo "Trang <url>: <hạng mục> <điểm> < <ngưỡng> — xem mục <audit id> trong báo cáo". Ghi bảng SAU vào BANG-DIEM.md.
 4. Chạy tiền cảnh: test:lh, khong-tran-ngang, giao-dien-sang, de-xuat-slide; npm test sau cùng. Push agy/ev-hieu-nang-14b.
 
-LUẬT RIÊNG máy 3: KHÔNG chạy máy chủ nền bằng lệnh riêng. Máy chủ phải khởi động và tắt BÊN TRONG chính tiến trình test/script node (start → đo → close), mỗi lệnh tự kết thúc. Lần trước agy để một tác vụ nền nên phiếu bị dừng "cho-tac-vu-nen".
-
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-hieu-nang-14b/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; bảng điểm trước/sau (trung bình + trang thấp nhất); pass/fail.
 
-nhip: 21:21 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-hieu-nang-14b
+may: may-3
+trang_thai: loi
+ly_do: qua_gio
+tep_doi: (khong)
+drive: (khong)
+phut: 40.34
+token: vao=0 ra=0
+
+phát hiện bí mật: infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:53, infra/staging/stg-event/chay-cloud.sh:23, infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:52
