@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\LINHX\ifagent-wt\ev-lien-ket-18
+nhan: may-4 2026-11-17T22:14:29+0700
 
 Phiếu ev-lien-ket-18 (song song): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. Nếu `git ls-remote https://github.com/fyzdfyzd/ifagent HEAD` lỗi xác thực: dừng ngay, KET-QUA ghi `CAN-LINH: dang nhap GitHub may-4`. Rồi `git clone https://github.com/fyzdfyzd/ifagent D:\LINHX\ifagent-wt\ev-lien-ket-18` (đã có thì fetch), `git checkout -b agy/ev-lien-ket-18 origin/agy/ev-de-xuat-13b`. Trong apps/event: `npm ci`. Ngay sau đó commit rỗng KHÔNG cần; push nhánh khi có commit đầu tiên.
