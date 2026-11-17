@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 50
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-sua-1
+nhan: may-2 2026-11-17T23:00:52+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd`. Commit đầu trong 5 phút, commit + push mỗi 10 phút.
 Sửa lỗi E2E đợt 1 (báo cáo cho thương hiệu bất kỳ). Worktree C:\linhx\ifagent-wt\bhc-sua-1, nhánh agy/bhc-sua-1 từ origin/agy/bhc-theo-doi (19457bc). Đọc kỹ bang-chung/bhc-e2e-khach/loi.md trên origin/agy/bhc-e2e-khach (đã có nguyên nhân gốc + cách sửa). CHỈ sửa apps/brand-health. Không gọi AI thật, không deploy.
