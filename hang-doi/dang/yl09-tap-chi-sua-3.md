@@ -15,4 +15,4 @@ Lượt 4: TIẾP phần dở trên nhánh agy/yl09-tap-chi (worktree đã có t
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md theo DE-BAI luật 9.
 
-nhip: 04:55 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:58 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
