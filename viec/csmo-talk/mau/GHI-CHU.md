@@ -1,12 +1,18 @@
-# Thẻ phong cách deck CSMO T21 (Claude viết, chuẩn tối thiểu = guideline BTMH 2026, ảnh tr-*.jpg trong thư mục này)
-Phiếu tìm mẫu top tier trên máy 1 chưa chạy được; nếu sau này có ảnh mẫu thì đối chiếu thêm, không đổi thẻ này khi chưa có Claude duyệt.
+# Mẫu slide keynote chuẩn cho bài nói CSMO 2026 (Topic 07)
+
+1. `01-bia-pitch.jpg` | https://pitch.com/templates/Hacker-6DgvwV4fri4G4tZrR53Towre | Loại: `bia` | Học: phông sans-serif đậm nét đặt giữa khung với ký hiệu mảnh phía trên, cỡ chữ tiêu đề lớn (~96pt), nền than tối `#22232A` chữ trắng `#FFFFFF` điểm nhấn mảnh `#8CCB9B` kèm đường kẻ dọc 1px bên trái, khoảng trống >80% diện tích giúp nổi bật trên màn LED phòng tối.
+2. `02-so-lon-pitch.jpg` | https://pitch.com/templates/10-Slide-Pitch-Deck-0dh4WE6siodH4gWAjk0og4tB | Loại: `so-lon` | Học: phông geometric sans mảnh–vừa cho con số cực lớn (~220pt) tách 3 cột bằng vạch kẻ dọc 1px, câu dẫn ngắn ở trên (~40pt) và chú thích 1 dòng dưới số (~24pt), nền xanh đêm `#081126` chữ trắng `#FFFFFF`, khoảng trống >65% không dùng hộp màu hay biểu đồ rối.
+3. `03-trich-dan-pitch.jpg` | https://pitch.com/templates/Design-Pitch-Deck-0nSSgC0W3aUf5sukm42UkqPX | Loại: `trich-dan` | Học: phông grotesk đậm tracking chặt cho 1 câu khẳng định 2 dòng (~72pt) không đóng khung trích dẫn, tên tác giả nhỏ (~16pt) dưới đường kẻ ngang mảnh 1px, nền sáng ngà `#F8F8F7` chữ đen mực `#111111`, khoảng trống >75% dồn toàn bộ thị giác vào câu nói đinh.
+4. `04-so-do-pitch.jpg` | https://pitch.com/templates/10-Slide-Pitch-Deck-0dh4WE6siodH4gWAjk0og4tB | Loại: `so-do` | Học: sơ đồ ma trận 2 trục chỉ dùng 2 nét mảnh 1px và chấm tròn trắng phân biệt kích thước thay vì icon/thẻ màu, tiêu đề mục căn trái (~56pt) và 3 ý ngắn (~28pt), nền tối `#081126` chữ trắng `#FFFFFF`, khoảng trống >60% đọc rõ từ cuối hội trường.
+5. `05-chuyen-chuong-pitch.jpg` | https://pitch.com/templates/Design-Pitch-Deck-0nSSgC0W3aUf5sukm42UkqPX | Loại: `chuyen-chuong` | Học: phông sans-serif siêu lớn (~180pt) ngắt 2 tầng dồn góc dưới phải kèm số thứ tự chương `01` (~36pt) trên đường kẻ ngang 1px, nền đen sâu `#050505` chữ trắng `#FFFFFF`, khoảng trống đen >75% tạo nhịp nghỉ mạnh khi đổi phần trên sân khấu.
+6. `06-ket-pitch.jpg` | https://pitch.com/templates/10-Slide-Pitch-Deck-0dh4WE6siodH4gWAjk0og4tB | Loại: `ket` | Học: bố cục chia 60/40 với vùng chữ trái cực thoáng cho câu chốt lớn (~110pt) và dòng liên hệ chân trang (~20pt), phần phải 40% dành trọn cho ảnh kiến trúc thật (hoặc khung mã QR ≥45% chiều cao khi kêu gọi hành động), nền `#081126` chữ `#FFFFFF`, khoảng trống vùng chữ >70%.
 
 THẺ PHONG CÁCH
-1. Phông: tiêu đề Playfair Display (đủ dấu tiếng Việt), thân và số Be Vietnam Pro. Tải từ Google Fonts, nhúng vào PPTX hoặc cài máy; dự phòng Georgia/Arial.
-2. Màu: nền giấy ngà #F4EFE6; chữ mực #1C1B19; nhấn đỏ trầm #9E2A1F (chỉ 1 điểm nhấn mỗi slide); đường kẻ vàng nhạt #C9A86A. Không màu nào khác.
-3. Cỡ chữ ở 1920×1080: tiêu đề 72–96pt; số lớn 220–300pt; thân 32–40pt; nguồn/chân 16pt màu #1C1B19 độ mờ 55%.
-4. Lề 120px bốn phía; nội dung chiếm ≤ 55% diện tích; căn trái, lưới 12 cột.
-5. Mỗi slide 1 ý. Slide số liệu: 1 con số khổng lồ + 1 dòng nghĩa + 1 dòng nguồn. Slide trích dẫn: 1 câu, không khung.
-6. Chi tiết trang trí duy nhất: đường kẻ mảnh 1px vàng nhạt và số trang nhỏ góc trên phải (như BTMH). Không icon, không thẻ màu, không bóng đổ, không gradient.
-7. Ảnh: chỉ ảnh chụp màn hình thật (đã che tên) khi kịch bản cần; không ảnh AI.
-8. CẤM: hơn 25 chữ thân trên một slide; hơn 1 màu nhấn; khối màu đặc làm nền chữ; chữ toàn hoa ở thân.
+1. Hai phông đủ dấu tiếng Việt: tiêu đề dùng `Playfair Display` (serif sang trọng, tạo điểm nhấn biên tập), thân bài và con số dùng `Be Vietnam Pro` (sans-serif hiện đại, đọc cực rõ từ xa trên màn LED); phông dự phòng `Georgia` và `Arial`.
+2. Bảng 4 màu mã hex duy nhất: nền giấy ngà `#F4EFE6`, chữ mực than `#1C1B19` (được phép đảo cặp nền `#1C1B19` – chữ `#F4EFE6` ở slide chuyển chương/màn tối), nhấn đỏ trầm `#9E2A1F` (tối đa 1 điểm nhấn/slide), đường kẻ mảnh `#C9A86A`.
+3. Cỡ chữ chuẩn ở khung `1920x1080` (16:9): tiêu đề `72–96pt` (≤12 chữ), thân bài `32–40pt` (≤25 chữ), số liệu lớn `220–300pt`, dòng nguồn/chân trang `16pt` (độ mờ 55%).
+4. Lề và lưới bố cục: lề an toàn `120px` cả 4 phía, lưới 12 cột căn trái nhất quán, tổng diện tích chữ và vật thể chiếm ≤45–55% khung hình (khoảng trống tối thiểu 45%).
+5. Quy tắc một ý và chi tiết trang trí: mỗi slide đúng 1 ý; chỉ dùng đường kẻ mảnh `1px` màu `#C9A86A` và số trang nhỏ góc trên phải; slide số lớn gồm 1 con số + 1 dòng nghĩa + 1 dòng nguồn; slide trích dẫn gồm 1 câu trần không khung.
+6. Quy tắc sơ đồ và slide QR kêu gọi hành động: sơ đồ/bảng đối chiếu tối đa 5 bước hoặc 3 hàng chỉ dùng nét `1px`; slide QR đặt mã QR tương phản cao chiếm ≥45% chiều cao bên phải kèm 1 câu lệnh ngắn và link rút gọn bên trái.
+7. Luật ảnh nền: không dùng ảnh phủ tràn đè chữ dưới mọi hình thức; chỉ giữ nền trơn (`#F4EFE6` hoặc `#1C1B19`), khi kịch bản cần minh chứng mới đặt ảnh chụp màn hình thật (đã che tên) hoặc ảnh thật tách riêng một bên chừa vùng chữ sạch.
+8. Ba điều CẤM: (1) CẤM nhồi quá 25 chữ thân hoặc quá 1 ý trên một slide và CẤM viết toàn chữ hoa ở phần thân; (2) CẤM dùng quá 1 màu nhấn hoặc đổ hộp màu đặc, bóng đổ, gradient, icon trang trí thừa; (3) CẤM dùng ảnh sinh bởi AI hoặc nêu tên thương hiệu riêng của diễn giả.
