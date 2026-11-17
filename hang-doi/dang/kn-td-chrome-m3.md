@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-3 2026-11-17T19:44:18+0700
 
 # kn-td-chrome-m3
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
