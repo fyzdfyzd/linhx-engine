@@ -15,4 +15,4 @@ Brand health check: gộp nhánh nền chung + sửa lỗi tải PDF.
 CẤM: deploy, gọi AI thật, in khoá, sửa test cũ (trừ khi test cũ sai do gộp, ghi rõ), đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; file xung đột; E2E-02 đỏ→xanh; verify 2 lần pass/fail.
 
-nhip: 09:11 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 09:11 21p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T09:11:44+0700] · root agent idle; waiting up to 40m0s for 1 ba
