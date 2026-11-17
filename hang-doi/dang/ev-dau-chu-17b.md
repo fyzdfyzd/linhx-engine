@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-dau-chu-17b
+nhan: may-3 2026-11-18T00:16:35+0700
 
 Phiếu ev-dau-chu-17b (song song): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. Nếu `git ls-remote https://github.com/fyzdfyzd/ifagent HEAD` lỗi xác thực: dừng ngay, KET-QUA ghi `CAN-LINH: dang nhap GitHub may-3`. Rồi `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-dau-chu-17b` (đã có thì fetch), `git checkout -b agy/ev-dau-chu-17b origin/agy/ev-de-xuat-13b`. Trong apps/event: `npm ci`. Ngay sau đó commit rỗng KHÔNG cần; push nhánh khi có commit đầu tiên.
