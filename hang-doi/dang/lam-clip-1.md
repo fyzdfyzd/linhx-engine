@@ -10,4 +10,4 @@ Trình duyệt: Browsentic (Chrome MSI đã đăng nhập Flow). Chrome đang ph
 Flow đòi đăng nhập: dừng, CHUA_DANG_NHAP (không gõ mật khẩu).
 Thêm vào KET-QUA: đường dẫn cho.webm và lam-cho-720.mp4 trong repo, có script tách nền t146 không, mỗi clip Flow mất bao nhiêu phút.
 
-nhip: 22:29 30p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 22:32 33p warning: --mode auto is not available for this account; continuing in the default mode.
