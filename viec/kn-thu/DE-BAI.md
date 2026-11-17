@@ -5,7 +5,7 @@ Mục tiêu: biết chắc máy nào làm được việc gì. Mỗi phiếu th�
 ## Luật chung cho mọi phiếu kn-*
 1. BƯỚC 0: `hostname`. Sai máy ghi trong phiếu thì dừng, KET-QUA ghi `SAI_MAY: <hostname>`.
 2. Dòng 2 của phần thân KET-QUA luôn là: `KET_LUAN: DAT | HONG | CHUA_DANG_NHAP | KHONG_CO_CONG_CU` + ` — <lý do ≤ 120 ký tự>`.
-3. Trình duyệt, thử theo thứ tự, dùng cách đầu tiên chạy được và ghi tên cách vào KET-QUA (`trinh_duyet: browsentic | agy-browser | cdp-9222`):
+3. (Sửa 17/11 22:30) Việc cần đăng nhập: CHỈ dùng MCP Browsentic (Chrome chính đã đăng nhập). Gọi `browsentic_status` đầu tiên; hỏng thì `KET_LUAN: HONG — browsentic: <lỗi nguyên văn>` rồi dừng, KHÔNG lùi sang hồ sơ chrome-agy. Việc không cần đăng nhập mới được thử theo thứ tự (`trinh_duyet: browsentic | agy-browser | cdp-9222`):
    a. MCP Browsentic (Chrome đã đăng nhập, cổng 8765) nếu `agy mcp list` có.
    b. Trình duyệt sẵn có của agy.
    c. Chrome hồ sơ RIÊNG: `chrome.exe --user-data-dir=<o>\linhx\chrome-agy --remote-debugging-port=9222` (o = D: nếu có, không thì C:). KHÔNG mở cổng debug trên User Data mặc định (Chrome mới chặn, đã thử 17/11).
@@ -15,3 +15,7 @@ Mục tiêu: biết chắc máy nào làm được việc gì. Mỗi phiếu th�
 7. Không tác vụ nền rồi chờ. Việc chờ lâu (deep research, render) thì kiểm trạng thái mỗi 1–2 phút ở tiền cảnh.
 8. Không trả phí, không bấm nâng cấp gói, không đăng/chia sẻ công khai gì.
 9. KET-QUA ≤ 2000 ký tự, thêm dòng `phut_that: <số phút>` và `loi_gap: <lỗi lặp lại được nếu có>`.
+10. Browsentic: mở tab MỚI của mình và giữ tab đó ở trước; tab khác đang phát video/âm thanh thì không đụng, ghi vào loi_gap.
+11. Tải file từ trang (ảnh/nhạc/video): ưu tiên nút tải gốc bằng chữ hiển thị ("Tải xuống", "Download"); không được thì dùng JS lấy `src`/blob rồi `fetch` lưu file. Cấm selector CSS dài theo id sinh tự động.
+12. Cấm chạy tác vụ nền rồi chờ (`waiting for background task` là bị dừng). Chờ trang thì vòng lặp tiền cảnh: chụp/đọc trang mỗi 60–120 giây.
+13. Chưa có ổ Drive G:\ thì để file > 1 MB ở `<o>\linhx\kn-thu\<id>\`, ghi đường dẫn + sha256.

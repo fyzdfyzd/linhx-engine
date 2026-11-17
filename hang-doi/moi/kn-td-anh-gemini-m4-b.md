@@ -1,0 +1,13 @@
+may: may-4
+loai: trinh-duyet
+tran_phut: 20
+khong_tien_phut: 15
+tu_sua: 0
+
+# kn-td-anh-gemini-m4-b
+Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
+Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
+
+Kỹ năng: tạo ảnh trên Gemini web (tài khoản Ultra nếu có).
+Đề ảnh: "Ảnh vuông, tối giản: bản đồ sao tròn màu vàng đồng trên nền xanh đêm, chữ 'LINHX' nhỏ ở góc dưới phải, phong cách tạp chí". Tải ảnh gốc về, chép vào xong/<id>/anh.png (nén ≤ 1 MB nếu lớn).
+ĐẠT khi: có file ảnh ≥ 1024 px cạnh ngắn, đúng đề. Trả: kích thước, model ảnh Gemini hiển thị, số giây chờ.
