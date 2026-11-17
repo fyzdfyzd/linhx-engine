@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-3 2026-11-17T22:31:47+0700
 
 # kn-td-gtask-tinh-m3-b
 Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
