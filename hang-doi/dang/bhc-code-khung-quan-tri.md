@@ -21,3 +21,5 @@ Brand health check: VẼ KHUNG trang quản trị (chưa nối app). Hiện app 
 4. Bằng chứng bang-chung/bhc-code-khung-quan-tri/: 6 màn × 1280, 3 màn (b, c, e) × 360, ghep-1280.png. ≤ 600 KB/ảnh.
 CẤM: sửa server/, nối app, deploy, sinh ảnh AI, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; verify; danh sách ảnh.
+
+nhip: 07:43 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
