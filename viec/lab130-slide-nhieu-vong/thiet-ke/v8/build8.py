@@ -1122,6 +1122,127 @@ def dung_slides_19_21() -> None:
     )
 
 
+def dung_slides_22_24() -> None:
+    # 22 — QR >= 45% chiều cao (540x540px = 50% chiều cao 1080px), ô trống ghi "QR"
+    s = nen(True)
+    so_trang(s, 22, True)
+    tieu_de_noi_dung(s, "Tối nay, anh chị tự soi thương hiệu mình trong 10 phút", dark=True, hep=True)
+    rect(s, L, 407, 48, 4, fill=DO)
+    hline(s, L + 56, 410, 220, color=VANG, lw=1.0)
+    txt(
+        s,
+        L,
+        455,
+        980,
+        240,
+        "Đo bốn chỉ số, biết mình sai ở chặng nào, nhận kế hoạch 30\u00A0ngày.\nMiễn phí, không cần đăng\u00A0nhập.",
+        SZ_BODY,
+        font=TH,
+        color=NGA,
+        ls=1.5,
+    )
+    qr_sz = 540
+    qr_x = W - L - qr_sz  # 1260px
+    qr_y = (H - qr_sz) // 2  # 270px
+    rect(s, qr_x, qr_y, qr_sz, qr_sz, fill=NGA, line=VANG, lw=1.0)
+    txt(
+        s,
+        qr_x,
+        qr_y,
+        qr_sz,
+        qr_sz,
+        "QR",
+        SZ_TITLE,
+        font=TH,
+        color=DO,
+        bold=True,
+        align=A.CENTER,
+        anchor=V.MIDDLE,
+    )
+    note(s, "Tôi không bán gì trên sân khấu. Quét mã này, tối nay anh chị có điểm của mình. Tôi để mã 45 giây.")
+
+    # 23 — Một dòng lớn trước thứ Hai + hai dòng nhỏ
+    s = nen(False)
+    so_trang(s, 23, False)
+    txt(
+        s,
+        L,
+        136,
+        1280,
+        160,
+        "Nếu chỉ làm được một việc trước thứ Hai,\nhãy đưa Bảng sự thật lên\u00A0web",
+        SZ_TITLE,
+        font=TD,
+        color=THAN,
+        ls=1.22,
+        tag="h2",
+    )
+    hline(s, L, 355, SAFE_W, color=VANG, lw=1.0)
+    txt(s, L, 405, 600, 44, "Thêm hai việc:", SZ_META, font=TH, color=DO, bold=True)
+    rect(s, L, 496, 10, 10, fill=DO, shape=S.OVAL)
+    txt(s, L + 32, 480, 1400, 56, "hỏi 2 AI, mỗi AI 3 lần, chụp\u00A0lại", SZ_BODY, font=TH, color=THAN, ls=1.35)
+    rect(s, L, 580, 10, 10, fill=DO, shape=S.OVAL)
+    txt(
+        s,
+        L + 32,
+        564,
+        1400,
+        56,
+        "sửa chỗ lệch giữa web và Google Business\u00A0Profile",
+        SZ_BODY,
+        font=TH,
+        color=THAN,
+        ls=1.35,
+    )
+    nguon(s, "Kịch bản v5", False)
+    note(
+        s,
+        "Bảng sự thật là một trang viết bằng chữ: mình là ai, bán gì, cho ai, giá, chính sách, ngày cập nhật. Giao cho một người giữ trang này và có quyền đòi các bộ phận sửa.",
+    )
+
+    # 24 — Dòng thời gian 4 tuần (30 ngày)
+    s = nen(False)
+    so_trang(s, 24, False)
+    tieu_de_noi_dung(s, "Trong 30 ngày, anh chị sửa phần dữ liệu trước rồi mới đo lại", dark=False)
+    bon_tuan = [
+        ("Tuần 1\n\nsửa chỗ AI nói\u00A0sai", False),
+        ("Tuần 2\n\nBảng sự\u00A0thật", False),
+        ("Tuần 3\n\nđồng bộ mọi\u00A0kênh", False),
+        ("Tuần 4\n\nthêm bằng chứng bên thứ ba, đo\u00A0lại", True),
+    ]
+    hline(s, L, 420, SAFE_W, color=VANG, lw=1.0)
+    gap4 = 40
+    cw4 = (SAFE_W - 3 * gap4) / 4  # 390px mỗi tuần
+    for idx, (noi_dung, la_cuoi) in enumerate(bon_tuan):
+        cx = L + idx * (cw4 + gap4)
+        rect(
+            s,
+            cx,
+            412,
+            16,
+            16,
+            fill=DO if la_cuoi else NGA,
+            line=DO if la_cuoi else VANG,
+            lw=1.5 if la_cuoi else 1.0,
+            shape=S.OVAL,
+        )
+        txt(
+            s,
+            cx,
+            465,
+            cw4,
+            260,
+            noi_dung,
+            SZ_BODY,
+            font=TH,
+            color=DO if la_cuoi else THAN,
+            bold=la_cuoi,
+            ls=1.35,
+        )
+    nguon(s, "Kịch bản v5", False)
+    note(s, "Ba tuần đầu sửa chặng 3, chặng anh chị nắm trong tay. Tuần 4 đo lại bằng trang QR và so với hai số lúc đầu.")
+
+
 # ───────────────────────── Xuất HTML Mirror, PDF, PNG & Kiểm Luật ─────────────────────────
 
 def font_css_embedded() -> str:
@@ -1302,6 +1423,7 @@ def main() -> None:
     dung_slides_7_12()
     dung_slides_13_18()
     dung_slides_19_21()
+    dung_slides_22_24()
     prs.save(str(PPTX_OUT))
     pngs = xuat_html_pdf_png()
     ghep_bang_anh_5x5(pngs)
