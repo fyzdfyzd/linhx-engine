@@ -20,4 +20,4 @@ Quản trị phần B, worktree C:\linhx\ifagent-wt\bhc-quan-tri, nhánh agy/bhc
 CẤM: deploy, gọi AI thật, in mã quản trị/khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; E2E phần B; test:lap; verify.
 
-nhip: 11:30 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 11:33 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
