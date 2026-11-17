@@ -15,3 +15,5 @@ Playwright Chromium, viewport 1080×1920 DPR 1, cờ --use-fake-ui-for-media-str
 5) Trên trang khách: có nút chia sẻ mạng xã hội không (Facebook/Zalo/tải ảnh)? Chụp. Nhánh "lên tạp chí" nằm ở đâu, chụp.
 6) Lỗi: ảnh không mặt (chụp vật), 2 mặt; bấm "Làm lại"; để yên 60s xem kiosk có tự về màn chờ không.
 Nộp: ảnh + BANG.md vào linhx-engine nhánh soi-rc8-17-11, thư mục soi/tong-duyet/kiosk/. KET-QUA ≤1500 ký tự: số ảnh, bước không đi được, lỗi, thời gian tạo bìa.
+
+nhip: 20:47 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
