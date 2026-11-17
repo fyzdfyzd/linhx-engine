@@ -14,3 +14,5 @@ Kỹ năng: Gemini Ultra chế độ tác vụ máy ảo làm video.
 Đề: "Trong máy ảo, dựng video MP4 1080×1920, 20 giây, 4 khung chữ tiếng Việt có dấu: 'Thử máy ảo Gemini' / 'Tính toán xong' / 'Video tự dựng' / 'LINHX 17-11', nền chuyển màu, nhạc nền tự tổng hợp bằng code (sin) nếu được. Xuất file cho tôi tải."
 Kiểm 2 phút/lần. Tải mp4 về Drive (luật 5), chụp 1 khung hình kiểm dấu tiếng Việt.
 ĐẠT khi: mp4 ≥ 15 giây, chữ tiếng Việt không vỡ dấu. Trả: thời lượng, có tiếng không, số phút, lỗi gặp.
+
+nhip: 05:33 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
