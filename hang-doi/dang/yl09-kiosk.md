@@ -15,4 +15,4 @@ Chạy mọi lệnh ở tiền cảnh, KHÔNG background task; mỗi 5 phút ph�
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md theo DE-BAI luật 9.
 
-nhip: 22:59 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:02 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
