@@ -12,3 +12,5 @@ nhan: may-4 2026-11-17T20:41:19+0700
 Kỹ năng: làm video trên Google Flow (labs.google/flow).
 Tạo dự án mới tên `kn-thu-17-11`, một cảnh từ chữ: "Cảnh 8 giây, máy quay lia chậm qua bàn gỗ có tách trà nóng bốc khói, nắng sớm qua cửa sổ, chân thực". Chọn model Veo rẻ nhất đang có (ghi tên + số tín dụng tốn). Tải mp4 về Drive (luật 5).
 ĐẠT khi: có mp4 ≥ 4 giây. Trả: model, tín dụng tốn/còn, thời lượng, số phút chờ.
+
+nhip: 20:44 3p warning: --mode auto is not available for this account; continuing in the default mode.
