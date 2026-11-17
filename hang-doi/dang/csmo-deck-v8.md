@@ -25,4 +25,4 @@ Chạy tiền cảnh. Commit + push lên nhánh claude/project-thread-j24agg sau
 Cấm: sửa TEXT-A-v3.md, đụng thư mục khác ngoài thiet-ke/v8/.
 Trả KET-QUA.md ≤2000 ký tự: đường dẫn tệp, kết quả vls do/phong, slide nào lệch luật và vì sao.
 
-nhip: 20:33 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 20:36 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
