@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-e2e-lan-2
+nhan: may-2 2026-11-18T00:56:23+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd`. Commit + push mỗi 10 phút.
 0. Chờ nền: `git fetch origin agy/bhc-sua-3`; nếu nhánh chưa có commit luật lint cỡ chữ/cỡ nút thì chờ 5 phút rồi kiểm lại, tối đa 60 phút; quá thì DỪNG, ghi CHUA_CO_NEN.
