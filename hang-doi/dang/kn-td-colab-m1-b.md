@@ -4,6 +4,7 @@ tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-td-deep-research-m1-b
+nhan: may-1 2026-11-17T22:35:30+0700
 
 # kn-td-colab-m1-b
 Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
