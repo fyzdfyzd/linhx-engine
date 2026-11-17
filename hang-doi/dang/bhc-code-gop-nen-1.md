@@ -14,3 +14,5 @@ Brand health check: gộp nhánh nền chung + sửa lỗi tải PDF.
 4. Bằng chứng bang-chung/bhc-nen/: log 2 lần verify, ảnh trang PDF trang 1 của một báo cáo vừa quét bằng AI giả.
 CẤM: deploy, gọi AI thật, in khoá, sửa test cũ (trừ khi test cũ sai do gộp, ghi rõ), đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; file xung đột; E2E-02 đỏ→xanh; verify 2 lần pass/fail.
+
+nhip: 08:53 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
