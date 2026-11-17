@@ -21,4 +21,4 @@ Brand health check: dựng trang quản trị thật theo khung apps/brand-healt
 CẤM: deploy, gọi AI thật, in khoá/mã quản trị vào log hay ảnh, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW. Hết giờ thì push phần đã xong và ghi rõ còn thiếu.
 KET-QUA.md: `dat: co|khong`; SHA; E2E quản trị pass/fail; verify 2 lần; phần còn thiếu.
 
-nhip: 10:08 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 10:11 33p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
