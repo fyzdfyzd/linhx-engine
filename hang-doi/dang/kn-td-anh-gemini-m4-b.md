@@ -12,3 +12,5 @@ Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mớ
 Kỹ năng: tạo ảnh trên Gemini web (tài khoản Ultra nếu có).
 Đề ảnh: "Ảnh vuông, tối giản: bản đồ sao tròn màu vàng đồng trên nền xanh đêm, chữ 'LINHX' nhỏ ở góc dưới phải, phong cách tạp chí". Tải ảnh gốc về, chép vào xong/<id>/anh.png (nén ≤ 1 MB nếu lớn).
 ĐẠT khi: có file ảnh ≥ 1024 px cạnh ngắn, đúng đề. Trả: kích thước, model ảnh Gemini hiển thị, số giây chờ.
+
+nhip: 22:55 3p warning: --mode auto is not available for this account; continuing in the default mode.
