@@ -2,6 +2,8 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-csmo-v8
+nhan: may-2 2026-11-17T21:15:22+0700
+moc: 140ffa44daedde03b48d03eeb19def73ce677c5f
 
 Phiếu DỰNG NỐT deck CSMO v8. Phiếu csmo-deck-v8 hết giờ ở slide 18 (đã push tới commit 140ffa44 trên nhánh claude/project-thread-j24agg).
 
