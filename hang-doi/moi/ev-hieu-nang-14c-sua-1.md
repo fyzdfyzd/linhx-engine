@@ -2,10 +2,8 @@ may: may-3
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14b
-nhan: may-3 2026-11-17T21:53:15+0700
-moc: 95b73a5fdecab580834068791c4efcf717c40a19
 
 Phiếu ev-hieu-nang-14c: LÀM TIẾP trong worktree CÓ SẴN D:\linhx\ifagent-wt\ev-hieu-nang-14b (nhánh agy/ev-hieu-nang-14b). Hai lượt trước đo được Lighthouse (truoc-mobile.json, truoc-desktop.json, scripts/do-lighthouse.js) nhưng KHÔNG commit/push nên mất 40 phút.
 BƯỚC 0 BẮT BUỘC (trong 3 phút đầu): `$env:GIT_TERMINAL_PROMPT=0`; cd worktree; `git add apps/event bang-chung/ev-hieu-nang-14b`; commit "ev-hieu-nang-14b: do Lighthouse truoc"; `git push -u origin agy/ev-hieu-nang-14b`. Sau đó mỗi lần sửa xong 1 nhóm (ảnh / phông / script / trợ năng / meta) là commit + push ngay.
@@ -21,4 +19,16 @@ Phiếu ev-hieu-nang-14b (song song, máy 3): đo và nâng điểm Lighthouse c
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-hieu-nang-14b/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; bảng điểm trước/sau (trung bình + trang thấp nhất); pass/fail.
 
-nhip: 22:32 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-hieu-nang-14c
+may: may-3
+trang_thai: dung
+ly_do: qua_gio
+tep_doi: (khong)
+drive: (khong)
+phut: 40.04
+token: vao=0 ra=0
+
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
