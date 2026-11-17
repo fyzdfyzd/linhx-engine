@@ -1,0 +1,956 @@
+{
+  "startedAt": "2026-11-17T11:41:25.731Z",
+  "base": "https://staging-demo.ifagent.net",
+  "expectedCommit": "3fd424b1",
+  "healthz": {
+    "httpStatus": 200,
+    "ms": 185,
+    "body": {
+      "ok": true,
+      "commit": "3fd424b177a6",
+      "uptimeSec": 574,
+      "db": "ok"
+    },
+    "commitMatched": true
+  },
+  "yenlamCheck": {
+    "stagingTicketWithYenlamOriginStatus": 200,
+    "stagingV1WithYenlamOriginStatus": 200,
+    "yenlamProdDomainProbe": {
+      "rootStatus": 302,
+      "locationHeader": "/yen-lam/",
+      "healthz": {
+        "ok": true,
+        "commit": null,
+        "uptimeSec": 6951,
+        "db": "ok"
+      }
+    }
+  },
+  "muc1_kiosk": {
+    "navHttpStatus": 200,
+    "navMs": 717,
+    "openState": {
+      "url": "https://staging-demo.ifagent.net/yen-lam/csmo/kiosk-lam",
+      "blockedByLock": false,
+      "hasKlBtn": true,
+      "klBtnText": "Đang tới",
+      "hasKlGo": true,
+      "mayTrangThai": "BUOC_VAO"
+    },
+    "cookiesKiosk": [
+      {
+        "name": "yl_may_mo",
+        "path": "/",
+        "httpOnly": true
+      }
+    ],
+    "qaResults": [
+      {
+        "idx": 1,
+        "label": "Giờ khai mạc 19/11",
+        "question": "Lễ khai mạc ngày 19/11 diễn ra lúc mấy giờ?",
+        "answered": true,
+        "reply": "Anh chị có thể xem thêm thông tin chi tiết trên màn hình.",
+        "ttfbMs": 2716,
+        "firstDomTextMs": 2716,
+        "turnDoneMs": 19333,
+        "nguon": "live",
+        "slowBannerShown": false,
+        "slowBanners": [],
+        "transientStatusTexts": [
+          "Lam đang nghĩ…"
+        ],
+        "turnApis": [
+          {
+            "turn": -1,
+            "method": "POST",
+            "path": "/api/yen-lam/kiosk/ticket",
+            "status": 200,
+            "ms": 54,
+            "xLamPhien": null
+          },
+          {
+            "turn": 1,
+            "method": "POST",
+            "path": "/api/yen-lam/kiosk/ticket",
+            "status": 200,
+            "ms": 64,
+            "xLamPhien": null
+          }
+        ],
+        "turnConsoleErrors": []
+      },
+      {
+        "idx": 2,
+        "label": "Phòng Track Lavender",
+        "question": "Track Lavender diễn ra ở phòng nào?",
+        "answered": true,
+        "reply": "Anh chị có muốn tìm hiểu về nội dung của Track này không?",
+        "ttfbMs": 1255,
+        "firstDomTextMs": 1103,
+        "turnDoneMs": 10768,
+        "nguon": "live",
+        "slowBannerShown": false,
+        "slowBanners": [],
+        "transientStatusTexts": [
+          "Lam đang nghĩ…"
+        ],
+        "turnApis": [],
+        "turnConsoleErrors": []
+      },
+      {
+        "idx": 3,
+        "label": "Diễn giả Nguyễn Trần Quang nói gì",
+        "question": "Diễn giả Nguyễn Trần Quang nói gì tại sự kiện?",
+        "answered": true,
+        "reply": "Ông Nguyễn Trần Quang, CEO FutureOne Consulting, sẽ có bài Keynote vào sáng ngày 19/11 tại Hồ Tây Grand Ballroom.",
+        "ttfbMs": 1244,
+        "firstDomTextMs": 1101,
+        "turnDoneMs": 17913,
+        "nguon": "live",
+        "slowBannerShown": false,
+        "slowBanners": [],
+        "transientStatusTexts": [
+          "Lam đang nghĩ…"
+        ],
+        "turnApis": [],
+        "turnConsoleErrors": []
+      }
+    ],
+    "directV1Probe": {
+      "kioskTicketStatus": 200,
+      "kioskTicketCheDo": "mo-tu-do",
+      "v1TicketLiveStatus": 200,
+      "v1TicketLiveMs": 57,
+      "v1TicketLivePhienHeader": "mo-tu-do",
+      "v1HoiThoaiStatus": 200,
+      "v1HoiThoaiMs": 1925,
+      "v1HoiThoaiPhienHeader": "mo-tu-do",
+      "v1HoiThoaiSampleReply": "Sáng 19/11 từ 08:00 đến 12:00 là Phiên Toàn thể VSMCamp 2026 tại Hồ Tây Grand Ballroom."
+    },
+    "allApiLogs": [
+      {
+        "turn": -1,
+        "method": "GET",
+        "path": "/api/yl/v1/may/toi",
+        "status": 401,
+        "ms": 64,
+        "xLamPhien": null
+      },
+      {
+        "turn": -1,
+        "method": "POST",
+        "path": "/api/yen-lam/kiosk/ticket",
+        "status": 200,
+        "ms": 54,
+        "xLamPhien": null
+      },
+      {
+        "turn": 1,
+        "method": "POST",
+        "path": "/api/yen-lam/kiosk/ticket",
+        "status": 200,
+        "ms": 64,
+        "xLamPhien": null
+      },
+      {
+        "turn": 99,
+        "method": "POST",
+        "path": "/api/yen-lam/kiosk/ticket",
+        "status": 200,
+        "ms": 52,
+        "xLamPhien": null
+      },
+      {
+        "turn": 99,
+        "method": "POST",
+        "path": "/api/yl/v1/may/ticket-live",
+        "status": 200,
+        "ms": 57,
+        "xLamPhien": "mo-tu-do"
+      },
+      {
+        "turn": 99,
+        "method": "POST",
+        "path": "/api/yl/v1/may/hoi-thoai",
+        "status": 200,
+        "ms": 1924,
+        "xLamPhien": "mo-tu-do"
+      }
+    ],
+    "hoiThoaiOrTicket401": false,
+    "consoleErrors": [
+      {
+        "turn": -1,
+        "type": "console.error",
+        "text": "Failed to load resource: the server responded with a status of 401 ()"
+      }
+    ]
+  },
+  "muc2_booth_kiem_anh": {
+    "anh1_webcam": {
+      "fixture": "C:\\linhx\\ifagent-wt\\tran-man\\.handoff\\T-141\\bia-v4\\artifact\\img\\vao-webcam-mau-nu-ai.jpg",
+      "passedKiemAnh": true,
+      "screenAfter": "AM-02d",
+      "uiTextAfter": {
+        "man": "AM-02d",
+        "tieuDe": "Bạn quan tâm điều gì nhất?",
+        "phu": "Chọn tối đa 3 mục.",
+        "hasChuaRoMat": false
+      },
+      "kiemAnh": {
+        "httpStatus": 200,
+        "ms": 2869,
+        "dat": true,
+        "lop": 2,
+        "lyDo": "",
+        "can_duyet": false,
+        "doMang": false,
+        "loiNhan": "",
+        "chiTiet": "anh binh thuong an toan",
+        "raw": {
+          "ok": true,
+          "sessionId": "am-mwkmi867-7573d3cb99",
+          "dat": true,
+          "lop": 2,
+          "lyDo": "",
+          "doMang": false,
+          "can_duyet": false,
+          "chiTiet": "anh binh thuong an toan",
+          "loiNhan": "",
+          "ms": 2622
+        }
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 400 ()",
+        "Failed to load resource: the server responded with a status of 404 ()",
+        "Failed to load resource: the server responded with a status of 404 ()"
+      ],
+      "httpErrors": [
+        {
+          "method": "POST",
+          "path": "/yen-lam/csmo/api/event/lemedia",
+          "status": 400
+        },
+        {
+          "method": "GET",
+          "path": "/yen-lam/csmo/api/agentic-me/tap-chi/am-mwkmi867-7573d3cb99",
+          "status": 404
+        },
+        {
+          "method": "GET",
+          "path": "/yen-lam/csmo/api/agentic-me/tap-chi/am-mwkmi867-7573d3cb99",
+          "status": 404
+        }
+      ]
+    },
+    "anh2_khong_mat": {
+      "fixture": "C:\\linhx\\ifagent-wt\\A1\\.handoff\\T-043\\luna-mai\\empty-stage.png",
+      "blockedCorrectly": true,
+      "screenAfter": "K7",
+      "uiTextAfter": {
+        "man": "K7",
+        "tieuDe": "Chưa thấy rõ khuôn mặt",
+        "phu": "Mời bạn bước lại gần và nhìn vào máy.",
+        "hasChupLaiBtn": true
+      },
+      "kiemAnh": {
+        "httpStatus": 200,
+        "ms": 1382,
+        "dat": false,
+        "lop": 1,
+        "lyDo": "khong-mat",
+        "can_duyet": false,
+        "doMang": false,
+        "loiNhan": "Mình chụp lại một tấm rõ mặt hơn nhé",
+        "chiTiet": "",
+        "raw": {
+          "ok": true,
+          "sessionId": "am-mwkmiv9w-9dde86ae0a",
+          "dat": false,
+          "lop": 1,
+          "lyDo": "khong-mat",
+          "doMang": false,
+          "can_duyet": false,
+          "chiTiet": "",
+          "loiNhan": "Mình chụp lại một tấm rõ mặt hơn nhé",
+          "ms": 1147
+        }
+      },
+      "consoleErrors": [
+        "Failed to load resource: the server responded with a status of 400 ()"
+      ],
+      "httpErrors": [
+        {
+          "method": "POST",
+          "path": "/yen-lam/csmo/api/event/lemedia",
+          "status": 400
+        }
+      ]
+    }
+  },
+  "muc3_chon_47_dien_gia": {
+    "init1080": {
+      "viewport": "1080x1920",
+      "W": 1080,
+      "H": 1920,
+      "docScrollWidth": 1080,
+      "docClientWidth": 1080,
+      "scrollWidthOk": true,
+      "docScrollHeight": 1920,
+      "docClientHeight": 1920,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 49,
+      "visibleNamesSample": [
+        "Lê Quốc Vinh",
+        "Trịnh Xuân Pháp",
+        "Đào Trung Thành",
+        "Nguyễn Đức Sơn",
+        "Nguyễn Dương"
+      ],
+      "innerScrollable": true,
+      "nutTiepTucText": "Tiếp tục",
+      "nutTiepTucRect": {
+        "left": 88,
+        "top": 1764,
+        "right": 528,
+        "bottom": 1876
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 0,
+      "chips": [],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "init390": {
+      "viewport": "390x844",
+      "W": 390,
+      "H": 844,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "scrollWidthOk": true,
+      "docScrollHeight": 844,
+      "docClientHeight": 844,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 49,
+      "visibleNamesSample": [
+        "Lê Quốc Vinh",
+        "Trịnh Xuân Pháp",
+        "Đào Trung Thành",
+        "Nguyễn Đức Sơn",
+        "Nguyễn Dương"
+      ],
+      "innerScrollable": true,
+      "nutTiepTucText": "Tiếp tục",
+      "nutTiepTucRect": {
+        "left": 12,
+        "top": 784,
+        "right": 190,
+        "bottom": 834
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 0,
+      "chips": [],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "filterStats": {
+      "19/11": {
+        "visibleCount": 36,
+        "sampleNames": [
+          "Lê Quốc Vinh",
+          "Trịnh Xuân Pháp",
+          "Đào Trung Thành",
+          "Nguyễn Đức Sơn",
+          "Arjun Ganesh"
+        ],
+        "ok1080": true,
+        "ok390": true
+      },
+      "20/11": {
+        "visibleCount": 17,
+        "sampleNames": [
+          "Lê Quốc Vinh",
+          "Đào Trung Thành",
+          "Nguyễn Dương",
+          "Thuận Đoàn",
+          "Nguyễn Quỳnh Trang"
+        ],
+        "ok1080": true,
+        "ok390": true
+      },
+      "toan-the": {
+        "visibleCount": 25,
+        "sampleNames": [
+          "Lê Quốc Vinh",
+          "Trịnh Xuân Pháp",
+          "Đào Trung Thành",
+          "Nguyễn Đức Sơn",
+          "Nguyễn Dương"
+        ],
+        "ok1080": true,
+        "ok390": true
+      },
+      "olive": {
+        "visibleCount": 7,
+        "sampleNames": [
+          "Đào Trung Thành",
+          "Phạm Vũ Tùng",
+          "Đặng Thuý Hà",
+          "Đinh Trần Tuấn Linh",
+          "Đào Hoàng Thanh"
+        ],
+        "ok1080": true,
+        "ok390": true
+      },
+      "lavender": {
+        "visibleCount": 10,
+        "sampleNames": [
+          "Nguyễn Hồng Nhung",
+          "Ngô Phương Thảo",
+          "Nguyễn Trọng Thành",
+          "Yan Yi",
+          "Jiang Na"
+        ],
+        "ok1080": true,
+        "ok390": true
+      },
+      "iris": {
+        "visibleCount": 9,
+        "sampleNames": [
+          "Jonathan Beh",
+          "Hạnh Lê",
+          "Thương Lê",
+          "Hoàng Việt Hà",
+          "Trần Nguyên Vũ"
+        ],
+        "ok1080": true,
+        "ok390": true
+      }
+    },
+    "search1080": {
+      "viewport": "1080x1920",
+      "W": 1080,
+      "H": 1920,
+      "docScrollWidth": 1080,
+      "docClientWidth": 1080,
+      "scrollWidthOk": true,
+      "docScrollHeight": 1920,
+      "docClientHeight": 1920,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 1,
+      "visibleNamesSample": [
+        "Nguyễn Trần Quang"
+      ],
+      "innerScrollable": false,
+      "nutTiepTucText": "Tiếp tục",
+      "nutTiepTucRect": {
+        "left": 88,
+        "top": 1764,
+        "right": 528,
+        "bottom": 1876
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 0,
+      "chips": [],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "search390": {
+      "viewport": "390x844",
+      "W": 390,
+      "H": 844,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "scrollWidthOk": true,
+      "docScrollHeight": 844,
+      "docClientHeight": 844,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 1,
+      "visibleNamesSample": [
+        "Nguyễn Trần Quang"
+      ],
+      "innerScrollable": false,
+      "nutTiepTucText": "Tiếp tục",
+      "nutTiepTucRect": {
+        "left": 12,
+        "top": 784,
+        "right": 190,
+        "bottom": 834
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 0,
+      "chips": [],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "virtualKb1080": {
+      "viewport": "1080x1920",
+      "W": 1080,
+      "H": 1920,
+      "docScrollWidth": 1080,
+      "docClientWidth": 1080,
+      "scrollWidthOk": true,
+      "docScrollHeight": 1920,
+      "docClientHeight": 1920,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 2,
+      "visibleNamesSample": [
+        "Nguyễn Trần Quang",
+        "Lê Hồng Quang"
+      ],
+      "innerScrollable": false,
+      "nutTiepTucText": "Tiếp tục",
+      "nutTiepTucRect": {
+        "left": 88,
+        "top": 1764,
+        "right": 528,
+        "bottom": 1876
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 0,
+      "chips": [],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "afterSelect3_1080": {
+      "viewport": "1080x1920",
+      "W": 1080,
+      "H": 1920,
+      "docScrollWidth": 1080,
+      "docClientWidth": 1080,
+      "scrollWidthOk": true,
+      "docScrollHeight": 1920,
+      "docClientHeight": 1920,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 49,
+      "visibleNamesSample": [
+        "Lê Quốc Vinh",
+        "Trịnh Xuân Pháp",
+        "Đào Trung Thành",
+        "Nguyễn Đức Sơn",
+        "Nguyễn Dương"
+      ],
+      "innerScrollable": true,
+      "nutTiepTucText": "Tiếp tục (3)",
+      "nutTiepTucRect": {
+        "left": 88,
+        "top": 1764,
+        "right": 528,
+        "bottom": 1876
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 3,
+      "chips": [
+        "1Lê Quốc Vinh×",
+        "2Trịnh Xuân Pháp×",
+        "3Nguyễn Dương×"
+      ],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "afterSelect3_390": {
+      "viewport": "390x844",
+      "W": 390,
+      "H": 844,
+      "docScrollWidth": 390,
+      "docClientWidth": 390,
+      "scrollWidthOk": true,
+      "docScrollHeight": 844,
+      "docClientHeight": 844,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 49,
+      "visibleNamesSample": [
+        "Lê Quốc Vinh",
+        "Trịnh Xuân Pháp",
+        "Đào Trung Thành",
+        "Nguyễn Đức Sơn",
+        "Nguyễn Dương"
+      ],
+      "innerScrollable": true,
+      "nutTiepTucText": "Tiếp tục (3)",
+      "nutTiepTucRect": {
+        "left": 12,
+        "top": 784,
+        "right": 190,
+        "bottom": 834
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 3,
+      "chips": [
+        "1Lê Quốc Vinh×",
+        "2Trịnh Xuân Pháp×",
+        "3Nguyễn Dương×"
+      ],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    },
+    "afterRemove1Chip_1080": {
+      "viewport": "1080x1920",
+      "W": 1080,
+      "H": 1920,
+      "docScrollWidth": 1080,
+      "docClientWidth": 1080,
+      "scrollWidthOk": true,
+      "docScrollHeight": 1920,
+      "docClientHeight": 1920,
+      "scrollHeightOk": true,
+      "totalCards": 49,
+      "visibleCards": 49,
+      "visibleNamesSample": [
+        "Lê Quốc Vinh",
+        "Trịnh Xuân Pháp",
+        "Đào Trung Thành",
+        "Nguyễn Đức Sơn",
+        "Nguyễn Dương"
+      ],
+      "innerScrollable": true,
+      "nutTiepTucText": "Tiếp tục (2)",
+      "nutTiepTucRect": {
+        "left": 88,
+        "top": 1764,
+        "right": 528,
+        "bottom": 1876
+      },
+      "nutTiepTucVisibleInViewport": true,
+      "nutBiChe": false,
+      "chipsCount": 2,
+      "chips": [
+        "1Trịnh Xuân Pháp×",
+        "2Nguyễn Dương×"
+      ],
+      "tabs": [
+        {
+          "loc": "all",
+          "text": "Tất cả",
+          "active": true
+        },
+        {
+          "loc": "19/11",
+          "text": "19/11",
+          "active": false
+        },
+        {
+          "loc": "20/11",
+          "text": "20/11",
+          "active": false
+        },
+        {
+          "loc": "toan-the",
+          "text": "Toàn thể",
+          "active": false
+        },
+        {
+          "loc": "olive",
+          "text": "Olive",
+          "active": false
+        },
+        {
+          "loc": "lavender",
+          "text": "Lavender",
+          "active": false
+        },
+        {
+          "loc": "iris",
+          "text": "Iris",
+          "active": false
+        }
+      ]
+    }
+  },
+  "muc4_admin_btc": {
+    "accountUsed": "test-btc",
+    "navHttpStatus": 200,
+    "navMs": 707,
+    "loginApiRecord": {
+      "httpStatus": 200,
+      "ms": 144
+    },
+    "loginUiMs": 879,
+    "enteredAdmin": true,
+    "adminCheck": {
+      "man": "QT-08a",
+      "heading": "Tổng quan",
+      "navItemsCount": 18,
+      "tinhTrangHttp": 200,
+      "taiKhoan": null,
+      "vaiTro": null,
+      "scrollWidthOk1280": true,
+      "docScrollWidth": 1280,
+      "docClientWidth": 1280
+    },
+    "httpErrorsAfterLogin": [
+      {
+        "method": "GET",
+        "path": "/api/yl/v1/qt/tinh-trang",
+        "status": 401,
+        "ms": 61
+      }
+    ],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 401 ()"
+    ]
+  },
+  "finishedAt": "2026-11-17T11:43:34.428Z",
+  "updatedKioskAt": "2026-11-17T11:46:53.782Z"
+}

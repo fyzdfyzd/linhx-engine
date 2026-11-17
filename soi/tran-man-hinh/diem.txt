@@ -1,0 +1,30 @@
+KIỂM STAGING BẢN 3fd424b1 (17/11/2026) — https://staging-demo.ifagent.net
+=========================================================================
+0. Healthz & Tên miền yenlam:
+   - GET /healthz: HTTP 200 (185ms), commit="3fd424b177a6", db="ok" -> ĐẠT
+   - Origin https://yenlam.ifagent.net gọi POST /api/yen-lam/kiosk/ticket & /api/yl/v1/may/ticket-live trên staging: HTTP 200 / 200 (không bị chặn 403) -> ĐẠT
+   - https://yenlam.ifagent.net/ thực tế: HTTP 302 Location: /yen-lam/ (lưu ý prod chưa deploy bản mới nên healthz commit=null).
+
+1. Kiosk /yen-lam/csmo/kiosk-lam mở TỰ DO (context mới, không mã kích hoạt):
+   - Mở trang HTTP 200 (717ms), không khoá màn hình, cấp cookie phiên tạm yl_may_mo.
+   - Câu 1 ("Lễ khai mạc ngày 19/11 diễn ra lúc mấy giờ?"): ĐẠT — Có trả lời (mở thẻ Khai mạc 09:00 · 19.11 + lời thoại), chữ đầu 2716ms, banner "mạng đang chậm": KHÔNG hiện, POST /api/yen-lam/kiosk/ticket HTTP 200 (64ms).
+   - Câu 2 ("Track Lavender diễn ra ở phòng nào?"): ĐẠT — Có trả lời qua Live, chữ đầu 1103ms (ttfb 1255ms), banner "mạng đang chậm": KHÔNG hiện, phiên Live mở sẵn 200.
+   - Câu 3 ("Diễn giả Nguyễn Trần Quang nói gì tại sự kiện?"): ĐẠT — Có trả lời ("Ông Nguyễn Trần Quang, CEO FutureOne Consulting, sẽ có bài Keynote vào sáng ngày 19/11 tại Hồ Tây Grand Ballroom."), chữ đầu 1101ms (ttfb 1244ms), banner "mạng đang chậm": KHÔNG hiện.
+   - Kiểm chứng trực tiếp API v1 mở tự do trên cùng context: POST /api/yl/v1/may/ticket-live -> HTTP 200 (57ms, x-lam-phien: mo-tu-do); POST /api/yl/v1/may/hoi-thoai -> HTTP 200 (1925ms, x-lam-phien: mo-tu-do). Không còn 401 trên /may/hoi-thoai và ticket Live.
+   - Ghi chú phụ: lúc mới tải trang có 1 lệnh thăm dò GET /api/yl/v1/may/toi trả 401 (kiểm máy trạm cố định); khi Live nói câu trả lời nhiều mệnh đề thì mệnh đề sau ghi đè text mệnh đề trước trong bong bóng lịch sử chat.
+
+2. Booth /yen-lam/csmo/agentic-me kiểm ảnh (/api/agentic-me/kiem-anh):
+   - Ảnh 1 (selfie chất lượng webcam 350x480: vao-webcam-mau-nu-ai.jpg): ĐẠT — HTTP 200, 2869ms (server 2622ms), { dat: true, lop: 2, lyDo: "", can_duyet: false } -> vào thẳng AM-02d, không báo "chưa rõ mặt".
+   - Ảnh 2 (không có mặt: empty-stage.png): ĐẠT (chặn đúng) — HTTP 200, 1382ms (server 1147ms), { dat: false, lop: 1, lyDo: "khong-mat", can_duyet: false } -> chặn tại màn K7 ("Chưa thấy rõ khuôn mặt").
+
+3. Bước chọn 47 diễn giả (AM-02e) ở 1080x1920 và 390x844:
+   - Nạp 49 thẻ diễn giả thật từ sự kiện.
+   - Không tràn trang:
+     + 1080x1920: scrollWidth=1080 <= clientWidth=1080, scrollHeight=1920 <= clientHeight=1920, nút Tiếp tục [88,1764..528,1876] luôn thấy rõ, không bị che (kể cả khi bật bàn phím ảo).
+     + 390x844: scrollWidth=390 <= clientWidth=390, scrollHeight=844 <= clientHeight=844, nút Tiếp tục [12,784..190,834] luôn thấy rõ, không bị che.
+   - Lọc ngày/track hoạt động đủ 7 tab (Tất cả: 49, 19/11: 36, 20/11: 17, Toàn thể: 25, Olive: 7, Lavender: 10, Iris: 9), không tràn ở cả 2 khung hình.
+   - Tìm tên ("Nguyễn Trần Quang" -> 1 kết quả; gõ phím ảo "QUANG" -> 2 kết quả) hoạt động đúng, không tràn.
+   - Chip đã chọn & số trên nút: chọn 3 người -> hiện 3 chip trên đầu + nút "Tiếp tục (3)"; bấm × trên chip đầu -> còn 2 chip + nút "Tiếp tục (2)", vẫn scrollWidth <= clientWidth ở cả 1080x1920 và 390x844.
+
+4. Admin /yen-lam/csmo/quan-tri/btc/ đăng nhập test-btc:
+   - POST /api/yl/v1/qt/dang-nhap: HTTP 200 (144ms), tổng thời gian vào màn QT-08a ("Tổng quan", 18 mục điều hướng): 879ms, GET /api/yl/v1/qt/tinh-trang HTTP 200, không tràn ngang (scrollWidth=1280/1280) -> ĐẠT.
