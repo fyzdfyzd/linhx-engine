@@ -14,3 +14,5 @@ Phiếu ev-de-xuat-16 (vòng 5): gắn ảnh ly cà phê vào slide đề xuất
 3. Chạy tiền cảnh: de-xuat-slide, xuong-ev4, xuong-pdf-mail, khong-tran-ngang, giao-dien-sang; npm test sau cùng. Bằng chứng bang-chung/ev-de-xuat-16/: slide-1..8, pdf-1..8 (1920×1080), TONG-SLIDE.png. Push agy/ev-de-xuat-16.
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-16/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-13b..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail; TONG-SLIDE.png.
+
+nhip: 21:24 2p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T21:24:53+0700] · root agent idle; waiting up to 40m0s for 1 ba
