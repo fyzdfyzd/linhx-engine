@@ -16,3 +16,5 @@ Máy: MSI (may-4). Kỹ năng: agy điều khiển được trình duyệt và b
    Gemini: nếu có nhiều tài khoản Google, ghi bảng /u/0../u/6 → email che + gói.
 4. Không đăng nhập thì để hồ sơ chrome-agy (cách c) MỞ SẴN cho Linh, ghi `CAN-LINH` liệt kê dịch vụ còn thiếu trên máy này.
 ĐẠT khi: điều khiển được trình duyệt + có bảng 6 dịch vụ. Trả: bảng dịch vụ | đăng nhập | gói.
+
+nhip: 19:47 3p warning: --mode auto is not available for this account; continuing in the default mode.
