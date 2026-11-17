@@ -6,13 +6,13 @@
 | Ảnh Gemini | – | – | ĐẠT lượt 2: 1024×1024, Nano Banana 2 Lite (/u/1) |
 | Nhạc Gemini | – | – | ĐẠT mp3 62 giây (/u/1); chưa chép Drive vì G: chưa gắn |
 | Nhạc Suno | – | – | ĐẠT mp3 184 giây, còn 730 tín dụng |
-| Video Google Flow | – | – | HỎNG: Browsentic mất tab khi Chrome đang phát YouTube |
-| Deep Research ChatGPT Plus | HỎNG: Browsentic không lên (cổng 8765–8767 bị chiếm) | – | – |
+| Video Google Flow | – | – | ĐẠT lượt 2: Veo 3.1 Lite, 7,9 giây, 10 tín dụng |
+| Deep Research ChatGPT Plus | KẸT: nhận 05:15, không ra kết quả sau 50 phút | – | – |
 | Google Colab | HỎNG: Browsentic như trên | – | – |
 | Đổi tài khoản | HỎNG: Browsentic như trên | – | – |
-| Gemini Task: tính toán + mạng | – | HỎNG: agy không thấy Browsentic (chưa khai MCP) | – |
-| Gemini Task: video | – | HỎNG: như trên | – |
-| Gemini Task: xlsx, pip, PDF | – | HỎNG: như trên | – |
+| Gemini Task: tính toán + mạng | – | ĐẠT: đúng 2 đáp án + PNG; máy ảo KHÔNG có mạng | – |
+| Gemini Task: video | – | ĐẠT: MP4 1080×1920 20 giây, nhạc sin, chữ Việt đủ dấu | – |
+| Gemini Task: xlsx, pip, PDF | – | ĐẠT 2/2: xlsx 3 sheet có SUM; pip lỗi (không mạng) nhưng tự tính Mặt Trời 280,37° đúng | – |
 | Crawler quét web | KẸT: nhận 19:59, quá trần, không có nhịp | – | – |
 | Crawler quét Facebook | chờ | – | – |
 
