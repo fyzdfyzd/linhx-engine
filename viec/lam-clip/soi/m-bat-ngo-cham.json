@@ -1,0 +1,12 @@
+{
+ "ma": "m-bat-ngo",
+ "rong": 1080,
+ "cao": 1920,
+ "giay": 5.96,
+ "codec": "vp9",
+ "alpha": true,
+ "ssim_dau": 0.9772,
+ "ssim_cuoi": 0.946,
+ "dat_may": true,
+ "loi": []
+}
