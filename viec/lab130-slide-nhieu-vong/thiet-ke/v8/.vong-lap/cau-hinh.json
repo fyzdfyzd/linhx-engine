@@ -1,0 +1,56 @@
+{
+  "be_rong": 1920,
+  "cao": 1080,
+  "tho": "agy",
+  "tran_vong": 3,
+  "toi_da_loi_moi_luot": 3,
+  "xac_minh_loi": true,
+  "ty_le_sua_toi_da": 0.6,
+  "co_chu_toi_thieu": 20,
+  "co_chu_nen": 24,
+  "le_an_toan": 48,
+  "tieu_de_toi_da_dong": 2,
+  "so_chu_toi_da": {
+    "trinh-bay": 60,
+    "doc": 140
+  },
+  "so_truc_canh_toi_da": 5,
+  "so_mau_nhan_toi_da": 2,
+  "tuong_phan_thuong": 4.5,
+  "tuong_phan_lon": 3.0,
+  "chu_lon_px": 24,
+  "phong_an_toan": [
+    "arial",
+    "helvetica",
+    "calibri",
+    "cambria",
+    "times new roman",
+    "georgia",
+    "verdana",
+    "segoe ui",
+    "tahoma",
+    "sans-serif",
+    "serif",
+    "monospace",
+    "system-ui",
+    "courier new"
+  ],
+  "css_them": "@font-face { font-family: 'Playfair Display'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/PlayfairDisplay-400.ttf') format('truetype'); font-weight: 400; font-style: normal; }\n@font-face { font-family: 'Playfair Display'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/PlayfairDisplay-400i.ttf') format('truetype'); font-weight: 400; font-style: italic; }\n@font-face { font-family: 'Playfair Display'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/PlayfairDisplay-700.ttf') format('truetype'); font-weight: 700; font-style: normal; }\n@font-face { font-family: 'Be Vietnam Pro'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/BeVietnamPro-400.ttf') format('truetype'); font-weight: 400; font-style: normal; }\n@font-face { font-family: 'Be Vietnam Pro'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/BeVietnamPro-400i.ttf') format('truetype'); font-weight: 400; font-style: italic; }\n@font-face { font-family: 'Be Vietnam Pro'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/BeVietnamPro-600.ttf') format('truetype'); font-weight: 600; font-style: normal; }\n@font-face { font-family: 'Be Vietnam Pro'; src: url('file:///C:/Users/Admin/AppData/Local/Microsoft/Windows/Fonts/BeVietnamPro-700.ttf') format('truetype'); font-weight: 700; font-style: normal; }",
+  "toi_gian": {
+    "khoang_trong_toi_thieu": 0.45,
+    "so_khoi_toi_da": 8,
+    "so_co_chu_toi_da": 3,
+    "so_chu_toi_da": 40
+  },
+  "diem_dat_toi_thieu": 4,
+  "so_nguoi_cham": 3,
+  "thuong_hieu": "",
+  "mau_tham_chieu": [
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\01-bia-pitch.jpg",
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\02-so-lon-pitch.jpg",
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\03-trich-dan-pitch.jpg",
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\04-so-do-pitch.jpg",
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\05-chuyen-chuong-pitch.jpg",
+    "C:\\linhx\\wt-csmo-v8\\viec\\csmo-talk\\mau\\06-ket-pitch.jpg"
+  ]
+}

@@ -1,0 +1,380 @@
+{
+  "slides": {
+    "s01": {
+      "vong": [
+        {
+          "hash_nguon": "292ed2ee4f2056e8",
+          "anh": "anh\\s01.png",
+          "hash_anh": "d38fe0850c9521e6",
+          "anh_danh_dau": "anh\\s01-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 27,
+            "so_khoi_chu": 3,
+            "so_khoi": 4,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              88
+            ],
+            "truc_canh": 1,
+            "mau_nhan": 0,
+            "tieu_de_y": 281,
+            "tieu_de_the": "h1"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 1,
+          "ban_luu": "vong\\s01-v1.html"
+        }
+      ]
+    },
+    "s02": {
+      "vong": [
+        {
+          "hash_nguon": "a399685939f3d036",
+          "anh": "anh\\s02.png",
+          "hash_anh": "2de162d77be33c57",
+          "anh_danh_dau": "anh\\s02-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 35,
+            "so_khoi_chu": 5,
+            "so_khoi": 7,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 0,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 1,
+          "ban_luu": "vong\\s02-v1.html"
+        }
+      ]
+    },
+    "s03": {
+      "vong": [
+        {
+          "hash_nguon": "cb2dd4e1636da2a1",
+          "anh": "anh\\s03.png",
+          "hash_anh": "1e57d45fe28c881d",
+          "anh_danh_dau": "anh\\s03-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-khoi",
+              "mo_ta": "12 khối thị giác (tối đa 8): bỏ bớt, gộp, hoặc tách slide"
+            },
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "65 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "65 chữ trên slide (deck trinh-bay nên ≤ 60)"
+            },
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 65,
+            "so_khoi_chu": 11,
+            "so_khoi": 12,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:32:28",
+          "so_vong": 1,
+          "ban_luu": "vong\\s03-v1.html"
+        },
+        {
+          "hash_nguon": "2b1821b8497fcef9",
+          "anh": "anh\\s03.png",
+          "hash_anh": "a9083a6fa3600b85",
+          "anh_danh_dau": "anh\\s03-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "61 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "61 chữ trên slide (deck trinh-bay nên ≤ 60)"
+            },
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 61,
+            "so_khoi_chu": 7,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 2,
+          "ban_luu": "vong\\s03-v2.html",
+          "ty_le_sua": 0.03
+        }
+      ]
+    },
+    "s04": {
+      "vong": [
+        {
+          "hash_nguon": "b62646a8f9ae74d7",
+          "anh": "anh\\s04.png",
+          "hash_anh": "58c1606cfe01b4a6",
+          "anh_danh_dau": "anh\\s04-danh-dau.png",
+          "sai": [],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 17,
+            "so_khoi_chu": 7,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              72,
+              184
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 0,
+            "tieu_de_y": 534,
+            "tieu_de_the": "h1"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 1,
+          "ban_luu": "vong\\s04-v1.html"
+        }
+      ]
+    },
+    "s05": {
+      "vong": [
+        {
+          "hash_nguon": "fc7026aafbba7e7c",
+          "anh": "anh\\s05.png",
+          "hash_anh": "898d1efeb6ddbeae",
+          "anh_danh_dau": "anh\\s05-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 29,
+            "so_khoi_chu": 5,
+            "so_khoi": 7,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 1,
+          "ban_luu": "vong\\s05-v1.html"
+        }
+      ]
+    },
+    "s06": {
+      "vong": [
+        {
+          "hash_nguon": "0043bc545d8c3d65",
+          "anh": "anh\\s06.png",
+          "hash_anh": "3e4c7ab3eb935a6b",
+          "anh_danh_dau": "anh\\s06-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "44 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 44,
+            "so_khoi_chu": 5,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 3,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:32:28",
+          "so_vong": 1,
+          "ban_luu": "vong\\s06-v1.html"
+        },
+        {
+          "hash_nguon": "76fb764218c4fea8",
+          "anh": "anh\\s06.png",
+          "hash_anh": "28d3de8755f8c27c",
+          "anh_danh_dau": "anh\\s06-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "45 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 45,
+            "so_khoi_chu": 6,
+            "so_khoi": 7,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 3,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:34:21",
+          "so_vong": 2,
+          "ban_luu": "vong\\s06-v2.html",
+          "ty_le_sua": 0.02
+        }
+      ]
+    }
+  },
+  "deck": {},
+  "nhat_ky": [
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s01",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s03",
+      "vong": 1,
+      "sai": 2,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:32:28",
+      "slide": "s06",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s01",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s03",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:34:21",
+      "slide": "s06",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    }
+  ],
+  "mau": {
+    "so_anh": 6,
+    "khoa": true,
+    "hash_the": "31b7c9ee6c94f42c",
+    "luc": "2026-11-17T20:29:33"
+  },
+  "kieu": "trinh-bay",
+  "deck_luu_y": []
+}
