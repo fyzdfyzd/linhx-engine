@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 15
 theo_doi: C:\linhx\ifagent-wt\bhc-sua-3
+nhan: may-2 2026-11-18T03:00:51+0700
+moc: b35388c81b8ac62bab1851692208d236189b79d1
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`. Commit đầu trong 5 phút, push mỗi bước.
 Hoàn tất đợt 3 trên nhánh agy/bhc-sua-3 (b35388c), worktree cũ C:\linhx\ifagent-wt\bhc-sua-3. KHÔNG đổi giao diện nữa.
