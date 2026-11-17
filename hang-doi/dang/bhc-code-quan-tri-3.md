@@ -19,3 +19,5 @@ Quản trị phần B, worktree C:\linhx\ifagent-wt\bhc-quan-tri, nhánh agy/bhc
 6. Ảnh 1280 + 360 cho chi tiết, lead, cài đặt trên app thật vào bang-chung/bhc-quan-tri/, ghep-1280.png đủ 6 màn.
 CẤM: deploy, gọi AI thật, in mã quản trị/khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; E2E phần B; test:lap; verify.
+
+nhip: 11:26 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
