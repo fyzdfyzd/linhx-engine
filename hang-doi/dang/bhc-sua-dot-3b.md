@@ -12,4 +12,4 @@ Sửa: chữ nội dung ≥ 14px ở mọi màn quản trị, trang so sánh, la
 Luật lint khoá mới: font-size < 14px (trừ lớp .kicker/.nhan ≥ 12px) và min-height nút < 44px trong CSS public bị chặn, thông báo ghi cách sửa. Test Playwright nhỏ: 360 không tràn ngang, đo cỡ chữ nhỏ nhất và nút nhỏ nhất ở 8 màn chính.
 Ảnh 1280/360 trước/sau của tổng quan, lượt quét, chi tiết, trang so sánh, landing vào bang-chung/bhc-sua-3/. verify + test:lap xanh. Push agy/bhc-sua-3.
 
-nhip: 01:32 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 01:35 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
