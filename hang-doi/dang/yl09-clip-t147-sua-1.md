@@ -11,4 +11,4 @@ Phiếu Yên Lam v0.9 `yl09-clip-t147` lượt 2: TIẾP phần dở trên nhán
 3. Test mới: mỗi trạng thái phát đúng clip; 3-2-1 hiện số trên giao diện và không gọi m-dem-321; tải trước có đủ clip t147. Duyệt pixel theo DE-BAI luật 7: chụp 1080×1920 các khoảnh khắc mời chụp, số 2 đang đếm, bìa + chỉ QR; ảnh ghép cạnh khung K1/K3/K4 vào `bang-chung/yl09-clip-t147/`.
 4. Push `agy/yl09-clip-t147`. CẤM như DE-BAI luật 5. KET-QUA theo luật 9.
 
-nhip: 04:54 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:57 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
