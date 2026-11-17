@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 25
 khong_tien_phut: 15
 theo_doi: C:\linhx\ifagent-wt\bhc-theo-doi
+nhan: may-2 2026-11-17T21:20:50+0700
+moc: 224fe248dcd08f03d21998845ac58fa421faac5a
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`. Commit + push mỗi 10 phút.
 Sửa lỗi trang so sánh 2 kỳ trên nhánh agy/bhc-theo-doi (224fe24), worktree cũ C:\linhx\ifagent-wt\bhc-theo-doi.
