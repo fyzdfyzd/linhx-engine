@@ -30,14 +30,19 @@ def vao(p, alpha):
     return (["-c:v", "libvpx-vp9"] if alpha and p.lower().endswith(".webm") else []) + ["-i", p]
 
 def khung(p, alpha, cuoi, ra, rong, cao):
-    vt = ["-sseof", "-0.15"] if cuoi else ["-ss", "0"]
-    # ghép lên nền xám để so được cả clip trong suốt
+    # ghép lên nền xám để so được cả clip trong suốt.
+    # Khung cuối: giải hết, ghi đè (-update 1). KHÔNG dùng -sseof: với VP9 alpha nó ra khung rỗng.
     f = (f"color=c=0x808080:s={rong}x{cao}[n];[0:v]scale={rong}:{cao},format=rgba[c];"
          f"[n][c]overlay=shortest=1,format=rgb24")
-    r = chay(["ffmpeg", "-v", "error", "-y", *vt, *vao(p, alpha), "-filter_complex", f,
-              "-frames:v", "1", ra])
+    duoi = ["-update", "1"] if cuoi else ["-frames:v", "1"]
+    r = chay(["ffmpeg", "-v", "error", "-y", *vao(p, alpha), "-filter_complex", f, *duoi, ra])
     if r.returncode or not os.path.exists(ra):
         raise RuntimeError(f"khong lay duoc khung {p}: {r.stderr[-300:]}")
+    # chặn khung rỗng (toàn nền xám) làm SSIM giả 1.0
+    g = subprocess.run(["ffmpeg", "-v", "error", "-i", ra, "-vf", "scale=64:-1", "-f", "rawvideo",
+                        "-pix_fmt", "gray", "-"], capture_output=True).stdout
+    if g and max(g) - min(g) < 8:
+        raise RuntimeError(f"khung rong (toan nen) {p}")
 
 def ssim(a, b):
     r = chay(["ffmpeg", "-v", "info", "-i", a, "-i", b, "-lavfi", "ssim", "-f", "null", "-"])

@@ -47,3 +47,8 @@ Dự án Flow đã tạo: https://flow.google.com/project/5d918385-823b-423b-a7f
 Model: nút "Select model family" → "Veo 3.1 - Fast".
 Đừng gọi `page_getPageInfo` liên tục (tốn 30 giây mỗi lần, ra file lớn): dùng `page_screenshot` maxLongSide 1024 và bấm theo chữ.
 NHANH: gửi đề TẤT CẢ clip của phiếu liên tiếp (Flow render song song), rồi mới chờ và tải về. Đừng chờ từng clip.
+
+## Sửa 18/11 0:15 (Claude)
+- `cham.py` đã sửa lỗi khung cuối (bản cũ lấy khung rỗng nên ssim_cuoi luôn 1.0). `git pull` trước khi chấm. Chấm lại bằng bản mới, KHÔNG tự tính "SSIM thực" kiểu khác để thay. Trượt 0,90 thì ghi trượt, Claude quyết.
+- TÍN DỤNG: tài khoản zo*** (/u/1) chỉ còn ~2 credit sau lam-clip-3. Trước khi sinh: mở Flow lần lượt /u/0 … /u/6, chọn tài khoản có NHIỀU credit nhất (ưu tiên chủ gói Ultra ai***). Không có tài khoản nào ≥ 30 credit: thử model 0 credit (Veo 3.1 Lite / "lower priority") nếu có; không có nữa thì DỪNG, `KET_LUAN: HET_CREDIT`. KHÔNG mua credit, không bấm nâng gói.
+- ẢNH SOI cho Claude: chép `<ma>-tam.jpg` + `<ma>-cham.json` vào repo linhx-engine nhánh `hang-doi`, thư mục `viec/lam-clip/soi/` (clone riêng `D:\linhx\lam-clip\le-soi`, pull --rebase rồi push). Runner không tự đẩy ảnh trong xong/.
