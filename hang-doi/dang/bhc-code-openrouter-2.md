@@ -15,4 +15,4 @@ Brand health check: thêm cổng OpenRouter để hỏi nhiều mô hình AI (ch
 CẤM: gọi API thật, in/ghi khoá, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test mới; verify pass/fail.
 
-nhip: 08:14 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:17 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
