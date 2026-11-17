@@ -23,3 +23,5 @@ BƯỚC 0: chạy `hostname`. Khác DESKTOP-PVHR2CD thì dừng, KET-QUA ghi `SA
 Cấm: không xoá/sửa/chia sẻ gì trên Drive (remote chỉ đọc), không bấm nút xin quyền truy cập trên file của người khác, luật tab Chrome: tối đa 5 tab, đóng tab mình mở, KET-QUA ghi `Tab: đã đóng N/N`, không ghi token rclone hay email vào repo/KET-QUA. File cấu hình rclone để nguyên chỗ mặc định trên máy.
 
 KET-QUA.md ≤ 2000 ký tự: số dòng mỗi trạng thái, tổng GB các folder MO_DUOC, 10 folder lớn nhất (stt + GB), dung lượng trống ổ D:, số file lẻ đã tải.
+
+nhip: 19:37 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
