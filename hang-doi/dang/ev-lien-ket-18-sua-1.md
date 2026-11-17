@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: D:\LINHX\ifagent-wt\ev-lien-ket-18
+nhan: may-4 2026-11-17T22:24:31+0700
 
 Lượt trước chạy tác vụ nền không ghi log rồi chờ. Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong.
 
