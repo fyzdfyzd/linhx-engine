@@ -4,6 +4,7 @@ tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-td-chrome-m4
+nhan: may-4 2026-11-17T19:56:03+0700
 
 # kn-td-anh-gemini-m4
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
