@@ -21,3 +21,5 @@ Việc:
 5. Chụp nhanh 2 màn sau deploy (điện thoại `/yen-lam/` 390×844, kiosk 1080×1920) vào `bang-chung/yl09-gop/`, push.
 KET-QUA: dòng đầu `dat: co|khong`, SHA gộp, SHA staging, bảng test từng tệp (pass/fail/DO_SAN), CON_LAI.
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
+
+nhip: 06:36 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
