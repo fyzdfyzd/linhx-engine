@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\nhat-ky\yl09-clip-t147; C:\linhx\ifagent-wt\yl09-clip-t147
+nhan: may-2 2026-11-18T04:03:22+0700
 
 Phiếu Yên Lam v0.9 `yl09-clip-t147`. ĐỌC TRƯỚC `viec/yen-lam-v09/DE-BAI.md` (luật 1–9). Chạy mọi lệnh tiền cảnh, KHÔNG background task, KHÔNG chạy cả bộ test lab (mỗi lệnh test ≤ 8 phút). Ghi tiến độ vào `C:\linhx\nhat-ky\yl09-clip-t147\tien-do.log` mỗi bước. Commit + push sau mỗi ý, phút 35 phải push.
 1. `git -C C:\linhx\ifagent fetch --all`; `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\yl09-clip-t147 -b agy/yl09-clip-t147 origin/agy/yl09-kiosk`; `git merge origin/clip-lam-t147` (14 clip Lam mới ở `assets/t147/`, webm alpha 1080×1920 + mp4 dự phòng Safari).
