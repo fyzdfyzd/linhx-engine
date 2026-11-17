@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14b
+nhan: may-3 2026-11-17T20:42:49+0700
 
 Phiếu ev-hieu-nang-14b (song song, máy 3): đo và nâng điểm Lighthouse cho event.ifagent.net bản agy. COMMIT + PUSH SAU MỖI Ý.
 0. Nếu `git ls-remote https://github.com/fyzdfyzd/ifagent` lỗi xác thực thì dừng ngay, KET-QUA ghi `CAN-LINH: dang nhap GitHub may-3`. Không mở hộp thoại, đặt `$env:GIT_TERMINAL_PROMPT=0` trước mọi lệnh git. Rồi `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-hieu-nang-14b` (nếu đã có thì fetch), `git checkout -b agy/ev-hieu-nang-14b origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`, KHÔNG chạy máy chủ nền bằng lệnh riêng: máy chủ phải được khởi động và tắt BÊN TRONG chính tiến trình test/script node (start server → đo → close), mỗi lệnh tự kết thúc. Lần trước agy để một tác vụ nền nên phiếu bị dừng "cho-tac-vu-nen".
