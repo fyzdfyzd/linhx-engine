@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-1 2026-11-17T22:32:12+0700
 
 # kn-td-deep-research-m1-b
 Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
