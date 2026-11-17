@@ -4,6 +4,7 @@ tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-td-anh-gemini-m4-b
+nhan: may-4 2026-11-17T23:10:32+0700
 
 # kn-td-flow-m4-b
 Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
