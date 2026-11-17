@@ -18,4 +18,4 @@ Brand health check: dựng STAGING RIÊNG trên VM chung (Linh duyệt 17/11 12:
 CẤM: deploy prod, sửa Caddy/DNS/compose prod, đụng stg-event/ifagent-staging-*/lab, chạy rollback-app.sh, in khoá/ADMIN_CODE, gọi AI thật quá 1 lượt quét thử. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA trên staging; healthz; lệnh đường hầm; lệnh lùi; CAN-LINH nếu có.
 
-nhip: 13:02 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:05 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
