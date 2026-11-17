@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 63.91,
-    "trong_gb": 54.99
+    "trong_gb": 57.84
   },
   "gpu": [
     {
@@ -22,23 +22,23 @@
     {
       "o": "C:",
       "tong_gb": 476.08,
-      "trong_gb": 54.76
+      "trong_gb": 54.73
     },
     {
       "o": "D:",
       "tong_gb": 931.51,
-      "trong_gb": 305.83
+      "trong_gb": 305.77
     },
     {
       "o": "G:",
       "tong_gb": 476.08,
-      "trong_gb": 52.02
+      "trong_gb": 51.99
     }
   ],
   "agy": {
     "co": true,
-    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.exe",
-    "phien_ban": "1.5.9"
+    "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.EXE",
+    "phien_ban": "1.5.10"
   },
   "python": "3.12.10",
   "chrome": {
@@ -57,7 +57,7 @@
     ]
   },
   "nhan_phieu": {
-    "so_phieu": 5,
+    "so_phieu": 1,
     "nhan_bat_ky": true,
     "che_do_nhan": "bat-ky"
   },
@@ -65,5 +65,5 @@
     "xong": 0,
     "loi": 0
   },
-  "cap_nhat_luc": "2026-11-15T22:01:14+0700"
+  "cap_nhat_luc": "2026-11-17T18:40:15+0700"
 }
