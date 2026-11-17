@@ -15,3 +15,5 @@ Kỹ năng: agy đổi qua lại giữa các tài khoản/hồ sơ đã đăng n
 2. Với tài khoản Google: mở gemini.google.com/u/0 ... /u/6, ghi gói từng chỉ số. Mở labs.google/flow với 2 tài khoản khác nhau (đổi tài khoản trên trang), ghi số tín dụng mỗi tài khoản.
 3. ChatGPT: ghi tài khoản đang mở + gói.
 ĐẠT khi: đổi được ≥ 2 tài khoản Google mà không cần Linh. Trả: bảng tài khoản (email che) | dịch vụ | gói | tín dụng.
+
+nhip: 22:40 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
