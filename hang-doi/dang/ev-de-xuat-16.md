@@ -15,4 +15,4 @@ Phiếu ev-de-xuat-16 (vòng 5): gắn ảnh ly cà phê vào slide đề xuất
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-16/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-13b..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail; TONG-SLIDE.png.
 
-nhip: 21:24 2p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T21:24:53+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 21:27 5p đang chờ nền · log cuối 2 phút trước [log_cuoi=2026-11-17T21:25:00+0700] · root agent idle; waiting up to 40m0s for 1 ba
