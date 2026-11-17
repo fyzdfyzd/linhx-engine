@@ -15,4 +15,4 @@ Kỹ năng: tìm giới hạn Gemini tác vụ máy ảo, thử 3 việc nhỏ t
 Đáp án (b): Mặt Trời ≈ 280,37° (Ma Kết ~10°).
 ĐẠT khi: ≥ 2/3 việc ra kết quả đúng. Trả: việc nào được/không, lý do, gợi ý loại việc nên giao máy ảo.
 
-nhip: 05:48 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:51 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
