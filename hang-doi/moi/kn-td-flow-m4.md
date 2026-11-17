@@ -1,0 +1,13 @@
+may: may-4
+loai: trinh-duyet
+tran_phut: 25
+khong_tien_phut: 15
+tu_sua: 0
+phu_thuoc: kn-td-nhac-suno-m4
+
+# kn-td-flow-m4
+Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
+
+Kỹ năng: làm video trên Google Flow (labs.google/flow).
+Tạo dự án mới tên `kn-thu-17-11`, một cảnh từ chữ: "Cảnh 8 giây, máy quay lia chậm qua bàn gỗ có tách trà nóng bốc khói, nắng sớm qua cửa sổ, chân thực". Chọn model Veo rẻ nhất đang có (ghi tên + số tín dụng tốn). Tải mp4 về Drive (luật 5).
+ĐẠT khi: có mp4 ≥ 4 giây. Trả: model, tín dụng tốn/còn, thời lượng, số phút chờ.
