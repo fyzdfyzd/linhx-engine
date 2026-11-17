@@ -12,3 +12,5 @@ Ghi đè t147/m-chi-qr.webm|mp4, chấm, push, ảnh soi.
 "She raises her right hand beside her face, palm facing the camera. First she shows exactly THREE fingers (index, middle and ring finger up, thumb and pinky folded) and holds one second. Then she folds the ring finger: exactly TWO fingers (index and middle) held one second. Then she folds the middle finger: exactly ONE finger (index) held one second. Then a small happy nod, mouth closed, returns to pose."
 3) Còn giờ: xem xong/lam-clip-4..6/KET-QUA.md, clip nào agy tự ghi xấu hoặc trượt cham.py thì làm lượt 2 cho clip đó (tối đa 2 clip).
 KET-QUA: mỗi clip 1 dòng như luật 12.
+
+nhip: 02:06 3p warning: --mode auto is not available for this account; continuing in the default mode.
