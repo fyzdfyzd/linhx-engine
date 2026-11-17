@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 63.91,
-    "trong_gb": 52.74
+    "trong_gb": 52.44
   },
   "gpu": [
     {
@@ -22,17 +22,17 @@
     {
       "o": "C:",
       "tong_gb": 476.08,
-      "trong_gb": 52.82
+      "trong_gb": 52.77
     },
     {
       "o": "D:",
       "tong_gb": 931.51,
-      "trong_gb": 286.34
+      "trong_gb": 282.85
     },
     {
       "o": "G:",
       "tong_gb": 476.08,
-      "trong_gb": 50.18
+      "trong_gb": 50.13
     }
   ],
   "agy": {
@@ -58,13 +58,13 @@
     ]
   },
   "nhan_phieu": {
-    "so_phieu": 1,
+    "so_phieu": 5,
     "nhan_bat_ky": true,
     "che_do_nhan": "bat-ky"
   },
   "thong_ke_24h": {
-    "xong": 11,
-    "loi": 21
+    "xong": 13,
+    "loi": 23
   },
-  "cap_nhat_luc": "2026-11-18T03:26:15+0700"
+  "cap_nhat_luc": "2026-11-18T04:44:16+0700"
 }
