@@ -15,4 +15,4 @@ Phiếu ev-de-xuat-11 (vòng 3, cuối): bộ slide đang 8.5, cần 9. COMMIT +
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-11/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ ngoài ý 1, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-10..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail; TONG-SLIDE.png.
 
-nhip: 10:54 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 10:57 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
