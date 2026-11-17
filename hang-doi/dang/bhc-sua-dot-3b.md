@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 50
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-sua-3
+nhan: may-2 2026-11-18T00:56:24+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd`. Commit đầu trong 5 phút, commit + push mỗi 10 phút.
 Sửa lỗi E2E đợt 3 (giao diện điện thoại + chữ). Worktree C:\linhx\ifagent-wt\bhc-sua-3, nhánh agy/bhc-sua-3 từ origin/agy/bhc-sua-2 (9eadb8e, đã gồm đợt 1 và 2). CHỈ sửa CSS/HTML trong apps/brand-health/public và trang so sánh (so-sanh-html.js) + scripts/lint.js + test. Không đổi logic server.
