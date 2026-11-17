@@ -26,4 +26,4 @@ Phiếu cụm event.ifagent.net (ev-de-xuat-9): làm bản ĐỀ XUẤT của x�
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-9/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh bằng AI (dùng ảnh mẫu đang có), không gọi AI thật. Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff <base>..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; đường dẫn TONG-SLIDE.png.
 
-nhip: 08:13 33p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:16 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
