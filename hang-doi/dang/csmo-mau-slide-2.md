@@ -15,4 +15,4 @@ Phiếu csmo-mau-slide-2 (lần 2, lần 1 quá giờ): tìm mẫu slide keynote
 CẤM: đăng nhập tài khoản mới, tải file trả phí, sinh ảnh AI, sửa thư mục khác ngoài viec/csmo-talk/mau/.
 KET-QUA.md: dòng đầu `dat: co` hoặc `dat: khong`; SHA commit; danh sách 6 tệp; số tab đã đóng.
 
-nhip: 15:22 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 15:25 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
