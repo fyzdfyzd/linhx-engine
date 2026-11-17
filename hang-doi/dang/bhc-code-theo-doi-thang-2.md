@@ -15,4 +15,4 @@ Brand health check, gói theo dõi hằng tháng (bản đầu, chỉ AI giả).
 5. verify + test:lap xanh. Ảnh 1280 + 360 trang so sánh (dữ liệu giả Vinamilk 2 kỳ) và màn quản trị vào bang-chung/bhc-theo-doi/. Push agy/bhc-theo-doi.
 KET-QUA.md: dat co|khong, SHA, số test, ảnh.
 
-nhip: 21:02 36p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T21:02:45+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 21:05 39p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-17T21:04:09+0700] · root agent idle; waiting up to 40m0s for 1 ba
