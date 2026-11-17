@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 45
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-theo-doi
+nhan: may-3 2026-11-17T19:51:23+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd` (npm.ps1 bị chặn). Commit đầu trong 5 phút, commit + push mỗi 10 phút.
 Máy 3 lần đầu làm ifagent: nếu chưa có C:\linhx\ifagent thì `git clone https://github.com/fyzdfyzd/ifagent C:\linhx\ifagent` (nếu không có quyền: DỪNG, CAN-LINH đăng nhập GitHub trên máy 3). Node ≥ 20 cần có; thiếu thì CAN-LINH.
