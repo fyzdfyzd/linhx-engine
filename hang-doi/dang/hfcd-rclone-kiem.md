@@ -24,4 +24,4 @@ Cấm: không xoá/sửa/chia sẻ gì trên Drive (remote chỉ đọc), không
 
 KET-QUA.md ≤ 2000 ký tự: số dòng mỗi trạng thái, tổng GB các folder MO_DUOC, 10 folder lớn nhất (stt + GB), dung lượng trống ổ D:, số file lẻ đã tải.
 
-nhip: 19:46 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 19:47 13p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T19:47:28+0700] · root agent idle; waiting up to 40m0s for 1 ba
