@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 15.71,
-    "trong_gb": 1.11
+    "trong_gb": 2.05
   },
   "gpu": [
     {
@@ -26,12 +26,12 @@
     {
       "o": "C:",
       "tong_gb": 249.4,
-      "trong_gb": 15.81
+      "trong_gb": 15.8
     },
     {
       "o": "D:",
       "tong_gb": 683.59,
-      "trong_gb": 5.63
+      "trong_gb": 5.58
     }
   ],
   "agy": {
@@ -71,8 +71,8 @@
     "che_do_nhan": "chi-dich-danh"
   },
   "thong_ke_24h": {
-    "xong": 7,
+    "xong": 9,
     "loi": 6
   },
-  "cap_nhat_luc": "2026-11-18T00:59:55+0700"
+  "cap_nhat_luc": "2026-11-18T01:59:52+0700"
 }
