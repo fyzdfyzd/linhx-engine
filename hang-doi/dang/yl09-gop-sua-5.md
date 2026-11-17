@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl09-gop; D:\linhx\ifagent-wt\yl09-gop
+nhan: may-3 2026-11-18T06:33:16+0700
 
 Phiếu Yên Lam v0.9 `yl09-gop`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật chung 1–9, bắt buộc) trong thư mục hàng đợi của máy này (`git pull` trước).
 Lượt 5 (máy 3, vì agy máy 2 không khởi động được lúc 06:09), CHẠY TIẾP, KHÔNG GỘP LẠI. Lượt 3 đã gộp xong 10 nhánh và push `origin/agy/yl09-gop`; test yl09-* đã chạy; bị runner dừng ở bước chạy test khoá vì lệnh `node --test test/nghiem-thu-rc6/*.test.js test/nghiem-thu-rc7/*.test.js` chạy quá lâu, công cụ tự chuyển nền và agy ngồi chờ.
