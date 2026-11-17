@@ -14,4 +14,4 @@ Phiếu ev-lien-ket-18 (song song): COMMIT + PUSH SAU MỖI Ý.
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task, không dùng lệnh `status` chờ tác vụ; máy chủ nếu cần thì khởi động và tắt BÊN TRONG chính script test. Chỉ sửa apps/event/ và bang-chung/ev-lien-ket-18/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới (chỉ sửa dấu/lỗi gõ của chữ đang có). Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-13b..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail.
 
-nhip: 22:17 3p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T22:17:27+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 22:20 6p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-17T22:19:25+0700] · root agent idle; waiting up to 40m0s for 1 ba
