@@ -4,7 +4,7 @@ tran_phut: 40
 theo_doi: C:\linhx\tong-duyet\kiosk.log
 
 Phiếu TỔNG DUYỆT LUỒNG 2: kiosk chào + trò chuyện Lam + chụp bìa. Chỉ CHỤP và GHI, KHÔNG sửa code, KHÔNG deploy. Mọi lệnh tiền cảnh, không background task. Commit + push sau mỗi mục.
-Đích prod: https://demo.ifagent.net/yen-lam/csmo/kiosk-lam (Lam trò chuyện) và màn booth AGENTIC:ME (/yen-lam/agentic-me-v5/kiosk hoặc đường kiosk BTC đang dùng: lấy từ trang chủ chân "Dành cho BTC" hoặc admin #cau-hinh). Kiosk đang MỞ TỰ DO (17/11), không cần mã; nếu bị khoá thì ghi lại, KHÔNG tự cấp mã.
+Đích (Linh 20:12: soi trên yenlam.ifagent.net): https://yenlam.ifagent.net/yen-lam/csmo/kiosk-lam (Lam trò chuyện) và màn booth AGENTIC:ME (/yen-lam/agentic-me-v5/kiosk hoặc đường kiosk BTC đang dùng: lấy từ trang chủ chân "Dành cho BTC" hoặc admin #cau-hinh). Kiosk đang MỞ TỰ DO (17/11), không cần mã; nếu bị khoá thì ghi lại, KHÔNG tự cấp mã.
 Playwright Chromium, viewport 1080×1920 DPR 1, cờ --use-fake-ui-for-media-stream --use-fake-device-for-media-stream --use-file-for-fake-video-capture=<ảnh chân dung y4m/mjpeg của Linh hoặc ảnh mẫu tinh/mau/a1.jpg chuyển y4m>. Chụp VIEWPORT ở MỖI trạng thái (NN-mo-ta.png) + BANG.md: tên ảnh | URL | nút đang thấy | lỗi console/HTTP≥400/WS đóng | thời gian (ms).
 Đi lần lượt:
 1) Màn chờ kiosk (chụp 3 lần cách 5s để thấy clip đổi).

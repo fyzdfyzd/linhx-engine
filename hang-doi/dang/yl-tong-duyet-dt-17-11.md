@@ -5,7 +5,7 @@ theo_doi: C:\linhx\tong-duyet\dt.log
 nhan: may-3 2026-11-17T20:04:54+0700
 
 Phiếu TỔNG DUYỆT LUỒNG 1 (điện thoại): trang chủ → đồng hành. Chỉ CHỤP và GHI, KHÔNG sửa code, KHÔNG deploy, KHÔNG gửi mail/Zalo. Mọi lệnh tiền cảnh, không background task. Commit + push sau mỗi mục.
-Đích: https://demo.ifagent.net/yen-lam/ (prod). Playwright Chromium, devices['iPhone 13'] (390×844, DPR 3), locale vi-VN, cấp quyền micro/camera/notifications, cờ --use-fake-device-for-media-stream. Tên khách thử: "Test Claude".
+Đích (Linh 20:12: soi trên yenlam.ifagent.net): https://yenlam.ifagent.net/yen-lam/ (prod). Playwright Chromium, devices['iPhone 13'] (390×844, DPR 3), locale vi-VN, cấp quyền micro/camera/notifications, cờ --use-fake-device-for-media-stream. Tên khách thử: "Test Claude".
 Chụp VIEWPORT (không fullPage) ở MỖI trạng thái, đặt tên NN-mo-ta.png; trang dài thì chụp thêm 1 ảnh fullPage. Mỗi ảnh ghi 1 dòng vào BANG.md: tên ảnh | URL | nút đang thấy | lỗi console/HTTP≥400 | thời gian từ bấm tới khi xong (ms).
 Đi lần lượt (context MỚI, chưa cookie):
 1) /yen-lam/ trang chủ; bấm từng ô (Đồng hành, Lịch, Diễn giả, Hỏi Lam, Giới thiệu) chụp trang đích rồi quay lại.
