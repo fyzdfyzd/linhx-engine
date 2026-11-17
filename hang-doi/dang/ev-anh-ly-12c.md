@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 10
 khong_tien_phut: 8
 tu_sua: 0
+nhan: may-4 2026-11-17T19:35:42+0700
 
 Phiếu ev-anh-ly-12c: lấy 2 ảnh Gemini vừa tải về trên Chrome máy này, đẩy lên nhánh hang-doi. KHÔNG mở trình duyệt.
 0. Chạy `hostname`. Nếu không phải MSI: KET-QUA ghi `SAI_MAY: <hostname>` rồi dừng.
