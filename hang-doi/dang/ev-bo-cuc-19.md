@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-bo-cuc-19
+nhan: may-3 2026-11-17T22:33:20+0700
 
 Phiếu ev-bo-cuc-19 (song song máy 3): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-bo-cuc-19` (đã có thì fetch), `git checkout -b agy/ev-bo-cuc-19 origin/agy/ev-de-xuat-13b`. Trong apps/event: `npm ci`. Commit + push ngay khi có thay đổi đầu tiên.
