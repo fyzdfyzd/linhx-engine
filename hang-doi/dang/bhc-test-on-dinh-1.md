@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-on-dinh
+nhan: may-2 2026-11-17T09:38:48+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Brand health check: test E2E-04 chập chờn. Claude chạy lại trên agy/bhc-nen (ffb6143) 2 lần: lần 1 đỏ, lần 2 xanh. Nguyên nhân: test/e2e-dau-cuoi.test.js dùng AI giả trễ cố định delayMs: 35, lượt 1 có thể xong trước khi lượt 2 được gửi nên lượt 2 không bao giờ phải xếp hàng.
