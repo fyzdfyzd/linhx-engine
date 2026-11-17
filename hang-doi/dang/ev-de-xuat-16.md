@@ -5,6 +5,7 @@ khong_tien_phut: 25
 tu_sua: 1
 phu_thuoc: ev-anh-ly-12f
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-16
+nhan: may-2 2026-11-17T21:23:16+0700
 
 Phiếu ev-de-xuat-16 (vòng 5): gắn ảnh ly cà phê vào slide đề xuất mẫu + cân slide 7. COMMIT + PUSH SAU MỖI Ý.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-16 -b agy/ev-de-xuat-16 origin/agy/ev-de-xuat-13b`. Trong apps/event: `npm ci`. Lấy ảnh từ nhánh hang-doi linhx-engine: `xong/ev-anh-ly-12f/ly-ngang.*`, `ly-vuong.*`.
