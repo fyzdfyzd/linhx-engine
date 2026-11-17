@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-quan-tri
+nhan: may-2 2026-11-17T09:38:46+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Brand health check: dựng trang quản trị thật theo khung apps/brand-health/bao-cao/khung/B-quan-tri/ (đã duyệt nội bộ 8/10).
