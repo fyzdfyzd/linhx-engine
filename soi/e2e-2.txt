@@ -1,0 +1,31 @@
+# TÓM TẮT KẾT QUẢ E2E LẦN 2 (STGD4-LAN2)
+Nguồn đối chiếu:
+- C:\linhx\rc6-cuc-bo\e2e\vong\stgd4-lan2-kiosk.json
+- C:\linhx\rc6-cuc-bo\e2e\vong\stgd4-lan2-dien-thoai.json
+- C:\linhx\rc6-cuc-bo\e2e\vong\stgd4-lan2-btc.json
+- C:\linhx\rc6-cuc-bo\e2e\BAO-CAO-E2E.md (các mục "stgd4 lần 2 — kiosk", "stgd4 lần 2 — dien-thoai", "stgd4 lần 2 — btc"; thực thi trên Staging lúc còn ở commit 6684e8b8f342 trước khi deploy 1896e9a9 lúc 15:56)
+
+## 1. SỐ LỖI CHẶN / NẶNG / VỪA / NHẸ THEO VAI
+- kiosk      (16 bước: 06 ĐẠT, 10 LỖI): Chặn = 2 | Nặng = 4 | Vừa = 1 | Nhẹ = 3
+- dien-thoai (22 bước: 11 ĐẠT, 11 LỖI): Chặn = 0 | Nặng = 2 | Vừa = 4 | Nhẹ = 5
+- btc        (65 bước: 52 ĐẠT, 13 LỖI): Chặn = 0 | Nặng = 4 | Vừa = 2 | Nhẹ = 7
+--------------------------------------------------------------------------------
+- TỔNG CỘNG (103 bước: 69 ĐẠT, 34 LỖI): Chặn = 2 | Nặng = 10 | Vừa = 7 | Nhẹ = 15
+
+## 2. LIỆT KÊ LỖI CHẶN & NẶNG (12 LỖI: 2 CHẶN, 10 NẶNG)
+
+### Lỗi Chặn (2)
+1. [Chặn] kiosk | 09 (09-kiem-anh-va-form-track) — POST /api/agentic-me/kiem-anh chạm lỗi mạng/hạn mức Gemini Lớp 2 (dat:false, lop:2, lyDo:"mang", doMang:true) và fail-closed đẩy khách về màn K8, chặn đường vào Form 1.
+2. [Chặn] kiosk | 11 (11-tao-bia-gemini-that-va-ket-qua-qr) — POST /api/agentic-me/tao gặp lỗi khóa/hạn mức Gemini trên server khiến lượt không lưu thành công (GET /tap-chi/:sid -> 404) và không trả được bìa K6 kèm mã QR.
+
+### Lỗi Nặng (10)
+1. [Nặng] kiosk | 03 (03-doi-thoai-lam-12-cau-kho) — WS Gemini Live đóng 1011 và POST /api/yl/v1/may/hoi-thoai trả 401 khi Kiosk mở không mã yl_may, làm cả 12 câu rơi về bộ từ khoá tĩnh dự phòng thiếu chi tiết phòng Track và phiên diễn giả.
+2. [Nặng] kiosk | 05 (05-kiem-trang-dien-gia-pregen) — Trên bản 6684e8b8 lúc chạy lần 2, /yen-lam/dien-gia/jiang-na còn ghi "Mr. Jiang Na" và 4 trang Host Track trả 404 (đã lên bản sửa đủ 48 người ở commit 1896e9a9).
+3. [Nặng] kiosk | 06 (06-do-mang-giong-noi-5-phut) — Upstream Gemini Live trên /ws/gemini liên tục thất bại handshake và đóng mã 1011 (44 lần đứt WS trong 5 phút, firstAudioCount = 0) kèm .wg-mo ẩn thanh nút .kl-the.
+4. [Nặng] kiosk | 10 (10-form-dien-gia-agenda-that) — Trên khung dọc Kiosk 1080x1920, lưới thẻ diễn giả ở AM-02e kéo dài tới y = 3772px (> 1920px), đè qua nhân vật Yên Lam và đẩy khuất hoàn toàn 2 nút Xong / Bỏ qua.
+5. [Nặng] dien-thoai | 01 (01-lay-link-khach-tu-kiosk) — POST /api/agentic-me/kiem-anh trên máy trạm thử gặp lỗi Gemini Lớp 2 (doMang:true) cả 6 lần thử và bị fail-closed về K8, chặn tạo lượt bìa mới.
+6. [Nặng] dien-thoai | 12 (12-doi-id-xem-khach-khac-phai-bi-chan) — Trên 6684e8b8, khách khác gọi POST /chon-bia/:sid và POST /tuy-chon/:sid trên lượt đã gắn khachId vẫn nhận 200 sửa được biến thể/chữ bìa của chủ (đã vá trả 403 ở 80d10559 / 1896e9a9).
+7. [Nặng] btc | 08 (08-dashboard-su-kien-nha-tai-tro-va-khop-so-lieu) — Trên 6684e8b8, bật an_mock=1 vẫn đếm lệch khach_checkin.tong = 108 so với #khach (57) do cộng trùng định danh và lead.tu_form = 5 chưa đọc đủ 28 liên hệ trong csmo-lien-he.jsonl (đã vá ở 6b72629e / 1896e9a9).
+8. [Nặng] btc | 19 (19-dien-dan-bao-xau-an-va-duyet-hien-lai) — Trên 6684e8b8, truy vấn /qt/dien-dan/bai LIMIT 500 bị bài seed 19-20/11 đẩy khuất bài bị báo xấu thật khỏi tab UI "Bị báo xấu (0)" (đã vá ở 4f31aff6 / 1896e9a9).
+9. [Nặng] btc | 41 (41-xuat-csv-utf8-bom-va-phat-hanh-pdf) — Trên 6684e8b8, file lead-btc-yen-lam.csv thiếu UTF-8 BOM (EF BB BF) gây lỗi dấu trên Excel Windows và thiếu nút UI phát hành PDF tạp chí (đã vá ở a2b844e0 / 1896e9a9).
+10. [Nặng] btc | 65 (65-kiem-route-cu-khong-con-502) — Trên 6684e8b8, 2 route cũ /yen-lam/csmo/quan-tri/hien-dien và /yen-lam/tap-chi vẫn trả 502 Bad Gateway (>5s) thay vì chuyển hướng 302 (đã vá ở 7f6aa321 / 1896e9a9).
