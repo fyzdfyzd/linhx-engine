@@ -16,3 +16,5 @@ Máy: DESKTOP-PVHR2CD (may-1). Kỹ năng: agy điều khiển được trình d
    Gemini: nếu có nhiều tài khoản Google, ghi bảng /u/0../u/6 → email che + gói.
 4. Không đăng nhập thì để hồ sơ chrome-agy (cách c) MỞ SẴN cho Linh, ghi `CAN-LINH` liệt kê dịch vụ còn thiếu trên máy này.
 ĐẠT khi: điều khiển được trình duyệt + có bảng 6 dịch vụ. Trả: bảng dịch vụ | đăng nhập | gói.
+
+nhip: 19:47 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
