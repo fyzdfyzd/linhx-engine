@@ -2,9 +2,10 @@ may: may-3
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14
-nhan: may-3 2026-11-17T19:44:17+0700
+
+Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh.
 
 Phiếu ev-hieu-nang-14 (song song, máy 3): đo và nâng điểm Lighthouse cho event.ifagent.net bản agy. COMMIT + PUSH SAU MỖI Ý.
 0. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-hieu-nang-14` (nếu đã có thì fetch), `git checkout -b agy/ev-hieu-nang-14 origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`, chạy máy chủ local theo README/package.json của apps/event (tiền cảnh trong cùng lệnh test, không để chạy nền sau khi xong).
@@ -14,3 +15,18 @@ Phiếu ev-hieu-nang-14 (song song, máy 3): đo và nâng điểm Lighthouse ch
 4. Chạy tiền cảnh: test:lh, khong-tran-ngang, giao-dien-sang, de-xuat-slide; npm test sau cùng. Push agy/ev-hieu-nang-14.
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-hieu-nang-14/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; bảng điểm trước/sau (trung bình + trang thấp nhất); pass/fail.
+
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-hieu-nang-14
+may: may-3
+trang_thai: dung
+ly_do: cho-tac-vu-nen
+tep_doi: (khong)
+drive: (khong)
+phut: 0.67
+token: vao=0 ra=0
+
+dừng agy (cho-tac-vu-nen): waiting up to ... background task
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
