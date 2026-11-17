@@ -1,0 +1,12 @@
+{
+ "ma": "p-vui",
+ "rong": 720,
+ "cao": 826,
+ "giay": 5.72,
+ "codec": "h264",
+ "alpha": false,
+ "ssim_dau": 0.9536,
+ "ssim_cuoi": 0.9552,
+ "dat_may": true,
+ "loi": []
+}
