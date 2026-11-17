@@ -12,4 +12,4 @@ Linh 18/11 04:28 hỏi: máy 3 lên 5 phiếu song song được không. Chạy 
 5. Đợi 2 phút, đọc `runner\tho.log` dòng cuối xem runner đã nhận số mới chưa.
 KET-QUA.md ≤ 800 ký tự: CPU, luồng, RAM tổng/trống, RAM mỗi phiếu đo được, số phiếu cũ → mới, có sửa hay không, lý do.
 
-nhip: 04:34 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:37 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
