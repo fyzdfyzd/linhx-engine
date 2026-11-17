@@ -15,4 +15,4 @@ Kỹ năng: Gemini Ultra chế độ tác vụ máy ảo làm video.
 Kiểm 2 phút/lần. Tải mp4 về Drive (luật 5), chụp 1 khung hình kiểm dấu tiếng Việt.
 ĐẠT khi: mp4 ≥ 15 giây, chữ tiếng Việt không vỡ dấu. Trả: thời lượng, có tiếng không, số phút, lỗi gặp.
 
-nhip: 05:36 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:39 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
