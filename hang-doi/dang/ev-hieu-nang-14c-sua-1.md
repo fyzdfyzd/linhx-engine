@@ -35,4 +35,4 @@ token: vao=0 ra=0
 dừng agy: quá trần 40 phút
 warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
 
-nhip: 23:17 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:20 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
