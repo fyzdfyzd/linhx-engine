@@ -10,3 +10,5 @@ Thứ tự: kiểm credit → gửi cả 3 đề liền nhau → chờ, tải �
 Đầu phiếu (≤ 5 phút): chấm lại bằng cham.py mới 6 clip đã có trong t147 (m-gat-dau, m-vay-chao, m-chi-trai + 3 clip của lam-clip-3 nếu có) và đẩy ảnh soi của chúng. m-dem-321: soi kỹ số ngón 3→2→1.
 Còn 8 phút mà chưa xong: dừng, push cái đã có, KET-QUA ghi clip đã gửi Flow chưa tải.
 KET-QUA ghi tài khoản dùng (che email) và credit còn lại.
+
+nhip: 00:33 3p warning: --mode auto is not available for this account; continuing in the default mode.
