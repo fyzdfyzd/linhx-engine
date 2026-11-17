@@ -11,3 +11,5 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd
 E2E giao diện vòng 2 (chấm lại sau sửa). Worktree C:\linhx\ifagent-wt\bhc-e2e-lan-2, nhánh agy/bhc-e2e-lan-2 từ origin/agy/bhc-sua-3. Lấy kịch bản apps/brand-health/e2e-giao-dien/khach.mjs từ origin/agy/bhc-e2e-khach và quan-tri.mjs từ origin/agy/bhc-e2e-quan-tri (giữ nguyên các bước K1–K9, Q1–Q7 và tự kiểm). KHÔNG sửa code app.
 Chạy cả hai luồng 2 lần độc lập (DATA_DIR trắng mỗi lần, AI giả, không mạng ngoài). Ảnh 1280×800 + 360×780 full page mỗi bước: bang-chung/bhc-e2e-lan-2/<khach|quan-tri>/lan-<n>/<ma>-<1280|360>.png, video webm lan-1. Ghi so-sanh-2-lan.md và loi.md (mã bước, mức chặn/nặng/nhẹ, ảnh, cách sửa). Push agy/bhc-e2e-lan-2.
 KET-QUA.md: số bước đạt/hỏng mỗi lần mỗi luồng, danh sách lỗi còn lại.
+
+nhip: 00:59 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
