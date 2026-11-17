@@ -53,3 +53,5 @@ Mỗi bước: ảnh 1280×800 và 360×780 (chụp cả trang), ghi console l�
 | Tốc độ | 5% | mỗi màn < 2 giây với AI giả |
 
 Ca hỏng được ghi theo mã (K4-360, Q6…), mức nghiêm trọng (chặn / nặng / nhẹ), ảnh chứng, cách sửa đề xuất.
+
+nhip: 21:57 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
