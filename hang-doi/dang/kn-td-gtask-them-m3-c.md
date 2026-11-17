@@ -14,3 +14,5 @@ Kỹ năng: tìm giới hạn Gemini tác vụ máy ảo, thử 3 việc nhỏ t
 "(a) Tạo file Excel 3 sheet có công thức tổng, xuất .xlsx; (b) cài thư viện Python bằng pip (thử `pip install pyswisseph`) rồi tính vị trí Mặt Trời ngày 2000-01-01 12:00 UTC (độ hoàng đạo); (c) đọc file PDF tôi tải lên và tóm tắt 3 dòng." Với (c) tải lên bất kỳ PDF nhỏ có sẵn trên máy (≤ 2 MB, không phải tài liệu riêng tư; không có thì bỏ (c)).
 Đáp án (b): Mặt Trời ≈ 280,37° (Ma Kết ~10°).
 ĐẠT khi: ≥ 2/3 việc ra kết quả đúng. Trả: việc nào được/không, lý do, gợi ý loại việc nên giao máy ảo.
+
+nhip: 05:48 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
