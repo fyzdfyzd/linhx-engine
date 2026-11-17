@@ -5,6 +5,7 @@ khong_tien_phut: 20
 tu_sua: 1
 phu_thuoc: ev-hieu-nang-14
 theo_doi: D:\linhx\linhx-engine-wt\runner-moc
+nhan: may-3 2026-11-17T19:55:50+0700
 
 Phiếu lx-runner-moc-15: sửa runner báo nhầm bí mật khi phiếu tạo worktree mới. KHÔNG merge vào main, chỉ đẩy nhánh để Claude duyệt.
 Lỗi: runner/rao_phieu.py inspect_new_commits. Khi `theo_doi` chưa tồn tại lúc nhận phiếu, base_sha rỗng → infer_initial_base_when_cloned_in_agy chỉ nhận reflog "clone:"; với `git worktree add ... -b <nhánh> <điểm>` reflog đầu là "branch: Created from ..." (hoặc "reset: moving to") nên rơi về cây rỗng → quét cả repo → báo nhầm dòng cũ (ví dụ apps/lab/..., apps/event/test/e2e/platform.test.js:38) → mọi phiếu ev-* ra "loi" rồi tự sinh -sua-1.
