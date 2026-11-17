@@ -13,3 +13,5 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ
 2. Cổng `cong_phat_hanh.py --truoc` qua đường hầm 127.0.0.1:3920 → `len-vm.sh <sha>` → `--sha <sha>`; trượt thì lùi :prev. Prod demo.ifagent.net/brand-health-check/ và event.ifagent.net phải 200. Kiểm `df -h /` VM trước, < 5 GB thì chỉ `docker builder prune -af` + `image prune -f`.
 3. KHÔNG quét AI thật. Qua đường hầm chụp 1280 + 360: trang chủ, /bao-cao/2026-11-13-vinamilk-9b816db5/, /quan-tri/ tổng quan (mã trong /opt/stg-brand/ADMIN_CODE.txt, đọc vào biến, không in). Vào bang-chung/bhc-staging-4/, push.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá. KET-QUA: dat, SHA, healthz, ảnh.
+
+nhip: 06:50 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
