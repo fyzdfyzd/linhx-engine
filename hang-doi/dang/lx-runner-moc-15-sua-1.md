@@ -31,4 +31,4 @@ dừng agy (cho-tac-vu-nen): waiting up to ... background task
 warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
 root agent idle; waiting up to 40m0s for 1 background task(s)
 
-nhip: 20:08 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 20:11 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
