@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-code-khung-quan-tri
+nhan: may-2 2026-11-17T07:40:22+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Brand health check: VẼ KHUNG trang quản trị (chưa nối app). Hiện app chỉ có mã ADMIN_CODE qua header để tải leads.csv và xem lịch sử, không có giao diện.
