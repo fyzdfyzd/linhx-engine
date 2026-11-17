@@ -22,4 +22,4 @@ Brand health check: VẼ KHUNG trang quản trị (chưa nối app). Hiện app 
 CẤM: sửa server/, nối app, deploy, sinh ảnh AI, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; verify; danh sách ảnh.
 
-nhip: 07:58 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:01 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
