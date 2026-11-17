@@ -1,0 +1,12 @@
+{
+ "ma": "p-nghe",
+ "rong": 720,
+ "cao": 826,
+ "giay": 5.92,
+ "codec": "h264",
+ "alpha": false,
+ "ssim_dau": 0.9543,
+ "ssim_cuoi": 0.9469,
+ "dat_may": true,
+ "loi": []
+}
