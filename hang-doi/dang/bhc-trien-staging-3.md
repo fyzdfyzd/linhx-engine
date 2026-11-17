@@ -14,3 +14,5 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`. Commit 
 3. Cổng `cong_phat_hanh.py --truoc` → `len-vm.sh` (STG_SHA=<sha mới>) → `--sha <sha>`; trượt thì lùi :prev. Prod demo.ifagent.net/brand-health-check/ và event.ifagent.net phải 200.
 4. KHÔNG quét AI thật. Chụp qua đường hầm 1280: /quan-tri/ màn chi tiết lượt quét 2026-11-17-vinamilk-9fc765e8 (đăng nhập bằng mã trong /opt/stg-brand/ADMIN_CODE.txt, đọc vào biến, không in). Vào bang-chung/bhc-staging-3/, push.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá. KET-QUA: dat co|khong, SHA, healthz, ảnh.
+
+nhip: 19:48 3p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T19:48:34+0700] · root agent idle; waiting up to 40m0s for 1 ba
