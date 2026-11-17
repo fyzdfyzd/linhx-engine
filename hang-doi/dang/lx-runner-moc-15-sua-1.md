@@ -5,6 +5,7 @@ khong_tien_phut: 20
 tu_sua: 0
 phu_thuoc: ev-hieu-nang-14
 theo_doi: D:\linhx\linhx-engine-wt\runner-moc
+nhan: may-3 2026-11-17T19:56:20+0700
 
 Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh.
 
