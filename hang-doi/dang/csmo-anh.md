@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 35
 khong_tien_phut: 20
 theo_doi: C:\linhx\wt-csmo\anh
+nhan: may-2 2026-11-17T07:40:25+0700
 
 Phiếu csmo-anh: tải ảnh thật, có giấy phép, cho deck bài nói CSMO (nói 19/11). Ảnh dùng làm nền tràn slide 16:9, sẽ phủ lớp tối để đặt chữ.
 0. git clone -b hang-doi https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-csmo\anh. Nhánh agy/csmo-anh.
