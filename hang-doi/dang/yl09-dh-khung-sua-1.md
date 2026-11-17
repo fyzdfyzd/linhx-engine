@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\nhat-ky\yl09-dh-khung; C:\linhx\ifagent-wt\yl09-dh-khung
+nhan: may-2 2026-11-18T02:04:23+0700
 
 Phiếu Yên Lam v0.9 `yl09-dh-khung`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật chung 1–9, bắt buộc) trong thư mục hàng đợi của máy này (`git pull` trước). Khung bố cục: `viec/yen-lam-v09/khung/` ảnh P1-tab-lam, P6-cua-toi (chỉ bố cục, GIỮ CSS kính hiện có).
 Lượt 2 (lượt 1 bị huỷ dây chuyền hoặc quá giờ). Chạy mọi lệnh ở tiền cảnh, KHÔNG background task. Tạo `C:\linhx\nhat-ky\yl09-dh-khung\` và ghi 1 dòng tiến độ vào `tien-do.log` ở đó sau mỗi bước (ít nhất 5 phút một lần). COMMIT + PUSH sau mỗi ý nhỏ, phút 35 phải push dù chưa xong.
