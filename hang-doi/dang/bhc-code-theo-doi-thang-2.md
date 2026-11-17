@@ -15,4 +15,4 @@ Brand health check, gói theo dõi hằng tháng (bản đầu, chỉ AI giả).
 5. verify + test:lap xanh. Ảnh 1280 + 360 trang so sánh (dữ liệu giả Vinamilk 2 kỳ) và màn quản trị vào bang-chung/bhc-theo-doi/. Push agy/bhc-theo-doi.
 KET-QUA.md: dat co|khong, SHA, số test, ảnh.
 
-nhip: 20:54 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 20:57 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
