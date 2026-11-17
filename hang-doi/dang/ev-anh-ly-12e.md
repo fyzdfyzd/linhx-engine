@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 10
 khong_tien_phut: 8
 tu_sua: 0
+nhan: may-2 2026-11-17T20:08:29+0700
 
 Phiếu ev-anh-ly-12e: chép 2 ảnh Gemini đã tải trên Chrome máy 2 lên nhánh hang-doi. KHÔNG tìm ổ khác, KHÔNG mở trình duyệt, chỉ 3 bước.
 1. Liệt kê `C:\Users\Admin\Downloads\Gemini_Generated_Image_*` sửa đổi sau 2026-11-17 18:45 (giờ máy), đọc kích thước px bằng python PIL (đã có).
