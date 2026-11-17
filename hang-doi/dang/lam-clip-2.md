@@ -10,4 +10,4 @@ Thứ tự: (1) gửi cả 3 đề lên Flow liền nhau (lượt 1), (2) chờ,
 Còn 8 phút mà chưa xong: dừng, push cái đã có, KET-QUA ghi clip nào đã gửi Flow nhưng chưa tải (để phiếu sau tải tiếp, không sinh lại).
 Thêm vào KET-QUA 3 dòng "mẹo Flow" mới học được (nếu có).
 
-nhip: 23:28 6p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 23:31 9p warning: --mode auto is not available for this account; continuing in the default mode.
