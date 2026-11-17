@@ -12,4 +12,4 @@ Phiếu ev-anh-ly-12c: lấy 2 ảnh Gemini vừa tải về trên Chrome máy n
 3. KET-QUA ngắn: tên gốc, đường dẫn, kích thước px, dung lượng của 2 tệp. Không thấy tệp nào: ghi `KHONG_THAY` + danh sách 5 tệp mới nhất trong các thư mục Downloads.
 Cấm: không xoá/sửa tệp nào của Linh, không đụng Chrome, không in khoá.
 
-nhip: 19:41 6p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 19:44 9p warning: --mode auto is not available for this account; continuing in the default mode.
