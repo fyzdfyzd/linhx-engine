@@ -5,8 +5,8 @@
  "giay": 5.96,
  "codec": "vp9",
  "alpha": true,
- "ssim_dau": 0.9773,
- "ssim_cuoi": 0.9526,
+ "ssim_dau": 0.9753,
+ "ssim_cuoi": 0.956,
  "dat_may": true,
  "loi": []
 }
