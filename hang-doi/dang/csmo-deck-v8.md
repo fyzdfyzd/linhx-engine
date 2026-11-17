@@ -2,6 +2,7 @@ may: may-2
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-csmo-v8
+nhan: may-2 2026-11-17T20:15:47+0700
 
 Phiếu DỰNG DECK CSMO v8 từ chữ đã chấm 3 vòng (LAB130, Linh đã chọn bản A). Chữ đã chốt, KHÔNG sửa câu chữ.
 
