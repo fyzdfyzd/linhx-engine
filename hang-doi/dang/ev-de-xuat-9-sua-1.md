@@ -17,4 +17,4 @@ Phiếu sửa ev-de-xuat-9 (lượt trước quá 40 phút, CHƯA push). Làm ti
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-9/; không đụng apps/lab, packages/, bang-chung của cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sinh ảnh AI, không gọi AI thật. Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-sang-8..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới; pass/fail; đường dẫn TONG-SLIDE.png.
 
-nhip: 08:37 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:38 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
