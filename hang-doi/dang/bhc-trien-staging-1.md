@@ -17,3 +17,5 @@ Brand health check: dựng STAGING RIÊNG trên VM chung (Linh duyệt 17/11 12:
 6. Qua đường hầm chụp 1280 + 360: trang chủ, /bao-cao/2026-11-13-vinamilk-9b816db5/, /quan-tri/ màn đăng nhập. Vào bang-chung/bhc-staging/. Commit infra + bằng chứng, push agy/bhc-staging.
 CẤM: deploy prod, sửa Caddy/DNS/compose prod, đụng stg-event/ifagent-staging-*/lab, chạy rollback-app.sh, in khoá/ADMIN_CODE, gọi AI thật quá 1 lượt quét thử. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA trên staging; healthz; lệnh đường hầm; lệnh lùi; CAN-LINH nếu có.
+
+nhip: 12:56 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
