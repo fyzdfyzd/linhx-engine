@@ -2,6 +2,7 @@ may: may-2
 loai: khac
 tran_phut: 20
 theo_doi: C:\linhx\nhat-ky\yl-do-chi-phi-gemini
+nhan: may-2 2026-11-18T04:46:56+0700
 
 Linh duyệt 18/11 04:46 (thẻ quyết định: "Cho máy 2 đọc sổ"). Linh hỏi: vì sao chi phí Gemini mấy hôm nay cao, có phải do test? CHỈ ĐỌC, không sửa gì, không deploy, không in khoá/mật khẩu. Lệnh tiền cảnh, không background task. Ghi tiến độ vào `C:\linhx\nhat-ky\yl-do-chi-phi-gemini\tien-do.log`.
 1. Đăng nhập admin bằng tài khoản test-btc có sẵn trên máy, gọi `/api/yl/v1/qt/chi-phi?nhom=ngay|tinh-nang|may&tu=2026-11-10&den=2026-11-18` trên prod (demo.ifagent.net) và staging. Không đăng nhập được thì đọc file sổ chi phí (do `apps/lab/server/v1/chi-phi/so-chi-phi.js` ghi) trên VM qua `gcloud compute ssh` như khi deploy, chỉ đọc.
