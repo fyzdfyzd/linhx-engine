@@ -14,4 +14,4 @@ Làm trong C:\linhx\wt-csmo-v8 (git pull nhánh claude/project-thread-j24agg tr�
 Chạy tiền cảnh. Commit + push sau mỗi 3 slide lên nhánh claude/project-thread-j24agg.
 Trả KET-QUA.md ≤1500 ký tự: số slide, kết quả vls, slide lệch luật.
 
-nhip: 21:36 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 21:39 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
