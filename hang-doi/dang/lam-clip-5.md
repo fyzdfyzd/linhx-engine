@@ -9,3 +9,5 @@ Phiếu này 3 clip: m-bat-ngo, m-xin-loi, p-vay.
 Thứ tự: kiểm credit → gửi cả 3 đề liền nhau → chờ, tải → hậu kỳ + chấm + push từng clip + đẩy ảnh soi.
 Còn 8 phút mà chưa xong: dừng, push cái đã có, KET-QUA ghi clip đã gửi Flow chưa tải.
 KET-QUA ghi tài khoản dùng (che email) và credit còn lại.
+
+nhip: 01:11 3p warning: --mode auto is not available for this account; continuing in the default mode.
