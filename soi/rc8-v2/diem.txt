@@ -1,0 +1,24 @@
+# BẢNG ĐIỂM ẢNH SOI RC8-V2 — SAU KHI SỬA 6 MỤC THEO SOI MẮT (COMMIT 6d2b263c)
+Nhánh code    : tap-chi-sua-mat-17-11 (6d2b263c)
+Khách thử     : TEST-E2E-CUOI (chuDe=01,05, dienGia=05,01 -> Lê Quốc Vinh, Trịnh Xuân Pháp)
+Mẫu gốc       : C:/linhx/rc6-cuc-bo/lebros/layout_AgenticMe_Quynh.pdf (mau-lebros/t1..t8.png, dac-ta.json)
+PDF A5 xuất ra: 8 trang đơn, PageLayout=SinglePage, khổ 148×210 mm
+Test khoá     : 10-khop-mau.test.js 9/9 PASS (10-1..10-9), 08-tap-chi.test.js 5/5 PASS
+
+## 6 MỤC ĐÃ SỬA
+1. T2: Khối HỌ TÊN / CÔNG TY co giãn tự nhiên (2-3 dòng), đẩy MY INTEREST xuống không đè chữ; tên gạch nối TEST-E2E-CUOI không bẻ giữa chữ.
+2. T2: MY FAVORITE SPEAKER khử trùng và chỉ hiển thị diễn giả khách chọn (không lặp Lê Quốc Vinh).
+3. T1: Chủ thể đặt lệch trái ~1/3, kiểm YuNet hộp mặt+tóc không giao hộp chữ AGENTIC:ME / The … Edition và cover lines.
+4. T6: Bỏ poster KV bị cắt chữ; dùng ảnh hội trường không chữ (E2-e.jpg) + placeholder chỉn chu khi thiếu ảnh thật.
+5. T3 (5 ô) & T7 (4 ô): Không lặp ảnh khách; xen ảnh sự kiện + diễn giả, tối đa 2 ảnh khách khác nhau mỗi trang.
+6. T3, T4, T5: Trọn câu hoàn chỉnh không cắt bằng "…"; T4 khối tiêu đề in hoa trái có khoảng cách thoáng với thân bài như mẫu.
+
+## 8 DÒNG ĐIỂM TỪNG TRANG
+Trang 1: SSIM web/mẫu=0.9062 | SSIM PDF/mẫu=0.9184 (web/PDF=0.9937) | 10-khop-mau=13/13 phần tử (ĐẠT)
+Trang 2: SSIM web/mẫu=0.7837 | SSIM PDF/mẫu=0.7804 (web/PDF=0.9831) | 10-khop-mau=14/14 phần tử (ĐẠT)
+Trang 3: SSIM web/mẫu=0.8149 | SSIM PDF/mẫu=0.8161 (web/PDF=0.9963) | 10-khop-mau=23/23 phần tử (ĐẠT)
+Trang 4: SSIM web/mẫu=0.6904 | SSIM PDF/mẫu=0.6861 (web/PDF=0.9918) | 10-khop-mau=14/14 phần tử (ĐẠT)
+Trang 5: SSIM web/mẫu=0.8305 | SSIM PDF/mẫu=0.8306 (web/PDF=0.9900) | 10-khop-mau=14/14 phần tử (ĐẠT)
+Trang 6: SSIM web/mẫu=0.9693 | SSIM PDF/mẫu=0.9615 (web/PDF=0.9956) | 10-khop-mau=4/4 phần tử (ĐẠT)
+Trang 7: SSIM web/mẫu=0.8771 | SSIM PDF/mẫu=0.8771 (web/PDF=0.9960) | 10-khop-mau=6/6 phần tử (ĐẠT)
+Trang 8: SSIM web/mẫu=0.8827 | SSIM PDF/mẫu=0.8853 (web/PDF=0.9585) | 10-khop-mau=16/16 phần tử (ĐẠT)
