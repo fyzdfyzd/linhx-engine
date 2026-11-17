@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl09-tap-chi; D:\linhx\ifagent-wt\yl09-tap-chi
+nhan: may-3 2026-11-18T04:49:15+0700
 
 Phiếu Yên Lam v0.9 `yl09-tap-chi`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật chung 1–9, bắt buộc) trong thư mục hàng đợi của máy này (`git pull` trước). Khung bố cục: `viec/yen-lam-v09/khung/` ảnh P7-tao-tap-chi, P8-xem-truoc-tap-chi (chỉ bố cục, GIỮ CSS kính hiện có).
 Lượt 4: TIẾP phần dở trên nhánh agy/yl09-tap-chi (worktree đã có thì vào, commit + push phần chưa commit, làm tiếp, KHÔNG tạo lại). Lượt trước quá 40 phút vì chờ bộ test đầy đủ: KHÔNG chạy cả bộ test lab, chỉ chạy test mới của phiếu + `apps/lab/test/nghiem-thu-*` liên quan, mỗi lệnh test có timeout ≤ 8 phút. Chạy mọi lệnh ở tiền cảnh, KHÔNG background task. Tạo `D:\linhx\nhat-ky\yl09-tap-chi\` và ghi 1 dòng tiến độ vào `tien-do.log` ở đó sau mỗi bước (ít nhất 5 phút một lần). COMMIT + PUSH sau mỗi ý nhỏ, phút 35 phải push dù chưa xong.
