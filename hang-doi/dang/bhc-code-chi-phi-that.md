@@ -15,3 +15,5 @@ Bối cảnh (quét thật staging 17/11 18:20): 4 làn OpenRouter tốn thực 
 4. Test khoá: AI giả trả usage.cost → tổng chi phí đúng; thiếu cost → dùng đơn giá; timeout riêng làn được tôn trọng. Lint giữ nguyên luật cũ (không delayMs, không nhãn thô).
 5. verify + test:lap xanh; ảnh quản trị chi tiết 1280 vào bang-chung/bhc-chi-phi/. Push agy/bhc-chi-phi.
 KET-QUA.md: dat co|khong, SHA, số test, ảnh.
+
+nhip: 18:32 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
