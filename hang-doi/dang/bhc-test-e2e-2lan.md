@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-test-e2e
+nhan: may-2 2026-11-17T07:40:24+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Brand health check: chạy kiểm thử đầu-cuối HAI LẦN liên tiếp trên bản nối app, KHÔNG sửa code.
