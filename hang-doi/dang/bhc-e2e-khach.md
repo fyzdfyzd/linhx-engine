@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 50
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-e2e-khach
+nhan: may-2 2026-11-17T21:54:51+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd`. Commit đầu trong 5 phút, commit + push mỗi 10 phút (ảnh xong bước nào push bước đó).
 E2E trên GIAO DIỆN THẬT cho Brand Health Check, Luồng K (K1–K9). Quy trình + thang chấm đầy đủ: linhx-engine nhánh hang-doi viec/brand-health/QUY-TRINH-E2E-17-11.md (bản sao ở cuối phiếu này).
