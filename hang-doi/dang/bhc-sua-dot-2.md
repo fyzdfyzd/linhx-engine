@@ -11,4 +11,4 @@ Sửa lỗi E2E đợt 2 (quản trị, theo dõi tháng). CHỈ chạy khi orig
 Sửa: LOI-Q6-01 (mỗi làn một ô bật/tắt riêng: gemini-tim, gemini-nho, openai-tim, claude-tim, openrouter-gemini-tim, perplexity-tim; AI giả tạo đủ 6 làn), LOI-Q7-01 (so sánh khác chế độ quét: quy về tỉ lệ, chỉ tính đổi khi trạng thái chính đổi; ghi chú "Kỳ trước quét đầy đủ, kỳ này quét nhanh"), LOI-Q7-API-NOW-ISO (nhận chuỗi ISO).
 Test khoá cho từng lỗi. Chạy lại e2e-giao-dien/quan-tri.mjs (từ origin/agy/bhc-e2e-quan-tri) cho Q6, Q7, ảnh vào bang-chung/bhc-sua-2/. verify + test:lap xanh. Push agy/bhc-sua-2.
 
-nhip: 23:58 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 00:01 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
