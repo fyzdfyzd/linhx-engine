@@ -14,4 +14,4 @@ Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ
 3. KHÔNG quét AI thật. Qua đường hầm chụp 1280 + 360: trang chủ, /bao-cao/2026-11-13-vinamilk-9b816db5/, /quan-tri/ tổng quan (mã trong /opt/stg-brand/ADMIN_CODE.txt, đọc vào biến, không in). Vào bang-chung/bhc-staging-4/, push.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá. KET-QUA: dat, SHA, healthz, ảnh.
 
-nhip: 06:53 6p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T06:52:32+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 06:56 9p đang chờ nền · log cuối 4 phút trước [log_cuoi=2026-11-18T06:52:32+0700] · root agent idle; waiting up to 40m0s for 1 ba
