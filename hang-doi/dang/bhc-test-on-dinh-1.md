@@ -15,4 +15,4 @@ Brand health check: test E2E-04 chập chờn. Claude chạy lại trên agy/bhc
 CẤM: sửa code sản phẩm ngoài AI giả, deploy, gọi AI thật, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test:lap 5 lần; verify.
 
-nhip: 09:50 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 09:53 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
