@@ -2,6 +2,7 @@ may: may-1
 loai: khac
 tran_phut: 40
 theo_doi: D:\linhx\LAB129-BACKUP-HFCD
+nhan: may-1 2026-11-17T19:34:12+0700
 
 # HFCD bước 1: cài rclone, kiểm quyền + đo dung lượng 361 link (CHƯA tải folder)
 
