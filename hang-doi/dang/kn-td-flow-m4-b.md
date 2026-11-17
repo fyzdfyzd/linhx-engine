@@ -13,3 +13,5 @@ Lượt 2 (Browsentic đã cài). Đọc lại DE-BAI.md, luật 3, 10–13 mớ
 Kỹ năng: làm video trên Google Flow (labs.google/flow).
 Tạo dự án mới tên `kn-thu-17-11`, một cảnh từ chữ: "Cảnh 8 giây, máy quay lia chậm qua bàn gỗ có tách trà nóng bốc khói, nắng sớm qua cửa sổ, chân thực". Chọn model Veo rẻ nhất đang có (ghi tên + số tín dụng tốn). Tải mp4 về Drive (luật 5).
 ĐẠT khi: có mp4 ≥ 4 giây. Trả: model, tín dụng tốn/còn, thời lượng, số phút chờ.
+
+nhip: 23:13 3p warning: --mode auto is not available for this account; continuing in the default mode.
