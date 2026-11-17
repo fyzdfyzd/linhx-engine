@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-gop-22b
+nhan: may-3 2026-11-18T03:44:15+0700
 
 Phiếu ev-gop-22b (hoàn tất 2 test khoá còn đỏ trên nhánh gộp): COMMIT + PUSH SAU MỖI Ý.
 0. KHÔNG git clone mới và KHÔNG npm ci (2 lượt trước: lệnh clone repo lớn bị agy đẩy thành tác vụ nền, phiếu dừng, mất trắng). Dùng clone có sẵn: `$env:GIT_TERMINAL_PROMPT=0; git -C D:\linhx\ifagent-wt\ev-gop-21 fetch origin agy/ev-gop-21`, rồi `git -C D:\linhx\ifagent-wt\ev-gop-21 worktree add D:\linhx\ifagent-wt\ev-gop-22b -b agy/ev-gop-22b origin/agy/ev-gop-21`. Trong apps/event của worktree mới, tạo liên kết node_modules: `cmd /c mklink /J node_modules D:\linhx\ifagent-wt\ev-gop-21\apps\event\node_modules`. Mỗi lệnh phải xong dưới 5 phút; lệnh nào lâu hơn thì chia nhỏ. Commit + push ngay sau ý 1.
