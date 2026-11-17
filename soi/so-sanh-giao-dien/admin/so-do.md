@@ -51,7 +51,7 @@
 ### Chi tiết khách (#khach -> chọn khách)
 - **Ảnh ghép tổng hợp (1280 + 360)**: `so-sanh-chi-tiet-khach.jpg` · Riêng khổ: `so-sanh-chi-tiet-khach-360.jpg`, `so-sanh-chi-tiet-khach-1280.jpg`
 - **Hiệu năng 3G (360px)**: Hiện tại `387.2 KB / 4219 ms` → Tối giản `442.2 KB / 3101 ms` → Lite `32.7 KB / 1138 ms` (**giảm 91.6% dung lượng, nhanh hơn 73.0% trên 3G**).
-- **Số bước việc chính (Xử lý yêu cầu Quên tôi / Mở khoá khách)**: Hiện tại `3 bước` → Tối giản `2 bước` → Lite `2 bước`. Hiện tại từ danh sách phải cuộn qua nhiều dòng chữ và liên kết phụ mới tới nút Xử lý rồi xác nhận (3 bước). Bản Tối giản & Lite gom chỉ số 1 hàng và đặt 1 nút chính `Xoá dữ liệu` ngay trong tầm mắt -> bấm xác nhận (2 bước).
+- **Số bước việc chính (Xử lý yêu cầu Quên tôi / Mở khoá khách)**: Hiện tại `3 bước` → Tối giản `2 bước` → Lite `2 bước`. Hiện tại từ danh sách phải cuộn qua nhiều dòng chữ và liên kết phụ mới tới nút Xử lý rồi xác nhận (3 bước). Bản Tối giản & Lite gom chỉ số 1 hàng và đặt 1 nút chính `Xoá hẳn` ngay trong tầm mắt -> bấm xác nhận (2 bước).
 
 ### Cấu hình (#cau-hinh)
 - **Ảnh ghép tổng hợp (1280 + 360)**: `so-sanh-cau-hinh.jpg` · Riêng khổ: `so-sanh-cau-hinh-360.jpg`, `so-sanh-cau-hinh-1280.jpg`
