@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-nen
+nhan: may-2 2026-11-17T08:50:23+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Push sau MỖI commit. Server chạy bằng Start-Process, tắt đúng PID.
 Brand health check: gộp nhánh nền chung + sửa lỗi tải PDF.
