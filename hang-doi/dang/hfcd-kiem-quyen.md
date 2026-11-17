@@ -2,6 +2,7 @@ may: may-1
 loai: trinh-duyet
 tran_phut: 40
 theo_doi: D:\linhx\LAB129-BACKUP-HFCD
+nhan: may-1 2026-11-17T18:37:15+0700
 
 # Kiểm quyền 361 link HFCD + đo dung lượng (CHƯA tải)
 
