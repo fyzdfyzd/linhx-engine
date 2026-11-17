@@ -1,0 +1,47 @@
+# BÁO CÁO ẢNH SOI DIỄN GIẢ V2 — TRƯỚC (PROD 6684e8b8) vs SAU (STAGING 1896e9a9)
+TRƯỚC (Prod)    : https://demo.ifagent.net (bản 6684e8b8)
+SAU (Staging)   : https://staging-demo.ifagent.net (bản 1896e9a9913f — /healthz OK, khớp TIEN-DO-E2E.md "DEPLOY STAGING 1896e9a9: OK")
+Diễn giả dài nhất thử nghiệm (chọn đồng thời 3 người trong 48 diễn giả):
+  1. Đào Trung Thành — chức danh dài nhất (106 ký tự): "Chuyên gia tư vấn Chiến lược AI & Chuyển đổi số, Ủy viên Ban Chấp hành Hội Truyền thông số Việt Nam (VDCA)"
+  2. Đào Cẩm Thuỷ — chức danh dài thứ 2 (97 ký tự): "Giảng viên Trường Đại học Kinh tế, Đại học Quốc gia Hà Nội, Tác giả cuốn “Marketing Now & Future”"
+  3. Đinh Trần Tuấn Linh — họ tên dài nhất (19 ký tự): "CTO, If Agent"
+
+## KẾT QUẢ SOI MẮT & ĐO ĐẠC TRƯỚC | SAU (GHI NHẬN THỰC TẾ TRÊN STAGING 1896e9a9)
+*(Lưu ý từ TIEN-DO-E2E.md dòng 193: "15:54 GỘP dien-gia-v2: XUNG ĐỘT, bỏ" — bản 1896e9a9 đã lên đủ pregen 48 diễn giả của 1896e9a9 nhưng chưa có nhánh giao diện dien-gia-v2)*
+
+1. Trang /yen-lam/dien-gia/ + thẻ diễn giả:
+   - Tổng số diễn giả: TRƯỚC = 45 ("Hiển thị 45 / 45 diễn giả") -> SAU = 48 ("Hiển thị 48 / 48 diễn giả", đã bổ sung đủ 4 Host Track: Đỗ Thị Hải Đăng, Hoàng Thảo Anh, Ngọc Đoàn, Vũ Hạnh Hoa).
+   - Danh xưng Jiang Na (/yen-lam/dien-gia/jiang-na): TRƯỚC = "Mr. Jiang Na" -> SAU = "Ms. Jiang Na" (ĐẠT).
+   - Khung ảnh thẻ diễn giả trên /yen-lam/dien-gia/: Cả TRƯỚC và SAU hiện đều dùng khung chữ cái đầu (monogram LV, ĐT, TP...) cho toàn bộ thẻ (0 thẻ gắn <img> chân dung trực tiếp trên trang pregen).
+2. Bước chọn diễn giả trên Form hành trình / Booth (/yen-lam/csmo/agentic-me -> màn AM-02e):
+   - Số thẻ chọn: TRƯỚC = 45 thẻ -> SAU = 48 thẻ; cho phép chọn tối đa 3 diễn giả (đã chọn đủ #1 Đào Trung Thành, #2 Đào Cẩm Thuỷ, #3 Đinh Trần Tuấn Linh).
+   - Khuôn mặt trong khung tròn trên AM-02e: 8 thẻ có ảnh thật (Đào Trung Thành, Trịnh Xuân Pháp, Nguyễn Đức Sơn, Nguyễn Dương, Phạm Vũ Tùng, Thuận Đoàn mặt ở vùng giữa; riêng Lê Quốc Vinh và Nguyễn Trần Quang là ảnh bán thân xa nên mặt hơi nhỏ ở nửa trên do chưa gắn object-position/tieuDiem từ dien-gia-v2); 40 thẻ còn lại vẫn hiện logo CSMO/VSMCamp bị cắt viền tròn.
+   - Bố cục theo độ phân giải:
+     + 360x780: Nút Xong/Bỏ qua nằm gọn trong khung nhìn (xongBottom = 631px <= 780px).
+     + 1280x800: Lưới 48 thẻ kéo dài xuống xongBottom = 2129px (> 800px), cần cuộn mới tới nút Xong/Bỏ qua.
+     + 1080x1920: Lưới 48 thẻ kéo dài xuống xongBottom = 3916px (> 1920px), đè qua nhân vật Yên Lam và đẩy khuất nút Xong/Bỏ qua xuống dưới màn hình.
+3. Bước chọn diễn giả trên T2 Tạp chí (mục MY FAVORITE SPEAKER):
+   - Khi chọn đồng thời 3 diễn giả có tên/chức danh dài nhất (Đào Trung Thành 106 ký tự + Đào Cẩm Thuỷ 97 ký tự + Đinh Trần Tuấn Linh), nội dung bên trong [data-vai-tro="muc-speaker-ds"] tràn chiều cao hộp cố định (10.65%) khiến dòng thứ 3 ("Đinh Trần Tuấn Linh · CTO, If Agent") đè chồng trực tiếp lên tiêu đề "BA TỪ KHOÁ" bên dưới trên cả TRƯỚC và SAU (xem rõ tại 06b-tap-chi-t2-can-canh-a5.jpg và 06-tap-chi-t2-nhieu-dien-gia-*.jpg).
+
+## DANH SÁCH 21 ẢNH GHÉP NGANG TRƯỚC | SAU (JPG <= 1600px, quality=80)
+- 01-trang-dien-gia-360.jpg (756x822px) — Danh sách /yen-lam/dien-gia/ @ 360x780
+- 01-trang-dien-gia-1280.jpg (1600x530px) — Danh sách /yen-lam/dien-gia/ @ 1280x800
+- 01-trang-dien-gia-1080x1920.jpg (1600x1432px) — Danh sách /yen-lam/dien-gia/ @ 1080x1920
+- 02-the-dien-gia-khuon-mat-360.jpg (756x822px) — Thẻ diễn giả trên /yen-lam/dien-gia/ @ 360x780
+- 02-the-dien-gia-khuon-mat-1280.jpg (1600x530px) — Thẻ diễn giả trên /yen-lam/dien-gia/ @ 1280x800
+- 02-the-dien-gia-khuon-mat-1080x1920.jpg (1600x1432px) — Thẻ diễn giả trên /yen-lam/dien-gia/ @ 1080x1920
+- 02b-can-canh-6-the-chan-dung.jpg (1189x1600px) — Cận cảnh 6 thẻ diễn giả chính TRƯỚC | SAU
+- 03-chi-tiet-dien-gia-dai-nhat-360.jpg (756x822px) — Chi tiết Đào Trung Thành (chức danh dài nhất) @ 360x780
+- 03-chi-tiet-dien-gia-dai-nhat-1280.jpg (1600x530px) — Chi tiết Đào Trung Thành (chức danh dài nhất) @ 1280x800
+- 03-chi-tiet-dien-gia-dai-nhat-1080x1920.jpg (1600x1432px) — Chi tiết Đào Trung Thành (chức danh dài nhất) @ 1080x1920
+- 03b-chi-tiet-jiang-na-1280.jpg (1600x530px) — Chi tiết Jiang Na (Mr. -> Ms. Jiang Na) @ 1280x800
+- 04-chon-dien-gia-booth-dau-360.jpg (756x822px) — Form chọn diễn giả Booth AM-02e (đầu trang, chọn 3) @ 360x780
+- 04-chon-dien-gia-booth-dau-1280.jpg (1600x530px) — Form chọn diễn giả Booth AM-02e (đầu trang, chọn 3) @ 1280x800
+- 04-chon-dien-gia-booth-dau-1080x1920.jpg (1600x1432px) — Form chọn diễn giả Booth AM-02e (đầu trang, chọn 3) @ 1080x1920
+- 05-chon-dien-gia-booth-ten-dai-360.jpg (756x822px) — Form Booth AM-02e (vùng thẻ tên/chức danh dài) @ 360x780
+- 05-chon-dien-gia-booth-ten-dai-1280.jpg (1600x530px) — Form Booth AM-02e (vùng thẻ tên/chức danh dài) @ 1280x800
+- 05-chon-dien-gia-booth-ten-dai-1080x1920.jpg (1600x1432px) — Form Booth AM-02e (vùng thẻ tên/chức danh dài) @ 1080x1920
+- 06-tap-chi-t2-nhieu-dien-gia-360.jpg (756x822px) — T2 Tạp chí Web (3 diễn giả dài nhất) @ 360x780
+- 06-tap-chi-t2-nhieu-dien-gia-1280.jpg (1600x530px) — T2 Tạp chí Web (3 diễn giả dài nhất) @ 1280x800
+- 06-tap-chi-t2-nhieu-dien-gia-1080x1920.jpg (1600x1432px) — T2 Tạp chí Web (3 diễn giả dài nhất) @ 1080x1920
+- 06b-tap-chi-t2-can-canh-a5.jpg (1600x1148px) — Cận cảnh trang T2 A5 (soi rõ chồng chữ MY FAVORITE SPEAKER -> BA TỪ KHOÁ)
