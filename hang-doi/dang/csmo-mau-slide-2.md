@@ -2,6 +2,7 @@ may: may-1
 loai: trinh-duyet
 tran_phut: 30
 khong_tien_phut: 20
+nhan: may-1 2026-11-17T15:09:49+0700
 
 Phiếu csmo-mau-slide-2 (lần 2, lần 1 quá giờ): tìm mẫu slide keynote top tier làm chuẩn phong cách cho bài nói CSMO 2026 của Linh (chủ đề: niềm tin thương hiệu khi AI agent mua hộ khách; khán giả CMO, Brand Director; sân khấu hội nghị, màn LED 16:9, phòng tối).
 
