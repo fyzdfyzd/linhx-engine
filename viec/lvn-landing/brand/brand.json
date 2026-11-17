@@ -1,0 +1,134 @@
+{
+  "brand_id": "listening-vietnam",
+  "ten": "Listening Vietnam",
+  "ten_viet_trong_cau": "Listening Vietnam (viết hoa chữ đầu mỗi từ; tiêu đề IN HOA: LISTENING VIETNAM; nội bộ: LVN; hashtag #ListeningVietnam; không viết ListeningVN, Listen VN, Listening Việt Nam)",
+  "quan_he": "Sáng kiến social listening, sub-brand của TUVA (brands/tuva) nhưng có nhận diện riêng màu xanh lá. KHÔNG dùng màu, font, logo, hoạ tiết TUVA trên ấn phẩm Listening Vietnam; chỉ ghi chữ 'Một sáng kiến của TUVA' ở chân khi cần (cách ghi chờ Linh chốt, D6).",
+  "nguon": "00-goc/ListeningVN_BrandGuideline_out.pdf (20 trang, Illustrator 30.3, 13/05/2026: nguồn chính cho màu, hoạ tiết, bố cục) + 00-goc/ListenVN_logo_done.ai (logo vector gốc, Illustrator 24.3, 06/02/2023, 4 trang) + 00-goc/logo-png-goc/ (done-01..04, dọc-06, Artboard 2) + 00-goc/BRAND_KIT.md (11/03/2026, PROTO_20: tagline, essence, giá trị, giọng văn; màu và font trong đó KHÔNG dùng, xem DOI-CHIEU.md)",
+  "phien_ban_chuan": "0.2 (Claude làm lại 17/10/2026, chờ Linh duyệt)",
+  "trang_thai_chung": "Màu, hoạ tiết, phong cách ảnh: lấy từ guideline PDF. Logo: vector thật từ file .ai. Font thay Avenir Next (bản quyền, không có file), tagline, ngôn ngữ bố cục chi tiết, vùng an toàn bằng số: đề xuất, chờ Linh chốt.",
+  "mau": {
+    "nguong_delta_e": 8,
+    "toi_thieu_phu_mau_thuong_hieu": 0.85,
+    "chinh": [
+      {"ten": "Green", "hex": "#00B579", "cmyk": "78 0 72 0", "vai_tro": "màu chủ đạo: khối lớn, dải sóng ngoài, nền thẻ", "nguon": "guideline tr.10 (Primary)"},
+      {"ten": "Dark Green", "hex": "#106047", "cmyk": "88 38 77 31", "vai_tro": "nền tối mặc định cho social, story, banner, bìa; chữ đậm trên nền sáng", "nguon": "guideline tr.10 (Secondary), nền bìa, trang logo, mẫu social"},
+      {"ten": "Light Green", "hex": "#74C465", "cmyk": "57 0 80 0", "vai_tro": "dải sóng giữa, chấm tròn, chữ nhấn cỡ lớn trên nền Dark Green (3.5:1, chỉ chữ ≥ 24px)", "nguon": "guideline tr.10"},
+      {"ten": "Lime", "hex": "#D9E74C", "cmyk": "19 0 84 0", "vai_tro": "điểm nhấn: chấm tâm sóng, CTA, nhãn trên nền Dark Green (5.6:1)", "nguon": "guideline tr.10"}
+    ],
+    "phu": [
+      {"ten": "Mid Green", "hex": "#00814D", "cmyk": "88 25 89 11", "vai_tro": "khối phụ, chữ xanh nhỏ trên nền sáng (4.9:1 trên trắng)", "nguon": "guideline tr.10"},
+      {"ten": "Navy", "hex": "#1E4992", "cmyk": "98 82 10 2", "vai_tro": "phụ, biểu đồ, không làm nền lớn", "nguon": "guideline tr.10"},
+      {"ten": "Blue", "hex": "#0063BC", "cmyk": "89 63 0 0", "vai_tro": "phụ, biểu đồ", "nguon": "guideline tr.10"},
+      {"ten": "Sky Blue", "hex": "#009BD8", "cmyk": "76 24 1 0", "vai_tro": "nhắc màu đám mây của biểu tượng; chấm, biểu đồ", "nguon": "guideline tr.10"},
+      {"ten": "Grey", "hex": "#7A7B80", "vai_tro": "chữ phụ cỡ ≥ 18px trên nền trắng (4.2:1); đường chia", "nguon": "đo trong vector trang 10 PDF (guideline có ô Grey nhưng không ghi mã)", "trang_thai": "đo, chờ xác nhận"},
+      {"ten": "Black", "hex": "#181718", "cmyk": "73 68 65 78", "vai_tro": "chữ chính trên nền sáng", "nguon": "guideline tr.10"},
+      {"ten": "Off White", "hex": "#F6F8ED", "cmyk": "3 1 7 0", "vai_tro": "nền sáng cho slide nội dung, tài liệu, thẻ", "nguon": "guideline tr.10"},
+      {"ten": "White", "hex": "#FFFFFF", "cmyk": "0 0 0 0", "vai_tro": "chữ trên nền tối, logo âm bản", "nguon": "guideline tr.10"}
+    ],
+    "nhan": [
+      {"ten": "Orange", "hex": "#FF8533", "cmyk": "0 59 87 0", "vai_tro": "chấm nhấn rất nhỏ (như chấm cam cạnh mũi tên tr.18); không làm chữ, không làm nền", "toi_da_dien_tich": 0.05, "nguon": "guideline tr.10 (Accent); giới hạn 5% là đề xuất"}
+    ],
+    "mau_khi_in_ra_man_hinh": {
+      "_ghi_chu": "Guideline khai hệ CMYK nên khi xuất RGB màu lệch; logo .ai dùng bộ màu riêng (ô màu ghi ngay trên trang 1 file .ai). Cả hai nhóm tính là đúng chuẩn để không chấm oan ấn phẩm dùng logo gốc hoặc ảnh chụp từ PDF. Xem DOI-CHIEU.md mâu thuẫn 1, 2.",
+      "Dark Green (render)": "#225D44",
+      "Green (render)": "#39B971",
+      "Light Green (render)": "#6DC854",
+      "Lime (render)": "#CFE636",
+      "Sky Blue (render)": "#449CDB",
+      "Navy (render)": "#345EB4",
+      "Orange (render)": "#F47329",
+      "Logo Blue may (.ai)": "#20A0DB",
+      "Logo Green song (.ai)": "#19B27E",
+      "Logo Light Green song (.ai)": "#98CA3C",
+      "Logo Lime cham (.ai)": "#D8E259",
+      "Logo chu Listening (.ai)": "#59595C",
+      "Logo chu Vietnam (.ai)": "#808285"
+    },
+    "ty_le": {
+      "toi_social_banner": {"nen_dark_green": 0.55, "green_light_green": 0.3, "lime": 0.1, "orange_sky_blue": 0.05},
+      "sang_tai_lieu": {"nen_off_white_trang": 0.6, "dark_green_chu_khoi": 0.25, "green_light_green_lime": 0.12, "orange": 0.03},
+      "_trang_thai": "đề xuất, guideline không ghi tỉ lệ (các trang mẫu tr.13–18 có khoảng 55–65% diện tích là Dark Green/Green)"
+    }
+  },
+  "chu": {
+    "font_cho_phep": ["Avenir Next", "Nunito Sans", "Montserrat Alternates"],
+    "vai_tro": {
+      "Avenir Next": "font chuẩn của guideline (Regular, Medium, Bold). Bản quyền Linotype, không có file: chỉ dùng khi máy designer đã có giấy phép",
+      "Nunito Sans": "thay Avenir Next cho mọi chữ trên ấn phẩm số (Light 300, Regular 400, Bold 700): sans hình học nhân văn gần Avenir, OFL, đủ dấu tiếng Việt",
+      "Montserrat Alternates": "font của chữ trong logo (đo trong font nhúng file .ai: MontserratAlternates-ExtraBold, SemiBold). Chỉ cho nhãn ngắn IN HOA, số lớn; không cho đoạn văn"
+    },
+    "trong_luong": ["Light 300", "Regular 400", "Bold 700"],
+    "file_font": "03-chu/: NunitoSans Light/Regular/Bold (github.com/googlefonts/NunitoSans, bản tĩnh), MontserratAlternates Regular/Bold (github.com/google/fonts ofl/montserratalternates). Cả hai OFL, đủ dấu tiếng Việt.",
+    "font_logo_suy_doan": "Montserrat Alternates ExtraBold (Listening) và SemiBold (Vietnam): đo trong font nhúng file .ai",
+    "font_la_trong_guideline": "Plus Jakarta Sans (nhúng trong PDF, không khai): không dùng",
+    "font_thay_the_web": ["Nunito Sans", "Avenir Next", "Avenir", "Arial", "sans-serif"],
+    "_trang_thai": "Nunito Sans thay Avenir Next: đề xuất, chờ Linh chốt (D2)"
+  },
+  "logo": {
+    "thanh_phan": "biểu tượng đám mây xanh dương (#20A0DB) chứa 3 dải sóng 1/4 đồng tâm Green #19B27E, Light Green #98CA3C và chấm tâm Lime #D8E259, mở ra từ góc dưới trái (tai nghe, sóng lan toả); chữ 'Listening' xám đậm #59595C, 'Vietnam' xám nhạt #808285, Montserrat Alternates, 2 dòng căn trái bên phải biểu tượng",
+    "mau_logo": "bản màu nguyên gốc .ai; bản chữ trắng trên nền tối; một màu trắng, xám #59595C, Dark Green #106047, Green #00B579, đen #181718. Không màu khác.",
+    "nguon_vector": "tách bằng pdftocairo -svg trang 2 file ListenVN_logo_done.ai (artboard sát logo), đổi màu theo trang 3 (trắng), trang 4 (xám) của chính file đó (01-logo/_tach_logo.py). Logo dọc ghép lại từ đúng các phần vector theo tỉ lệ ListenVN_logo_dọc-06.png. Vector thật, không vẽ lại.",
+    "bien_the": [
+      {"file": "01-logo/logo-mau.svg", "dung_khi": "nền trắng, Off White, nền sáng: nguyên bản .ai"},
+      {"file": "01-logo/logo-mau-nen-toi.svg", "dung_khi": "BẢN CHÍNH cho ấn phẩm số: nền Dark Green #106047, ảnh tối; biểu tượng màu, chữ trắng (đúng cách guideline tr.4, tr.7 đặt logo)"},
+      {"file": "01-logo/logo-trang.svg", "dung_khi": "nền Green #00B579, Mid Green, ảnh có lớp phủ: âm bản trắng (trang 3 .ai, guideline tr.4)"},
+      {"file": "01-logo/logo-xanh-dam.svg", "dung_khi": "nền Green, Light Green: một màu Dark Green (guideline tr.7)"},
+      {"file": "01-logo/logo-xanh.svg", "dung_khi": "nền trắng khi cần một màu xanh (guideline tr.6 vẽ vùng an toàn bằng bản này)"},
+      {"file": "01-logo/logo-xam.svg", "dung_khi": "in một màu xám, co-branding nền sáng (trang 4 .ai)"},
+      {"file": "01-logo/logo-den.svg", "dung_khi": "in đen trắng, photocopy"},
+      {"file": "01-logo/logo-doc-mau.svg", "dung_khi": "logo dọc, nền sáng, khổ dọc hẹp (theo PNG dọc-06)"},
+      {"file": "01-logo/logo-doc-nen-toi.svg", "dung_khi": "logo dọc trên nền Dark Green (guideline tr.7 ô phải)"},
+      {"file": "01-logo/logo-doc-trang.svg", "dung_khi": "logo dọc âm bản trắng"},
+      {"file": "01-logo/bieu-tuong-mau.svg", "dung_khi": "chỉ biểu tượng: avatar, favicon, góc trang (guideline tr.4 ô phải)"},
+      {"file": "01-logo/bieu-tuong-trang.svg", "dung_khi": "biểu tượng trắng trên nền Green, Dark Green"},
+      {"file": "01-logo/bieu-tuong-xanh-dam.svg", "dung_khi": "biểu tượng Dark Green trên nền Green, Lime"}
+    ],
+    "vung_an_toan": "quanh logo ≥ X, X = chiều cao chữ 'L' của Listening ≈ 0.23 chiều cao biểu tượng (guideline tr.6 chỉ vẽ ô X, không ghi số; con số là đề xuất). Khuôn dùng ≥ 0.5 chiều cao logo.",
+    "kich_thuoc_toi_thieu": {"so": "logo ngang cao ≥ 40px (rộng ≈ 112px); dưới mức này dùng biểu tượng, biểu tượng ≥ 24px", "in": "logo ngang rộng ≥ 30mm", "_trang_thai": "đề xuất"},
+    "vi_tri": "góc trái trên cho social, story, banner, slide (mẫu social tr.14–15 của guideline đặt logo góc trái); bìa đặt giữa hoặc trái",
+    "dong_thuong_hieu": "Với TUVA: Listening Vietnam đứng tên chính, TUVA chỉ là dòng chữ 'Một sáng kiến của TUVA' cỡ nhãn ở chân; không ghép logo TUVA cạnh logo LVN khi chưa có quy định (D6)",
+    "cam": [
+      "gõ lại chữ 'Listening Vietnam' bằng font thay cho file logo",
+      "đổi màu các dải sóng hoặc đám mây ngoài bảng, đảo thứ tự màu sóng",
+      "kéo méo, xoay, lật, thêm bóng đổ, viền, glow",
+      "đặt logo màu nguyên bản (chữ xám) lên nền Dark Green: chữ xám chìm; phải dùng logo-mau-nen-toi.svg",
+      "đặt logo lên ảnh rối không có lớp phủ, hoặc lên nền Green bằng bản màu (sóng xanh chìm)",
+      "dùng logo PNG cắt từ trang PDF (độ phân giải thấp) khi đã có SVG"
+    ]
+  },
+  "hinh_anh": {
+    "phong_cach": "người Việt thật trong đời sống thường ngày (sinh viên, người cao tuổi, gia đình nhiều thế hệ), nhìn ống kính hoặc đang trò chuyện, cảm xúc ấm, tự nhiên; ẢNH ĐEN TRẮNG tương phản vừa đặt trên khối Green/Dark Green (guideline tr.11, tr.13, tr.15); ảnh màu chỉ khi là khoảnh khắc văn hoá có màu ấm (tr.11 ảnh bà bên đèn lồng)",
+    "cach_dat": "cắt tròn, cắt theo cung 1/4 của sóng, hoặc khung bo góc lớn; ảnh tràn một cạnh; không đặt chữ nhỏ trên ảnh",
+    "anh_trong_04": "4 ảnh tách từ ảnh gốc nhúng trong PDF (CMYK 300ppi, đổi sang RGB): anh-sinh-vien-nu, anh-nhom-sinh-vien, anh-gia-dinh-ba-the-he, anh-ba-den-long; mỗi ảnh có bản -den-trang. Ảnh theo template guideline, chưa rõ bản quyền: dùng tạm, chờ ảnh thật của dự án (D8). 6 ảnh cũ độ phân giải thấp ở 04-hinh-anh/_ban-cu-cat-thap/.",
+    "khong": ["ảnh stock phương Tây", "ảnh dashboard, màn hình số liệu giả", "ảnh máy chủ, robot, mạch điện kiểu sci-fi", "ảnh tài chính, tiền, crypto (sót từ template TradeNest)", "chữ hoặc logo trong ảnh AI"],
+    "mau_tham_khao": "04-hinh-anh/"
+  },
+  "do_hoa": {
+    "hoa_tiet": "Sóng nghe (3 cung 1/4 đồng tâm + chấm tâm, mở từ góc, lấy từ biểu tượng), chấm tròn lưới, cung lồng nét mảnh, mũi tên bo tròn có chấm hai đầu, vành tròn gradient Lime → Green (guideline tr.12–15, 18). File 05-icon/hoa-tiet-*.svg do Claude vẽ lại theo hình trong PDF: đề xuất.",
+    "icon": "bộ 20 icon AI/robot nét đen mảnh có mảng Light Green (guideline tr.8): tách vector thật từ PDF ở 05-icon/icon-ai/ và 05-icon/bo-icon-ai.svg. Nét đen chỉ dùng trên nền sáng.",
+    "khoi": "khối màu phẳng lớn, bo tròn lớn (pill, nửa tròn, 1/4 tròn); không gradient ngoài vành tròn Lime → Green; không bóng đổ",
+    "net": "đường chia 2px Light Green hoặc Lime trên nền tối; 1px Grey nhạt trên nền sáng"
+  },
+  "ngon_ngu_thiet_ke": {
+    "tinh_than": "Hình học phẳng, ấm và rõ: khối xanh lá lớn, sóng 1/4 lan ra từ góc như tiếng nói được nghe thấy, ảnh người Việt đen trắng nằm trong hình tròn hoặc cung. Trầm tĩnh, không ồn ào; năng lượng đến từ nhịp các cung đồng tâm và một điểm Lime, không từ nhiều màu.",
+    "che_do": "Tối (Dark Green #106047) là mặc định cho social, story, banner, bìa slide. Sáng (Off White #F6F8ED, chữ Black/Dark Green) cho slide nhiều chữ, báo cáo, tài liệu. Khối Green #00B579 làm vùng đối trọng trong cả hai chế độ.",
+    "luoi": "lưới 12 cột; lề ngoài 7% cạnh ngắn (76px cho 1080, 80px cho 1920 ngang); khoảng cách cơ bản 8px, nhịp khối 24/40/64",
+    "bo_cuc": [
+      "logo góc trái trên (logo-mau-nen-toi.svg trên Dark Green), cao 64–80px; đối diện góc phải là nhãn nhỏ (danh mục) bằng Montserrat Alternates IN HOA",
+      "một khối hình học lớn chiếm 40–55% khung (nửa tròn, 1/4 tròn Green) chứa ảnh đen trắng cắt tròn hoặc cắt cung; sóng nghe đặt ở một góc, tâm sóng nằm đúng góc khung",
+      "thứ tự chữ: nhãn Montserrat Alternates IN HOA màu Lime → tiêu đề Nunito Sans Bold trắng, cụm cuối tô Lime → mô tả Nunito Sans Regular trắng → thẻ hoặc CTA",
+      "nội dung nhiều ý: thẻ bo 28px nền Green hoặc trắng 8%, số thứ tự trong chấm tròn Lime; tối đa 3–5 thẻ",
+      "CTA: viên thuốc bo tròn nền Lime, chữ Dark Green đậm; mũi tên bo tròn có chấm làm dấu dẫn",
+      "chân khung: #ListeningVietnam và 'Một sáng kiến của TUVA' cỡ nhãn"
+    ],
+    "co_chu": "tối đa 3 cỡ: tiêu đề : thân : nhãn ≈ 4 : 1.25 : 1 (social 1080: 96/30/24 px; story: 124/40/30; banner: 80/30/22; slide: 84/30/22). Line-height tiêu đề 1.05, thân 1.4. Nhãn IN HOA giãn 0.12em.",
+    "anh": "ảnh đen trắng (file -den-trang.jpg) trong hình tròn, nửa tròn hoặc cung 1/4 đặt trên khối Green; ảnh chiếm ≥ 40% khung; không đặt chữ lên ảnh",
+    "khong_lam": ["nền trắng tinh cho social", "màu TUVA (cam #F9A61B, nâu #2A1E1A) hay màu brand kit cũ (#1A1F36, #00897B, #FFC107)", "gradient ngoài vành tròn Lime → Green", "chữ Lime hoặc Light Green trên nền trắng (1.4–2.2:1)", "chữ trắng nhỏ dưới 24px trên nền Green #00B579 (2.7:1)", "đổ bóng, viền chữ, chữ 3D", "hơn 2 họ font", "IN HOA cả câu tiếng Việt dài", "dashboard giả, số liệu không nguồn", "nội dung crypto/tài chính còn sót từ template TradeNest"]
+  },
+  "noi_dung": {
+    "tagline": "Lắng nghe để dẫn dắt (EN: Listen to Lead), từ BRAND_KIT.md; bản gốc viết 'Lắng nghe để Dẫn dắt', chuẩn hoá chữ thường là đề xuất (D3)",
+    "tu_cam": ["lorem ipsum", "TradeNest", "Crypto", "Fintech", "Trading", "Saving Jars", "Zero Hidden Fees", "đột phá", "số 1 Việt Nam", "cách mạng hoá", "tình báo"],
+    "_ghi_chu": "Chữ template sót trong guideline PDF và từ cấm giọng văn. 'Tình báo' (BRAND_KIT gọi LVN là 'tình báo truyền thông') dễ hiểu sai khi công khai: dùng 'phân tích', 'lắng nghe' (D9). Không bịa số liệu: BRAND_KIT ghi '500+ nguồn, 24/7' là mục tiêu PROTO, chưa dùng làm số công khai."
+  },
+  "trong_so_diem": {"mau": 30, "chu": 20, "logo": 25, "hinh_bo_cuc": 15, "noi_dung": 10}
+}

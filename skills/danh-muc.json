@@ -1528,6 +1528,14 @@
   "ban_goc": "MSI ~/.gemini/config/skills/frontend-security-audit"
  },
  {
+  "ten": "hang-doi-may",
+  "mo_ta": "Giao việc cho đội máy agy qua hàng đợi phiếu GitHub (nhánh hang-doi của linhx-engine): Claude ra đề, khoá test, agy trên các máy tự nhận, tự chia việc, Claude chấm cuối. Dùng khi Linh nói giao máy, giao agy, chạy trên máy cty, hàng đợi, hoặc dự án cần dựng/chạy/tìm kiếm nặng.",
+  "duong_dan": "le/hang-doi-may",
+  "bo": "",
+  "nhom": "khac",
+  "ban_goc": ""
+ },
+ {
   "ten": "hybrid-canh-nhan-vat",
   "mo_ta": "Dựng cảnh hoạt hình kiểu hybrid: Flow/Veo chỉ làm chuyển động riêng của nhân vật nét vẽ trên nền trắng, code lo object, chữ, máy, âm thanh và canh nhịp theo thoại. Dùng khi Linh nói \"hybrid\", \"làm chuyển động riêng\", hoặc khi cảnh có nhân vật cạnh poster, logo, chữ mà Veo làm hỏng.",
   "duong_dan": "le/hybrid-canh-nhan-vat",

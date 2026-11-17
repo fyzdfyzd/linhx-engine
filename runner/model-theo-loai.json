@@ -1,0 +1,10 @@
+{
+  "dp": "gemini-pro-orchestrator",
+  "code": "gemini-pro-orchestrator",
+  "test": "gemini-4-argon-high",
+  "trien": "gemini-4-argon-high",
+  "gop": "gemini-4-hydrogen-high",
+  "do": "gemini-4-hydrogen-high",
+  "td": "gemini-4-hydrogen-high",
+  "kiem": "gemini-4-hydrogen-low"
+}
