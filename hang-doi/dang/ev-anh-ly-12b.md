@@ -12,4 +12,4 @@ Phiếu ev-anh-ly-12b: lấy 2 ảnh Gemini vừa tải về trên Chrome máy 1
 3. KET-QUA ngắn: tên gốc, đường dẫn, kích thước px, dung lượng của 2 tệp. Không thấy tệp nào: ghi `KHONG_THAY` + danh sách 5 tệp mới nhất trong các thư mục Downloads.
 Cấm: không xoá/sửa tệp nào của Linh, không đụng Chrome, không in khoá.
 
-nhip: 19:20 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 19:23 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
