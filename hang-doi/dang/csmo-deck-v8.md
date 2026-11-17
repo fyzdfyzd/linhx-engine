@@ -25,4 +25,4 @@ Chạy tiền cảnh. Commit + push lên nhánh claude/project-thread-j24agg sau
 Cấm: sửa TEXT-A-v3.md, đụng thư mục khác ngoài thiet-ke/v8/.
 Trả KET-QUA.md ≤2000 ký tự: đường dẫn tệp, kết quả vls do/phong, slide nào lệch luật và vì sao.
 
-nhip: 20:47 32p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T20:47:23+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 20:50 35p đang chờ nền · log cuối 2 phút trước [log_cuoi=2026-11-17T20:47:59+0700] · root agent idle; waiting up to 40m0s for 1 ba
