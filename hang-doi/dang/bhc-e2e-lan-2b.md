@@ -11,4 +11,4 @@ E2E giao diện vòng 2 (chấm lại sau sửa 3 đợt). Worktree C:\linhx\ifa
 Chạy cả hai luồng 2 lần độc lập (DATA_DIR trắng, AI giả, không mạng ngoài). Ảnh 1280×800 + 360×780 full page mỗi bước: bang-chung/bhc-e2e-lan-2/<khach|quan-tri>/lan-<n>/<ma>-<1280|360>.png, video webm lan-1. Ghi so-sanh-2-lan.md và loi.md (mã bước, mức chặn/nặng/nhẹ, ảnh, cách sửa). Push agy/bhc-e2e-lan-2.
 KET-QUA.md: số bước đạt/hỏng mỗi lần mỗi luồng, danh sách lỗi còn lại.
 
-nhip: 03:06 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 03:09 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
