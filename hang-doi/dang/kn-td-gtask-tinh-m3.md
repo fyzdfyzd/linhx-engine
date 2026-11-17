@@ -4,6 +4,7 @@ tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-td-chrome-m3
+nhan: may-3 2026-11-17T19:50:27+0700
 
 # kn-td-gtask-tinh-m3
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
