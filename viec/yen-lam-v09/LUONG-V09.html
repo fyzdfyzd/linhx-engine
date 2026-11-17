@@ -1,0 +1,523 @@
+<title>Yên Lam v0.9</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,500&display=swap">
+<style>
+/* Layout: phần 1 kiosk, phần 2 đồng hành (điện thoại), phần 3 admin, rồi bảng phủ tính năng, kế hoạch, tự chấm, điểm phản biện. Màn vẽ theo glassmorphism thanh nhã trên nền KV. */
+:root{--bg:#f3f5fa;--fg:#121933;--mut:#5b6380;--line:#dfe3ee;--card:#fff;--acc:#1d3f9e;--chan:#c0331f;--nang:#b86e00;--ok:#1f7a4d;
+--kinh:rgba(255,255,255,.16);--kinh2:rgba(255,255,255,.26);--vien:rgba(255,255,255,.42);--toi:rgba(10,24,62,.38);--cam:#d0532f;--vang:#f3d08a;--chu:#fff;--chu2:rgba(255,255,255,.78);
+--f:"Be Vietnam Pro",system-ui,sans-serif;--s:"Playfair Display",Georgia,serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1222;--fg:#e8ebf5;--mut:#9aa3c0;--line:#283050;--card:#151a2c;--acc:#8fb0ff;--chan:#ff7a66;--nang:#ffb84d;--ok:#5fd39a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1222;--fg:#e8ebf5;--mut:#9aa3c0;--line:#283050;--card:#151a2c;--acc:#8fb0ff;--chan:#ff7a66;--nang:#ffb84d;--ok:#5fd39a;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--f);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:24px 56px}
+main{max-width:1040px;margin:0 auto;display:grid;gap:28px}
+h1{font-size:28px;margin:0;text-wrap:balance}h2{font-size:21px;margin:0 0 6px;text-wrap:balance}
+h3{font-size:13px;margin:14px 0 6px;color:var(--mut);text-transform:uppercase;letter-spacing:.07em}
+.sub{color:var(--mut);margin:6px 0 0;max-width:72ch}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.dai{display:flex;gap:18px;overflow-x:auto;padding:14px 2px 6px;scroll-snap-type:x mandatory}
+.o-man{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;gap:8px;width:270px}
+.o-man p{margin:0;font-size:13px;color:var(--mut)}.o-man b.t{font-size:14px;color:var(--fg)}
+/* Màn vẽ v2: kính tối trên nền KV navy, chữ trắng, tương phản ≥7:1 cho chữ chính */
+.dai{display:flex;gap:22px;overflow-x:auto;padding:14px 2px 10px;scroll-snap-type:x mandatory}
+.om{flex:none;margin:0;scroll-snap-align:start;display:flex;flex-direction:column;gap:10px;width:390px}
+.om.okk{width:360px}
+.om figcaption b{font-size:15px}.om figcaption p{margin:2px 0 0;font-size:14px;color:var(--mut)}
+.p,.ksk{position:relative;overflow:hidden;color:#fff;background:#0a1638 url(a/nen.webp) center/cover;font:16px/1.45 var(--f);isolation:isolate}
+.p::before,.ksk::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,12,36,.55),rgba(5,12,36,.82));z-index:-1}
+.p{width:390px;height:844px;border-radius:46px;border:8px solid #04070e;box-sizing:border-box}
+.k{background:rgba(18,34,82,.66);border:1px solid rgba(255,255,255,.17);border-radius:18px;backdrop-filter:blur(22px) saturate(140%);-webkit-backdrop-filter:blur(22px) saturate(140%)}
+.mu{color:rgba(255,255,255,.8)}.s{font-size:13px}
+.nhan{font:600 11px var(--f);letter-spacing:.14em;text-transform:uppercase;color:#f5c870}
+.lam{font-family:var(--s);font-style:italic;font-size:21px;line-height:1.3;margin:0;color:#fff}
+.lam.s{font-size:18px}
+.sb{position:absolute;top:0;left:0;right:0;height:44px;display:flex;justify-content:space-between;align-items:center;padding:0 28px;font-size:14px;z-index:3}
+.sb span{font-size:11px;opacity:.85}
+.hd{position:absolute;top:44px;left:0;right:0;height:56px;display:flex;align-items:center;gap:10px;padding:0 18px;z-index:3}
+.hd h4{flex:1;margin:0;font-size:22px;font-weight:600}.hd h4 small{display:block;font-size:13px;font-weight:400;color:rgba(255,255,255,.8)}
+.lamav{width:34px;height:34px;border-radius:50%;background:url(lam-dt.jpg) center 12%/cover;border:2px solid #fff;flex:none}
+.lui{font-size:16px;color:#fff;font-weight:500}
+.seg{display:flex;background:rgba(255,255,255,.12);border-radius:99px;padding:3px;font-size:13px}.seg span{padding:5px 10px;border-radius:99px}.seg .on{background:#fff;color:#0d1c46;font-weight:600}
+.than{position:absolute;top:104px;left:16px;right:16px;bottom:96px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.tb{box-sizing:border-box;position:absolute;left:0;right:0;bottom:0;height:84px;display:grid;grid-template-columns:repeat(4,1fr);padding:10px 8px 22px;background:rgba(6,14,40,.86);border-top:1px solid rgba(255,255,255,.12);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:3}
+.tb div{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:12px;color:rgba(255,255,255,.7)}
+.tb div.on{color:#fff;font-weight:600}.tb div.on svg{stroke:#f5c870}
+.tb svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.chips{display:flex;gap:8px;overflow:hidden;flex:none}
+.ch{flex:none;border:1px solid rgba(255,255,255,.3);border-radius:99px;padding:7px 13px;font-size:14px;background:rgba(255,255,255,.08);white-space:nowrap}
+.ch.on{background:#fff;color:#0d1c46;border-color:#fff;font-weight:600}
+.tim{padding:11px 14px;color:rgba(255,255,255,.72);font-size:15px;flex:none}
+.nut{background:#c8461f;color:#fff;border-radius:14px;text-align:center;font-weight:600;padding:12px 14px;font-size:15px;white-space:nowrap}
+.nut2{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.1);border-radius:14px;text-align:center;font-weight:500;padding:11px 14px;font-size:15px;white-space:nowrap}
+.nut.nho,.nut2.nho{padding:7px 12px;font-size:13px;border-radius:11px}.nut.lon{display:block;padding:15px;font-size:16px;flex:none}
+.av{display:inline-block;border-radius:50%;background:center/cover;flex:none;border:2px solid rgba(255,255,255,.85);box-sizing:border-box}
+.av.mo{display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#3653a8,#1b2b66);font-weight:600;color:#f5c870}
+.sc{padding:12px 14px;flex:none;display:flex;flex-direction:column;gap:7px;border-left:4px solid var(--tr)}
+.trk{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--tr,#fff)}.trk i{width:8px;height:8px;border-radius:50%;background:var(--tr)}
+.trk em{margin-left:auto;font-style:normal;color:#0d1c46;background:#f5c870;border-radius:99px;padding:1px 8px;font-size:11.5px}
+.tt{font-size:16px;font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.who{display:flex;align-items:center;gap:6px}
+.lamtop{position:absolute;top:0;left:0;right:0;height:300px;background:url(lam-dt.jpg) center 12%/cover;-webkit-mask:linear-gradient(#000 55%,transparent);mask:linear-gradient(#000 55%,transparent)}
+.chat{position:absolute;top:226px;left:16px;right:16px;display:flex;flex-direction:column;gap:12px}
+.toi{align-self:flex-end;background:#fff;color:#0d1c46;border-radius:18px 18px 4px 18px;padding:9px 14px;font-size:15px;font-weight:500}
+.nhap{position:absolute;left:14px;right:14px;bottom:96px;display:flex;align-items:center;padding:8px 8px 8px 16px;color:rgba(255,255,255,.75);font-size:15px}
+.nhap span{flex:1}.mic{width:38px;height:38px;border-radius:50%;background:#c8461f;flex:none;box-shadow:0 0 0 5px rgba(200,70,31,.3)}
+.ngay{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:none}.ngay span{padding:8px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.22);font-size:15px;font-weight:600}
+.ngay small{display:block;font-weight:400;font-size:12.5px;opacity:.8}.ngay .on{background:#fff;color:#0d1c46}
+.gio{display:flex;align-items:baseline;gap:8px;font-size:14px;flex:none}.gio b{font-size:18px}.gio span{color:rgba(255,255,255,.8)}
+.gio em{margin-left:auto;font-style:normal;font-size:12px;font-weight:600;color:#ff8f73}.gio em::before{content:"● "}
+.ngang{display:flex;gap:10px;flex:none;margin-right:-16px}
+.dgl{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 8px}
+.dg{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px}.dg b{font-size:14px;line-height:1.25;margin-top:4px}.dg span{font-size:12px;color:rgba(255,255,255,.75);line-height:1.2}
+.ph{margin:0;font-size:22px;line-height:1.3}
+.nguoi{display:flex;gap:12px;align-items:center;padding:12px}.nguoi b{display:block}
+.hai{display:flex;gap:8px}.hai>*{flex:1}
+.cq{padding:12px 14px;display:flex;flex-direction:column;gap:9px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.q{display:flex;gap:10px;font-size:14.5px;line-height:1.35}.vote{flex:none;font-size:12.5px;font-weight:700;color:#f5c870;width:40px}
+.ghim{padding:11px 14px;border-left:4px solid #f5c870;flex:none}.ghim b{display:block;font-size:16px;margin-top:2px}
+.luoi{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:0 -16px}
+.luoi .o{aspect-ratio:4/5;background:center/cover;position:relative}
+.luoi .o em{position:absolute;left:5px;bottom:5px;font-style:normal;font-size:11px;font-weight:600;background:#f5c870;color:#0d1c46;border-radius:99px;padding:1px 7px}
+.luoi .sk{background:linear-gradient(110deg,rgba(255,255,255,.08) 30%,rgba(255,255,255,.18) 50%,rgba(255,255,255,.08) 70%)}
+.bia1{display:flex;gap:12px;padding:10px;align-items:center}.bia1 .bia{width:84px;height:118px;border-radius:8px;background:center/cover;flex:none}.bia1 b{display:block;font-size:16px}.bia1 .hai{margin-top:10px}
+.o4{display:grid;grid-template-columns:1fr 1fr;gap:8px}.o4 .k{padding:11px 12px;min-height:62px}.o4 b{display:block;font-size:15px}
+.mini{display:flex;gap:4px;margin-top:5px}.mini i{width:30px;height:30px;border-radius:6px;background:center/cover}
+.ds{padding:2px 14px}.ds .row{padding:11px 0;border-top:1px solid rgba(255,255,255,.12);font-size:15px}.ds .row:first-child{border:0}.ds .do{color:#ff9a85}
+.buocbar{position:absolute;top:100px;left:16px;right:16px;display:flex;gap:6px}.buocbar i{flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.25)}.buocbar i.on{background:#f5c870}
+.chon{display:flex;gap:12px;align-items:center;padding:10px 12px;flex:none}.chon b{display:block;font-size:15px}.chon i{margin-left:auto;font-style:normal;color:#0d1c46;background:#f5c870;border-radius:50%;width:24px;height:24px;display:grid;place-items:center;font-weight:700}
+.chon.on{border-color:#f5c870;background:rgba(40,60,130,.75)}
+/* kiosk: vẽ ở tỉ lệ 1/3 của 1080×1920 */
+.ksk{width:360px;height:640px;border-radius:12px;border:8px solid #04070e;box-sizing:border-box;font-size:13px}
+.kt{position:absolute;top:12px;left:14px;right:14px;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;color:rgba(255,255,255,.85)}
+.lamk{position:absolute;bottom:0;height:74%;left:50%;transform:translateX(-50%)}
+.kw{position:absolute;padding:10px 12px;font-size:13px}
+.kr{display:flex;align-items:center;gap:7px;margin-top:5px;font-weight:500}.kr i{width:9px;height:9px;border-radius:50%}
+.kb{position:absolute;left:14px;right:14px;bottom:84px;padding:12px 14px}.kb .lam{font-size:19px}
+.kd{position:absolute;left:14px;right:14px;bottom:14px;display:flex;align-items:center;gap:10px;font-size:13px}.kd span:nth-child(2){flex:1}
+.mic.lg{width:52px;height:52px;box-shadow:0 0 0 7px rgba(200,70,31,.3)}
+.cam{position:absolute;inset:0;background:center/cover}
+.khung{position:absolute;left:16%;right:16%;top:10%;height:52%;border:2px solid #fff;border-radius:24px;box-shadow:0 0 0 999px rgba(5,12,36,.45)}
+.dem{position:absolute;left:50%;top:36%;transform:translate(-50%,-50%);font:200 120px/1 var(--f);text-shadow:0 4px 30px rgba(0,0,0,.5)}
+.bialon{position:absolute;left:50%;top:44px;transform:translateX(-50%);width:200px;height:283px;border-radius:8px;background:center/cover;box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.qrw{right:14px;bottom:14px;left:14px;display:flex;gap:12px;align-items:center}.qrw>div{flex:1}.qrw b{display:block;font-size:16px}.qrw span{display:block}
+.qr{width:88px;height:88px;flex:none;border:6px solid #fff;border-radius:10px;background:#fff repeating-conic-gradient(#0d1c46 0 25%,#fff 0 50%) 0 0/14px 14px}
+/* admin */
+.adm{background:#0a1638 url(a/nen.webp) center/cover;border:8px solid #04070e;border-radius:14px;color:#13204a;font:14px/1.45 var(--f);overflow:hidden;position:relative;isolation:isolate}
+.adm::before{content:"";position:absolute;inset:0;background:rgba(5,12,36,.55);z-index:-1}
+.atb{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:12px 18px;color:#fff;border-bottom:1px solid rgba(255,255,255,.15)}.atb span{font-size:13px;color:rgba(255,255,255,.8)}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;padding:14px}
+.ak{background:rgba(255,255,255,.92);border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}.ak.w2{grid-column:1/-1}
+.ah{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.ah h5{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#4a5578}
+.tabs{display:flex;gap:6px}.tabs span{font-size:13px;padding:3px 10px;border-radius:99px;border:1px solid #cdd3e3}.tabs .on{background:#13204a;color:#fff;border-color:#13204a}
+.athumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:6px}
+.at{aspect-ratio:4/5;border-radius:8px;background:center/cover;position:relative;outline:3px solid transparent;outline-offset:-3px}.at.chon{outline-color:#c8461f}
+.at i{position:absolute;right:4px;top:4px;width:18px;height:18px;border-radius:5px;background:#fff;border:1.5px solid #8a93ad;font-style:normal;font-size:12px;display:grid;place-items:center;color:#fff}.at.chon i{background:#c8461f;border-color:#c8461f}
+.at em{position:absolute;left:3px;bottom:3px;right:3px;font-style:normal;font-size:10px;background:#fff3c4;color:#6b4a00;border-radius:4px;padding:1px 4px;text-align:center}
+.ab{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px}
+.ak .row{padding:7px 0;border-top:1px solid #e7eaf2}.mu2{color:#4a5578;font-size:13px}
+.b{background:#c8461f;color:#fff;border-radius:9px;padding:6px 12px;font-weight:600;font-size:13px;white-space:nowrap}
+.b2{border:1px solid #c3c9da;border-radius:9px;padding:5px 10px;font-size:13px;white-space:nowrap}.b2.on{background:#e8ecf7;border-color:#13204a}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}.dot.ok{background:#1f8a55}.dot.loi{background:#c0331f}.ak .do{color:#b42318;font-weight:600;font-size:13px}
+.sub2{font-size:12px;font-weight:600;color:#4a5578;margin-top:8px}
+.sw{width:34px;height:20px;border-radius:99px;background:#1f8a55;position:relative;flex:none}.sw::after{content:"";position:absolute;right:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff}.sw.tat{background:#b9c0d4}.sw.tat::after{right:auto;left:2px}
+.ta{border:1px solid #cdd3e3;border-radius:10px;padding:10px;min-height:56px;margin-bottom:6px}
+.so4{display:grid;grid-template-columns:1fr 1fr;gap:12px}.so4 b{display:block;font-size:28px;line-height:1.1}.so4 span{font-size:13px;color:#4a5578}
+.achan{padding:0 18px 14px;color:rgba(255,255,255,.8);font-size:13px}
+.wimg{width:74px;height:92px;border-radius:10px;background:center/cover;flex:none}
+
+.p h3.ph{text-transform:none;letter-spacing:0;color:#fff;font-size:22px;font-weight:600;margin:0}
+.hai .nut,.hai .nut2{white-space:normal;font-size:14px;padding:10px}
+
+.trang{display:flex;gap:12px;align-items:center;padding:9px 12px;flex:none}.trang>b{width:22px;color:#f5c870;font-size:14px}.trang div b{display:block;font-size:15px}
+.bialon2{width:120px;height:170px;border-radius:8px;background:center/cover;align-self:center;flex:none;box-shadow:0 12px 30px rgba(0,0,0,.5);margin-bottom:4px}
+.trg{position:absolute;left:14px;right:14px;top:190px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.trg .k{padding:14px 12px;border-left:4px solid var(--tr)}.trg .trk{font-size:16px}
+main{grid-template-columns:minmax(0,1fr)}section,header{min-width:0}
+.kw{box-sizing:border-box}.kd span{white-space:nowrap}.trang{padding:7px 12px}
+/* Linh 22:49: kính sáng, độ đục 0,7, chữ navy đậm */
+.p,.ksk{color:#10204a;background:#cfe0f4 url(a/kvs.webp) center/cover}
+.p::before,.ksk::before{background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.22))}
+.k{background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 24px rgba(16,32,74,.12)}
+.mu{color:#3c4a70}.nhan{color:#b04a1c}.lam{color:#10204a;text-shadow:none}.lui{color:#10204a}
+.seg{background:rgba(255,255,255,.6)}.seg .on{background:#10204a;color:#fff}
+.tb{background:rgba(255,255,255,.7);border-top:1px solid rgba(255,255,255,.95)}.tb div{color:#4a5578}.tb div.on{color:#10204a}.tb div.on svg{stroke:#c8461f}
+.ch{border-color:rgba(16,32,74,.22);background:rgba(255,255,255,.6)}.ch.on{background:#10204a;color:#fff;border-color:#10204a}
+.tim{color:#4a5578}.nut2{border-color:rgba(16,32,74,.25);background:rgba(255,255,255,.65);color:#10204a}
+.av{border-color:#fff}.av.mo{color:#fff}
+.trk em{background:#10204a;color:#fff}.toi{background:#10204a;color:#fff}
+.gio span{color:#3c4a70}.gio em{color:#c0331f}.dg span{color:#4a5578}
+.ngay span{border-color:rgba(16,32,74,.2);background:rgba(255,255,255,.5)}.ngay .on{background:#10204a;color:#fff}
+.ds .row{border-top-color:rgba(16,32,74,.1)}.ds .do{color:#b42318}
+.buocbar i{background:rgba(16,32,74,.15)}.buocbar i.on{background:#c8461f}
+.chon.on{background:rgba(255,255,255,.92);border-color:#c8461f}.chon i{background:#c8461f;color:#fff}
+.vote{color:#b04a1c}.ghim{border-left-color:#c8461f}.luoi .o em{background:#10204a;color:#fff}
+.luoi .sk{background:linear-gradient(110deg,rgba(255,255,255,.4) 30%,rgba(255,255,255,.7) 50%,rgba(255,255,255,.4) 70%)}
+.kt{color:#10204a}.trang>b{color:#c8461f}.hd h4 small{color:#3c4a70}
+.adm{background:#cfe0f4 url(a/kvs.webp) center/cover}.adm::before{background:rgba(255,255,255,.15)}
+.atb{color:#10204a;border-bottom-color:rgba(16,32,74,.12)}.atb span{color:#3c4a70}.ak{background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95)}.achan{color:#3c4a70}
+.p::before,.ksk::before{background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.42))}
+.p h3.ph{color:#10204a}.nhap{color:#4a5578}
+.kd>span:nth-child(2){background:rgba(255,255,255,.7);padding:7px 11px;border-radius:99px;flex:none}
+.dg{background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.95);border-radius:16px;padding:10px 4px 8px}.dgl{gap:8px}
+.kd .nut{padding:10px 12px;font-size:13px}
+
+table{width:100%;border-collapse:collapse;font-size:14px}td,th{border-top:1px solid var(--line);padding:7px 6px;text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}
+.tw{overflow-x:auto}
+.pill{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.okp{color:var(--ok)}.nangp{color:var(--nang)}
+code{font-size:13px}
+.doi{font-size:13px;color:var(--mut)}
+.mm{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;overflow-x:auto;margin:10px 0}
+pre.mermaid{margin:0;background:none;font-family:var(--f)}
+.luong{font:700 12px var(--f);letter-spacing:.12em;text-transform:uppercase;color:var(--cam)}
+nav.nhay{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}nav.nhay a{border:1px solid var(--line);border-radius:99px;padding:5px 12px;color:var(--fg);text-decoration:none;font-size:14px;background:var(--card)}
+details{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}summary{cursor:pointer;color:var(--acc);font-weight:600}
+.buoc{display:grid;gap:8px;margin:10px 0}.buoc>div{border-left:3px solid var(--line);padding:2px 0 2px 12px}.buoc>div b{display:block}
+.buoc>div.moi{border-color:var(--cam)}
+</style>
+<main>
+<header>
+<h1>Yên Lam v0.9</h1>
+<p class="sub"><b>Linh chốt 22:48: giữ nguyên giao diện glassmorphism đang có trong app, v0.9 chỉ đổi luồng.</b> Màn vẽ dưới đây chỉ để xem bố cục và luồng, agy không đổi màu, kính hay phông.<br>Ba luồng lớn, mỗi luồng có sơ đồ đi và màn vẽ. Đồng hành vẽ kỹ nhất vì đang rối. Bản vẽ theo góp ý của Linh lúc 22:27. Kiosk là nơi <b>trò chuyện với Lam</b>, có widget BTC bật tắt được, có chụp bìa và quét mã. Đồng hành trên điện thoại giữ <b>đủ tính năng</b> của danh sách 13/11, kể cả tạo tạp chí. Giao diện glassmorphism nhẹ trên nền KV. Kể qua mắt khán giả hư cấu Mai Anh.</p>
+<nav class="nhay"><a href="#kiosk">1 · Kiosk</a><a href="#dh">2 · Đồng hành</a><a href="#admin">3 · Admin</a><a href="#kh">Kế hoạch</a></nav>
+</header>
+
+<section id="kiosk">
+<div class="luong">Luồng 1</div>
+<h2>Kiosk ở sảnh (1080×1920)</h2>
+<p class="sub">Một trang, một vòng. Màn chính là trò chuyện với Lam. Chụp bìa và quét mã là hai nhánh, xong thì về lại trò chuyện. Không có ngõ cụt.</p>
+<div class="mm"><pre class="mermaid">
+flowchart TD
+  CHO["Chờ: Lam đứng, widget chạy"] -->|"có người tới / chạm / gọi Lam ơi"| K1["K1 Trò chuyện"]
+  K1 -->|"hỏi đáp, Lam chỉ widget"| K1
+  K1 -->|"camera nhận mặt (nạp sẵn) hoặc giơ QR"| K2["K2 Chào đúng tên, nhắc phiên đã lưu"]
+  K2 --> K1
+  K1 -->|"bấm Chụp bìa"| DY["Câu nói ảnh dùng làm gì + nút Đồng ý"]
+  DY -->|"không"| K1
+  DY -->|"đồng ý"| K3["K3 Đếm 3-2-1"]
+  K3 -->|"không thấy mặt / đứng xa"| LG["Lam: lại gần chút nhé"] --> K3
+  K3 -->|"ảnh đạt"| CB["Chờ bìa 10-15s, Lam vẫn trò chuyện"]
+  CB -->|"lỗi tạo bìa"| XL["Lam xin lỗi, mời chụp lại"] --> K1
+  CB --> K4["K4 Bìa + QR"]
+  K4 -->|"quét QR"| DT(["Bìa vào Đồng hành trên điện thoại"])
+  K4 -->|"60s không ai"| CHO
+  K1 -->|"90s im lặng"| CHO
+  K1 -.->|"mất mạng"| OFF["Lam xin lỗi, chỉ còn widget tĩnh"]
+</pre></div>
+<div class="dai"><figure class="om okk"><div class="ksk"><div class="kt"><span>VSMCamp · CSMOSummit 2026</span><b>13:24</b></div><img class="lamk" src="lam-kiosk.webp" alt=""><div class="kw k" style="left:14px;top:42px;width:150px"><span class="nhan">Sắp diễn ra · 13:30</span><div class="kr"><i style="background:#3f7d22"></i>Hồ Tây 2</div><div class="kr"><i style="background:#6d47b8"></i>Trúc Bạch</div><div class="kr"><i style="background:#1c6db3"></i>Hồ Tây 1</div></div><div class="kw k" style="right:14px;top:42px;width:128px;text-align:center"><span class="av" style="width:48px;height:48px;background-image:url(a/dg-dao-trung-thanh.webp)"></span><span class="nhan" style="display:block;margin-top:6px">Diễn giả</span><b style="font-size:13px">Đào Trung Thành</b></div>
+<div class="kb k"><div class="mu s">Bạn: Phòng Hồ Tây 2 ở đâu?</div><p class="lam">Hồ Tây 2 có phiên Olive lúc 13:30. Bạn muốn mình lưu phiên này không?</p></div>
+<div class="kd"><i class="mic lg"></i><span>Nói “Lam ơi”</span><span class="nut">Chụp bìa cùng Lam</span></div></div><figcaption><b>K1 · Trò chuyện + widget</b><p>Widget lấy dữ liệu thật: 3 phiên 13:30, diễn giả nổi bật đổi mỗi 20 giây. Tối đa 3 widget. Lời Lam cỡ 54px trên màn thật.</p></figcaption></figure><figure class="om okk"><div class="ksk"><div class="kt"><span>VSMCamp · CSMOSummit 2026</span><b>13:24</b></div><img class="lamk" src="lam-kiosk.webp" alt="">
+<div class="kw k" style="left:50%;top:60px;transform:translateX(-50%);width:230px"><span class="nhan">Đã nhận ra bạn</span><div class="sc" style="--tr:#3f7d22;width:204px"><div class="trk"><i></i>Olive · Hồ Tây 2<em>Đã lưu</em></div><b class="tt">Tăng trưởng thương hiệu khi AI tham gia quyền lựa chọn: Bảo vệ bản sắc và xây dựng hệ sinh thái trải nghiệm kết nối</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">P</span><span class="mu s">Bùi Quý Phong</span></div></div></div>
+<div class="kb k"><p class="lam">Chào Mai Anh! 6 phút nữa phiên Olive bạn lưu bắt đầu ở Hồ Tây 2.</p></div>
+<div class="kd"><i class="mic lg"></i><span>Nhận mặt, hoặc giơ mã QR</span></div></div><figcaption><b>K2 · Nhận ra khách</b><p>Nhận mặt bằng bộ đặc trưng nạp sẵn vào kiosk (khách đã đồng ý sinh trắc). QR là đường dự phòng. Kiosk chỉ đọc tên và phiên đã lưu.</p></figcaption></figure><figure class="om okk"><div class="ksk"><div class="kt"><span>VSMCamp · CSMOSummit 2026</span><b>13:24</b></div><div class="cam" style="background-image:url(a/p07.webp)"></div><div class="khung"></div><div class="dem">2</div>
+<div class="kb k" style="text-align:center"><p class="lam">Cười tươi nào!</p><div class="mu s">Ảnh chỉ dùng làm bìa của bạn · tự xoá sau 30 ngày</div></div></div><figcaption><b>K3 · Chụp, sau khi bấm Đồng ý</b><p>Trước đó là một màn hỏi đồng ý với 2 nút lớn. Không thấy mặt hoặc đứng xa thì Lam nói “Lại gần chút nhé” rồi đếm lại.</p></figcaption></figure><figure class="om okk"><div class="ksk"><div class="kt"><span>VSMCamp · CSMOSummit 2026</span><b>13:24</b></div><img class="lamk" src="lam-kiosk.webp" alt="" style="opacity:.55">
+<div class="kb k" style="bottom:auto;top:44px"><p class="lam">Trong lúc chờ bìa, bạn quan tâm mảng nào nhất?</p><div class="mu s">Lam đưa lộ trình phiên vào bìa của bạn</div></div>
+<div class="trg"><div class="k" style="--tr:#a8681a"><div class="trk"><i></i>Toàn thể</div><span class="mu s">Grand Ballroom · 20 phiên</span></div><div class="k" style="--tr:#3f7d22"><div class="trk"><i></i>Olive</div><span class="mu s">Hồ Tây 2 · 7 phiên</span></div><div class="k" style="--tr:#6d47b8"><div class="trk"><i></i>Lavender</div><span class="mu s">Trúc Bạch · 7 phiên</span></div><div class="k" style="--tr:#1c6db3"><div class="trk"><i></i>Iris</div><span class="mu s">Hồ Tây 1 · 7 phiên</span></div></div>
+<div class="kd"><i class="mic lg"></i><span>Hoặc nói tên chủ đề</span><span class="mu s">bìa 70%</span></div></div><figcaption><b>K3b · Chờ bìa: chọn mảng</b><p>Chọn 1 trong 4 track bằng nút lớn, không bắt chọn trong 48 diễn giả trên kiosk. Chọn diễn giả để dành cho tạp chí trên điện thoại.</p></figcaption></figure><figure class="om okk"><div class="ksk"><div class="kt"><span>VSMCamp · CSMOSummit 2026</span><b>13:24</b></div><div class="bialon" style="background-image:url(a/b03.webp)"></div>
+<img class="lamk" src="lam-kiosk.webp" alt="" style="height:52%;left:22%">
+<div class="kw k qrw"><div><b>Quét để nhận bìa</b><span class="mu s">Bìa vào điện thoại của bạn</span><span class="mu s">Về đầu sau 60 giây</span></div><i class="qr"></i></div></div><figcaption><b>K4 · Bìa + QR</b><p>Trong 10 đến 15 giây chờ, Lam vẫn trò chuyện. Bìa xong thì hiện lớn kèm QR. Quét QR mở thẳng tab Của tôi.</p></figcaption></figure></div>
+<p class="doi"><b>Logic chốt (Linh 22:51):</b> kiosk nhận mặt, đặc trưng mặt nạp sẵn từ khách đã đồng ý; QR dự phòng. Logo Le Bros giữ. Hết phiên khách thì xoá lịch sử chat trên kiosk. Mỗi nhánh đều quay về K1 hoặc màn chờ.<br>Widget có thể bật: Phiên tiếp theo · Diễn giả nổi bật · Wifi · Sơ đồ tầng · Bìa vừa chụp · Bảng tin · QR đồng hành · Thông báo BTC. Mỗi lúc tối đa 3 widget trên màn, để Lam luôn là trung tâm.</p>
+</section>
+
+<section id="dh">
+<div class="luong">Luồng 2 · kỹ nhất</div>
+<h2>Đồng hành trên điện thoại (390×844)</h2>
+<p class="sub">Trang chủ yenlam.ifagent.net chính là đồng hành. Gỡ rối bằng một nguyên tắc: <b>mọi lối vào đều đáp xuống cùng một chỗ, 4 tab cố định, mọi thứ khác là trang con có nút quay lại.</b></p>
+
+<h3>Đang rối ở đâu (soi prod 17/11)</h3>
+<div class="tw"><table>
+<tr><th>Chỗ rối</th><th>Gỡ trong v0.9</th></tr>
+<tr><td>13 điểm đến trên thanh điều hướng, có cả "Ngày sinh"</td><td>4 tab cố định. Ngày sinh bỏ khỏi luồng sự kiện</td></tr>
+<tr><td>Mở lần đầu bị 401 ở màn đồng ý, chặn trước khi thấy gì</td><td>Vào thẳng tab Lam. Xin quyền đúng lúc cần (lưu, nhắc, email, ảnh)</td></tr>
+<tr><td>Video Lam chiếm 1/3 mọi tab, tab Phiên chỉ thấy 2/41 phiên</td><td>Lam lớn chỉ ở tab Lam. Tab khác là avatar 28px</td></tr>
+<tr><td>Bấm "Của tôi" vẫn hiện Diễn đàn</td><td>Mỗi tab một route, có test bấm từng tab</td></tr>
+<tr><td>Phiên, diễn giả, lịch riêng nằm 3 nơi</td><td>Gộp vào tab Lịch, đoạn Phiên / Diễn giả / Đã lưu</td></tr>
+<tr><td>Diễn đàn có chủ đề teabreak, check-in; tường ảnh và tường chung tách đôi</td><td>Thông báo BTC và ảnh vào một Bảng tin. Thảo luận nằm trong từng phiên</td></tr>
+<tr><td>Bìa từ kiosk không biết về đâu</td><td>Quét QR ở K4 là mở Của tôi, bìa ở đầu</td></tr>
+</table></div>
+
+<h3>A · Lối vào: 5 cửa, 1 chỗ đáp</h3>
+<div class="mm"><pre class="mermaid">
+flowchart LR
+  Z["Link Zalo / email BTC"] --> R{"Đã có hồ sơ trên máy?"}
+  S["QR standee sảnh"] --> R
+  KQ["QR bìa ở kiosk K4"] --> B["Nhận bìa vào hồ sơ"] --> R
+  LS["Link bìa bạn bè chia sẻ /b/mã"] --> XB["Xem bìa người khác + nút Mở đồng hành"] --> R
+  QL["Quay lại / thêm vào màn hình chính"] --> R
+  R -->|"chưa"| M1["Tab Lam: Lam chào, nói mình là AI, hỏi tên"]
+  R -->|"rồi"| M2["Tab Lam: chào đúng tên, gợi ý theo giờ"]
+  B -.->|"mở thẳng"| CT["Tab Của tôi, bìa ở đầu"]
+</pre></div>
+
+<h3>B · Lần đầu: làm quen trong chat, không có form</h3>
+<div class="buoc">
+<div><b>1. Lam chào</b>"Chào bạn, mình là Lam, trợ lý AI của VSMCamp & CSMOSummit 2026. Mình gọi bạn là gì nhỉ?"</div>
+<div><b>2. Khách gõ tên</b>Lưu tên vào hồ sơ ẩn danh trên máy. Chưa cần email, chưa cần đồng ý gì.</div>
+<div><b>3. Lam hỏi một câu</b>"Bạn quan tâm mảng nào?" với 3 chip track. Chọn xong thì Lịch tự lọc theo track.</div>
+<div class="moi"><b>4. Gợi ý đầu tiên</b>Lam đưa 2 phiên hợp track, nút "Lưu và nhắc". Bấm lần đầu mới hỏi quyền nhắc.</div>
+<div><b>5. Bỏ qua</b>Khách không trả lời vẫn dùng được 4 tab. Lam gọi "bạn".</div>
+</div>
+
+<h3>C · Vòng chính: 4 tab và trang con</h3>
+<div class="mm"><pre class="mermaid">
+flowchart LR
+  L["Tab Lam"] --> L1["Chat chữ / giọng, 10 lượt"]
+  L --> L2["Chip gợi ý theo giờ"]
+  L1 -->|"Lam nhắc tới phiên"| P
+  LI["Tab Lịch"] --> LI1["Phiên: lọc ngày, track"] --> P["Trang phiên"]
+  LI --> LI2["Diễn giả"] --> DG["Trang diễn giả"] --> P
+  LI --> LI3["Đã lưu"] --> P
+  P --> P1["Lưu và nhắc"]
+  P --> P2["Thêm vào lịch máy .ics"]
+  P --> P3["Đặt câu hỏi, cùng hỏi"]
+  P --> P4["Thảo luận"]
+  BT["Tab Bảng tin"] --> BT1["Đăng ảnh"] --> AT["Lọc an toàn"] --> DUY["BTC duyệt"]
+  BT --> BT2["Thông báo BTC"]
+  BT --> BT3["Báo cáo bài"]
+  CT["Tab Của tôi"] --> C1["Bìa: lưu, chia sẻ"]
+  CT --> C2["Tạo tạp chí, xem luồng E"]
+  CT --> C3["Mã QR của tôi"] -.->|"giơ ở kiosk"| K2(["Kiosk K2"])
+  CT --> C4["Ảnh có tôi"]
+  CT --> C5["Gặp gỡ, xem luồng D"]
+  CT --> C6["Hồ sơ, email, Lam nhớ gì, Quên tôi"]
+</pre></div>
+<p class="doi">Luật điều hướng: thanh 4 tab luôn hiện, trừ khi đang trong luồng tạo tạp chí. Trang con có nút quay lại ở góc trái, không mở tab mới. Lam nhắc tới phiên nào thì có thẻ bấm được ngay dưới câu trả lời.</p>
+
+<h3>D · Gặp gỡ: chỉ khi hai bên đồng ý</h3>
+<div class="buoc">
+<div><b>Bước 1</b>Mai Anh bấm "Gặp gỡ", hiện mã QR gặp gỡ riêng (khác mã kiosk).</div>
+<div><b>Bước 2</b>Hùng quét, thấy tên và nghề Mai Anh tự cho hiện, bấm "Gửi lời chào".</div>
+<div><b>Bước 3</b>Mai Anh nhận lời mời trong Của tôi. Chỉ khi Mai Anh bấm "Đồng ý" thì hai bên mới thấy liên hệ của nhau.</div>
+</div>
+
+<h3>E · Tạo tạp chí: luồng riêng, code riêng</h3>
+<div class="mm"><pre class="mermaid">
+flowchart TD
+  A["Của tôi: Tạo tạp chí"] --> E{"Có email?"}
+  E -->|"chưa"| E1["Xin email + đồng ý gửi"] --> Q1
+  E -->|"rồi"| Q1["Câu 1: track"] --> Q2["Câu 2: diễn giả nhớ nhất"] --> Q3["Câu 3: điều mang về"]
+  Q3 --> X["Xem trước bìa + mục lục"] --> H["Có tạp chí ngay: xem 8 trang"] --> H2["Tối 20/11 tự cập nhật thêm phiên, ảnh"]
+  H2 --> G(["Email + thông báo, tải PDF A5"])
+  Q1 -.->|"thoát giữa chừng"| LUU["Lưu câu đã trả lời, quay lại Của tôi"]
+</pre></div>
+
+<h3>F · Theo thời gian: cùng 4 tab, nội dung đổi</h3>
+<div class="tw"><table>
+<tr><th>Lúc</th><th>Tab Lam gợi ý</th><th>Của tôi thêm</th></tr>
+<tr><td>Trước 19/11</td><td>Lên lịch, chọn track, đường tới, gửi xe</td><td>Đã lưu</td></tr>
+<tr><td>Trong ngày 19–20/11</td><td>Phiên kế tiếp gần nhất, wifi, teabreak, "đang ở phiên nào"</td><td>Bìa, ảnh có tôi, gặp gỡ</td></tr>
+<tr><td>Tối 20/11</td><td>"Tạp chí của bạn đã xong"</td><td>Tạp chí, khảo sát</td></tr>
+<tr><td>Sau sự kiện</td><td>Tóm phiên từ mô tả BTC, lời mời mùa sau</td><td>Video (sau 1.0), Quên tôi</td></tr>
+</table></div>
+
+<h3>G · Lỗi và trạng thái trống</h3>
+<div class="tw"><table>
+<tr><th>Tình huống</th><th>Khách thấy</th></tr>
+<tr><td>Mất mạng</td><td>Lịch và Của tôi vẫn mở từ bộ nhớ máy. Tab Lam: "Mình mất mạng chút, bạn xem Lịch trước nhé."</td></tr>
+<tr><td>Lam không có dữ kiện</td><td>"Phần này BTC sẽ công bố, mình báo bạn ngay khi có."</td></tr>
+<tr><td>Chưa có bìa</td><td>Thẻ "Chụp bìa ở kiosk sảnh" kèm sơ đồ chỗ đặt kiosk</td></tr>
+<tr><td>Ảnh bị lọc chặn</td><td>"Ảnh này chưa đăng được." Không nói lý do chi tiết</td></tr>
+<tr><td>Đổi máy</td><td>Nhập email nhận mã 6 số để lấy lại hồ sơ</td></tr>
+<tr><td>Bấm Quên tôi</td><td>Xác nhận 1 lần, xoá hồ sơ, ảnh, bìa; về màn chào lần đầu</td></tr>
+</table></div>
+
+<h3>Tính cho quy mô thật</h3>
+<div class="tw"><table>
+<tr><th>Dữ liệu</th><th>Số lượng</th><th>Cách hiện</th></tr>
+<tr><td>Phiên</td><td>41 phiên, chiều 19/11 có 3 track chạy cùng giờ</td><td>Nhóm theo khung giờ, mỗi khung một hàng vuốt ngang. Lọc ngày, track. Tự cuộn tới "Đang diễn ra"</td></tr>
+<tr><td>Diễn giả và người dẫn</td><td>48 người, ảnh thật mới có 6</td><td>Lưới 3 cột, tìm kiếm, lọc vai. Thiếu ảnh thì hiện chữ cái đầu. Tạp chí chỉ gợi ý người trong phiên khách đã lưu, còn lại tìm</td></tr>
+<tr><td>Ảnh bảng tin</td><td>Vài trăm ảnh (mẫu: 386)</td><td>Ảnh nhỏ 300px webp, tải dần 30 ảnh một lần. Lọc Có bạn, Ảnh BTC, Bìa, Khách</td></tr>
+<tr><td>Ảnh chờ duyệt</td><td>Hàng chục mỗi giờ</td><td>Admin chọn nhiều, duyệt một lần. Ảnh bị gắn cờ có nhãn riêng</td></tr>
+<tr><td>Kiosk</td><td>48 diễn giả, 4 track</td><td>Kiosk không bắt chọn diễn giả. Khách chọn 1 trong 4 track bằng nút lớn</td></tr>
+</table></div>
+
+<h3>Màn vẽ</h3>
+<div class="dai"><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><div class="lamtop"></div>
+<div class="chat">
+ <div class="nhan">Lam · trợ lý AI</div>
+ <p class="lam">Chào Mai Anh. 13:30 có 3 phiên chạy song song, bạn đã lưu phiên ở Olive.</p>
+ <div class="k sc" style="--tr:#3f7d22;width:346px"><div class="trk"><i></i>Olive · Hồ Tây 2<em>Đã lưu</em></div><b class="tt">Tăng trưởng thương hiệu khi AI tham gia quyền lựa chọn: Bảo vệ bản sắc và xây dựng hệ sinh thái trải nghiệm kết nối</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">P</span><span class="mu s">Bùi Quý Phong</span></div></div>
+ <div class="toi">Phiên Iris lúc đó nói gì?</div>
+ <p class="lam s">Phiên Iris bàn về hiệu ứng tâm lý khi AI “đọc vị” khách hàng, theo mô tả của BTC.</p>
+ <div class="chips"><span class="ch">Đổi sang Iris</span><span class="ch">Đường tới Hồ Tây 2</span><span class="ch">Wifi</span></div>
+</div>
+<div class="nhap k"><span>Nhắn cho Lam…</span><i class="mic"></i></div><nav class="tb"><div class="on"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>1 · Tab Lam</b><p>Lam lớn ở đầu tab, cao 240px. Câu trả lời có thẻ phiên bấm được. Gợi ý đổi theo giờ.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lamav"></span><h4>Lam<small>Trợ lý AI</small></h4><span class="mu s">Bật tiếng</span></header>
+<div class="than" style="gap:10px">
+ <div class="toi">Chiều nay nghe gì về GEO?</div>
+ <p class="lam s">Có 2 phiên ở phòng Trúc Bạch, theo lịch BTC.</p>
+ <div class="ngang"><div class="k sc" style="--tr:#6d47b8;width:272px"><div class="trk"><i></i>Lavender · Trúc Bạch</div><b class="tt">Winning the AI Recommendation: Làm thế nào để thương hiệu xuất hiện trong câu trả lời của AI?</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">T</span><span class="mu s">Ngô Phương Thảo</span></div><div class="hai" style="margin-top:4px"><span class="nut nho">Lưu và nhắc</span><span class="nut2 nho">Xem phiên</span></div></div><div class="k sc" style="--tr:#6d47b8;width:272px"><div class="trk"><i></i>Lavender · Trúc Bạch</div><b class="tt">Ứng dụng GAI và triển khai các giải pháp GEO thực tiễn nhằm tối ưu hóa hiển thị trên các công cụ tìm kiếm bằng AI</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">T</span><span class="mu s">Nguyễn Trọng Thành</span></div><div class="hai" style="margin-top:4px"><span class="nut nho">Lưu và nhắc</span><span class="nut2 nho">Xem phiên</span></div></div></div>
+ <div class="toi">Ảnh của mình đâu?</div>
+ <p class="lam s">BTC đã gắn bạn trong 3 ảnh.</p>
+ <div class="k" style="padding:8px;display:flex;gap:6px;flex:none"><i class="wimg" style="background-image:url(a/p01.webp)"></i><i class="wimg" style="background-image:url(a/p04.webp)"></i><i class="wimg" style="background-image:url(a/p03.webp)"></i><span class="nut2 nho" style="align-self:center">Tải cả 3</span></div>
+</div>
+<div class="nhap k"><span>Nhắn cho Lam…</span><i class="mic"></i></div><nav class="tb"><div class="on"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>1b · Chat có widget</b><p>Lam trả lời bằng chữ và widget thật: thẻ phiên có nút Lưu, dải ảnh có bạn, mã QR, thẻ diễn giả. Widget do công cụ trả về từ dữ liệu BTC, AI không tự viết giờ hay phòng.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lamav"></span><h4>Lịch</h4><div class="seg"><span class="on">Phiên</span><span>Diễn giả</span><span>Đã lưu</span></div></header>
+<div class="than">
+ <div class="ngay"><span class="on">Thứ Năm 19/11<small>21 phiên</small></span><span>Thứ Sáu 20/11<small>20 phiên</small></span></div>
+ <div class="tim k">Tìm phiên, diễn giả, chủ đề</div>
+ <div class="chips"><span class="ch on">Tất cả 41</span><span class="ch">Toàn thể 20</span><span class="ch">Olive 7</span><span class="ch">Lavender 7</span><span class="ch">Iris 7</span></div>
+ <div class="gio"><b>13:30</b><span>3 phiên song song</span><em>Đang diễn ra</em></div><div class="ngang"><div class="k sc" style="--tr:#3f7d22;width:272px"><div class="trk"><i></i>Olive · Hồ Tây 2<em>Đã lưu</em></div><b class="tt">Tăng trưởng thương hiệu khi AI tham gia quyền lựa chọn: Bảo vệ bản sắc và xây dựng hệ sinh thái trải nghiệm kết nối</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">P</span><span class="mu s">Bùi Quý Phong</span></div></div><div class="k sc" style="--tr:#6d47b8;width:272px"><div class="trk"><i></i>Lavender · Trúc Bạch</div><b class="tt">The machinereadable brand: Thương hiệu của bạn, AI có hiểu không?</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">N</span><span class="mu s">Tuấn Nguyễn</span></div></div><div class="k sc" style="--tr:#1c6db3;width:272px"><div class="trk"><i></i>Iris · Hồ Tây 1</div><b class="tt">Khi AI “đọc vị” khách hàng: Những hiệu ứng tâm lý cũ trong cuộc chơi mới</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">T</span><span class="mu s">Đào Cẩm Thuỷ</span></div></div></div><div class="gio"><b>13:55</b><span>3 phiên song song</span></div><div class="ngang"><div class="k sc" style="--tr:#3f7d22;width:272px"><div class="trk"><i></i>Olive · Hồ Tây 2</div><b class="tt">Xu hướng khách hàng đang trao quyền lựa chọn cho AI và nền tảng – Báo cáo từ NielsenIQ</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">H</span><span class="mu s">Đặng Thuý Hà</span></div></div><div class="k sc" style="--tr:#6d47b8;width:272px"><div class="trk"><i></i>Lavender · Trúc Bạch</div><b class="tt">AI-Power Marketing: Future of Growth</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">H</span><span class="mu s">Hưng Huỳnh</span></div></div><div class="k sc" style="--tr:#1c6db3;width:272px"><div class="trk"><i></i>Iris · Hồ Tây 1</div><b class="tt">Chủ động kiến tạo thị trường trong xã hội Người - Máy - Người</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">T</span><span class="mu s">Lê Công Thành</span></div></div></div><div class="gio"><b>14:20</b><span>3 phiên song song</span></div><div class="ngang"><div class="k sc" style="--tr:#3f7d22;width:272px"><div class="trk"><i></i>Olive · Hồ Tây 2</div><b class="tt">Who does the agent work for? AI phục vụ ai, ai chịu trách nhiệm?</b><div class="who"><span class="av" style="width:26px;height:26px;background-image:url(a/dg-dao-trung-thanh.webp)"></span><span class="mu s">Đào Trung Thành</span></div></div><div class="k sc" style="--tr:#6d47b8;width:272px"><div class="trk"><i></i>Lavender · Trúc Bạch</div><b class="tt">Một câu chuyện hay còn đủ không? - Vai trò của cảm xúc và trải nghiệm trong branding</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">N</span><span class="mu s">Nguyễn Hồng Nhung</span></div></div><div class="k sc" style="--tr:#1c6db3;width:272px"><div class="trk"><i></i>Iris · Hồ Tây 1</div><b class="tt">Real-time signal và real-time decision</b><div class="who"><span class="av mo" style="width:26px;height:26px;font-size:10px">N</span><span class="mu s">Trần Vũ Quỳnh Như</span></div></div></div>
+</div><nav class="tb"><div class=""><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class="on"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>2 · Lịch: 41 phiên</b><p>Chiều 19/11 có 3 track chạy cùng giờ, nên mỗi khung giờ là một hàng vuốt ngang. Lọc theo ngày, track, tìm kiếm. Tự cuộn tới “Đang diễn ra”.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lamav"></span><h4>Lịch</h4><div class="seg"><span>Phiên</span><span class="on">Diễn giả</span><span>Đã lưu</span></div></header>
+<div class="than">
+ <div class="tim k">Tìm trong 48 người</div>
+ <div class="chips"><span class="ch on">Tất cả 48</span><span class="ch">Diễn giả 39</span><span class="ch">Dẫn dắt 9</span><span class="ch">Có phiên hôm nay</span></div>
+ <div class="dgl"><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-dao-trung-thanh.webp)"></span><b>Đào Trung Thành</b><span>Ủy viên Ban Chấp hành </span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">Q</span><b>Nguyễn Trần Quang</b><span>FutureOne Consulting</span></div><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-pham-vu-tung.webp)"></span><b>Phạm Vũ Tùng</b><span>CNG Group</span></div><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-doan-thuan.webp)"></span><b>Thuận Đoàn</b><span>Phó Viện trưởng Viện C</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">H</span><b>Đặng Thuý Hà</b><span>NielsenIQ Việt Nam</span></div><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-nguyen-duc-son.webp)"></span><b>Nguyễn Đức Sơn</b><span>Interloka Brand Agency</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">H</span><b>Hưng Huỳnh</b><span>TikTok Việt Nam</span></div><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-nguyen-duong.webp)"></span><b>Nguyễn Dương</b><span>Chủ tịch &amp; Founder Vpe</span></div><div class="dg"><span class="av" style="width:80px;height:80px;background-image:url(a/dg-trinh-xuan-phap.webp)"></span><b>Trịnh Xuân Pháp</b><span>Nâng tầm dịch vụ PLC</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">Q</span><b>Lê Hồng Quang</b><span>MISA</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">G</span><b>Arjun Ganesh</b><span>Salesforce</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">H</span><b>Hoàng Việt Hà</b><span>Giám đốc Swinburne Việ</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">V</span><b>Trần Nguyên Vũ</b><span>AWS Vietnam</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">T</span><b>Ngô Phương Thảo</b><span>SEONGON</span></div><div class="dg"><span class="av mo" style="width:80px;height:80px;font-size:33px">V</span><b>Lê Quốc Vinh</b><span>Chủ tịch Le Bros</span></div></div>
+</div><nav class="tb"><div class=""><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class="on"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>3 · Diễn giả: 48 người</b><p>Lưới 3 cột, ảnh 80px. Hiện có ảnh thật 6/48, còn lại hiện chữ cái đầu trên nền kính. Tìm và lọc theo vai.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lui">‹ Lịch</span><h4></h4><span class="mu s">Chia sẻ</span></header>
+<div class="than">
+ <div class="trk" style="--tr:#3f7d22"><i></i>Olive · Phòng Hồ Tây 2 · Keynote</div>
+ <h3 class="ph">Tăng trưởng thương hiệu khi AI tham gia quyền lựa chọn: Bảo vệ bản sắc và xây dựng hệ sinh thái trải nghiệm kết nối</h3>
+ <div class="mu">Thứ Năm 19/11 · 13:30 – 13:55</div>
+ <div class="k nguoi"><span class="av mo" style="width:48px;height:48px;font-size:20px">P</span><div><b>Bùi Quý Phong</b><span class="mu s">Phó Chủ tịch CSMO Việt Nam</span></div></div>
+ <div class="hai"><span class="nut">✓ Đã lưu · nhắc 13:20</span><span class="nut2">Thêm vào lịch máy</span></div>
+ <div class="k cq"><div class="row"><b>Câu hỏi cho diễn giả</b><span class="mu s">14 câu</span></div>
+  <div class="q"><span class="vote">▲ 23</span>Doanh nghiệp vừa và nhỏ nên bắt đầu bảo vệ bản sắc từ đâu?</div>
+  <div class="q"><span class="vote">▲ 11</span>Có số liệu nào về tỉ lệ khách chọn theo gợi ý của AI ở Việt Nam?</div>
+  <div class="q"><span class="vote">▲ 6</span>Thương hiệu nhỏ cạnh tranh thế nào khi AI ưu tiên tên lớn?</div>
+  <span class="nut2">Đặt câu hỏi</span></div>
+ <div class="k cq row"><b>Thảo luận</b><span class="mu s">18 bình luận ›</span></div>
+</div><nav class="tb"><div class=""><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class="on"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>4 · Trang phiên</b><p>Mọi việc với một phiên ở một chỗ: lưu và nhắc, lịch máy, câu hỏi được bình chọn, thảo luận. Câu hỏi đi qua lọc an toàn và BTC duyệt.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lamav"></span><h4>Bảng tin</h4><span class="nut nho">+ Đăng ảnh</span></header>
+<div class="than">
+ <div class="k ghim"><span class="nhan">BTC · 13:10 · ghim</span><b>Teabreak chiều dời sang 15:05 tại sảnh tầng 1</b></div>
+ <div class="chips"><span class="ch on">Tất cả 386</span><span class="ch">Có bạn 3</span><span class="ch">Ảnh BTC 214</span><span class="ch">Bìa 128</span><span class="ch">Khách 44</span></div>
+ <div class="luoi"><div class="o" style="background-image:url(a/p01.webp)"><em>Có bạn</em></div><div class="o" style="background-image:url(a/b03.webp)"></div><div class="o" style="background-image:url(a/p02.webp)"></div><div class="o" style="background-image:url(a/b07.webp)"></div><div class="o" style="background-image:url(a/b01.webp)"></div><div class="o" style="background-image:url(a/p04.webp)"><em>Có bạn</em></div><div class="o" style="background-image:url(a/b10.webp)"></div><div class="o" style="background-image:url(a/p03.webp)"></div><div class="o" style="background-image:url(a/b05.webp)"></div><div class="o" style="background-image:url(a/b12.webp)"></div><div class="o" style="background-image:url(a/p06.webp)"></div><div class="o" style="background-image:url(a/b08.webp)"></div><div class="o" style="background-image:url(a/b14.webp)"></div><div class="o" style="background-image:url(a/p05.webp)"></div><div class="o" style="background-image:url(a/b02.webp)"></div><div class="o sk"></div><div class="o sk"></div><div class="o sk"></div></div>
+</div><nav class="tb"><div class=""><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class="on"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class=""><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>5 · Bảng tin: vài trăm ảnh</b><p>Lưới 3 cột tải dần 30 ảnh một lần, ảnh nhỏ 300px webp khoảng 15 KB. Lọc “Có bạn” là ảnh BTC đã gắn tên khách. Thông báo BTC ghim trên đầu.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lamav" style="background-image:url(a/b03.webp);background-position:60% 40%"></span><h4>Mai Anh<small>Marketing Manager</small></h4><span class="mu s">Sửa</span></header>
+<div class="than">
+ <div class="k bia1"><div class="bia" style="background-image:url(a/b03.webp)"></div><div><b>Bìa AGENTIC:ME của bạn</b><span class="mu s">Chụp ở kiosk sảnh · 08:52</span><div class="hai"><span class="nut nho">Lưu ảnh</span><span class="nut2 nho">Chia sẻ</span></div></div></div>
+ <div class="nut lon">Tạo tạp chí 8 trang của bạn</div>
+ <div class="o4">
+  <div class="k"><b>Mã QR của tôi</b><span class="mu s">Giơ ở kiosk để Lam chào</span></div>
+  <div class="k"><b>Ảnh có tôi · 3</b><div class="mini"><i style="background-image:url(a/p01.webp)"></i><i style="background-image:url(a/p04.webp)"></i><i style="background-image:url(a/p03.webp)"></i></div></div>
+  <div class="k"><b>Gặp gỡ · 2</b><span class="mu s">1 lời chào đang chờ</span></div>
+  <div class="k"><b>Đã lưu · 4 phiên</b><span class="mu s">Kế tiếp 13:30</span></div>
+ </div>
+ <div class="k ds"><div class="row">Email giữ trang<span class="mu s">mai…@gmail.com ›</span></div><div class="row">Lam nhớ gì về bạn<span class="mu s">›</span></div><div class="row do">Quên tôi<span class="mu s">›</span></div></div>
+</div><nav class="tb"><div class=""><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Lam</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Lịch</div><div class=""><svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Bảng tin</div><div class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Của tôi</div></nav></div><figcaption><b>6 · Của tôi</b><p>Bìa ở đầu, rồi tạo tạp chí. Bốn ô lối tắt, cuối là quyền riêng tư. Sau 20/11 có thêm khảo sát và video.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lui">‹ Đóng</span><h4>Tạp chí của bạn</h4><span class="mu s">2 / 3</span></header>
+<div class="buocbar"><i class="on"></i><i class="on"></i><i></i></div>
+<div class="than">
+ <p class="lam">Diễn giả nào làm bạn nhớ nhất?</p>
+ <div class="tim k">Tìm trong 48 diễn giả</div>
+ <div class="nhan">Từ phiên bạn đã lưu và đã hỏi · 5</div>
+ <div class="k chon on"><span class="av" style="width:44px;height:44px;background-image:url(a/dg-dao-trung-thanh.webp)"></span><div><b>Đào Trung Thành</b><span class="mu s">Chuyên gia tư vấn Chiến lược AI &amp; </span></div><i>✓</i></div><div class="k chon"><span class="av mo" style="width:44px;height:44px;font-size:18px">P</span><div><b>Bùi Quý Phong</b><span class="mu s">Phó Chủ tịch CSMO Việt Nam</span></div></div><div class="k chon"><span class="av mo" style="width:44px;height:44px;font-size:18px">H</span><div><b>Đặng Thuý Hà</b><span class="mu s">Giám đốc cấp cao, NielsenIQ Việt N</span></div></div><div class="k chon"><span class="av" style="width:44px;height:44px;background-image:url(a/dg-pham-vu-tung.webp)"></span><div><b>Phạm Vũ Tùng</b><span class="mu s">CMO, CNG Group</span></div></div><div class="k chon"><span class="av" style="width:44px;height:44px;background-image:url(a/dg-nguyen-duong.webp)"></span><div><b>Nguyễn Dương</b><span class="mu s">Chủ tịch &amp; Founder Vperia</span></div></div>
+ <span class="nut lon">Tiếp</span>
+</div></div><figcaption><b>7 · Tạo tạp chí</b><p>Luồng riêng, ẩn thanh tab. Danh sách lấy từ phiên khách đã lưu và đã hỏi, không phải cả 48 người. Có tạp chí xem ngay, tối 20/11 tự cập nhật.</p></figcaption></figure><figure class="om"><div class="p"><div class="sb"><b>13:24</b><span>5G ▮▮▮</span></div><header class="hd"><span class="lui">‹ Của tôi</span><h4>Xem trước</h4><span class="mu s">8 trang</span></header>
+<div class="than">
+ <div class="bialon2" style="background-image:url(a/b03.webp)"></div>
+ <div class="k trang"><b></b><div><b>Bìa</b><span class="mu s">Ảnh bạn chụp ở kiosk</span></div></div><div class="k trang"><b>2</b><div><b>Lộ trình của bạn</b><span class="mu s">4 phiên đã lưu</span></div></div><div class="k trang"><b>3</b><div><b>Diễn giả bạn nhớ</b><span class="mu s">Đào Trung Thành</span></div></div><div class="k trang"><b>4</b><div><b>Câu bạn đã hỏi</b><span class="mu s">2 câu</span></div></div><div class="k trang"><b>5</b><div><b>Ảnh có bạn</b><span class="mu s">3 ảnh BTC</span></div></div><div class="k trang"><b>6</b><div><b>Điều mang về</b><span class="mu s">câu trả lời của bạn</span></div></div>
+
+</div></div><figcaption><b>8 · Xem trước tạp chí</b><p>Mỗi trang ghi rõ lấy dữ liệu từ đâu. Bản đầy đủ và PDF A5 gửi tối 20/11. Không có trang nào AI tự viết thay diễn giả.</p></figcaption></figure></div>
+</section>
+
+<section id="admin">
+<div class="luong">Luồng 3</div>
+<h2>Admin BTC: một màn</h2>
+<p class="sub">Ngày diễn ra, BTC cần trả lời 4 câu: có gì cần duyệt, kiosk nào hỏng, widget nào đang bật, cần báo gì cho khách. Các tab cũ gom vào "Nâng cao".</p>
+<div class="mm"><pre class="mermaid">
+flowchart TD
+  DN["Đăng nhập test-btc"] --> M["Một màn: 4 khối"]
+  M --> D["Cần duyệt"] --> D1["Duyệt / Ẩn"] --> BT(["Bảng tin, câu hỏi diễn giả"])
+  M --> K["Kiosk và widget"] --> K1["Bật tắt widget từng máy"] --> KS(["Kiosk đổi trong 10s"])
+  K --> K2["Máy mất kết nối: cấp mã, mở lại"]
+  M --> T["Gửi thông báo"] --> T1["Soạn, chọn nơi nhận, gửi / hẹn giờ"] --> TT(["Bảng tin + widget kiosk"])
+  M --> H["Hôm nay: số khách, bìa, câu hỏi, chi phí AI"]
+  M --> NC["Nâng cao"] --> NC1["Lịch trình, Tri thức Lam, Khách, Ảnh BTC, Màn MC, Standee, Tạp chí..."]
+</pre></div>
+<div class="adm"><div class="atb"><b>Điều hành · VSMCamp & CSMOSummit 2026</b><span>Thứ Năm 19/11 · 13:24 · test-btc · Nâng cao ▾</span></div>
+<div class="ag">
+<div class="ak w2"><div class="ah"><h5>Cần duyệt</h5><div class="tabs"><span class="on">Ảnh 29</span><span>Câu hỏi 8</span></div></div>
+ <div class="athumbs"><div class="at chon" style="background-image:url(a/b04.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b09.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/p08.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b11.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b06.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/p02.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b13.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b15.webp)"><i>✓</i></div><div class="at chon" style="background-image:url(a/b02.webp)"><i>✓</i></div><div class="at" style="background-image:url(a/p06.webp)"><i></i></div><div class="at" style="background-image:url(a/b12.webp)"><i></i><em>Cờ: trẻ em</em></div><div class="at" style="background-image:url(a/b05.webp)"><i></i></div></div>
+ <div class="ab"><span class="mu2">Đã chọn 9 · lọc an toàn đã qua</span><span><span class="b2">Ẩn</span> <span class="b">Duyệt 9 ảnh</span></span></div></div>
+<div class="ak"><div class="ah"><h5>Kiosk và widget</h5></div>
+ <div class="row"><span><i class="dot ok"></i>Sảnh tầng 1</span><span class="mu2">112 lượt · 41 bìa</span></div>
+ <div class="row"><span><i class="dot ok"></i>Cửa Ballroom</span><span class="mu2">87 lượt · 33 bìa</span></div>
+ <div class="row"><span><i class="dot loi"></i>Sảnh tầng 2</span><span class="do">Mất kết nối 3 phút</span></div>
+ <div class="sub2">Widget · Sảnh tầng 1 (3/3)</div>
+ <div class="row"><span>Sắp diễn ra</span><span class="sw"></span></div>
+ <div class="row"><span>Diễn giả nổi bật</span><span class="sw"></span></div>
+ <div class="row"><span>Sơ đồ tầng</span><span class="sw"></span></div>
+ <div class="row"><span>Wifi</span><span class="sw tat"></span></div>
+ <div class="row"><span>Bìa vừa chụp</span><span class="sw tat"></span></div></div>
+<div class="ak"><div class="ah"><h5>Gửi thông báo</h5></div>
+ <div class="ta">Teabreak chiều dời sang 15:05 tại sảnh tầng 1.</div>
+ <div class="row"><span class="mu2">Tới</span><span><span class="b2 on">Điện thoại 486</span> <span class="b2 on">Kiosk 3</span></span></div>
+ <div class="ab"><span class="b2">Hẹn giờ</span><span class="b">Gửi ngay</span></div></div>
+<div class="ak"><div class="ah"><h5>Hôm nay</h5></div>
+ <div class="so4"><div><b>486</b><span>khách mở đồng hành</span></div><div><b>203</b><span>bìa đã chụp</span></div><div><b>58</b><span>câu hỏi diễn giả</span></div><div><b>38%</b><span>ngân sách AI đã dùng</span></div></div></div>
+</div>
+<div class="achan">Nâng cao: Lịch trình · Tri thức Lam · Khách · Ảnh BTC · Màn MC · Standee · Tạp chí · Nhật ký · Tài khoản · Cấu hình</div></div>
+<p class="doi">Admin chưa đăng nhập test được vì cloud không có mật khẩu test-btc. E2E chiều 17/11 trên staging: 65 bước, 52 đạt, 4 lỗi nặng (lệch số khách 108/57, lead đọc thiếu). Đêm nay agy chạy E2E admin trên prod.</p>
+</section>
+
+<section>
+<h2>Bảng phủ tính năng (danh sách 13/11)</h2>
+<div class="tw"><table>
+<tr><th>Tính năng Linh nêu</th><th>Ở đâu trong v0.9</th><th>Code hiện có</th></tr>
+<tr><td>Trò chuyện với Lam</td><td>Kiosk K1 · Tab Lam</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Tư vấn lịch trình, lịch riêng</td><td>Tab Lam (gợi ý) · Tab Lịch (lưu)</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Nhắc việc, thông báo sắp diễn ra</td><td>Tab Lam, Lịch · widget kiosk · admin Gửi thông báo</td><td><span class="pill nangp">thiếu Web Push</span></td></tr>
+<tr><td>Thêm vào lịch máy</td><td>Phiên · "+ Lịch máy"</td><td><span class="pill nangp">thiếu .ics</span></td></tr>
+<tr><td>Trang riêng của khách</td><td>Tab Của tôi</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Đổi avatar, nghề</td><td>Của tôi · Sửa</td><td><span class="pill nangp">thiếu avatar</span></td></tr>
+<tr><td>Hỏi diễn giả, bình luận</td><td>Phiên · Đặt câu hỏi, Thảo luận</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Upload ảnh, bảng tin chung</td><td>Tab Bảng tin · màn lớn sảnh · widget kiosk</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Ảnh BTC gửi và tag</td><td>Bảng tin · Ảnh BTC · Của tôi · Ảnh có tôi</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Lam nhận ra mình</td><td>Kiosk K2 nhận mặt (nạp sẵn), QR dự phòng</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Gặp gỡ (hai bên đồng ý)</td><td>Của tôi · Gặp gỡ</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Bìa, tạo tạp chí</td><td>Kiosk K3–K4 · Của tôi · Tạo tạp chí</td><td><span class="pill okp">có</span>, phải tách code</td></tr>
+<tr><td>Video sau sự kiện</td><td>Của tôi (sau 20/11)</td><td><span class="pill nangp">chưa có</span></td></tr>
+<tr><td>Khảo sát, lời mời mùa sau</td><td>Của tôi (sau 20/11)</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Email giữ trang, Quên tôi</td><td>Của tôi</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Brand safety, chống lạm dụng, quản trị</td><td>Mọi chỗ khách gửi · admin Cần duyệt</td><td><span class="pill okp">có</span></td></tr>
+<tr><td>Widget kiosk bật tắt</td><td>Admin · Kiosk &amp; widget</td><td><span class="pill nangp">mới</span></td></tr>
+</table></div>
+</section>
+
+<section id="kh">
+<h2>Kế hoạch sửa v0.9</h2>
+<p class="sub">Mỗi việc là một phiếu agy ≤40 phút. Phiếu to thì chia nhỏ. Chạy song song máy 1, 2, 3. Staging khoảng 03:30, Claude soi lúc 06:00, Linh test sáng 18/11.</p>
+<div class="tw"><table>
+<tr><th>#</th><th>Việc</th><th>Cần trước</th><th>Đạt khi</th></tr>
+<tr><td>1</td><td>Giữ nguyên giao diện glassmorphism hiện tại. Màn mới (Lịch gộp, Bảng tin, Của tôi, kiosk K1 đến K4) dùng lại đúng class kính đang có</td><td></td><td>0 thay đổi file CSS màu và kính</td></tr>
+<tr><td>2</td><td>Sửa 401 đồng ý; <code>/yen-lam/</code> = đồng hành; 4 tab Lam · Lịch · Bảng tin · Của tôi</td><td>1</td><td>Context mới 0 lỗi 4xx; ảnh khớp màn vẽ</td></tr>
+<tr><td>3</td><td>Lam lớn chỉ ở tab Lam, avatar ở tab khác. Chat giữ 10 lượt, làm quen trong chat</td><td>2</td><td>Tab Lịch thấy ≥4 phiên</td></tr>
+<tr><td>4</td><td>Tab Lịch: gộp <code>/lich</code> và diễn giả; lưu, nhắc, .ics, câu hỏi, thảo luận trong phiên</td><td>2</td><td>.ics mở được trên iPhone</td></tr>
+<tr><td>5</td><td>Tab Bảng tin: ảnh khách, ảnh BTC, thông báo; gộp tường ảnh và tường chung</td><td>2</td><td>Một bảng tin duy nhất</td></tr>
+<tr><td>6</td><td>Tab Của tôi: bìa, mã QR, ảnh có tôi, gặp gỡ, đã lưu, hồ sơ có avatar, email, Quên tôi</td><td>2</td><td>Đủ 9 mục, 0 mục trùng</td></tr>
+<tr><td>7</td><td>Luồng tạo tạp chí trên điện thoại (3 câu), tách module khỏi kiosk</td><td>6</td><td>Trang kiosk không nạp script tạp chí</td></tr>
+<tr><td>8</td><td>Kiosk một trang: K1 trò chuyện + widget, K2 nhận mặt nạp sẵn + QR dự phòng, K3 chụp có nút đồng ý, K4 chờ bìa vẫn trò chuyện + QR</td><td>1</td><td>Một lượt chụp ≤60 giây, quét QR chào đúng tên</td></tr>
+<tr><td>9</td><td>Widget kiosk: 8 loại, cấu hình theo từng máy, bật tắt trong admin, tối đa 3 trên màn</td><td>8</td><td>Tắt trong admin thì kiosk ẩn trong ≤10 giây</td></tr>
+<tr><td>10</td><td>Kiosk tải trước asset theo phiên bản, màn "đang chuẩn bị"</td><td>8</td><td>Mở lần 2 dưới 1 giây, không khung đen</td></tr>
+<tr><td>11</td><td>Chia sẻ bìa <code>/b/:mã</code> với og:image, Lưu ảnh, Chia sẻ; favicon, manifest</td><td>6</td><td>Trình xem OG thấy bìa</td></tr>
+<tr><td>12</td><td>Admin một màn 4 khối (nền là bản lite), "Nâng cao" chứa các tab cũ</td><td>1, 9</td><td>Bố cục khớp màn vẽ, giữ style cũ</td></tr>
+<tr><td>13</td><td>Prompt bỏ "đại sứ"; ảnh diễn giả v2; gỡ 15 route v0 và bộ clip <code>ylk/</code></td><td></td><td>3 câu bẫy đạt, 15/15 trả 302</td></tr>
+<tr><td>14</td><td>Gộp, test khoá, deploy staging (máy 2)</td><td>1–13</td><td>Test khoá xanh</td></tr>
+<tr><td>15</td><td>E2E 3 vai + admin. Claude soi từng màn so với màn vẽ</td><td>14</td><td>0 chặn, 0 nặng, điểm soi ≥9</td></tr>
+</table></div>
+<p class="doi">Để sau bản 1.0: Web Push (cần service worker), video sau sự kiện. Clip Lam mới chạy ở thread riêng, chưa có thì dùng clip nghe/nói.</p>
+</section>
+
+<section>
+<h2>Tự chấm</h2>
+<div class="tw"><table>
+<tr><th>Tiêu chí</th><th>Điểm</th><th>Ghi chú</th></tr>
+<tr><td>Đúng vai từng màn hình (kiosk / điện thoại)</td><td>9</td><td>Kiosk: trò chuyện, widget, chụp, quét. Điện thoại: đủ tính năng, có tạo tạp chí.</td></tr>
+<tr><td>Đồng hành hết rối</td><td>9</td><td>5 lối vào đáp một chỗ, 4 tab cố định, trang con có quay lại. Mọi nhánh đều có lỗi và trạng thái trống.</td></tr>
+<tr><td>Phủ đủ danh sách 13/11</td><td>9</td><td>17/17 tính năng có chỗ. Web Push và video để sau 1.0.</td></tr>
+<tr><td>Glassmorphism, tương phản</td><td>9</td><td>Kính sáng độ đục 0,7, chữ navy đậm. Chữ chính trên 7:1. Màn vẽ đúng 390×844.</td></tr>
+<tr><td>Dữ liệu thật, quy mô thật</td><td>9</td><td>41 phiên, 48 người và ảnh mẫu lấy từ kho code. Ảnh diễn giả thật mới có 6/48.</td></tr>
+<tr><td>Lam là trung tâm</td><td>9</td><td>Kiosk tối đa 3 widget. Điện thoại có Lam lớn ở tab Lam, avatar ở tab khác.</td></tr>
+<tr><td>Đọc được ở kiosk từ 1,5 m</td><td>8</td><td>Thẻ widget tương đương khoảng 40px trên 1080. Lời Lam nên ≥56px khi dựng.</td></tr>
+<tr><td>Quyền riêng tư</td><td>9</td><td>Nhận ra khách bằng QR. Ảnh có nút đồng ý riêng và hạn xoá.</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>Linh đã chốt (22:51)</h2>
+<ol>
+<li>4 tab Lam · Lịch · Bảng tin · Của tôi. Tab Lam là chat bằng giọng và chữ, có widget trong chat. Diễn giả nằm trong Lịch.</li>
+<li>Kiosk nhận mặt, đặc trưng mặt nạp sẵn vào kiosk. Chỉ khách đã đồng ý sinh trắc. QR dự phòng.</li>
+<li>Có tạp chí xem ngay sau 3 câu. Tối 20/11 tự cập nhật thêm phiên và ảnh.</li>
+<li>Bỏ màn đồng ý ở đầu, xin quyền đúng lúc cần.</li>
+<li>Giữ logo Le Bros ở kiosk.</li>
+<li>Giữ nguyên CSS kính đang có. Duyệt bằng mắt trên ảnh pixel từng màn.</li>
+</ol>
+</section>
+</main>
+
