@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-3 2026-11-18T05:20:16+0700
 
 # kn-td-gtask-tinh-m3-c
 Lượt 3 (Browsentic máy 3 đã ghép Chrome 18/11 05:18). Chrome đang ở hồ sơ Workspace tuanlinh@urah.vn (KHÔNG có Gemini Task): vào gemini.google.com/u/1, /u/2... tìm tài khoản gói Ultra; không có tài khoản Ultra nào thì KET_LUAN CHUA_DANG_NHAP, CAN-LINH: thêm tài khoản Google Ultra vào hồ sơ Chrome đang ghép Browsentic. Đọc lại DE-BAI.md, luật 3, 10–13 mới.
