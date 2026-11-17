@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-gop-21
+nhan: may-3 2026-11-18T00:58:08+0700
 
 Phiếu ev-gop-21 (gộp đợt 1): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-gop-21` (có thì fetch --all), `git checkout -b agy/ev-gop-21 origin/agy/ev-de-xuat-16`. Trong apps/event: `npm ci`.
