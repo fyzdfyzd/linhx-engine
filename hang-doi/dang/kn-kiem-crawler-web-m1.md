@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-1 2026-11-17T19:59:12+0700
 
 # kn-kiem-crawler-web-m1
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
