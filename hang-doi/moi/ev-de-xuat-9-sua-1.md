@@ -2,10 +2,9 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-9
 phu_thuoc: ev-sang-8
-nhan: may-2 2026-11-17T07:40:27+0700
 
 Phiếu cụm event.ifagent.net (ev-de-xuat-9): làm bản ĐỀ XUẤT của xưởng ý tưởng thành bộ SLIDE đẹp, chỉn chu như TẠP CHÍ (anh Linh 17/11). Claude chấm bản hiện tại 6.5/10: trông như tài liệu, ảnh chung chung không thể hiện ý tưởng, chữ nhỏ, lịch triển khai chữ bị gãy dòng, phần đo lường không có điểm nhấn.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-9 -b agy/ev-de-xuat-9 origin/agy/ev-sang-8` (nếu ev-sang-8 chưa push thì dùng origin/agy/ev-tran-7). Trong apps/event: `npm ci`.
@@ -26,4 +25,15 @@ Phiếu cụm event.ifagent.net (ev-de-xuat-9): làm bản ĐỀ XUẤT của x�
 
 LUẬT CHUNG cụm event: chạy mọi lệnh TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-9/; không đụng apps/lab, packages/, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh bằng AI (dùng ảnh mẫu đang có), không gọi AI thật. Bộ quét bí mật runner báo nhầm dòng CŨ (apps/lab/..., platform.test.js:38, apps/veew-booth/..., infra/staging/stg-event/...): không sửa các tệp đó; phiếu sửa chỉ cần xác nhận `git diff <base>..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA đỉnh; test mới đỏ→xanh; pass/fail npm test; đường dẫn TONG-SLIDE.png.
 
-nhip: 08:19 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-de-xuat-9
+may: may-2
+trang_thai: loi
+ly_do: qua_gio
+tep_doi: KET-QUA.md, bang-chung/bhc-code-khung-quan-tri/a-dang-nhap-1280-dem.png, bang-chung/bhc-code-khung-quan-tri/a-dang-nhap-1280-sang.png, bang-chung/bhc-code-khung-quan-tri/b-tong-quan-1280-sang.png, bang-chung/bhc-code-khung-quan-tri/b-tong-quan-360-sang.png, bang-chung/bhc-code-khung-quan-tri/c-lu...
+drive: (khong)
+phut: 40.31
+token: vao=0 ra=0
+
+phát hiện bí mật: apps/event/test/e2e/platform.test.js:38, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:73, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:86, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:111, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:212, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:265, apps/lab/demos/yen-lam/modules/san-khau/san-khau.html:275, apps/lab/test/agentic-me-luot.test.js:126, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/yen-lam-t101.test.js:13, apps/veew-booth/server/setup-kiosks.js:7, infra/staging/stg-event/GOI-LENH-DEPLOY-16-11.md:53, infra/staging/stg-event/chay-cloud.sh:23
