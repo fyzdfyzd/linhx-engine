@@ -14,3 +14,5 @@ Lỗi: Câu D1, làn "Gemini, có tìm trên web": kỳ trước "Khuyên có đ
 2. Test khoá: dữ liệu giả có một làn trùng hệt hai kỳ → không xuất hiện; đếm "Đổi ý" đúng. Thông báo lỗi test ghi rõ cách sửa.
 3. verify + test:lap xanh; chụp lại so-sanh-1280/360 vào bang-chung/bhc-theo-doi/. Push agy/bhc-theo-doi.
 KET-QUA.md: dat co|khong, SHA, số test.
+
+nhip: 21:23 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
