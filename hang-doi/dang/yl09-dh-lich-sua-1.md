@@ -16,4 +16,4 @@ Lượt 2 (lượt 1 bị huỷ dây chuyền hoặc quá giờ). Chạy mọi l
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md theo DE-BAI luật 9.
 
-nhip: 03:01 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 03:03 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
