@@ -22,4 +22,4 @@ Việc:
 KET-QUA: dòng đầu `dat: co|khong`, SHA gộp, SHA staging, bảng test từng tệp (pass/fail/DO_SAN), CON_LAI.
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
 
-nhip: 06:39 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 06:42 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
