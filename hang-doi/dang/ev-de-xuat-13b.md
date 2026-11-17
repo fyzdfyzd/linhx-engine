@@ -15,4 +15,4 @@ Phiếu ev-de-xuat-13b (vòng 4): gắn 2 ảnh ly cà phê Gemini vào bộ sli
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-de-xuat-13b/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail; TONG-SLIDE.png.
 
-nhip: 19:38 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 19:41 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
