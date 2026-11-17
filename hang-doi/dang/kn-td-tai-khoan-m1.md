@@ -4,6 +4,7 @@ tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-td-colab-m1
+nhan: may-1 2026-11-17T20:03:48+0700
 
 # kn-td-tai-khoan-m1
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
