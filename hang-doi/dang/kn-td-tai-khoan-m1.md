@@ -14,3 +14,5 @@ Kỹ năng: agy đổi qua lại giữa các tài khoản/hồ sơ đã đăng n
 2. Với tài khoản Google: mở gemini.google.com/u/0 ... /u/6, ghi gói từng chỉ số. Mở labs.google/flow với 2 tài khoản khác nhau (đổi tài khoản trên trang), ghi số tín dụng mỗi tài khoản.
 3. ChatGPT: ghi tài khoản đang mở + gói.
 ĐẠT khi: đổi được ≥ 2 tài khoản Google mà không cần Linh. Trả: bảng tài khoản (email che) | dịch vụ | gói | tín dụng.
+
+nhip: 20:06 2p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T20:06:00+0700] · root agent idle; waiting up to 40m0s for 1 ba
