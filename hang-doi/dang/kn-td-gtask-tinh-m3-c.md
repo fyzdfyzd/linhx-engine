@@ -16,4 +16,4 @@ Kiểm 2 phút/lần. Tải PNG về xong/<id>/.
 Đáp án đúng: (1) 104729, (2) 37550402023. (3) cho biết máy ảo có mạng không.
 ĐẠT khi: (1)(2) đúng và có PNG. Trả: tên chế độ + model, số phút, máy ảo có mạng không, hạn mức còn nếu hiện.
 
-nhip: 05:23 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:26 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
