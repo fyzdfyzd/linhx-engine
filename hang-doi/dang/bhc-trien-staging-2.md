@@ -21,3 +21,5 @@ VM: gcloud compute ssh ifagent-event --zone=asia-southeast1-b --project=ifagent-
 4. Chụp 1280 + 360 qua đường hầm: trang chủ, /bao-cao/2026-11-13-vinamilk-9b816db5/, /quan-tri/ đăng nhập. Vào bang-chung/bhc-staging/. Commit + push agy/bhc-staging.
 CẤM: deploy prod, sửa /opt/ifagent, rollback-app.sh, in khoá/ADMIN_CODE, gọi AI thật. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; df trước/sau; tên biến trong env; SHA staging; healthz; lệnh đường hầm; lệnh lùi; CAN-LINH nếu có.
+
+nhip: 14:27 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
