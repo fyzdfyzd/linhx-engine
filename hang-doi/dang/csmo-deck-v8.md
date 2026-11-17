@@ -24,3 +24,5 @@ git clone -b claude/project-thread-j24agg https://github.com/fyzdfyzd/linhx-engi
 Chạy tiền cảnh. Commit + push lên nhánh claude/project-thread-j24agg sau mỗi 6 slide; hết giờ thì push phần đã xong và ghi rõ dừng ở slide nào.
 Cấm: sửa TEXT-A-v3.md, đụng thư mục khác ngoài thiet-ke/v8/.
 Trả KET-QUA.md ≤2000 ký tự: đường dẫn tệp, kết quả vls do/phong, slide nào lệch luật và vì sao.
+
+nhip: 20:24 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
