@@ -16,4 +16,4 @@ Lượt 3. Lượt trước quá 40 phút vì chờ bộ test đầy đủ: KHÔ
 CẤM: như DE-BAI luật 5. Trạng thái cao nhất REVIEW.
 Trả lời KET-QUA.md theo DE-BAI luật 9.
 
-nhip: 05:22 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:25 6p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T05:25:42+0700] · root agent idle; waiting up to 40m0s for 1 ba
