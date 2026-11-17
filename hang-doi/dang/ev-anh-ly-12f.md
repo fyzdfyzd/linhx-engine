@@ -10,3 +10,4 @@ Phiếu ev-anh-ly-12f: chép 2 ảnh Gemini đã tải trên Chrome máy 2 lên 
 2. Tệp có rộng/cao ≈ 1,7–1,85 chép thành `xong/ev-anh-ly-12f/ly-ngang.<duoi>`; tệp ≈ 1,0 chép thành `xong/ev-anh-ly-12f/ly-vuong.<duoi>` (nếu nhiều tệp cùng loại, lấy tệp mới nhất). Không cắt, không nén lại, không xoá tệp gốc.
 3. KET-QUA: tên gốc, kích thước px, dung lượng. Thiếu loại nào ghi `THIEU: ngang|vuong`.
 
+nhip: 21:18 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
