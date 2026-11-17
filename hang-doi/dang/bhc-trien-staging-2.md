@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-17T14:24:22+0700
+moc: bece4901296fb2bc61490262ccc9e003c6f2716a
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Commit + push mỗi 10 phút.
 Tiếp bhc-trien-staging-1 (dừng vì ổ VM 4.4 GB và thiếu stg-brand.env). Linh duyệt 17/11 14:22 VN: máy 2 dọn cache docker VM và tạo file khoá staging.
