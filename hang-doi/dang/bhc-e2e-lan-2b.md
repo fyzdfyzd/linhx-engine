@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-e2e-lan-2
+nhan: may-2 2026-11-18T03:00:49+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ; `npm.cmd`/`npx.cmd`. Commit + push sau mỗi luồng mỗi lần.
 E2E giao diện vòng 2 (chấm lại sau sửa 3 đợt). Worktree C:\linhx\ifagent-wt\bhc-e2e-lan-2 (tạo mới nếu chưa có), nhánh agy/bhc-e2e-lan-2 từ origin/agy/bhc-sua-3 tại b35388c (đã gồm đợt 1, 2, 3). Lấy kịch bản apps/brand-health/e2e-giao-dien/khach.mjs từ origin/agy/bhc-e2e-khach và quan-tri.mjs từ origin/agy/bhc-e2e-quan-tri, giữ nguyên các bước K1–K9, Q1–Q7 và tự kiểm (chỉ sửa bộ chọn nếu nút đã đổi tên). KHÔNG sửa code app.
