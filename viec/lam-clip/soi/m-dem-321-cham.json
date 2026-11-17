@@ -1,0 +1,12 @@
+{
+ "ma": "m-dem-321",
+ "rong": 1080,
+ "cao": 1920,
+ "giay": 5.96,
+ "codec": "vp9",
+ "alpha": true,
+ "ssim_dau": 0.9775,
+ "ssim_cuoi": 0.9229,
+ "dat_may": true,
+ "loi": []
+}

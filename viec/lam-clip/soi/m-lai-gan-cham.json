@@ -1,0 +1,12 @@
+{
+ "ma": "m-lai-gan",
+ "rong": 1080,
+ "cao": 1920,
+ "giay": 5.96,
+ "codec": "vp9",
+ "alpha": true,
+ "ssim_dau": 0.976,
+ "ssim_cuoi": 0.9644,
+ "dat_may": true,
+ "loi": []
+}
