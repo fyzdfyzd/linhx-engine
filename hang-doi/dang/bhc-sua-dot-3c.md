@@ -14,4 +14,4 @@ Hoàn tất đợt 3 trên nhánh agy/bhc-sua-3 (b35388c), worktree cũ C:\linhx
 3. Ảnh vàng landing NOP đã được Claude cập nhật theo cỡ chữ mới (test landing xanh trên cloud); không sửa test landing.
 verify + test:lap xanh. Push agy/bhc-sua-3.
 
-nhip: 03:13 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 03:13 13p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T03:13:44+0700] · root agent idle; waiting up to 40m0s for 1 ba
