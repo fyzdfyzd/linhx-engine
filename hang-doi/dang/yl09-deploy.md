@@ -3,6 +3,7 @@ loai: code
 tran_phut: 20
 khong_tien_phut: 10
 theo_doi: C:\linhx\nhat-ky\yl09-deploy; C:\linhx\ifagent-wt\yl09-gop
+nhan: may-2 2026-11-18T06:54:56+0700
 
 Phiếu Yên Lam v0.9 `yl09-deploy`: chỉ DEPLOY STAGING bản gộp. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật 5: chỉ staging, KHÔNG prod, không in khoá).
 Chạy mọi lệnh ở tiền cảnh. Ghi tiến độ vào `C:\linhx\nhat-ky\yl09-deploy\tien-do.log`.
