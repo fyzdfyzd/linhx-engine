@@ -2,6 +2,7 @@ may: may-3
 loai: soi
 tran_phut: 40
 theo_doi: C:\linhx\tong-duyet\kiosk.log
+nhan: may-3 2026-11-17T20:44:57+0700
 
 Phiếu TỔNG DUYỆT LUỒNG 2: kiosk chào + trò chuyện Lam + chụp bìa. Chỉ CHỤP và GHI, KHÔNG sửa code, KHÔNG deploy. Mọi lệnh tiền cảnh, không background task. Commit + push sau mỗi mục.
 Đích (Linh 20:12: soi trên yenlam.ifagent.net): https://yenlam.ifagent.net/yen-lam/csmo/kiosk-lam (Lam trò chuyện) và màn booth AGENTIC:ME (/yen-lam/agentic-me-v5/kiosk hoặc đường kiosk BTC đang dùng: lấy từ trang chủ chân "Dành cho BTC" hoặc admin #cau-hinh). Kiosk đang MỞ TỰ DO (17/11), không cần mã; nếu bị khoá thì ghi lại, KHÔNG tự cấp mã.
