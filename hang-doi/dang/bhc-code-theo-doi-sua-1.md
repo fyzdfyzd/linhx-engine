@@ -15,4 +15,4 @@ Lỗi: Câu D1, làn "Gemini, có tìm trên web": kỳ trước "Khuyên có đ
 3. verify + test:lap xanh; chụp lại so-sanh-1280/360 vào bang-chung/bhc-theo-doi/. Push agy/bhc-theo-doi.
 KET-QUA.md: dat co|khong, SHA, số test.
 
-nhip: 21:29 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 21:32 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
