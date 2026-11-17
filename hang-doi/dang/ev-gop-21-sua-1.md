@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-gop-21
+nhan: may-3 2026-11-18T00:58:41+0700
 
 Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh.
 
