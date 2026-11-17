@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\yl09-kiosk
+nhan: may-2 2026-11-17T22:56:24+0700
 
 Phiếu Yên Lam v0.9 `yl09-kiosk`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật chung 1–9, bắt buộc) trong thư mục hàng đợi của máy này (`git pull` trước). Khung bố cục: `viec/yen-lam-v09/khung/` ảnh K1-tro-chuyen, K2-nhan-ra-khach, K3-chup, K3b-chon-track, K4-bia-qr (chỉ bố cục, GIỮ CSS kính hiện có).
 Chạy mọi lệnh ở tiền cảnh, KHÔNG background task; mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
