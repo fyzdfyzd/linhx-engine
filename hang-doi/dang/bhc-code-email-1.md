@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-quan-tri
+nhan: may-2 2026-11-17T12:20:22+0700
+moc: 19584c76aeec95dddc890735e714ea5ec420bf4c
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Server chạy bằng Start-Process, tắt đúng PID.
 LUẬT: commit + push ít nhất mỗi 10 phút. Commit đầu tiên trong 5 phút.
