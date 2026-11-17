@@ -96,7 +96,7 @@ ANH_CENTER = {
     "a05": (0.78, 0.50),  # Biển hiệu Walmart Supercenter
     "a06": (0.70, 0.45),  # Tay cầm thẻ chạm máy POS
     "a10": (0.60, 0.55),  # Chiếc ghế trống dưới đèn sân khấu
-    "a11": (0.75, 0.45),  # Quầy dược CVS pharmacy
+    "a11": (0.85, 0.45),  # Quầy dược CVS pharmacy (lấy trọn chữ CVS pharmacy)
     "a12": (0.50, 0.45),  # Mua hàng online trên màn hình laptop
     "a13": (0.35, 0.50),  # Khán giả giơ điện thoại trong hội trường tối
 }
@@ -859,6 +859,240 @@ def dung_slides_7_12() -> None:
     )
 
 
+def dung_slides_13_18() -> None:
+    # 13 — Đo bốn điều (lưới 4 ô 2x2 nét mảnh 1px)
+    s = nen(False)
+    so_trang(s, 13, False)
+    tieu_de_noi_dung(s, "Đừng đo thứ hạng trên AI, vì hỏi hai lần sẽ ra hai danh sách khác nhau", dark=False)
+    txt(s, L, 295, 900, 48, "Đo bốn điều:", SZ_BODY, font=TH, color=XAM_SANG)
+    bon_dieu = [
+        ("01   Có mặt", True),
+        ("02   Đúng", True),
+        ("03   Được đề xuất", False),
+        ("04   Nhất quán", False),
+    ]
+    ow, oh, gx, gy = 810, 190, 60, 32
+    for i, (nhan, nhan_manh) in enumerate(bon_dieu):
+        rr, cc = divmod(i, 2)
+        ox = L + cc * (ow + gx)
+        oy = 380 + rr * (oh + gy)
+        hop_chu_vien(
+            s,
+            ox,
+            oy,
+            ow,
+            oh,
+            nhan,
+            SZ_TITLE,
+            font=TD,
+            color=DO if i == 0 else THAN,
+            line=DO if i == 0 else VANG,
+            lw=1.5 if i == 0 else 1.0,
+            pad_x=40,
+            pad_y=28,
+            anchor=V.MIDDLE,
+        )
+    nguon(s, "SparkToro × Gumshoe 1/2026", False)
+    note(
+        s,
+        "Hai số anh chị ghi lúc đầu là Có mặt và Đúng. Được đề xuất: AI có khuyên chọn mình vì lý do đúng không. Nhất quán: các AI có nói giống nhau không. Trang QR cuối bài đo đủ cả bốn.",
+    )
+
+    # 14 — Mở chương Chặng 3
+    chuong(
+        3,
+        "Chặng 3: thương hiệu trả lời bằng dữ liệu máy kiểm được",
+        "Đây là chặng anh chị nắm trong tay nhiều nhất.",
+    )
+
+    # 15 — Công thức nhân to giữa slide
+    s = nen(False)
+    so_trang(s, 15, False)
+    tieu_de_noi_dung(
+        s,
+        "Muốn được AI giới thiệu, thương hiệu cần cả uy tín lẫn bằng chứng máy kiểm được",
+        dark=False,
+    )
+    hline(s, L, 365, SAFE_W, color=VANG, lw=1.0)
+    txt(
+        s,
+        L,
+        405,
+        SAFE_W,
+        95,
+        "Khả năng được AI chọn =",
+        40,
+        font=TD,
+        color=THAN,
+        align=A.CENTER,
+        ls=1.1,
+    )
+    txt(s, 180, 535, 520, 110, "Uy tín", 40, font=TD, color=THAN, align=A.RIGHT, ls=1.1)
+    txt(s, 720, 528, 120, 110, "×", 40, font=TH, color=DO, bold=True, align=A.CENTER, ls=1.0)
+    txt(s, 860, 535, 880, 110, "Dữ liệu kiểm được", 40, font=TD, color=THAN, align=A.LEFT, ls=1.1)
+    hline(s, L, 695, SAFE_W, color=VANG, lw=1.0)
+    txt(
+        s,
+        L,
+        745,
+        SAFE_W,
+        48,
+        "Agentic Visibility = Reputation × Verifiable Data · khung của diễn giả",
+        SZ_META,
+        font=TH,
+        color=XAM_SANG,
+        align=A.CENTER,
+    )
+    note(
+        s,
+        "Đây là câu tôi mong anh chị mang về nói với sếp. Tôi dùng phép nhân vì thiếu một bên là về không: khách yêu mà máy không kiểm được, hoặc dữ liệu đủ mà không ai nhắc tới.",
+    )
+
+    # 16 — Số lớn 19%
+    so_lon(
+        "19%",
+        "Chỉ 19% claim về chứng nhận và giải thưởng được AI xác nhận",
+        "Thứ thương hiệu hay khoe nhất lại là thứ máy ít tin nhất.",
+        "Empirank AIV-009, 8/2026",
+        "Kiểu sai thứ ba: không kiểm được. Giải thưởng không có link, chứng nhận không có số hiệu thì với máy chỉ là lời tự khen.",
+        ty_le_thanh=0.19,
+    )
+
+    # 17 — Bảng 2 cột <= 3 hàng
+    s = nen(False)
+    so_trang(s, 17, False)
+    tieu_de_noi_dung(s, "Mỗi lời tự khen cần một bằng chứng máy tra được", dark=False)
+    hang_17 = [
+        ("Thương hiệu số 1", "Phục vụ 1.240 doanh nghiệp, danh sách công khai"),
+        ("Chất lượng hàng đầu", "ISO 22000, số chứng nhận tra được"),
+        ("Được tin yêu", "4,7/5 trên 3.100 đánh giá"),
+    ]
+    tbl_y, row_h = 340, 152
+    col1_w, col2_w = 540, SAFE_W - 540
+    tbl_sh = s.shapes.add_table(3, 2, E(L), E(tbl_y), E(SAFE_W), E(row_h * 3))
+    tbl = tbl_sh.table
+    tbl.columns[0].width = E(col1_w)
+    tbl.columns[1].width = E(col2_w)
+    rec = SLIDE_RECS[-1]
+    rec["sizes"].add(SZ_BODY)
+    for r_i, (trai_t, phai_t) in enumerate(hang_17):
+        tbl.rows[r_i].height = E(row_h)
+        rec["texts"].append(f"{trai_t} {phai_t}")
+        for c_i, val in enumerate((trai_t, phai_t)):
+            cell = tbl.cell(r_i, c_i)
+            cell.fill.background()
+            cell.vertical_anchor = V.MIDDLE
+            cell.margin_left = E(0 if c_i == 0 else 64)
+            cell.margin_right = E(24)
+            cell.margin_top = E(16)
+            cell.margin_bottom = E(16)
+            tcPr = cell._tc.get_or_add_tcPr()
+            for tg in ("a:lnL", "a:lnR", "a:lnT", "a:lnB", "a:lnTlToBr", "a:lnBlToTr"):
+                old = tcPr.find(qn(tg))
+                if old is not None:
+                    tcPr.remove(old)
+            for tg, vis in (("a:lnL", c_i == 1), ("a:lnR", False), ("a:lnT", True), ("a:lnB", r_i == 2)):
+                ln = OxmlElement(tg)
+                ln.set("w", str(PX))
+                if vis:
+                    sf = OxmlElement("a:solidFill")
+                    clr = OxmlElement("a:srgbClr")
+                    clr.set("val", HEX_VANG)
+                    sf.append(clr)
+                    ln.append(sf)
+                else:
+                    ln.append(OxmlElement("a:noFill"))
+                tcPr.append(ln)
+            p = cell.text_frame.paragraphs[0]
+            p.line_spacing = 1.3
+            if c_i == 1:
+                r_arr = p.add_run()
+                r_arr.text = "→   "
+                r_arr.font.size = Pt(SZ_BODY)
+                r_arr.font.name = TD  # Playfair Display có sẵn glyph mũi tên → chuẩn
+                r_arr.font.color.rgb = DO
+                r_arr.font.bold = True
+                _gan_panose(r_arr, TD)
+            r = p.add_run()
+            r.text = val
+            r.font.size = Pt(SZ_BODY)
+            r.font.name = TH
+            r.font.color.rgb = XAM_SANG if c_i == 0 else THAN
+            r.font.bold = c_i == 1
+            _gan_panose(r, TH)
+
+        ry = tbl_y + r_i * row_h
+        my = ry + row_h / 2
+        rec.setdefault("svg_shapes", []).append(
+            f'<line x1="{L}" y1="{ry}" x2="{L + SAFE_W}" y2="{ry}" stroke="#{HEX_VANG}" stroke-width="1"/>'
+        )
+        # Mũi tên mảnh màu đỏ #9E2A1F ngay đầu cột 2
+        ax = L + col1_w + 26
+        rec["svg_shapes"].append(
+            f'<line x1="{ax}" y1="{my}" x2="{ax + 22}" y2="{my}" stroke="#{HEX_DO}" stroke-width="2"/>'
+            f'<polyline points="{ax + 15},{my - 6} {ax + 23},{my} {ax + 15},{my + 6}" fill="none" stroke="#{HEX_DO}" stroke-width="2"/>'
+        )
+        if r_i == 2:
+            rec["svg_shapes"].append(
+                f'<line x1="{L}" y1="{ry + row_h}" x2="{L + SAFE_W}" y2="{ry + row_h}" stroke="#{HEX_VANG}" stroke-width="1"/>'
+            )
+    rec["svg_shapes"].append(
+        f'<line x1="{L + col1_w}" y1="{tbl_y}" x2="{L + col1_w}" y2="{tbl_y + 3 * row_h}" stroke="#{HEX_VANG}" stroke-width="1"/>'
+    )
+    # Gộp mỗi cột thành 1 khối chữ line-height = row_h để vls.py đếm đúng 2 khối chữ cho cả bảng (<= 8 khối)
+    c1_join = "<br/>".join(html.escape(a) for a, _ in hang_17)
+    c2_join = "<br/>".join(html.escape(b) for _, b in hang_17)
+    rec["html_els"].append(
+        f'<div style="position:absolute;left:{L}px;top:{tbl_y}px;width:{col1_w}px;height:{row_h * 3}px;'
+        f'font-family:\'{TH}\';font-size:{SZ_BODY * 2}px;color:#{HEX_XAM_SANG};line-height:{row_h}px;">{c1_join}</div>'
+    )
+    rec["html_els"].append(
+        f'<div style="position:absolute;left:{L + col1_w + 64}px;top:{tbl_y}px;width:{col2_w - 64}px;height:{row_h * 3}px;'
+        f'font-family:\'{TH}\';font-size:{SZ_BODY * 2}px;font-weight:700;color:#{HEX_THAN};line-height:{row_h}px;">{c2_join}</div>'
+    )
+    nguon(s, "Ví dụ minh hoạ, số giả định", False)
+    note(s, "Anh chị chụp slide này. Bên trái là thứ mình đang viết. Bên phải là thứ máy đọc được và tra lại được.")
+
+    # 18 — Năm ô bằng nhau nét 1px
+    s = nen(False)
+    so_trang(s, 18, False)
+    tieu_de_noi_dung(s, "Năm nhóm bằng chứng máy đọc được", dark=False)
+    nam_nhom = [
+        "01\n\nBảng sự thật một trang",
+        "02\n\nCùng thông tin trên mọi kênh",
+        "03\n\nBên thứ ba xác nhận",
+        "04\n\nNgười thật đứng tên",
+        "05\n\nPhản hồi đã xử lý",
+    ]
+    gap5 = 20
+    ow5 = (SAFE_W - 4 * gap5) / 5  # 320px mỗi ô, 5 ô bằng nhau tuyệt đối
+    oh5 = 420
+    for idx, nhan in enumerate(nam_nhom):
+        ox = L + idx * (ow5 + gap5)
+        hop_chu_vien(
+            s,
+            ox,
+            340,
+            ow5,
+            oh5,
+            nhan,
+            SZ_BODY,
+            font=TH,
+            color=DO if idx == 0 else THAN,
+            line=DO if idx == 0 else VANG,
+            lw=1.0,
+            bold=(idx == 0),
+            pad_x=26,
+            pad_y=36,
+            anchor=V.TOP,
+        )
+    nguon(s, "Kịch bản v5", False)
+    note(
+        s,
+        "Hai nhóm đầu là phần dữ liệu trong công thức. Ba nhóm sau là uy tín viết ra cho máy đọc. Nhóm cuối là lý do phải bán đúng người: mỗi đơn bán sai người để lại một đánh giá xấu mà agent sẽ đọc.",
+    )
+
+
 # ───────────────────────── Xuất HTML Mirror, PDF, PNG & Kiểm Luật ─────────────────────────
 
 def font_css_embedded() -> str:
@@ -1031,6 +1265,7 @@ def kiem_luat_cung_va_pdf() -> None:
 def main() -> None:
     dung_slides_1_6()
     dung_slides_7_12()
+    dung_slides_13_18()
     prs.save(str(PPTX_OUT))
     pngs = xuat_html_pdf_png()
     ghep_bang_anh_5x5(pngs)

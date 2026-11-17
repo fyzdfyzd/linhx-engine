@@ -50,7 +50,7 @@
             "tieu_de_y": null,
             "tieu_de_the": null
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s01-v2.html",
           "ty_le_sua": 0.0
@@ -81,7 +81,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s02-v1.html"
         }
@@ -169,7 +169,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s03-v2.html",
           "ty_le_sua": 0.03
@@ -205,7 +205,7 @@
             "tieu_de_y": 534,
             "tieu_de_the": "h1"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s04-v1.html"
         }
@@ -235,7 +235,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s05-v1.html"
         }
@@ -301,7 +301,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s06-v2.html",
           "ty_le_sua": 0.02
@@ -363,7 +363,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s07-v2.html",
           "ty_le_sua": 0.0
@@ -399,7 +399,7 @@
             "tieu_de_y": 534,
             "tieu_de_the": "h1"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s08-v1.html"
         }
@@ -464,7 +464,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s09-v2.html",
           "ty_le_sua": 0.0
@@ -511,7 +511,7 @@
         {
           "hash_nguon": "2edb4acac270865e",
           "anh": "anh\\s10.png",
-          "hash_anh": "d96a317ee7e353b6",
+          "hash_anh": "d5c97d6713f851be",
           "anh_danh_dau": "anh\\s10-danh-dau.png",
           "sai": [
             {
@@ -535,7 +535,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 2,
           "ban_luu": "vong\\s10-v2.html",
           "ty_le_sua": 0.0
@@ -571,7 +571,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s11-v1.html"
         }
@@ -606,9 +606,250 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:37:54",
+          "luc": "2026-11-17T20:43:33",
           "so_vong": 1,
           "ban_luu": "vong\\s12-v1.html"
+        }
+      ]
+    },
+    "s13": {
+      "vong": [
+        {
+          "hash_nguon": "a06d27181b9ec0d7",
+          "anh": "anh\\s13.png",
+          "hash_anh": "894594cd271a62df",
+          "anh_danh_dau": "anh\\s13-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 37,
+            "so_khoi_chu": 8,
+            "so_khoi": 8,
+            "khoang_trong": 0.9,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 4,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 1,
+          "ban_luu": "vong\\s13-v1.html"
+        }
+      ]
+    },
+    "s14": {
+      "vong": [
+        {
+          "hash_nguon": "c63bd25ef51f6f26",
+          "anh": "anh\\s14.png",
+          "hash_anh": "b4d1c940fbe968c7",
+          "anh_danh_dau": "anh\\s14-danh-dau.png",
+          "sai": [],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 18,
+            "so_khoi_chu": 7,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              72,
+              184
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 0,
+            "tieu_de_y": 534,
+            "tieu_de_the": "h1"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 1,
+          "ban_luu": "vong\\s14-v1.html"
+        }
+      ]
+    },
+    "s15": {
+      "vong": [
+        {
+          "hash_nguon": "9d6e7c9c8ed51d3a",
+          "anh": "anh\\s15.png",
+          "hash_anh": "4be6bbdb90a319fd",
+          "anh_danh_dau": "anh\\s15-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "43 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "7 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 43,
+            "so_khoi_chu": 7,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              80
+            ],
+            "truc_canh": 7,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 1,
+          "ban_luu": "vong\\s15-v1.html"
+        }
+      ]
+    },
+    "s16": {
+      "vong": [
+        {
+          "hash_nguon": "9caf3fd5e82d64ad",
+          "anh": "anh\\s16.png",
+          "hash_anh": "d51053d8f6a8c931",
+          "anh_danh_dau": "anh\\s16-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 31,
+            "so_khoi_chu": 5,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 1,
+          "ban_luu": "vong\\s16-v1.html"
+        }
+      ]
+    },
+    "s17": {
+      "vong": [
+        {
+          "hash_nguon": "c5bf27e9c0354444",
+          "anh": "anh\\s17.png",
+          "hash_anh": "5fee5581f86d9b26",
+          "anh_danh_dau": "anh\\s17-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-khoi",
+              "mo_ta": "10 khối thị giác (tối đa 8): bỏ bớt, gộp, hoặc tách slide"
+            },
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "54 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 54,
+            "so_khoi_chu": 9,
+            "so_khoi": 10,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 3,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:41:19",
+          "so_vong": 1,
+          "ban_luu": "vong\\s17-v1.html"
+        },
+        {
+          "hash_nguon": "8bc061b63b6a01c4",
+          "anh": "anh\\s17.png",
+          "hash_anh": "45f29fd56c93a1ad",
+          "anh_danh_dau": "anh\\s17-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "47 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 47,
+            "so_khoi_chu": 5,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 3,
+            "mau_nhan": 0,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 2,
+          "ban_luu": "vong\\s17-v2.html",
+          "ty_le_sua": 0.03
+        }
+      ]
+    },
+    "s18": {
+      "vong": [
+        {
+          "hash_nguon": "a64594e1c07babb2",
+          "anh": "anh\\s18.png",
+          "hash_anh": "93774b3ad8c46ab3",
+          "anh_danh_dau": "anh\\s18-danh-dau.png",
+          "sai": [],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "7 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 36,
+            "so_khoi_chu": 8,
+            "so_khoi": 8,
+            "khoang_trong": 0.91,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 7,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:43:33",
+          "so_vong": 1,
+          "ban_luu": "vong\\s18-v1.html"
         }
       ]
     }
@@ -866,6 +1107,258 @@
       "vong": 1,
       "sai": 1,
       "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s01",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s03",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s06",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s07",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s08",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s09",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s10",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s11",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s12",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s13",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s14",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s15",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s16",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s17",
+      "vong": 1,
+      "sai": 2,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:41:19",
+      "slide": "s18",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s01",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s03",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s06",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s07",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s08",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s09",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s10",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s11",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s12",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s13",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s14",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s15",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s16",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s17",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:43:33",
+      "slide": "s18",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
     }
   ],
   "mau": {
