@@ -14,4 +14,4 @@ Kỹ năng: làm nhạc trên Gemini web (công cụ tạo nhạc trong Gemini, 
 Không có công cụ nhạc ở tài khoản này → `KHONG_CO_CONG_CU` + ảnh màn hình chỗ tìm.
 ĐẠT khi: có file âm thanh ≥ 20 giây (ghi thời lượng bằng ffprobe hoặc thuộc tính file).
 
-nhip: 20:14 3p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 20:17 6p warning: --mode auto is not available for this account; continuing in the default mode.
