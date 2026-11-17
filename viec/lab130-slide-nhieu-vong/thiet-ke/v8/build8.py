@@ -642,6 +642,30 @@ def xuong_song_4_o(s, y: float = 500) -> None:
             rect(s, mx + gap - 16, my - 4, 8, 8, fill=DO if i == 1 else VANG, shape=S.OVAL)
 
 
+def chuyen_anh(
+    tieu_de: str,
+    chu_phu: str,
+    src: str,
+    nt: str,
+    anh_ma: str,
+    *,
+    nhan_do: str = "",
+):
+    """Khuôn slide chuyện có ảnh thật đặt riêng bên phải, vùng chữ bên trái nền ngà sạch."""
+    s = nen(False)
+    n_sl = SLIDE_RECS[-1]["so"]
+    so_trang(s, n_sl, False)
+    tieu_de_noi_dung(s, tieu_de, dark=False, hep=True)
+    nen_anh(s, anh_ma, x=1200, y=136, w=600, h=812)
+    rect(s, L, 417, 48, 4, fill=DO)
+    hline(s, L + 56, 420, 220, color=VANG, lw=1.0)
+    if chu_phu:
+        txt(s, L, 465, 980, 280, chu_phu, SZ_BODY, font=TH, color=THAN, ls=1.45)
+    nguon(s, src, False)
+    note(s, nt)
+    return s
+
+
 # ═════════════════════════ DỰNG 25 SLIDE THEO TEXT-A-v3.md ═════════════════════════
 
 def dung_slides_1_6() -> None:
@@ -659,7 +683,7 @@ def dung_slides_1_6() -> None:
         font=TD,
         color=NGA,
         ls=1.14,
-        tag="h1",
+        tag="div",
     )
     txt(
         s,
@@ -773,6 +797,65 @@ def dung_slides_1_6() -> None:
         "Lòng trung thành mà mình mua bằng mười năm quảng cáo đang được giao cho một cái máy. Tin tốt là khách chưa tin hẳn.",
         ty_le_thanh=0.57,
         so_phu_thanh=0.15,
+    )
+
+
+def dung_slides_7_12() -> None:
+    # 07 — Mua hàng Etsy trong khung chat ChatGPT + ảnh a12
+    chuyen_anh(
+        "Từ tháng 9/2025, người Mỹ bấm mua hàng Etsy ngay trong khung chat ChatGPT",
+        "OpenAI nói thứ tự sản phẩm xếp theo mức hợp với người hỏi, không ai trả tiền để đứng đầu.",
+        "TechCrunch 29/9/2025",
+        "Khách không mở website của người bán. Chỗ đứng trong câu trả lời không mua bằng tiền quảng cáo được. Muốn có mặt thì phải được máy chọn.",
+        "a12",
+        nhan_do="ngay trong khung chat ChatGPT",
+    )
+
+    # 08 — Mở chương Chặng 2
+    chuong(
+        2,
+        "Chặng 2: agent của khách đi hỏi, đọc và so sánh",
+        "Khi khách đã giao quyền, agent của họ đi đọc về anh chị ở khắp nơi.",
+    )
+
+    # 09 — Google & Walmart + ảnh a05
+    chuyen_anh(
+        "Tháng 1/2026, Google cho agent của khách nói chuyện thẳng với hệ thống của Walmart",
+        "Agent đọc thẳng dữ liệu sản phẩm, không cần mở trang web dành cho khách.",
+        "Google Developers Blog, CNBC 11/1/2026",
+        "Google công bố giao thức thương mại cho agent, Walmart vào nhóm đầu. Trang sản phẩm đẹp vẫn dành cho người. Cái máy thì đọc dữ liệu.",
+        "a05",
+        nhan_do="nói chuyện thẳng",
+    )
+
+    # 10 — Nhận nhầm thành hãng dược bán kem bôi khớp + ảnh a11
+    chuyen_anh(
+        "Một công ty phục vụ các ngân hàng lớn bị AI tả thành hãng dược bán kem bôi khớp",
+        "Mười năm làm thương hiệu tử tế, nhưng với cái máy họ là một công ty khác.",
+        "Kết quả đo của diễn giả, đã ẩn danh",
+        "Tháng trước tôi hỏi AI về công ty này, nó trả lời rất tự tin. Hỏi chung về ngành, không AI nào nhắc tới họ. Đây là kiểu sai đầu tiên: bị nhận nhầm.",
+        "a11",
+        nhan_do="hãng dược bán kem bôi khớp",
+    )
+
+    # 11 — Số lớn 8,2%
+    so_lon(
+        "8,2%",
+        "Dù 1.231 trang đại lý đều ghi đúng, AI vẫn gán nhãn hiệu cho đối thủ trong 8,2% câu trả lời",
+        "Dữ liệu đúng có sẵn, máy vẫn đọc lẫn.",
+        "AIMCLEAR 6/2026, audit một thương hiệu trên 5 hệ AI",
+        "Đây không phải thiếu thông tin. Agent gộp hai thương hiệu có tên gần nhau thành một.",
+        ty_le_thanh=0.082,
+    )
+
+    # 12 — Số lớn 1/9 + lưới 9 ô, 1 ô đỏ
+    so_lon(
+        "1/9",
+        "Cứ 9 doanh nghiệp được ChatGPT giới thiệu thì 1 doanh nghiệp mang thông tin sai",
+        "Kiểu sai thứ hai: AI tự điền chỗ trống bằng số liệu bịa.",
+        "Empirank AIV-009, 8/2026, 182 doanh nghiệp địa phương ở Mỹ",
+        "Một công ty đào tạo Việt được AI gán số học viên và giải thưởng không có thật. Nghe thì có lợi, nhưng khách kiểm lại thì người mất uy tín là công ty.",
+        luoi_9_o=True,
     )
 
 
@@ -947,6 +1030,7 @@ def kiem_luat_cung_va_pdf() -> None:
 
 def main() -> None:
     dung_slides_1_6()
+    dung_slides_7_12()
     prs.save(str(PPTX_OUT))
     pngs = xuat_html_pdf_png()
     ghep_bang_anh_5x5(pngs)

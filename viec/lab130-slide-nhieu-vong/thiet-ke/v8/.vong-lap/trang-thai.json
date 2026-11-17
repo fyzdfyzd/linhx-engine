@@ -24,9 +24,36 @@
             "tieu_de_y": 281,
             "tieu_de_the": "h1"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:36:39",
           "so_vong": 1,
           "ban_luu": "vong\\s01-v1.html"
+        },
+        {
+          "hash_nguon": "0782a1395f8a7e13",
+          "anh": "anh\\s01.png",
+          "hash_anh": "d38fe0850c9521e6",
+          "anh_danh_dau": "anh\\s01-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 27,
+            "so_khoi_chu": 3,
+            "so_khoi": 4,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              88
+            ],
+            "truc_canh": 1,
+            "mau_nhan": 0,
+            "tieu_de_y": null,
+            "tieu_de_the": null
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 2,
+          "ban_luu": "vong\\s01-v2.html",
+          "ty_le_sua": 0.0
         }
       ]
     },
@@ -54,7 +81,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:37:54",
           "so_vong": 1,
           "ban_luu": "vong\\s02-v1.html"
         }
@@ -142,7 +169,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:37:54",
           "so_vong": 2,
           "ban_luu": "vong\\s03-v2.html",
           "ty_le_sua": 0.03
@@ -178,7 +205,7 @@
             "tieu_de_y": 534,
             "tieu_de_the": "h1"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:37:54",
           "so_vong": 1,
           "ban_luu": "vong\\s04-v1.html"
         }
@@ -208,7 +235,7 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:37:54",
           "so_vong": 1,
           "ban_luu": "vong\\s05-v1.html"
         }
@@ -274,10 +301,314 @@
             "tieu_de_y": 132,
             "tieu_de_the": "h2"
           },
-          "luc": "2026-11-17T20:34:21",
+          "luc": "2026-11-17T20:37:54",
           "so_vong": 2,
           "ban_luu": "vong\\s06-v2.html",
           "ty_le_sua": 0.02
+        }
+      ]
+    },
+    "s07": {
+      "vong": [
+        {
+          "hash_nguon": "6db1b0823e4dfb08",
+          "anh": "anh\\s07.png",
+          "hash_anh": "edc7e45382ffbc5b",
+          "anh_danh_dau": "anh\\s07-danh-dau.png",
+          "sai": [
+            {
+              "ma": "chong-lan",
+              "mo_ta": "\"Từ tháng 9/2025, người Mỹ bấm…\" chồng lên \"ngay trong khung chat ChatGPT\""
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 37,
+            "so_khoi_chu": 5,
+            "so_khoi": 7,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": null,
+            "tieu_de_the": null
+          },
+          "luc": "2026-11-17T20:36:39",
+          "so_vong": 1,
+          "ban_luu": "vong\\s07-v1.html"
+        },
+        {
+          "hash_nguon": "fb50d9052169ba5c",
+          "anh": "anh\\s07.png",
+          "hash_anh": "278ba0608f95a2dd",
+          "anh_danh_dau": "anh\\s07-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 37,
+            "so_khoi_chu": 4,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 0,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 2,
+          "ban_luu": "vong\\s07-v2.html",
+          "ty_le_sua": 0.0
+        }
+      ]
+    },
+    "s08": {
+      "vong": [
+        {
+          "hash_nguon": "5a31f014b1940336",
+          "anh": "anh\\s08.png",
+          "hash_anh": "675a648df9e4f95d",
+          "anh_danh_dau": "anh\\s08-danh-dau.png",
+          "sai": [],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 17,
+            "so_khoi_chu": 7,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              72,
+              184
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 0,
+            "tieu_de_y": 534,
+            "tieu_de_the": "h1"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 1,
+          "ban_luu": "vong\\s08-v1.html"
+        }
+      ]
+    },
+    "s09": {
+      "vong": [
+        {
+          "hash_nguon": "14d57ec7442b6ba7",
+          "anh": "anh\\s09.png",
+          "hash_anh": "5f253bc503c23ff7",
+          "anh_danh_dau": "anh\\s09-danh-dau.png",
+          "sai": [
+            {
+              "ma": "chong-lan",
+              "mo_ta": "\"Tháng 1/2026, Google cho agen…\" chồng lên \"nói chuyện thẳng\""
+            },
+            {
+              "ma": "chong-lan",
+              "mo_ta": "\"Tháng 1/2026, Google cho agen…\" chồng lên \"với hệ thống của Walmart\""
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 36,
+            "so_khoi_chu": 6,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": null,
+            "tieu_de_the": null
+          },
+          "luc": "2026-11-17T20:36:39",
+          "so_vong": 1,
+          "ban_luu": "vong\\s09-v1.html"
+        },
+        {
+          "hash_nguon": "22c2e51a979277e0",
+          "anh": "anh\\s09.png",
+          "hash_anh": "066d84407c0091b3",
+          "anh_danh_dau": "anh\\s09-danh-dau.png",
+          "sai": [],
+          "luu_y": [],
+          "so": {
+            "so_chu": 36,
+            "so_khoi_chu": 4,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 0,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 2,
+          "ban_luu": "vong\\s09-v2.html",
+          "ty_le_sua": 0.0
+        }
+      ]
+    },
+    "s10": {
+      "vong": [
+        {
+          "hash_nguon": "68da4a4885815869",
+          "anh": "anh\\s10.png",
+          "hash_anh": "b890d5f0f0683e15",
+          "anh_danh_dau": "anh\\s10-danh-dau.png",
+          "sai": [
+            {
+              "ma": "chong-lan",
+              "mo_ta": "\"Một công ty phục vụ các ngân …\" chồng lên \"hãng dược bán kem bôi khớp\""
+            },
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "46 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 46,
+            "so_khoi_chu": 5,
+            "so_khoi": 7,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": null,
+            "tieu_de_the": null
+          },
+          "luc": "2026-11-17T20:36:39",
+          "so_vong": 1,
+          "ban_luu": "vong\\s10-v1.html"
+        },
+        {
+          "hash_nguon": "2edb4acac270865e",
+          "anh": "anh\\s10.png",
+          "hash_anh": "d96a317ee7e353b6",
+          "anh_danh_dau": "anh\\s10-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "46 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 46,
+            "so_khoi_chu": 4,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              36,
+              48
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 0,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 2,
+          "ban_luu": "vong\\s10-v2.html",
+          "ty_le_sua": 0.0
+        }
+      ]
+    },
+    "s11": {
+      "vong": [
+        {
+          "hash_nguon": "17ffe7f653b9dba2",
+          "anh": "anh\\s11.png",
+          "hash_anh": "b42b59f8941bc99c",
+          "anh_danh_dau": "anh\\s11-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "42 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 42,
+            "so_khoi_chu": 5,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 1,
+          "ban_luu": "vong\\s11-v1.html"
+        }
+      ]
+    },
+    "s12": {
+      "vong": [
+        {
+          "hash_nguon": "0e142f825db75e36",
+          "anh": "anh\\s12.png",
+          "hash_anh": "ce9dd105c1540943",
+          "anh_danh_dau": "anh\\s12-danh-dau.png",
+          "sai": [
+            {
+              "ma": "nhieu-chu",
+              "mo_ta": "41 chữ (tối giản: tối đa 40)"
+            }
+          ],
+          "luu_y": [],
+          "so": {
+            "so_chu": 41,
+            "so_khoi_chu": 5,
+            "so_khoi": 6,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              48,
+              220
+            ],
+            "truc_canh": 2,
+            "mau_nhan": 1,
+            "tieu_de_y": 132,
+            "tieu_de_the": "h2"
+          },
+          "luc": "2026-11-17T20:37:54",
+          "so_vong": 1,
+          "ban_luu": "vong\\s12-v1.html"
         }
       ]
     }
@@ -365,6 +696,174 @@
       "luc": "2026-11-17T20:34:21",
       "slide": "s06",
       "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s01",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s03",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s06",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s07",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s08",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s09",
+      "vong": 1,
+      "sai": 2,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s10",
+      "vong": 1,
+      "sai": 2,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s11",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:36:39",
+      "slide": "s12",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s01",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s02",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s03",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 2
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s04",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s05",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s06",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s07",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s08",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s09",
+      "vong": 2,
+      "sai": 0,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s10",
+      "vong": 2,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s11",
+      "vong": 1,
+      "sai": 1,
+      "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T20:37:54",
+      "slide": "s12",
+      "vong": 1,
       "sai": 1,
       "luu_y": 0
     }
