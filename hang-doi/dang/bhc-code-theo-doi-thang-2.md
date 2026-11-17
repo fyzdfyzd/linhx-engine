@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 45
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-theo-doi
+nhan: may-2 2026-11-17T20:26:48+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; `npm.cmd`/`npx.cmd` (npm.ps1 bị chặn). Commit đầu trong 5 phút, commit + push mỗi 10 phút.
 Brand health check, gói theo dõi hằng tháng (bản đầu, chỉ AI giả). Worktree C:\linhx\ifagent-wt\bhc-theo-doi, nhánh agy/bhc-theo-doi từ origin/agy/bhc-chi-phi. CHỈ sửa apps/brand-health (+ bang-chung/bhc-theo-doi). Không deploy, không gọi AI thật, không đụng apps/event, apps/lab, packages/.
