@@ -14,3 +14,5 @@ Brand health check: thêm cổng OpenRouter để hỏi nhiều mô hình AI (ch
 4. Test (AI giả, không gọi mạng): provider bật/tắt theo biến; 1 làn treo → lượt vẫn xong trong timeout; nhãn nguồn không lộ mã thô (luật lint cũ phải xanh); quét nhanh đúng 6 câu. Thêm tên biến vào deploy/brand-health.env.example (chỉ tên, không giá trị). npm.cmd run verify xanh.
 CẤM: gọi API thật, in/ghi khoá, deploy, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; test mới; verify pass/fail.
+
+nhip: 08:08 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
