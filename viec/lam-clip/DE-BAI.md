@@ -39,3 +39,11 @@ Same woman as reference, identical face, long dark wavy hair, royal blue blazer 
 | p-nghe | Listens attentively, slight head tilt, small nod, returns to pose. |
 | p-suy-nghi | Finger lightly touches chin, eyes up-left thinking, then smiles, returns to pose. |
 | p-vui | Happy delighted smile, small soft clap near chest, returns to pose. |
+
+## Cách làm Flow đã dò được (lam-clip-1, MSI, 17/11)
+Đã có sẵn trên MSI: repo `D:\linhx\lam-clip\ifagent`, `khung\khung-kiosk.png`, `khung\khung-dt.png`. cho.webm ở `apps\lab\demos\yen-lam\public\assets\t146\rv\cho.webm` → đặt clip ở `...\assets\t147\`. portrait ở `ifagent\[1021]IFAGENT_LEBROS\YENLAM_REF_OFFICIAL\image\portrait.webp`: đổi sang PNG bằng ffmpeg trước (Chrome từ chối tải webp từ server cục bộ).
+Dự án Flow đã tạo: https://flow.google.com/project/5d918385-823b-423b-a7f5-7e8af0685945 (dùng lại, không tạo mới).
+Đưa ảnh lên Flow: chạy `python -m http.server 18911 --bind 127.0.0.1 --directory D:\linhx\lam-clip\khung` TIỀN CẢNH trong 1 lệnh riêng giữ sống (hoặc Start-Process), rồi browsentic `page_captureDownload` url `http://127.0.0.1:18911/<anh>.png` → `page_attachFile` target `input[type='file']` sau khi bấm nút "Start" (rồi "End").
+Model: nút "Select model family" → "Veo 3.1 - Fast".
+Đừng gọi `page_getPageInfo` liên tục (tốn 30 giây mỗi lần, ra file lớn): dùng `page_screenshot` maxLongSide 1024 và bấm theo chữ.
+NHANH: gửi đề TẤT CẢ clip của phiếu liên tiếp (Flow render song song), rồi mới chờ và tải về. Đừng chờ từng clip.
