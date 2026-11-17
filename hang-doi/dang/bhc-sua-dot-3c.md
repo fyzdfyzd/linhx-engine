@@ -13,3 +13,5 @@ Hoàn tất đợt 3 trên nhánh agy/bhc-sua-3 (b35388c), worktree cũ C:\linhx
 2. Thêm luật lint khoá trong scripts/lint.js: CSS trong public/ và so-sanh-html.js có font-size < 14px (trừ selector chứa .kicker/.nhan/.eyebrow tối thiểu 12px) hoặc nút (button, .nut, a.nut) có min-height/height < 44px → báo lỗi, thông báo ghi "tăng lên ≥14px / ≥44px". Test cho luật này (một CSS giả vi phạm phải bị bắt).
 3. Ảnh vàng landing NOP đã được Claude cập nhật theo cỡ chữ mới (test landing xanh trên cloud); không sửa test landing.
 verify + test:lap xanh. Push agy/bhc-sua-3.
+
+nhip: 03:03 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
