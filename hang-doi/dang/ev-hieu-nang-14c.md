@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: D:\linhx\ifagent-wt\ev-hieu-nang-14b
+nhan: may-3 2026-11-17T21:53:15+0700
+moc: 95b73a5fdecab580834068791c4efcf717c40a19
 
 Phiếu ev-hieu-nang-14c: LÀM TIẾP trong worktree CÓ SẴN D:\linhx\ifagent-wt\ev-hieu-nang-14b (nhánh agy/ev-hieu-nang-14b). Hai lượt trước đo được Lighthouse (truoc-mobile.json, truoc-desktop.json, scripts/do-lighthouse.js) nhưng KHÔNG commit/push nên mất 40 phút.
 BƯỚC 0 BẮT BUỘC (trong 3 phút đầu): `$env:GIT_TERMINAL_PROMPT=0`; cd worktree; `git add apps/event bang-chung/ev-hieu-nang-14b`; commit "ev-hieu-nang-14b: do Lighthouse truoc"; `git push -u origin agy/ev-hieu-nang-14b`. Sau đó mỗi lần sửa xong 1 nhóm (ảnh / phông / script / trợ năng / meta) là commit + push ngay.
