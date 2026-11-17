@@ -2,6 +2,7 @@ may: may-3
 loai: soi
 tran_phut: 40
 theo_doi: C:\linhx\tong-duyet\dt.log
+nhan: may-3 2026-11-17T20:04:54+0700
 
 Phiếu TỔNG DUYỆT LUỒNG 1 (điện thoại): trang chủ → đồng hành. Chỉ CHỤP và GHI, KHÔNG sửa code, KHÔNG deploy, KHÔNG gửi mail/Zalo. Mọi lệnh tiền cảnh, không background task. Commit + push sau mỗi mục.
 Đích: https://demo.ifagent.net/yen-lam/ (prod). Playwright Chromium, devices['iPhone 13'] (390×844, DPR 3), locale vi-VN, cấp quyền micro/camera/notifications, cờ --use-fake-device-for-media-stream. Tên khách thử: "Test Claude".
