@@ -2,6 +2,7 @@ may: may-3
 loai: khac
 tran_phut: 15
 theo_doi: D:\linhx\nhat-ky\may3-so-phieu-5
+nhan: may-3 2026-11-18T04:28:51+0700
 
 Linh 18/11 04:28 hỏi: máy 3 lên 5 phiếu song song được không. Chạy lệnh tiền cảnh, KHÔNG background task. Ghi mỗi bước 1 dòng vào `D:\linhx\nhat-ky\may3-so-phieu-5\tien-do.log`.
 1. Đo (PowerShell): CPU (tên, số nhân, số luồng), RAM tổng, RAM trống NGAY LÚC NÀY (đang có phiếu chạy), ổ D: còn trống, số tiến trình node/agy đang chạy và RAM mỗi tiến trình agy + node (Get-Process | sort WS).
