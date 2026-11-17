@@ -12,4 +12,6 @@ Phiếu ev-hieu-nang-14b (song song, máy 3): đo và nâng điểm Lighthouse c
 3. Thêm test khoá `apps/event/test/e2e/lighthouse-nguong.test.js` (script npm `test:lh`): chạy 18 trang di động, trượt ngưỡng thì báo "Trang <url>: <hạng mục> <điểm> < <ngưỡng> — xem mục <audit id> trong báo cáo". Ghi bảng SAU vào BANG-DIEM.md.
 4. Chạy tiền cảnh: test:lh, khong-tran-ngang, giao-dien-sang, de-xuat-slide; npm test sau cùng. Push agy/ev-hieu-nang-14b.
 
+LUẬT RIÊNG máy 3: KHÔNG chạy máy chủ nền bằng lệnh riêng. Máy chủ phải khởi động và tắt BÊN TRONG chính tiến trình test/script node (start → đo → close), mỗi lệnh tự kết thúc. Lần trước agy để một tác vụ nền nên phiếu bị dừng "cho-tac-vu-nen".
+
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task; chỉ sửa apps/event/ và bang-chung/ev-hieu-nang-14b/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó; chỉ xác nhận `git diff origin/agy/ev-de-xuat-11..HEAD` không có bí mật mới. KET-QUA ngắn: dat co/khong; SHA; bảng điểm trước/sau (trung bình + trang thấp nhất); pass/fail.
