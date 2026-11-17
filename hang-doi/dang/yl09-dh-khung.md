@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\yl09-dh-khung
+nhan: may-2 2026-11-17T22:56:23+0700
 
 Phiếu Yên Lam v0.9 `yl09-dh-khung`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI.md` (luật chung 1–9, bắt buộc) trong thư mục hàng đợi của máy này (`git pull` trước). Khung bố cục: `viec/yen-lam-v09/khung/` ảnh P1-tab-lam, P6-cua-toi (chỉ bố cục, GIỮ CSS kính hiện có).
 Chạy mọi lệnh ở tiền cảnh, KHÔNG background task; mỗi 5 phút phải có file mới hoặc commit trong thư mục theo_doi.
