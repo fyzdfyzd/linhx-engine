@@ -13,3 +13,5 @@ Chạy mọi lệnh ở tiền cảnh. Ghi tiến độ vào `C:\linhx\nhat-ky\y
 4. Deploy staging `origin/agy/yl09-gop` theo cách deploy staging thường lệ trên máy 2 (như các lần deploy staging trước). KHÔNG đụng prod, compose prod, `infra/` prod. Kiểm `/healthz` đúng SHA.
 5. Chụp 2 màn: điện thoại `/yen-lam/` 390×844 (deviceScaleFactor 2) và kiosk 1080×1920 trên staging. Commit vào `bang-chung/yl09-deploy/` của nhánh `agy/yl09-gop`, push.
 KET-QUA: dòng đầu `dat: co|khong`, SHA staging, link staging đã kiểm, 2 ảnh.
+
+nhip: 06:57 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
