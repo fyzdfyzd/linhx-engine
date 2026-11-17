@@ -17,3 +17,5 @@ Bỏ mọi nhãn "số mẫu", "Màn B ·", đường dẫn kỹ thuật. E2E ch
 Phần B (chi tiết, lead, cài đặt) để phiếu sau, ghi vào KET-QUA "còn phần B".
 CẤM: deploy, gọi AI thật, in mã quản trị/khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; E2E A1–A3; verify.
+
+nhip: 10:33 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
