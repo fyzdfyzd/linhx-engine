@@ -2,6 +2,7 @@ may: may-4
 loai: trinh-duyet
 tran_phut: 40
 theo_doi: D:\linhx\lam-clip
+nhan: may-4 2026-11-17T21:59:43+0700
 
 Phiếu THỬ ĐƯỜNG clip Lam qua Google Flow. Đọc và làm đúng `viec/lam-clip/DE-BAI.md` (luật 1–12).
 Phiếu này: dựng thư mục + clone + ảnh khung (luật 3–5), rồi làm 2 clip kiosk: `m-gat-dau`, `m-vay-chao` (đủ hậu kỳ, chấm máy, tự soi, push).
