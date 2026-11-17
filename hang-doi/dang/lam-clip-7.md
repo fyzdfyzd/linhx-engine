@@ -13,4 +13,4 @@ Ghi đè t147/m-chi-qr.webm|mp4, chấm, push, ảnh soi.
 3) Còn giờ: xem xong/lam-clip-4..6/KET-QUA.md, clip nào agy tự ghi xấu hoặc trượt cham.py thì làm lượt 2 cho clip đó (tối đa 2 clip).
 KET-QUA: mỗi clip 1 dòng như luật 12.
 
-nhip: 02:30 27p warning: --mode auto is not available for this account; continuing in the default mode.
+nhip: 02:33 30p warning: --mode auto is not available for this account; continuing in the default mode.
