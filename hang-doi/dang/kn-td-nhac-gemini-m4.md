@@ -13,3 +13,5 @@ Kỹ năng: làm nhạc trên Gemini web (công cụ tạo nhạc trong Gemini, 
 Đề: "Nhạc nền không lời 30 giây, piano + đàn dây nhẹ, cảm giác bình minh, dùng cho video giới thiệu". Tải file âm thanh về Drive (luật 5).
 Không có công cụ nhạc ở tài khoản này → `KHONG_CO_CONG_CU` + ảnh màn hình chỗ tìm.
 ĐẠT khi: có file âm thanh ≥ 20 giây (ghi thời lượng bằng ffprobe hoặc thuộc tính file).
+
+nhip: 20:14 3p warning: --mode auto is not available for this account; continuing in the default mode.
