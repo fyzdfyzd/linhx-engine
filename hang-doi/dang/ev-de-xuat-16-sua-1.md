@@ -5,6 +5,8 @@ khong_tien_phut: 25
 tu_sua: 0
 phu_thuoc: ev-anh-ly-12f
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-16
+nhan: may-2 2026-11-17T21:30:23+0700
+moc: d7ac65e7ecd869c5172d3d8ed410aa400343963f
 
 Lượt trước chạy tác vụ nền không ghi log rồi chờ. Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong.
 
