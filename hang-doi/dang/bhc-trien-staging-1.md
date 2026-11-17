@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-17T12:53:23+0700
 
 Lưu ý máy: KHÔNG dùng background task, subagent hay thợ con; mọi lệnh chạy tiền cảnh. Gọi `npm.cmd`/`npx.cmd`. Commit + push mỗi 10 phút.
 Brand health check: dựng STAGING RIÊNG trên VM chung (Linh duyệt 17/11 12:51). TUYỆT ĐỐI KHÔNG chạm prod, không chạm stg-event, staging Yên Lam (ifagent-staging-*, lab), Caddy, DNS.
