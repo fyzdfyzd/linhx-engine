@@ -14,3 +14,5 @@ Brand health check: chạy kiểm thử đầu-cuối HAI LẦN liên tiếp tr�
 4. Thiếu test cho ca ở bước 2 thì viết test mới (test/e2e-*.test.js), không sửa code sản phẩm. Lỗi thật của sản phẩm: ghi vào KET-QUA, KHÔNG tự sửa.
 CẤM: sửa code sản phẩm, deploy, gọi AI thật, in khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; bảng ca × lần 1 × lần 2; lỗi sản phẩm tìm thấy.
+
+nhip: 07:43 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
