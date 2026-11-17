@@ -16,4 +16,4 @@ Bối cảnh (quét thật staging 17/11 18:20): 4 làn OpenRouter tốn thực 
 5. verify + test:lap xanh; ảnh quản trị chi tiết 1280 vào bang-chung/bhc-chi-phi/. Push agy/bhc-chi-phi.
 KET-QUA.md: dat co|khong, SHA, số test, ảnh.
 
-nhip: 18:50 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 18:53 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
