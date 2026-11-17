@@ -12,4 +12,4 @@ Sửa: K7-NOI-DUNG-MAU (baoCaoTuQuet dựng động câu sốc, tóm tắt, 9 ch
 Test khoá mới (thông báo lỗi ghi cách sửa): báo cáo + PDF của thương hiệu thứ ba ("Highlands Coffee", "cà phê") KHÔNG chứa "Vinamilk", "TH true", "Sữa tươi"; thẻ điểm = điểm đầu trang; huỷ nhận thư đổi consent; lỗi form giữ dữ liệu. Chạy lại kịch bản apps/brand-health/e2e-giao-dien/khach.mjs (lấy từ origin/agy/bhc-e2e-khach) cho K4–K8, ảnh 1280/360 vào bang-chung/bhc-sua-1/.
 verify + test:lap xanh. Push agy/bhc-sua-1. KET-QUA: dat, SHA, số test, ảnh.
 
-nhip: 23:06 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 23:09 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
