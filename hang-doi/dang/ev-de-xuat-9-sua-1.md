@@ -5,6 +5,8 @@ khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-9
 phu_thuoc: ev-sang-8
+nhan: may-2 2026-11-17T08:20:51+0700
+moc: 2396c241922c6c3c637641b2f6571b14fe491b43
 
 Phiếu cụm event.ifagent.net (ev-de-xuat-9): làm bản ĐỀ XUẤT của xưởng ý tưởng thành bộ SLIDE đẹp, chỉn chu như TẠP CHÍ (anh Linh 17/11). Claude chấm bản hiện tại 6.5/10: trông như tài liệu, ảnh chung chung không thể hiện ý tưởng, chữ nhỏ, lịch triển khai chữ bị gãy dòng, phần đo lường không có điểm nhấn.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-9 -b agy/ev-de-xuat-9 origin/agy/ev-sang-8` (nếu ev-sang-8 chưa push thì dùng origin/agy/ev-tran-7). Trong apps/event: `npm ci`.
