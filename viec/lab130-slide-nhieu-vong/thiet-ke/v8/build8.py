@@ -344,6 +344,8 @@ def vline(s, x: float, y: float, h: float, color: RGBColor = VANG, lw: float = 1
 def note(s, t: str) -> None:
     """Đưa lời nói nguyên văn từ TEXT-A-v3.md vào speaker notes."""
     s.notes_slide.notes_text_frame.text = t
+    if SLIDE_RECS and SLIDE_RECS[-1]["so"] >= 19:
+        SLIDE_RECS[-1]["note"] = t
 
 
 def so_trang(s, n: int, dark: bool, size: float = SZ_META) -> None:
@@ -1093,6 +1095,33 @@ def dung_slides_13_18() -> None:
     )
 
 
+def dung_slides_19_21() -> None:
+    # 19 — Mở chương Chặng 4 (cùng khuôn s04/s08/s14)
+    chuong(
+        4,
+        "Chặng 4: máy nói thay, người đứng sau phải chịu trách nhiệm",
+        "Chặng cuối nhắc chúng ta ai là người ký tên.",
+    )
+
+    # 20 — Air Canada + ảnh a03
+    chuyen_anh(
+        "Chatbot của Air Canada hứa sai chính sách hoàn tiền, và toà buộc hãng bồi thường",
+        "Hãng cãi rằng chatbot tự chịu trách nhiệm. Toà không chấp\u00A0nhận.",
+        "Global News 15/2/2024; Civil Resolution Tribunal, BC",
+        "Một hành khách mất bà, hỏi chatbot và được bảo có thể xin giá vé tang sau chuyến bay. Chính sách thật không cho. Agent nói thay anh chị thì anh chị chịu thay agent.",
+        "a03",
+    )
+
+    # 21 — American Express + ảnh a06
+    chuyen_anh(
+        "Năm 2026, American Express cam kết bồi hoàn khi agent đã đăng ký mua nhầm",
+        "Giữa hai cái máy, cuối cùng vẫn cần một người đứng\u00A0tên.",
+        "The Financial Brand 1/5/2026",
+        "Agent được cấp danh tính, chủ thẻ xác thực trước khi agent được mua. Hãng thẻ hiểu rằng niềm tin giữa hai cái máy chỉ giữ được khi có người chịu trách nhiệm.",
+        "a06",
+    )
+
+
 # ───────────────────────── Xuất HTML Mirror, PDF, PNG & Kiểm Luật ─────────────────────────
 
 def font_css_embedded() -> str:
@@ -1149,11 +1178,16 @@ def xuat_html_pdf_png() -> list[Path]:
                 f'<svg style="position:absolute;left:0;top:0;width:{W}px;height:{H}px;pointer-events:none;" '
                 f'viewBox="0 0 {W} {H}">{"".join(rec["svg_shapes"])}</svg>'
             )
+        aside_html = f'<aside style="display:none;">{html.escape(rec["note"])}</aside>' if rec.get("note") else ""
         sec_html = (
             f'<section style="width:{W}px;height:{H}px;position:relative;overflow:hidden;background:{rec["bg"]};">'
-            f'{svg_layer}{"".join(rec["html_els"])}</section>'
+            f'{svg_layer}{"".join(rec["html_els"])}{aside_html}</section>'
         )
-        (SLIDES_HTML_DIR / f"{sid}.html").write_text(sec_html, encoding="utf-8")
+        html_file = SLIDES_HTML_DIR / f"{sid}.html"
+        if rec["so"] >= 19 or not html_file.exists():
+            html_file.write_text(sec_html, encoding="utf-8")
+        else:
+            sec_html = html_file.read_text(encoding="utf-8")
         slide_sections.append((sid, sec_html))
 
     # Dựng tài liệu tổng hợp để in PDF vector 1920x1080px nhúng phông thật
@@ -1190,7 +1224,8 @@ html, body {{ margin: 0; padding: 0; width: 1920px; -webkit-print-color-adjust: 
             locs = pg.locator(".page")
             for idx, (sid, _) in enumerate(slide_sections):
                 out_p = PNG_DIR / f"{sid}.png"
-                locs.nth(idx).screenshot(path=str(out_p))
+                if idx >= 18 or not out_p.exists():
+                    locs.nth(idx).screenshot(path=str(out_p))
                 png_paths.append(out_p)
             b.close()
     finally:
@@ -1266,6 +1301,7 @@ def main() -> None:
     dung_slides_1_6()
     dung_slides_7_12()
     dung_slides_13_18()
+    dung_slides_19_21()
     prs.save(str(PPTX_OUT))
     pngs = xuat_html_pdf_png()
     ghep_bang_anh_5x5(pngs)
