@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 25
 theo_doi: D:\linhx\ifagent-wt\bhc-e2e-lan-3
+nhan: may-3 2026-11-18T06:46:50+0700
 
 Lưu ý máy: KHÔNG background task/subagent; tiền cảnh; KHÔNG chờ/ngủ; `npm.cmd`/`npx.cmd`. Commit + push sau mỗi luồng mỗi lần.
 Nếu chưa có D:\linhx\ifagent: `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent` (không có quyền → DỪNG, CAN-LINH đăng nhập GitHub máy 3). Node ≥ 21; thiếu playwright thì `npx.cmd playwright install chromium`.
