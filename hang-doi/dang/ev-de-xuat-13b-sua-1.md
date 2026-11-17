@@ -5,6 +5,8 @@ khong_tien_phut: 25
 tu_sua: 0
 phu_thuoc: ev-anh-ly-12b
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-13b
+nhan: may-2 2026-11-17T19:49:09+0700
+moc: ccdb79dbe095ead97ae0c6656182239da7aec078
 
 Phiếu ev-de-xuat-13b (vòng 4): gắn 2 ảnh ly cà phê Gemini vào bộ slide đề xuất mẫu và sửa chữ "AI" rơi dòng. COMMIT + PUSH SAU MỖI Ý.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-13b -b agy/ev-de-xuat-13b origin/agy/ev-de-xuat-11`. Trong apps/event: `npm ci`. Lấy 2 ảnh từ nhánh hang-doi của linhx-engine: `xong/ev-anh-ly-12b/ly-ngang.*` và `ly-vuong.*` (nếu KET-QUA ev-anh-ly-12b ghi KHONG_THAY hoặc SAI_MAY thì bỏ ý 1, làm ý 2–3, ghi rõ).
