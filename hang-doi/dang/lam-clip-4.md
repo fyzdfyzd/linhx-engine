@@ -2,6 +2,7 @@ may: may-4
 loai: trinh-duyet
 tran_phut: 40
 theo_doi: D:\linhx\lam-clip
+nhan: may-4 2026-11-18T00:30:03+0700
 
 Clip Lam qua Google Flow. Làm đúng `viec/lam-clip/DE-BAI.md` (luật 1–12, "Cách làm Flow đã dò được", mẹo trong xong/lam-clip-2/KET-QUA.md, và mục "Sửa 18/11 0:15": credit, cham.py mới, ảnh soi).
 Phiếu này 3 clip: m-dem-321, m-lai-gan, m-suy-nghi.
