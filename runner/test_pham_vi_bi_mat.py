@@ -502,3 +502,63 @@ def test_clone_created_inside_agy_session_checks_only_new_commits(tmp_path):
     assert res["so_file"] == 1
     assert res["ngoai_vung"] == []
     assert "trang_thai: xong" in _read_ket_qua_from_bare(bare_repo, "01-clone-moi")
+
+
+def test_worktree_new_branch_ignores_old_secret_and_catches_new_secret(tmp_path):
+    # Worktree mới tạo bằng `-b` từ commit cũ có chuỗi giống khoá: base_sha "" chỉ quét commit mới
+    fakes = _make_runtime_fake_secrets()
+    repo_goc = tmp_path / "repo-goc"
+    old_commit = _init_project_repo(
+        repo_goc,
+        {
+            "apps/lab/old.txt": "du lieu cu ngoai vung\n",
+            "apps/event/test/e2e/platform.test.js": f"const legacyKey = '{fakes['sk_val']}';\n",
+        },
+    )
+
+    wt_sach = tmp_path / "wt-ev-sach"
+    _run_git(["worktree", "add", str(wt_sach), "-b", "agy/ev-sach", old_commit], repo_goc)
+    _commit_files(wt_sach, {"apps/event/src/clean.js": "export const ok = 1;\n"}, "commit sach")
+
+    res_sach = rao_phieu.inspect_new_commits(wt_sach, "", ["apps/event/**"], hang_doi_git.chay_git)
+    assert res_sach["bi_mat"] == []
+    assert res_sach["ngoai_vung"] == []
+    assert res_sach["file_doi"] == ["apps/event/src/clean.js"]
+    assert res_sach["dat"] is True
+
+    # Ca ngược: commit mới trên worktree thêm chuỗi giống khoá thì vẫn bắt được đúng dòng mới
+    wt_lo = tmp_path / "wt-ev-lo"
+    _run_git(["worktree", "add", str(wt_lo), "-b", "agy/ev-lo", old_commit], repo_goc)
+    _commit_files(
+        wt_lo,
+        {"apps/event/src/leak.js": f"// header\nexport const k = '{fakes['ghp_val']}';\n"},
+        "commit lo khoa",
+    )
+
+    res_lo = rao_phieu.inspect_new_commits(wt_lo, "", ["apps/event/**"], hang_doi_git.chay_git)
+    assert res_lo["dat"] is False
+    assert res_lo["bi_mat"] == ["apps/event/src/leak.js:2"]
+
+
+def test_infer_initial_base_oldest_reflog_and_empty_fallback(tmp_path):
+    # Lấy SHA mục reflog cũ nhất bất kể chủ đề; chỉ rơi về cây rỗng khi không có reflog
+    for subject in (
+        "branch: Created from origin/main",
+        "reset: moving to abc1234",
+        "checkout: moving from main to feat",
+        "clone: from https://example.invalid/repo.git",
+        "",
+    ):
+        fake_out = f"newsha999\tcommit: sua\noldsha111\t{subject}\n"
+        got = rao_phieu.infer_initial_base_when_cloned_in_agy(
+            tmp_path,
+            lambda _args, **_kw: subprocess.CompletedProcess(["git"], 0, fake_out, ""),
+        )
+        assert got == "oldsha111"
+
+    empty_got = rao_phieu.infer_initial_base_when_cloned_in_agy(
+        tmp_path,
+        lambda _args, **_kw: subprocess.CompletedProcess(["git"], 0, "", ""),
+    )
+    assert empty_got == rao_phieu.GIT_EMPTY_TREE_SHA
+

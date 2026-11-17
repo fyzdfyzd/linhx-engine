@@ -287,12 +287,12 @@ def capture_repo_head(repo_toplevel: Path | None, chay_git_fn) -> str:
 
 
 def infer_initial_base_when_cloned_in_agy(repo_toplevel: Path, chay_git_fn) -> str:
-    # Khi `theo_doi` chưa tồn tại lúc nhận phiếu mà được agy `git clone` trong phiên, lấy mốc clone đầu tiên từ reflog
+    # Khi `theo_doi` chưa tồn tại lúc nhận phiếu (agy clone hoặc tạo worktree mới), lấy SHA mục reflog cũ nhất của HEAD
     proc = chay_git_fn(["reflog", "--format=%H\t%gs", "HEAD"], cwd=repo_toplevel, check=False, timeout=15)
     if proc.returncode == 0 and proc.stdout.strip():
         for raw_line in reversed(proc.stdout.splitlines()):
-            sha, _, subject = raw_line.strip().partition("\t")
-            if sha.strip() and subject.strip().lower().startswith("clone:"):
+            sha, _, _ = raw_line.strip().partition("\t")
+            if sha.strip():
                 return sha.strip()
     return GIT_EMPTY_TREE_SHA
 
