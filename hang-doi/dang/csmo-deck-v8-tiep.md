@@ -13,3 +13,5 @@ Làm trong C:\linhx\wt-csmo-v8 (git pull nhánh claude/project-thread-j24agg tr�
 3) Xuất lại CSMO26_T21_v8.pptx + .pdf đủ 25 slide, png/s19..s25.png, tong.png 5x5. Chạy vls.py do + phong; ghi kết quả.
 Chạy tiền cảnh. Commit + push sau mỗi 3 slide lên nhánh claude/project-thread-j24agg.
 Trả KET-QUA.md ≤1500 ký tự: số slide, kết quả vls, slide lệch luật.
+
+nhip: 21:18 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
