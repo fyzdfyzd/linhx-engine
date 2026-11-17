@@ -2,6 +2,7 @@ may: may-3
 loai: code
 tran_phut: 40
 theo_doi: D:\linhx\wt-dien-gia-v4
+nhan: may-3 2026-11-17T18:43:15+0700
 
 Phiếu DIỄN GIẢ v4 (chuyển các bản sửa dien-gia-v3 sang dòng ứng viên prod). Nhánh mo-test-17-11 trên origin có các commit dien-gia-v3 (vd 4699d55f bỏ logo VSM/CSMO -> avatar chữ cái đầu ở bộ chọn booth; db12fa2d khử trùng chức danh "Chủ tịch · Chủ tịch" Lê Quốc Vinh; và các commit tiêu điểm khuôn mặt nếu có). cherry-pick các commit đó (git log origin/mo-test-17-11 --oneline -15 để tìm) sang nhánh mới; giải xung đột giữ cả bản sửa tràn 47 diễn giả đã có trên lam-gap.
 Làm nốt mục CHẶN còn thiếu: T2 tạp chí — MY FAVORITE SPEAKER mỗi mục "Tên · Đơn vị ngắn" 1 dòng kẹp, tối đa 3 diễn giả, đo chiều cao thực đẩy khối BA TỪ KHOÁ xuống; thêm test khoá MỚI: 3 diễn giả chức danh dài nhất (Đào Trung Thành, Đào Cẩm Thuỷ...) không chồng. Đếm số diễn giả có ảnh thật / 48 ghi vào KET-QUA.
