@@ -18,3 +18,5 @@ Chụp VIEWPORT (không fullPage) ở MỖI trạng thái, đặt tên NN-mo-ta.
 8) Diễn giả: /yen-lam/dien-gia/ + 3 trang (nguyen-tran-quang, jiang-na, 1 người không ảnh) + /yen-lam/lich.
 9) Bấm nút "Tiếng" (âm thanh) và nút micro "Chạm để nói" ở tab Lam: chụp trạng thái.
 Nộp: ảnh + BANG.md vào repo linhx-engine nhánh soi-rc8-17-11, thư mục soi/tong-duyet/dt/ (push từng mục). KET-QUA ≤1500 ký tự: số ảnh, các bước KHÔNG đi được, mọi lỗi 4xx/5xx.
+
+nhip: 20:07 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
