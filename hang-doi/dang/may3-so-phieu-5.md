@@ -11,3 +11,5 @@ Linh 18/11 04:28 hỏi: máy 3 lên 5 phiếu song song được không. Chạy 
 4. Nếu N > giá trị hiện tại: sửa ĐÚNG MỘT dòng `LINHX_SO_PHIEU=<N>` trong tho.env (UTF-8 không BOM, giữ nguyên các dòng khác), đặt thêm `LINHX_RAM_TOI_THIEU_GB=3` nếu đang thấp hơn 3. KHÔNG khởi động lại runner, KHÔNG dừng phiếu đang chạy (runner đọc tho.env mỗi phút). Nếu N ≤ hiện tại thì không sửa.
 5. Đợi 2 phút, đọc `runner\tho.log` dòng cuối xem runner đã nhận số mới chưa.
 KET-QUA.md ≤ 800 ký tự: CPU, luồng, RAM tổng/trống, RAM mỗi phiếu đo được, số phiếu cũ → mới, có sửa hay không, lý do.
+
+nhip: 04:31 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
