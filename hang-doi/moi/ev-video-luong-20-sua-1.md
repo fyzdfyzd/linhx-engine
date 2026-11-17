@@ -2,9 +2,10 @@ may: may-3
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-video-luong-20
-nhan: may-3 2026-11-17T23:37:54+0700
+
+Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh.
 
 Phiếu ev-video-luong-20 (song song máy 3): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-video-luong-20` (đã có thì fetch), `git checkout -b agy/ev-video-luong-20 origin/agy/ev-de-xuat-13b`. Trong apps/event: `npm ci`. Commit + push ngay khi có thay đổi đầu tiên.
@@ -13,3 +14,18 @@ Phiếu ev-video-luong-20 (song song máy 3): COMMIT + PUSH SAU MỖI Ý.
 3. npm test sau cùng. KET-QUA: 5 luồng pass/fail, thời lượng mỗi video, lỗi đã sửa.
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task, không dùng lệnh `status` chờ tác vụ; máy chủ khởi động và tắt BÊN TRONG chính script test. Chỉ sửa apps/event/ và bang-chung/ev-video-luong-20/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ (chỉ thêm ca mới), không sinh ảnh AI, không gọi AI thật, không viết chữ mới. KET-QUA ngắn: dat co/khong; SHA; test đỏ→xanh; pass/fail.
+
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: ev-video-luong-20
+may: may-3
+trang_thai: dung
+ly_do: cho-tac-vu-nen
+tep_doi: (khong)
+drive: (khong)
+phut: 0.75
+token: vao=0 ra=0
+
+dừng agy (cho-tac-vu-nen): waiting up to ... background task
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
