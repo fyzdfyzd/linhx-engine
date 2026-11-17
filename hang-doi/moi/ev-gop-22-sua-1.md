@@ -2,9 +2,10 @@ may: may-3
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: D:\linhx\ifagent-wt\ev-gop-22
-nhan: may-3 2026-11-18T02:44:20+0700
+
+Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. Lượt này mọi lệnh phải chạy tiền cảnh, đợi xong trong cùng lệnh.
 
 Phiếu ev-gop-22 (hoàn tất 2 test khoá còn đỏ trên nhánh gộp): COMMIT + PUSH SAU MỖI Ý.
 0. `$env:GIT_TERMINAL_PROMPT=0`. `git clone https://github.com/fyzdfyzd/ifagent D:\linhx\ifagent-wt\ev-gop-22` (có thì fetch --all), `git checkout -b agy/ev-gop-22 origin/agy/ev-gop-21`. Trong apps/event: `npm ci`.
@@ -14,3 +15,18 @@ Phiếu ev-gop-22 (hoàn tất 2 test khoá còn đỏ trên nhánh gộp): COMM
 4. Chạy tiền cảnh lần lượt: dau-tieng-viet, test:lien-ket, de-xuat-slide, khong-tran-ngang, giao-dien-sang, test:bo-cuc, test:lh, npm test. Chụp lại bang-chung/ev-gop-22/: TONG-1280, TONG-360, TONG-SANG-1280, TONG-SANG-360, TONG-SLIDE. Ghi bang-chung/ev-gop-22/KET-QUA-TEST.md: mỗi bộ test pass/fail, số ca. Push agy/ev-gop-22.
 
 LUẬT CHUNG cụm event: chạy TIỀN CẢNH, không background task, không dùng lệnh `status` chờ tác vụ; máy chủ khởi động và tắt BÊN TRONG chính script test. Chỉ sửa apps/event/ và bang-chung/ev-gop-22/; không đụng apps/lab, packages/, bang-chung cụm khác, nhánh Yên Lam/brand; không deploy, không mail thật, không in khoá, không sửa/xoá test cũ, không sinh ảnh AI, không gọi AI thật, không viết chữ mới. Bộ quét bí mật runner báo nhầm dòng CŨ: không sửa các tệp đó. KET-QUA ngắn: SHA; bảng pass/fail từng bộ; số lỗi dấu và lỗi liên kết đã sửa.
+
+## Lần trước trượt vì:
+model: gemini-4-hydrogen-high
+phieu: ev-gop-22
+may: may-3
+trang_thai: dung
+ly_do: cho-tac-vu-nen
+tep_doi: (khong)
+drive: (khong)
+phut: 0.40
+token: vao=0 ra=0
+
+dừng agy (cho-tac-vu-nen): waiting up to ... background task
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
