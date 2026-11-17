@@ -18,4 +18,4 @@ Phần B (chi tiết, lead, cài đặt) để phiếu sau, ghi vào KET-QUA "c�
 CẤM: deploy, gọi AI thật, in mã quản trị/khoá, đụng apps/event, apps/lab, packages/. Trạng thái cao nhất REVIEW.
 KET-QUA.md: `dat: co|khong`; SHA; E2E A1–A3; verify.
 
-nhip: 10:45 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 10:48 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
