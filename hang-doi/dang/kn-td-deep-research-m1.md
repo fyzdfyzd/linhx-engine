@@ -14,4 +14,4 @@ Kỹ năng: Deep Research trên ChatGPT Plus (tài khoản zomplaza).
 Lưu báo cáo dạng .md vào xong/<id>/bao-cao.md.
 ĐẠT khi: báo cáo có ≥ 5 nguồn có link. Trả: số phút chạy, số nguồn.
 
-nhip: 19:55 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 19:56 3p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T19:56:07+0700] · root agent idle; waiting up to 40m0s for 1 ba
