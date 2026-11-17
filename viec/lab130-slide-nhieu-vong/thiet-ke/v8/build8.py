@@ -1243,6 +1243,33 @@ def dung_slides_22_24() -> None:
     note(s, "Ba tuần đầu sửa chặng 3, chặng anh chị nắm trong tay. Tuần 4 đo lại bằng trang QR và so với hai số lúc đầu.")
 
 
+def dung_slide_25() -> None:
+    # 25 — Kết: câu chốt + sơ đồ 4 chặng sáng cả bốn + ảnh a10 bên phải
+    s = nen(True)
+    so_trang(s, 25, True)
+    nen_anh(s, "a10", x=1200, y=136, w=600, h=812)
+    txt(
+        s,
+        L,
+        235,
+        1020,
+        320,
+        "Mười năm tới, thương hiệu thắng là thương hiệu dễ kiểm\u00A0chứng\u00A0nhất",
+        SZ_CHAP_TITLE,
+        font=TD,
+        color=NGA,
+        ls=1.22,
+        tag="div",
+    )
+    hline(s, L, 610, 980, color=VANG, lw=1.0)
+    # Sơ đồ 4 chặng sáng đủ cả bốn chặng (đồng bộ thanh_chang với s04/s08/s14/s19)
+    thanh_chang(s, {0, 1, 2, 3}, dark=True, y=675)
+    note(
+        s,
+        "Mười năm qua, thương hiệu thắng là thương hiệu kể chuyện hay nhất. Ba mươi ngày nữa anh chị hỏi lại AI câu lúc nãy. Tôi mong lần đó anh chị là người giơ tay. Mời anh chị ở lại panel lúc 16:15 ở phòng này.",
+    )
+
+
 # ───────────────────────── Xuất HTML Mirror, PDF, PNG & Kiểm Luật ─────────────────────────
 
 def font_css_embedded() -> str:
@@ -1424,6 +1451,7 @@ def main() -> None:
     dung_slides_13_18()
     dung_slides_19_21()
     dung_slides_22_24()
+    dung_slide_25()
     prs.save(str(PPTX_OUT))
     pngs = xuat_html_pdf_png()
     ghep_bang_anh_5x5(pngs)

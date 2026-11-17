@@ -1042,6 +1042,40 @@
           "ban_luu": "vong\\s24-v1.html"
         }
       ]
+    },
+    "s25": {
+      "vong": [
+        {
+          "hash_nguon": "08fc926c490539bd",
+          "anh": "anh\\s25.png",
+          "hash_anh": "5ff37e59ceb43c76",
+          "anh_danh_dau": "anh\\s25-danh-dau.png",
+          "sai": [],
+          "luu_y": [
+            {
+              "ma": "truc-canh",
+              "mo_ta": "6 trục canh trái khác nhau (nên ≤ 5)"
+            }
+          ],
+          "so": {
+            "so_chu": 18,
+            "so_khoi_chu": 6,
+            "so_khoi": 8,
+            "khoang_trong": null,
+            "co_chu": [
+              28,
+              72
+            ],
+            "truc_canh": 6,
+            "mau_nhan": 0,
+            "tieu_de_y": null,
+            "tieu_de_the": null
+          },
+          "luc": "2026-11-17T21:36:55",
+          "so_vong": 1,
+          "ban_luu": "vong\\s25-v1.html"
+        }
+      ]
     }
   },
   "deck": {},
@@ -1591,6 +1625,13 @@
       "vong": 1,
       "sai": 1,
       "luu_y": 0
+    },
+    {
+      "luc": "2026-11-17T21:36:55",
+      "slide": "s25",
+      "vong": 1,
+      "sai": 0,
+      "luu_y": 1
     }
   ],
   "mau": {
