@@ -11,4 +11,4 @@ Linh duyệt 18/11 04:46 (thẻ quyết định: "Cho máy 2 đọc sổ"). Linh
 4. Nếu máy có quyền Cloud Billing / AI Studio thì lấy số tiền thật theo ngày, không thì ghi KHONG_CO_QUYEN.
 KET-QUA.md ≤ 1500 ký tự: bảng ngày, bảng tính năng, % test/nội bộ vs khách, 3 nguyên nhân lớn nhất có số, đề xuất cắt.
 
-nhip: 04:56 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:59 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
