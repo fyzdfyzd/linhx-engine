@@ -16,3 +16,5 @@ Tạo sổ tay mới tên `kn-thu-colab`, chọn GPU tốt nhất được phép
 print(sum(range(10**7)))
 ```
 ĐẠT khi: ô chạy ra đúng 49999995000000. Trả: loại GPU (hoặc "chỉ CPU"), danh sách máy chạy hiện ra trong Đổi loại thời gian chạy, đơn vị tính toán còn lại nếu hiện. Xong thì Ngắt kết nối và xoá thời gian chạy.
+
+nhip: 20:01 2p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-17T20:01:43+0700] · root agent idle; waiting up to 40m0s for 1 ba
