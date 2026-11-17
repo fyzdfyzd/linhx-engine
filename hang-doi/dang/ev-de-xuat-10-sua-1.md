@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\ev-de-xuat-10
+nhan: may-2 2026-11-17T09:58:44+0700
+moc: 71a047ef68c2a4a5c7e625b98a4241f57304722d
 
 Phiếu ev-de-xuat-10: nâng bộ 8 slide đề xuất từ 8 lên 9 điểm chuẩn tạp chí (Claude soi bang-chung/ev-de-xuat-9/sau/). COMMIT + PUSH SAU MỖI Ý.
 0. `git -C C:\linhx\ifagent fetch --all`. `git -C C:\linhx\ifagent worktree add C:\linhx\ifagent-wt\ev-de-xuat-10 -b agy/ev-de-xuat-10 origin/agy/ev-de-xuat-9`. Trong apps/event: `npm ci`.
