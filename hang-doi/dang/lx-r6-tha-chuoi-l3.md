@@ -19,3 +19,5 @@ LUẬT CHỐNG CHUYỂN NỀN (bắt buộc, lượt 2 hết hạn mức agy gi�
 CẤM: sửa runner đang chạy ở D:\linhx\hang-doi, đụng GitHub, deploy, in khoá. Không đổi hành vi ngoài phạm vi phiếu.
 Cuối: `git -C D:\linhx\wt-lx-r6-tha-chuoi-l3 -c sendpack.sideband=false push origin lx-r6-tha-chuoi-l3`.
 KET-QUA (ngắn): dòng đầu `dat: co|khong`; SHA đỉnh lx-r6-tha-chuoi-l3; test mới đỏ→xanh; số test chạy.
+
+nhip: 12:05 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
