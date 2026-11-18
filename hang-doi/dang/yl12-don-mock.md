@@ -12,4 +12,4 @@ Phiếu `yl12-don-mock`: DỌN DỮ LIỆU GIẢ trước production. ĐỌC `vi
 3. Không xoá dữ liệu trên VM. Chỉ sửa code nạp/hiển thị. Ảnh 390×844 bảng tin rỗng.
 Push agy/yl12-don-mock. KHÔNG deploy.
 
-nhip: 15:07 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 15:10 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
