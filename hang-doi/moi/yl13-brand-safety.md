@@ -19,7 +19,8 @@ VIỆC CÒN LẠI:
 3. "tự tử", "tự sát" trong chat Lam: Lam trả câu ân cần, có gợi ý tìm người hỗ trợ, không trả thông điệp "chưa phù hợp". Ở chỗ công khai thì xếp là nghi.
 4. Kiểm KHÔNG chặn: "Tôi từ TP Hồ Chí Minh ra", "Phiên đánh giá chiến dịch tấn công thị trường mấy giờ?", "PNJ làm loyalty thế nào?", "Chi phí vé bao nhiêu tiền?". Nếu bị chặn thì sửa bằng ngoại lệ (mục D).
 5. Mục G: email hoặc SĐT của chính khách ở ô cổng email và trong chat riêng không bị chặn. Ở chỗ công khai vẫn chặn.
-Test 1 tệp `yl13-brand-safety.test.js` (mock Gemini, không gọi mạng), phủ các mục 1–5:
+6. Kiosk Live (giọng nói, live-proxy.js): lọc cả LỜI LAM NÓI qua bản chữ phiên âm. Nếu vi phạm thì cắt lượt, ghi brand_safety_block. Không làm trễ câu sạch.
+Test 1 tệp `yl13-brand-safety.test.js` (thêm 1 ca cho mục 6) (mock Gemini, không gọi mạng), phủ các mục 1–5:
 - ảnh sạch hiện ngay;
 - ảnh nghi vào hàng duyệt;
 - ảnh vi phạm không có trong hàng;
