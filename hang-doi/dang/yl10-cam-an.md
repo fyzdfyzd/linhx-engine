@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\nhat-ky\yl10-cam-an; C:\linhx\ifagent-wt\yl10-cam-an
+nhan: may-2 2026-11-18T07:28:22+0700
 
 Phiếu Yên Lam sửa nhanh `yl10-cam-an`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` và `viec/yen-lam-v09/DE-BAI.md` (git pull hàng đợi trước).
 Chạy mọi lệnh ở tiền cảnh. Tạo `C:\linhx\nhat-ky\yl10-cam-an\`, ghi 1 dòng vào `tien-do.log` sau mỗi bước.
