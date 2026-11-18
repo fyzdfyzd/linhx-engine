@@ -1,0 +1,357 @@
+From b54fc9ebd05dba6a3553bff2469f27a3b10dd01e Mon Sep 17 00:00:00 2001
+From: LAB131 <lab131@linhx.local>
+Date: Wed, 18 Nov 2026 12:11:44 +0700
+Subject: [PATCH 1/2] test(tha-chuoi): them bo test do cho runner/tha_chuoi.py
+
+---
+ runner/test_tha_chuoi.py | 338 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 338 insertions(+)
+ create mode 100644 runner/test_tha_chuoi.py
+
+diff --git a/runner/test_tha_chuoi.py b/runner/test_tha_chuoi.py
+new file mode 100644
+index 00000000..6298b305
+--- /dev/null
++++ b/runner/test_tha_chuoi.py
+@@ -0,0 +1,338 @@
++"""Kiểm thử `runner/tha_chuoi.py` bằng git repo giả cục bộ (tmp_path, không gọi mạng)."""
++from __future__ import annotations
++
++import os
++from pathlib import Path
++import shutil
++import stat
++import subprocess
++import sys
++import uuid
++
++import pytest
++
++RUNNER_DIR = Path(__file__).resolve().parent
++REPO_ROOT = RUNNER_DIR.parent
++if str(REPO_ROOT) not in sys.path:
++    sys.path.insert(0, str(REPO_ROOT))
++
++from runner import hang_doi_git, linhx_runner  # noqa: E402
++from runner._gia_moi_truong import _gia_ram_va_moi_truong_h3  # noqa: F401  (fixture autouse, thay conftest)
++
++TEP_THA_CHUOI = RUNNER_DIR / "tha_chuoi.py"
++
++
++def _xoa_cay(thu_muc: Path) -> None:
++    if not thu_muc.exists():
++        return
++
++    def _go_readonly(fn, duong_dan, _):
++        try:
++            os.chmod(duong_dan, stat.S_IWRITE)
++            fn(duong_dan)
++        except OSError:
++            pass
++
++    shutil.rmtree(thu_muc, onerror=_go_readonly)
++
++
++@pytest.fixture
++def tmp_path():
++    goc_viec = linhx_runner.GOC / "viec"
++    da_co = goc_viec.exists()
++    tm_tam = goc_viec / f"pytest-tmp-tc-{os.getpid()}-{uuid.uuid4().hex[:8]}"
++    tm_tam.mkdir(parents=True, exist_ok=True)
++    try:
++        yield tm_tam
++    finally:
++        _xoa_cay(tm_tam)
++        if not da_co and goc_viec.exists():
++            try:
++                next(goc_viec.iterdir())
++            except StopIteration:
++                goc_viec.rmdir()
++
++
++def _chay_git(args: list[str], cwd: Path) -> str:
++    env = os.environ.copy()
++    env["GIT_TERMINAL_PROMPT"] = "0"
++    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
++    proc = subprocess.run(
++        ["git"] + list(args),
++        cwd=str(cwd),
++        env=env,
++        capture_output=True,
++        text=True,
++        encoding="utf-8",
++        check=True,
++        **kw,
++    )
++    return proc.stdout.strip()
++
++
++def _tao_bare_va_clone(tmp_path: Path) -> tuple[Path, Path]:
++    """Tạo bare repo và bản clone cục bộ có nhánh main + nhánh hang-doi trống (không mạng)."""
++    bare = tmp_path / f"remote-{uuid.uuid4().hex[:6]}.git"
++    bare.mkdir(parents=True)
++    _chay_git(["init", "--bare"], bare)
++
++    seed = tmp_path / f"seed-{uuid.uuid4().hex[:6]}"
++    seed.mkdir()
++    _chay_git(["init"], seed)
++    _chay_git(["config", "user.name", "seed"], seed)
++    _chay_git(["config", "user.email", "seed@linhx.local"], seed)
++    _chay_git(["config", "commit.gpgsign", "false"], seed)
++
++    _chay_git(["checkout", "-b", "main"], seed)
++    (seed / "README.md").write_text("linhx-engine\n", encoding="utf-8")
++    _chay_git(["add", "-A"], seed)
++    _chay_git(["commit", "-m", "init main"], seed)
++    _chay_git(["remote", "add", "origin", str(bare)], seed)
++    _chay_git(["push", "origin", "main"], seed)
++    _chay_git(["symbolic-ref", "HEAD", "refs/heads/main"], bare)
++
++    _chay_git(["checkout", "--orphan", "hang-doi"], seed)
++    _chay_git(["rm", "-rf", "."], seed)
++    tm_moi = seed / "hang-doi" / "moi"
++    tm_moi.mkdir(parents=True, exist_ok=True)
++    (tm_moi / ".gitkeep").write_text("", encoding="utf-8")
++    _chay_git(["add", "-A"], seed)
++    _chay_git(["commit", "-m", "init hang-doi"], seed)
++    _chay_git(["push", "origin", "hang-doi"], seed)
++
++    clone_dir = tmp_path / f"clone-{uuid.uuid4().hex[:6]}"
++    _chay_git(["clone", str(bare), str(clone_dir)], tmp_path)
++    _chay_git(["config", "user.name", "dieu-phoi"], clone_dir)
++    _chay_git(["config", "user.email", "dieu-phoi@linhx.local"], clone_dir)
++    _chay_git(["config", "commit.gpgsign", "false"], clone_dir)
++    return bare, clone_dir
++
++
++def _xem_nhanh_hang_doi(bare: Path, tmp_path: Path) -> Path:
++    tm_xem = tmp_path / f"xem-{uuid.uuid4().hex[:6]}"
++    _chay_git(["clone", "-b", "hang-doi", str(bare), str(tm_xem)], tmp_path)
++    return tm_xem
++
++
++def _goi_cli_tha_chuoi(args: list[str], cwd: Path) -> subprocess.CompletedProcess[str]:
++    assert TEP_THA_CHUOI.is_file(), f"Chưa có tệp {TEP_THA_CHUOI}"
++    env = os.environ.copy()
++    env["GIT_TERMINAL_PROMPT"] = "0"
++    env["PYTHONIOENCODING"] = "utf-8"
++    env.pop("LINHX_REPO_HANG_DOI", None)
++    kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
++    return subprocess.run(
++        [sys.executable, str(TEP_THA_CHUOI), *args],
++        cwd=str(cwd),
++        env=env,
++        capture_output=True,
++        text=True,
++        encoding="utf-8",
++        timeout=30,
++        **kw,
++    )
++
++
++def test_chuoi_3_phieu_sinh_4_tep_trong_moi_va_ping_la_goc(tmp_path, monkeypatch):
++    bare, clone_dir = _tao_bare_va_clone(tmp_path)
++    tm_chuoi = tmp_path / "chuoi-dem-18"
++    tm_chuoi.mkdir()
++
++    (tm_chuoi / "01-buoc-mot.md").write_text(
++        "may: may-1\nloai: code\n\nThực hiện bước 1.\n",
++        encoding="utf-8",
++    )
++    (tm_chuoi / "02-buoc-hai.md").write_text(
++        "may: may-1\nloai: code\nphu_thuoc: 01-buoc-mot\n\nThực hiện bước 2 sau bước 1.\n",
++        encoding="utf-8",
++    )
++    (tm_chuoi / "03-buoc-doc-lap.md").write_text(
++        "---\nmay: may-1\nloai: code\n---\nThực hiện bước 3 độc lập nhưng vẫn phải sau ping.\n",
++        encoding="utf-8",
++    )
++
++    proc = _goi_cli_tha_chuoi([str(tm_chuoi), "--may", "may-1"], cwd=clone_dir)
++    assert proc.returncode == 0, f"stderr={proc.stderr}\nstdout={proc.stdout}"
++
++    tm_xem = _xem_nhanh_hang_doi(bare, tmp_path)
++    cac_tep = sorted((tm_xem / "hang-doi" / "moi").glob("*.md"), key=lambda p: p.name)
++    assert len(cac_tep) == 4
++
++    map_phieu = {
++        tep.stem: hang_doi_git.phan_tich_phieu(tep.read_text(encoding="utf-8"), tep.stem)
++        for tep in cac_tep
++    }
++    ten_goc_ban_dau = {"01-buoc-mot", "02-buoc-hai", "03-buoc-doc-lap"}
++    cac_id_moi = set(map_phieu.keys()) - ten_goc_ban_dau
++    assert len(cac_id_moi) == 1
++    id_ping = next(iter(cac_id_moi))
++
++    # Kiểm phiếu ping tự sinh từ tao_phieu_ping với tran_phut = 5 và là gốc duy nhất
++    phieu_ping = map_phieu[id_ping]
++    assert phieu_ping["may"] == "may-1"
++    assert phieu_ping["loai"] == "code"
++    assert phieu_ping["tran_phut"] == 5
++    assert "PONG" in phieu_ping["de"]
++    assert phieu_ping["phu_thuoc"] == []
++
++    # Mọi phiếu không có phu_thuoc đều được chèn phu_thuoc: <id ping>; phiếu có sẵn phu_thuoc giữ nguyên
++    assert map_phieu["01-buoc-mot"]["phu_thuoc"] == [id_ping]
++    assert map_phieu["03-buoc-doc-lap"]["phu_thuoc"] == [id_ping]
++    assert map_phieu["02-buoc-hai"]["phu_thuoc"] == ["01-buoc-mot"]
++
++    # Khi runner nhận việc, bắt buộc phải nhận phiếu ping gốc đầu tiên
++    thu_tu_chay: list[str] = []
++    monkeypatch.setattr(
++        hang_doi_git,
++        "chay_agy",
++        lambda cfg, viec: (thu_tu_chay.append(viec["viec"]) or ("xong", "PONG", "ok", 5, 3)),
++    )
++    cfg_tho = {
++        "nguon": "github",
++        "tho": "may-1",
++        "agy": "agy-gia",
++        "agy_args": "--output-format json",
++        "thu_muc": tmp_path / "lam-viec-may-1",
++        "nghi": 0.01,
++        "repo_hang_doi": clone_dir,
++        "nhanh_hang_doi": "hang-doi",
++        "remote_hang_doi": "origin",
++        "wt_hang_doi": "",
++        "thu_muc_drive": tmp_path / "drive-may-1",
++        "thu_muc_log": tmp_path / "log-may-1",
++    }
++    kq_dau = hang_doi_git.xu_ly_mot_phieu(cfg_tho)
++    assert kq_dau is not None and kq_dau["viec"] == id_ping
++    assert thu_tu_chay == [id_ping]
++
++
++def test_vong_phu_thuoc_thoat_ma_2_va_khong_ghi_gi(tmp_path):
++    bare, clone_dir = _tao_bare_va_clone(tmp_path)
++    sha_truoc = _chay_git(["rev-parse", "refs/heads/hang-doi"], bare)
++
++    tm_vong = tmp_path / "chuoi-vong"
++    tm_vong.mkdir()
++    (tm_vong / "01-dau.md").write_text("may: may-1\nloai: code\n\nBước mở đầu.\n", encoding="utf-8")
++    (tm_vong / "02-a.md").write_text("may: may-1\nphu_thuoc: 03-b\n\nChờ B.\n", encoding="utf-8")
++    (tm_vong / "03-b.md").write_text("may: may-1\nphu_thuoc: 02-a\n\nChờ A.\n", encoding="utf-8")
++
++    proc = _goi_cli_tha_chuoi([str(tm_vong), "--may", "may-1"], cwd=clone_dir)
++    assert proc.returncode == 2
++    assert proc.stderr.strip() != ""
++
++    sha_sau = _chay_git(["rev-parse", "refs/heads/hang-doi"], bare)
++    assert sha_sau == sha_truoc
++    tm_xem = _xem_nhanh_hang_doi(bare, tmp_path)
++    assert list((tm_xem / "hang-doi" / "moi").glob("*.md")) == []
++
++    # Tự phụ thuộc chính mình (self-loop) cũng phải thoát mã 2 và không ghi gì
++    tm_tu_vong = tmp_path / "chuoi-tu-vong"
++    tm_tu_vong.mkdir()
++    (tm_tu_vong / "tu-vong.md").write_text("may: may-1\nphu_thuoc: tu-vong\n\nTự chờ mình.\n", encoding="utf-8")
++    proc_tu_vong = _goi_cli_tha_chuoi([str(tm_tu_vong), "--may", "may-1"], cwd=clone_dir)
++    assert proc_tu_vong.returncode == 2
++    assert _chay_git(["rev-parse", "refs/heads/hang-doi"], bare) == sha_truoc
++
++
++def test_id_phu_thuoc_la_thoat_ma_2_va_khong_ghi_gi(tmp_path):
++    bare, clone_dir = _tao_bare_va_clone(tmp_path)
++    sha_truoc = _chay_git(["rev-parse", "refs/heads/hang-doi"], bare)
++
++    tm_la = tmp_path / "chuoi-id-la"
++    tm_la.mkdir()
++    (tm_la / "01-hop-le.md").write_text("may: may-2\nloai: code\n\nBước 1.\n", encoding="utf-8")
++    (tm_la / "02-id-la.md").write_text(
++        "may: may-2\nloai: code\nphu_thuoc: 01-hop-le; phieu-ma-khong-ton-tai\n\nBước 2.\n",
++        encoding="utf-8",
++    )
++
++    proc = _goi_cli_tha_chuoi([str(tm_la), "--may", "may-2"], cwd=clone_dir)
++    assert proc.returncode == 2
++    assert "phieu-ma-khong-ton-tai" in (proc.stderr + proc.stdout)
++
++    sha_sau = _chay_git(["rev-parse", "refs/heads/hang-doi"], bare)
++    assert sha_sau == sha_truoc
++    tm_xem = _xem_nhanh_hang_doi(bare, tmp_path)
++    assert list((tm_xem / "hang-doi" / "moi").glob("*.md")) == []
++
++
++def test_push_bi_tu_choi_tu_pull_rebase_toi_da_3_lan(tmp_path):
++    from runner import tha_chuoi
++
++    bare, clone_dir = _tao_bare_va_clone(tmp_path)
++    other_clone = tmp_path / "other-worker"
++    _chay_git(["clone", "-b", "hang-doi", str(bare), str(other_clone)], tmp_path)
++    _chay_git(["config", "user.name", "may-khac"], other_clone)
++    _chay_git(["config", "user.email", "may-khac@linhx.local"], other_clone)
++    _chay_git(["config", "commit.gpgsign", "false"], other_clone)
++
++    tm_chuoi = tmp_path / "chuoi-tranh-chap"
++    tm_chuoi.mkdir()
++    (tm_chuoi / "p1.md").write_text("may: may-1\n\nViệc 1.\n", encoding="utf-8")
++
++    so_lan_push = [0]
++    so_lan_rebase = [0]
++    chay_git_goc = hang_doi_git.chay_git
++
++    def gia_chay_git(args, cwd, check=True, timeout=120):
++        ds = list(args)
++        if ds[:2] == ["pull", "--rebase"]:
++            so_lan_rebase[0] += 1
++        if ds and ds[0] == "push":
++            so_lan_push[0] += 1
++            if so_lan_push[0] <= 2:
++                # Giả lập máy khác vừa đẩy commit mới lên nhánh hang-doi trước khi push kịp hoàn tất
++                tep_khac = other_clone / "hang-doi" / "xong" / f"viec-ngoai-{so_lan_push[0]}" / "KET-QUA.md"
++                tep_khac.parent.mkdir(parents=True, exist_ok=True)
++                tep_khac.write_text("trang_thai: xong\n", encoding="utf-8")
++                _chay_git(["add", "-A"], other_clone)
++                _chay_git(["commit", "-m", f"ngoai {so_lan_push[0]}"], other_clone)
++                _chay_git(["push", "origin", "hang-doi"], other_clone)
++        return chay_git_goc(ds, cwd=cwd, check=check, timeout=timeout)
++
++    kq = tha_chuoi.tha_chuoi(
++        tm_chuoi,
++        may="may-1",
++        repo_hang_doi=clone_dir,
++        chay_git_fn=gia_chay_git,
++    )
++    assert kq["so_tep"] == 2
++    assert so_lan_rebase[0] == 2
++    assert so_lan_push[0] == 3
++
++    tm_xem = _xem_nhanh_hang_doi(bare, tmp_path)
++    assert len(list((tm_xem / "hang-doi" / "moi").glob("*.md"))) == 2
++    assert (tm_xem / "hang-doi" / "xong" / "viec-ngoai-1" / "KET-QUA.md").is_file()
++    assert (tm_xem / "hang-doi" / "xong" / "viec-ngoai-2" / "KET-QUA.md").is_file()
++
++    # Nếu liên tục xung đột vượt quá trần 3 lần pull --rebase thì dừng sau đúng 3 lần rebase và báo lỗi
++    _chay_git(["pull", "--rebase", "origin", "hang-doi"], other_clone)
++    tm_chuoi_2 = tmp_path / "chuoi-qua-tran-rebase"
++    tm_chuoi_2.mkdir()
++    (tm_chuoi_2 / "q1.md").write_text("may: may-1\n\nViệc Q1.\n", encoding="utf-8")
++    dem_rebase_loi = [0]
++    dem_push_loi = [0]
++
++    def gia_chay_git_luon_xung_dot(args, cwd, check=True, timeout=120):
++        ds = list(args)
++        if ds[:2] == ["pull", "--rebase"]:
++            dem_rebase_loi[0] += 1
++        if ds and ds[0] == "push":
++            dem_push_loi[0] += 1
++            tep_khac = other_clone / "hang-doi" / "xong" / f"chan-push-{dem_push_loi[0]}" / "KET-QUA.md"
++            tep_khac.parent.mkdir(parents=True, exist_ok=True)
++            tep_khac.write_text("trang_thai: xong\n", encoding="utf-8")
++            _chay_git(["add", "-A"], other_clone)
++            _chay_git(["commit", "-m", f"chan {dem_push_loi[0]}"], other_clone)
++            _chay_git(["push", "origin", "hang-doi"], other_clone)
++        return chay_git_goc(ds, cwd=cwd, check=check, timeout=timeout)
++
++    with pytest.raises(RuntimeError):
++        tha_chuoi.tha_chuoi(
++            tm_chuoi_2,
++            may="may-1",
++            repo_hang_doi=clone_dir,
++            chay_git_fn=gia_chay_git_luon_xung_dot,
++        )
++    assert dem_rebase_loi[0] == 3
++    assert dem_push_loi[0] == 4
+-- 
+2.56.1.windows.1
+

@@ -1,0 +1,198 @@
+From 582a37343f24f6a33d894363144fc3831cd98eeb Mon Sep 17 00:00:00 2001
+From: may-3 <may-3@linhx.local>
+Date: Wed, 18 Nov 2026 12:18:53 +0700
+Subject: [PATCH 2/2] fix(bi-mat-goc): lay merge-base voi nhanh nguon origin
+ khi thieu base_sha
+
+---
+ runner/rao_phieu.py | 168 +++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 166 insertions(+), 2 deletions(-)
+
+diff --git a/runner/rao_phieu.py b/runner/rao_phieu.py
+index 21101c03..877df315 100644
+--- a/runner/rao_phieu.py
++++ b/runner/rao_phieu.py
+@@ -286,14 +286,178 @@ def capture_repo_head(repo_toplevel: Path | None, chay_git_fn) -> str:
+     return GIT_EMPTY_TREE_SHA
+ 
+ 
+-def infer_initial_base_when_cloned_in_agy(repo_toplevel: Path, chay_git_fn) -> str:
+-    # Khi `theo_doi` chưa tồn tại lúc nhận phiếu mà được agy `git clone` trong phiên, lấy mốc clone đầu tiên từ reflog
++_BRANCH_CFG_RE = re.compile(r"^branch\.(.+)\.(remote|merge)\s+(.+)$")
++_EXPLICIT_FETCH_RE = re.compile(r"^\+?refs/heads/[^\s*:]+:(refs/remotes/origin/[^\s*:]+)$")
++
++
++def _git_merge_base(repo_toplevel: Path, head_sha: str, target_ref: str, chay_git_fn) -> str:
++    # Lấy SHA `merge-base HEAD <target_ref>` nếu ref tồn tại và có chung lịch sử với HEAD
++    if not head_sha or not target_ref:
++        return ""
++    proc = chay_git_fn(["merge-base", head_sha, target_ref], cwd=repo_toplevel, check=False, timeout=15)
++    if proc.returncode == 0 and proc.stdout.strip():
++        return proc.stdout.strip().splitlines()[0].strip()
++    return ""
++
++
++def _pick_closest_merge_base(repo_toplevel: Path, mb_candidates: list[str], chay_git_fn) -> str:
++    # Khi có nhiều mốc chung với `HEAD`, chọn mốc gần `HEAD` nhất trên chuỗi tổ tiên
++    unique_mbs: list[str] = []
++    seen: set[str] = set()
++    for mb in mb_candidates:
++        if mb and mb not in seen:
++            seen.add(mb)
++            unique_mbs.append(mb)
++    if not unique_mbs:
++        return ""
++    best = unique_mbs[0]
++    for cand in unique_mbs[1:]:
++        p_anc = chay_git_fn(["merge-base", "--is-ancestor", best, cand], cwd=repo_toplevel, check=False, timeout=15)
++        if p_anc.returncode == 0:
++            best = cand
++    return best
++
++
++def _infer_clone_reflog_sha(repo_toplevel: Path, chay_git_fn) -> str:
++    # Dự phòng khi repo không có nhánh `origin/*`: lấy mốc `clone:` đầu tiên từ reflog HEAD
+     proc = chay_git_fn(["reflog", "--format=%H\t%gs", "HEAD"], cwd=repo_toplevel, check=False, timeout=15)
+     if proc.returncode == 0 and proc.stdout.strip():
+         for raw_line in reversed(proc.stdout.splitlines()):
+             sha, _, subject = raw_line.strip().partition("\t")
+             if sha.strip() and subject.strip().lower().startswith("clone:"):
+                 return sha.strip()
++    return ""
++
++
++def infer_initial_base_when_cloned_in_agy(repo_toplevel: Path, chay_git_fn) -> str:
++    # Khi không có `base_sha`, lấy `merge-base HEAD <nhánh nguồn trong origin>` (đọc từ upstream hoặc `clone -b`),
++    # chỉ lùi về cây rỗng khi không tìm được
++    p_head = chay_git_fn(["rev-parse", "--verify", "-q", "HEAD"], cwd=repo_toplevel, check=False, timeout=15)
++    head_sha = p_head.stdout.strip() if p_head.returncode == 0 else ""
++    if not head_sha:
++        return GIT_EMPTY_TREE_SHA
++
++    p_cur = chay_git_fn(["symbolic-ref", "--quiet", "--short", "HEAD"], cwd=repo_toplevel, check=False, timeout=15)
++    cur_branch = p_cur.stdout.strip() if p_cur.returncode == 0 else ""
++
++    same_branch_mb = ""
++
++    # 1. Đọc nhánh nguồn từ upstream của HEAD (`HEAD@{upstream}`)
++    p_up = chay_git_fn(
++        ["rev-parse", "--verify", "-q", "--symbolic-full-name", "HEAD@{upstream}"],
++        cwd=repo_toplevel,
++        check=False,
++        timeout=15,
++    )
++    if p_up.returncode == 0 and p_up.stdout.strip():
++        up_ref = p_up.stdout.strip()
++        up_branch = ""
++        if up_ref.startswith("refs/remotes/"):
++            _, _, up_branch = up_ref[len("refs/remotes/") :].partition("/")
++        mb_up = _git_merge_base(repo_toplevel, head_sha, up_ref, chay_git_fn)
++        if mb_up:
++            if not cur_branch or up_branch != cur_branch or mb_up != head_sha:
++                return mb_up
++            same_branch_mb = mb_up
++
++    # 2. Đọc nhánh nguồn tạo bởi `git clone -b <nhánh>` (hoặc nhánh local khác trỏ `origin/*`) trong `.git/config`
++    p_cfg = chay_git_fn(
++        ["config", "--local", "--get-regexp", r"^branch\..*\.(remote|merge)$"],
++        cwd=repo_toplevel,
++        check=False,
++        timeout=15,
++    )
++    if p_cfg.returncode == 0 and p_cfg.stdout.strip():
++        remotes_by_branch: dict[str, str] = {}
++        merges_by_branch: dict[str, str] = {}
++        for raw_line in p_cfg.stdout.splitlines():
++            m_cfg = _BRANCH_CFG_RE.match(raw_line.strip())
++            if not m_cfg:
++                continue
++            b_name, prop, val = m_cfg.group(1), m_cfg.group(2), m_cfg.group(3).strip()
++            if prop == "remote":
++                remotes_by_branch[b_name] = val
++            else:
++                merges_by_branch[b_name] = val
++
++        clone_mbs: list[str] = []
++        for b_name, merge_val in merges_by_branch.items():
++            if cur_branch and b_name == cur_branch:
++                continue
++            rem = remotes_by_branch.get(b_name, "")
++            if rem == "origin" and merge_val.startswith("refs/heads/"):
++                src_branch = merge_val[len("refs/heads/") :]
++                mb = _git_merge_base(repo_toplevel, head_sha, f"refs/remotes/origin/{src_branch}", chay_git_fn)
++                if mb:
++                    clone_mbs.append(mb)
++        chosen_clone_mb = _pick_closest_merge_base(repo_toplevel, clone_mbs, chay_git_fn)
++        if chosen_clone_mb:
++            return chosen_clone_mb
++
++    # 3. Đọc refspec đơn nhánh (`clone --single-branch -b`), `origin/HEAD` hoặc nhánh nguồn trong `refs/remotes/origin/*`
++    p_fetch = chay_git_fn(["config", "--local", "--get-all", "remote.origin.fetch"], cwd=repo_toplevel, check=False, timeout=15)
++    if p_fetch.returncode == 0 and p_fetch.stdout.strip():
++        fetch_mbs: list[str] = []
++        for raw_spec in p_fetch.stdout.splitlines():
++            m_spec = _EXPLICIT_FETCH_RE.match(raw_spec.strip())
++            if m_spec:
++                ref_cand = m_spec.group(1)
++                if cur_branch and ref_cand == f"refs/remotes/origin/{cur_branch}":
++                    continue
++                mb = _git_merge_base(repo_toplevel, head_sha, ref_cand, chay_git_fn)
++                if mb:
++                    fetch_mbs.append(mb)
++        chosen_fetch_mb = _pick_closest_merge_base(repo_toplevel, fetch_mbs, chay_git_fn)
++        if chosen_fetch_mb:
++            return chosen_fetch_mb
++
++    if not same_branch_mb:
++        p_ohead = chay_git_fn(["symbolic-ref", "--quiet", "refs/remotes/origin/HEAD"], cwd=repo_toplevel, check=False, timeout=15)
++        ohead_ref = p_ohead.stdout.strip() if p_ohead.returncode == 0 else ""
++
++        p_refs = chay_git_fn(
++            ["for-each-ref", "--format=%(objectname)\t%(refname)", "refs/remotes/origin"],
++            cwd=repo_toplevel,
++            check=False,
++            timeout=15,
++        )
++        if p_refs.returncode == 0 and p_refs.stdout.strip():
++            other_remote_shas: list[str] = []
++            seen_shas: set[str] = set()
++            same_name_remote_ref = f"refs/remotes/origin/{cur_branch}" if cur_branch else ""
++            for raw_line in p_refs.stdout.splitlines():
++                obj_sha, _, ref_name = raw_line.strip().partition("\t")
++                if not obj_sha or not ref_name or ref_name == "refs/remotes/origin/HEAD":
++                    continue
++                if same_name_remote_ref and ref_name == same_name_remote_ref and obj_sha == head_sha:
++                    continue
++                if obj_sha not in seen_shas:
++                    seen_shas.add(obj_sha)
++                    other_remote_shas.append(obj_sha)
++            remote_mbs = [
++                mb
++                for sha_cand in other_remote_shas
++                if (mb := _git_merge_base(repo_toplevel, head_sha, sha_cand, chay_git_fn))
++            ]
++            chosen_remote_mb = _pick_closest_merge_base(repo_toplevel, remote_mbs, chay_git_fn)
++            if chosen_remote_mb:
++                return chosen_remote_mb
++            if ohead_ref:
++                mb_ohead = _git_merge_base(repo_toplevel, head_sha, ohead_ref, chay_git_fn)
++                if mb_ohead:
++                    return mb_ohead
++
++    reflog_sha = _infer_clone_reflog_sha(repo_toplevel, chay_git_fn)
++    if reflog_sha:
++        mb_reflog = _git_merge_base(repo_toplevel, head_sha, reflog_sha, chay_git_fn)
++        if mb_reflog and (not same_branch_mb or mb_reflog != head_sha):
++            return mb_reflog
++        if not same_branch_mb:
++            return reflog_sha
++
++    if same_branch_mb:
++        return same_branch_mb
++
+     return GIT_EMPTY_TREE_SHA
+ 
+ 
+-- 
+2.56.1.windows.1
+

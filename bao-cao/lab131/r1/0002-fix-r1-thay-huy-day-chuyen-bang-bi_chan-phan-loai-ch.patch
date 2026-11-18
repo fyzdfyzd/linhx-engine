@@ -1,0 +1,641 @@
+From 7b671108245daf557fe87fe084c3b72661f6e464 Mon Sep 17 00:00:00 2001
+From: linhx-runner <runner@linhx.local>
+Date: Wed, 18 Nov 2026 14:17:55 +0700
+Subject: [PATCH 2/2] fix(r1): thay huy day chuyen bang bi_chan, phan loai cha
+ truot va giu huy_chuoi(id)
+
+---
+ runner/hang_doi_git.py | 543 +++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 490 insertions(+), 53 deletions(-)
+
+diff --git a/runner/hang_doi_git.py b/runner/hang_doi_git.py
+index 66c380c8..c0406d71 100644
+--- a/runner/hang_doi_git.py
++++ b/runner/hang_doi_git.py
+@@ -83,8 +83,10 @@ _SHA256_ONLY_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+ _SHA256_LINE_RE = re.compile(r"^([0-9a-fA-F]{64})\s+\*?(.+?)\s*$")
+ _SHA256_BSD_RE = re.compile(r"^SHA256\s*\((.+?)\)\s*=\s*([0-9a-fA-F]{64})\s*$")
+ _KHOA_DAU_DONG = re.compile(r"^([a-zA-Z0-9_-]+)\s*:\s*(.*)$")
+-_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi", "lenh_kiem", "khoa", "vung"})
++_SEMI_LIST_HEADERS = frozenset({"phu_thuoc", "theo_doi", "lenh_kiem", "khoa", "vung", "bi_chan"})
+ _SELF_REPAIR_SUFFIX_RE = re.compile(r"^(.*)-sua-(\d+)$")
++_SHA_LABELED_RE = re.compile(r"\b(?:sha|commit|head)\s*[:=]\s*([0-9a-fA-F]{7,40})\b", re.IGNORECASE)
++_SHA_FULL40_RE = re.compile(r"\b([0-9a-fA-F]{40})\b")
+ _SELF_REPAIR_SECTION_SPLIT_RE = re.compile(r"\n+(?:##\s*)?Lần trước trượt vì:\s*\n", re.UNICODE)
+ _HTTP_429_RE = re.compile(r"(?<!\d)429(?!\d)")
+ _NON_HTTP_429_CONTEXT_RE = re.compile(
+@@ -1010,6 +1012,50 @@ def read_result_status(wt: Path, dep_id: str) -> str | None:
+     return ""
+ 
+ 
++def _base_ticket_id(ticket_id: str) -> str:
++    # Lấy mã phiếu gốc khi mã truyền vào có hậu tố tự sửa `-sua-<k>`
++    clean = str(ticket_id or "").strip()
++    m = _SELF_REPAIR_SUFFIX_RE.match(clean)
++    return m.group(1) if m else clean
++
++
++def _effective_dependency_result_id(wt: Path, dep_id: str) -> str:
++    # Tìm mã phiếu kết quả hiệu lực mới nhất của `dep_id` (ưu tiên `clean_id` nếu đã `xong`, hoặc `-sua-<k>` lớn nhất)
++    clean_id = str(dep_id or "").strip()
++    if not clean_id or "/" in clean_id or "\\" in clean_id or ".." in clean_id:
++        return ""
++    if read_result_status(wt, clean_id) == "xong":
++        return clean_id
++    goc_hd = thu_muc_hang_doi(wt)
++    m = _SELF_REPAIR_SUFFIX_RE.match(clean_id)
++    if m:
++        base_id = m.group(1)
++        min_idx = int(m.group(2))
++    else:
++        base_id = clean_id
++        min_idx = 0
++
++    repair_prefix = f"{base_id}-sua-"
++    latest_repair_idx = min_idx
++    latest_repair_id = ""
++    tm_xong = goc_hd / "xong"
++    if tm_xong.is_dir():
++        try:
++            done_entries = list(tm_xong.iterdir())
++        except OSError:
++            done_entries = []
++        for cand_dir in done_entries:
++            if not cand_dir.is_dir() or not cand_dir.name.startswith(repair_prefix):
++                continue
++            m_cand = _SELF_REPAIR_SUFFIX_RE.match(cand_dir.name)
++            if m_cand and m_cand.group(1) == base_id:
++                idx_val = int(m_cand.group(2))
++                if idx_val > latest_repair_idx and (cand_dir / "KET-QUA.md").is_file():
++                    latest_repair_idx = idx_val
++                    latest_repair_id = cand_dir.name
++    return latest_repair_id or clean_id
++
++
+ def get_dependency_state(wt: Path, dep_id: str) -> str:
+     # Trạng thái phụ thuộc: 'xong' (đạt), 'cho' (đang chờ/chạy hoặc còn lượt tự sửa), 'truot' (đã trượt hẳn)
+     clean_id = str(dep_id or "").strip()
+@@ -1044,25 +1090,7 @@ def get_dependency_state(wt: Path, dep_id: str) -> str:
+             if m_cand and m_cand.group(1) == base_id and int(m_cand.group(2)) > min_idx:
+                 return "cho"
+ 
+-    latest_repair_idx = min_idx
+-    latest_repair_id = ""
+-    tm_xong = goc_hd / "xong"
+-    if tm_xong.is_dir():
+-        try:
+-            done_entries = list(tm_xong.iterdir())
+-        except OSError:
+-            done_entries = []
+-        for cand_dir in done_entries:
+-            if not cand_dir.is_dir() or not cand_dir.name.startswith(repair_prefix):
+-                continue
+-            m_cand = _SELF_REPAIR_SUFFIX_RE.match(cand_dir.name)
+-            if m_cand and m_cand.group(1) == base_id:
+-                idx_val = int(m_cand.group(2))
+-                if idx_val > latest_repair_idx and (cand_dir / "KET-QUA.md").is_file():
+-                    latest_repair_idx = idx_val
+-                    latest_repair_id = cand_dir.name
+-
+-    effective_id = latest_repair_id or clean_id
++    effective_id = _effective_dependency_result_id(wt, clean_id)
+     status = read_result_status(wt, effective_id)
+     if status is None:
+         return "cho"
+@@ -1083,40 +1111,417 @@ def are_dependencies_met(wt: Path, dependencies: list[str] | tuple[str, ...]) ->
+     return True
+ 
+ 
+-def huy_phieu_phu_thuoc_truot_trong_wt(wt: Path, tho: str) -> list[str]:
+-    # Chuyển dây chuyền mọi phiếu trong `moi/` có `phu_thuoc` đã trượt hẳn sang `xong/<id>/KET-QUA.md` (`huy`)
++def _la_dong_bi_chan(dong: str) -> bool:
++    m = _KHOA_DAU_DONG.match(dong.strip())
++    return bool(m and m.group(1).lower() == "bi_chan")
++
++
++def cap_nhat_header_bi_chan(noi_dung: str, gia_tri_bi_chan: str | None) -> str:
++    # Thêm/cập nhật hoặc xoá dòng `bi_chan: <id cha> <ly do>` trong phần header của phiếu ở `moi/`
++    van_ban = noi_dung.lstrip("\ufeff")
++    cac_dong = van_ban.splitlines()
++    co_xuong_dong_cuoi = van_ban.endswith("\n")
++    gia_tri_sach = " ".join(str(gia_tri_bi_chan or "").splitlines()).strip()
++
++    if cac_dong and cac_dong[0].strip() == "---":
++        for i in range(1, len(cac_dong)):
++            if cac_dong[i].strip() == "---":
++                phan_dau = [d for d in cac_dong[1:i] if not _la_dong_bi_chan(d)]
++                if gia_tri_sach:
++                    phan_dau.append(f"bi_chan: {gia_tri_sach}")
++                moi = [cac_dong[0], *phan_dau, *cac_dong[i:]]
++                return "\n".join(moi) + ("\n" if co_xuong_dong_cuoi else "")
++
++    phan_dau_thuong: list[str] = []
++    vi_tri = 0
++    for i, dong in enumerate(cac_dong):
++        s = dong.strip()
++        if not s:
++            vi_tri = i
++            break
++        if _tach_cap_khoa_gia_tri(s):
++            vi_tri = i + 1
++            if not _la_dong_bi_chan(s):
++                phan_dau_thuong.append(dong)
++        else:
++            vi_tri = i
++            break
++    if gia_tri_sach:
++        phan_dau_thuong.append(f"bi_chan: {gia_tri_sach}")
++    phan_con_lai = cac_dong[vi_tri:]
++    if phan_dau_thuong and phan_con_lai and phan_con_lai[0].strip() != "":
++        moi_thuong = [*phan_dau_thuong, "", *phan_con_lai]
++    else:
++        moi_thuong = [*phan_dau_thuong, *phan_con_lai]
++    return "\n".join(moi_thuong) + ("\n" if co_xuong_dong_cuoi else "")
++
++
++def _doc_chi_tiet_ket_qua_cha(wt: Path, dep_id: str) -> tuple[str, str, str]:
++    # Đọc (trang_thai, ly_do_ngan, sha_cuoi) từ `KET-QUA.md` của phiếu cha (hoặc lượt `-sua-<k>` cuối)
++    effective_id = _effective_dependency_result_id(wt, dep_id)
++    if not effective_id:
++        return "loi", f"loi - {DEPENDENCY_FAILED_REASON}", ""
++    goc_hd = thu_muc_hang_doi(wt)
++    tep_kq = goc_hd / "xong" / effective_id / "KET-QUA.md"
++    if not tep_kq.is_file():
++        return "loi", f"loi - {DEPENDENCY_FAILED_REASON}", ""
++    try:
++        raw = tep_kq.read_text(encoding="utf-8", errors="replace").lstrip("\ufeff")
++    except OSError:
++        return "loi", f"loi - {DEPENDENCY_FAILED_REASON}", ""
++
++    lines = raw.splitlines()
++    meta_kq: dict[str, str] = {}
++    body_idx = 0
++    if lines and lines[0].strip() == "---":
++        for idx in range(1, len(lines)):
++            if lines[idx].strip() == "---":
++                for hl in lines[1:idx]:
++                    mh = _KHOA_DAU_DONG.match(hl.strip())
++                    if mh:
++                        meta_kq[mh.group(1).lower()] = mh.group(2).strip()
++                body_idx = idx + 1
++                break
++    else:
++        for idx, hl in enumerate(lines):
++            if not hl.strip():
++                body_idx = idx + 1
++                break
++            mh = _KHOA_DAU_DONG.match(hl.strip())
++            if not mh:
++                body_idx = idx
++                break
++            meta_kq[mh.group(1).lower()] = mh.group(2).strip()
++        else:
++            body_idx = len(lines)
++
++    tt = (meta_kq.get("trang_thai") or "loi").split("#", 1)[0].strip().lower() or "loi"
++    ly_do_hdr = (meta_kq.get("ly_do") or "").strip()
++    than_lines = lines[body_idx:]
++    than_txt = "\n".join(than_lines).strip()
++    dong_dau = ""
++    for dl in than_lines:
++        s = dl.strip()
++        if s and not s.startswith("---"):
++            dong_dau = s
++            break
++    chi_tiet = dong_dau or ly_do_hdr or DEPENDENCY_FAILED_REASON
++    ly_do_ngan = _cat_mot_dong(f"{tt} - {chi_tiet}", 160)
++
++    sha_tim = ""
++    m_lbl = _SHA_LABELED_RE.search(than_txt)
++    if m_lbl:
++        sha_tim = m_lbl.group(1)
++    else:
++        m_40 = _SHA_FULL40_RE.search(than_txt)
++        if m_40:
++            sha_tim = m_40.group(1)
++    return tt, ly_do_ngan, sha_tim
++
++
++def tao_phan_loai_cha_truot_md(
++    cha_id: str,
++    tho: str,
++    ds_con: list[str],
++    ly_do_cha: str = "",
++    sha_cuoi: str = "",
++    gio_iso: str = "",
++) -> str:
++    # Tạo tệp `hang-doi/can-linh/<id cha>-phan-loai.md` liệt kê con bị chặn, SHA cuối cha và 3 lựa chọn sua/chia/huy
++    moc_gio = (gio_iso or time.strftime("%Y-%m-%dT%H:%M:%S%z")).strip()
++    cha_sach = _cat_mot_dong(cha_id, 120)
++    sha_sach = _cat_mot_dong(sha_cuoi, 80) if sha_cuoi and str(sha_cuoi).strip() else ""
++    sha_hien_thi = sha_sach or "(chưa có)"
++    con_chuoi = ", ".join(ds_con)
++    ly_do_sach = _cat_mot_dong(ly_do_cha or DEPENDENCY_FAILED_REASON, 240)
++    dong_con = "\n".join(f"- {c}" for c in ds_con)
++    dau = [
++        f"may: {_cat_mot_dong(tho, 80)}",
++        f"phieu: {cha_sach}",
++        "loai: phan-loai",
++        f"sha_cuoi: {sha_hien_thi}",
++        f"con_bi_chan: {_cat_mot_dong(con_chuoi, 300)}",
++        f"viec: Phân loại phiếu cha {cha_sach} trượt hẳn (chặn: {_cat_mot_dong(con_chuoi, 180)} - chọn: sua / chia / huy)",
++        f"lenh: python -m runner.hang_doi_git huy_chuoi {cha_sach}",
++        f"gio: {moc_gio}",
++    ]
++    than = (
++        f"Phiếu cha `{cha_sach}` đã trượt hẳn ({ly_do_sach}).\n"
++        f"SHA cuối của cha: {sha_hien_thi}\n\n"
++        f"Các phiếu con đang bị chặn tại `hang-doi/moi/`:\n"
++        f"{dong_con}\n\n"
++        f"3 lựa chọn xử lý (sua / chia / huy):\n"
++        f"1. sua: Tạo phiếu sửa tiếp `{cha_sach}-sua-<k>` từ SHA cuối của cha để gỡ chặn cho phiếu con.\n"
++        f"2. chia: Chia nhỏ lại phạm vi phiếu cha `{cha_sach}` hoặc tách lại phụ thuộc của phiếu con.\n"
++        f"3. huy: Huỷ tay chuỗi phụ thuộc bằng `huy_chuoi(\"{cha_sach}\")`.\n"
++    )
++    return "\n".join(dau) + "\n\n" + than
++
++
++def dong_bo_bi_chan_va_phan_loai_trong_wt(
++    wt: Path,
++    tho: str,
++    sha_theo_cha: dict[str, str] | None = None,
++) -> dict:
++    # Đồng bộ cờ `bi_chan` trên các phiếu con trong `moi/` và tệp `<id cha>-phan-loai.md` trong `can-linh/`
+     goc_hd = thu_muc_hang_doi(wt)
+     tm_moi = goc_hd / "moi"
+-    if not tm_moi.is_dir():
+-        return []
+-    da_huy: list[str] = []
+-    while True:
+-        huy_vong_nay: list[str] = []
++    bi_chan_moi_ds: list[str] = []
++    go_bi_chan_ds: list[str] = []
++    phan_loai_moi_ds: list[str] = []
++    xoa_phan_loai_ds: list[str] = []
++    co_thay_doi = False
++    con_theo_cha_truot: dict[str, list[str]] = {}
++
++    if tm_moi.is_dir():
+         for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
+             noi_dung = tep.read_text(encoding="utf-8", errors="replace")
+             viec_ung = phan_tich_phieu(noi_dung, tep.stem)
++            bi_chan_cu = str(viec_ung["meta"].get("bi_chan") or "").strip()
++            cha_cu = bi_chan_cu.split()[0] if bi_chan_cu else ""
+             deps = viec_ung.get("phu_thuoc") or []
+-            if not deps:
++            ds_cha_truot = [dep_id for dep_id in deps if get_dependency_state(wt, dep_id) == "truot"]
++
++            if bi_chan_cu:
++                if cha_cu and get_dependency_state(wt, cha_cu) == "xong":
++                    if ds_cha_truot:
++                        _, ly_do_cha, _ = _doc_chi_tiet_ket_qua_cha(wt, ds_cha_truot[0])
++                        gia_tri_moi: str | None = f"{ds_cha_truot[0]} {ly_do_cha}"
++                    else:
++                        gia_tri_moi = None
++                else:
++                    gia_tri_moi = bi_chan_cu
++            else:
++                if ds_cha_truot:
++                    _, ly_do_cha, _ = _doc_chi_tiet_ket_qua_cha(wt, ds_cha_truot[0])
++                    gia_tri_moi = f"{ds_cha_truot[0]} {ly_do_cha}"
++                else:
++                    gia_tri_moi = None
++
++            if (gia_tri_moi or "") != bi_chan_cu:
++                noi_dung_moi = cap_nhat_header_bi_chan(noi_dung, gia_tri_moi)
++                if noi_dung_moi != noi_dung:
++                    tep.write_text(noi_dung_moi, encoding="utf-8")
++                    co_thay_doi = True
++                    if gia_tri_moi:
++                        bi_chan_moi_ds.append(tep.stem)
++                    else:
++                        go_bi_chan_ds.append(tep.stem)
++
++            for dep_truot in ds_cha_truot:
++                cha_goc = _base_ticket_id(dep_truot)
++                ds_c = con_theo_cha_truot.setdefault(cha_goc, [])
++                if tep.stem not in ds_c:
++                    ds_c.append(tep.stem)
++            if gia_tri_moi:
++                cha_chan = gia_tri_moi.split()[0]
++                if cha_chan and get_dependency_state(wt, cha_chan) == "truot":
++                    cha_goc = _base_ticket_id(cha_chan)
++                    ds_c = con_theo_cha_truot.setdefault(cha_goc, [])
++                    if tep.stem not in ds_c:
++                        ds_c.append(tep.stem)
++
++    tm_can_linh = goc_hd / "can-linh"
++    if tm_can_linh.is_dir():
++        for tep_pl_cu in sorted(tm_can_linh.glob("*-phan-loai.md"), key=lambda p: p.name):
++            try:
++                nd_pl_cu = tep_pl_cu.read_text(encoding="utf-8", errors="replace")
++            except OSError:
+                 continue
+-            if any(get_dependency_state(wt, dep_id) == "truot" for dep_id in deps):
+-                phieu_huy = tep.stem
+-                tep.unlink()
+-                tep_kq_huy = goc_hd / "xong" / phieu_huy / "KET-QUA.md"
+-                tep_kq_huy.parent.mkdir(parents=True, exist_ok=True)
+-                nd_huy = tao_ket_qua_md(
+-                    phieu_id=phieu_huy,
+-                    tho=tho,
+-                    trang_thai="huy",
+-                    ket_qua=DEPENDENCY_FAILED_REASON,
++            parsed_pl = phan_tich_phieu(nd_pl_cu, tep_pl_cu.stem)
++            cha_pl = str(parsed_pl["meta"].get("phieu") or "").strip()
++            if not cha_pl and tep_pl_cu.stem.endswith("-phan-loai"):
++                cha_pl = tep_pl_cu.stem[: -len("-phan-loai")]
++            cha_pl_goc = _base_ticket_id(cha_pl)
++            if cha_pl_goc and cha_pl_goc not in con_theo_cha_truot and get_dependency_state(wt, cha_pl_goc) != "truot":
++                tep_pl_cu.unlink(missing_ok=True)
++                xoa_phan_loai_ds.append(cha_pl_goc)
++                co_thay_doi = True
++
++    for cha_goc, ds_con in sorted(con_theo_cha_truot.items()):
++        if not ds_con:
++            continue
++        tm_can_linh.mkdir(parents=True, exist_ok=True)
++        tep_pl = tm_can_linh / f"{_ten_phieu_an_toan(cha_goc)}-phan-loai.md"
++        _, ly_do_cha, sha_tu_kq = _doc_chi_tiet_ket_qua_cha(wt, cha_goc)
++        sha_ung = str((sha_theo_cha or {}).get(cha_goc) or sha_tu_kq or "").strip()
++
++        if tep_pl.is_file():
++            nd_hien_tai = tep_pl.read_text(encoding="utf-8", errors="replace")
++            parsed_ht = phan_tich_phieu(nd_hien_tai, tep_pl.stem)
++            gio_cu = str(parsed_ht["meta"].get("gio") or "").strip()
++            sha_cu = str(parsed_ht["meta"].get("sha_cuoi") or "").strip()
++            if not sha_ung and sha_cu and sha_cu != "(chưa có)":
++                sha_ung = sha_cu
++            du_con = all(con_id in nd_hien_tai for con_id in ds_con)
++            du_sha = (not sha_ung) or (sha_ung in nd_hien_tai)
++            if du_con and du_sha:
++                continue
++            nd_moi = tao_phan_loai_cha_truot_md(
++                cha_id=cha_goc,
++                tho=tho,
++                ds_con=ds_con,
++                ly_do_cha=ly_do_cha,
++                sha_cuoi=sha_ung,
++                gio_iso=gio_cu,
++            )
++            if nd_moi != nd_hien_tai:
++                tep_pl.write_text(nd_moi, encoding="utf-8")
++                phan_loai_moi_ds.append(cha_goc)
++                co_thay_doi = True
++        else:
++            nd_moi = tao_phan_loai_cha_truot_md(
++                cha_id=cha_goc,
++                tho=tho,
++                ds_con=ds_con,
++                ly_do_cha=ly_do_cha,
++                sha_cuoi=sha_ung,
++            )
++            tep_pl.write_text(nd_moi, encoding="utf-8")
++            phan_loai_moi_ds.append(cha_goc)
++            co_thay_doi = True
++
++    return {
++        "bi_chan_moi": bi_chan_moi_ds,
++        "go_bi_chan": go_bi_chan_ds,
++        "phan_loai_moi": phan_loai_moi_ds,
++        "xoa_phan_loai": xoa_phan_loai_ds,
++        "co_thay_doi": co_thay_doi,
++    }
++
++
++def _huy_chuoi_trong_wt(
++    wt: Path,
++    phieu_id: str,
++    tho: str = "linh",
++    ly_do: str = DEPENDENCY_FAILED_REASON,
++) -> list[str]:
++    # Thực hiện huỷ tay `phieu_id` (nếu còn ở `moi/`) và toàn bộ chuỗi con/cháu phụ thuộc trong `wt`
++    clean_id = str(phieu_id or "").strip()
++    if not clean_id or "/" in clean_id or "\\" in clean_id or ".." in clean_id:
++        return []
++    goc_hd = thu_muc_hang_doi(wt)
++    tm_moi = goc_hd / "moi"
++    tho_ghi = (tho or "linh").strip() or "linh"
++    goc_cha = _base_ticket_id(clean_id)
++    tap_goc_huy: set[str] = {clean_id, goc_cha}
++    da_huy: list[str] = []
++
++    if tm_moi.is_dir():
++        tep_goc = tm_moi / f"{clean_id}.md"
++        if tep_goc.is_file():
++            tep_goc.unlink()
++            tep_kq_goc = goc_hd / "xong" / clean_id / "KET-QUA.md"
++            tep_kq_goc.parent.mkdir(parents=True, exist_ok=True)
++            tep_kq_goc.write_text(
++                tao_ket_qua_md(phieu_id=clean_id, tho=tho_ghi, trang_thai="huy", ket_qua=ly_do),
++                encoding="utf-8",
++            )
++            da_huy.append(clean_id)
++
++        while True:
++            huy_vong_nay: list[str] = []
++            for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
++                noi_dung = tep.read_text(encoding="utf-8", errors="replace")
++                viec_ung = phan_tich_phieu(noi_dung, tep.stem)
++                deps = list(viec_ung.get("phu_thuoc") or [])
++                bi_chan_raw = str(viec_ung["meta"].get("bi_chan") or "").strip()
++                if bi_chan_raw:
++                    deps.append(bi_chan_raw.split()[0])
++                co_dinh_chuoi = any(
++                    d in tap_goc_huy or _base_ticket_id(d) in tap_goc_huy
++                    for d in deps
++                    if d
+                 )
+-                tep_kq_huy.write_text(nd_huy, encoding="utf-8")
+-                huy_vong_nay.append(phieu_huy)
+-                da_huy.append(phieu_huy)
+-        if not huy_vong_nay:
+-            break
++                if co_dinh_chuoi:
++                    phieu_huy = tep.stem
++                    tep.unlink()
++                    tep_kq_huy = goc_hd / "xong" / phieu_huy / "KET-QUA.md"
++                    tep_kq_huy.parent.mkdir(parents=True, exist_ok=True)
++                    nd_huy = tao_ket_qua_md(
++                        phieu_id=phieu_huy,
++                        tho=tho_ghi,
++                        trang_thai="huy",
++                        ket_qua=ly_do,
++                    )
++                    tep_kq_huy.write_text(nd_huy, encoding="utf-8")
++                    huy_vong_nay.append(phieu_huy)
++                    da_huy.append(phieu_huy)
++                    tap_goc_huy.add(phieu_huy)
++                    tap_goc_huy.add(_base_ticket_id(phieu_huy))
++            if not huy_vong_nay:
++                break
++
++    tm_can_linh = goc_hd / "can-linh"
++    if tm_can_linh.is_dir():
++        for ma_xoa in {clean_id, goc_cha}:
++            tep_pl = tm_can_linh / f"{_ten_phieu_an_toan(ma_xoa)}-phan-loai.md"
++            if tep_pl.is_file():
++                tep_pl.unlink(missing_ok=True)
+     return da_huy
+ 
+ 
++def huy_chuoi(
++    phieu_id: str | Path | dict,
++    cfg_hoac_wt: dict | Path | str | None = None,
++    *,
++    wt: Path | str | None = None,
++    cfg: dict | None = None,
++    tho: str = "",
++    ly_do: str = DEPENDENCY_FAILED_REASON,
++    push: bool | None = None,
++) -> list[str]:
++    """Đường huỷ tay chuỗi phụ thuộc của `phieu_id`; chỉ chạy khi được gọi tường minh."""
++    if isinstance(phieu_id, dict) and isinstance(cfg_hoac_wt, str):
++        cfg = phieu_id
++        ma_muc_tieu = cfg_hoac_wt
++    elif isinstance(phieu_id, Path) and isinstance(cfg_hoac_wt, str):
++        wt = phieu_id
++        ma_muc_tieu = cfg_hoac_wt
++    else:
++        ma_muc_tieu = str(phieu_id or "").strip()
++        if isinstance(cfg_hoac_wt, dict) and cfg is None:
++            cfg = cfg_hoac_wt
++        elif isinstance(cfg_hoac_wt, (Path, str)) and wt is None:
++            wt = Path(cfg_hoac_wt)
++
++    if wt is not None and (cfg is None or push is False):
++        wt_path = Path(wt)
++        tho_dung = tho or (str(cfg.get("tho")) if isinstance(cfg, dict) and cfg.get("tho") else "linh")
++        return _huy_chuoi_trong_wt(wt_path, ma_muc_tieu, tho=tho_dung, ly_do=ly_do)
++
++    cfg_dung = cfg if isinstance(cfg, dict) else linhx_runner.doc_env()
++    _, _, remote, nhanh = _duong_dan_wt(cfg_dung)
++    tho_dung = tho or str(cfg_dung.get("tho") or "linh")
++    co_push = True if push is None else bool(push)
++    loi_cuoi = ""
++    with _khoa_tep(_duong_dan_khoa_wt(cfg_dung)):
++        for lan in range(SO_LAN_THU_PUSH):
++            wt_sync = dam_bao_worktree(cfg_dung)
++            if wt_sync is None:
++                return []
++            tep_pl_goc = (
++                thu_muc_hang_doi(wt_sync)
++                / "can-linh"
++                / f"{_ten_phieu_an_toan(_base_ticket_id(ma_muc_tieu))}-phan-loai.md"
++            )
++            co_pl_truoc = tep_pl_goc.is_file()
++            ds_huy = _huy_chuoi_trong_wt(wt_sync, ma_muc_tieu, tho=tho_dung, ly_do=ly_do)
++            da_xoa_pl = co_pl_truoc and not tep_pl_goc.exists()
++            if not ds_huy and not da_xoa_pl:
++                return []
++            if not co_push:
++                return ds_huy
++            mo_ta = ", ".join(ds_huy) if ds_huy else _base_ticket_id(ma_muc_tieu)
++            _commit_git(wt_sync, tho_dung, f"huy-chuoi: {mo_ta} ({tho_dung})")
++            kq_push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt_sync, check=False)
++            if kq_push.returncode == 0:
++                return ds_huy
++            loi_cuoi = (kq_push.stderr or kq_push.stdout or "").strip()
++            time.sleep(0.05 * (lan + 1))
++    raise RuntimeError(f"Khong push duoc huy_chuoi cho {ma_muc_tieu}: {loi_cuoi}")
++
++
+ def is_quota_error(trang_thai: str, ket_qua, nhat_ky: str = "") -> bool:
+     # Nhận diện lỗi HTTP 429 / hết hạn mức từ agy để máy tạm nghỉ nhận phiếu mới
+     if trang_thai not in ("loi", "dung"):
+@@ -1261,6 +1666,7 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str, ly_do: str = "") -> st
+     meta.pop("nhan", None)
+     meta.pop("head_nhan", None)
+     meta.pop("moc", None)
++    meta.pop("bi_chan", None)
+     header_lines: list[str] = []
+     has_may = False
+     has_tu_sua = False
+@@ -1442,6 +1848,8 @@ def chon_ung_vien(
+     for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
+         noi_dung = tep.read_text(encoding="utf-8", errors="replace")
+         viec = phan_tich_phieu(noi_dung, tep.stem)
++        if str(viec["meta"].get("bi_chan") or "").strip():
++            continue
+         if not co_the_nhan_loai(viec["loai"], dem_dang, so_phieu):
+             continue
+         if not are_dependencies_met(wt, viec.get("phu_thuoc") or ()):
+@@ -1490,13 +1898,23 @@ def nhan_phieu_git(cfg: dict):
+             wt = dam_bao_worktree(cfg)
+             if wt is None:
+                 return None
+-            ds_huy = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
++            kq_dong_bo = dong_bo_bi_chan_va_phan_loai_trong_wt(wt, tho)
+             ung_vien = chon_ung_vien(wt, tho, cfg=cfg)
+             if not ung_vien:
+-                if ds_huy:
+-                    _commit_git(wt, tho, f"huy: {', '.join(ds_huy)} ({tho})")
+-                    push_huy = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+-                    if push_huy.returncode == 0:
++                if kq_dong_bo["co_thay_doi"]:
++                    ghi_chu_db: list[str] = []
++                    if kq_dong_bo["bi_chan_moi"]:
++                        ghi_chu_db.append(f"bi-chan: {', '.join(kq_dong_bo['bi_chan_moi'])}")
++                    if kq_dong_bo["go_bi_chan"]:
++                        ghi_chu_db.append(f"go-bi-chan: {', '.join(kq_dong_bo['go_bi_chan'])}")
++                    if kq_dong_bo["phan_loai_moi"]:
++                        ghi_chu_db.append(f"phan-loai: {', '.join(kq_dong_bo['phan_loai_moi'])}")
++                    if kq_dong_bo["xoa_phan_loai"]:
++                        ghi_chu_db.append(f"xoa-phan-loai: {', '.join(kq_dong_bo['xoa_phan_loai'])}")
++                    td_db = "; ".join(ghi_chu_db) or "dong-bo-bi-chan"
++                    _commit_git(wt, tho, f"{td_db} ({tho})")
++                    push_db = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
++                    if push_db.returncode == 0:
+                         return None
+                     time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
+                     continue
+@@ -1517,8 +1935,10 @@ def nhan_phieu_git(cfg: dict):
+             tep_dang.write_text(noi_dung_moi, encoding="utf-8")
+ 
+             thong_diep_nhan = f"nhan: {viec['viec']} ({tho})"
+-            if ds_huy:
+-                thong_diep_nhan = f"{thong_diep_nhan} [huy: {', '.join(ds_huy)}]"
++            if kq_dong_bo["bi_chan_moi"]:
++                thong_diep_nhan = f"{thong_diep_nhan} [bi-chan: {', '.join(kq_dong_bo['bi_chan_moi'])}]"
++            if kq_dong_bo["go_bi_chan"]:
++                thong_diep_nhan = f"{thong_diep_nhan} [go-bi-chan: {', '.join(kq_dong_bo['go_bi_chan'])}]"
+             _commit_git(wt, tho, thong_diep_nhan)
+             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+             if push.returncode == 0:
+@@ -1699,9 +2119,18 @@ def bao_ket_qua_git(
+                         (tm_moi / f"{ma_phieu_cham}.md").write_text(noi_dung_cham, encoding="utf-8")
+                         thong_diep = f"{thong_diep} -> {ma_phieu_cham}"
+ 
+-            ds_huy_day_chuyen = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
+-            if ds_huy_day_chuyen:
+-                thong_diep = f"{thong_diep} [huy: {', '.join(ds_huy_day_chuyen)}]"
++            sha_theo_cha: dict[str, str] = {}
++            if tt_chuan in ("loi", "dung"):
++                sha_cuoi_viec = lay_moc_head(cfg, viec_nguon)
++                if sha_cuoi_viec:
++                    sha_theo_cha[_base_ticket_id(phieu_id)] = sha_cuoi_viec
++            kq_dong_bo = dong_bo_bi_chan_va_phan_loai_trong_wt(wt, tho, sha_theo_cha=sha_theo_cha)
++            if kq_dong_bo["bi_chan_moi"]:
++                thong_diep = f"{thong_diep} [bi-chan: {', '.join(kq_dong_bo['bi_chan_moi'])}]"
++            if kq_dong_bo["go_bi_chan"]:
++                thong_diep = f"{thong_diep} [go-bi-chan: {', '.join(kq_dong_bo['go_bi_chan'])}]"
++            if kq_dong_bo["phan_loai_moi"]:
++                thong_diep = f"{thong_diep} [phan-loai: {', '.join(kq_dong_bo['phan_loai_moi'])}]"
+ 
+             _commit_git(wt, tho, thong_diep)
+             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+@@ -2612,3 +3041,11 @@ def vong_git(cfg: dict, mot_lan: bool = False, mot_viec: bool = False, chay_agy_
+         if mot_lan:
+             return None
+         time.sleep(cfg["nghi"])
++
++
++if __name__ == "__main__":
++    if len(sys.argv) >= 3 and sys.argv[1] in ("huy_chuoi", "huy-chuoi"):
++        da_huy_cli = huy_chuoi(sys.argv[2])
++        print("\n".join(da_huy_cli) if da_huy_cli else "(khong co phieu can huy)")
++        raise SystemExit(0)
++    raise SystemExit("Cu phap: python -m runner.hang_doi_git huy_chuoi <id>")
+-- 
+2.56.1.windows.1
+

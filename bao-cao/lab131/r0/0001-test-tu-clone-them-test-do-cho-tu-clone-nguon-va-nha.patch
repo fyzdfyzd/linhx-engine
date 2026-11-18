@@ -1,0 +1,472 @@
+From 551fd9abe6758966a27eb5f0f5bcfb40591bf067 Mon Sep 17 00:00:00 2001
+From: lab131 <lab131@linhx.local>
+Date: Wed, 18 Nov 2026 13:47:19 +0700
+Subject: [PATCH 1/2] test(tu-clone): them test do cho tu clone nguon va
+ nhanh_moi
+
+---
+ runner/test_tu_clone.py | 452 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 452 insertions(+)
+ create mode 100644 runner/test_tu_clone.py
+
+diff --git a/runner/test_tu_clone.py b/runner/test_tu_clone.py
+new file mode 100644
+index 00000000..4cdefcbd
+--- /dev/null
++++ b/runner/test_tu_clone.py
+@@ -0,0 +1,452 @@
++"""Kiểm thử tự clone (`nguon:`, `nhanh_moi:`) của runner trước khi gọi agy."""
++from __future__ import annotations
++
++import os
++from pathlib import Path
++import shutil
++import stat
++import subprocess
++import sys
++import time
++import uuid
++
++import pytest
++
++sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
++from runner import hang_doi_git, linhx_runner  # noqa: E402
++from runner._gia_moi_truong import _gia_ram_va_moi_truong_h3  # noqa: F401
++
++
++def _remove_tree(target_dir: Path) -> None:
++    if not target_dir.exists():
++        return
++
++    def _on_readonly(func, path_str, _):
++        try:
++            os.chmod(path_str, stat.S_IWRITE)
++            func(path_str)
++        except OSError:
++            pass
++
++    shutil.rmtree(target_dir, onerror=_on_readonly)
++
++
++@pytest.fixture
++def tmp_path():
++    work_root = linhx_runner.GOC / "viec"
++    existed_before = work_root.exists()
++    temp_root = work_root / f"pytest-tmp-tu-clone-{os.getpid()}-{uuid.uuid4().hex[:8]}"
++    temp_root.mkdir(parents=True, exist_ok=True)
++    try:
++        yield temp_root
++    finally:
++        _remove_tree(temp_root)
++        if not existed_before and work_root.exists():
++            try:
++                next(work_root.iterdir())
++            except StopIteration:
++                work_root.rmdir()
++
++
++def _run_git(args: list[str], cwd: Path) -> str:
++    env = os.environ.copy()
++    env["GIT_TERMINAL_PROMPT"] = "0"
++    extra_kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
++    proc = subprocess.run(
++        ["git"] + list(args),
++        cwd=str(cwd),
++        env=env,
++        capture_output=True,
++        text=True,
++        encoding="utf-8",
++        check=True,
++        **extra_kw,
++    )
++    return proc.stdout.strip()
++
++
++def _init_bare_source_repo(
++    tmp_path: Path,
++    branch: str,
++    files: dict[str, str],
++    name: str = "nguon.git",
++) -> tuple[Path, str]:
++    """Tạo repo nguồn giả bằng `git init --bare` trong tmp_path (không mạng)."""
++    bare_dir = tmp_path / name
++    bare_dir.mkdir(parents=True, exist_ok=True)
++    _run_git(["init", "--bare"], bare_dir)
++
++    seed_dir = tmp_path / f"seed-{uuid.uuid4().hex[:6]}"
++    seed_dir.mkdir(parents=True, exist_ok=True)
++    _run_git(["init"], seed_dir)
++    _run_git(["config", "user.name", "seed-src"], seed_dir)
++    _run_git(["config", "user.email", "seed-src@linhx.local"], seed_dir)
++    _run_git(["config", "commit.gpgsign", "false"], seed_dir)
++    _run_git(["checkout", "-b", branch], seed_dir)
++    for rel, content in files.items():
++        file_path = seed_dir / rel
++        file_path.parent.mkdir(parents=True, exist_ok=True)
++        file_path.write_text(content, encoding="utf-8")
++    _run_git(["add", "-A"], seed_dir)
++    _run_git(["commit", "-m", "init source"], seed_dir)
++    head_sha = _run_git(["rev-parse", "HEAD"], seed_dir)
++    _run_git(["remote", "add", "origin", str(bare_dir)], seed_dir)
++    _run_git(["push", "origin", f"HEAD:refs/heads/{branch}"], seed_dir)
++    _run_git(["symbolic-ref", "HEAD", f"refs/heads/{branch}"], bare_dir)
++    return bare_dir, head_sha
++
++
++def _commit_files(repo_dir: Path, updates: dict[str, str], message: str = "update") -> str:
++    _run_git(["config", "user.name", "tho-test"], repo_dir)
++    _run_git(["config", "user.email", "tho@linhx.local"], repo_dir)
++    _run_git(["config", "commit.gpgsign", "false"], repo_dir)
++    for rel, content in updates.items():
++        p = repo_dir / rel
++        p.parent.mkdir(parents=True, exist_ok=True)
++        p.write_text(content, encoding="utf-8")
++    _run_git(["add", "-A"], repo_dir)
++    _run_git(["commit", "-m", message], repo_dir)
++    return _run_git(["rev-parse", "HEAD"], repo_dir)
++
++
++def _setup_queue_env(tmp_path: Path, tickets: dict[str, str]) -> tuple[Path, dict]:
++    bare_queue = tmp_path / f"queue-{uuid.uuid4().hex[:6]}.git"
++    bare_queue.mkdir(parents=True, exist_ok=True)
++    _run_git(["init", "--bare"], bare_queue)
++
++    seed = tmp_path / f"seed-q-{uuid.uuid4().hex[:6]}"
++    seed.mkdir(parents=True, exist_ok=True)
++    _run_git(["init"], seed)
++    _run_git(["config", "user.name", "seed"], seed)
++    _run_git(["config", "user.email", "seed@linhx.local"], seed)
++    _run_git(["config", "commit.gpgsign", "false"], seed)
++    _run_git(["checkout", "-b", "main"], seed)
++    (seed / "README.md").write_text("linhx\n", encoding="utf-8")
++    _run_git(["add", "-A"], seed)
++    _run_git(["commit", "-m", "init main"], seed)
++    _run_git(["remote", "add", "origin", str(bare_queue)], seed)
++    _run_git(["push", "origin", "main"], seed)
++    _run_git(["symbolic-ref", "HEAD", "refs/heads/main"], bare_queue)
++
++    _run_git(["checkout", "--orphan", "hang-doi"], seed)
++    _run_git(["rm", "-rf", "."], seed)
++    moi_dir = seed / "hang-doi" / "moi"
++    moi_dir.mkdir(parents=True, exist_ok=True)
++    for tid, body in tickets.items():
++        (moi_dir / f"{tid}.md").write_text(body, encoding="utf-8")
++    _run_git(["add", "-A"], seed)
++    _run_git(["commit", "-m", "seed hang-doi"], seed)
++    _run_git(["push", "origin", "hang-doi"], seed)
++
++    clone_dir = tmp_path / f"worker-clone-{uuid.uuid4().hex[:6]}"
++    _run_git(["clone", str(bare_queue), str(clone_dir)], tmp_path)
++    work_dir = tmp_path / f"worker-work-{uuid.uuid4().hex[:6]}"
++    work_dir.mkdir(parents=True, exist_ok=True)
++    cfg = {
++        "nguon": "github",
++        "tho": "may-2",
++        "agy": "agy-gia",
++        "agy_args": "--output-format json",
++        "thu_muc": work_dir,
++        "nghi": 0.01,
++        "repo_hang_doi": clone_dir,
++        "nhanh_hang_doi": "hang-doi",
++        "remote_hang_doi": "origin",
++        "wt_hang_doi": "",
++        "thu_muc_drive": tmp_path / "drive",
++        "thu_muc_log": tmp_path / "log",
++    }
++    return bare_queue, cfg
++
++
++def _read_ket_qua_from_bare(bare_queue: Path, ticket_id: str) -> str:
++    return _run_git(["show", f"hang-doi:hang-doi/xong/{ticket_id}/KET-QUA.md"], bare_queue)
++
++
++def test_phan_tich_header_nguon_nhanh_moi_va_hang_so_tran_5_phut():
++    raw = (
++        "may: may-2\n"
++        "loai: code\n"
++        "theo_doi: D:\\linhx\\wt-demo\n"
++        "nguon: git://192.168.1.136/linhx-engine.git claude/project-thread-jowxv1 # nguồn nội bộ\n"
++        "nhanh_moi: lx-r0-tu-clone # nhánh làm việc mới\n"
++        "tu_sua: 1\n\n"
++        "Làm việc trên nhánh đã clone sẵn.\n"
++    )
++    parsed = hang_doi_git.phan_tich_phieu(raw, "lx-r0-tu-clone")
++    assert parsed["nguon"] == (
++        "git://192.168.1.136/linhx-engine.git",
++        "claude/project-thread-jowxv1",
++    )
++    assert parsed["nhanh_moi"] == "lx-r0-tu-clone"
++    assert hang_doi_git.CLONE_TIMEOUT_MINUTES == 5.0
++    assert hang_doi_git.LY_DO_CLONE_HONG == "clone_hong"
++
++    repair_md = hang_doi_git.build_self_repair_ticket(parsed, "trang_thai: loi\n\nTest trượt.\n")
++    assert repair_md is not None
++    reparsed = hang_doi_git.phan_tich_phieu(repair_md, "lx-r0-tu-clone-sua-1")
++    assert reparsed["nguon"] == (
++        "git://192.168.1.136/linhx-engine.git",
++        "claude/project-thread-jowxv1",
++    )
++    assert reparsed["nhanh_moi"] == "lx-r0-tu-clone"
++
++    plain = hang_doi_git.phan_tich_phieu("may: bat-ky\n\nPhiếu cũ không tự clone.", "cu-01")
++    assert plain["nguon"] is None
++    assert plain["nhanh_moi"] == ""
++
++
++def test_runner_tu_clone_vao_theo_doi_dau_tien_va_checkout_nhanh_moi_truoc_agy(tmp_path):
++    src_bare, src_sha = _init_bare_source_repo(
++        tmp_path,
++        branch="claude/nhanh-goc",
++        files={
++            "src/core.py": "VAL = 1\n",
++            "README.md": "demo\n",
++        },
++    )
++    wt_first = tmp_path / "wt-chinh"
++    wt_second = tmp_path / "wt-phu"
++    assert not wt_first.exists()
++
++    bare_queue, cfg = _setup_queue_env(
++        tmp_path,
++        {
++            "01-tu-clone": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_first}; {wt_second}\n"
++                f"nguon: {src_bare} claude/nhanh-goc\n"
++                "nhanh_moi: lx-r0-tu-clone\n\n"
++                "Sửa src/core.py trên repo đã được runner clone sẵn.\n"
++            )
++        },
++    )
++
++    quan_sat_trong_agy: dict[str, object] = {}
++
++    def _fake_agy(_c, viec):
++        quan_sat_trong_agy["ton_tai_wt1"] = wt_first.is_dir()
++        quan_sat_trong_agy["ton_tai_wt2"] = wt_second.exists()
++        quan_sat_trong_agy["nhanh_hien_tai"] = _run_git(["symbolic-ref", "--short", "HEAD"], wt_first)
++        quan_sat_trong_agy["head_truoc_sua"] = _run_git(["rev-parse", "HEAD"], wt_first)
++        quan_sat_trong_agy["noi_dung_core"] = (wt_first / "src" / "core.py").read_text(encoding="utf-8")
++        quan_sat_trong_agy["head_nhan_viec"] = viec.get("head_nhan")
++        _commit_files(wt_first, {"src/core.py": "VAL = 2\n"}, "cap nhat core")
++        return "xong", "Đã sửa xong không cần tự clone.", "exit=0", 10, 12
++
++    res = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_fake_agy)
++    assert res is not None
++    assert res["trang_thai"] == "xong"
++    assert res["tu_clone"] == "da_clone"
++    assert quan_sat_trong_agy["ton_tai_wt1"] is True
++    assert quan_sat_trong_agy["ton_tai_wt2"] is False
++    assert quan_sat_trong_agy["nhanh_hien_tai"] == "lx-r0-tu-clone"
++    assert quan_sat_trong_agy["head_truoc_sua"] == src_sha
++    assert quan_sat_trong_agy["noi_dung_core"] == "VAL = 1\n"
++    assert quan_sat_trong_agy["head_nhan_viec"] == src_sha
++    assert "trang_thai: xong" in _read_ket_qua_from_bare(bare_queue, "01-tu-clone")
++
++
++def test_clone_hong_va_qua_tran_5_phut_ghi_loi_clone_hong_khong_goi_agy(tmp_path, monkeypatch):
++    src_bare, _ = _init_bare_source_repo(
++        tmp_path,
++        branch="main",
++        files={"a.txt": "ok\n"},
++    )
++    wt_bad_url = tmp_path / "wt-bad-url"
++    wt_bad_branch = tmp_path / "wt-bad-branch"
++    wt_timeout = tmp_path / "wt-timeout"
++    missing_bare = tmp_path / "khong-ton-tai.git"
++
++    bare_queue, cfg = _setup_queue_env(
++        tmp_path,
++        {
++            "01-url-hong": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_bad_url}\n"
++                f"nguon: {missing_bare} main\n"
++                "nhanh_moi: nhanh-1\n\n"
++                "Repo nguồn không tồn tại.\n"
++            ),
++            "02-nhanh-hong": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_bad_branch}\n"
++                f"nguon: {src_bare} nhanh-khong-co-that\n"
++                "nhanh_moi: nhanh-2\n\n"
++                "Nhánh nguồn không tồn tại.\n"
++            ),
++            "03-qua-tran": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_timeout}\n"
++                f"nguon: {src_bare} main\n"
++                "nhanh_moi: nhanh-3\n\n"
++                "Clone bị treo quá trần 5 phút.\n"
++            ),
++        },
++    )
++
++    da_goi_agy: list[str] = []
++
++    def _khong_duoc_goi_agy(_c, viec):
++        da_goi_agy.append(viec["viec"])
++        return "xong", "Không được chạy tới đây", "exit=0", 1, 1
++
++    # 1. URL nguồn không tồn tại -> loi, ly_do: clone_hong, không gọi agy
++    res_1 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_khong_duoc_goi_agy)
++    assert res_1 is not None and res_1["viec"] == "01-url-hong"
++    assert res_1["trang_thai"] == "loi"
++    assert da_goi_agy == []
++    kq_1 = _read_ket_qua_from_bare(bare_queue, "01-url-hong")
++    assert "trang_thai: loi\n" in kq_1
++    assert "ly_do: clone_hong\n" in kq_1
++
++    # 2. Nhánh nguồn không tồn tại -> loi, ly_do: clone_hong, không gọi agy
++    res_2 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_khong_duoc_goi_agy)
++    assert res_2 is not None and res_2["viec"] == "02-nhanh-hong"
++    assert res_2["trang_thai"] == "loi"
++    assert da_goi_agy == []
++    kq_2 = _read_ket_qua_from_bare(bare_queue, "02-nhanh-hong")
++    assert "trang_thai: loi\n" in kq_2
++    assert "ly_do: clone_hong\n" in kq_2
++
++    # 3. Kiểm tra trần mặc định 5 phút (300s) được truyền vào bước chạy clone và khi quá trần -> clone_hong
++    ghi_nhan_timeout: list[float] = []
++    chay_clone_goc = hang_doi_git._chay_git_co_tran
++
++    def _gia_treo_clone(args, cwd, timeout_seconds):
++        ghi_nhan_timeout.append(float(timeout_seconds))
++        if "clone" in args:
++            return -1, "quá trần clone", True
++        return chay_clone_goc(args, cwd, timeout_seconds)
++
++    monkeypatch.setattr(hang_doi_git, "_chay_git_co_tran", _gia_treo_clone)
++    t0 = time.monotonic()
++    res_3 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_khong_duoc_goi_agy)
++    assert (time.monotonic() - t0) < 5.0
++    assert res_3 is not None and res_3["viec"] == "03-qua-tran"
++    assert res_3["trang_thai"] == "loi"
++    assert da_goi_agy == []
++    assert ghi_nhan_timeout and abs(ghi_nhan_timeout[0] - 300.0) <= 1.0
++    kq_3 = _read_ket_qua_from_bare(bare_queue, "03-qua-tran")
++    assert "trang_thai: loi\n" in kq_3
++    assert "ly_do: clone_hong\n" in kq_3
++
++
++def test_thu_muc_theo_doi_da_co_thi_khong_clone_lai(tmp_path):
++    src_bare, _ = _init_bare_source_repo(
++        tmp_path,
++        branch="main",
++        files={"tu_nguon_moi.txt": "khong duoc keo ve\n"},
++    )
++    wt_existing = tmp_path / "wt-da-co"
++    wt_existing.mkdir(parents=True, exist_ok=True)
++    _run_git(["init"], wt_existing)
++    _run_git(["checkout", "-b", "nhanh-dang-lam"], wt_existing)
++    sha_cu = _commit_files(wt_existing, {"tep_hien_co.txt": "giu nguyen\n"}, "commit san co")
++
++    bare_queue, cfg = _setup_queue_env(
++        tmp_path,
++        {
++            "01-da-co-thu-muc": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_existing}\n"
++                f"nguon: {src_bare} main\n"
++                "nhanh_moi: nhanh-moi-khong-chuyen\n\n"
++                "Làm tiếp trên thư mục đã có sẵn.\n"
++            )
++        },
++    )
++
++    quan_sat: dict[str, object] = {}
++
++    def _fake_agy(_c, _v):
++        quan_sat["nhanh"] = _run_git(["symbolic-ref", "--short", "HEAD"], wt_existing)
++        quan_sat["co_tep_cu"] = (wt_existing / "tep_hien_co.txt").is_file()
++        quan_sat["co_tep_nguon_moi"] = (wt_existing / "tu_nguon_moi.txt").exists()
++        quan_sat["head"] = _run_git(["rev-parse", "HEAD"], wt_existing)
++        return "xong", "Giữ nguyên thư mục cũ.", "exit=0", 5, 5
++
++    res = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_fake_agy)
++    assert res is not None
++    assert res["trang_thai"] == "xong"
++    assert res["tu_clone"] == "da_co"
++    assert quan_sat["nhanh"] == "nhanh-dang-lam"
++    assert quan_sat["co_tep_cu"] is True
++    assert quan_sat["co_tep_nguon_moi"] is False
++    assert quan_sat["head"] == sha_cu
++
++
++def test_base_sha_quet_bi_mat_bang_head_sau_clone(tmp_path):
++    fake_sk_old = "".join(["s", "k-", "ant-", "OldHistoricalKey0123456789abcdef"])
++    fake_sk_new = "".join(["s", "k-", "ant-", "NewLeakedKeyAfterClone0123456789"])
++
++    src_bare, sha_sau_clone = _init_bare_source_repo(
++        tmp_path,
++        branch="main",
++        files={
++            "legacy_outside.py": f"# file cu truoc clone\nOLD_TOKEN = '{fake_sk_old}'\n",
++            "src/work.py": "x = 1\n",
++        },
++    )
++    wt_sach = tmp_path / "wt-sach"
++    wt_lo = tmp_path / "wt-lo"
++
++    bare_queue, cfg = _setup_queue_env(
++        tmp_path,
++        {
++            "01-commit-sach-sau-clone": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_sach}\n"
++                f"nguon: {src_bare} main\n"
++                "nhanh_moi: feat-sach\n"
++                "vung: src/**\n\n"
++                "Sửa sạch trong src/** sau khi runner tự clone.\n"
++            ),
++            "02-commit-lo-bi-mat-sau-clone": (
++                "may: may-2\n"
++                "loai: code\n"
++                f"theo_doi: {wt_lo}\n"
++                f"nguon: {src_bare} main\n"
++                "nhanh_moi: feat-lo\n"
++                "vung: src/**\n\n"
++                "Commit lộ khoá mới sau mốc clone.\n"
++            ),
++        },
++    )
++
++    # 1. Nguồn có sẵn khoá lịch sử & file ngoài vùng từ trước clone, nhưng sau clone agy chỉ sửa sạch -> XONG
++    def _agy_sach(_c, viec):
++        assert viec["head_nhan"] == sha_sau_clone
++        _commit_files(wt_sach, {"src/work.py": "x = 2\n"}, "sua sach sau clone")
++        return "xong", "Đã sửa sạch.", "exit=0", 8, 8
++
++    res_1 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_agy_sach)
++    assert res_1 is not None
++    assert res_1["trang_thai"] == "xong"
++    assert res_1["bi_mat"] == []
++    assert res_1["ngoai_vung"] == []
++    assert res_1["so_file"] == 1
++    assert "trang_thai: xong" in _read_ket_qua_from_bare(bare_queue, "01-commit-sach-sau-clone")
++
++    # 2. Sau khi clone, agy commit thêm bí mật mới -> quét từ base_sha (= HEAD sau clone) bắt đúng file mới
++    def _agy_lo(_c, viec):
++        assert viec["head_nhan"] == sha_sau_clone
++        _commit_files(wt_lo, {"src/work.py": f"x = 2\nKEY = '{fake_sk_new}'\n"}, "lo bi mat moi")
++        return "xong", "Trót lộ khoá mới.", "exit=0", 8, 8
++
++    res_2 = hang_doi_git.xu_ly_mot_phieu(cfg, chay_agy_fn=_agy_lo)
++    assert res_2 is not None
++    assert res_2["trang_thai"] == "loi"
++    assert res_2["bi_mat"] == ["src/work.py:2"]
++    assert not any("legacy_outside.py" in item for item in res_2["bi_mat"])
++    kq_2 = _read_ket_qua_from_bare(bare_queue, "02-commit-lo-bi-mat-sau-clone")
++    assert "trang_thai: loi" in kq_2
++    assert "src/work.py:2" in kq_2
++    assert fake_sk_new not in kq_2
++    assert fake_sk_old not in kq_2
+-- 
+2.56.1.windows.1
+

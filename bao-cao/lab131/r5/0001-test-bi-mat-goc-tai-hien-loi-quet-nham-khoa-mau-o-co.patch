@@ -1,0 +1,249 @@
+From 5364f5cc2e0e6db4e9869cf81d2598364956b649 Mon Sep 17 00:00:00 2001
+From: may-3 <may-3@linhx.local>
+Date: Wed, 18 Nov 2026 12:13:33 +0700
+Subject: [PATCH 1/2] test(bi-mat-goc): tai hien loi quet nham khoa mau o
+ commit goc khi agy tu clone
+
+---
+ runner/test_bi_mat_goc.py | 229 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 229 insertions(+)
+ create mode 100644 runner/test_bi_mat_goc.py
+
+diff --git a/runner/test_bi_mat_goc.py b/runner/test_bi_mat_goc.py
+new file mode 100644
+index 00000000..3a646236
+--- /dev/null
++++ b/runner/test_bi_mat_goc.py
+@@ -0,0 +1,229 @@
++"""Kiểm thử lx-r5-bi-mat-goc: không báo nhầm bí mật ở commit gốc của nhánh nguồn khi agy tự clone."""
++from __future__ import annotations
++
++import os
++from pathlib import Path
++import shutil
++import stat
++import subprocess
++import sys
++import uuid
++
++import pytest
++
++sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
++from runner import hang_doi_git, linhx_runner, rao_phieu  # noqa: E402
++from runner._gia_moi_truong import _gia_ram_va_moi_truong_h3  # noqa: F401
++
++
++def _remove_tree(target_dir: Path) -> None:
++    if not target_dir.exists():
++        return
++
++    def _on_readonly(func, path_str, _):
++        try:
++            os.chmod(path_str, stat.S_IWRITE)
++            func(path_str)
++        except OSError:
++            pass
++
++    shutil.rmtree(target_dir, onerror=_on_readonly)
++
++
++@pytest.fixture
++def tmp_path():
++    work_root = linhx_runner.GOC / "viec"
++    existed_before = work_root.exists()
++    temp_root = work_root / f"pytest-tmp-r5-{os.getpid()}-{uuid.uuid4().hex[:8]}"
++    temp_root.mkdir(parents=True, exist_ok=True)
++    try:
++        yield temp_root
++    finally:
++        _remove_tree(temp_root)
++        if not existed_before and work_root.exists():
++            try:
++                next(work_root.iterdir())
++            except StopIteration:
++                work_root.rmdir()
++
++
++def _run_git(args: list[str], cwd: Path) -> str:
++    env = os.environ.copy()
++    env["GIT_TERMINAL_PROMPT"] = "0"
++    extra_kw = {"creationflags": 0x08000000} if os.name == "nt" else {}
++    proc = subprocess.run(
++        ["git"] + list(args),
++        cwd=str(cwd),
++        env=env,
++        capture_output=True,
++        text=True,
++        encoding="utf-8",
++        check=True,
++        **extra_kw,
++    )
++    return proc.stdout.strip()
++
++
++def _commit_files(repo_dir: Path, updates: dict[str, str], message: str) -> str:
++    for rel, content in updates.items():
++        p = repo_dir / rel
++        p.parent.mkdir(parents=True, exist_ok=True)
++        p.write_text(content, encoding="utf-8")
++    _run_git(["add", "-A"], repo_dir)
++    _run_git(["commit", "-m", message], repo_dir)
++    return _run_git(["rev-parse", "HEAD"], repo_dir)
++
++
++def _fake_tokens() -> tuple[str, str]:
++    # Ghép mảnh lúc chạy để mã nguồn test không chứa chuỗi giống bí mật
++    khoa_goc = "".join(["s", "k-", "ant-", "KhoaMauCoSanOCommitGoc012345"])
++    khoa_moi = "".join(["gh", "p_", "KhoaMoiThemTrongPhieu9876543210ab"])
++    return khoa_goc, khoa_moi
++
++
++def _tao_origin_co_khoa_mau_o_goc(tmp_path: Path, nhanh_nguon: str = "claude/nhanh-nguon") -> Path:
++    """Tạo bare repo giả có sẵn 1 tệp chứa chuỗi giống khoá ở commit gốc của nhánh nguồn."""
++    khoa_goc, _ = _fake_tokens()
++    bare = tmp_path / "origin-proj.git"
++    bare.mkdir()
++    _run_git(["init", "--bare"], bare)
++
++    seed = tmp_path / "seed-proj"
++    seed.mkdir()
++    _run_git(["init"], seed)
++    _run_git(["config", "user.name", "seed"], seed)
++    _run_git(["config", "user.email", "seed@linhx.local"], seed)
++    _run_git(["config", "commit.gpgsign", "false"], seed)
++    _run_git(["checkout", "-b", nhanh_nguon], seed)
++    _commit_files(
++        seed,
++        {
++            "tests/mau_khoa.py": f"# tep test mau co san\nFAKE_KEY = '{khoa_goc}'\n",
++            "runner/xu_ly.py": " GIA_TRI = 1\n",
++        },
++        "commit goc nhanh nguon",
++    )
++    _run_git(["remote", "add", "origin", str(bare)], seed)
++    _run_git(["push", "origin", nhanh_nguon], seed)
++    return bare
++
++
++def test_clone_upstream_nhanh_nguon_co_khoa_goc_khong_bao_nham_va_bat_khoa_moi(tmp_path):
++    """Repo giả có khoá mẫu ở commit gốc (HEAD bare chưa trỏ nhánh); agy clone + checkout upstream:
++    - Thêm 1 commit sạch -> `bi_mat` rỗng.
++    - Thêm commit chứa khoá mới -> bắt đúng `file:dòng`, không dính tệp mẫu ở gốc.
++    """
++    _, khoa_moi = _fake_tokens()
++    nhanh_nguon = "claude/nhanh-nguon"
++    bare = _tao_origin_co_khoa_mau_o_goc(tmp_path, nhanh_nguon=nhanh_nguon)
++
++    wt = tmp_path / "wt-agy-upstream"
++    _run_git(["clone", str(bare), str(wt)], tmp_path)
++    _run_git(["config", "user.name", "agy"], wt)
++    _run_git(["config", "user.email", "agy@linhx.local"], wt)
++    _run_git(["config", "commit.gpgsign", "false"], wt)
++    _run_git(["checkout", "-b", "lx-r5-viec", f"origin/{nhanh_nguon}"], wt)
++
++    _commit_files(wt, {"runner/xu_ly.py": "GIA_TRI = 2\n"}, "commit sach")
++    kq_sach = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_sach["bi_mat"] == []
++    assert kq_sach["ngoai_vung"] == []
++    assert kq_sach["dat"] is True
++
++    _commit_files(
++        wt,
++        {"runner/ket_noi.py": f"# dong 1\nx = 10\nTOKEN_MOI = '{khoa_moi}'\n"},
++        "them khoa moi",
++    )
++    kq_ban = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_ban["bi_mat"] == ["runner/ket_noi.py:3"]
++    assert kq_ban["dat"] is False
++
++
++def test_clone_b_nhanh_nguon_khong_reflog_va_da_push_nhanh_moi(tmp_path):
++    """Agy `clone -b <nhánh nguồn>` rồi tách nhánh mới (kể cả không có mục `clone:` trong reflog
++    và đã `push -u origin <nhánh mới>`): lấy `merge-base HEAD origin/<nhánh nguồn>` đúng gốc.
++    """
++    _, khoa_moi = _fake_tokens()
++    nhanh_nguon = "claude/project-thread-jowxv1"
++    bare = _tao_origin_co_khoa_mau_o_goc(tmp_path, nhanh_nguon=nhanh_nguon)
++
++    wt = tmp_path / "wt-agy-clone-b"
++    _run_git(
++        ["-c", "core.logallrefupdates=false", "clone", "-b", nhanh_nguon, str(bare), str(wt)],
++        tmp_path,
++    )
++    _run_git(["config", "user.name", "agy"], wt)
++    _run_git(["config", "user.email", "agy@linhx.local"], wt)
++    _run_git(["config", "commit.gpgsign", "false"], wt)
++    _run_git(["checkout", "-b", "lx-r5-bi-mat-goc"], wt)
++
++    _commit_files(wt, {"runner/xu_ly.py": "GIA_TRI = 3\n"}, "commit sach")
++    _run_git(["push", "-u", "origin", "lx-r5-bi-mat-goc"], wt)
++
++    kq_sach = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_sach["bi_mat"] == []
++    assert kq_sach["so_file"] == 1
++    assert kq_sach["dat"] is True
++
++    _commit_files(
++        wt,
++        {"runner/xu_ly.py": f"GIA_TRI = 3\nAPI_TOKEN = '{khoa_moi}'\n"},
++        "commit chua khoa moi",
++    )
++    _run_git(["push", "origin", "lx-r5-bi-mat-goc"], wt)
++
++    kq_ban = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_ban["bi_mat"] == ["runner/xu_ly.py:2"]
++    assert kq_ban["dat"] is False
++
++
++def test_clone_mac_dinh_main_roi_checkout_nhanh_nguon_khac_khong_quet_nham_commit_cu(tmp_path):
++    """Origin có `main` làm mặc định nhưng agy sau khi clone chuyển sang `origin/<nhánh nguồn>`
++    (nơi đã có sẵn tệp chứa khoá mẫu từ trước): không quét nhầm diff giữa `main` và `<nhánh nguồn>`.
++    """
++    khoa_goc, khoa_moi = _fake_tokens()
++    bare = tmp_path / "origin-2nhanh.git"
++    bare.mkdir()
++    _run_git(["init", "--bare"], bare)
++
++    seed = tmp_path / "seed-2nhanh"
++    seed.mkdir()
++    _run_git(["init"], seed)
++    _run_git(["config", "user.name", "seed"], seed)
++    _run_git(["config", "user.email", "seed@linhx.local"], seed)
++    _run_git(["config", "commit.gpgsign", "false"], seed)
++    _run_git(["checkout", "-b", "main"], seed)
++    _commit_files(seed, {"README.md": "goc main\n"}, "init main")
++    _run_git(["remote", "add", "origin", str(bare)], seed)
++    _run_git(["push", "origin", "main"], seed)
++    _run_git(["symbolic-ref", "HEAD", "refs/heads/main"], bare)
++
++    _run_git(["checkout", "-b", "agy/nguon-staging"], seed)
++    _commit_files(
++        seed,
++        {
++            "apps/lab/test/mau.test.js": f"const k = '{khoa_goc}';\n",
++            "runner/app.py": "v = 1\n",
++        },
++        "commit co san tren nhanh nguon",
++    )
++    _run_git(["push", "origin", "agy/nguon-staging"], seed)
++
++    wt = tmp_path / "wt-chuyen-nhanh"
++    _run_git(["clone", str(bare), str(wt)], tmp_path)
++    _run_git(["config", "user.name", "agy"], wt)
++    _run_git(["config", "user.email", "agy@linhx.local"], wt)
++    _run_git(["config", "commit.gpgsign", "false"], wt)
++    _run_git(["checkout", "-b", "agy/phieu-moi", "origin/agy/nguon-staging"], wt)
++
++    _commit_files(wt, {"runner/app.py": "v = 2\n"}, "sua sach")
++    kq_sach = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_sach["bi_mat"] == []
++    assert kq_sach["ngoai_vung"] == []
++    assert kq_sach["dat"] is True
++
++    _commit_files(wt, {"runner/app.py": "v = 2\n\n\nKEY = '" + khoa_moi + "'\n"}, "lo khoa dong 4")
++    kq_ban = rao_phieu.inspect_new_commits(wt, "", ["runner/**"], hang_doi_git.chay_git)
++    assert kq_ban["bi_mat"] == ["runner/app.py:4"]
++    assert kq_ban["dat"] is False
+-- 
+2.56.1.windows.1
+

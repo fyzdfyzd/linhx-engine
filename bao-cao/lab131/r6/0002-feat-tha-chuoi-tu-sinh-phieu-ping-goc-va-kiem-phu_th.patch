@@ -1,0 +1,424 @@
+From 062e1f439d61fab27bd658a3d36bc6d4db58ed1e Mon Sep 17 00:00:00 2001
+From: LAB131 <lab131@linhx.local>
+Date: Wed, 18 Nov 2026 12:17:49 +0700
+Subject: [PATCH 2/2] feat(tha-chuoi): tu sinh phieu ping goc va kiem phu_thuoc
+ truoc khi tha chuoi
+
+---
+ runner/tha_chuoi.py | 404 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 404 insertions(+)
+ create mode 100644 runner/tha_chuoi.py
+
+diff --git a/runner/tha_chuoi.py b/runner/tha_chuoi.py
+new file mode 100644
+index 00000000..f0bf342d
+--- /dev/null
++++ b/runner/tha_chuoi.py
+@@ -0,0 +1,404 @@
++#!/usr/bin/env python3
++"""Thả một chuỗi phiếu vào nhánh `hang-doi` kèm phiếu ping làm gốc bắt buộc.
++
++Chạy:
++  python runner/tha_chuoi.py <thu-muc-phieu> --may <may>
++"""
++from __future__ import annotations
++
++import argparse
++import os
++from pathlib import Path
++import re
++import shutil
++import stat
++import sys
++import time
++from typing import Sequence
++
++RUNNER_DIR = Path(__file__).resolve().parent
++REPO_ROOT = RUNNER_DIR.parent
++if str(REPO_ROOT) not in sys.path:
++    sys.path.insert(0, str(REPO_ROOT))
++
++from runner import hang_doi_git, linhx_runner  # noqa: E402
++
++TRAN_PHUT_PING = 5
++SO_LAN_THU_REBASE = 3
++_MAU_TEN_MAY = re.compile(r"^[a-z0-9][a-z0-9_-]*$")
++_MAU_MA_PHIEU = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
++
++
++class LoiDauVaoThaChuoi(ValueError):
++    """Lỗi tham số, vòng phụ thuộc hoặc mã phụ thuộc không tồn tại (thoát mã 2)."""
++
++
++def chuan_hoa_may(may: str) -> str:
++    may_chuan = str(may or "").strip().lower()
++    if not _MAU_TEN_MAY.match(may_chuan):
++        raise LoiDauVaoThaChuoi(f"Tên máy không hợp lệ: {may!r}")
++    return may_chuan
++
++
++def _slug_ten_chuoi(ten: str) -> str:
++    slug = re.sub(r"[^a-z0-9]+", "-", str(ten or "").strip().lower()).strip("-")
++    return (slug[:24].rstrip("-") or "chuoi")
++
++
++def _la_dong_khoa_phu_thuoc(dong: str) -> bool:
++    m = hang_doi_git._KHOA_DAU_DONG.match(dong.strip())
++    return bool(m and m.group(1).lower() == "phu_thuoc")
++
++
++def chen_phu_thuoc_goc(noi_dung: str, ma_phieu: str, id_ping: str) -> str:
++    """Chèn `phu_thuoc: <id_ping>` vào phiếu chưa có `phu_thuoc`; giữ nguyên phiếu đã có."""
++    van_ban = noi_dung.lstrip("\ufeff")
++    da_phan_tich = hang_doi_git.phan_tich_phieu(van_ban, ma_phieu)
++    if da_phan_tich["phu_thuoc"]:
++        return van_ban if van_ban.endswith("\n") else (van_ban + "\n")
++
++    dong_chen = f"phu_thuoc: {id_ping}"
++    cac_dong = van_ban.splitlines()
++
++    if cac_dong and cac_dong[0].strip() == "---":
++        for idx in range(1, len(cac_dong)):
++            if cac_dong[idx].strip() == "---":
++                phan_dau = [
++                    d for d in cac_dong[1:idx]
++                    if not _la_dong_khoa_phu_thuoc(d)
++                ]
++                ket_qua = "\n".join([cac_dong[0], *phan_dau, dong_chen, *cac_dong[idx:]])
++                return ket_qua + "\n"
++
++    phan_dau_thuong: list[str] = []
++    vi_tri_than = 0
++    for idx, dong in enumerate(cac_dong):
++        s = dong.strip()
++        if not s:
++            vi_tri_than = idx
++            break
++        if hang_doi_git._tach_cap_khoa_gia_tri(s):
++            vi_tri_than = idx + 1
++            if not _la_dong_khoa_phu_thuoc(s):
++                phan_dau_thuong.append(dong)
++        else:
++            vi_tri_than = idx
++            break
++    else:
++        vi_tri_than = len(cac_dong)
++
++    phan_con_lai = cac_dong[vi_tri_than:]
++    if not phan_dau_thuong:
++        than_sach = "\n".join(phan_con_lai).lstrip("\r\n")
++        return f"{dong_chen}\n\n{than_sach}" + ("" if than_sach.endswith("\n") else "\n")
++
++    co_dong_trong = bool(phan_con_lai and not phan_con_lai[0].strip())
++    ngan_cach = [] if (not phan_con_lai or co_dong_trong) else [""]
++    ket_qua = "\n".join([*phan_dau_thuong, dong_chen, *ngan_cach, *phan_con_lai])
++    return ket_qua + "\n"
++
++
++def kiem_khong_vong_phu_thuoc(do_thi: dict[str, list[str]]) -> None:
++    """Duyệt DFS 3 trạng thái phát hiện mọi chu trình phụ thuộc (kể cả tự vòng)."""
++    trang_thai: dict[str, int] = {}
++    duong_di: list[str] = []
++
++    def _tham(dinh: str) -> None:
++        trang_thai[dinh] = 1
++        duong_di.append(dinh)
++        for phu in do_thi.get(dinh, ()):
++            tt = trang_thai.get(phu, 0)
++            if tt == 1:
++                vi_tri = duong_di.index(phu)
++                chu_trinh = " -> ".join([*duong_di[vi_tri:], phu])
++                raise LoiDauVaoThaChuoi(f"Phát hiện vòng phụ thuộc: {chu_trinh}")
++            if tt == 0 and phu in do_thi:
++                _tham(phu)
++        duong_di.pop()
++        trang_thai[dinh] = 2
++
++    for dinh in sorted(do_thi.keys()):
++        if trang_thai.get(dinh, 0) == 0:
++            _tham(dinh)
++
++
++def _doc_thu_muc_phieu(thu_muc: Path) -> list[tuple[str, str, dict]]:
++    if not thu_muc.exists() or not thu_muc.is_dir():
++        raise LoiDauVaoThaChuoi(f"Thư mục phiếu không tồn tại: {thu_muc}")
++    cac_tep = sorted(
++        (p for p in thu_muc.iterdir() if p.is_file() and p.suffix.lower() == ".md"),
++        key=lambda p: p.name,
++    )
++    if not cac_tep:
++        raise LoiDauVaoThaChuoi(f"Không có tệp .md nào trong thư mục: {thu_muc}")
++
++    danh_sach: list[tuple[str, str, dict]] = []
++    da_gap_lower: set[str] = set()
++    for tep in cac_tep:
++        ma_phieu = tep.stem.strip()
++        if not _MAU_MA_PHIEU.match(ma_phieu) or ".." in ma_phieu:
++            raise LoiDauVaoThaChuoi(f"Tên tệp phiếu không hợp lệ: {tep.name}")
++        khoa_lower = ma_phieu.lower()
++        if khoa_lower in da_gap_lower:
++            raise LoiDauVaoThaChuoi(f"Trùng mã phiếu không phân biệt hoa thường: {ma_phieu}")
++        da_gap_lower.add(khoa_lower)
++        noi_dung = tep.read_text(encoding="utf-8")
++        viec = hang_doi_git.phan_tich_phieu(noi_dung, ma_phieu)
++        danh_sach.append((ma_phieu, noi_dung, viec))
++    return danh_sach
++
++
++def _xac_dinh_repo_hang_doi(repo_hang_doi: Path | str | None, chay_git_fn) -> Path:
++    if repo_hang_doi is not None and str(repo_hang_doi).strip():
++        return Path(repo_hang_doi).resolve()
++    env_repo = os.environ.get("LINHX_REPO_HANG_DOI", "").strip()
++    if env_repo:
++        return Path(env_repo).resolve()
++
++    cwd = Path.cwd()
++    p_top = chay_git_fn(["rev-parse", "--show-toplevel"], cwd=cwd, check=False, timeout=15)
++    if p_top.returncode == 0 and p_top.stdout.strip():
++        return Path(p_top.stdout.strip()).resolve()
++
++    tep_tho_env = linhx_runner.GOC / "tho.env"
++    if tep_tho_env.is_file():
++        cfg_env = linhx_runner.doc_env(tep_tho_env)
++        if cfg_env.get("repo_hang_doi"):
++            return Path(cfg_env["repo_hang_doi"]).resolve()
++    return linhx_runner.GOC.parent.resolve()
++
++
++def _dam_bao_wt_hang_doi(cfg: dict, chay_git_fn) -> tuple[Path, str]:
++    repo, wt, remote, nhanh = hang_doi_git._duong_dan_wt(cfg)
++    if not (repo / ".git").exists():
++        p_check = chay_git_fn(["rev-parse", "--git-dir"], cwd=repo, check=False, timeout=15)
++        if p_check.returncode != 0:
++            raise LoiDauVaoThaChuoi(f"Không phải git repo hàng đợi: {repo}")
++
++    ref_remote = f"refs/remotes/{remote}/{nhanh}"
++    nhanh_ht = chay_git_fn(["symbolic-ref", "--short", "-q", "HEAD"], cwd=repo, check=False)
++    dang_o_nhanh_hd = nhanh_ht.returncode == 0 and nhanh_ht.stdout.strip() == nhanh
++
++    p_fetch = chay_git_fn(["fetch", remote, f"+refs/heads/{nhanh}:{ref_remote}"], cwd=repo, check=False)
++    if p_fetch.returncode != 0:
++        err = (p_fetch.stderr or p_fetch.stdout or "").lower()
++        chua_co_ref = "couldn't find remote ref" in err or "remote ref does not exist" in err
++        if chua_co_ref and dang_o_nhanh_hd:
++            p_head = chay_git_fn(["rev-parse", "--verify", "-q", "HEAD"], cwd=repo, check=False)
++            return repo, (p_head.stdout.strip() if p_head.returncode == 0 else "")
++        raise RuntimeError(f"Không kéo được nhánh {nhanh} từ {remote}: {(p_fetch.stderr or p_fetch.stdout).strip()}")
++
++    if dang_o_nhanh_hd:
++        chay_git_fn(["reset", "--hard", ref_remote], cwd=repo)
++        chay_git_fn(["clean", "-fd"], cwd=repo)
++        return repo, ref_remote
++
++    if not (wt / ".git").exists():
++        if wt.exists():
++            shutil.rmtree(wt, onerror=lambda fn, p, _: (os.chmod(p, stat.S_IWRITE), fn(p)))
++        chay_git_fn(["worktree", "prune"], cwd=repo, check=False)
++        chay_git_fn(["worktree", "add", "-B", nhanh, str(wt), ref_remote], cwd=repo)
++    else:
++        chay_git_fn(["checkout", "-B", nhanh, ref_remote], cwd=wt)
++        chay_git_fn(["reset", "--hard", ref_remote], cwd=wt)
++        chay_git_fn(["clean", "-fd"], cwd=wt)
++    return wt, ref_remote
++
++
++def _phieu_da_co_tren_hang_doi(goc_hd: Path, ma_phieu: str) -> bool:
++    return (
++        (goc_hd / "moi" / f"{ma_phieu}.md").exists()
++        or (goc_hd / "dang" / f"{ma_phieu}.md").exists()
++        or (goc_hd / "xong" / ma_phieu).exists()
++    )
++
++
++def _phu_thuoc_ton_tai_tren_hang_doi(wt: Path, goc_hd: Path, dep_id: str) -> bool:
++    if (goc_hd / "moi" / f"{dep_id}.md").is_file() or (goc_hd / "dang" / f"{dep_id}.md").is_file():
++        return True
++    return hang_doi_git.read_result_status(wt, dep_id) == "xong"
++
++
++def _sinh_id_ping_duy_nhat(thu_muc: Path, tap_id_chuoi: set[str], goc_hd: Path) -> str:
++    slug = _slug_ten_chuoi(thu_muc.name)
++    dau_gio = time.strftime("%Y%m%d-%H%M%S")
++    goc_id = f"00-ping-{slug}-{dau_gio}"
++    ung_vien = goc_id
++    chi_so = 2
++    tap_lower = {x.lower() for x in tap_id_chuoi}
++    while ung_vien.lower() in tap_lower or _phieu_da_co_tren_hang_doi(goc_hd, ung_vien):
++        ung_vien = f"{goc_id}-{chi_so}"
++        chi_so += 1
++    return ung_vien
++
++
++def _dam_bao_danh_tinh_git(wt: Path, nguoi_commit: str, chay_git_fn) -> None:
++    p_name = chay_git_fn(["config", "--get", "user.name"], cwd=wt, check=False, timeout=10)
++    if p_name.returncode != 0 or not p_name.stdout.strip():
++        chay_git_fn(["config", "user.name", nguoi_commit], cwd=wt, check=False, timeout=10)
++    p_mail = chay_git_fn(["config", "--get", "user.email"], cwd=wt, check=False, timeout=10)
++    if p_mail.returncode != 0 or not p_mail.stdout.strip():
++        chay_git_fn(["config", "user.email", f"{nguoi_commit}@linhx.local"], cwd=wt, check=False, timeout=10)
++    chay_git_fn(["config", "commit.gpgsign", "false"], cwd=wt, check=False, timeout=10)
++
++
++def tha_chuoi(
++    thu_muc_phieu: Path | str,
++    may: str,
++    *,
++    repo_hang_doi: Path | str | None = None,
++    nhanh_hang_doi: str = hang_doi_git.NHANH_MAC_DINH,
++    remote_hang_doi: str = hang_doi_git.REMOTE_MAC_DINH,
++    wt_hang_doi: Path | str | None = None,
++    chay_git_fn=None,
++) -> dict:
++    """Đọc các phiếu `.md`, sinh 1 phiếu ping làm gốc, kiểm DAG + phụ thuộc, ghi `moi/` và commit + push."""
++    ham_git = chay_git_fn or hang_doi_git.chay_git
++    may_chuan = chuan_hoa_may(may)
++    tm_nguon = Path(thu_muc_phieu).resolve()
++    ds_phieu_goc = _doc_thu_muc_phieu(tm_nguon)
++
++    # Kiểm sớm vòng phụ thuộc nội bộ trước khi chạm vào git worktree
++    do_thi_so_bo = {ma: list(viec["phu_thuoc"]) for ma, _, viec in ds_phieu_goc}
++    kiem_khong_vong_phu_thuoc(do_thi_so_bo)
++
++    repo = _xac_dinh_repo_hang_doi(repo_hang_doi, ham_git)
++    cfg = {
++        "repo_hang_doi": repo,
++        "nhanh_hang_doi": nhanh_hang_doi,
++        "remote_hang_doi": remote_hang_doi,
++        "wt_hang_doi": wt_hang_doi or "",
++    }
++    _, _, remote, nhanh = hang_doi_git._duong_dan_wt(cfg)
++
++    with hang_doi_git._khoa_tep(hang_doi_git._duong_dan_khoa_wt(cfg)):
++        wt, ref_remote = _dam_bao_wt_hang_doi(cfg, ham_git)
++        goc_hd = hang_doi_git.thu_muc_hang_doi(wt)
++
++        tap_id_chuoi = {ma for ma, _, _ in ds_phieu_goc}
++        for ma in sorted(tap_id_chuoi):
++            if _phieu_da_co_tren_hang_doi(goc_hd, ma):
++                raise LoiDauVaoThaChuoi(f"Phiếu '{ma}' đã tồn tại trên nhánh {nhanh}")
++
++        id_ping = _sinh_id_ping_duy_nhat(tm_nguon, tap_id_chuoi, goc_hd)
++        noi_dung_ping = hang_doi_git.tao_phieu_ping(may=may_chuan, tran_phut=TRAN_PHUT_PING)
++
++        tep_se_ghi: list[tuple[str, str]] = [(id_ping, noi_dung_ping)]
++        do_thi_day_du: dict[str, list[str]] = {id_ping: []}
++        tap_hop_le = set(tap_id_chuoi) | {id_ping}
++
++        # Nạp thêm cạnh phụ thuộc của các phiếu đang chờ/chạy sẵn trên hàng đợi (nếu có)
++        for ten_tm in ("moi", "dang"):
++            tm_hd = goc_hd / ten_tm
++            if tm_hd.is_dir():
++                for tep_cu in sorted(tm_hd.glob("*.md"), key=lambda p: p.name):
++                    viec_cu = hang_doi_git.phan_tich_phieu(
++                        tep_cu.read_text(encoding="utf-8", errors="replace"),
++                        tep_cu.stem,
++                    )
++                    do_thi_day_du[tep_cu.stem] = list(viec_cu["phu_thuoc"])
++
++        for ma, noi_dung_goc, _ in ds_phieu_goc:
++            noi_dung_moi = chen_phu_thuoc_goc(noi_dung_goc, ma, id_ping)
++            viec_moi = hang_doi_git.phan_tich_phieu(noi_dung_moi, ma)
++            deps = list(viec_moi["phu_thuoc"])
++            for dep_id in deps:
++                if dep_id not in tap_hop_le and not _phu_thuoc_ton_tai_tren_hang_doi(wt, goc_hd, dep_id):
++                    raise LoiDauVaoThaChuoi(f"Phiếu '{ma}' phụ thuộc vào id không tồn tại: '{dep_id}'")
++            do_thi_day_du[ma] = deps
++            tep_se_ghi.append((ma, noi_dung_moi))
++
++        kiem_khong_vong_phu_thuoc(do_thi_day_du)
++
++        # Chỉ khi toàn bộ kiểm tra hợp lệ mới bắt đầu ghi tệp vào hang-doi/moi/
++        tm_moi = goc_hd / "moi"
++        tm_moi.mkdir(parents=True, exist_ok=True)
++        for ma, noi_dung_tep in tep_se_ghi:
++            (tm_moi / f"{ma}.md").write_text(noi_dung_tep, encoding="utf-8")
++
++        nguoi_commit = f"tha-chuoi-{may_chuan}"
++        _dam_bao_danh_tinh_git(wt, nguoi_commit, ham_git)
++        thong_diep = f"tha-chuoi: {tm_nguon.name} ({len(tep_se_ghi)} phieu, goc={id_ping}, may={may_chuan})"
++        ham_git(["add", "-A"], cwd=wt)
++        ham_git(
++            [
++                "-c", f"user.name={nguoi_commit}",
++                "-c", f"user.email={nguoi_commit}@linhx.local",
++                "-c", "commit.gpgsign=false",
++                "commit", "-m", thong_diep,
++            ],
++            cwd=wt,
++        )
++
++        push = ham_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=45)
++        loi_cuoi = (push.stderr or push.stdout or "").strip()
++        if push.returncode != 0:
++            da_push = False
++            for _ in range(SO_LAN_THU_REBASE):
++                pull_rb = ham_git(["pull", "--rebase", remote, nhanh], cwd=wt, check=False, timeout=45)
++                if pull_rb.returncode != 0:
++                    loi_cuoi = (pull_rb.stderr or pull_rb.stdout or "").strip()
++                    ham_git(["rebase", "--abort"], cwd=wt, check=False, timeout=15)
++                    break
++                push = ham_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False, timeout=45)
++                if push.returncode == 0:
++                    da_push = True
++                    break
++                loi_cuoi = (push.stderr or push.stdout or "").strip()
++
++            if not da_push:
++                if ref_remote:
++                    ham_git(["reset", "--hard", ref_remote], cwd=wt, check=False, timeout=15)
++                ham_git(["clean", "-fd"], cwd=wt, check=False, timeout=15)
++                raise RuntimeError(
++                    f"Không push được chuỗi lên {remote}/{nhanh} sau {SO_LAN_THU_REBASE} lần pull --rebase: {loi_cuoi}"
++                )
++
++        return {
++            "id_ping": id_ping,
++            "may": may_chuan,
++            "so_tep": len(tep_se_ghi),
++            "cac_phieu": [ma for ma, _ in tep_se_ghi],
++            "wt": str(wt),
++        }
++
++
++def tao_bo_tham_so() -> argparse.ArgumentParser:
++    ap = argparse.ArgumentParser(
++        description="Thả chuỗi phiếu .md vào hang-doi/moi/ kèm 1 phiếu ping tự động làm gốc."
++    )
++    ap.add_argument("thu_muc_phieu", help="Đường dẫn thư mục chứa các tệp .md của chuỗi phiếu.")
++    ap.add_argument("--may", required=True, help="Tên máy nhận phiếu ping gốc (vd: may-1, may-2, bat-ky).")
++    ap.add_argument("--repo", default=None, help="Đường dẫn git repo hàng đợi (mặc định: tự nhận diện từ cwd / tho.env).")
++    ap.add_argument("--nhanh", default=hang_doi_git.NHANH_MAC_DINH, help="Tên nhánh hàng đợi (mặc định: hang-doi).")
++    ap.add_argument("--remote", default=hang_doi_git.REMOTE_MAC_DINH, help="Tên remote git (mặc định: origin).")
++    return ap
++
++
++def main(argv: Sequence[str] | None = None) -> int:
++    ap = tao_bo_tham_so()
++    args = ap.parse_args(argv)
++    try:
++        kq = tha_chuoi(
++            args.thu_muc_phieu,
++            may=args.may,
++            repo_hang_doi=args.repo,
++            nhanh_hang_doi=args.nhanh,
++            remote_hang_doi=args.remote,
++        )
++    except LoiDauVaoThaChuoi as exc:
++        print(f"LỖI THẢ CHUỖI: {exc}", file=sys.stderr)
++        return 2
++    except RuntimeError as exc:
++        print(f"LỖI GIT: {exc}", file=sys.stderr)
++        return 1
++
++    print(
++        f"Đã thả {kq['so_tep']} phiếu vào hang-doi/moi/ "
++        f"(goc={kq['id_ping']}, may={kq['may']})"
++    )
++    return 0
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+-- 
+2.56.1.windows.1
+
