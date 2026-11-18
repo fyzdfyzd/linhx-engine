@@ -1,0 +1,572 @@
+From 2fc0b46c0eb5d647e780dd405824e09b9f997370 Mon Sep 17 00:00:00 2001
+From: may-2 <may-2@linhx.local>
+Date: Wed, 18 Nov 2026 14:38:35 +0700
+Subject: [PATCH 2/3] wip(r4): luu phan va do tu luot c-va
+
+---
+ runner/hang_doi_git.py | 359 ++++++++++++++++++++++++++++++++++++++++-
+ runner/linhx_runner.py |  45 +++++-
+ 2 files changed, 395 insertions(+), 9 deletions(-)
+
+diff --git a/runner/hang_doi_git.py b/runner/hang_doi_git.py
+index 66c380c8..415b0e2b 100644
+--- a/runner/hang_doi_git.py
++++ b/runner/hang_doi_git.py
+@@ -10,6 +10,7 @@ from __future__ import annotations
+ from contextlib import contextmanager
+ import hashlib
+ import json
++import math
+ import os
+ import random
+ import re
+@@ -75,8 +76,48 @@ REVIEW_PROMPT_HEADER = (
+ )
+ VALID_RESULT_STATUSES = ("xong", "loi", "dung", "huy")
+ VERIFY_TIMEOUT_MINUTES = 15.0
++TRAN_KIEM_PHUT_MAC_DINH = 5
++LY_DO_QUA_TRAN_KIEM = "qua_tran_kiem"
++LY_DO_LENH_KIEM_QUA_RONG = "lenh_kiem_qua_rong"
+ VERIFY_LOG_TAIL_LIMIT = 1500
+ LOCK_TAMPER_MESSAGE = "sửa test khoá"
++_PYTEST_OPTS_TAKING_VALUE = frozenset(
++    {
++        "-c",
++        "-o",
++        "-p",
++        "-W",
++        "-r",
++        "-n",
++        "--tb",
++        "--maxfail",
++        "--durations",
++        "--durations-min",
++        "--color",
++        "--capture",
++        "--basetemp",
++        "--rootdir",
++        "--confcutdir",
++        "--import-mode",
++        "--ignore",
++        "--ignore-glob",
++        "--deselect",
++        "--log-level",
++        "--log-format",
++        "--log-date-format",
++        "--log-cli-level",
++        "--log-file",
++        "--junitxml",
++        "--result-log",
++        "--cov",
++        "--cov-config",
++        "--cov-report",
++        "--numprocesses",
++        "--dist",
++    }
++)
++_ENV_ASSIGN_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
++_PYTHON_EXE_RE = re.compile(r"^(?:py|python(?:\d+(?:\.\d+)*)?)$")
+ _AUTOLOAD_HOOK_NAMES = frozenset({"conftest.py", "pytest.py", "sitecustomize.py", "usercustomize.py", "_pytest"})
+ _FEATURE_LOCK_MUTABLE_KEYS = frozenset({"passes", "bang_chung"})
+ _SHA256_ONLY_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+@@ -324,6 +365,233 @@ def parse_lenh_kiem(raw_value) -> str:
+     return _strip_unquoted_comment(str(raw_value)).strip()
+ 
+ 
++def _parse_positive_minutes(raw_value) -> int | float | None:
++    if raw_value is None or isinstance(raw_value, bool):
++        return None
++    cleaned = _strip_unquoted_comment(str(raw_value)).strip()
++    if not cleaned:
++        return None
++    try:
++        val = float(cleaned)
++    except (ValueError, TypeError):
++        return None
++    if not math.isfinite(val) or val <= 0:
++        return None
++    return int(val) if val.is_integer() else val
++
++
++def parse_tran_kiem_phut(raw_value) -> int | float:
++    # Phân tích trần thời gian riêng của `lenh_kiem` từ header `tran_kiem_phut:` (mặc định 5 phút)
++    parsed = _parse_positive_minutes(raw_value)
++    return TRAN_KIEM_PHUT_MAC_DINH if parsed is None else parsed
++
++
++def _split_shell_subcommands(command: str) -> list[str]:
++    # Tách chuỗi lệnh shell theo `;`, `&&`, `||`, `|`, xuống dòng khi nằm ngoài dấu nháy
++    parts: list[str] = []
++    buf: list[str] = []
++    quote_char: str | None = None
++    idx = 0
++    n = len(command)
++    while idx < n:
++        ch = command[idx]
++        if quote_char is not None:
++            if ch == "\\" and quote_char == '"' and idx + 1 < n and command[idx + 1] == '"':
++                buf.append(ch)
++                buf.append(command[idx + 1])
++                idx += 2
++                continue
++            if ch == quote_char:
++                quote_char = None
++            buf.append(ch)
++            idx += 1
++            continue
++        if ch in ("'", '"'):
++            quote_char = ch
++            buf.append(ch)
++            idx += 1
++            continue
++        if ch in (";", "\n"):
++            seg = "".join(buf).strip()
++            if seg:
++                parts.append(seg)
++            buf.clear()
++            idx += 1
++            continue
++        if ch in ("&", "|"):
++            if idx + 1 < n and command[idx + 1] == ch:
++                idx += 2
++            else:
++                idx += 1
++            seg = "".join(buf).strip()
++            if seg:
++                parts.append(seg)
++            buf.clear()
++            continue
++        buf.append(ch)
++        idx += 1
++    tail = "".join(buf).strip()
++    if tail:
++        parts.append(tail)
++    return parts
++
++
++def _tokenize_shell_segment(segment: str) -> list[str]:
++    # Tách tham số một lệnh đơn, bảo toàn dấu `\` trong đường dẫn Windows và gỡ cặp nháy bao ngoài
++    tokens: list[str] = []
++    cur: list[str] = []
++    in_token = False
++    quote_char: str | None = None
++    idx = 0
++    n = len(segment)
++    while idx < n:
++        ch = segment[idx]
++        if quote_char is not None:
++            if ch == "\\" and quote_char == '"' and idx + 1 < n and segment[idx + 1] == '"':
++                cur.append('"')
++                idx += 2
++                continue
++            if ch == quote_char:
++                quote_char = None
++                idx += 1
++                continue
++            cur.append(ch)
++            idx += 1
++            continue
++        if ch in ("'", '"'):
++            quote_char = ch
++            in_token = True
++            idx += 1
++            continue
++        if ch.isspace():
++            if in_token:
++                tokens.append("".join(cur))
++                cur.clear()
++                in_token = False
++            idx += 1
++            continue
++        cur.append(ch)
++        in_token = True
++        idx += 1
++    if in_token:
++        tokens.append("".join(cur))
++    return tokens
++
++
++def _exe_stem(token: str) -> str:
++    base = str(token or "").replace("\\", "/").rsplit("/", 1)[-1].strip().lower()
++    for ext in (".exe", ".cmd", ".bat", ".ps1"):
++        if base.endswith(ext) and len(base) > len(ext):
++            return base[: -len(ext)]
++    return base
++
++
++def _extract_pytest_args_from_tokens(tokens: list[str]) -> list[str] | None:
++    # Trả về danh sách đối số sau `pytest` nếu lệnh này gọi pytest, hoặc None nếu không phải pytest
++    idx = 0
++    n = len(tokens)
++    while idx < n and _ENV_ASSIGN_RE.match(tokens[idx]) and not linhx_runner._la_duong_dan_win_tuyet_doi(tokens[idx]):
++        idx += 1
++    if idx + 1 < n and _exe_stem(tokens[idx]) in ("uv", "poetry", "pipenv", "pdm") and tokens[idx + 1].lower() == "run":
++        idx += 2
++    if idx >= n:
++        return None
++    stem = _exe_stem(tokens[idx])
++    if stem in ("pytest", "py.test"):
++        return tokens[idx + 1 :]
++    if _PYTHON_EXE_RE.match(stem):
++        j = idx + 1
++        while j < n:
++            tok = tokens[j]
++            if tok == "-m":
++                if j + 1 < n and _exe_stem(tokens[j + 1]) in ("pytest", "py.test"):
++                    return tokens[j + 2 :]
++                return None
++            if tok.lower() in ("-mpytest", "-mpy.test"):
++                return tokens[j + 1 :]
++            if tok == "-c":
++                return None
++            if tok in ("-W", "-X"):
++                j += 2
++                continue
++            if tok.startswith("-"):
++                j += 1
++                continue
++            return None
++    return None
++
++
++def _classify_pytest_target(tok: str, file_targets: list[str], dir_targets: list[str]) -> None:
++    path_part = str(tok or "").split("::", 1)[0].strip()
++    if not path_part or path_part.endswith(("/", "\\")) or path_part in (".", ".."):
++        dir_targets.append(tok)
++        return
++    if path_part.lower().endswith(".py"):
++        file_targets.append(tok)
++    else:
++        dir_targets.append(tok)
++
++
++def _is_pytest_args_too_broad(pytest_args: list[str]) -> bool:
++    has_filter = False
++    file_targets: list[str] = []
++    dir_targets: list[str] = []
++    after_ddash = False
++    i = 0
++    n = len(pytest_args)
++    while i < n:
++        tok = pytest_args[i]
++        if after_ddash:
++            _classify_pytest_target(tok, file_targets, dir_targets)
++            i += 1
++            continue
++        if tok == "--":
++            after_ddash = True
++            i += 1
++            continue
++        if tok in ("-k", "-m"):
++            if i + 1 < n and pytest_args[i + 1].strip():
++                has_filter = True
++            i += 2
++            continue
++        if tok.startswith(("-k=", "-m=")):
++            if tok.split("=", 1)[1].strip():
++                has_filter = True
++            i += 1
++            continue
++        if not tok.startswith("--") and len(tok) > 2 and tok[:2] in ("-k", "-m"):
++            if tok[2:].strip():
++                has_filter = True
++            i += 1
++            continue
++        if tok in _PYTEST_OPTS_TAKING_VALUE:
++            i += 2
++            continue
++        if tok.startswith("-"):
++            i += 1
++            continue
++        _classify_pytest_target(tok, file_targets, dir_targets)
++        i += 1
++    if has_filter:
++        return False
++    if file_targets and not dir_targets:
++        return False
++    return True
++
++
++def is_lenh_kiem_pytest_toan_bo(raw_lenh_kiem) -> bool:
++    # Kiểm tra `lenh_kiem` có gọi pytest quá rộng (thiếu đường dẫn tệp `.py` và thiếu `-k`/`-m`) hay không
++    cleaned = parse_lenh_kiem(raw_lenh_kiem)
++    if not cleaned:
++        return False
++    for subcmd in _split_shell_subcommands(cleaned):
++        tokens = _tokenize_shell_segment(subcmd)
++        pytest_args = _extract_pytest_args_from_tokens(tokens)
++        if pytest_args is not None and _is_pytest_args_too_broad(pytest_args):
++            return True
++    return False
++
++
+ def parse_vung_globs(raw_value) -> list[str]:
+     # Phân tích danh sách mẫu glob phạm vi được sửa từ header `vung: glob1; glob2`
+     return rao_phieu.parse_vung_globs(raw_value, _strip_unquoted_comment)
+@@ -411,6 +679,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
+     phu_thuoc = parse_dependencies(meta.get("phu_thuoc"))
+     tu_sua = parse_self_repair_count(meta.get("tu_sua"))
+     lenh_kiem = parse_lenh_kiem(meta.get("lenh_kiem"))
++    tran_kiem_phut = parse_tran_kiem_phut(meta.get("tran_kiem_phut"))
+     khoa_list = parse_khoa_paths(meta.get("khoa"))
+     khoa = khoa_list[0] if len(khoa_list) == 1 else ("; ".join(khoa_list) if khoa_list else "")
+     vung = parse_vung_globs(meta.get("vung"))
+@@ -424,6 +693,7 @@ def phan_tich_phieu(noi_dung: str, ma_phieu: str) -> dict:
+         "loai": loai,
+         "che_do": che_do,
+         "tran_phut": tran_phut,
++        "tran_kiem_phut": tran_kiem_phut,
+         "phu_thuoc": phu_thuoc,
+         "tu_sua": tu_sua,
+         "lenh_kiem": lenh_kiem,
+@@ -529,6 +799,7 @@ def trich_khoi_can_linh(van_ban: str | None) -> tuple[str, str] | None:
+     # Bỏ qua chính câu hướng dẫn mẫu nếu vô tình bị lặp lại nguyên văn
+     s = s.replace(linhx_runner.CAU_NHAC_CAN_LINH, "")
+     s = s.replace(linhx_runner.CAU_NHAC_TIEN_CANH, "")
++    s = s.replace(linhx_runner.CAU_NHAC_LENH_KIEM, "")
+     matches = list(_CAN_LINH_BLOCK_RE.finditer(s))
+     for m in reversed(matches):
+         viec_can = " ".join((m.group(1) or "").split()).strip(" `")
+@@ -1280,6 +1551,8 @@ def build_self_repair_ticket(viec: dict, ket_qua_md: str, ly_do: str = "") -> st
+             header_lines.append(f"khoa: {khoa_joined}")
+     if "lenh_kiem" not in meta and parse_lenh_kiem(viec.get("lenh_kiem")):
+         header_lines.append(f"lenh_kiem: {parse_lenh_kiem(viec.get('lenh_kiem'))}")
++    if "tran_kiem_phut" not in meta and viec.get("tran_kiem_phut") not in (None, TRAN_KIEM_PHUT_MAC_DINH):
++        header_lines.append(f"tran_kiem_phut: {parse_tran_kiem_phut(viec.get('tran_kiem_phut'))}")
+     if "vung" not in meta and parse_vung_globs(viec.get("vung")):
+         header_lines.append(f"vung: {'; '.join(parse_vung_globs(viec.get('vung')))}")
+     if "cham" not in meta and get_ticket_cham(viec):
+@@ -1466,6 +1739,34 @@ def _commit_git(wt: Path, tho: str, thong_diep: str):
+     )
+ 
+ 
++def _tu_choi_phieu_lenh_kiem_qua_rong_trong_wt(wt: Path, cfg: dict, tep_moi: Path, viec: dict) -> str:
++    # Xoá phiếu khỏi `moi/` (không qua `dang/`) và ghi thẳng `xong/<id>/KET-QUA.md` với `ly_do: lenh_kiem_qua_rong`
++    goc_hd = thu_muc_hang_doi(wt)
++    phieu_id = viec["viec"]
++    tho = cfg["tho"]
++    if tep_moi.exists():
++        tep_moi.unlink()
++    model_tu_viec, canh_bao_tu_viec = _xac_dinh_model_cho_ket_qua(cfg, viec)
++    lenh_rut_gon = _cat_mot_dong(get_ticket_lenh_kiem(viec), 120)
++    thong_bao = (
++        f"từ chối nhận phiếu ({LY_DO_LENH_KIEM_QUA_RONG}): "
++        f"lenh_kiem chạy pytest quá rộng, cần chỉ định đường dẫn tệp test (.py) hoặc -k/-m: {lenh_rut_gon}"
++    )
++    nd_kq = tao_ket_qua_md(
++        phieu_id=phieu_id,
++        tho=tho,
++        trang_thai="loi",
++        ket_qua=thong_bao,
++        model=model_tu_viec,
++        canh_bao=canh_bao_tu_viec,
++        ly_do=LY_DO_LENH_KIEM_QUA_RONG,
++    )
++    tep_kq = goc_hd / "xong" / phieu_id / "KET-QUA.md"
++    tep_kq.parent.mkdir(parents=True, exist_ok=True)
++    tep_kq.write_text(nd_kq, encoding="utf-8")
++    return phieu_id
++
++
+ def nhan_phieu_git(cfg: dict):
+     """Keo nhanh hang-doi, chon phieu phu hop va giu phieu bang commit + push."""
+     dang_nghi, con_lai_phut = dang_tam_nghi_quota(cfg)
+@@ -1492,16 +1793,33 @@ def nhan_phieu_git(cfg: dict):
+                 return None
+             ds_huy = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
+             ung_vien = chon_ung_vien(wt, tho, cfg=cfg)
+-            if not ung_vien:
+-                if ds_huy:
+-                    _commit_git(wt, tho, f"huy: {', '.join(ds_huy)} ({tho})")
++            ds_tu_choi: list[str] = []
++            chon_duoc: tuple[Path, dict] | None = None
++            for tep_ung, viec_ung in ung_vien:
++                if is_lenh_kiem_pytest_toan_bo(get_ticket_lenh_kiem(viec_ung)):
++                    ds_tu_choi.append(_tu_choi_phieu_lenh_kiem_qua_rong_trong_wt(wt, cfg, tep_ung, viec_ung))
++                else:
++                    chon_duoc = (tep_ung, viec_ung)
++                    break
++            if ds_tu_choi:
++                ds_huy.extend(huy_phieu_phu_thuoc_truot_trong_wt(wt, tho))
++            if chon_duoc is None:
++                if ds_tu_choi or ds_huy:
++                    cac_nhan = []
++                    if ds_tu_choi:
++                        cac_nhan.append(f"tu-choi: {', '.join(ds_tu_choi)}")
++                    if ds_huy:
++                        cac_nhan.append(f"huy: {', '.join(ds_huy)}")
++                    _commit_git(wt, tho, f"{'; '.join(cac_nhan)} ({tho})")
+                     push_huy = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+                     if push_huy.returncode == 0:
++                        for ma_tc in ds_tu_choi:
++                            linhx_runner.log("tu-choi", ma_tc, LY_DO_LENH_KIEM_QUA_RONG)
+                         return None
+                     time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
+                     continue
+                 return None
+-            tep_moi, viec = ung_vien[0]
++            tep_moi, viec = chon_duoc
+             goc_hd = thu_muc_hang_doi(wt)
+             tm_dang = goc_hd / "dang"
+             tm_dang.mkdir(parents=True, exist_ok=True)
+@@ -1517,11 +1835,15 @@ def nhan_phieu_git(cfg: dict):
+             tep_dang.write_text(noi_dung_moi, encoding="utf-8")
+ 
+             thong_diep_nhan = f"nhan: {viec['viec']} ({tho})"
++            if ds_tu_choi:
++                thong_diep_nhan = f"{thong_diep_nhan} [tu-choi: {', '.join(ds_tu_choi)}]"
+             if ds_huy:
+                 thong_diep_nhan = f"{thong_diep_nhan} [huy: {', '.join(ds_huy)}]"
+             _commit_git(wt, tho, thong_diep_nhan)
+             push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+             if push.returncode == 0:
++                for ma_tc in ds_tu_choi:
++                    linhx_runner.log("tu-choi", ma_tc, LY_DO_LENH_KIEM_QUA_RONG)
+                 head_luc_nhan = snapshot_tracked_head(cfg, viec)
+                 viec["head_nhan"] = head_luc_nhan
+                 viec["_head_nhan"] = head_luc_nhan
+@@ -1566,6 +1888,8 @@ def _khoi_phuc_viec_tu_tep_dang(viec: dict, tep_dang: Path, phieu_id: str) -> di
+         merged["cham"] = parsed_dang.get("cham", False)
+     if "cho_nen" not in merged:
+         merged["cho_nen"] = parsed_dang.get("cho_nen", False)
++    if "tran_kiem_phut" not in merged:
++        merged["tran_kiem_phut"] = parsed_dang.get("tran_kiem_phut", TRAN_KIEM_PHUT_MAC_DINH)
+     if not merged.get("de") and parsed_dang.get("de"):
+         merged["de"] = parsed_dang["de"]
+     if not merged.get("may") and parsed_dang.get("may"):
+@@ -1777,6 +2101,25 @@ def get_ticket_lenh_kiem(viec: dict | None) -> str:
+     return parse_lenh_kiem(raw)
+ 
+ 
++def get_ticket_tran_kiem_phut(viec: dict | None, cfg: dict | None = None) -> float:
++    # Đọc trần kiểm riêng `tran_kiem_phut:` (ưu tiên header phiếu, sau đó cấu hình `cfg`, mặc định 5 phút)
++    meta = (viec or {}).get("meta") if isinstance((viec or {}).get("meta"), dict) else {}
++    if "tran_kiem_phut" in meta:
++        m_val = _parse_positive_minutes(meta.get("tran_kiem_phut"))
++        if m_val is not None:
++            return float(m_val)
++    if isinstance(viec, dict) and "tran_kiem_phut" in viec:
++        if "meta" not in viec or viec.get("tran_kiem_phut") != TRAN_KIEM_PHUT_MAC_DINH:
++            v_val = _parse_positive_minutes(viec.get("tran_kiem_phut"))
++            if v_val is not None:
++                return float(v_val)
++    if cfg and cfg.get("tran_kiem_phut") is not None:
++        c_val = _parse_positive_minutes(cfg.get("tran_kiem_phut"))
++        if c_val is not None:
++            return float(c_val)
++    return float(TRAN_KIEM_PHUT_MAC_DINH)
++
++
+ def has_verification_gate(viec: dict | None) -> bool:
+     # Kiểm tra phiếu có bật tự chấm bằng `khoa:` hoặc `lenh_kiem:` không
+     return bool(get_ticket_khoa_paths(viec) or get_ticket_lenh_kiem(viec))
+@@ -2278,9 +2621,11 @@ def run_post_agy_verification(
+     snapshot_before: dict[str, bytes] | None = None,
+     tep_log: Path | None = None,
+ ) -> tuple[str, str | None, str]:
+-    # Cổng tự chấm của runner sau khi agy báo xong: kiểm `.khoa` rồi chạy `lenh_kiem` (trần 15 phút)
++    # Cổng tự chấm của runner sau khi agy báo xong: kiểm `.khoa` rồi chạy `lenh_kiem` (trần mặc định 5 phút)
+     if isinstance(viec, dict):
+         viec.pop("_loi_cong_kiem", None)
++        if viec.get("_ly_do_dung") == LY_DO_QUA_TRAN_KIEM:
++            viec.pop("_ly_do_dung", None)
+     khoa_paths = get_ticket_khoa_paths(viec)
+     lenh_kiem = get_ticket_lenh_kiem(viec)
+     if not khoa_paths and not lenh_kiem:
+@@ -2306,7 +2651,7 @@ def run_post_agy_verification(
+             return "loi", lock_err, _merge_agy_into_nhat_ky(ket_qua_agy, nhat_ky_agy, lock_err)
+ 
+     if lenh_kiem:
+-        timeout_minutes = linhx_runner._ep_so_duong((cfg or {}).get("tran_kiem_phut"), VERIFY_TIMEOUT_MINUTES)
++        timeout_minutes = get_ticket_tran_kiem_phut(viec, cfg)
+         rc, full_log, timed_out = run_verification_command(
+             lenh_kiem,
+             cwd=root_dir,
+@@ -2329,6 +2674,8 @@ def run_post_agy_verification(
+                 viec["_loi_cong_kiem"] = True
+             cmd_short = _cat_mot_dong(lenh_kiem, 80)
+             if timed_out:
++                if isinstance(viec, dict):
++                    viec["_ly_do_dung"] = LY_DO_QUA_TRAN_KIEM
+                 head = f"lệnh kiểm quá trần {linhx_runner._dinh_dang_phut(timeout_minutes)} phút: {cmd_short}"
+             else:
+                 head = f"lệnh kiểm trượt (exit={rc}): {cmd_short}"
+diff --git a/runner/linhx_runner.py b/runner/linhx_runner.py
+index cb3e082a..66d4d28d 100644
+--- a/runner/linhx_runner.py
++++ b/runner/linhx_runner.py
+@@ -91,6 +91,7 @@ CAU_NHAC_CAN_LINH = (
+     "DỪNG việc đó và ghi khối `CAN-LINH: <việc>; LENH: <lệnh dán được nếu có>` trong câu trả lời."
+ )
+ CAU_NHAC_TIEN_CANH = "Không dùng background task hay thợ con trừ khi phiếu cho phép; chạy lệnh tiền cảnh."
++CAU_NHAC_LENH_KIEM = "Không chạy bộ test đầy đủ; runner sẽ chạy lenh_kiem sau khi bạn thoát."
+ LY_DO_CHO_TAC_VU_NEN = "cho-tac-vu-nen"
+ CAU_DAU_DE_SUA_CHO_NEN = (
+     "Lượt trước bị dừng vì chạy tác vụ nền rồi chờ. "
+@@ -1259,14 +1260,51 @@ def phat_hien_luong_cho_tac_vu_nen(van_ban: str | None, la_stderr: bool = False)
+     return phat_hien_dong_cho_tac_vu_nen(toan_bo, la_stderr=la_stderr)
+ 
+ 
+-def ghep_de_gui_agy(de_goc: str, cho_nen: bool = False) -> str:
+-    """Thêm hướng dẫn CAN-LINH và câu cấm background task / thợ con vào cuối mọi đề gửi agy."""
++def _cat_chu_thich_ngoai_nhay(van_ban: str) -> str:
++    # Cắt chú thích `# ...` cuối dòng khi `#` nằm ngoài dấu nháy và đứng đầu hoặc sau khoảng trắng
++    ky_tu_nhay: str | None = None
++    thoat = False
++    for i, ch in enumerate(van_ban):
++        if thoat:
++            thoat = False
++            continue
++        if ky_tu_nhay is not None:
++            if ch == "\\" and i + 1 < len(van_ban) and van_ban[i + 1] == ky_tu_nhay:
++                thoat = True
++                continue
++            if ch == ky_tu_nhay:
++                ky_tu_nhay = None
++            continue
++        if ch in ("'", '"'):
++            ky_tu_nhay = ch
++            continue
++        if ch == "#" and (i == 0 or van_ban[i - 1].isspace()):
++            return van_ban[:i]
++    return van_ban
++
++
++def co_lenh_kiem_phieu(viec: dict | None) -> bool:
++    """Cho biet phieu co khai bao `lenh_kiem` khac rong hay khong."""
++    if not isinstance(viec, dict):
++        return False
++    gia_tri = viec.get("lenh_kiem")
++    if gia_tri is None and isinstance(viec.get("meta"), dict):
++        gia_tri = viec["meta"].get("lenh_kiem")
++    if gia_tri is None:
++        return False
++    return bool(_cat_chu_thich_ngoai_nhay(str(gia_tri)).strip())
++
++
++def ghep_de_gui_agy(de_goc: str, cho_nen: bool = False, co_lenh_kiem: bool = False) -> str:
++    """Thêm hướng dẫn CAN-LINH, câu cấm background task / thợ con, và câu nhắc lenh_kiem vào cuối đề gửi agy."""
+     goc = str(de_goc or "").rstrip()
+     cac_phan = [goc] if goc else []
+     if CAU_NHAC_CAN_LINH not in goc:
+         cac_phan.append(CAU_NHAC_CAN_LINH)
+     if not cho_nen and CAU_NHAC_TIEN_CANH not in goc:
+         cac_phan.append(CAU_NHAC_TIEN_CANH)
++    if co_lenh_kiem and CAU_NHAC_LENH_KIEM not in goc:
++        cac_phan.append(CAU_NHAC_LENH_KIEM)
+     return "\n\n".join(cac_phan)
+ 
+ 
+@@ -1452,7 +1490,8 @@ def chay_agy(cfg, viec):
+         return "loi", None, ly_do_tm, 0, 0
+     thu_muc.mkdir(parents=True, exist_ok=True)
+     cho_nen = cho_phep_chay_nen(viec)
+-    de = ghep_de_gui_agy(viec["de"], cho_nen=cho_nen)
++    co_lk = co_lenh_kiem_phieu(viec)
++    de = ghep_de_gui_agy(viec["de"], cho_nen=cho_nen, co_lenh_kiem=co_lk)
+     if len(de) > DE_DAI:
+         # Windows gioi han dong lenh 32.767 ky tu: de dai thi ghi ra file, -p chi tro toi file
+         f = thu_muc / f"de-{viec['viec']}.md"
+-- 
+2.56.1.windows.1
+

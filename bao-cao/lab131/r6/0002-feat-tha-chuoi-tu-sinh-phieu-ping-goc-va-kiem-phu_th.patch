@@ -1,7 +1,7 @@
 From 062e1f439d61fab27bd658a3d36bc6d4db58ed1e Mon Sep 17 00:00:00 2001
 From: LAB131 <lab131@linhx.local>
 Date: Wed, 18 Nov 2026 12:17:49 +0700
-Subject: [PATCH 2/2] feat(tha-chuoi): tu sinh phieu ping goc va kiem phu_thuoc
+Subject: [PATCH 2/4] feat(tha-chuoi): tu sinh phieu ping goc va kiem phu_thuoc
  truoc khi tha chuoi
 
 ---

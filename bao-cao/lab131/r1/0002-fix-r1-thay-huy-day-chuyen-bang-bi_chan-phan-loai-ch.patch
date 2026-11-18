@@ -1,7 +1,7 @@
 From 7b671108245daf557fe87fe084c3b72661f6e464 Mon Sep 17 00:00:00 2001
 From: linhx-runner <runner@linhx.local>
 Date: Wed, 18 Nov 2026 14:17:55 +0700
-Subject: [PATCH 2/2] fix(r1): thay huy day chuyen bang bi_chan, phan loai cha
+Subject: [PATCH 2/3] fix(r1): thay huy day chuyen bang bi_chan, phan loai cha
  truot va giu huy_chuoi(id)
 
 ---

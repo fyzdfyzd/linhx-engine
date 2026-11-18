@@ -1,7 +1,7 @@
 From b54fc9ebd05dba6a3553bff2469f27a3b10dd01e Mon Sep 17 00:00:00 2001
 From: LAB131 <lab131@linhx.local>
 Date: Wed, 18 Nov 2026 12:11:44 +0700
-Subject: [PATCH 1/2] test(tha-chuoi): them bo test do cho runner/tha_chuoi.py
+Subject: [PATCH 1/4] test(tha-chuoi): them bo test do cho runner/tha_chuoi.py
 
 ---
  runner/test_tha_chuoi.py | 338 +++++++++++++++++++++++++++++++++++++++

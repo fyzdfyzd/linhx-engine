@@ -1,0 +1,80 @@
+From 037f0a5a727807cffb41a4849292f44ffdaa3411 Mon Sep 17 00:00:00 2001
+From: LAB131 <lab131@linhx.local>
+Date: Wed, 18 Nov 2026 15:40:55 +0700
+Subject: [PATCH 4/4] fix(tha-chuoi): luon ghi phieu qua worktree rieng, khong
+ reset/clean repo nguoi goi
+
+---
+ runner/tha_chuoi.py | 49 +++++++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
+
+diff --git a/runner/tha_chuoi.py b/runner/tha_chuoi.py
+index f0bf342d..eb08d8a6 100644
+--- a/runner/tha_chuoi.py
++++ b/runner/tha_chuoi.py
+@@ -174,35 +174,40 @@ def _dam_bao_wt_hang_doi(cfg: dict, chay_git_fn) -> tuple[Path, str]:
+         p_check = chay_git_fn(["rev-parse", "--git-dir"], cwd=repo, check=False, timeout=15)
+         if p_check.returncode != 0:
+             raise LoiDauVaoThaChuoi(f"Không phải git repo hàng đợi: {repo}")
++    if wt.resolve() == repo.resolve():
++        raise LoiDauVaoThaChuoi(f"Worktree hàng đợi phải tách biệt với repo người gọi: {wt}")
+ 
+     ref_remote = f"refs/remotes/{remote}/{nhanh}"
+-    nhanh_ht = chay_git_fn(["symbolic-ref", "--short", "-q", "HEAD"], cwd=repo, check=False)
+-    dang_o_nhanh_hd = nhanh_ht.returncode == 0 and nhanh_ht.stdout.strip() == nhanh
++    ref_co_so = ref_remote
+ 
+     p_fetch = chay_git_fn(["fetch", remote, f"+refs/heads/{nhanh}:{ref_remote}"], cwd=repo, check=False)
+     if p_fetch.returncode != 0:
+         err = (p_fetch.stderr or p_fetch.stdout or "").lower()
+         chua_co_ref = "couldn't find remote ref" in err or "remote ref does not exist" in err
+-        if chua_co_ref and dang_o_nhanh_hd:
+-            p_head = chay_git_fn(["rev-parse", "--verify", "-q", "HEAD"], cwd=repo, check=False)
+-            return repo, (p_head.stdout.strip() if p_head.returncode == 0 else "")
+-        raise RuntimeError(f"Không kéo được nhánh {nhanh} từ {remote}: {(p_fetch.stderr or p_fetch.stdout).strip()}")
+-
+-    if dang_o_nhanh_hd:
+-        chay_git_fn(["reset", "--hard", ref_remote], cwd=repo)
+-        chay_git_fn(["clean", "-fd"], cwd=repo)
+-        return repo, ref_remote
+-
+-    if not (wt / ".git").exists():
+-        if wt.exists():
+-            shutil.rmtree(wt, onerror=lambda fn, p, _: (os.chmod(p, stat.S_IWRITE), fn(p)))
+-        chay_git_fn(["worktree", "prune"], cwd=repo, check=False)
+-        chay_git_fn(["worktree", "add", "-B", nhanh, str(wt), ref_remote], cwd=repo)
+-    else:
+-        chay_git_fn(["checkout", "-B", nhanh, ref_remote], cwd=wt)
+-        chay_git_fn(["reset", "--hard", ref_remote], cwd=wt)
+-        chay_git_fn(["clean", "-fd"], cwd=wt)
+-    return wt, ref_remote
++        if chua_co_ref:
++            p_local = chay_git_fn(["rev-parse", "--verify", "-q", f"refs/heads/{nhanh}"], cwd=repo, check=False)
++            if p_local.returncode == 0 and p_local.stdout.strip():
++                ref_co_so = p_local.stdout.strip()
++            else:
++                raise RuntimeError(
++                    f"Không kéo được nhánh {nhanh} từ {remote}: {(p_fetch.stderr or p_fetch.stdout).strip()}"
++                )
++        else:
++            raise RuntimeError(f"Không kéo được nhánh {nhanh} từ {remote}: {(p_fetch.stderr or p_fetch.stdout).strip()}")
++
++    if (wt / ".git").exists():
++        p_co = chay_git_fn(["checkout", "-f", "--detach", ref_co_so], cwd=wt, check=False)
++        if p_co.returncode == 0:
++            chay_git_fn(["reset", "--hard", ref_co_so], cwd=wt)
++            chay_git_fn(["clean", "-fd"], cwd=wt)
++            return wt, ref_co_so
++        shutil.rmtree(wt, onerror=lambda fn, p, _: (os.chmod(p, stat.S_IWRITE), fn(p)))
++
++    if wt.exists():
++        shutil.rmtree(wt, onerror=lambda fn, p, _: (os.chmod(p, stat.S_IWRITE), fn(p)))
++    chay_git_fn(["worktree", "prune"], cwd=repo, check=False)
++    chay_git_fn(["worktree", "add", "--detach", str(wt), ref_co_so], cwd=repo)
++    return wt, ref_co_so
+ 
+ 
+ def _phieu_da_co_tren_hang_doi(goc_hd: Path, ma_phieu: str) -> bool:
+-- 
+2.56.1.windows.1
+

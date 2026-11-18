@@ -1,0 +1,76 @@
+From f4a1e83f5fb64f7267cceabba400ce5a8a2c57a9 Mon Sep 17 00:00:00 2001
+From: LAB131 <lab131@linhx.local>
+Date: Wed, 18 Nov 2026 15:37:26 +0700
+Subject: [PATCH 3/4] test(tha-chuoi): kiem tra giu nguyen tep chua commit khi
+ repo o nhanh hang-doi
+
+---
+ runner/test_tha_chuoi.py | 55 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+
+diff --git a/runner/test_tha_chuoi.py b/runner/test_tha_chuoi.py
+index 6298b305..ff0b31c5 100644
+--- a/runner/test_tha_chuoi.py
++++ b/runner/test_tha_chuoi.py
+@@ -336,3 +336,58 @@ def test_push_bi_tu_choi_tu_pull_rebase_toi_da_3_lan(tmp_path):
+         )
+     assert dem_rebase_loi[0] == 3
+     assert dem_push_loi[0] == 4
++
++
++def test_repo_nguoi_goi_dang_o_nhanh_hang_doi_giu_nguyen_tep_chua_commit(tmp_path):
++    from runner import tha_chuoi
++
++    bare, clone_dir = _tao_bare_va_clone(tmp_path)
++    _chay_git(["checkout", "hang-doi"], clone_dir)
++    sha_repo_truoc = _chay_git(["rev-parse", "HEAD"], clone_dir)
++
++    tep_chua_commit = clone_dir / "dang-soan-chua-commit.md"
++    noi_dung_do = "Việc đang làm dở trong repo người gọi, chưa commit.\n"
++    tep_chua_commit.write_text(noi_dung_do, encoding="utf-8")
++
++    tep_theo_doi = clone_dir / "hang-doi" / "moi" / ".gitkeep"
++    tep_theo_doi.write_text("ban-nhap-chua-commit\n", encoding="utf-8")
++
++    tm_chuoi = tmp_path / "chuoi-tu-repo-hang-doi"
++    tm_chuoi.mkdir()
++    (tm_chuoi / "01-viec.md").write_text(
++        "may: may-1\nloai: code\n\nViệc thả khi repo người gọi đang ở nhánh hang-doi.\n",
++        encoding="utf-8",
++    )
++
++    kq = tha_chuoi.tha_chuoi(
++        tm_chuoi,
++        may="may-1",
++        repo_hang_doi=clone_dir,
++    )
++
++    assert tep_chua_commit.is_file()
++    assert tep_chua_commit.read_text(encoding="utf-8") == noi_dung_do
++    assert tep_theo_doi.read_text(encoding="utf-8") == "ban-nhap-chua-commit\n"
++    assert Path(kq["wt"]).resolve() != clone_dir.resolve()
++    assert _chay_git(["rev-parse", "HEAD"], clone_dir) == sha_repo_truoc
++
++    tm_xem = _xem_nhanh_hang_doi(bare, tmp_path)
++    cac_tep = sorted(p.name for p in (tm_xem / "hang-doi" / "moi").glob("*.md"))
++    assert len(cac_tep) == 2
++    assert "01-viec.md" in cac_tep
++    assert not (tm_xem / "dang-soan-chua-commit.md").exists()
++
++    # Lần gọi thứ 2 (khi worktree riêng đã tồn tại sẵn) vẫn giữ nguyên tệp chưa commit
++    tm_chuoi_2 = tmp_path / "chuoi-tu-repo-hang-doi-lan-2"
++    tm_chuoi_2.mkdir()
++    (tm_chuoi_2 / "02-viec.md").write_text(
++        "may: may-1\nloai: code\n\nViệc lần 2 khi worktree đã có sẵn.\n",
++        encoding="utf-8",
++    )
++    proc_2 = _goi_cli_tha_chuoi([str(tm_chuoi_2), "--may", "may-1"], cwd=clone_dir)
++    assert proc_2.returncode == 0, f"stderr={proc_2.stderr}\nstdout={proc_2.stdout}"
++    assert tep_chua_commit.is_file()
++    assert tep_chua_commit.read_text(encoding="utf-8") == noi_dung_do
++    assert tep_theo_doi.read_text(encoding="utf-8") == "ban-nhap-chua-commit\n"
++    assert _chay_git(["rev-parse", "HEAD"], clone_dir) == sha_repo_truoc
++
+-- 
+2.56.1.windows.1
+

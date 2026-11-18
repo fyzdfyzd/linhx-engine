@@ -1,0 +1,26 @@
+From dd54ba62d7773e0485ebd03b03b6eab67b3bddbd Mon Sep 17 00:00:00 2001
+From: may-2 <may-2@linhx.local>
+Date: Wed, 18 Nov 2026 14:43:27 +0700
+Subject: [PATCH 3/3] fix(r4): dong bo VERIFY_TIMEOUT_MINUTES=5.0 va xac nhan 6
+ ca test_tran_kiem xanh
+
+---
+ runner/hang_doi_git.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/runner/hang_doi_git.py b/runner/hang_doi_git.py
+index 415b0e2b..de339c13 100644
+--- a/runner/hang_doi_git.py
++++ b/runner/hang_doi_git.py
+@@ -75,7 +75,7 @@ REVIEW_PROMPT_HEADER = (
+     "dưới ngưỡng ghi lỗi file:dòng."
+ )
+ VALID_RESULT_STATUSES = ("xong", "loi", "dung", "huy")
+-VERIFY_TIMEOUT_MINUTES = 15.0
++VERIFY_TIMEOUT_MINUTES = 5.0
+ TRAN_KIEM_PHUT_MAC_DINH = 5
+ LY_DO_QUA_TRAN_KIEM = "qua_tran_kiem"
+ LY_DO_LENH_KIEM_QUA_RONG = "lenh_kiem_qua_rong"
+-- 
+2.56.1.windows.1
+
