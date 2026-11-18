@@ -14,3 +14,5 @@ Chạy mọi lệnh tiền cảnh. Ghi tiến độ `C:\linhx\nhat-ky\yl11-tri-t
 4. NÉN VỪA PHẢI: phần đưa vào prompt ≤ 12.000 ký tự (giờ, phòng, track, diễn giả, địa điểm, vé, check-in, tài trợ); phần còn lại tra cứu khi cần. Không bịa ngoài dữ liệu.
 5. Test mới (mock Gemini): 8 câu hỏi lấy từ dữ liệu 18/11 → ngữ cảnh gửi đi chứa đúng dữ kiện; kiosk và đồng hành đọc cùng nguồn; bản nén ≤ 12.000 ký tự.
 Cuối: push `agy/yl11-tri-thuc`. KHÔNG deploy. KET-QUA: dat, SHA, danh sách tệp đã nạp/THIEU, thay đổi agenda/diễn giả, test.
+
+nhip: 13:03 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
