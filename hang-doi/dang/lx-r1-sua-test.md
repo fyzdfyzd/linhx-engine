@@ -12,4 +12,4 @@ Việc: r1 đã đổi huỷ dây chuyền thành `bi_chan` (đề do Linh duy�
 Chạy 2 tệp đó + runner/test_phu_thuoc_cho.py, đều XANH. Commit "test(r1): cap nhat 2 ca cu sang bi_chan". Push như lượt c-va (`origin lx-r1-phu-thuoc-cho-l4`).
 KET-QUA: dòng đầu `dat: co|khong`; SHA; số test 3 tệp.
 
-nhip: 15:36 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 15:39 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
