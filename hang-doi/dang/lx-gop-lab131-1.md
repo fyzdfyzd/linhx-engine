@@ -14,3 +14,5 @@ LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra `D:\linhx\nhat-ky\lx-gop-
    c. D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 nhánh lx-r1-phu-thuoc-cho-l4 → test_phu_thuoc_cho.py, test_phu_thuoc_tu_sua.py, test_va5_cham_va_ngat_mach.py, test_hang_doi_git.py
 3. `git -C D:\linhx\wt-lx-gop-lab131 -c sendpack.sideband=false push origin lx-gop-lab131 > D:\linhx\nhat-ky\lx-gop-lab131\push-1.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA từng merge; tệp nào có xung đột; số test mỗi bước.
+
+nhip: 18:37 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
