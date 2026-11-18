@@ -19,4 +19,4 @@ Test Playwright 1 tệp yl14-bia-kiosk (AI mock):
 - chạm chọn diễn giả phản hồi ≤ 150 ms.
 Ảnh trước/sau 1080×1920: màn chọn track, bìa kết quả. Cuối: push `agy/yl14-bia-kiosk`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 18:01 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 18:04 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
