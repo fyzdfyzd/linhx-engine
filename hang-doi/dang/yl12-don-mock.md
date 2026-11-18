@@ -11,3 +11,5 @@ Phiếu `yl12-don-mock`: DỌN DỮ LIỆU GIẢ trước production. ĐỌC `vi
 2. Bảo đảm: production KHÔNG bao giờ nạp seed (chỉ khi biến môi trường staging/thu bật), có test chứng minh. Bảng tin rỗng thì hiện trạng thái rỗng đẹp ("Chưa có ảnh, hãy là người đầu tiên") thay vì ô trống.
 3. Không xoá dữ liệu trên VM. Chỉ sửa code nạp/hiển thị. Ảnh 390×844 bảng tin rỗng.
 Push agy/yl12-don-mock. KHÔNG deploy.
+
+nhip: 15:04 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
