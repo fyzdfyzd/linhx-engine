@@ -14,4 +14,4 @@ LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra `D:\linhx\nhat-ky\lx-r4-t
 4. `git -C D:\linhx\wt-lx-r4-tran-kiem-l4 -c sendpack.sideband=false push origin lx-r4-tran-kiem-l4:refs/heads/agy/lx-r4-tran-kiem-l4 > D:\linhx\nhat-ky\lx-r4-tran-kiem-l4\push-c2.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA đỉnh; test_tran_kiem đỏ→xanh (số ca).
 
-nhip: 14:43 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 14:46 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
