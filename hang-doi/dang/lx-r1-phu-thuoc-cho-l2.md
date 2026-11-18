@@ -20,4 +20,4 @@ CẤM: sửa runner đang chạy ở D:\linhx\hang-doi, đụng GitHub, deploy, 
 Cuối: `git -C D:\linhx\wt-lx-r1-phu-thuoc-cho-l2 -c sendpack.sideband=false push origin lx-r1-phu-thuoc-cho-l2`.
 KET-QUA (ngắn): dòng đầu `dat: co|khong`; SHA đỉnh lx-r1-phu-thuoc-cho-l2; test mới đỏ→xanh; số test chạy.
 
-nhip: 08:15 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:18 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
