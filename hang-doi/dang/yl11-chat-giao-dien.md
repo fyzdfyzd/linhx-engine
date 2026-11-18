@@ -17,4 +17,4 @@ VIỆC (giao diện chat tab Yên Lam ở 390×844, giữ bộ màu/kính sẵn 
 Test: Playwright 1 tệp: tin Lam có class bóng + avatar, font-style không italic, thẻ phiên không có "*" và giờ đủ, nút tiếng ≥ 44px.
 Cuối: push `agy/yl11-chat-giao-dien`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH (dat, SHA, test, ảnh ghép trước/sau + điểm).
 
-nhip: 13:02 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:05 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
