@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl12-email-vao; D:\linhx\ifagent-wt\yl12-email-vao
+nhan: may-3 2026-11-18T15:01:16+0700
 
 Phiếu Yên Lam `yl12-email-vao` (Linh 14:58 18/11): ĐỒNG HÀNH vào bằng EMAIL, không mật khẩu, để BTC thu được danh sách khách. ĐỌC TRƯỚC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` (luật chung, chống chuyển nền, cấm).
 Chạy tiền cảnh, ghi `D:\linhx\nhat-ky\yl12-email-vao\tien-do.log`, mỗi mục xong COMMIT + PUSH. Phút 30 dừng việc mới, chụp ảnh, push, ghi CON_LAI.
