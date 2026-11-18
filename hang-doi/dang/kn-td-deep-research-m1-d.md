@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 40
 khong_tien_phut: 30
 tu_sua: 0
+nhan: may-1 2026-11-18T12:35:04+0700
 
 # kn-td-deep-research-m1-d
 Lượt 4: lượt trước Browsentic chạy được nhưng hết trần 25 phút khi Deep Research chưa xong. Nay trần 40: gửi đề xong thì cứ 3 phút đọc trang 1 lần, tới phút 35 chưa xong thì chụp tiến độ, ghi HONG — quá giờ. Đọc lại DE-BAI.md, luật 3, 10–13 mới.
