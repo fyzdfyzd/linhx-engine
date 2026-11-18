@@ -4,6 +4,7 @@ tran_phut: 40
 tu_sua: 0
 theo_doi: D:\linhx\wt-lx-r6-tha-chuoi
 phu_thuoc: lx-thu-5p
+nhan: may-3 2026-11-18T07:12:07+0700
 
 Phiếu lx-r6-tha-chuoi (sửa runner, LAB131). Chạy mọi lệnh ở TIỀN CẢNH, không background task, không tự chạy `pytest runner` toàn bộ (chỉ chạy test của phiếu và tệp test đụng tới). Mỗi 5 phút có tệp mới hoặc commit.
 1. `git -c sendpack.sideband=false clone -b claude/project-thread-jowxv1 git://192.168.1.136/linhx-engine.git D:\linhx\wt-lx-r6-tha-chuoi` rồi `git -C D:\linhx\wt-lx-r6-tha-chuoi checkout -b lx-r6-tha-chuoi`.
