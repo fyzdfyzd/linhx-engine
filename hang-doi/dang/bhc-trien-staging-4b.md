@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 25
 khong_tien_phut: 15
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-18T08:07:00+0700
+moc: ef3616e32129479b4555794c1154fc94ff80b1fa
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ; mỗi lệnh phải xong trong 3 phút (lệnh lâu hơn bị máy coi là chạy nền và dừng phiếu). Push mỗi bước.
 Tiếp bhc-trien-staging-4 (đã merge agy/bhc-sua-4 vào agy/bhc-staging ef3616e, dừng ở bước chụp vì đọc ADMIN_CODE.txt thiếu sudo).
