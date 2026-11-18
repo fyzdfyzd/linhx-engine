@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 25
 theo_doi: D:\linhx\ifagent-wt\bhc-e2e-lan-3
+nhan: may-3 2026-11-18T07:49:53+0700
+moc: 54330abcea579c2fe7829867b69197835139421b
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ. MỖI LỆNH PHẢI XONG TRONG 3 PHÚT: chạy cả luồng một lệnh sẽ bị máy coi là chạy nền và dừng phiếu (lỗi cho-tac-vu-nen lần trước). Push sau mỗi luồng mỗi lần.
 Tiếp bhc-e2e-lan-3: worktree D:\linhx\ifagent-wt\bhc-e2e-lan-3, nhánh agy/bhc-e2e-lan-3 (54330ab: khách lần 1 xong). KHÔNG sửa code app.
