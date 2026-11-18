@@ -18,4 +18,4 @@ Linh yêu cầu (04:02 VN 19/11): quét THẬT thương hiệu CSMO trên stagin
 6. Trả cấu hình: BH_QUICK và BH_TRAN_CHI_PHI_NGAY về giá trị cũ, recreate stg-brand, healthz ok. Prod demo.ifagent.net/brand-health-check/ và event.ifagent.net phải 200.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá/mã quản trị, quét thương hiệu khác. KET-QUA: dat, mã báo cáo, 3 chỉ số, thời gian, chi phí, danh sách ảnh.
 
-nhip: 04:20 15p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:23 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
