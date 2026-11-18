@@ -17,4 +17,4 @@ Kiosk Lam (`/yen-lam/csmo/kiosk-lam`, 1080×1920) sửa nhanh:
 Test: unit cho gom đoạn nói, cho bộ chọn widget theo câu trả lời (5 câu mẫu → đúng widget). Ảnh trước/sau K1 và K1 đang nói có widget.
 Cuối: commit + push `agy/yl10-kiosk-lam`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 07:49 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 07:52 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
