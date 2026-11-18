@@ -11,3 +11,5 @@ LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra tệp trong thư mục nh
 Việc: r1 đã đổi huỷ dây chuyền thành `bi_chan` (đề do Linh duyệt). 2 test cũ còn kiểm hành vi cũ: 1 ca trong runner/test_phu_thuoc_tu_sua.py, 1 ca trong runner/test_va5_cham_va_ngat_mach.py. Sửa đúng 2 ca đó để kiểm hành vi mới (con ở moi/ có bi_chan, không có KET-QUA huy). Không xoá, không skip ca nào.
 Chạy 2 tệp đó + runner/test_phu_thuoc_cho.py, đều XANH. Commit "test(r1): cap nhat 2 ca cu sang bi_chan". Push như lượt c-va (`origin lx-r1-phu-thuoc-cho-l4`).
 KET-QUA: dòng đầu `dat: co|khong`; SHA; số test 3 tệp.
+
+nhip: 15:33 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
