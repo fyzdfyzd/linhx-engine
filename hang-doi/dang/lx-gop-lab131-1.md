@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-gop-lab131; D:\linhx\nhat-ky\lx-gop-lab131
+nhan: may-3 2026-11-18T18:34:15+0700
 
 Phiếu lx-gop-lab131-1 (LAB131, Claude đã soi diff từng nhánh). Gộp tuần tự 3 nhánh sửa runner vào nhánh mới lx-gop-lab131.
 LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra `D:\linhx\nhat-ky\lx-gop-lab131\<ten>.log`, chạy tiền cảnh; công cụ báo đã chuyển nền thì gọi trạng thái liên tục tới khi xong, không kết thúc lượt; test chỉ chạy 1 tệp mỗi lệnh. CẤM chạy `pytest runner` toàn bộ, đụng GitHub, deploy, sửa D:\linhx\hang-doi, sửa logic ngoài phần giải xung đột.
