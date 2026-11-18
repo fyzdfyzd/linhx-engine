@@ -3,6 +3,8 @@ loai: code
 tran_phut: 25
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r1-phu-thuoc-cho-l4; D:\linhx\nhat-ky\lx-r1-phu-thuoc-cho-l4
+nhan: may-3 2026-11-18T15:30:47+0700
+moc: 7b671108245daf557fe87fe084c3b72661f6e464
 
 Phiếu lx-r1-sua-test (LAB131). Thư mục D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 ở nhánh lx-r1-phu-thuoc-cho-l4, KHÔNG clone lại, KHÔNG sửa runner/hang_doi_git.py.
 LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra tệp trong thư mục nhật ký của phiếu, chạy tiền cảnh; công cụ báo đã chuyển nền thì gọi trạng thái liên tục tới khi xong, không kết thúc lượt; test chỉ chạy 1 tệp mỗi lệnh. CẤM chạy `pytest runner` toàn bộ, đụng GitHub, sửa D:\linhx\hang-doi.
