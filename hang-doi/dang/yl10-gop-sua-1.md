@@ -3,6 +3,7 @@ loai: code
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: D:\linhx\nhat-ky\yl10-gop-sua-1; D:\linhx\ifagent-wt\yl10-gop
+nhan: may-3 2026-11-18T08:12:53+0700
 
 Phiếu `yl10-gop-sua-1`: GỘP để Linh test sớm. ĐỌC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 1. `git -C D:\linhx\ifagent fetch --all`. Worktree `D:\linhx\ifagent-wt\yl10-gop` nhánh `agy/yl10-gop`: chưa có thì tạo `-b agy/yl10-gop origin/agy/yl09-gop`.
