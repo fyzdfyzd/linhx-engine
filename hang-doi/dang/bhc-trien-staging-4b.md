@@ -13,4 +13,4 @@ Tiếp bhc-trien-staging-4 (đã merge agy/bhc-sua-4 vào agy/bhc-staging ef3616
 2. Mã quản trị đọc bằng `sudo cat /opt/stg-brand/ADMIN_CODE.txt` vào biến, không in. Qua đường hầm chụp 1280 + 360: trang chủ, /bao-cao/2026-11-13-vinamilk-9b816db5/, /quan-tri/ tổng quan. Vào bang-chung/bhc-staging-4/, push agy/bhc-staging.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá, quét AI thật. KET-QUA: dat, SHA, healthz, ảnh.
 
-nhip: 08:10 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:13 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
