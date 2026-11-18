@@ -13,4 +13,4 @@ Tiếp bhc-e2e-lan-3: worktree D:\linhx\ifagent-wt\bhc-e2e-lan-3, nhánh agy/bhc
 2. Chạy khách lần 2 và quản trị lần 1, lần 2: mỗi lệnh 1–3 bước, DATA_DIR trắng cho mỗi lần. Ảnh 1280×800 + 360×780 full page: bang-chung/bhc-e2e-lan-3/<khach|quan-tri>/lan-<n>/<ma>-<1280|360>.png; K8 thêm ảnh từng ca lỗi (ten-trong, ten-khoang-trang, web-sai).
 3. Ghi so-sanh-2-lan.md và loi.md (mã bước, mức chặn/nặng/nhẹ, ảnh, cách sửa). Push agy/bhc-e2e-lan-3. KET-QUA.md: đạt/hỏng mỗi lần mỗi luồng, lỗi còn lại.
 
-nhip: 08:11 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:14 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
