@@ -13,3 +13,5 @@ Lỗi Claude soi: runner/tha_chuoi.py hàm _dam_bao_wt_hang_doi, khi repo ngư�
 2. Vá: luôn ghi phiếu qua worktree riêng (`_duong_dan_wt`), không bao giờ reset/clean repo người gọi. Test mới và runner/test_tha_chuoi.py XANH. Commit "fix(tha-chuoi): ...".
 3. `git -C D:\linhx\wt-lx-r6-tha-chuoi-l3 -c sendpack.sideband=false push origin lx-r6-tha-chuoi-l3 > D:\linhx\nhat-ky\lx-r6-tha-chuoi-l3\push-s1.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA; test đỏ→xanh.
+
+nhip: 15:33 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
