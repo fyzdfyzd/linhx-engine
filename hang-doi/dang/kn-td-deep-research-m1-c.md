@@ -4,6 +4,7 @@ tran_phut: 25
 khong_tien_phut: 15
 tu_sua: 0
 nhan: may-1 2026-11-18T05:15:11+0700
+nhan: may-1 2026-11-18T11:39:09+0700
 
 # kn-td-deep-research-m1-c
 Lượt 3 (Browsentic máy 1 đã sửa 18/11 05:10, bridge chạy). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
