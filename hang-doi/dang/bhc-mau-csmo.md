@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-19T04:05:22+0700
+moc: 2d00c7aaab75bd8bb0344c9134eea53b3755b49c
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT (lượt quét chạy trên máy chủ, máy chỉ gọi API khởi động rồi kiểm trạng thái bằng lệnh ngắn, mỗi lần kiểm cách nhau ≤ 60 giây bằng một lệnh `Start-Sleep 50; curl ...`). Push mỗi bước.
 Linh yêu cầu (04:02 VN 19/11): quét THẬT thương hiệu CSMO trên staging stg-brand thành BÁO CÁO MẪU FINAL, chụp đủ màn hình. Được phép gọi AI thật đúng 1 lượt đầy đủ (6 làn) cho CSMO; tối đa 1 lần chạy lại nếu lỗi mạng. Trần chi tiêu OpenRouter cho phiếu này: 6 USD (kiểm GET https://openrouter.ai/api/v1/key usage trước/sau, chỉ in usage).
