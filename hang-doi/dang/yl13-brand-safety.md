@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl13-brand-safety; D:\linhx\ifagent-wt\yl13-brand-safety
+nhan: may-3 2026-11-18T16:12:16+0700
 
 Phiếu `yl13-brand-safety`: hoàn thiện Brand Safety CSMO. ĐỌC TRƯỚC `viec/yen-lam-v09/BRAND-SAFETY-CSMO.md` (bộ đầy đủ, mục F thắng) và `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 Máy 2 ĐÃ làm phần từ điển và prompt (nhánh origin/agy/yl12-brand-safety, b98e960c). Đọc diff nhánh đó trước, KHÔNG làm lại.
