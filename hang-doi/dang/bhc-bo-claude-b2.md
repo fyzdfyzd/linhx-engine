@@ -5,6 +5,8 @@ tran_phut: 40
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
 phu_thuoc: bhc-bo-claude-a2
+nhan: may-2 2026-11-19T06:54:55+0700
+moc: f9f46c36561bcdd97447ae60cc0601eb930a42db
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT (lượt quét chạy trên máy chủ; kiểm trạng thái bằng lệnh ngắn `Start-Sleep 50; curl ...`). E2E chạy từng bước (--buoc). Push mỗi bước.
 Linh yêu cầu (05:13 VN 19/11): "bỏ claude sang những AI rẻ hơn". Lượt đầy đủ CSMO tốn 6,96 USD, riêng làn Claude 5,02 USD (gọi thẳng Anthropic claude-opus-5-5 vì có ANTHROPIC_API_KEY).
