@@ -13,4 +13,4 @@ Chụp từng màn trước khi sửa, tìm mọi chỗ vỡ (tràn, chồng l�
 Test: Playwright 1 tệp đi hết luồng chụp, kiểm không phần tử nào tràn khỏi màn, nút chính ≥ 44px.
 Cuối: commit + push `agy/yl10-kiosk-chup`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 07:34 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 07:37 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
