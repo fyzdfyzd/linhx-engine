@@ -4,6 +4,7 @@ tran_phut: 20
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-kiem-crawler-web-m1-b
+nhan: may-1 2026-11-18T11:50:48+0700
 
 # kn-kiem-crawler-fb-m1-b
 Lượt 2: lượt 1 kẹt không chạy. Không chạy tác vụ nền (luật 12).
