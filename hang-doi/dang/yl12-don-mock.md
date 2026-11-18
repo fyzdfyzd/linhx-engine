@@ -3,6 +3,7 @@ loai: code
 tran_phut: 30
 khong_tien_phut: 20
 theo_doi: D:\linhx\nhat-ky\yl12-don-mock; D:\linhx\ifagent-wt\yl12-don-mock
+nhan: may-3 2026-11-18T15:01:15+0700
 
 Phiếu `yl12-don-mock`: DỌN DỮ LIỆU GIẢ trước production. ĐỌC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 0. worktree `D:\linhx\ifagent-wt\yl12-don-mock` -b agy/yl12-don-mock từ origin/agy/yl10-gop.
