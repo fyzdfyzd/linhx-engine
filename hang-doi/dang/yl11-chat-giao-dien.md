@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl11-chat-giao-dien; D:\linhx\ifagent-wt\yl11-chat-giao-dien
+nhan: may-3 2026-11-18T12:53:15+0700
 
 Phiếu Yên Lam `yl11-chat-giao-dien`: sửa tab chat Yên Lam (điện thoại) sau đánh giá UX Linh duyệt 12:50 18/11. ĐỌC TRƯỚC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` (luật chung, chống chuyển nền, cấm) và XEM ẢNH `viec/yen-lam-v09/anh/chat-linh-18-11.png` (màn Linh chụp trên staging 84ba9304).
 Chạy mọi lệnh tiền cảnh. Ghi tiến độ `D:\linhx\nhat-ky\yl11-chat-giao-dien\tien-do.log`. Mỗi mục xong COMMIT + PUSH ngay. Phút 30 dừng việc mới, chụp ảnh, push, ghi CON_LAI.
