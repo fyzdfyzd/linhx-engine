@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 40
 khong_tien_phut: 20
 theo_doi: C:\linhx\wt-csmo\anh2
+nhan: may-2 2026-11-18T08:05:55+0700
 
 Phiếu csmo-anh-2: tải thêm 20 ảnh thật, có giấy phép, cho deck CSMO bản NỀN SÁNG (nói 19/11, cần gấp sáng 18/11). Ảnh đặt trong khung bo góc hoặc tràn nửa slide trắng, nên cần ảnh SÁNG, thoáng, nhiều khoảng trống, chủ thể rõ một bên, màu tự nhiên, sang (kiểu ảnh tạp chí). Không ảnh tối, không neon.
 0. git clone -b hang-doi https://github.com/fyzdfyzd/linhx-engine C:\linhx\wt-csmo\anh2. Nhánh agy/csmo-anh-2.
