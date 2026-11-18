@@ -1,0 +1,192 @@
+commit 75cadfdae603260db61b953f1ca3c1f3e2091596
+Merge: 546e9e3f 582a3734
+Author: may-3 <may-3@linhx.local>
+Date:   Wed Nov 18 18:36:00 2026 +0700
+
+    gop(lab131): lx-r5-bi-mat-goc-l3
+
+
+commit 573c86aaba57c8c85252068403d326e376c359e5
+Merge: 75cadfda 037f0a5a
+Author: may-3 <may-3@linhx.local>
+Date:   Wed Nov 18 18:36:59 2026 +0700
+
+    gop(lab131): lx-r6-tha-chuoi-l3
+
+
+commit 363802129d55151d01b1bc0fc2528375905cb06e
+Merge: 573c86aa 84a013af
+Author: may-3 <may-3@linhx.local>
+Date:   Wed Nov 18 18:37:42 2026 +0700
+
+    gop(lab131): lx-r1-phu-thuoc-cho-l4
+
+
+commit 4a8d37363c8529408853c47bce7761a45c202335
+Merge: 36380212 dd54ba62
+Author: may-3 <may-3@linhx.local>
+Date:   Wed Nov 18 18:44:19 2026 +0700
+
+    gop(lab131): lx-r4-tran-kiem-l4
+    
+    # Conflicts:
+    #       runner/hang_doi_git.py
+
+diff --cc runner/hang_doi_git.py
+index c0406d71,de339c13..57acc2c3
+--- a/runner/hang_doi_git.py
++++ b/runner/hang_doi_git.py
+@@@ -1898,24 -1791,31 +2199,45 @@@ def nhan_phieu_git(cfg: dict)
+              wt = dam_bao_worktree(cfg)
+              if wt is None:
+                  return None
+ -            ds_huy = huy_phieu_phu_thuoc_truot_trong_wt(wt, tho)
+ +            kq_dong_bo = dong_bo_bi_chan_va_phan_loai_trong_wt(wt, tho)
+              ung_vien = chon_ung_vien(wt, tho, cfg=cfg)
+-             if not ung_vien:
+-                 if kq_dong_bo["co_thay_doi"]:
++             ds_tu_choi: list[str] = []
++             chon_duoc: tuple[Path, dict] | None = None
++             for tep_ung, viec_ung in ung_vien:
++                 if is_lenh_kiem_pytest_toan_bo(get_ticket_lenh_kiem(viec_ung)):
++                     ds_tu_choi.append(_tu_choi_phieu_lenh_kiem_qua_rong_trong_wt(wt, cfg, tep_ung, viec_ung))
++                 else:
++                     chon_duoc = (tep_ung, viec_ung)
++                     break
++             if ds_tu_choi:
+ -                ds_huy.extend(huy_phieu_phu_thuoc_truot_trong_wt(wt, tho))
+++                kq_sau = dong_bo_bi_chan_va_phan_loai_trong_wt(wt, tho)
+++                for k in ("bi_chan_moi", "go_bi_chan", "phan_loai_moi", "xoa_phan_loai"):
+++                    for item in kq_sau[k]:
+++                        if item not in kq_dong_bo[k]:
+++                            kq_dong_bo[k].append(item)
+++                if kq_sau["co_thay_doi"]:
+++                    kq_dong_bo["co_thay_doi"] = True
++             if chon_duoc is None:
+ -                if ds_tu_choi or ds_huy:
+ -                    cac_nhan = []
+++                if ds_tu_choi or kq_dong_bo["co_thay_doi"]:
+ +                    ghi_chu_db: list[str] = []
++                     if ds_tu_choi:
+ -                        cac_nhan.append(f"tu-choi: {', '.join(ds_tu_choi)}")
+ -                    if ds_huy:
+ -                        cac_nhan.append(f"huy: {', '.join(ds_huy)}")
+ -                    _commit_git(wt, tho, f"{'; '.join(cac_nhan)} ({tho})")
+ -                    push_huy = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+ -                    if push_huy.returncode == 0:
+++                        ghi_chu_db.append(f"tu-choi: {', '.join(ds_tu_choi)}")
+ +                    if kq_dong_bo["bi_chan_moi"]:
+ +                        ghi_chu_db.append(f"bi-chan: {', '.join(kq_dong_bo['bi_chan_moi'])}")
+ +                    if kq_dong_bo["go_bi_chan"]:
+ +                        ghi_chu_db.append(f"go-bi-chan: {', '.join(kq_dong_bo['go_bi_chan'])}")
+ +                    if kq_dong_bo["phan_loai_moi"]:
+ +                        ghi_chu_db.append(f"phan-loai: {', '.join(kq_dong_bo['phan_loai_moi'])}")
+ +                    if kq_dong_bo["xoa_phan_loai"]:
+ +                        ghi_chu_db.append(f"xoa-phan-loai: {', '.join(kq_dong_bo['xoa_phan_loai'])}")
+ +                    td_db = "; ".join(ghi_chu_db) or "dong-bo-bi-chan"
+ +                    _commit_git(wt, tho, f"{td_db} ({tho})")
+ +                    push_db = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+ +                    if push_db.returncode == 0:
++                         for ma_tc in ds_tu_choi:
++                             linhx_runner.log("tu-choi", ma_tc, LY_DO_LENH_KIEM_QUA_RONG)
++                         return None
+ +                        return None
+                      time.sleep(random.uniform(0.02, 0.08) * (lan + 1))
+                      continue
+                  return None
+@@@ -1935,10 -1835,10 +2257,12 @@@
+              tep_dang.write_text(noi_dung_moi, encoding="utf-8")
+  
+              thong_diep_nhan = f"nhan: {viec['viec']} ({tho})"
++             if ds_tu_choi:
++                 thong_diep_nhan = f"{thong_diep_nhan} [tu-choi: {', '.join(ds_tu_choi)}]"
+ -            if ds_huy:
+ -                thong_diep_nhan = f"{thong_diep_nhan} [huy: {', '.join(ds_huy)}]"
+ +            if kq_dong_bo["bi_chan_moi"]:
+ +                thong_diep_nhan = f"{thong_diep_nhan} [bi-chan: {', '.join(kq_dong_bo['bi_chan_moi'])}]"
+ +            if kq_dong_bo["go_bi_chan"]:
+ +                thong_diep_nhan = f"{thong_diep_nhan} [go-bi-chan: {', '.join(kq_dong_bo['go_bi_chan'])}]"
+              _commit_git(wt, tho, thong_diep_nhan)
+              push = chay_git(["push", remote, f"HEAD:refs/heads/{nhanh}"], cwd=wt, check=False)
+              if push.returncode == 0:
+
+commit ad86622afe458647892400adf88309b93e0bd64f
+Merge: 4a8d3736 7406f861
+Author: may-3 <may-3@linhx.local>
+Date:   Wed Nov 18 18:47:33 2026 +0700
+
+    gop(lab131): lx-r0-tu-clone
+    
+    # Conflicts:
+    #       runner/hang_doi_git.py
+
+diff --cc runner/hang_doi_git.py
+index 57acc2c3,e33d4bce..45f4be29
+--- a/runner/hang_doi_git.py
++++ b/runner/hang_doi_git.py
+@@@ -75,49 -74,11 +75,51 @@@ REVIEW_PROMPT_HEADER = 
+      "dưới ngưỡng ghi lỗi file:dòng."
+  )
+  VALID_RESULT_STATUSES = ("xong", "loi", "dung", "huy")
+ -VERIFY_TIMEOUT_MINUTES = 15.0
+ +VERIFY_TIMEOUT_MINUTES = 5.0
+ +TRAN_KIEM_PHUT_MAC_DINH = 5
+ +LY_DO_QUA_TRAN_KIEM = "qua_tran_kiem"
+ +LY_DO_LENH_KIEM_QUA_RONG = "lenh_kiem_qua_rong"
+  VERIFY_LOG_TAIL_LIMIT = 1500
++ CLONE_TIMEOUT_MINUTES = 5.0
++ LY_DO_CLONE_HONG = "clone_hong"
+  LOCK_TAMPER_MESSAGE = "sửa test khoá"
+ +_PYTEST_OPTS_TAKING_VALUE = frozenset(
+ +    {
+ +        "-c",
+ +        "-o",
+ +        "-p",
+ +        "-W",
+ +        "-r",
+ +        "-n",
+ +        "--tb",
+ +        "--maxfail",
+ +        "--durations",
+ +        "--durations-min",
+ +        "--color",
+ +        "--capture",
+ +        "--basetemp",
+ +        "--rootdir",
+ +        "--confcutdir",
+ +        "--import-mode",
+ +        "--ignore",
+ +        "--ignore-glob",
+ +        "--deselect",
+ +        "--log-level",
+ +        "--log-format",
+ +        "--log-date-format",
+ +        "--log-cli-level",
+ +        "--log-file",
+ +        "--junitxml",
+ +        "--result-log",
+ +        "--cov",
+ +        "--cov-config",
+ +        "--cov-report",
+ +        "--numprocesses",
+ +        "--dist",
+ +    }
+ +)
+ +_ENV_ASSIGN_RE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*=")
+ +_PYTHON_EXE_RE = re.compile(r"^(?:py|python(?:\d+(?:\.\d+)*)?)$")
+  _AUTOLOAD_HOOK_NAMES = frozenset({"conftest.py", "pytest.py", "sitecustomize.py", "usercustomize.py", "_pytest"})
+  _FEATURE_LOCK_MUTABLE_KEYS = frozenset({"passes", "bang_chung"})
+  _SHA256_ONLY_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+@@@ -2312,8 -1679,10 +2425,12 @@@ def _khoi_phuc_viec_tu_tep_dang(viec: d
+          merged["cham"] = parsed_dang.get("cham", False)
+      if "cho_nen" not in merged:
+          merged["cho_nen"] = parsed_dang.get("cho_nen", False)
+ +    if "tran_kiem_phut" not in merged:
+ +        merged["tran_kiem_phut"] = parsed_dang.get("tran_kiem_phut", TRAN_KIEM_PHUT_MAC_DINH)
++     if "nguon" not in merged:
++         merged["nguon"] = parsed_dang.get("nguon")
++     if not merged.get("nhanh_moi") and parsed_dang.get("nhanh_moi"):
++         merged["nhanh_moi"] = parsed_dang["nhanh_moi"]
+      if not merged.get("de") and parsed_dang.get("de"):
+          merged["de"] = parsed_dang["de"]
+      if not merged.get("may") and parsed_dang.get("may"):
