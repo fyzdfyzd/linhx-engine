@@ -15,3 +15,5 @@ PHIẾU NÀY CHỈ LÀM CODE (bước 1–4), push agy/bhc-sua-6 sau mỗi bư�
 3. Test khoá: (a) mặc định không có làn Claude dù có ANTHROPIC_API_KEY; (b) có làn deepseek-tim và grok-tim khi có OPENROUTER_API_KEY; (c) mã hiển thị không còn '?' cho mọi làn; (d) ước tính chi phí lượt đầy đủ mặc định ≤ 2,5 USD theo bảng giá. npm test + node scripts/lint.js xanh; golden landing VNM/IFA không đổi.
 4. Thử thật nhỏ trên máy (không qua staging): mỗi làn mới 3 câu CSMO, in chi phí usage.cost. Tổng ≤ 0,2 USD. Làn nào trả rỗng/lỗi thì đổi sang ID khác trong cùng họ, ghi lý do.
 KET-QUA: dat, SHA, số test, ID + giá 2 model mới, chi phí thử nhỏ.
+
+nhip: 06:01 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
