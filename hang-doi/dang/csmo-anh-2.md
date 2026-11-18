@@ -33,3 +33,5 @@ Phiếu csmo-anh-2: tải thêm 20 ảnh thật, có giấy phép, cho deck CSMO
 4. Ghép viec/csmo-talk/anh2/TONG.jpg (≤ 1 MB). Commit, push agy/csmo-anh-2 VÀ commit vào nhánh hang-doi thư mục viec/csmo-talk/anh2/ (pull trước, merge thường).
 CẤM: đăng nhập tài khoản, tải tệp trả phí, sửa ngoài viec/csmo-talk/anh2/.
 KET-QUA.md: dat: co/khong; SHA; số ảnh / 20; danh sách thiếu.
+
+nhip: 08:08 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
