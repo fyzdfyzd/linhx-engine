@@ -16,4 +16,4 @@ Xuất soi: `git -C D:\linhx\wt-lx-gop-lab131 show --cc <mọi SHA merge của l
 `git -C D:\linhx\wt-lx-gop-lab131 -c sendpack.sideband=false push origin lx-gop-lab131 > D:\linhx\nhat-ky\lx-gop-lab131\push-2.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA đỉnh lx-gop-lab131; xung đột; số test từng tệp.
 
-nhip: 18:51 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 18:54 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
