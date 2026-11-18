@@ -6,7 +6,7 @@ theo_doi: D:\linhx\nhat-ky\yl13-brand-safety; D:\linhx\ifagent-wt\yl13-brand-saf
 nhan: may-3 2026-11-18T16:12:16+0700
 
 Phiếu `yl13-brand-safety`: hoàn thiện Brand Safety CSMO. ĐỌC TRƯỚC `viec/yen-lam-v09/BRAND-SAFETY-CSMO.md` (bộ đầy đủ, mục F thắng) và `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
-Máy 2 ĐÃ làm phần từ điển và prompt (nhánh origin/agy/yl12-brand-safety, b98e960c). Đọc diff nhánh đó trước, KHÔNG làm lại.
+Máy 2 ĐÃ làm phần từ điển, prompt và file luật chuẩn `apps/lab/server/v1/brand-safety/LUAT-BRAND-SAFETY-CSMO.md` (nhánh origin/agy/yl12-brand-safety, ≥ 2a969da7; file này thắng khi khác đặc tả viec/). Đọc diff nhánh đó trước, KHÔNG làm lại.
 0. `git -C D:\linhx\ifagent fetch --all`; `git -C D:\linhx\ifagent worktree add D:\linhx\ifagent-wt\yl13-brand-safety -b agy/yl13-brand-safety origin/agy/yl12-brand-safety`. Nối node_modules như phiếu yl10 (cần cả jpeg-js, ws).
 Chạy mọi lệnh ở tiền cảnh. Mỗi mục xong thì COMMIT + PUSH ngay. Phút 30 dừng việc mới, push, ghi CON_LAI.
 VIỆC CÒN LẠI:
