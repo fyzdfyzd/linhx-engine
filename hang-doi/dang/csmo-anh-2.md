@@ -34,4 +34,4 @@ Phiếu csmo-anh-2: tải thêm 20 ảnh thật, có giấy phép, cho deck CSMO
 CẤM: đăng nhập tài khoản, tải tệp trả phí, sửa ngoài viec/csmo-talk/anh2/.
 KET-QUA.md: dat: co/khong; SHA; số ảnh / 20; danh sách thiếu.
 
-nhip: 08:24 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:27 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
