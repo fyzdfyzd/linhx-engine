@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 31.91,
-    "trong_gb": 19.84
+    "trong_gb": 19.3
   },
   "gpu": [
     {
@@ -26,12 +26,12 @@
     {
       "o": "C:",
       "tong_gb": 476.31,
-      "trong_gb": 93.15
+      "trong_gb": 89.58
     },
     {
       "o": "G:",
       "tong_gb": 476.31,
-      "trong_gb": 88.49
+      "trong_gb": 85.11
     }
   ],
   "agy": {
@@ -95,8 +95,8 @@
     "che_do_nhan": "bat-ky"
   },
   "thong_ke_24h": {
-    "xong": 16,
+    "xong": 15,
     "loi": 30
   },
-  "cap_nhat_luc": "2026-11-18T13:34:23+0700"
+  "cap_nhat_luc": "2026-11-18T15:35:23+0700"
 }
