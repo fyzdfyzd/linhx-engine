@@ -15,3 +15,5 @@ Chạy mọi lệnh ở tiền cảnh. Tạo `C:\linhx\nhat-ky\yl10-dong-hanh\`,
 4. Ô chat Yên Lam dùng chung nguồn tri thức với kiosk (nếu phiếu yl10-tri-thuc chưa xong thì để hàm đọc nguồn chung, ghi CON_LAI).
 Test: unit cho tìm kiếm (10 truy vấn mẫu có dấu/không dấu, tên diễn giả, tên phiên), cho luồng xác nhận email (mock). Ảnh: tab Yên Lam (nói + chat), ô email, kết quả tìm kiếm.
 Cuối: commit + push `agy/yl10-dong-hanh`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 07:31 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
