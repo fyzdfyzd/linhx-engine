@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 20
 theo_doi: C:\linhx\ifagent-wt\bhc-staging
+nhan: may-2 2026-11-19T05:09:23+0700
+moc: a54c0312f0288fd8a32e41aba619d56b1acacf83
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT; chạy E2E từng bước (--buoc). Push mỗi bước.
 Bối cảnh: báo cáo mẫu CSMO 2026-11-18-csmo-51848e1b (nhánh agy/bhc-staging, bang-chung/bhc-mau-csmo/). Claude chấm: đẹp, nhưng có 3 lỗi phải sửa để thành bản final. KHÔNG gọi AI thật lần nào (dựng lại từ bao-cao-csmo.json + chi-tiet-luot-csmo.json sẵn có).
