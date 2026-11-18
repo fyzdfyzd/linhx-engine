@@ -26,4 +26,4 @@ VIỆC (giữ bộ màu, kính và logo sẵn có):
 Test Playwright 1 tệp yl13-kiosk-ux: thẻ sắp diễn ra có tên phiên; lời chào có "VSMCamp"; sau trả lời mock có QR; chữ tạm hiện khi giả lập sự kiện nhận giọng; mũi tên không giao với khung chữ; ở 390×844 với UA trình duyệt trong app thì chỉ có 1 thông báo, không phần tử nào tràn ngoài màn, chữ nút không xuống dòng.
 Cuối: push `agy/yl13-kiosk-ux`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 17:20 33p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 17:23 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
