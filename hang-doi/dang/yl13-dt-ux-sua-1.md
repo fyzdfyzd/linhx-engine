@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl13-dt-ux-sua-1; D:\linhx\ifagent-wt\yl13-dt-ux
+nhan: may-3 2026-11-18T16:47:17+0700
 
 Phiếu `yl13-dt-ux-sua-1` (LƯỢT 2: lượt 1 dừng vì agy hết hạn mức sau 3 phút; nếu worktree/nhánh đã có thì dùng lại, bỏ qua bước 0): sửa trải nghiệm điện thoại `/yen-lam/#lam` (390×844 @2x) sau khi Linh duyệt lúc 15:52 18/11. ĐỌC TRƯỚC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 0. `git -C D:\linhx\ifagent fetch --all`; `git -C D:\linhx\ifagent worktree add D:\linhx\ifagent-wt\yl13-dt-ux -b agy/yl13-dt-ux origin/agy/yl12-email-vao`. Nhánh nền đã có cổng email. Nối node_modules như phiếu yl10.
