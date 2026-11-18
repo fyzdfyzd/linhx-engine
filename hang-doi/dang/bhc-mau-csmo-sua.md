@@ -18,4 +18,4 @@ Nhánh mới agy/bhc-sua-5 từ agy/bhc-sua-4 (7b853da).
 6. Chụp lại vào bang-chung/bhc-mau-csmo-final/: 06d chương 01–13 ở 1280 (sáng) và 360 (sáng), landing full 1280/360 sáng+đêm, PDF Full + Light ra PNG 150 dpi. JPG 90 nếu tổng > 40 MB. Push agy/bhc-staging.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá/mã quản trị, gọi AI thật. KET-QUA: dat, SHA, số test, danh sách ảnh, 3 câu trước/sau cho mục 2 và 3.
 
-nhip: 05:12 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 05:15 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
