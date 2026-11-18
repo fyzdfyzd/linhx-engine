@@ -16,4 +16,4 @@ Kiosk: Lam THẤY người đối diện qua camera, khung hình ẨN.
 Test: unit cho bộ lấy mẫu khung hình (tần suất, kích thước, không ghi đĩa), cho công tắc. Ảnh K1 có biểu tượng camera.
 Cuối: commit + push `agy/yl10-cam-an`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 07:52 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 07:55 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
