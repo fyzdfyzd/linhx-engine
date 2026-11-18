@@ -4,6 +4,8 @@ tran_phut: 30
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r4-tran-kiem-l4; D:\linhx\nhat-ky\lx-r4-tran-kiem-l4
 phu_thuoc: lx-r4-b-test
+nhan: may-3 2026-11-18T13:51:06+0700
+moc: 99cc35716fa08a4ba33fb78de0d9e094cafe1975
 
 Phiếu lx-r4-c-va (LAB131). Thư mục D:\linhx\wt-lx-r4-tran-kiem-l4 ở nhánh lx-r4-tran-kiem-l4 đã có commit test đỏ, KHÔNG clone lại, KHÔNG sửa tệp test.
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc; lượt trước agy để lệnh chạy nền rồi ngồi chờ nên runner dừng):
