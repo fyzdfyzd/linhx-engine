@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r0-tu-clone; D:\linhx\nhat-ky\lx-r0-tu-clone
+nhan: may-3 2026-11-18T13:33:15+0700
 
 Phiếu lx-r0-tu-clone (LAB131). Mục tiêu: runner tự clone trước khi gọi agy, để agy không phải chạy lệnh clone dài (agy hay đẩy clone ra nền rồi ngồi chờ).
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc): mọi lệnh ghi log ra `D:\linhx\nhat-ky\lx-r0-tu-clone\<ten>.log` và chạy tiền cảnh; công cụ báo đã chuyển nền thì gọi trạng thái liên tục tới khi xong, không kết thúc lượt; test chỉ chạy 1 tệp mỗi lệnh. Đầu tiên `New-Item -ItemType Directory -Force D:\linhx\nhat-ky\lx-r0-tu-clone`.
