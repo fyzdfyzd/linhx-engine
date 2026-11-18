@@ -4,6 +4,7 @@ tran_phut: 40
 tu_sua: 0
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r4-tran-kiem-l2; D:\linhx\nhat-ky\lx-r4-tran-kiem-l2
+nhan: may-3 2026-11-18T08:03:52+0700
 
 Phiếu lx-r4-tran-kiem-l2 (sửa runner, LAB131). Chạy mọi lệnh ở TIỀN CẢNH, không background task, không tự chạy `pytest runner` toàn bộ (chỉ chạy test của phiếu và tệp test đụng tới). Mỗi 5 phút có tệp mới hoặc commit.
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc, lượt 1 bị runner dừng sau 30 giây vì agy để lệnh clone chạy nền rồi ngồi chờ):
