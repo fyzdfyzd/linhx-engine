@@ -16,4 +16,4 @@ VIỆC:
 Test Playwright 1 tệp yl13-dt-ux: tin đầu không chứa "gọi bạn là gì"; chỉ hiện một tấm email; ô nhập hiện trong ≤ 1500 ms ở throttle; nút gửi không phải màu cam đỏ.
 Cuối: push `agy/yl13-dt-ux`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 17:08 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 17:11 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
