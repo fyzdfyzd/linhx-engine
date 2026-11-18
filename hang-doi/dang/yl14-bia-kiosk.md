@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl14-bia-kiosk; D:\linhx\ifagent-wt\yl14-bia-kiosk
+nhan: may-3 2026-11-18T17:40:16+0700
 
 Phiếu `yl14-bia-kiosk`: GẤP, sự kiện diễn ra sáng 19/11. Đội test thật tại Ascott chiều 18/11 báo luồng bìa ở kiosk lỗi. ĐỌC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 0. `git -C D:\linhx\ifagent fetch --all`; `git -C D:\linhx\ifagent worktree add D:\linhx\ifagent-wt\yl14-bia-kiosk -b agy/yl14-bia-kiosk origin/agy/yl10-gop` (lấy đỉnh mới nhất). Nối node_modules như phiếu yl10.
