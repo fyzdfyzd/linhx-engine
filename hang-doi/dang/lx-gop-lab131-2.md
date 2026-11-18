@@ -15,3 +15,5 @@ Cuối cùng chạy thêm từng tệp: test_chan_cho_nen.py, test_tu_cham_khoa.
 Xuất soi: `git -C D:\linhx\wt-lx-gop-lab131 show --cc <mọi SHA merge của lx-gop-lab131> > D:\linhx\nhat-ky\lx-gop-lab131\merges.patch`, chép vào bao-cao/lab131/gop/ trên nhánh hang-doi y như phiếu lx-patch-lab131 (clone hang-doi riêng, push trạm, KHÔNG GitHub).
 `git -C D:\linhx\wt-lx-gop-lab131 -c sendpack.sideband=false push origin lx-gop-lab131 > D:\linhx\nhat-ky\lx-gop-lab131\push-2.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA đỉnh lx-gop-lab131; xung đột; số test từng tệp.
+
+nhip: 18:45 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
