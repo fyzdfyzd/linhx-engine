@@ -4,6 +4,8 @@ tran_phut: 30
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r1-phu-thuoc-cho-l4; D:\linhx\nhat-ky\lx-r1-phu-thuoc-cho-l4
 phu_thuoc: lx-r1-b-test
+nhan: may-3 2026-11-18T13:51:39+0700
+moc: 97e9d12ade34dfecf55c7112e9fec3c7ab52cac4
 
 Phiếu lx-r1-c-va (LAB131). Thư mục D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 ở nhánh lx-r1-phu-thuoc-cho-l4 đã có commit test đỏ, KHÔNG clone lại, KHÔNG sửa tệp test.
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc; lượt trước agy để lệnh chạy nền rồi ngồi chờ nên runner dừng):
