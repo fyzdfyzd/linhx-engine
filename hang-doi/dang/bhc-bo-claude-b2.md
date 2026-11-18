@@ -17,3 +17,5 @@ Code đã xong ở agy/bhc-sua-6 (phiếu bhc-bo-claude-a + a2; ID 2 model: deep
 7. Chụp vào bang-chung/bhc-mau-csmo-v2/: trang chủ, bảng sự thật, đang quét, kết quả, landing full + chương 01–13 (chờ số đếm xong) ở 1280 và 360 sáng, landing đêm full, xem nguyên văn, form email, quản trị tổng quan / lượt quét / chi tiết lượt (chi phí từng làn) / lead; PDF Full + Light ra PNG 150 dpi. JPG 90 nếu > 40 MB. Push agy/bhc-staging.
 8. Trả cấu hình BH_QUICK, BH_TRAN_CHI_PHI_NGAY; healthz ok; demo.ifagent.net/brand-health-check/ và event.ifagent.net 200.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá/mã quản trị, quét thương hiệu khác. KET-QUA: dat, SHA, số test, ID + giá 2 model mới, mã báo cáo mới, 3 chỉ số, thời gian, chi phí từng làn (USD), tổng USD, danh sách ảnh.
+
+nhip: 06:58 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
