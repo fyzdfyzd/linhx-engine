@@ -14,3 +14,5 @@ Kỹ năng: Deep Research trên ChatGPT Plus (tài khoản zomplaza).
 Đề: "Tóm tắt 5 công cụ mã nguồn mở tính bản đồ sao (natal chart) tốt nhất 2026: giấy phép, ngôn ngữ, độ chính xác, link repo. Bảng so sánh, tiếng Việt." Bật Deep research, trả lời câu hỏi làm rõ (nếu có) bằng "không cần, cứ làm". Kiểm 2 phút/lần ở tiền cảnh. Hết 22 phút chưa xong thì chụp tiến độ, ghi `HONG — quá giờ` + số phút đã chạy.
 Lưu báo cáo dạng .md vào xong/<id>/bao-cao.md.
 ĐẠT khi: báo cáo có ≥ 5 nguồn có link. Trả: số phút chạy, số nguồn.
+
+nhip: 11:48 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
