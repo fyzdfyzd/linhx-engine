@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 20
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-sua-6
+nhan: may-2 2026-11-19T06:42:23+0700
+moc: c5dbb7070755a64b0547b8325cc8f4aa28f3c6cf
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Phiếu nhỏ, làm xong trong 15 phút.
 Nhánh agy/bhc-sua-6 (c5dbb707, phiếu bhc-bo-claude-a bị quá giờ nhưng code đã push). Claude kiểm: 118/120 test, hỏng 2 test golden PDF in-bao-cao.test.js ("2026-11-13-vinamilk-9b816db5" và "2026-11-13-if-agent-bf460a21": ảnh từng trang Full + Light khớp bản đạt chấm 9).
