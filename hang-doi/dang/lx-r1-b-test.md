@@ -17,3 +17,5 @@ CẤM: sửa runner đang chạy ở D:\linhx\hang-doi, đụng GitHub, deploy, 
 2. Chạy đúng tệp test mới, cho thấy ĐỎ (ghi số failed). Commit "test(r1): ...".
 3. `git -C D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 -c sendpack.sideband=false push origin lx-r1-phu-thuoc-cho-l4 > D:\linhx\nhat-ky\lx-r1-phu-thuoc-cho-l4\push-b.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA; số test đỏ.
+
+nhip: 13:38 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
