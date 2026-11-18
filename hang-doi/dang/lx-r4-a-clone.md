@@ -2,6 +2,7 @@ may: may-3
 loai: code
 tran_phut: 10
 theo_doi: D:\linhx\nhat-ky\lx-r4-tran-kiem-l4
+nhan: may-3 2026-11-18T13:33:18+0700
 
 Phiếu lx-r4-a-clone (LAB131, chỉ chuẩn bị thư mục, không sửa code).
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc; lượt trước agy để lệnh chạy nền rồi ngồi chờ nên runner dừng):
