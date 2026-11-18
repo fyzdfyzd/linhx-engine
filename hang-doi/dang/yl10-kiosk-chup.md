@@ -12,3 +12,5 @@ Kiosk: giao diện chụp ảnh đang VỠ. Đi hết nhánh chụp ở 1080×19
 Chụp từng màn trước khi sửa, tìm mọi chỗ vỡ (tràn, chồng lớp, lệch tâm, khung camera méo, nút < 44px, chữ mờ), sửa hết, chụp lại. Khung tham chiếu: `viec/yen-lam-v09/khung/` (K3, K3b, K4). Không đổi CSS kính, dùng lại class sẵn có.
 Test: Playwright 1 tệp đi hết luồng chụp, kiểm không phần tử nào tràn khỏi màn, nút chính ≥ 44px.
 Cuối: commit + push `agy/yl10-kiosk-chup`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 07:31 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
