@@ -30,4 +30,4 @@ Test 1 tệp `yl13-brand-safety.test.js` (thêm 1 ca cho mục 6) (mock Gemini, 
 Chạy các test brand-safety cũ TỪNG TỆP. Test khoá nghiem-thu-* không được sửa.
 Cuối: push `agy/yl13-brand-safety`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 17:00 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 17:03 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
