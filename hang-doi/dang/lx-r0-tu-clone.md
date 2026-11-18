@@ -13,3 +13,5 @@ CẤM: sửa runner đang chạy ở D:\linhx\hang-doi, đụng GitHub, deploy, 
 3. Vá runner cho test xanh; chạy thêm từng tệp test cũ của hàm đã sửa. Commit "feat(tu-clone): ...".
 4. `git -C D:\linhx\wt-lx-r0-tu-clone -c sendpack.sideband=false push origin lx-r0-tu-clone:refs/heads/agy/lx-r0-tu-clone > D:\linhx\nhat-ky\lx-r0-tu-clone\push.log 2>&1`.
 KET-QUA: dòng đầu `dat: co|khong`; SHA đỉnh; test đỏ→xanh.
+
+nhip: 13:36 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
