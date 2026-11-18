@@ -10,13 +10,9 @@
   },
   "ram": {
     "tong_gb": 15.6,
-    "trong_gb": 3.09
+    "trong_gb": 3.56
   },
   "gpu": [
-    {
-      "ten": "Parsec Virtual Display Adapter",
-      "vram_gb": null
-    },
     {
       "ten": "Intel(R) UHD Graphics 730",
       "vram_gb": 2.0
@@ -26,7 +22,7 @@
     {
       "o": "C:",
       "tong_gb": 118.63,
-      "trong_gb": 2.37
+      "trong_gb": 19.55
     },
     {
       "o": "D:",
@@ -46,7 +42,7 @@
     {
       "o": "G:",
       "tong_gb": 351.56,
-      "trong_gb": 332.41
+      "trong_gb": 323.94
     },
     {
       "o": "H:",
@@ -114,5 +110,5 @@
     "xong": 12,
     "loi": 2
   },
-  "cap_nhat_luc": "2026-11-18T10:08:11+0700"
+  "cap_nhat_luc": "2026-11-18T11:06:21+0700"
 }
