@@ -16,4 +16,4 @@ PHIẾU NÀY CHỈ LÀM CODE (bước 1–4), push agy/bhc-sua-6 sau mỗi bư�
 4. Thử thật nhỏ trên máy (không qua staging): mỗi làn mới 3 câu CSMO, in chi phí usage.cost. Tổng ≤ 0,2 USD. Làn nào trả rỗng/lỗi thì đổi sang ID khác trong cùng họ, ghi lý do.
 KET-QUA: dat, SHA, số test, ID + giá 2 model mới, chi phí thử nhỏ.
 
-nhip: 06:23 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 06:26 28p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
