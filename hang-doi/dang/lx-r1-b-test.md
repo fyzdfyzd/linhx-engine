@@ -4,6 +4,8 @@ tran_phut: 30
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-r1-phu-thuoc-cho-l4; D:\linhx\nhat-ky\lx-r1-phu-thuoc-cho-l4
 phu_thuoc: lx-r1-a-clone
+nhan: may-3 2026-11-18T13:35:49+0700
+moc: 546e9e3f7d6013c8a1d1fb56dc64fe649202fff2
 
 Phiếu lx-r1-b-test (LAB131). Thư mục D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 đã clone sẵn ở nhánh lx-r1-phu-thuoc-cho-l4, KHÔNG clone lại. CHỈ VIẾT TEST, chưa vá code.
 LUẬT CHỐNG CHUYỂN NỀN (bắt buộc; lượt trước agy để lệnh chạy nền rồi ngồi chờ nên runner dừng):
