@@ -17,3 +17,5 @@ VIỆC:
 5. Không đổi CSS kính; tấm email dùng class sẵn có, chụp 390×844 @2x trước/sau: chat lần đầu → tấm email → gửi được.
 Test mới: (a) chưa email thì POST chat/ảnh/lưu trả mã yêu cầu email, có email thì qua; (b) email lưu server, không có trong localStorage; (c) hai thiết bị cùng email chưa xác nhận KHÔNG thấy dữ liệu của nhau; (d) CSV admin có email. Chạy thêm test khoá liên quan từng tệp.
 Cuối: push `agy/yl12-email-vao`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 15:04 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
