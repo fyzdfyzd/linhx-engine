@@ -15,3 +15,5 @@ VIỆC:
 Ảnh trước/sau 390×844 @2x: màn đầu ở giây thứ 1, tấm email, chat sau 1 câu. Tự soi 100%, chấm ≥ 8.
 Test Playwright 1 tệp yl13-dt-ux: tin đầu không chứa "gọi bạn là gì"; chỉ hiện một tấm email; ô nhập hiện trong ≤ 1500 ms ở throttle; nút gửi không phải màu cam đỏ.
 Cuối: push `agy/yl13-dt-ux`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 16:50 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
