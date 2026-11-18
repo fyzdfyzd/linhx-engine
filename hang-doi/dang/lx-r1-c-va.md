@@ -17,3 +17,5 @@ CẤM: sửa runner đang chạy ở D:\linhx\hang-doi, đụng GitHub, deploy, 
 2. Chạy tệp test mới: phải XANH. Chạy thêm tệp test cũ của module đã sửa (từng tệp một), không đỏ thêm. Commit "fix(r1): ...".
 3. `git -C D:\linhx\wt-lx-r1-phu-thuoc-cho-l4 -c sendpack.sideband=false push origin lx-r1-phu-thuoc-cho-l4:refs/heads/agy/lx-r1-phu-thuoc-cho-l4 > D:\linhx\nhat-ky\lx-r1-phu-thuoc-cho-l4\push-c.log 2>&1` (tên agy/* để trạm đồng bộ lên GitHub).
 KET-QUA: dòng đầu `dat: co|khong`; SHA đỉnh; test đỏ→xanh; số test cũ đã chạy.
+
+nhip: 13:54 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
