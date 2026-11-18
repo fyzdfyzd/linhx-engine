@@ -16,3 +16,5 @@ Trang KỸ THUẬT để test nhanh, sửa nhanh (Linh cần không phải đăn
 Test: unit cho kiểm mã (sai → 404, prod → 404), lưu/khôi phục tri thức, ghi log. Ảnh 3 khối.
 Trong KET-QUA ghi tên biến/tệp cấu hình chứa mã (KHÔNG ghi giá trị).
 Cuối: commit + push `agy/yl10-trang-test`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 07:31 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
