@@ -15,4 +15,4 @@ Chạy mọi lệnh tiền cảnh. Ghi tiến độ `C:\linhx\nhat-ky\yl11-tri-t
 5. Test mới (mock Gemini): 8 câu hỏi lấy từ dữ liệu 18/11 → ngữ cảnh gửi đi chứa đúng dữ kiện; kiosk và đồng hành đọc cùng nguồn; bản nén ≤ 12.000 ký tự.
 Cuối: push `agy/yl11-tri-thuc`. KHÔNG deploy. KET-QUA: dat, SHA, danh sách tệp đã nạp/THIEU, thay đổi agenda/diễn giả, test.
 
-nhip: 13:30 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:34 33p {"conversation_id":"e3b73ef8-6435-4021-b31f-67156ac91ce8","status":"SUCCESS","response":"`dat: co`\n- **Nhánh đã push**:
