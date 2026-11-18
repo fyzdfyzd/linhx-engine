@@ -15,4 +15,4 @@ Kỹ năng: agy đổi qua lại giữa các tài khoản/hồ sơ đã đăng n
 3. ChatGPT: ghi tài khoản đang mở + gói.
 ĐẠT khi: đổi được ≥ 2 tài khoản Google mà không cần Linh. Trả: bảng tài khoản (email che) | dịch vụ | gói | tín dụng.
 
-nhip: 12:49 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:52 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
