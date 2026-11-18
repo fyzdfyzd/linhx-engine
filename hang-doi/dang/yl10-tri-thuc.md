@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl10-tri-thuc; D:\linhx\ifagent-wt\yl10-tri-thuc
+nhan: may-3 2026-11-18T07:28:18+0700
 
 Phiếu Yên Lam sửa nhanh `yl10-tri-thuc`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` và `viec/yen-lam-v09/DE-BAI.md` (git pull hàng đợi trước).
 Chạy mọi lệnh ở tiền cảnh. Tạo `D:\linhx\nhat-ky\yl10-tri-thuc\`, ghi 1 dòng vào `tien-do.log` sau mỗi bước.
