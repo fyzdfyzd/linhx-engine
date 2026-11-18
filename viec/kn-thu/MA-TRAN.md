@@ -7,9 +7,9 @@
 | Nhạc Gemini | – | – | ĐẠT mp3 62 giây (/u/1); chưa chép Drive vì G: chưa gắn |
 | Nhạc Suno | – | – | ĐẠT mp3 184 giây, còn 730 tín dụng |
 | Video Google Flow | – | – | ĐẠT lượt 2: Veo 3.1 Lite, 7,9 giây, 10 tín dụng |
-| Deep Research ChatGPT Plus | HỎNG lượt 3: Browsentic chạy, nhưng hết trần 25 phút; lượt 4 trần 40 | – | – |
-| Google Colab | huỷ theo phiếu trước; lượt 4 chạy độc lập | – | – |
-| Đổi tài khoản | huỷ theo phiếu trước; lượt 4 chạy độc lập | – | – |
+| Deep Research ChatGPT Plus | ĐẠT lượt 4: 13 nguồn, 11 phút | – | – |
+| Google Colab | ĐẠT: GPU G4 RTX PRO 6000 (H100 không còn) | – | – |
+| Đổi tài khoản | ĐẠT: 7 tài khoản Google + Flow 2 tài khoản + ChatGPT, không cần Linh | – | – |
 | Gemini Task: tính toán + mạng | – | ĐẠT: đúng 2 đáp án + PNG; máy ảo KHÔNG có mạng | – |
 | Gemini Task: video | – | ĐẠT: MP4 1080×1920 20 giây, nhạc sin, chữ Việt đủ dấu | – |
 | Gemini Task: xlsx, pip, PDF | – | ĐẠT 2/2: xlsx 3 sheet có SUM; pip lỗi (không mạng) nhưng tự tính Mặt Trời 280,37° đúng | – |
