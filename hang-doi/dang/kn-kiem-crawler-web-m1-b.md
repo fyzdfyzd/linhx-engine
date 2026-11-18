@@ -3,6 +3,7 @@ loai: khac
 tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-1 2026-11-18T11:39:01+0700
 
 # kn-kiem-crawler-web-m1-b
 Lượt 2: lượt 1 kẹt không chạy. Không chạy tác vụ nền (luật 12).
