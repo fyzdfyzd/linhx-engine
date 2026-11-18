@@ -16,4 +16,4 @@ VIỆC (nội dung trả lời, server/prompt/tri thức, KHÔNG đụng CSS):
 Test mới (mock Gemini): 10 câu hỏi giờ/địa điểm mẫu (khai mạc ngày 19 và 20, bế mạc, nghỉ trưa, phòng Hồ Tây 1…) → ngữ cảnh gửi đi có đúng dòng agenda; chip không trùng câu đã hỏi; tin đầu không chứa "Chủ đề".
 Cuối: push `agy/yl11-chat-noi-dung`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH (dat, SHA, test, ảnh ghép trước/sau + điểm).
 
-nhip: 13:20 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:23 30p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
