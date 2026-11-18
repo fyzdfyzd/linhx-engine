@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\nhat-ky\yl10-kiosk-lam; C:\linhx\ifagent-wt\yl10-kiosk-lam
+nhan: may-2 2026-11-18T08:13:02+0700
 
 Phiếu `yl10-kiosk-lam` LƯỢT 2, CHẠY TIẾP. Đề gốc: `git show ba1a2e50:hang-doi/moi/yl10-kiosk-lam.md` trong thư mục hàng đợi, và `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md`.
 Lượt 1 hết 40 phút mà KHÔNG push gì lên origin. Việc ĐẦU TIÊN (phút 0–3): vào worktree `C:\linhx\ifagent-wt\yl10-kiosk-lam`, `git status`, `git add -A` phần code đã sửa (không thêm node_modules, log, ảnh > 600 KB), commit "lượt 1 dở", `git push -u origin agy/yl10-kiosk-lam`. Worktree mất thì tạo lại từ origin/agy/yl09-gop như đề gốc.
