@@ -3,6 +3,7 @@ loai: trinh-duyet
 tran_phut: 15
 khong_tien_phut: 15
 tu_sua: 0
+nhan: may-1 2026-11-18T12:45:59+0700
 
 # kn-td-tai-khoan-m1-d
 Lượt 4 (Browsentic máy 1 chạy, đã kiểm 18/11). Đọc lại DE-BAI.md, luật 3, 10–13 mới.
