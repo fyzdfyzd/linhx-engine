@@ -11,3 +11,5 @@ Phiếu `yl10-gop-sua-1`: GỘP để Linh test sớm. ĐỌC `viec/yen-lam-v09/
 3. Chạy test mới của các nhánh vừa gộp (tệp test yl10-*.test.js), TỪNG TỆP, không chạy cả bộ. Đỏ do gộp thì sửa. LUẬT CHỐNG CHUYỂN NỀN như DE-BAI-SUA-NHANH.
 4. Push `agy/yl10-gop`. KHÔNG deploy (phiếu deploy làm). Phút 20 phải push dù chưa chạy hết test, ghi CON_LAI.
 KET-QUA: dat, SHA đỉnh, nhánh đã gộp/THIEU, test.
+
+nhip: 08:15 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
