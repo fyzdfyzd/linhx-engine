@@ -14,3 +14,5 @@ Sửa: biến coCl (đổi tên thành dungBoCu) = báo cáo có dòng Claude HO
 Test khoá mới: báo cáo chỉ Gemini → chữ cũ "ChatGPT, Claude, Perplexity"; báo cáo có DeepSeek/Grok không có Claude → bộ mới, không chữ "Claude".
 npm test (phải 120+/120+, 0 hỏng) + node scripts/lint.js xanh. Commit, push agy/bhc-sua-6. KHÔNG deploy.
 KET-QUA: dat, SHA, số test.
+
+nhip: 06:45 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
