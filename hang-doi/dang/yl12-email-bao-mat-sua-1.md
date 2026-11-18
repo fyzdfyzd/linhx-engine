@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl12-email-bao-mat-sua-1; D:\linhx\ifagent-wt\yl12-email-vao
+nhan: may-3 2026-11-18T16:12:15+0700
 
 Phiếu `yl12-email-bao-mat-sua-1`: tiếp nối yl12-email-vao (đã push ff2ddd29, mục 1–4 xong, phiếu dừng vì quá giờ). Sửa các lỗ hổng email/phiên trước production. ĐỌC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` và `viec/yen-lam-v09/EMAIL-BO-SUNG.md` (mục 2–6).
 Làm trên worktree `D:\linhx\ifagent-wt\yl12-email-vao` nhánh `agy/yl12-email-vao`. Chạy `git pull` từ origin trước. Nếu worktree mất thì tạo lại từ origin/agy/yl12-email-vao. Bỏ qua mục nào đã có trong commit của nhánh.
