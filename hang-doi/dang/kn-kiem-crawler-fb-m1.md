@@ -4,6 +4,7 @@ tran_phut: 20
 khong_tien_phut: 15
 tu_sua: 0
 phu_thuoc: kn-kiem-crawler-web-m1
+nhan: may-1 2026-11-18T11:54:57+0700
 
 # kn-kiem-crawler-fb-m1
 Đọc và làm theo luật chung `viec/kn-thu/DE-BAI.md` (bắt buộc).
