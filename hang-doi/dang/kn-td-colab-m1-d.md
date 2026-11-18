@@ -17,4 +17,4 @@ print(sum(range(10**7)))
 ```
 ĐẠT khi: ô chạy ra đúng 49999995000000. Trả: loại GPU (hoặc "chỉ CPU"), danh sách máy chạy hiện ra trong Đổi loại thời gian chạy, đơn vị tính toán còn lại nếu hiện. Xong thì Ngắt kết nối và xoá thời gian chạy.
 
-nhip: 12:29 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:32 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
