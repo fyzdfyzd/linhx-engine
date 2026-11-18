@@ -13,3 +13,5 @@ Kỹ năng: gọi LINHX Crawler (server cũ D:\LINHX_CRAWLER, FastAPI cổng 800
 1. `curl -s http://127.0.0.1:8000/docs` hoặc /health. Tắt thì đọc README trong D:\LINHX_CRAWLER, bật server tiền cảnh có timeout, ghi lệnh đã dùng; xong việc tắt server nếu do mình bật.
 2. Gọi API quét 2 URL: https://example.com và https://vnexpress.net (trang chủ). Lưu văn bản trích ra vào xong/<id>/web-1.txt, web-2.txt (cắt ≤ 20 KB).
 ĐẠT khi: web-2 có ≥ 500 ký tự tiếng Việt. Trả: endpoint đã gọi, thời gian mỗi URL, số ký tự.
+
+nhip: 11:47 9p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T11:47:56+0700] · root agent idle; waiting up to 40m0s for 1 ba
