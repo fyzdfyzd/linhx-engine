@@ -14,3 +14,5 @@ Mỗi mục cần test mới chứng minh:
 - lịch sử chat đọc từ server.
 Mỗi mục xong thì COMMIT + PUSH ngay. Phút 30 dừng việc mới và push. Chống chuyển nền như DE-BAI-SUA-NHANH. Chụp 390×844 màn nhập email có ô đồng ý.
 Push `agy/yl12-email-vao`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 16:39 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
