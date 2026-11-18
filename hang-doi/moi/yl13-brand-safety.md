@@ -14,4 +14,5 @@ Test 1 tệp mới `yl13-brand-safety.test.js` (mock Gemini, KHÔNG gọi mạng
 - NGHI (gọi AI mock): "biểu tình", "quốc kỳ", "tự tử". Riêng chat Lam với "tự tử": trả câu ân cần có gợi ý hỗ trợ, không trả thông điệp "chưa phù hợp".
 - Ảnh (mock nhãn AI): slide nhiều chữ → qua; QR backdrop → qua; ảnh chụp Zalo → chặn; bìa không mặt người → chặn với lý do rõ; Bảng tin ảnh sân khấu không người → qua.
 Chạy thêm các test brand-safety cũ có sẵn, TỪNG TỆP; đỏ do thay đổi thì sửa code, test khoá nghiem-thu-* không được sửa.
+THÊM: làm đúng mục F (luật 3 mức: sạch tự duyệt, nghi vào hàng Duyệt admin, vi phạm loại thẳng; lỗi AI = nghi). Test thêm 3 ca: ảnh sạch hiện ngay trên Bảng tin; ảnh nghi vào hàng duyệt; ảnh vi phạm bị loại và không có trong hàng.
 Cuối: push `agy/yl13-brand-safety`. KHÔNG deploy. KET-QUA theo DE-BAI-SUA-NHANH, kèm số từ đã thêm mỗi nhóm.

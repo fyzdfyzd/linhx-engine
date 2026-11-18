@@ -43,3 +43,11 @@ Thay whitelist BTMH bằng: toàn bộ `doi_tuong_bao_ve` hiện có + "tp hồ 
 - Chat riêng với Lam (điện thoại, kiosk): chặn cứng + nghi→AI. Lam từ chối khéo theo `THONG_DIEP_MAC_DINH.lam`. Không lưu công khai.
 - Nơi công khai (Bảng tin, câu hỏi diễn giả, bình luận, chữ trên bìa): toàn bộ A–D; ca AI không chắc → vào hàng "Duyệt" của admin, không tự đăng.
 - Câu Lam nói ra (kiosk đọc to): Lam không bình luận chính trị, tôn giáo, lãnh đạo, so sánh chê đối thủ/nhà tài trợ; lỡ bị hỏi thì lái về sự kiện.
+
+## F. LUẬT 3 MỨC (Linh 16:05, THẮNG mọi chỗ khác)
+Mọi nội dung khách gửi lên nơi công khai (ảnh Bảng tin, chữ kèm ảnh, câu hỏi diễn giả, bình luận, chữ trên bìa, ảnh chụp bìa kiosk) chia đúng 3 mức:
+1. **SẠCH → TỰ DUYỆT**, hiện ngay trên giao diện, không chờ admin. (Hiện nay mọi ảnh đều chờ duyệt: bỏ hành vi đó, trừ ảnh trẻ em vẫn khoá như cũ.)
+2. **NGHI → hàng "Duyệt" của admin**, khách thấy "đang được BTC xem qua", admin bấm Duyệt mới hiện, Ẩn thì không hiện.
+3. **VI PHẠM (chặn cứng lớp 1 hoặc AI kết luận vi phạm rõ) → LOẠI THẲNG**, báo khách lý do thân thiện, KHÔNG vào hàng admin (chỉ đếm số lượt bị chặn).
+Lỗi/timeout AI → coi là NGHI (không tự duyệt).
+Chat riêng với Lam không đăng công khai: chỉ dùng mức 3 (Lam từ chối khéo), không vào hàng duyệt.
