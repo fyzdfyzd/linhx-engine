@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: C:\linhx\nhat-ky\yl11-tri-thuc; C:\linhx\ifagent-wt\yl11-tri-thuc
+nhan: may-2 2026-11-18T13:00:49+0700
 
 Phiếu Yên Lam `yl11-tri-thuc`: NẠP DỮ LIỆU BTC 18/11 làm tri thức cho Yên Lam (kiosk + đồng hành). ĐỌC TRƯỚC `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` (luật chung, chống chuyển nền, cấm).
 Chạy mọi lệnh tiền cảnh. Ghi tiến độ `C:\linhx\nhat-ky\yl11-tri-thuc\tien-do.log`. Mỗi bước xong COMMIT + PUSH. Phút 30 dừng việc mới, push, ghi CON_LAI.
