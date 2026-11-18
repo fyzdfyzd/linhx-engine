@@ -10,4 +10,4 @@ Lượt 1 hết 40 phút mà KHÔNG push gì lên origin. Việc ĐẦU TIÊN (p
 Sau đó làm tiếp phần còn lại. Ưu tiên theo thứ tự trong đề gốc, mỗi mục xong là COMMIT + PUSH ngay (không để dồn). Phút 30 dừng việc mới, chụp ảnh ghép các màn đã sửa, push, ghi CON_LAI.
 LUẬT CHỐNG CHUYỂN NỀN như DE-BAI-SUA-NHANH. Chỉ chạy test của phiếu, từng tệp. CẤM như DE-BAI-SUA-NHANH. KET-QUA theo DE-BAI-SUA-NHANH.
 
-nhip: 08:22 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:25 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
