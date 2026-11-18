@@ -2,6 +2,7 @@ may: may-3
 loai: code
 tran_phut: 15
 theo_doi: D:\linhx\nhat-ky\lab131-patch
+nhan: may-3 2026-11-18T14:37:15+0700
 
 Phiếu xuất patch 4 nhánh LAB131 vào nhánh hang-doi để Claude soi diff. Không sửa code.
 LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra `D:\linhx\nhat-ky\lab131-patch\<ten>.log`, chạy tiền cảnh; công cụ báo đã chuyển nền thì gọi trạng thái liên tục tới khi xong, không kết thúc lượt. KHÔNG push lên GitHub (lượt trước push GitHub bị treo).
