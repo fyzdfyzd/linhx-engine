@@ -15,3 +15,5 @@ Nạp tri thức mới từ tài liệu Lark của BTC cho cả kiosk Lam và đ
 4. NÉN VỪA PHẢI: bản nạp vào prompt ≤ 12.000 ký tự (giữ giờ, phòng, track, diễn giả, địa điểm, vé, check-in, nhà tài trợ; bỏ văn chào hỏi, lặp lại). Bản đầy đủ để tra cứu khi cần (công cụ tìm), không nhồi hết vào prompt. Không bịa thông tin ngoài tài liệu và agenda.json.
 5. Test: tệp test mới kiểm (a) tri thức nạp ≤ 12.000 ký tự, (b) 5 câu hỏi mẫu lấy từ tài liệu có câu trả lời chứa đúng dữ kiện (dùng mock Gemini, kiểm ngữ cảnh gửi đi chứa dữ kiện), (c) đồng hành và kiosk cùng đọc một nguồn.
 Cuối: commit + push `agy/yl10-tri-thuc`. CẤM như DE-BAI-SUA-NHANH. Trạng thái cao nhất REVIEW. KET-QUA theo DE-BAI-SUA-NHANH.
+
+nhip: 07:31 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
