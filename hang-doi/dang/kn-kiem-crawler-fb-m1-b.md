@@ -15,3 +15,5 @@ Dùng chức năng Facebook có sẵn của crawler (đọc code/README D:\LINHX
 Lưu JSON (bài: thời gian, 200 ký tự đầu, link) vào xong/<id>/fb.json.
 ĐẠT khi: ≥ 5 bài có nội dung + thời gian. Hỏng do checkpoint/đăng nhập → `CHUA_DANG_NHAP` + CAN-LINH ghi tài khoản FB crawler cần.
 Trả: endpoint, số bài, thời gian, lỗi nếu có.
+
+nhip: 11:52 2p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-18T11:52:42+0700] · root agent idle; waiting up to 40m0s for 1 ba
