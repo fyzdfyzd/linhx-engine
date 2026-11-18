@@ -15,4 +15,4 @@ Test khoá mới: báo cáo chỉ Gemini → chữ cũ "ChatGPT, Claude, Perplex
 npm test (phải 120+/120+, 0 hỏng) + node scripts/lint.js xanh. Commit, push agy/bhc-sua-6. KHÔNG deploy.
 KET-QUA: dat, SHA, số test.
 
-nhip: 06:45 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 06:48 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
