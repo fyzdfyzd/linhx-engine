@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 15
 theo_doi: D:\linhx\wt-lx-gop-lab131; D:\linhx\nhat-ky\lx-gop-lab131
 phu_thuoc: lx-gop-lab131-1
+nhan: may-3 2026-11-18T18:42:08+0700
+moc: 363802129d55151d01b1bc0fc2528375905cb06e
 
 Phiếu lx-gop-lab131-2 (LAB131). Thư mục D:\linhx\wt-lx-gop-lab131 ở nhánh lx-gop-lab131 đã gộp r5, r6, r1. KHÔNG clone lại. Gộp tiếp 2 nhánh, cùng cách như phiếu lx-gop-lab131-1:
 LUẬT CHỐNG CHUYỂN NỀN: mọi lệnh ghi log ra `D:\linhx\nhat-ky\lx-gop-lab131\<ten>.log`, chạy tiền cảnh; công cụ báo đã chuyển nền thì gọi trạng thái liên tục tới khi xong, không kết thúc lượt; test chỉ chạy 1 tệp mỗi lệnh. CẤM chạy `pytest runner` toàn bộ, đụng GitHub, deploy, sửa D:\linhx\hang-doi, sửa logic ngoài phần giải xung đột.
