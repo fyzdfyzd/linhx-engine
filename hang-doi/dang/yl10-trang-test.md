@@ -3,6 +3,7 @@ loai: code
 tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\nhat-ky\yl10-trang-test; D:\linhx\ifagent-wt\yl10-trang-test
+nhan: may-3 2026-11-18T07:28:17+0700
 
 Phiếu Yên Lam sửa nhanh `yl10-trang-test`. ĐỌC TRƯỚC: `viec/yen-lam-v09/DE-BAI-SUA-NHANH.md` và `viec/yen-lam-v09/DE-BAI.md` (git pull hàng đợi trước).
 Chạy mọi lệnh ở tiền cảnh. Tạo `D:\linhx\nhat-ky\yl10-trang-test\`, ghi 1 dòng vào `tien-do.log` sau mỗi bước.
