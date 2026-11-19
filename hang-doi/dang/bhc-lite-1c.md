@@ -18,3 +18,5 @@ LINH (12:00 VN 19/11): "tự động deploy đi" — deploy chế độ Lite lê
 7. Chụp 1280 + 360: landing Lite, khối Nhận bản Full, lời cảm ơn, quản trị lead.
 Hỏng: rollback image :prev + khôi phục env .bak, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá, quét thật. KET-QUA: dat, SHA, kết quả bước 6, ảnh.
+
+nhip: 12:39 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
