@@ -5,6 +5,7 @@ tran_phut: 30
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-prod-2
 nhan: may-2 2026-11-19T08:16:53+0700
+nhan: may-2 2026-11-19T08:26:52+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push KET-QUA sau mỗi bước.
 LINH DUYỆT (08:14 VN 19/11, nguyên văn "deploy lên production"): deploy Brand Health Check lên PRODUCTION demo.ifagent.net/brand-health-check/ (service brand-health, /opt/ifagent, cổng 3020). Đây là lệnh của Linh, đúng 1 app này.
