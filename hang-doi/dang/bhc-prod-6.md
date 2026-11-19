@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 25
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-prod-4
+nhan: may-2 2026-11-19T12:12:52+0700
+moc: 71c7ed910049a4caca69c84cc56f6576042aa096
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push KET-QUA + ảnh vào bang-chung/bhc-prod-6/ trên nhánh agy/bhc-prod-6. KHÔNG in khoá/mã. KHÔNG quét lại (chỉ Chấm lại).
 Báo cáo mẫu CSMO prod 2026-11-19-csmo-d88de79d (Có mặt 93, Đúng 71, Được đề xuất 71). Claude soi thấy 2 lỗi:
