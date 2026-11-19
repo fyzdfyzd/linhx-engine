@@ -16,3 +16,5 @@ Bản deploy: ifagent commit ead66ac5 (nhánh agy/bhc-sua-6; staging 999ed2e ch�
 4. Kiểm sau: healthz prod 200 kèm BUILD_SHA/version; https://demo.ifagent.net/brand-health-check/ 200; https://event.ifagent.net/ 200; lab.ifagent.net và bd.ifagent.net giữ nguyên code HTTP như bước 0. Chụp trang chủ prod 1280 và 360 (sáng) vào bang-chung/bhc-prod-1/ trên nhánh agy/bhc-prod-1. Mở 1 báo cáo cũ đã có trên prod (nếu có) xem còn 200.
 5. Nếu bất kỳ bước 4 nào hỏng: chạy `sudo sh /opt/ifagent/infra/blue-green/rollback-fast.sh brand-health` hoặc rollback theo hướng dẫn trong deploy-app.sh về :prev, kiểm lại 200, ghi rõ.
 CẤM: đụng service khác (event, caddy, concept-note, idea-lab, lab), sửa Caddyfile/DNS, đụng stg-event/stg-brand, in khoá/mã, quét thật trên prod. KET-QUA: dat, SHA đang chạy, df trước/sau, tên env thiếu, HTTP các trang trước/sau, ảnh.
+
+nhip: 08:19 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
