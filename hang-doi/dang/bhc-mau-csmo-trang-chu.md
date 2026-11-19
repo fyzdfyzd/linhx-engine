@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 35
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-mau-csmo-tc
+nhan: may-2 2026-11-19T13:06:23+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push sau mỗi bước. KHÔNG gọi AI thật. KHÔNG in khoá/mã.
 LINH (13:04 VN 19/11, nguyên văn "xoá thông tin ifagent, để csmo"), đã duyệt deploy prod từ trước ("tự động deploy đi"). Cách hiểu: ở trang chủ công cụ, khối "Số thật đã đo · bấm để đọc báo cáo mẫu đầy đủ" bỏ thẻ báo cáo mẫu IF Agent (0/33/27), thay bằng thẻ báo cáo mẫu CSMO. Giữ logo/chân trang IF Agent (chủ công cụ) và thẻ Vinamilk.
