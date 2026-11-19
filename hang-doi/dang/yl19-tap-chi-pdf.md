@@ -24,3 +24,5 @@ KIỂM + BẰNG CHỨNG (C:\linhx\ifagent-wt\yl19-tap-chi-pdf\bang-chung\yl19-ta
   - Chạy test lab đủ (`npm i --no-save ws` trong packages/character trước), log thô; lỗi mới ngoài 9 lỗi môi trường đã biết thì sửa.
 CẤM: deploy staging/prod, sửa env/khoá, in khoá, xoá dữ liệu, sửa test cũ, sinh ảnh AI, đổi bố cục tạp chí, push lên yl17-tron/yl18-tap-chi/main.
 Trả lời KET-QUA.md (ngắn ≤ 2000 ký tự): dòng đầu `dat: co|khong`; SHA đỉnh; cỡ image trước/sau; HTTP + số trang PDF; đường dẫn ảnh so-pdf-web.png; pass/fail test.
+
+nhip: 04:12 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
