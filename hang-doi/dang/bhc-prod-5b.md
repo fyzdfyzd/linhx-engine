@@ -16,4 +16,4 @@ Linh (11:45 VN 19/11): "đã mở" (Gemini đã mở lại / nạp tiền). Linh
 4. Chụp (chờ số đếm xong): landing báo cáo full 1280 + 360 (sáng), chương 01–02 1280, PDF Full trang 1–3 + Light trang 1 (150 dpi), quản trị chi tiết lượt 1280 (chi phí từng làn). Tải PDF Full + Light vào bang-chung/bhc-prod-5b/pdf/. Nếu https://brandcheck.ifagent.net/ đã chạy thì chụp thêm landing báo cáo qua tên miền này 1280.
 CẤM: quét quá 1 lượt (tối đa 1 lần chạy lại nếu lỗi mạng trước khi có câu trả lời), quét thương hiệu khác, đụng service khác, Caddy/DNS, in khoá. KET-QUA: dat, mã + link báo cáo, 3 chỉ số, thời gian, chi phí từng làn + tổng USD, ảnh.
 
-nhip: 11:58 12p đang chờ nền · log cuối 2 phút trước [log_cuoi=2026-11-19T11:56:18+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 12:01 15p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-19T12:01:23+0700] · root agent idle; waiting up to 40m0s for 1 ba
