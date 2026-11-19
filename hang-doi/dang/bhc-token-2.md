@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 8
 khong_tien_phut: 5
 theo_doi: C:\linhx\ifagent-wt\bhc-token
+nhan: may-2 2026-11-19T14:15:22+0700
+moc: b4b02420abdb512fa517d240f1563aede2c334e0
 
 Lưu ý máy: KHÔNG background task/subagent; MỖI LỆNH XONG TRONG 2 PHÚT. Chỉ KIỂM, không sửa gì. TUYỆT ĐỐI KHÔNG in, ghi, commit giá trị khoá (chỉ ghi sha8 nếu cần). Push KET-QUA vào bang-chung/bhc-token-2/ trên nhánh agy/bhc-token-2.
 Chạy trên VM prod qua `gcloud compute ssh ifagent-event --zone=asia-southeast1-b --project=ifagent-event-2026 --command "..."`, đọc khoá từ /opt/ifagent/infra/brand-health.env bằng biến shell (không echo):
