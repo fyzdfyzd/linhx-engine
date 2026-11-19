@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-sua-7
+nhan: may-2 2026-11-19T07:49:22+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push mỗi bước. KHÔNG gọi AI thật, trừ bước 3 (đúng 3 câu Grok, ≤ 0,05 USD).
 Nhánh agy/bhc-sua-7 từ agy/bhc-sua-6 (ead66ac). Claude soi báo cáo CSMO v2 2026-11-19-csmo-90481a4a, chấm 8,8. Sửa 3 lỗi:
