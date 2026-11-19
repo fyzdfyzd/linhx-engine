@@ -17,4 +17,4 @@ Nhánh agy/bhc-mau-csmo-tc từ agy/bhc-lite-1 (33cb800, đang chạy prod).
 Hỏng: rollback :prev, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá, quét thật. KET-QUA: dat, SHA, test, ảnh.
 
-nhip: 13:20 14p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-19T13:20:43+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 13:23 17p đang chờ nền · log cuối 2 phút trước [log_cuoi=2026-11-19T13:21:03+0700] · root agent idle; waiting up to 40m0s for 1 ba
