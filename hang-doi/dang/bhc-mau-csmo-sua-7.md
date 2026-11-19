@@ -13,3 +13,5 @@ Nhánh agy/bhc-sua-7 từ agy/bhc-sua-6 (ead66ac). Claude soi báo cáo CSMO v2 
 3. Làn Grok quá thời gian 34/42 (trần 20 s). Đặt mặc định thời gian chờ riêng cho grok-tim 60 s (giống cách Claude nhân đôi), thử thật 3 câu CSMO bằng x-ai/grok-4.7 đo thời gian; nếu > 45 s/câu thì thử bản nhanh cùng họ (vd x-ai/grok-4.7-fast hoặc bản mới nhất có chữ fast trong /api/v1/models) và chọn bản nhanh làm mặc định. Ghi thời gian + chi phí vào KET-QUA.
 4. npm test + node scripts/lint.js xanh, golden VNM/IFA không đổi. Dựng lại PDF + landing CSMO v2 từ JSON (không quét lại) trên máy, chụp lại 06d chương 01–02 (1280, 360) và PDF trang 1–3 vào bang-chung/bhc-mau-csmo-v2-sua/ trên nhánh agy/bhc-sua-7. KHÔNG deploy staging.
 CẤM: deploy, in khoá. KET-QUA: dat, SHA, số test, câu trước/sau mục 1, model Grok chọn + thời gian.
+
+nhip: 07:52 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
