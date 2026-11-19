@@ -21,3 +21,5 @@ brandcheck.ifagent.net {
 6. Cập nhật infra/Caddyfile trong repo ifagent giống bước 2, commit vào nhánh agy/bhc-domain-1.
 Hỏng bất kỳ: khôi phục Caddyfile.bak-19-11 + reload, kiểm 5 địa chỉ cũ 200, ghi rõ.
 CẤM: restart caddy/event/các service khác, sửa khối khác trong Caddyfile, sửa DNS, in khoá. KET-QUA: dat, đã đổi gì, HTTP trước/sau, trạng thái DNS + chứng chỉ, ảnh.
+
+nhip: 11:48 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
