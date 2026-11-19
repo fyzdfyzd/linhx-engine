@@ -20,4 +20,4 @@ CẤM: đụng service khác (event, caddy, concept-note, idea-lab, lab), sửa 
 
 6. Staging cũng nâng lên b8c4b7ba: gộp agy/bhc-sua-7 vào agy/bhc-staging, recreate stg-brand (STG_SHA=<sha> docker compose -p stg-brand up -d --force-recreate), healthz đúng SHA. Dựng lại báo cáo CSMO 2026-11-19-csmo-90481a4a từ JSON đã lưu (KHÔNG quét lại, dùng nút Chấm lại trong quản trị), chụp landing chương 01–02 ở 1280 và 360, PDF Full trang 1–3 (150 dpi), quản trị chi tiết lượt 1280, vào bang-chung/bhc-mau-csmo-v3/ trên agy/bhc-staging.
 
-nhip: 08:29 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:32 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
