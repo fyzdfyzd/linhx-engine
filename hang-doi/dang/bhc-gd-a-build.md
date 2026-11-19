@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 75
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-gd-a
+nhan: may-2 2026-11-19T21:56:22+0700
 
 Lưu ý máy: KHÔNG background task/subagent; MỖI LỆNH XONG TRONG 3 PHÚT. KHÔNG in/ghi/commit khoá hay ADMIN_CODE. Không đụng service khác, DNS, Caddy, stg-event.
 Linh (21:53 VN 19/11) đã DUYỆT phương án A (apps/brand-health/phac-thao/pa-a.html trên nhánh agy/bhc-gd-1 3e7216a). Linh đã cho phép tự deploy prod.
