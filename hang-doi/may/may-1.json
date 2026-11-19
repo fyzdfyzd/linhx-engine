@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 15.6,
-    "trong_gb": 4.64
+    "trong_gb": 4.2
   },
   "gpu": [
     {
@@ -53,7 +53,7 @@
   "agy": {
     "co": true,
     "duong_dan": "C:\\Users\\ADMIN\\.gemini\\bin\\agy.exe",
-    "phien_ban": "1.5.10"
+    "phien_ban": "chưa rõ"
   },
   "python": "3.12.10",
   "chrome": {
@@ -105,5 +105,5 @@
     "xong": 0,
     "loi": 0
   },
-  "cap_nhat_luc": "2026-11-19T22:38:00+0700"
+  "cap_nhat_luc": "2026-11-19T23:53:26+0700"
 }
