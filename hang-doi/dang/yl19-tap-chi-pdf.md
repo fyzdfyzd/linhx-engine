@@ -25,4 +25,4 @@ KIỂM + BẰNG CHỨNG (C:\linhx\ifagent-wt\yl19-tap-chi-pdf\bang-chung\yl19-ta
 CẤM: deploy staging/prod, sửa env/khoá, in khoá, xoá dữ liệu, sửa test cũ, sinh ảnh AI, đổi bố cục tạp chí, push lên yl17-tron/yl18-tap-chi/main.
 Trả lời KET-QUA.md (ngắn ≤ 2000 ký tự): dòng đầu `dat: co|khong`; SHA đỉnh; cỡ image trước/sau; HTTP + số trang PDF; đường dẫn ảnh so-pdf-web.png; pass/fail test.
 
-nhip: 04:34 25p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T04:33:51+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 04:37 28p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T04:37:02+0700] · root agent idle; waiting up to 40m0s for 1 ba
