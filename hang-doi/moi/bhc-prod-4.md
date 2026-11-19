@@ -1,10 +1,11 @@
-May: may-4
+May: may-3
 loai: code
 model: gemini-4-argon-high
 tran_phut: 45
 khong_tien_phut: 10
-theo_doi: D:\LINHX\PRJ\IFAGENT-wt\bhc-prod-4
+theo_doi: D:\linhx\ifagent-wt\bhc-prod-4
 
+Bước 0: kiểm `gcloud compute ssh ifagent-event --zone=asia-southeast1-b --project=ifagent-event-2026 --command="echo ok"`; nếu không chạy được thì chỉ làm bước 1–2 (code + thử nhỏ), push, DỪNG, ghi "can gcloud".
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push sau mỗi bước.
 LINH DUYỆT (09:28 VN 19/11: "ko để trần cho tôi, chạy 1 báo cáo mẫu"; 09:21 VN 19/11, nguyên văn "đồng ý, chuyển sang mini"): (a) chép khoá OpenRouter vào production để có đủ ChatGPT, Perplexity, DeepSeek, Grok; (b) đổi làn ChatGPT sang bản mini.
 Điều kiện chạy: phiếu bhc-prod-3b-gap đã push agy/bhc-sua-8 và prod trang chủ đã sửa (đọc KET-QUA của nó hoặc kiểm https://demo.ifagent.net/brand-health-check/chung/landing.css 200 và trang chủ không còn `../chung/`). Nếu chưa, DỪNG và ghi KET-QUA.
