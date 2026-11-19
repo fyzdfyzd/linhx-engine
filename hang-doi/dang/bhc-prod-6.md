@@ -16,4 +16,4 @@ B. 4 làn OpenRouter chỉ giữ 16–21/42 câu (ChatGPT 21, Gemini OR 18, Perp
 3. Chụp lại chương 01–02 1280 + 360 (chờ số đếm xong) và PDF Full trang 2–3 sau khi chấm lại.
 CẤM: quét thật, recreate container, đụng service khác, in khoá. KET-QUA: dat, chỉ số trước/sau, câu mới, bảng lý do mất câu, đề xuất timeout, ảnh.
 
-nhip: 12:18 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:21 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
