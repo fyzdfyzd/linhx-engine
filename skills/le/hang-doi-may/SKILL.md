@@ -2,11 +2,13 @@
 name: hang-doi-may
 description: "Giao việc cho đội máy agy qua hàng đợi phiếu GitHub (nhánh hang-doi của linhx-engine): Claude ra đề, khoá test, agy trên các máy tự nhận, tự chia việc, Claude chấm cuối. Dùng khi Linh nói giao máy, giao agy, chạy trên máy cty, hàng đợi, hoặc dự án cần dựng/chạy/tìm kiếm nặng."
 metadata:
-  version: 0.1.0
+  version: 0.2.0
 ---
 # Hàng đợi máy agy
 
 Claude cloud là não: nói chuyện với Linh, ra đề, khoá test, chấm cuối. Việc nặng (dựng, chạy, duyệt web, tải, render) giao agy trên máy qua phiếu. Claude chỉ đọc `KET-QUA.md` (≤ 2000 ký tự) nên tốn ít token.
+
+**Ngưỡng 20 dòng** (học từ codex-first): Claude chỉ tự sửa khi thay đổi dưới 20 dòng, một chỗ, rõ ràng. Lớn hơn, hoặc rebase/gộp/xử lý xung đột/sửa CI, thì viết phiếu giao agy. Viết phiếu mà còn phải tự quyết thiết kế thì Claude chốt thiết kế trước, rồi mới giao.
 
 ## Máy (sửa bảng này khi đổi máy)
 | Mã | Máy | Dùng cho |
@@ -33,8 +35,16 @@ lenh_kiem: python -m pytest viec/du-an/nghiem-thu -q  # tuỳ chọn: runner t�
 vung: runner/**; skills/le/hang-doi-may/**  # tuỳ chọn: glob phạm vi commit mới ở theo_doi đầu; ngoài vùng ("sửa ngoài vùng: <file>") hoặc lộ bí mật (<file>:<dòng>) → loi
 cho_nen: co           # tuỳ chọn: đặt khi phiếu được phép chạy tác vụ nền / thợ con (mặc định tắt)
 
-Việc, đầu vào, cấm đụng gì, cách kiểm, trả lời gì.
+## Mục tiêu
+Làm xong thì đúng cái gì (1–3 câu, đo được).
+## File được sửa
+Đường dẫn/glob cụ thể (khớp `vung:` nếu có).
+## Cấm động
+File/thư mục/việc không được chạm (test khoá, `.khoa`, prod, bí mật...). Gặp chặn: DỪNG, báo số liệu và chẩn đoán, không lách.
+## Test bằng chứng
+Lệnh kiểm chính xác (khớp `lenh_kiem:`) và kết quả phải thấy. Trả lời: file đã đổi + đầu ra test.
 ```
+**Phiếu thiếu một trong 4 mục trên thì không đẩy.** Agy bắt đầu không có ngữ cảnh gì, chất lượng đề quyết định kết quả. Mỗi luật cấm phải kèm lối ra (dừng và báo); phiếu trả về báo cáo dừng vẫn tính là chạy đúng, đó là điểm Claude quyết.
 **Chọn model theo phiếu** (cờ headless `--model <id>`, thứ tự ưu tiên): `model:` trong header phiếu → tiền tố `<loai>` ở đoạn thứ 2 của tên phiếu `<du-an>-<loai>-<viec>` → biến `LINHX_MODEL` trong `tho.env` → giữ `AGY_ARGS` mặc định như cũ. Model không có trong `agy models` thì runner ghi cảnh báo vào `KET-QUA.md` và chạy model mặc định (`mac-dinh`), không báo lỗi.
 
 | Tiền tố `<loai>` | Model (`runner/model-theo-loai.json`) | Dùng cho |
@@ -60,8 +70,9 @@ Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối �
 3. **Điều phối**: một phiếu `loai: dieu-phoi` cho may-2 (xem dưới), hoặc Claude tự viết vài phiếu nhỏ có thứ tự (tìm mẫu → dựng → chấm).
 4. **Thợ** (agy): làm, tự chạy test khoá tới khi đạt, push nhánh việc.
 5. **Chấm vòng 1** (máy): test khoá + Lighthouse + bộ `bang-chung/` thu bằng `runner/bang_chung.py` trên HTTP thật.
-6. **Chấm vòng 2** (Claude): so sha256 test, chạy lại test trên cloud, xem 2 ảnh màn đầu, đối chiếu brand. Trượt thì phiếu sửa, tối đa 3 vòng.
-7. **Giao Linh**: bản một file (nhúng css/js/svg) đính kèm, hoặc link demo.
+6. **Soát chéo** (agy, mắt mới): phiếu code bắt buộc `cham: 1` → runner tự sinh `<id>-cham.md`, một phiên agy mới đọc đề gốc + diff, chấm theo 4 mục của phiếu, ngưỡng 9/10. Chưa qua soát chéo thì Claude chưa chấm; trượt thì phiếu sửa.
+7. **Chấm vòng cuối** (Claude, quyết gộp): so sha256 test, chạy lại test trên cloud, xem 2 ảnh màn đầu, đối chiếu brand. Trượt thì phiếu sửa, tối đa 3 vòng.
+8. **Giao Linh**: bản một file (nhúng css/js/svg) đính kèm, hoặc link demo.
 
 ## Bằng chứng
 - Mọi phiếu giao diện/web bắt buộc chạy trên `http://` hoặc `https://` thật (cấm `file://`) và nộp thư mục bằng chứng sinh từ:
