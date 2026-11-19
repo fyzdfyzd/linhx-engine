@@ -18,4 +18,4 @@ Code đã xong ở agy/bhc-sua-6 (phiếu bhc-bo-claude-a + a2; ID 2 model: deep
 8. Trả cấu hình BH_QUICK, BH_TRAN_CHI_PHI_NGAY; healthz ok; demo.ifagent.net/brand-health-check/ và event.ifagent.net 200.
 CẤM: deploy prod, sửa /opt/ifagent, stg-event, Caddy, rollback-app.sh, in khoá/mã quản trị, quét thương hiệu khác. KET-QUA: dat, SHA, số test, ID + giá 2 model mới, mã báo cáo mới, 3 chỉ số, thời gian, chi phí từng làn (USD), tổng USD, danh sách ảnh.
 
-nhip: 07:04 9p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-19T07:04:16+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 07:07 12p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-19T07:07:17+0700] · root agent idle; waiting up to 40m0s for 1 ba
