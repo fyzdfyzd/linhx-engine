@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 10
 theo_doi: D:\linhx\ifagent-wt\bhc-prod-3
+nhan: may-3 2026-11-19T09:31:15+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push sau mỗi bước. GẤP: đây là trang QR của bài nói. Chạy trên máy 3 vì máy 2 hết hạn mức agy và MSI tắt. Bước 0: kiểm `gcloud compute ssh ifagent-event --zone=asia-southeast1-b --project=ifagent-event-2026 --command="echo ok"` chạy được; nếu không chạy được (chưa cài/chưa đăng nhập gcloud) thì VẪN làm phần code (bước 1–4), push nhánh, rồi DỪNG trước bước deploy và ghi rõ trong KET-QUA "can gcloud" (không tự đăng nhập tài khoản nào).
 Linh đã duyệt deploy production (08:14 VN 19/11). Prod đang chạy b8c4b7ba nhưng TRANG CHỦ https://demo.ifagent.net/brand-health-check/ HỎNG GIAO DIỆN: Claude kiểm, `../chung/landing.css` và `../chung/logo/grad-notag.png` ra 404 (trình duyệt đổi thành /chung/...), trang hiện chữ trơn, logo vỡ. Link báo cáo mẫu `href="/bao-cao/2026-11-13-vinamilk-9b816db5/"` và `/bao-cao/2026-11-13-if-agent-bf460a21/` là đường tuyệt đối gốc → 404, và 2 mã này không có trong dữ liệu prod (prod có 2026-11-13-vinamilk-128ac969, 2026-11-13-if-agent-3534b096).
