@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-lite-deploy-c
+nhan: may-2 2026-11-19T12:36:22+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push KET-QUA + ảnh vào bang-chung/bhc-lite-1c/ trên nhánh agy/bhc-lite-1c sau mỗi bước. KHÔNG in khoá/mã. KHÔNG gọi AI thật.
 LINH (12:00 VN 19/11): "tự động deploy đi" — deploy chế độ Lite lên production, không cần chờ duyệt.
