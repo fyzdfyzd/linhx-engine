@@ -17,4 +17,4 @@ Nhánh agy/bhc-sua-8 từ agy/bhc-sua-7 (b8c4b7ba).
 6. Nếu prod hỏng sau deploy: rollback về :prev, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá/mã, quét thật. KET-QUA: dat, SHA, số test, danh sách 404 trước/sau, ảnh.
 
-nhip: 10:12 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 10:15 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
