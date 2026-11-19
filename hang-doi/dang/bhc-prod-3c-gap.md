@@ -16,3 +16,5 @@ Nhánh agy/bhc-sua-8 từ agy/bhc-sua-7 (b8c4b7ba).
 5. Deploy prod như phiếu bhc-prod-2 (sao lưu data -c.tgz, git archive <sha>:apps/brand-health, scp, `sudo sh /opt/ifagent/infra/deploy-app.sh brand-health`). Sau đó kiểm bằng trình duyệt thật: https://demo.ifagent.net/brand-health-check/ có CSS + logo (không ảnh vỡ), 0 yêu cầu 404 trong tab mạng; bấm 2 link báo cáo mẫu → 200 có giao diện. event/lab/bd giữ HTTP như cũ. Chụp trang chủ prod 1280 + 360 sáng và báo cáo mẫu Vinamilk 1280 vào bang-chung/bhc-prod-3/ trên agy/bhc-prod-3. Staging cũng nâng lên SHA mới.
 6. Nếu prod hỏng sau deploy: rollback về :prev, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá/mã, quét thật. KET-QUA: dat, SHA, số test, danh sách 404 trước/sau, ảnh.
+
+nhip: 09:51 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
