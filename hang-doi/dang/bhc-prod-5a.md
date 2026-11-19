@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-prod-4
+nhan: may-2 2026-11-19T10:46:22+0700
+moc: 5bbcb0cef3b040085a109515b9d5910ec236987d
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Ghi KET-QUA vào bang-chung/bhc-prod-5/ trên nhánh agy/bhc-prod-5, push sau mỗi bước. KHÔNG in khoá.
 Bối cảnh: phiếu bhc-prod-4b đã quét CSMO trên prod (2026-11-19-csmo-29040bd3) nhưng HỎNG: (1) 2 làn Gemini trực tiếp lỗi toàn bộ ("không trả lời kịp"), chỉ số Đúng = null "Chưa đối chiếu được"; agy thử khoá Gemini thấy HTTP 402. (2) Grok tốn 3,14 USD cho 13 câu (≈0,24 USD/câu) — quá đắt, Linh muốn AI rẻ. (3) ChatGPT mini chỉ giữ 20/42 câu. Báo cáo này KHÔNG xuất bản; nếu đang công khai thì ẩn.
