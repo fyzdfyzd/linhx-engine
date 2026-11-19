@@ -15,3 +15,5 @@ Linh đã duyệt deploy prod và chạy báo cáo mẫu (08:14, 09:21, 09:28 VN
 3. Bỏ Grok khỏi prod và staging: OPENROUTER_MODELS=<id mini đang dùng>,google/gemini-2.5-flash,perplexity/sonar,deepseek/deepseek-v4.1-flash-1017 (không x-ai). Kiểm thời gian chờ làn openai-tim: đặt BH_TIMEOUT_MS_OPENAI_TIM=60000 nếu nhỏ hơn.
 4. Recreate chỉ service brand-health (cd /opt/ifagent/infra && sudo docker compose up -d --force-recreate brand-health) và stg-brand; healthz 200; thử lại bước 1 trong container prod phải 200. Trang chủ prod, event, bd giữ HTTP như cũ.
 CẤM: quét thật, đụng service khác, Caddy/DNS, in khoá. KET-QUA: dat, kết quả chẩn đoán (status/message), đã đổi gì, HTTP sau.
+
+nhip: 10:49 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
