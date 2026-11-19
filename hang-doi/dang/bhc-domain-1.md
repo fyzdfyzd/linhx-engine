@@ -22,4 +22,4 @@ brandcheck.ifagent.net {
 Hỏng bất kỳ: khôi phục Caddyfile.bak-19-11 + reload, kiểm 5 địa chỉ cũ 200, ghi rõ.
 CẤM: restart caddy/event/các service khác, sửa khối khác trong Caddyfile, sửa DNS, in khoá. KET-QUA: dat, đã đổi gì, HTTP trước/sau, trạng thái DNS + chứng chỉ, ảnh.
 
-nhip: 11:51 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 11:54 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
