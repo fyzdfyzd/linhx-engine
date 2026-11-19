@@ -17,4 +17,4 @@ Bản deploy: ifagent commit ead66ac5 (nhánh agy/bhc-sua-6; staging 999ed2e ch�
 5. Nếu bất kỳ bước 4 nào hỏng: chạy `sudo sh /opt/ifagent/infra/blue-green/rollback-fast.sh brand-health` hoặc rollback theo hướng dẫn trong deploy-app.sh về :prev, kiểm lại 200, ghi rõ.
 CẤM: đụng service khác (event, caddy, concept-note, idea-lab, lab), sửa Caddyfile/DNS, đụng stg-event/stg-brand, in khoá/mã, quét thật trên prod. KET-QUA: dat, SHA đang chạy, df trước/sau, tên env thiếu, HTTP các trang trước/sau, ảnh.
 
-nhip: 08:22 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:25 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
