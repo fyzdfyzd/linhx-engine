@@ -10,7 +10,7 @@
   },
   "ram": {
     "tong_gb": 63.91,
-    "trong_gb": 50.26
+    "trong_gb": 50.48
   },
   "gpu": [
     {
@@ -22,23 +22,23 @@
     {
       "o": "C:",
       "tong_gb": 476.08,
-      "trong_gb": 50.61
+      "trong_gb": 50.36
     },
     {
       "o": "D:",
       "tong_gb": 931.51,
-      "trong_gb": 254.8
+      "trong_gb": 254.74
     },
     {
       "o": "G:",
       "tong_gb": 476.08,
-      "trong_gb": 48.08
+      "trong_gb": 47.85
     }
   ],
   "agy": {
     "co": true,
     "duong_dan": "C:\\Users\\Admin\\AppData\\Local\\agy\\bin\\agy.EXE",
-    "phien_ban": "1.5.11"
+    "phien_ban": "1.5.12"
   },
   "python": "3.12.10",
   "chrome": {
@@ -64,7 +64,7 @@
   },
   "thong_ke_24h": {
     "xong": 19,
-    "loi": 13
+    "loi": 15
   },
-  "cap_nhat_luc": "2026-11-19T09:29:15+0700"
+  "cap_nhat_luc": "2026-11-19T10:30:15+0700"
 }
