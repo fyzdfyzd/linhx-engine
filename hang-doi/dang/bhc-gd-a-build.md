@@ -15,3 +15,5 @@ Nhánh mới agy/bhc-gd-a tách từ agy/bhc-gd-1.
 4. Commit, push nhánh agy/bhc-gd-a lên fyzdfyzd/ifagent. Deploy staging rồi prod theo cách cũ (đóng gói /tmp/brand-health-app.tgz, `sudo sh /opt/ifagent/infra/deploy-app.sh brand-health` trên VM ifagent-event). Không dùng rollback-app.sh cho staging.
 5. Kiểm prod bằng playwright: https://demo.ifagent.net/brand-health-check/ và https://brandcheck.ifagent.net/ ở 1280x900 + 360 toàn trang, 0 yêu cầu lỗi ≥400; thử gửi form thiếu email (phải báo lỗi, KHÔNG chạy quét thật để khỏi tốn tiền). Lưu ảnh vào bang-chung/bhc-gd-a/ và push.
 KET-QUA: SHA, số test, ảnh, mã đang chạy trên prod (:prev là gì).
+
+nhip: 21:59 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
