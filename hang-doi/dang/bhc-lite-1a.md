@@ -21,3 +21,5 @@ Nhánh agy/bhc-lite-1 từ agy/bhc-sua-9 (5bbcb0c).
 6. Test khoá: lite + moFull=false → HTML/JSON công khai không chứa số liệu chương 03+, /tai/full.pdf 403, light 200; moFull=true → như cũ; full mode → như cũ; báo cáo mẫu luôn full; lead lưu reportId. npm test + node scripts/lint.js xanh, golden VNM/IFA không đổi.
 7. Chụp chạy local (dữ liệu CSMO có sẵn ở bang-chung, không gọi AI): landing lite 1280 + 360, khối Nhận bản Full, lời cảm ơn sau gửi, quản trị lead với nút Mở bản Full — vào bang-chung/bhc-lite-1/.
 KET-QUA: dat, SHA, số test, danh sách ảnh.
+
+nhip: 11:53 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
