@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 60
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-gd
+nhan: may-2 2026-11-19T13:54:22+0700
 
 Lưu ý máy: KHÔNG background task/subagent; MỖI LỆNH XONG TRONG 3 PHÚT. KHÔNG deploy, KHÔNG đụng VM. Làm trên nhánh mới agy/bhc-gd-1 tách từ agy/bhc-mau-csmo-tc. Chỉ thêm file bản phác trong apps/brand-health/phac-thao/ (không sửa public/ đang chạy).
 Đề (Linh 13:53 VN 19/11): "cho tôi giao diện đẹp, hấp dẫn hơn với call to action và hình ảnh nhập form, có nơi lấy email". Luật Linh: 2 phương án, chấm điểm, CHỜ DUYỆT mới build. Chỉn chu, sang trọng, tối giản. Giữ logo IF Agent, font và màu thương hiệu hiện có, tiếng Việt đủ dấu, chữ cho khách không có từ kỹ thuật.
