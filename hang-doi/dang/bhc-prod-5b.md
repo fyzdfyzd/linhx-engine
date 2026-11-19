@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-prod-4
+nhan: may-2 2026-11-19T11:46:48+0700
+moc: db102a722ee58c3c5f691b94e8291cf278332f67
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT (theo dõi lượt quét bằng lệnh ngắn `Start-Sleep 50; curl ...`). Push KET-QUA + ảnh vào bang-chung/bhc-prod-5b/ trên nhánh agy/bhc-prod-5b sau mỗi bước. KHÔNG in khoá/mã.
 Linh (11:45 VN 19/11): "đã mở" (Gemini đã mở lại / nạp tiền). Linh đã yêu cầu chạy 1 báo cáo mẫu trên production, không trần (09:28).
