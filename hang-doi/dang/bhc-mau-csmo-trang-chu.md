@@ -16,3 +16,5 @@ Nhánh agy/bhc-mau-csmo-tc từ agy/bhc-lite-1 (33cb800, đang chạy prod).
 5. Kiểm trình duyệt thật 1280 + 360 trên https://demo.ifagent.net/brand-health-check/ (và brandcheck.ifagent.net nếu DNS đã ra 34.87.102.182): 0 lỗi ≥ 400, thẻ CSMO mở được báo cáo full, thẻ Vinamilk mở được. Chụp trang chủ 1280 + 360 vào bang-chung/bhc-mau-csmo-tc/.
 Hỏng: rollback :prev, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá, quét thật. KET-QUA: dat, SHA, test, ảnh.
+
+nhip: 13:09 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
