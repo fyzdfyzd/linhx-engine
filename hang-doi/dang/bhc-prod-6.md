@@ -15,3 +15,5 @@ B. 4 làn OpenRouter chỉ giữ 16–21/42 câu (ChatGPT 21, Gemini OR 18, Perp
 2. B: đọc bang-chung/bhc-prod-5b/chi-tiet-luot-csmo.json và log container brand-health (sudo docker logs --since 2h ifagent-brand-health-1 | grep -i -E "timeout|quá|lỗi|error|429|5[0-9][0-9]" | tail -80) để biết vì sao mất câu ở 4 làn OpenRouter (quá thời gian chờ, 429, lỗi mạng, hay bị lọc). Ghi số câu mất theo lý do từng làn. KHÔNG sửa env trong phiếu này, chỉ đề xuất giá trị BH_TIMEOUT_MS_* phù hợp.
 3. Chụp lại chương 01–02 1280 + 360 (chờ số đếm xong) và PDF Full trang 2–3 sau khi chấm lại.
 CẤM: quét thật, recreate container, đụng service khác, in khoá. KET-QUA: dat, chỉ số trước/sau, câu mới, bảng lý do mất câu, đề xuất timeout, ảnh.
+
+nhip: 12:15 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
