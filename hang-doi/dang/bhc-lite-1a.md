@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 40
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-lite
+nhan: may-2 2026-11-19T11:50:52+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Commit + push agy/bhc-lite-1 sau mỗi bước. KHÔNG gọi AI thật, KHÔNG deploy trong phiếu này.
 LINH YÊU CẦU (11:49 VN 19/11): "bật trên brandcheck và deploy domain, sau đó bật tính năng lite và để lại email để ifagent liên lạc -> full".
