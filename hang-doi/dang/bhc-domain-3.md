@@ -4,6 +4,8 @@ model: gemini-4-argon-high
 tran_phut: 15
 khong_tien_phut: 5
 theo_doi: C:\linhx\ifagent-wt\bhc-domain
+nhan: may-2 2026-11-19T13:06:53+0700
+moc: fb0fd7769937daa4dd4394ecc048f3d44f515142
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Chỉ KIỂM (trừ lệnh caddy reload nêu dưới). Push KET-QUA + ảnh vào bang-chung/bhc-domain-3/ trên nhánh agy/bhc-domain-3.
 Linh (13:05 VN 19/11): đã lưu bản ghi A brandcheck → 34.87.102.182 ở GoDaddy. Nếu DNS đã đúng mà Caddy chưa có chứng chỉ sau 3 phút, chạy `sudo docker compose exec -T caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile --force` (KHÔNG restart container) để Caddy thử lấy chứng chỉ lại.
