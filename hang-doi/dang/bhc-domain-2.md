@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 15
 khong_tien_phut: 5
 theo_doi: C:\linhx\ifagent-wt\bhc-domain
+nhan: may-2 2026-11-19T12:40:48+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Chỉ KIỂM, không sửa gì trên VM. Push KET-QUA + ảnh vào bang-chung/bhc-domain-2/ trên nhánh agy/bhc-domain-2.
 Linh (12:39 VN 19/11): đã trỏ DNS brandcheck.ifagent.net.
