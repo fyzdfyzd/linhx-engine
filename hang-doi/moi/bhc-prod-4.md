@@ -1,13 +1,13 @@
-May: may-2
+May: may-4
 loai: code
 model: gemini-4-argon-high
 tran_phut: 35
 khong_tien_phut: 10
-theo_doi: C:\linhx\ifagent-wt\bhc-prod-4
+theo_doi: D:\LINHX\PRJ\IFAGENT-wt\bhc-prod-4
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push sau mỗi bước.
 LINH DUYỆT (09:21 VN 19/11, nguyên văn "đồng ý, chuyển sang mini"): (a) chép khoá OpenRouter vào production để có đủ ChatGPT, Perplexity, DeepSeek, Grok; (b) đổi làn ChatGPT sang bản mini.
-Điều kiện chạy: phiếu bhc-prod-3-gap đã push agy/bhc-sua-8 và prod trang chủ đã sửa (đọc KET-QUA của nó hoặc kiểm https://demo.ifagent.net/brand-health-check/chung/landing.css 200 và trang chủ không còn `../chung/`). Nếu chưa, DỪNG và ghi KET-QUA.
+Điều kiện chạy: phiếu bhc-prod-3b-gap đã push agy/bhc-sua-8 và prod trang chủ đã sửa (đọc KET-QUA của nó hoặc kiểm https://demo.ifagent.net/brand-health-check/chung/landing.css 200 và trang chủ không còn `../chung/`). Nếu chưa, DỪNG và ghi KET-QUA.
 Nhánh agy/bhc-sua-9 từ agy/bhc-sua-8.
 1. Lấy ID mini mới nhất của OpenAI trên GET https://openrouter.ai/api/v1/models (vd openai/gpt-5-mini hoặc bản mini mới hơn; ghi ID + giá). Đổi DEFAULT_OPENROUTER_MODELS: openai/gpt-5 → ID mini; cập nhật bảng giá ai-gia.js và test ước tính chi phí (lượt đầy đủ mặc định ≤ 2,2 USD). npm test + lint xanh, golden VNM/IFA không đổi. Push.
 2. Thử thật nhỏ 3 câu CSMO bằng ID mini qua OpenRouter (≤ 0,05 USD), ghi thời gian + chi phí.
