@@ -17,4 +17,4 @@ Nhánh agy/bhc-mau-csmo-tc từ agy/bhc-lite-1 (33cb800, đang chạy prod).
 Hỏng: rollback :prev, kiểm 200, ghi rõ.
 CẤM: đụng service khác, Caddy/DNS, in khoá, quét thật. KET-QUA: dat, SHA, test, ảnh.
 
-nhip: 13:15 9p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:18 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
