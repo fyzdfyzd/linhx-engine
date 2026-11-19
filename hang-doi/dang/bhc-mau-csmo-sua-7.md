@@ -14,4 +14,4 @@ Nhánh agy/bhc-sua-7 từ agy/bhc-sua-6 (ead66ac). Claude soi báo cáo CSMO v2 
 4. npm test + node scripts/lint.js xanh, golden VNM/IFA không đổi. Dựng lại PDF + landing CSMO v2 từ JSON (không quét lại) trên máy, chụp lại 06d chương 01–02 (1280, 360) và PDF trang 1–3 vào bang-chung/bhc-mau-csmo-v2-sua/ trên nhánh agy/bhc-sua-7. KHÔNG deploy staging.
 CẤM: deploy, in khoá. KET-QUA: dat, SHA, số test, câu trước/sau mục 1, model Grok chọn + thời gian.
 
-nhip: 08:13 24p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 08:16 27p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
