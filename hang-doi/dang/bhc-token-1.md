@@ -13,4 +13,4 @@ Chạy trên VM prod qua `gcloud compute ssh ifagent-event --zone=asia-southeast
 3. Gemini: gọi generateContent model gemini-3.5-flash-lite với khoá GEMINI_API_KEY trong env đó, câu "ok". Ghi mã HTTP + lỗi nếu có.
 KET-QUA: bảng số dư OpenRouter, từng model HTTP, Gemini HTTP, kết luận dat/khong.
 
-nhip: 13:57 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 14:00 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
