@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 45
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-prod-4
+nhan: may-2 2026-11-19T09:48:23+0700
 
 Bước 0: kiểm `gcloud compute ssh ifagent-event --zone=asia-southeast1-b --project=ifagent-event-2026 --command="echo ok"`; nếu không chạy được thì chỉ làm bước 1–2 (code + thử nhỏ), push, DỪNG, ghi "can gcloud".
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push sau mỗi bước.
