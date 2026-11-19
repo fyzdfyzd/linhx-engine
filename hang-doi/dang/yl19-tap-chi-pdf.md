@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl19-tap-chi-pdf
+nhan: may-2 2026-11-20T04:09:22+0700
 
 Phiếu Yên Lam, tạp chí AGENTIC:ME (góp ý BTC 19/11). Linh đã duyệt: cài Chromium lên máy chủ để PDF giống hệt bản xem online. Chạy mọi lệnh ở tiền cảnh, KHÔNG background task, mỗi bước commit + push ngay (BƯỚC 0 push nhánh rỗng trước).
 
