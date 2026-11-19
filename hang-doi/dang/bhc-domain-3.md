@@ -14,4 +14,4 @@ Linh (13:05 VN 19/11): đã lưu bản ghi A brandcheck → 34.87.102.182 ở Go
 3. Mở bằng trình duyệt thật 1280 + 360: trang chủ, báo cáo mẫu CSMO https://brandcheck.ifagent.net/bao-cao/2026-11-19-csmo-d88de79d/, /quan-tri/ (chỉ trang đăng nhập). Ghi danh sách yêu cầu lỗi ≥ 400 (phải rỗng). Chụp ảnh.
 KET-QUA: dat, IP DNS, HTTP, chứng chỉ, lỗi, ảnh.
 
-nhip: 13:09 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 13:12 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
