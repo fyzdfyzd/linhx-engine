@@ -22,4 +22,4 @@ Nhánh agy/bhc-sua-9 từ agy/bhc-sua-8.
 6c. Chụp vào bang-chung/bhc-prod-4/: trang chủ 1280 + 360, landing báo cáo CSMO prod full 1280 + 360 (chờ số đếm xong), chương 01–02 1280, PDF Full trang 1–3 và Light trang 1 (150 dpi), quản trị chi tiết lượt (chi phí từng làn) 1280. Ghi link công khai báo cáo vào KET-QUA.
 CẤM: đụng service khác, Caddy/DNS, in khoá/mã, quét thương hiệu khác, quét quá 1 lượt (tối đa 1 lần chạy lại nếu lỗi mạng). KET-QUA: dat, SHA, ID mini + giá, chi phí thử, link báo cáo CSMO prod, 3 chỉ số, thời gian quét, chi phí từng làn và tổng USD, danh sách TÊN env prod sau, ảnh.
 
-nhip: 10:24 36p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 10:27 39p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
