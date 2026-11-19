@@ -4,6 +4,7 @@ model: gemini-4-argon-high
 tran_phut: 30
 khong_tien_phut: 10
 theo_doi: C:\linhx\ifagent-wt\bhc-domain
+nhan: may-2 2026-11-19T11:45:22+0700
 
 Lưu ý máy: KHÔNG background task/subagent; KHÔNG chờ/ngủ dài; MỖI LỆNH PHẢI XONG TRONG 3 PHÚT. Push KET-QUA vào bang-chung/bhc-domain-1/ trên nhánh agy/bhc-domain-1 sau mỗi bước. KHÔNG in khoá/mã.
 LINH YÊU CẦU (11:42 VN 19/11, nguyên văn "https://brandcheck.ifagent.net/ golive domain này cho tôi đi"): đưa Brand Health Check production lên tên miền riêng brandcheck.ifagent.net, phục vụ ở GỐC "/". Giữ nguyên đường cũ demo.ifagent.net/brand-health-check/ (QR bài nói đang trỏ vào đó).
