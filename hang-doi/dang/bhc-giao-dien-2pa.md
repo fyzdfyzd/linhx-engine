@@ -17,4 +17,4 @@ Làm 2 trang tĩnh phac-thao/pa-a.html và pa-b.html (dùng lại chung/landing.
 Chụp bằng playwright mỗi PA ở 1280x900 (màn đầu) + 1280 toàn trang + 360 toàn trang, 0 yêu cầu lỗi ≥400. Lưu ảnh + ảnh sinh vào bang-chung/bhc-gd-1/.
 KET-QUA: đường dẫn ảnh, prompt dùng sinh ảnh, tự chấm mỗi PA /10 theo: rõ CTA, đẹp/sang, đọc tốt 360, lấy email.
 
-nhip: 13:57 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 14:00 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
