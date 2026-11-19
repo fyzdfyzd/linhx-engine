@@ -25,4 +25,4 @@ KIỂM + BẰNG CHỨNG (C:\linhx\ifagent-wt\yl19-tap-chi-pdf\bang-chung\yl19-ta
 CẤM: deploy staging/prod, sửa env/khoá, in khoá, xoá dữ liệu, sửa test cũ, sinh ảnh AI, đổi bố cục tạp chí, push lên yl17-tron/yl18-tap-chi/main.
 Trả lời KET-QUA.md (ngắn ≤ 2000 ký tự): dòng đầu `dat: co|khong`; SHA đỉnh; cỡ image trước/sau; HTTP + số trang PDF; đường dẫn ảnh so-pdf-web.png; pass/fail test.
 
-nhip: 04:21 12p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 04:22 13p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T04:22:10+0700] · root agent idle; waiting up to 40m0s for 1 ba
