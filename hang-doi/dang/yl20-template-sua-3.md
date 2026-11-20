@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl20-template
+nhan: may-2 2026-11-20T12:10:22+0700
+moc: e1a836adb842234f1a53316d22d628afe8f4f35d
 
 Vòng sửa 3 nhánh agy/yl20-template (e1a836ad), rồi đưa lên STAGING. Claude chấm ảnh so-*.png: đạt bố cục. Claude chạy test tạp chí trên cloud: yl20 làm ĐỎ MỚI 2 test (nền da85e71a xanh 2 test này). Chạy tiền cảnh, KHÔNG để agy chạy tác vụ nền (lần trước kẹt 'root agent idle waiting background task' tới quá giờ). Mỗi bước commit + push.
 
