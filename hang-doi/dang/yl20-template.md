@@ -29,4 +29,4 @@ LUẬT MỚI của Linh 20/11 10:28: tạp chí AGENTIC:ME tạo từ ảnh khá
 CẤM: deploy staging/prod, sửa env/khoá, sinh ảnh AI, xoá dữ liệu, sửa test cũ để xanh, push lên nhánh yl18-*/main.
 KET-QUA.md ≤ 2000 ký tự: `dat: co|khong`; SHA; bảng 8 trang (khớp/lệch còn lại); số ảnh BTC còn thiếu; pass/fail test; đường dẫn so-*.png.
 
-nhip: 11:01 28p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T11:01:29+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 11:04 31p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T11:03:42+0700] · root agent idle; waiting up to 40m0s for 1 ba
