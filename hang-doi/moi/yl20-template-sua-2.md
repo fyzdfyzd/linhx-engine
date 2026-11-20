@@ -2,12 +2,8 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl20-template
-nhan: may-2 2026-11-20T11:09:13+0700
-moc: 7247a3952a4162efc8bff351224c6a0b911c6dc4
-
-Lượt trước chạy tác vụ nền không ghi log rồi chờ. Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong.
 
 LUẬT MỚI của Linh 20/11 10:28: tạp chí AGENTIC:ME tạo từ ảnh khách (bản web, bản in, PDF tải về) VÀ ảnh bìa hiển thị phải theo DUY NHẤT template InDesign: hang-doi/du-an/yl20-template/TEMPLATE-CHUAN-layout_AgenticMe_Quynh.pdf (5 trang PDF = bìa, cặp 2|3, 4|5, 6|7, trang 8; A5). Chữ trong template là chữ giả, chỉ lấy BỐ CỤC, font, cỡ, màu, vị trí ảnh. Ảnh đối chiếu template|prod hiện tại: doi-chieu-0..4.png cùng thư mục. Chạy tiền cảnh, mỗi bước commit + push ngay (bước 0 push nhánh trước).
 
@@ -33,6 +29,16 @@ CẤM: deploy staging/prod, sửa env/khoá, sinh ảnh AI, xoá dữ liệu, s�
 KET-QUA.md ≤ 2000 ký tự: `dat: co|khong`; SHA; bảng 8 trang (khớp/lệch còn lại); số ảnh BTC còn thiếu; pass/fail test; đường dẫn so-*.png.
 
 ## Lần trước trượt vì:
-thuc-hat-giong.json:1232, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1257, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1297, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1333, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1371, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1409, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1443, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1515, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1539, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1563, apps/lab/server/v1/lam/tri-thuc-hat-giong.json:1590, apps/lab/test/agentic-me-luot.test.js:134, apps/lab/test/agentic-me-noi-dung.test.js:71, apps/lab/test/agentic-me-su-kien.test.js:35, apps/lab/test/nghiem-thu-rc7/05-chi-phi.test.js:27, apps/lab/test/nghiem-thu-rc7/09-van-hanh.test.js:153, apps/lab/test/rc7-chi-phi-live.test.js:24, apps/lab/test/sua-401-dong-y.test.js:39, apps/lab/test/t148-quan-tri-chung.test.js:18, apps/lab/test/t161-nen-v1.test.js:546, apps/lab/test/tri-thuc-03-api-qt.test.js:112, apps/lab/test/tri-thuc-04-giao-dien-e2e.test.js:74, apps/lab/test/tri-thuc-04-giao-dien-e2e.test.js:179, apps/lab/test/yen-lam-full-suite.test.js:27, apps/lab/test/yen-lam-t101.test.js:13, apps/lab/test/yl13-brand-safety.test.js:32, apps/lab/test/yl14-hai-khoa.test.js:21, apps/lab/test/yl16-hop.test.js:36, apps/lab/test/yl16-ma-loi.test.js:22, apps/lab/test/yl16-ma-loi.test.js:23, apps/lab/test/yl16-ma-loi.test.js:24, apps/veew-booth/server/setup-kiosks.js:7, docs/T-160-GHI-CHU.md:33
+model: mac-dinh
+phieu: yl20-template-sua-1
+may: may-2
+trang_thai: dung
+ly_do: qua_gio
+tep_doi: theo_doi/yl20-evidence-2.log, theo_doi/yl20-evidence.log, theo_doi/yl20-final-verify.log, theo_doi/yl20-gen-evidence.mjs, theo_doi/yl20-lab-test-all.log, theo_doi/yl20-lab-test-full.log, theo_doi/yl20-lab-test-report.json, theo_doi/yl20-run-all-216-out.log, theo_doi/yl20-run-all-216.mjs, theo_doi...
+drive: (khong)
+phut: 40.06
+token: vao=0 ra=0
 
-nhip: 11:48 40p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T11:48:39+0700] · root agent idle; waiting up to 40m0s for 1 ba
+dừng agy: quá trần 40 phút
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
