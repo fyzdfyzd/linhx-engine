@@ -19,3 +19,5 @@ Vòng sửa 3 nhánh agy/yl20-template (e1a836ad), rồi đưa lên STAGING. Cla
 4. Kiểm staging https://staging-demo.ifagent.net: /healthz commit khớp; `docker exec ifagent-staging-lab sh -c 'ls /usr/bin/chromium*'`; POST /yen-lam/csmo/api/agentic-me-v5/pdf/mau-k1 {"ten":"Trần Thị Quỳnh"} → 200 PDF 8 trang (thời gian); GET /yen-lam/csmo/api/agentic-me-v5/bia/mau-k1 → ảnh bìa có chữ; Playwright ĐT 360 + 1280: tab tạp chí, bấm TẢI PDF A5 thật → file PDF có chữ. Ghép stg-pdf vs template (so-stg-0..4.png) + stg-bia-chu.png vào bang-chung/yl20-staging/. Prod healthz vẫn 200, uptime không reset.
 CẤM: deploy prod, sửa env/khoá, xoá dữ liệu/volume, image prune -a, sửa test cũ để xanh, sinh ảnh AI, push yl18-*/main.
 KET-QUA.md ≤ 2000 ký tự: `dat: co|khong`; SHA; test tạp chí pass/fail + tên test đỏ; DOI_LUAT_TEST nếu có; staging commit + PDF (HTTP, số trang, giây); ổ/RAM VM; prod healthz; đường dẫn so-stg-*.png.
+
+nhip: 12:13 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
