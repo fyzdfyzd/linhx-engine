@@ -20,4 +20,4 @@ Vòng sửa 3 nhánh agy/yl20-template (e1a836ad), rồi đưa lên STAGING. Cla
 CẤM: deploy prod, sửa env/khoá, xoá dữ liệu/volume, image prune -a, sửa test cũ để xanh, sinh ảnh AI, push yl18-*/main.
 KET-QUA.md ≤ 2000 ký tự: `dat: co|khong`; SHA; test tạp chí pass/fail + tên test đỏ; DOI_LUAT_TEST nếu có; staging commit + PDF (HTTP, số trang, giây); ổ/RAM VM; prod healthz; đường dẫn so-stg-*.png.
 
-nhip: 12:13 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 12:15 5p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T12:15:45+0700] · root agent idle; waiting up to 40m0s for 1 ba
