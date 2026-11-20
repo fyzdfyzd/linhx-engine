@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl19-tap-chi-pdf
+nhan: may-2 2026-11-20T07:54:21+0700
+moc: 036ea544ec27f09e963712e865c33f1a7a4540ba
 
 Phiếu Yên Lam: đưa nhánh agy/yl19-tap-chi-pdf (036ea544) lên STAGING stg-lab. Linh đã duyệt "lên staging" 20/11 07:51. KHÔNG đụng prod (đang ngày 2 sự kiện). Chạy tiền cảnh, không background, mỗi bước ghi log vào theo_doi.
 
