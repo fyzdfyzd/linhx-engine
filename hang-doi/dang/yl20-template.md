@@ -4,6 +4,7 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 2
 theo_doi: C:\linhx\ifagent-wt\yl20-template
+nhan: may-2 2026-11-20T10:33:22+0700
 
 LUẬT MỚI của Linh 20/11 10:28: tạp chí AGENTIC:ME tạo từ ảnh khách (bản web, bản in, PDF tải về) VÀ ảnh bìa hiển thị phải theo DUY NHẤT template InDesign: hang-doi/du-an/yl20-template/TEMPLATE-CHUAN-layout_AgenticMe_Quynh.pdf (5 trang PDF = bìa, cặp 2|3, 4|5, 6|7, trang 8; A5). Chữ trong template là chữ giả, chỉ lấy BỐ CỤC, font, cỡ, màu, vị trí ảnh. Ảnh đối chiếu template|prod hiện tại: doi-chieu-0..4.png cùng thư mục. Chạy tiền cảnh, mỗi bước commit + push ngay (bước 0 push nhánh trước).
 
