@@ -23,4 +23,4 @@ Phiếu Yên Lam: đưa nhánh agy/yl19-tap-chi-pdf (036ea544) lên STAGING stg-
 CẤM: deploy prod (`deploy.bat lab` không có --staging), sửa env/khoá, in khoá, xoá dữ liệu/volume, image prune -a, đổi Caddyfile, gửi tin ra ngoài.
 Trả lời KET-QUA.md ≤ 2000 ký tự: dòng đầu `dat: co|khong`; SHA staging; ổ/RAM VM trước/sau; phiên bản Chromium trong container; HTTP + số trang + thời gian PDF; prod healthz; đường dẫn stg-pdf-8-trang.png.
 
-nhip: 07:59 5p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-20T07:58:03+0700] · root agent idle; waiting up to 40m0s for 2 ba
+nhip: 08:02 8p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-20T08:02:27+0700] · root agent idle; waiting up to 40m0s for 2 ba
