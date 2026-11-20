@@ -2,10 +2,10 @@ may: may-2
 loai: code
 tran_phut: 40
 khong_tien_phut: 25
-tu_sua: 1
+tu_sua: 0
 theo_doi: C:\linhx\ifagent-wt\yl20-template
-nhan: may-2 2026-11-20T12:10:22+0700
-moc: e1a836adb842234f1a53316d22d628afe8f4f35d
+
+Lượt trước chạy tác vụ nền không ghi log rồi chờ. Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong.
 
 Vòng sửa 3 nhánh agy/yl20-template (e1a836ad), rồi đưa lên STAGING. Claude chấm ảnh so-*.png: đạt bố cục. Claude chạy test tạp chí trên cloud: yl20 làm ĐỎ MỚI 2 test (nền da85e71a xanh 2 test này). Chạy tiền cảnh, KHÔNG để agy chạy tác vụ nền (lần trước kẹt 'root agent idle waiting background task' tới quá giờ). Mỗi bước commit + push.
 
@@ -20,4 +20,17 @@ Vòng sửa 3 nhánh agy/yl20-template (e1a836ad), rồi đưa lên STAGING. Cla
 CẤM: deploy prod, sửa env/khoá, xoá dữ liệu/volume, image prune -a, sửa test cũ để xanh, sinh ảnh AI, push yl18-*/main.
 KET-QUA.md ≤ 2000 ký tự: `dat: co|khong`; SHA; test tạp chí pass/fail + tên test đỏ; DOI_LUAT_TEST nếu có; staging commit + PDF (HTTP, số trang, giây); ổ/RAM VM; prod healthz; đường dẫn so-stg-*.png.
 
-nhip: 12:18 8p đang chờ nền · log cuối 3 phút trước [log_cuoi=2026-11-20T12:15:45+0700] · root agent idle; waiting up to 40m0s for 1 ba
+## Lần trước trượt vì:
+model: mac-dinh
+phieu: yl20-template-sua-3
+may: may-2
+trang_thai: dung
+ly_do: cho-nen-im-lang
+tep_doi: (khong)
+drive: (khong)
+phut: 10.41
+token: vao=0 ra=0
+
+dừng agy (cho-nen-im-lang): waiting up to ... background task
+warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the default mode.
+root agent idle; waiting up to 40m0s for 1 background task(s)
