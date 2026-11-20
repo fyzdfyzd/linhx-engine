@@ -4,6 +4,8 @@ tran_phut: 40
 khong_tien_phut: 25
 tu_sua: 1
 theo_doi: C:\linhx\ifagent-wt\yl20-template
+nhan: may-2 2026-11-20T11:09:13+0700
+moc: 7247a3952a4162efc8bff351224c6a0b911c6dc4
 
 Lượt trước chạy tác vụ nền không ghi log rồi chờ. Tác vụ nền phải có timeout, ghi log vào thư mục theo_doi; dev server/watch phải tắt khi xong.
 
