@@ -22,4 +22,4 @@ nguon: [nguon/2026-10-30-QUY-CHUAN-DU-AN-TU-CHAY.md]
 `fyzdfyzd/chiemtinhso`, `fyzdfyzd/mayquet`, `fyzdfyzd/linhx-engine` (đợt 1).
 
 ## Liên quan
-[[loi-engine]] [[du-an-chiem-tinh-so]] [[du-an-may-quet]] [[he-may-va-tai-khoan]]
+[[loi-engine]] [[du-an-chiem-tinh-so]] [[du-an-may-quet]] [[he-may-va-tai-khoan]] [[kinh-nghiem-dev]]

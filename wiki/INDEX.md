@@ -17,6 +17,7 @@
 | [loi-engine](trang/loi-engine.md) | Bản đang chạy: Frappe, linhx_worker, VM, đợt 1 26 feature, nơi để code | 2026-11-08 |
 | [he-du-an-tu-chay](trang/he-du-an-tu-chay.md) | Quy chuẩn agy làm, Claude canh, features khoá, cong_kiem | 2026-11-08 |
 | [he-may-va-tai-khoan](trang/he-may-va-tai-khoan.md) | Máy cty, MSI, VM, tài khoản agy, bí mật nằm ở đâu | 2026-11-08 |
+| [kinh-nghiem-dev](trang/kinh-nghiem-dev.md) | 7 luật dev với AI: bằng chứng xong, tiêu chí đo được, domain, test chỉ lớn, ra sớm có đo, dữ liệu dẫn, đề khó | 2026-11-20 |
 
 ## Hệ thống theo nhóm (sinh từ bảng 59 dòng)
 | Trang | Một dòng | Cập nhật |
