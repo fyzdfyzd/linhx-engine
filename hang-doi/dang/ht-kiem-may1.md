@@ -1,6 +1,7 @@
 may: may-1
 loai: khac
 tran_phut: 30
+nhan: may-1 2026-11-21T22:12:14+0700
 
 Kiểm kê máy 1 (DESKTOP-PVHR2CD) làm nhà cho server Zalo, crawler và kho dữ liệu.
 1. D:\linhx và D:\LINHX_CRAWLER: dung lượng thư mục cấp 1 (bỏ .venv/node_modules/.git) → kiem-ke-may1.csv.
