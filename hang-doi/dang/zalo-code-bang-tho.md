@@ -33,4 +33,4 @@ Chỉ trong `D:\linhx\zalo-bang-tho\` (git init cục bộ): `bang_tho.py` (Pyth
 2. Gửi đúng 1 tin thử vào nhóm "LINHX Thợ": kết quả lệnh `tt` thật, mở đầu "Bảng thợ đã nối".
 3. KET-QUA ≤ 15 dòng: bộ nghe dùng lại là gì, id nhóm (4 số cuối), file đã đổi, lệnh bật/tắt, đầu ra pytest, giờ gửi tin thử.
 
-nhip: 11:08 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 11:11 6p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
