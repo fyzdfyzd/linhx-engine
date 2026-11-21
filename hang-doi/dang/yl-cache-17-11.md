@@ -13,4 +13,4 @@ Làm:
 Test: unit cho rewrite ?v và chọn header; test tích hợp cục bộ: đổi BUILD_SHA -> trang trả ?v mới, kiosk mô phỏng nhận /phien-ban khác -> tải lại khi rảnh.
 CÁCH LÀM: git clone https://github.com/fyzdfyzd/ifagent D:\linhx\wt-cache-17-11 ; cd D:\linhx\wt-cache-17-11 ; git checkout -b cache-17-11 origin/lam-gap-17-11 (bản 3fd424b1 = ứng viên prod). Cài phụ thuộc theo README/package.json của apps/lab. MỌI LỆNH TIỀN CẢNH, không background task. Commit + PUSH sau mỗi mục (hết giờ không mất việc). Không sửa test khoá nghiem-thu-*; test khoá 10/11 phải xanh. KHÔNG deploy staging/prod (máy 2 gộp và deploy). Không in/đổi khoá. KET-QUA ≤2000 ký tự: SHA nhánh, test, còn thiếu.
 
-nhip: 10:58 10p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:57:10+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 11:01 13p đang chờ nền · log cuối 1 phút trước [log_cuoi=2026-11-21T10:59:54+0700] · root agent idle; waiting up to 40m0s for 1 ba
