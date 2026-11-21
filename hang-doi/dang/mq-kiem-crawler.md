@@ -1,6 +1,7 @@
 may: may-1
 loai: khac
 tran_phut: 30
+nhan: may-1 2026-11-21T22:21:13+0700
 
 Khảo sát máy quét trên máy 1 cho việc đưa thành MCP.
 1. Server D:\LINHX_CRAWLER cổng 8000 (hoặc 8001) có sống: gọi /health hoặc /docs.
