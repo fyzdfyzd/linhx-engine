@@ -11,4 +11,4 @@ Kiểm kê D:\LINHX trên MSI để chuyển dữ liệu về kho máy 1 (D:\lin
 Ghi kiem-ke-msi.csv (thu_muc,gb,so_file,moi_nhat,bu,nhom,bi_mat) + KET-QUA tóm tắt tổng GB từng nhóm, 15 thư mục lớn nhất.
 Luật chung: CHỈ ĐỌC. Không xoá, không sửa, không cài, không deploy, không gửi tin/email/Zalo, không trả tiền, không in bí mật (.env, token, cookie) vào kết quả. Kết quả chính ghi KET-QUA.md ≤ 2000 ký tự, tiếng Việt, gạch đầu dòng; bảng dài ghi file CSV/MD cạnh KET-QUA và chỉ tóm tắt.
 
-nhip: 22:16 4p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T22:16:15+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 22:19 7p đang chờ nền · log cuối 3 phút trước [log_cuoi=2026-11-21T22:16:15+0700] · root agent idle; waiting up to 40m0s for 1 ba
