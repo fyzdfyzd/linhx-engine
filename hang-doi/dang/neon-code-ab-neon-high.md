@@ -18,3 +18,5 @@ Chỉ `viec/neon-ab/lam/lich.py` (tạo mới). Commit cục bộ một lần kh
 Không sửa `viec/neon-ab/nghiem-thu/**` hay file `.khoa`, không cài thư viện, không chạy nền, không dùng thợ con. Kẹt quá 20 phút: DỪNG, ghi test nào còn trượt và vì sao.
 ## Test bằng chứng
 `python -m pytest viec/neon-ab/nghiem-thu -q` trong clone, phải thấy `29 passed`. KET-QUA ≤ 10 dòng: số test đạt, số lần chạy test, số dòng lich.py.
+
+nhip: 10:10 0p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:10:58+0700] · root agent idle; waiting up to 40m0s for 1 ba
