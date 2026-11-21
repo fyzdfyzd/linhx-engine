@@ -10,3 +10,5 @@ Kiểm 10 site BU bằng HTTP (curl hoặc Python requests, không cần trình 
 Đọc thêm repo linhx-engine thư mục trang-bu/ và sites/ (git clone nhánh main vào C:\linhx\wt-om-kiem) để ghi site nào đã có mã nguồn trong repo.
 KET-QUA: bảng site (sống, có form, có SEO cơ bản, có nguồn trong repo), 5 việc own media đáng làm nhất.
 Luật chung: CHỈ ĐỌC. Không xoá, không sửa, không cài, không deploy, không gửi tin/email/Zalo, không trả tiền, không in bí mật (.env, token, cookie) vào kết quả. Kết quả chính ghi KET-QUA.md ≤ 2000 ký tự, tiếng Việt, gạch đầu dòng; bảng dài ghi file CSV/MD cạnh KET-QUA và chỉ tóm tắt.
+
+nhip: 01:06 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
