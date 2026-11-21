@@ -2,6 +2,7 @@ may: may-3
 loai: code
 tran_phut: 40
 theo_doi: C:\linhx\wt-ht-uu-tien
+nhan: may-3 2026-11-21T22:12:18+0700
 
 Thêm ưu tiên theo bảng việc cho runner hàng đợi. CHỈ làm trên nhánh mới, KHÔNG push vào hang-doi, main hay nhánh runner đang chạy.
 1. Clone https://github.com/fyzdfyzd/linhx-engine vào C:\linhx\wt-ht-uu-tien, tạo nhánh agy/ht-uu-tien-bang từ main.
