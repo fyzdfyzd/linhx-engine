@@ -2,6 +2,7 @@ may: may-3
 loai: khac
 tran_phut: 40
 theo_doi: C:\linhx\wt-cts-kiem
+nhan: may-3 2026-11-21T22:12:17+0700
 
 Khảo sát sức khoẻ repo Chiêm Tinh Số trước launch 1/12.
 1. Clone mới https://github.com/fyzdfyzd/chiemtinhso vào C:\linhx\wt-cts-kiem (có rồi thì git fetch + checkout origin/main).
