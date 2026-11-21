@@ -18,3 +18,5 @@ Chỉ `viec/neon-ab/sua/lich.py`. Commit cục bộ một lần, rồi push: `gi
 Không sửa `viec/neon-ab/nghiem-thu*/**`, `.khoa`, file khác; không cài thư viện, không chạy nền, không thợ con. Kẹt quá 20 phút: DỪNG, ghi lỗi còn lại.
 ## Test bằng chứng
 `python -m pytest viec/neon-ab/nghiem-thu-sua -q` phải `29 passed`. KET-QUA ≤ 12 dòng: danh sách lỗi đã sửa (mỗi lỗi 1 dòng, số dòng), số lần chạy test, sha commit.
+
+nhip: 10:19 0p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:19:56+0700] · root agent idle; waiting up to 40m0s for 1 ba
