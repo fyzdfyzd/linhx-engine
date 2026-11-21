@@ -10,3 +10,5 @@ nhan: may-4 2026-11-21T22:21:44+0700
 4. Liệt kê chỗ đã cũ (mốc đã qua trước 21/11/2026).
 KET-QUA ≤ 2000 ký tự: tóm tắt + 5 việc cần chuẩn bị đầu tiên + câu hỏi cần Linh trả lời.
 Luật chung: CHỈ ĐỌC. Không xoá, không sửa, không cài, không deploy, không gửi tin/email/Zalo, không trả tiền, không in bí mật (.env, token, cookie) vào kết quả. Kết quả chính ghi KET-QUA.md ≤ 2000 ký tự, tiếng Việt, gạch đầu dòng; bảng dài ghi file CSV/MD cạnh KET-QUA và chỉ tóm tắt.
+
+nhip: 22:24 3p warning: --mode auto is not available for this account; continuing in the default mode.
