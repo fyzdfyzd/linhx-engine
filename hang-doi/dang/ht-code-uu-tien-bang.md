@@ -11,3 +11,5 @@ Thêm ưu tiên theo bảng việc cho runner hàng đợi. CHỈ làm trên nh�
 4. Viết test pytest cho hàm sắp xếp (≥ 5 ca: bảng thiếu, json hỏng, cùng ưu tiên, không thuộc bảng, ưu tiên 0). Chạy tiền cảnh tới khi đạt cùng các test runner sẵn có.
 5. Push nhánh agy/ht-uu-tien-bang. KHÔNG mở PR, không merge.
 KET-QUA: tên hàm, file:dòng sửa, số test đạt, sha commit.
+
+nhip: 22:15 3p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
