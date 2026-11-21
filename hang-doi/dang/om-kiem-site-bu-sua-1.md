@@ -2,6 +2,7 @@ may: may-3
 loai: khac
 tran_phut: 25
 model: gemini-4-neon-medium
+nhan: may-3 2026-11-22T01:03:17+0700
 
 LẦN 2 (lần 1 dừng vì agy chờ tác vụ nền). BẮT BUỘC: KHÔNG chạy lệnh nền/background, KHÔNG Start-Job, KHÔNG '&'. Mỗi lệnh chạy tiền cảnh, đặt timeout ≤ 120 giây (pytest thêm --timeout hoặc giới hạn thư mục), chờ xong rồi mới làm bước sau. Quét thư mục lớn thì giới hạn độ sâu.
 
