@@ -2,6 +2,7 @@ may: may-1
 loai: code
 tran_phut: 40
 theo_doi: D:\linhx\wt-cache-17-11
+nhan: may-1 2026-11-21T10:48:16+0700
 
 Phiếu CHỐNG CHẠY BẢN CACHE (Linh 16:47: sau deploy không ai phải Ctrl+F5). Hiện trạng đo trên prod: trang HTML Cache-Control no-cache (ổn); JS/CSS /yen-lam/js/*.js trả "public, max-age=3600", nhiều tệp ?v= cố định tay (uik1, rc7p4...) hoặc không có ?v= (/js/audio.js, /js/gemini-live.js, /js/clip-plan.js, kiosk-lam.js...).
 Làm:
