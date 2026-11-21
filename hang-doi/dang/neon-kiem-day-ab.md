@@ -1,6 +1,7 @@
 may: may-2
 loai: kiem
 tran_phut: 8
+nhan: may-2 2026-11-21T10:16:22+0700
 
 ## Mục tiêu
 Đẩy 3 commit A/B lên GitHub để Claude chấm bằng test ẩn.
