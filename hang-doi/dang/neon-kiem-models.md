@@ -1,6 +1,7 @@
 may: may-2
 loai: kiem
 tran_phut: 10
+nhan: may-2 2026-11-21T10:07:22+0700
 
 ## Mục tiêu
 Xác minh agy trên máy này có model Gemini 4 Neon (ra 18/11/2026) chưa, lấy đúng id để dùng với cờ `--model`.
