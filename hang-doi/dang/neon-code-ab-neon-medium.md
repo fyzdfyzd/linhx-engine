@@ -6,6 +6,7 @@ theo_doi: C:\linhx\wt-neon-ab-neon-medium
 khoa: viec/neon-ab/nghiem-thu/test_lich.py.khoa
 lenh_kiem: python -m pytest viec/neon-ab/nghiem-thu -q
 vung: viec/neon-ab/lam/**
+nhan: may-2 2026-11-21T10:10:29+0700
 
 ## Mục tiêu
 Viết `viec/neon-ab/lam/lich.py` theo `viec/neon-ab/DE-BAI.md`, qua đủ 29 test trong `viec/neon-ab/nghiem-thu/test_lich.py`.
