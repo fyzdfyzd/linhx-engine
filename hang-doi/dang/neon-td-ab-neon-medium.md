@@ -3,6 +3,7 @@ loai: trinh-duyet
 model: gemini-4-neon-medium
 tran_phut: 15
 phu_thuoc: neon-kiem-ra-may-1
+nhan: may-1 2026-11-21T10:51:35+0700
 
 ## Mục tiêu
 So model cho việc trình duyệt. Dùng Browsentic (trình duyệt Chrome đã nối), mở https://vi.wikipedia.org/wiki/H%C3%A0_N%E1%BB%99i, đọc hộp thông tin bên phải.
