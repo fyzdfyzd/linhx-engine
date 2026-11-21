@@ -19,4 +19,4 @@ Không sửa `viec/neon-ab/nghiem-thu*/**`, `.khoa`, file khác; không cài th�
 ## Test bằng chứng
 `python -m pytest viec/neon-ab/nghiem-thu-sua -q` phải `29 passed`. KET-QUA ≤ 12 dòng: danh sách lỗi đã sửa (mỗi lỗi 1 dòng, số dòng), số lần chạy test, sha commit.
 
-nhip: 10:30 0p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:30:54+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 10:33 3p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:33:34+0700] · root agent idle; waiting up to 40m0s for 1 ba
