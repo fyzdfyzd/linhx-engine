@@ -1,6 +1,7 @@
 may: may-4
 loai: khac
 tran_phut: 35
+nhan: may-4 2026-11-21T22:21:44+0700
 
 Đọc D:\LINHX\00-INBOX\TUVA2026\DECENTAI trên MSI (gồm TUVA_Decent_AI_Master_Plan_2026_2028.md và Implementation_Plan_TUVA_Decent_AI). Không đọc file ngoài thư mục này trừ D:\LINHX\BRAND\TUVA nếu có.
 1. Liệt kê file (tên, dung lượng, ngày sửa) → decentai-file.csv.
