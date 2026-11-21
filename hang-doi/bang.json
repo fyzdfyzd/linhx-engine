@@ -1,0 +1,13 @@
+{
+  "_huong_dan": "5 bảng việc LAB133. uu_tien 1 = làm trước. Phiếu thuộc bảng theo tiền tố tên <ma>-<loai>-<viec>. Đổi ưu tiên: sửa số ở đây (hoặc lệnh Zalo 'uu <ma> <n>' khi có).",
+  "cap_nhat": "2026-11-21T22:30:00+07:00",
+  "bang": [
+    {"ma": "cts", "ten": "OPC Chiêm Tinh Số", "uu_tien": 1, "day_chuyen": "dev", "han": "2026-12-01", "bu": "chiemtinhso"},
+    {"ma": "ev",  "ten": "ifAgent Event", "uu_tien": 2, "day_chuyen": "dev", "bu": "ifagent"},
+    {"ma": "mq",  "ten": "Máy quét thành MCP", "uu_tien": 3, "day_chuyen": "research", "bu": "linhx"},
+    {"ma": "om",  "ten": "Own media BU", "uu_tien": 4, "day_chuyen": "craft", "bu": "nhieu"},
+    {"ma": "tv",  "ten": "Decent AI TUVA", "uu_tien": 5, "day_chuyen": "research", "bu": "tuva"},
+    {"ma": "ht",  "ten": "Hạ tầng cụm", "uu_tien": 0, "day_chuyen": "dev", "bu": "linhx"}
+  ],
+  "day_chuyen": {"craft": "may-3", "dev": "may-2", "research": "may-1"}
+}
