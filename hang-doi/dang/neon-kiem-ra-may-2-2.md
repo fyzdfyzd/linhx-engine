@@ -1,6 +1,7 @@
 may: may-2
 loai: kiem
 tran_phut: 6
+nhan: may-2 2026-11-21T11:18:23+0700
 
 ## Mục tiêu
 Kiểm nhanh các việc từng chặn phiếu trên máy này còn chặn không.
