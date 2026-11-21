@@ -12,4 +12,4 @@ Thêm ưu tiên theo bảng việc cho runner hàng đợi. CHỈ làm trên nh�
 5. Push nhánh agy/ht-uu-tien-bang. KHÔNG mở PR, không merge.
 KET-QUA: tên hàm, file:dòng sửa, số test đạt, sha commit.
 
-nhip: 22:30 18p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
+nhip: 22:33 21p warning: --mode auto is not available because the terminal sandbox is not available on this host; continuing in the defa
