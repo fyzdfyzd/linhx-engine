@@ -10,3 +10,5 @@ Kiểm kê D:\LINHX trên MSI để chuyển dữ liệu về kho máy 1 (D:\lin
 4. Đề xuất 4 nhóm: CHUYEN-NGAY (đang dùng), CHUYEN-SAU, LUU-TRU-NEN-ZIP, BO-QUA (rác, tạm, trùng).
 Ghi kiem-ke-msi.csv (thu_muc,gb,so_file,moi_nhat,bu,nhom,bi_mat) + KET-QUA tóm tắt tổng GB từng nhóm, 15 thư mục lớn nhất.
 Luật chung: CHỈ ĐỌC. Không xoá, không sửa, không cài, không deploy, không gửi tin/email/Zalo, không trả tiền, không in bí mật (.env, token, cookie) vào kết quả. Kết quả chính ghi KET-QUA.md ≤ 2000 ký tự, tiếng Việt, gạch đầu dòng; bảng dài ghi file CSV/MD cạnh KET-QUA và chỉ tóm tắt.
+
+nhip: 22:15 3p warning: --mode auto is not available for this account; continuing in the default mode.
