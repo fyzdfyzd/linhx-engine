@@ -10,7 +10,7 @@ Cau hinh bang bien moi truong hoac file tho.env canh script:
   LINHX_THO     ma tho, vd may-cty / may-1
   AGY_CMD       duong dan agy (mac dinh: agy)
   AGY_ARGS      them co cho agy (mac dinh: --output-format json)
-  LINHX_MODEL   ten model agy mac dinh khi phieu khong co header model: (vd gemini-4-argon-high)
+  LINHX_MODEL   ten model agy mac dinh khi phieu khong co header model: (vd gemini-4-neon-high)
   LINHX_THU_MUC thu muc lam viec cua agy (mac dinh: ./viec)
   LINHX_NGHI    giay giua 2 lan hoi (mac dinh 15)
   LINHX_SO_PHIEU        so phieu code chay song song toi da tren moi may (mac dinh 1)
@@ -65,6 +65,11 @@ CO_MODEL_AGY = "--model"
 MODEL_MAC_DINH_NHAN = "mac-dinh"
 _MAU_TEN_MODEL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 DANH_SACH_MODEL_AGY_DA_BIET = (
+    "gemini-4-neon-low",
+    "gemini-4-neon-medium",
+    "gemini-4-neon-high",
+    "gemini-4-neon-xhigh",
+    "gemini-pro-orchestrator-neon",
     "gemini-4-carbon-medium",
     "gemini-4-carbon-high",
     "gemini-4-carbon-low",
