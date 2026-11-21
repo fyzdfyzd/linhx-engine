@@ -13,3 +13,5 @@ Chỉ chạy lệnh đọc dưới đây, tiền cảnh. Không đăng nhập, k
 1. `Test-Path "G:\My Drive\LINHX-VIEC"` (OK nếu True).
 2. `browsentic status`.
 KET-QUA ≤ 8 dòng, mỗi lệnh một dòng: `<việc> OK|CHAN|TREO <1 cụm lý do>`.
+
+nhip: 11:14 3p warning: --mode auto is not available for this account; continuing in the default mode.
