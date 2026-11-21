@@ -55,10 +55,10 @@ Lệnh kiểm chính xác (khớp `lenh_kiem:`) và kết quả phải thấy. T
 | `trien` | `gemini-4-neon-medium` | Triển khai, cấu hình |
 | `gop` | `gemini-4-hydrogen-high` | Gộp nhánh, xử lý xung đột |
 | `do` | `gemini-4-hydrogen-high` | Đo đạc, benchmark, Lighthouse |
-| `td` | `gemini-4-hydrogen-high` | Trình duyệt / tương tác |
+| `td` | `gemini-4-neon-medium` | Trình duyệt / tương tác (A/B 21/11 may-1: 0,9 phút, 38k/2k token, 3 bước; hydrogen-high 1,0 phút, 52k/4k, 6 bước; cùng kết quả đúng) |
 | `kiem` | `gemini-4-hydrogen-low` | Kiểm nhanh, ping, rà nhẹ |
 
-Việc rất khó (thiết kế lại, lỗi lặp 2 lần): ghi đè `model: gemini-4-neon-xhigh` (chưa đo). `gop`, `do`, `td` giữ Hydrogen tới khi có A/B trình duyệt. Đo lại bảng sau mỗi đợt: `python runner/so_model.py hang-doi/xong`.
+Việc rất khó (thiết kế lại, lỗi lặp 2 lần): ghi đè `model: gemini-4-neon-xhigh` (chưa đo). `gop`, `do` giữ Hydrogen (chưa đo). Đo lại bảng sau mỗi đợt: `python runner/so_model.py hang-doi/xong`.
 
 Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. Runner tự chèn vào cuối đề câu nhắc cho phép chạy tác vụ nền có timeout, ghi log vào `theo_doi`, tự kiểm/tắt và tắt server chạy mãi trước khi kết thúc (trừ khi `cho_nen: co`). Khi đọc luồng ra thấy `waiting up to .* background task` hoặc `root agent idle`, runner chuyển sang chế độ **CANH NỀN**: còn file mới/đổi trong `theo_doi` hoặc log tác vụ nền tăng dòng trong 5 phút gần nhất thì để chạy tiếp (bảng 8090 hiện nhãn `"đang chờ nền · log cuối N phút trước"`), im hoàn toàn đủ 5 phút (hoặc gặp `status ERROR` có `"chờ lệnh hoàn tất"`) thì dừng cả cây tiến trình (`trang_thai: dung`, `ly_do: cho-nen-im-lang`) và sinh phiếu `-sua-` nếu còn `tu_sua`. Khi phiếu kết thúc (`xong` hoặc `dung`), runner chép 60 bước cuối đã che bí mật vào `hang-doi/xong/<id>/NHAT-KY.md`. Bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
 Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).

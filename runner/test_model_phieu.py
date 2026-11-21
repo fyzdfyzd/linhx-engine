@@ -256,7 +256,7 @@ def test_uu_tien_2_tien_to_loai_viec_tu_file_json_thang_linhx_model(tmp_path, mo
         "trien": "gemini-4-neon-medium",
         "gop": "gemini-4-hydrogen-high",
         "do": "gemini-4-hydrogen-high",
-        "td": "gemini-4-hydrogen-high",
+        "td": "gemini-4-neon-medium",
         "kiem": "gemini-4-hydrogen-low",
     }
     assert linhx_runner.TEP_MODEL_THEO_LOAI.is_file()
