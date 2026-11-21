@@ -5,6 +5,7 @@ tran_phut: 40
 khong_tien_phut: 25
 theo_doi: D:\linhx\zalo-bang-tho
 vung: **
+nhan: may-1 2026-11-21T11:05:05+0700
 
 ## Mục tiêu
 Nhóm Zalo "LINHX Thợ" (Linh vừa tạo, có nick Nụ) nói chuyện được với hàng đợi máy agy, KHÔNG gọi Claude/LLM:
