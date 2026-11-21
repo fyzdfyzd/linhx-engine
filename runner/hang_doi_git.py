@@ -10,6 +10,7 @@ from __future__ import annotations
 from contextlib import contextmanager
 import hashlib
 import json
+import math
 import os
 import random
 import re
@@ -1435,6 +1436,81 @@ def build_review_ticket(viec: dict, moc_sha: str = "", cfg: dict | None = None) 
     return "\n".join(header_lines) + "\n\n" + body
 
 
+def _doc_bang_uu_tien(tep_bang: str | Path | None) -> list[tuple[str, float]]:
+    """Đọc danh sách (ma_bang, uu_tien) từ hang-doi/bang.json; trả về rỗng nếu thiếu hoặc hỏng."""
+    if tep_bang is None or not str(tep_bang).strip():
+        return []
+    duong_dan = Path(tep_bang)
+    if duong_dan.is_dir():
+        duong_dan = thu_muc_hang_doi(duong_dan) / "bang.json"
+    if not duong_dan.is_file():
+        return []
+    try:
+        du_lieu = json.loads(duong_dan.read_text(encoding="utf-8-sig"))
+    except (OSError, ValueError, TypeError):
+        return []
+    if not isinstance(du_lieu, dict) or not isinstance(du_lieu.get("bang"), list):
+        return []
+
+    bang_map: dict[str, float] = {}
+    for muc in du_lieu["bang"]:
+        if not isinstance(muc, dict):
+            continue
+        ma = str(muc.get("ma") or "").strip().lower().rstrip("-")
+        if not ma:
+            continue
+        raw_ut = muc.get("uu_tien")
+        if raw_ut is None or isinstance(raw_ut, bool):
+            continue
+        if isinstance(raw_ut, str) and not raw_ut.strip():
+            continue
+        try:
+            ut = float(raw_ut)
+        except (ValueError, TypeError):
+            continue
+        if not math.isfinite(ut):
+            continue
+        bang_map[ma] = ut
+    return sorted(bang_map.items(), key=lambda kv: len(kv[0]), reverse=True)
+
+
+def _ten_phieu_tu_muc(muc) -> str:
+    """Trích tên phiếu (không gồm .md) từ Path, str, dict hoặc tuple."""
+    if isinstance(muc, Path):
+        ten = muc.name
+    elif isinstance(muc, str):
+        ten = Path(muc).name
+    elif isinstance(muc, dict):
+        ten = str(muc.get("viec") or "")
+    elif isinstance(muc, tuple) and muc:
+        return _ten_phieu_tu_muc(muc[0])
+    else:
+        ten = str(muc or "")
+    ten = ten.strip()
+    if ten.lower().endswith(".md"):
+        ten = ten[:-3]
+    return ten
+
+
+def sap_xep_phieu_theo_bang(ds_phieu, tep_bang: str | Path | None = None) -> list:
+    """Xếp phiếu theo uu_tien tăng dần của bảng khớp tiền tố <ma>-; ngoài bảng xếp sau cùng."""
+    ds = list(ds_phieu)
+    if len(ds) <= 1:
+        return ds
+    ds_ma_uu_tien = _doc_bang_uu_tien(tep_bang)
+    if not ds_ma_uu_tien:
+        return ds
+
+    def _khoa_sap_xep(muc) -> tuple[int, float]:
+        ten = _ten_phieu_tu_muc(muc).lower()
+        for ma, ut in ds_ma_uu_tien:
+            if ten == ma or ten.startswith(f"{ma}-"):
+                return (0, ut)
+        return (1, 0.0)
+
+    return sorted(ds, key=_khoa_sap_xep)
+
+
 def chon_ung_vien(
     wt: Path,
     tho: str,
@@ -1451,7 +1527,11 @@ def chon_ung_vien(
     cho_bat_ky = co_nhan_bat_ky(cfg) if nhan_bat_ky is None else linhx_runner._ep_cong_tac(nhan_bat_ky, bool(NHAN_BAT_KY_MAC_DINH))
     dem_dang = dem_phieu_dang_chay(wt, tho_chuan)
     rieng, chung = [], []
-    for tep in sorted(tm_moi.glob("*.md"), key=lambda p: p.name):
+    ds_tep_moi = sap_xep_phieu_theo_bang(
+        sorted(tm_moi.glob("*.md"), key=lambda p: p.name),
+        goc_hd / "bang.json",
+    )
+    for tep in ds_tep_moi:
         noi_dung = tep.read_text(encoding="utf-8", errors="replace")
         viec = phan_tich_phieu(noi_dung, tep.stem)
         if not co_the_nhan_loai(viec["loai"], dem_dang, so_phieu):
