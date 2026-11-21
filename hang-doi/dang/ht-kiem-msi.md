@@ -1,6 +1,7 @@
 may: may-4
 loai: khac
 tran_phut: 40
+nhan: may-4 2026-11-21T22:11:45+0700
 
 Kiểm kê D:\LINHX trên MSI để chuyển dữ liệu về kho máy 1 (D:\linhx\kho, máy DESKTOP-PVHR2CD).
 1. Dung lượng + số file từng thư mục cấp 1 và cấp 2 của D:\LINHX (bỏ .venv, node_modules, .git; ghi riêng tổng của chúng). Dùng PowerShell hoặc Python, chạy tiền cảnh.
