@@ -5,6 +5,6 @@
   "trien": "gemini-4-neon-medium",
   "gop": "gemini-4-hydrogen-high",
   "do": "gemini-4-hydrogen-high",
-  "td": "gemini-4-hydrogen-high",
+  "td": "gemini-4-neon-medium",
   "kiem": "gemini-4-hydrogen-low"
 }
