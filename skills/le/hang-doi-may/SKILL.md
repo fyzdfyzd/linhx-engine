@@ -2,20 +2,20 @@
 name: hang-doi-may
 description: "Giao việc cho đội máy agy qua hàng đợi phiếu GitHub (nhánh hang-doi của linhx-engine): Claude ra đề, khoá test, agy trên các máy tự nhận, tự chia việc, Claude chấm cuối. Dùng khi Linh nói giao máy, giao agy, chạy trên máy cty, hàng đợi, hoặc dự án cần dựng/chạy/tìm kiếm nặng."
 metadata:
-  version: 0.2.0
+  version: 0.3.0
 ---
 # Hàng đợi máy agy
 
 Claude cloud là não: nói chuyện với Linh, ra đề, khoá test, chấm cuối. Việc nặng (dựng, chạy, duyệt web, tải, render) giao agy trên máy qua phiếu. Claude chỉ đọc `KET-QUA.md` (≤ 2000 ký tự) nên tốn ít token.
 
-**Ngưỡng 20 dòng** (học từ codex-first): Claude chỉ tự sửa khi thay đổi dưới 20 dòng, một chỗ, rõ ràng. Lớn hơn, hoặc rebase/gộp/xử lý xung đột/sửa CI, thì viết phiếu giao agy. Viết phiếu mà còn phải tự quyết thiết kế thì Claude chốt thiết kế trước, rồi mới giao.
+**Ngưỡng 10 dòng** (học từ codex-first, hạ từ 20 ngày 21/11 vì Neon sửa 7 lỗi trong ~5 phút máy, không tốn token Claude): Claude chỉ tự sửa khi thay đổi dưới 10 dòng, một chỗ, rõ ràng. Lớn hơn, hoặc rebase/gộp/xử lý xung đột/sửa CI, thì viết phiếu giao agy. Viết phiếu mà còn phải tự quyết thiết kế thì Claude chốt thiết kế trước, rồi mới giao.
 
 ## Máy (sửa bảng này khi đổi máy)
 | Mã | Máy | Dùng cho |
 |---|---|---|
 | may-1 | DESKTOP-PVHR2CD, `D:\linhx\hang-doi` | Chrome đã đăng nhập tài khoản. RAM ít, ổ C: gần đầy, đang chạy thợ ENGINE |
-| may-2 | DESKTOP-LNRQBEE, `C:\linhx\hang-doi` | Máy chính: dựng code, orchestration, 3 phiếu song song; có trình duyệt đăng nhập (15/11); deploy staging Yên Lam |
-| may-3 | (cài sau) | |
+| may-2 | DESKTOP-LNRQBEE, `C:\linhx\hang-doi` | Máy chính: dựng code, orchestration, 5 phiếu song song; có trình duyệt đăng nhập (15/11); deploy staging Yên Lam; trạm git |
+| may-3 | DESKTOP-2AUT482, `C:\linhx\hang-doi` | Gemini Task, phiếu code; hạn mức Ultra riêng |
 | may-4 | MSI (máy cá nhân) | Chỉ phiếu ghi đích danh may-4 (`-ChiDichDanh`) |
 
 ## Phiếu
@@ -49,14 +49,16 @@ Lệnh kiểm chính xác (khớp `lenh_kiem:`) và kết quả phải thấy. T
 
 | Tiền tố `<loai>` | Model (`runner/model-theo-loai.json`) | Dùng cho |
 |---|---|---|
-| `dp` | `gemini-pro-orchestrator` | Điều phối, chia phiếu |
-| `code` | `gemini-pro-orchestrator` | Dựng code, sửa kiến trúc |
-| `test` | `gemini-4-argon-high` | Viết / chạy kiểm thử |
-| `trien` | `gemini-4-argon-high` | Triển khai, cấu hình |
+| `dp` | `gemini-pro-orchestrator-neon` | Điều phối, chia phiếu |
+| `code` | `gemini-4-neon-high` | Dựng code, sửa lỗi, sửa kiến trúc |
+| `test` | `gemini-4-neon-medium` | Viết / chạy kiểm thử |
+| `trien` | `gemini-4-neon-medium` | Triển khai, cấu hình |
 | `gop` | `gemini-4-hydrogen-high` | Gộp nhánh, xử lý xung đột |
 | `do` | `gemini-4-hydrogen-high` | Đo đạc, benchmark, Lighthouse |
 | `td` | `gemini-4-hydrogen-high` | Trình duyệt / tương tác |
 | `kiem` | `gemini-4-hydrogen-low` | Kiểm nhanh, ping, rà nhẹ |
+
+Việc rất khó (thiết kế lại, lỗi lặp 2 lần): ghi đè `model: gemini-4-neon-xhigh` (chưa đo). `gop`, `do`, `td` giữ Hydrogen tới khi có A/B trình duyệt. Đo lại bảng sau mỗi đợt: `python runner/so_model.py hang-doi/xong`.
 
 Mỗi phiếu: một repo clone riêng (`C:\linhx\wt-<du-an>`), không làm trong `hang-doi` (runner đang chạy). Hai phiếu chạy song song không dùng chung một clone. Runner tự chèn vào cuối đề câu nhắc cho phép chạy tác vụ nền có timeout, ghi log vào `theo_doi`, tự kiểm/tắt và tắt server chạy mãi trước khi kết thúc (trừ khi `cho_nen: co`). Khi đọc luồng ra thấy `waiting up to .* background task` hoặc `root agent idle`, runner chuyển sang chế độ **CANH NỀN**: còn file mới/đổi trong `theo_doi` hoặc log tác vụ nền tăng dòng trong 5 phút gần nhất thì để chạy tiếp (bảng 8090 hiện nhãn `"đang chờ nền · log cuối N phút trước"`), im hoàn toàn đủ 5 phút (hoặc gặp `status ERROR` có `"chờ lệnh hoàn tất"`) thì dừng cả cây tiến trình (`trang_thai: dung`, `ly_do: cho-nen-im-lang`) và sinh phiếu `-sua-` nếu còn `tu_sua`. Khi phiếu kết thúc (`xong` hoặc `dung`), runner chép 60 bước cuối đã che bí mật vào `hang-doi/xong/<id>/NHAT-KY.md`. Bộ canh "không tiến" (mặc định 20 phút) tính là có tiến khi có file đổi đệ quy trong `theo_doi` hoặc tổng CPU cây tiến trình `agy` tăng trong 2 phút gần nhất.
 Khi chạy: cứ 3 phút runner ghi dòng `nhip: <giờ> <phút> <dòng cuối ≤120 ký tự>` vào cuối `dang/<id>.md`; gặp khối `CAN-LINH: <việc>; LENH: <lệnh>` thì ghi `can-linh/<id>.md` để hiện lên đầu bảng web; hồ sơ phần cứng/năng lực tự ghi ở `may/<ma-may>.json` (thêm `LINHX_VAI` trong `tho.env`).
@@ -102,6 +104,20 @@ Học từ luật deploy thực chiến của `ifagent`: mọi dự án có serv
   - Sau deploy (bắt buộc `GET /healthz` trả `200` và khớp `<sha-moi>`): `python runner/cong_phat_hanh.py --base <url-staging> --sha <sha-moi> --prod <ds-ten-mien-prod>` — nếu lệch hoặc quá hạn phải chạy rollback ngay về `:prev`.
 - **Ghi rõ lệnh rollback**: kết quả phiếu bắt buộc ghi lệnh rollback 1 dòng đã sẵn sàng (vd khôi phục image `:prev` / `rollback-app.sh <app>`).
 - **Prod luôn là `CAN-LINH`** (cùng các việc xoá dữ liệu/lead, đổi DNS, tạo/sửa tài nguyên đám mây/khoá, đổi bí mật `.env`): agy tuyệt đối không tự deploy prod mà dừng và trả `CAN-LINH: Duyệt và chạy deploy prod <app> (<sha-moi>); LENH: <lệnh deploy prod> # Rollback: <lệnh rollback>` để Linh duyệt và tự chạy.
+
+## Neon (đo 21/11 trên may-2, `viec/neon-ab/`)
+Gemini 4 Neon ra 18/11, có sẵn trong agy 1.5.13 (`gemini-4-neon-low|medium|high|xhigh`, `gemini-pro-orchestrator-neon`). Hai vòng, cùng đề, test khoá + 19 test ẩn chạy ở cloud:
+| Model | Vòng 1 viết mới (phút, token vào/ra) | Vòng 2 sửa 7 lỗi | Test ẩn |
+|---|---|---|---|
+| gemini-pro-orchestrator (cũ của `code`) | | 8,5 · 141k/62k | 19/19 |
+| gemini-pro-orchestrator-neon | | 6,9 · 121k/43k | 19/19 |
+| gemini-4-neon-high | 4,0 · 60k/11k | 5,7 · 82k/28k | 19/19, 18/19* |
+| gemini-4-argon-high (cũ của `test`) | 4,2 · 55k/9k | 4,3 · 66k/17k | 19/19 |
+| gemini-4-neon-medium | 3,1 · 56k/7k | | 19/19 |
+\* 29/2 được cho sang năm nhuận kế tiếp thay vì báo lỗi: hợp lý, nhưng làm quá đề.
+Kết luận: lợi lớn nhất là bỏ orchestrator cho phiếu code (nhanh gấp 1,5, ít hơn nửa token ra), đơn tác tử còn tránh lỗi "chờ nền". Neon-high ngang argon-high ở việc nhỏ (không nhanh hơn); chọn Neon vì giá thấp hơn Carbon ~32% mỗi việc và điểm coding agent cao. Neon-medium đủ cho viết test/triển khai.
+Luật mới: phiếu code quan trọng có thêm **test ẩn** giữ ở cloud (không đẩy lên phiếu), Claude chạy sau khi agy push nhánh; bắt được lỗi "chỉ cho qua test".
+Lỗi đã gặp: 4 phiếu chạy cùng lúc trên may-2 thì một phiếu trả `backend returned an empty conversation id` sau 5 giây (lỗi máy, `tu_sua` không tự chạy lại lỗi máy; Claude thả lại phiếu đuôi `2` là đạt).
 
 ## Bài học (14/11)
 - agy chia thợ con làm ở thư mục khác → bộ canh không thấy tiến, dừng oan sau 10 phút. Sửa: dòng `theo_doi:`.

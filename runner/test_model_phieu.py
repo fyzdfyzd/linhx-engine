@@ -250,10 +250,10 @@ def test_uu_tien_2_tien_to_loai_viec_tu_file_json_thang_linhx_model(tmp_path, mo
     # 2. Kiểm tra file `runner/model-theo-loai.json` đúng bảng yêu cầu và tên phiếu `<du-an>-<loai>-<viec>`
     #    lấy đoạn thứ 2, ưu tiên hơn `LINHX_MODEL`.
     bang_ky_vong = {
-        "dp": "gemini-pro-orchestrator",
-        "code": "gemini-pro-orchestrator",
-        "test": "gemini-4-argon-high",
-        "trien": "gemini-4-argon-high",
+        "dp": "gemini-pro-orchestrator-neon",
+        "code": "gemini-4-neon-high",
+        "test": "gemini-4-neon-medium",
+        "trien": "gemini-4-neon-medium",
         "gop": "gemini-4-hydrogen-high",
         "do": "gemini-4-hydrogen-high",
         "td": "gemini-4-hydrogen-high",
