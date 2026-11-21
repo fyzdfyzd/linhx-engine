@@ -19,4 +19,4 @@ Không sửa `viec/neon-ab/nghiem-thu/**` hay file `.khoa`, không cài thư vi�
 ## Test bằng chứng
 `python -m pytest viec/neon-ab/nghiem-thu -q` trong clone, phải thấy `29 passed`. KET-QUA ≤ 10 dòng: số test đạt, số lần chạy test, số dòng lich.py.
 
-nhip: 10:11 1p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:11:04+0700] · root agent idle; waiting up to 40m0s for 1 ba
+nhip: 10:14 4p đang chờ nền · log cuối 0 phút trước [log_cuoi=2026-11-21T10:14:03+0700] · root agent idle; waiting up to 40m0s for 1 ba
