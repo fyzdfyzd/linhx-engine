@@ -6,6 +6,7 @@ theo_doi: C:\linhx\wt-neon-sua-orch-neon
 khoa: viec/neon-ab/nghiem-thu-sua/test_sua.py.khoa
 lenh_kiem: python -m pytest viec/neon-ab/nghiem-thu-sua -q
 vung: viec/neon-ab/sua/**
+nhan: may-2 2026-11-21T10:19:25+0700
 
 ## Mục tiêu
 `viec/neon-ab/sua/lich.py` có nhiều lỗi. Sửa cho đúng ĐẶC TẢ `viec/neon-ab/DE-BAI.md` (không chỉ cho qua test: còn lỗi mà test không bắt, Claude sẽ chấm bằng test ẩn). Sửa tối thiểu, giữ cấu trúc cũ.
